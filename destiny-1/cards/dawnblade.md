@@ -1,0 +1,13 @@
+# Dawnblade
+
+- Source: https://www.ishtar-collective.net/entries/dawnblade
+
+A young—by Warlock standards—apprentice holds out a hand and reaches for flame. Nothing. The wizened teacher laughs. “You're supposed to be teaching me. Not laughing.”
+
+The teacher's arm extends as one word hangs in the air, “Sword.” As quickly as it appeared, the blade vanishes. “That doesn't help.”
+
+“Sword.” In a flash, the blade appears again, this time at the student's throat. Both pairs of eyes widened. One aghast, one aglow. “Say it with me.”
+
+Two voices ring: “Sword.”
+
+A blade appears in each outstretched hand. A pair of wings form on each Warlock's back. Two Warlocks take flight and vow to never again look down.

@@ -1,0 +1,13 @@
+# Daring Hunter's Cloak
+
+- Source: https://www.ishtar-collective.net/entries/daring-hunters-cloak
+
+OK, here's where I give you this big pep talk about "what it means to be a Hunter" and "follow these rules" and blah blah blah.
+
+So. Here's the one rule to being a Hunter: can you see me? I'm—I'm shrugging. It's—hard to convey in a written—
+
+Anyway. It's a shrug. Get it? There's no one way to be a Hunter. Just—figure it out as you go along. I know you can. Otherwise you wouldn't be a Hunter. OK?
+
+So what are you waiting for? Get out of here. Wait, wait—that'll be 1000 Glimmer. I'm kidding! Now go make me proud. Or don't. Just make you proud, okay?
+
+Wow. Sometimes I inspire even myself.

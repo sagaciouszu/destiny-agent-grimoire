@@ -1,0 +1,17 @@
+# Docking
+
+- Source: https://www.ishtar-collective.net/entries/docking
+
+"Honorless, at the end," gasps the former Kell of Kings. "Faithless and false. Your sister's will kept us from the Great Machine, Uldren Sov. She challenged the Wolves by right of noble lineage. But you… you skulk in shadows and filth. You hide behind your bruises like a Dreg."
+
+"Funny you should mention that," Uldren sneers. He knows he's sneering, but this worthless thing deserves it. What did the Kell of Kings ever want? To go backward. More Servitors. More machines. More of the past. Uldren sees now that extinction is only the beginning: that the bones of what you become can act more powerfully than the flesh of what you leave behind.
+
+"Fikrul."
+
+Shattered Servitors and dead Fallen loom in Ether-frosted mounds behind Fikrul. He comes forward silently, hulking, horrific, his headdress gridding out the firelight into blocks of shadow and smoke. He carries two shock daggers.
+
+"We are the last of our kinds," Uldren tells the Kell. "My sister is gone. So is the idea of your Great Machine. The difference between us?" He leans in to hiss. "My sister's coming back."
+
+In four swift cuts, the Archon of the Scorned Barons docks the Kell of Kings. Uldren tears the House of Kings sigil hanging from the new Dreg's belt and holds it high for all to see. "The Kings are dead."
+
+"Long live the King," comes Fikrul's reverent growl.

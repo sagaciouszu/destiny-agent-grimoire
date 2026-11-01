@@ -2,103 +2,102 @@
 
 | Card | Slug | Status |
 |---|---|---|
-| Checking the Chamber | checking-the-chamber | done |
-| Chill of Winter | chill-of-winter | done |
-| Chitinous Shell | chitinous-shell | done |
-| Chivalric Fire | chivalric-fire | done |
-| Choir of One | choir-of-one | done |
-| Chords of Meaning | chords-of-meaning | done |
-| Chroma Rush | chroma-rush | done |
-| Chromatic Fire | chromatic-fire | done |
-| Chronophage | chronophage | done |
-| Chrysopelea-S | chrysopelea-s | done |
-| Chrysura Melo | chrysura-melo | done |
-| Cinder Pinion Bond | cinder-pinion-bond | done |
-| Cinder Pinion Boots | cinder-pinion-boots | done |
-| Cinder Pinion Cloak | cinder-pinion-cloak | done |
-| Cinder Pinion Cover | cinder-pinion-cover | done |
-| Cinder Pinion Cowl | cinder-pinion-cowl | done |
-| Cinder Pinion Gauntlets | cinder-pinion-gauntlets | done |
-| Cinder Pinion Gloves | cinder-pinion-gloves | done |
-| Cinder Pinion Grasps | cinder-pinion-grasps | done |
-| Cinder Pinion Greaves | cinder-pinion-greaves | done |
-| Cinder Pinion Helm | cinder-pinion-helm | done |
-| Cinder Pinion Mark | cinder-pinion-mark | done |
-| Cinder Pinion Plate | cinder-pinion-plate | done |
-| Cinder Pinion Robes | cinder-pinion-robes | done |
-| Cinder Pinion Strides | cinder-pinion-strides | done |
-| Cinder Pinion Vest | cinder-pinion-vest | done |
-| Citan's Ramparts | citans-ramparts | done |
-| Civilian Atrium South | civilian-atrium-south | done |
-| Classified | classified | done |
-| Claws of Ahamkara | claws-of-ahamkara | done |
-| Claws of the Flain | claws-of-the-flain | done |
-| Cloak Judgment | cloak-judgment | done |
-| Cloak Judgment (CODA) | cloak-judgment-coda | done |
-| Cloak of Feltroc | cloak-of-feltroc | done |
-| Cloak of Remembrance | cloak-of-remembrance | done |
-| Cloak of Temptation | cloak-of-temptation | done |
-| Cloak of the Emperor's Agent | cloak-of-the-emperors-agent | done |
-| Cloak of the Great Hunt | cloak-of-the-great-hunt | done |
-| Cloak of the Taken King | cloak-of-the-taken-king | done |
-| Cloak of Trepidation | cloak-of-trepidation | done |
-| Cloak Relentless | cloak-relentless | done |
-| Cloudstrike | cloudstrike | done |
-| Coalition Shell | coalition-shell | done |
-| Cobra's Hood | cobras-hood | done |
-| Cocytus | cocytus | done |
-| Code Duello | code-duello | done |
-| Coffin Nail | coffin-nail | done |
-| Cold Comfort | cold-comfort | done |
-| Cold Denial | cold-denial | done |
-| Coldheart | coldheart | done |
-| Collection Call | collection-call | done |
-| Collective | collective | done |
-| Collective Obligation | collective-obligation | done |
-| Color of Speed | color-of-speed | done |
-| Commemorative Steed | commemorative-steed | done |
-| Committing | committing | done |
-| Common Nobility | common-nobility | done |
-| Compact Defender | compact-defender | done |
-| Compass Rose | compass-rose | done |
-| Compliments | compliments | done |
-| Comrades in Arms | comrades-in-arms | done |
-| Concentric Dawn | concentric-dawn | done |
-| Conditional Finality | conditional-finality | done |
-| Confession of Hope | Part One | confession-of-hope-part-one | done |
-| Confession of Hope | Part Two | confession-of-hope-part-two | done |
-| Conrad Jain | conrad-jain | done |
-| Conspirator | conspirator | done |
-| CONTACT | contact | done |
-| Contender's Shell | contenders-shell | done |
-| Contestant Shell | contestant-shell | done |
-| Contingency Plans | contingency-plans | done |
-| CONTRAST | contrast | done |
-| Contraverse Hold | contraverse-hold | done |
-| CONVICTION | conviction | done |
-| Coronation | coronation | done |
-| Corrasion | corrasion | done |
-| Corsair's Wrath | corsairs-wrath | done |
-| Cosmogyre I | cosmogyre-i | done |
-| Cosmogyre II | cosmogyre-ii | done |
-| Cosmogyre III | cosmogyre-iii | done |
-| Cosmogyre IV | cosmogyre-iv | done |
-| Cosmos Shell | cosmos-shell | done |
-| Cowl of Righteousness | cowl-of-righteousness | done |
-| Crawlway Sink | crawlway-sink | done |
-| Crest of Alpha Lupi | crest-of-alpha-lupi | done |
-| Crimson | crimson | done |
-| Criticality of Quickness | criticality-of-quickness | done |
-| Crota's Exile | crotas-exile | done |
-| Crown of Tempests | crown-of-tempests | done |
-| Crown-Splitter | crown-splitter | done |
-| Crowning Duologue | crowning-duologue | done |
-| Crushing Greaves (CODA) | crushing-greaves-coda | done |
-| Crushing Guard (CODA) | crushing-guard-coda | done |
-| Crushing Helm (CODA) | crushing-helm-coda | done |
-| Crushing Plate (CODA) | crushing-plate-coda | done |
-| Cry Mutiny | cry-mutiny | done |
-| Cryosthesia 77K | cryosthesia-77k | done |
-| Cryptolith Lure | cryptolith-lure | done |
-| Cuirass of the Emperor's Champion | cuirass-of-the-emperors-champion | done |
-| Cuirass of the Falling Star | cuirass-of-the-falling-star | done |
+| Cull's Shadow | culls-shadow | done |
+| Curious Discoveries | curious-discoveries | done |
+| Curse of Foresight | curse-of-foresight | done |
+| CUSP | cusp | done |
+| Cusp Sempiternal | cusp-sempiternal | done |
+| Cyrtarachne's Facade | cyrtarachnes-facade | done |
+| D.A.R.C.I. | darci | done |
+| Daring Hunter's Cloak | daring-hunters-cloak | done |
+| Dark Glass | dark-glass | done |
+| Dark Heirlooms | dark-heirlooms | done |
+| Dark Horse | dark-horse | done |
+| Dawn Chimes Shell | dawn-chimes-shell | done |
+| Dawn Chorus | dawn-chorus | done |
+| Dawnblade | dawnblade | done |
+| Dawnblade | dawnblade-2 | done |
+| Dawning Before the Dawning | dawning-before-the-dawning | done |
+| Dawning Cheer | dawning-cheer | done |
+| Dawning Helpers | dawning-helpers | done |
+| DCCCVII. | dcccvii | done |
+| DCCII. | dccii | done |
+| DCCLXXXIX. | dcclxxxix | done |
+| DCII. | dcii | done |
+| DCV. | dcv | done |
+| Dead Man's Tale | dead-mans-tale | done |
+| Dead Messenger | dead-messenger | done |
+| Deafening Whisper | deafening-whisper | done |
+| Deal | deal | done |
+| Death | death | done |
+| Death to Kells | death-to-kells | done |
+| Deathbringer | deathbringer | done |
+| Debt | debt | done |
+| Decompiled | decompiled | done |
+| Deep Explorer Bond | deep-explorer-bond | done |
+| Deep Explorer Boots | deep-explorer-boots | done |
+| Deep Explorer Cloak | deep-explorer-cloak | done |
+| Deep Explorer Gauntlets | deep-explorer-gauntlets | done |
+| Deep Explorer Gloves | deep-explorer-gloves | done |
+| Deep Explorer Grasps | deep-explorer-grasps | done |
+| Deep Explorer Greaves | deep-explorer-greaves | done |
+| Deep Explorer Helmet | deep-explorer-helmet | done |
+| Deep Explorer Hood | deep-explorer-hood | done |
+| Deep Explorer Mark | deep-explorer-mark | done |
+| Deep Explorer Mask | deep-explorer-mask | done |
+| Deep Explorer Plate | deep-explorer-plate | done |
+| Deep Explorer Strides | deep-explorer-strides | done |
+| Deep Explorer Vest | deep-explorer-vest | done |
+| Deep Explorer Vestments | deep-explorer-vestments | done |
+| Deepseeker Shell | deepseeker-shell | done |
+| Defiant | defiant | done |
+| Deimosuffusion | deimosuffusion | done |
+| Deinterlace | deinterlace | done |
+| Delicate Tomb | delicate-tomb | done |
+| Denier of Futurity | denier-of-futurity | done |
+| Deontic | deontic | done |
+| Department-Issued Shell | department-issued-shell | done |
+| Detached | detached | done |
+| Deterministic Chaos | deterministic-chaos | done |
+| Devil's Ruin | devils-ruin | done |
+| D.F.A. | dfa | done |
+| Difference of Opinion | difference-of-opinion | done |
+| Different Times | different-times | done |
+| Dinas Emrys | dinas-emrys | done |
+| Disparity | disparity | done |
+| Dissected Carve | dissected-carve | done |
+| Dissentience | dissentience | done |
+| Distortions | distortions | done |
+| District 125 | district-125 | done |
+| Divalian Shell | divalian-shell | done |
+| Divinity | divinity | done |
+| Division | division | done |
+| DLXXIX. | dlxxix | done |
+| Docking | docking | done |
+| Dogma | dogma | done |
+| Don't Call Me Ghost | dont-call-me-ghost | done |
+| Doom Fang Pauldrons | doom-fang-pauldrons | done |
+| Doomed Petitioner | doomed-petitioner | done |
+| Downfall | downfall | done |
+| Dragon's Breath | dragons-breath | done |
+| Drang | drang | done |
+| Dream Demon | dream-demon | done |
+| Dreaming | dreaming | done |
+| Duality | duality | done |
+| Dues | dues | done |
+| Dunemarchers | dunemarchers | done |
+| Dust Rock Blues | dust-rock-blues | done |
+| Duty Bound | duty-bound | done |
+| Ecliptic Distaff | ecliptic-distaff | done |
+| Ecstasiate I | ecstasiate-i | done |
+| Ecstasiate II | ecstasiate-ii | done |
+| Ecstasiate III | ecstasiate-iii | done |
+| Edge of Action | edge-of-action | done |
+| Edge of Concurrence | edge-of-concurrence | done |
+| Edge of Intent | edge-of-intent | done |
+| Edge Transit | edge-transit | done |
+| EGGSHELL | eggshell | done |
+| Ego and Squid | ego-and-squid | done |
+| Ego Talon Bond | ego-talon-bond | done |
+| Eidolon Pursuant Bond | eidolon-pursuant-bond | done |
+| Eidolon Pursuant Cloak | eidolon-pursuant-cloak | done |

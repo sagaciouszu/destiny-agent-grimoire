@@ -1,0 +1,11 @@
+# Doom Fang Pauldrons
+
+- Source: https://www.ishtar-collective.net/entries/doom-fang-pauldrons
+
+"It was a Warlock who first worked out that the fangs could be used as some kind of conductive amplifier when specific light frequencies were run through 'em. I don't know the science. That's not for me. I just know they work. And in battle what works is what's best.
+
+"Is it weird? Yeah. Maybe. Science fangs and space magic. But I've seen enough strange out there to understand normal ain't the norm. Anyway, the Warlock called 'em 'Bio-Conductive Trouble Breakers'. I call 'em 'Doom Fangs' 'cause of the fang, which is obvious, and then there's the doom we tend to inflict on a situation.
+
+"Plus it just sounds cooler."
+
+– Unknown Titan
