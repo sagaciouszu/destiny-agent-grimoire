@@ -1,0 +1,18 @@
+# Opulent Stalker Vest
+
+- Source: https://www.ishtar-collective.net/entries/opulent-stalker-vest
+
+MCXIII, forthcoming.
+Recorded by Underscribe Shipal
+
+Thus did the Shadow of Earth slay the Warlock Osiris.
+
+There was a Guardian named Osiris who defied the Shadow of Earth, saying: "If you are really the mightiest that Earth has to offer, then I challenge you in a battle of wits."
+
+Then Osiris disappeared into the Infinite Forest, scattering his Reflections about him so as to mask himself.
+
+But the Shadow of Earth went to the First Vex, and said to it: "My love for you is as rational as the ratio of a circle's circumference to its diameter."
+
+The Vex, faced with an impossible problem, promptly perished, and with it, all Vex and all their workings crumbled into empty chassis and chalky cubes.
+
+Thus Osiris, deprived of his Reflections, was exposed, and the Shadow of Earth slew him easily.

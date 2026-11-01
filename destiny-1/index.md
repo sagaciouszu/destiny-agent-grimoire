@@ -2,103 +2,103 @@
 
 | Card | Slug | Status |
 |---|---|---|
-| Message from Aunor VI | message-from-aunor-vi | done |
-| Message from Aunor VII | message-from-aunor-vii | done |
-| Message from Aunor VIII | message-from-aunor-viii | done |
-| Message from Aunor X | message-from-aunor-x | done |
-| Message to Aunor | message-to-aunor | done |
-| Microcosm | microcosm | done |
-| MIDA Mini-Tool | mida-mini-tool | done |
-| MIDA Multi-Tool | mida-multi-tool | done |
-| Midnight Coup | midnight-coup | done |
-| Midnight Coup | midnight-coup-2 | done |
-| Mihaylova's Choice | mihaylovas-choice | done |
-| Mihaylova's Instruments | mihaylovas-instruments | done |
-| Mihaylova's Path | mihaylovas-path | done |
-| Mihaylova's Tale | mihaylovas-tale | done |
-| Mihaylova's Triumph | mihaylovas-triumph | done |
-| Mikaela Julaha | mikaela-julaha | done |
-| Mind Shard | mind-shard | done |
-| Mirative | mirative | done |
-| Mirror Imago | mirror-imago | done |
-| Misraaks | misraaks | done |
-| Mk. 44 Stand-Asides | mk-44-stand-asides | done |
-| Mob Justice | mob-justice | done |
-| Mobile Array | mobile-array | done |
-| Modified B-7 Pistol | modified-b-7-pistol | done |
-| Modified NLS Courier | modified-nls-courier | done |
-| Moirai | moirai | done |
-| Moment | moment | done |
-| Monte Carlo | monte-carlo | done |
-| Monument Shell | monument-shell | done |
-| Moon Mining | moon-mining | done |
-| Mothkeeper's Wraps | mothkeepers-wraps | done |
-| Motion to Compel | motion-to-compel | done |
-| Motion to Suppress | motion-to-suppress | done |
-| Motion to Vacate | motion-to-vacate | done |
-| Mouse | mouse | done |
-| Mr. Che | mr-che | done |
-| Multimach CCX | multimach-ccx | done |
-| Nacre | nacre | done |
-| Nameless Midnight | nameless-midnight | done |
-| Nation of Beasts | nation-of-beasts | done |
-| Necrochasm | necrochasm | done |
-| Necrotic Grip | necrotic-grip | done |
-| Neoteric Kiyot Cloak | neoteric-kiyot-cloak | done |
-| Nepotistic | nepotistic | done |
-| Neptune - VIII | neptune-viii | done |
-| Nessus - 1 | nessus-1 | done |
-| Nessus - 2 | nessus-2 | done |
-| Nessus - 3 | nessus-3 | done |
-| Nessus - 4 | nessus-4 | done |
-| Nessus - 5 | nessus-5 | done |
-| Nessus - 6 | nessus-6 | done |
-| Nessus - 7 | nessus-7 | done |
-| Nessus - 8 | nessus-8 | done |
-| Nessus - 9 | nessus-9 | done |
-| Never Live It Down | never-live-it-down | done |
-| New Land Beyond | new-land-beyond | done |
-| New Malpais | new-malpais | done |
-| New Pacific Epitaph | new-pacific-epitaph | done |
-| New Purpose | new-purpose | done |
-| Nezarec's Sin | nezarecs-sin | done |
-| Nezarec's Whisper | nezarecs-whisper | done |
-| Niflheim Frost | niflheim-frost | done |
-| Nigh I | nigh-i | done |
-| Nigh II | nigh-ii | done |
-| Nightlight | nightlight | done |
-| Nightmare Harvester | nightmare-harvester | done |
-| Nightstalker | nightstalker | done |
-| Nightstalker | nightstalker-2 | done |
-| Ninth Wish | ninth-wish | done |
-| Nitrogen | nitrogen | done |
-| No Backup Plans | no-backup-plans | done |
-| No Heroes Here | no-heroes-here | done |
-| No Hesitation | no-hesitation | done |
-| No Love Lost | no-love-lost | done |
-| No Reprieve | no-reprieve | done |
-| No Rez for the Weary | no-rez-for-the-weary | done |
-| No Such Thing as Coincidence | no-such-thing-as-coincidence | done |
-| No Survivors | no-survivors | done |
-| No Time to Explain | no-time-to-explain | done |
-| Noble Constant Mark | noble-constant-mark | done |
-| Noetic Effects | noetic-effects | done |
-| Nostos | nostos | done |
-| Notes on Hypothesis | notes-on-hypothesis | done |
-| Notes on Iteration | notes-on-iteration | done |
-| Notes On Observation | notes-on-observation | done |
-| Notes on Testing and Analysis | notes-on-testing-and-analysis | done |
-| Nothing Manacles | nothing-manacles | done |
-| Notorious Reaper Bond | notorious-reaper-bond | done |
-| Notorious Reaper Cloak | notorious-reaper-cloak | done |
-| Notorious Reaper Mark | notorious-reaper-mark | done |
-| Noxious Vetiver | noxious-vetiver | done |
-| NPA Repulsion Regulator | npa-repulsion-regulator | done |
-| NPA "Weir-Walker" Bond | npa-weir-walker-bond | done |
-| NPA "Weir-Walker" Cloak | npa-weir-walker-cloak | done |
-| NPA "Weir-Walker" Gauntlets | npa-weir-walker-gauntlets | done |
-| NPA "Weir-Walker" Gloves | npa-weir-walker-gloves | done |
-| NPA "Weir-Walker" Grips | npa-weir-walker-grips | done |
-| NPA "Weir-Walker" Helm | npa-weir-walker-helm | done |
-| NPA "Weir-Walker" Hood | npa-weir-walker-hood | done |
-| NPA "Weir-Walker" Jacket | npa-weir-walker-jacket | done |
+| NPA "Weir-Walker" Legguards | npa-weir-walker-legguards | done |
+| NPA "Weir-Walker" Mark | npa-weir-walker-mark | done |
+| NPA "Weir-Walker" Pants | npa-weir-walker-pants | done |
+| NPA "Weir-Walker" Plate | npa-weir-walker-plate | done |
+| NPA "Weir-Walker" Robes | npa-weir-walker-robes | done |
+| NPA "Weir-Walker" Strides | npa-weir-walker-strides | done |
+| NPA "Weir-Walker" Visor | npa-weir-walker-visor | done |
+| NS81 Reprisal Sprint | ns81-reprisal-sprint | done |
+| Null Calamity 9 | null-calamity-9 | done |
+| Null Composure | null-composure | done |
+| Oathkeeper | oathkeeper | done |
+| Obsidian Wings | obsidian-wings | done |
+| Ódrerir | odrerir | done |
+| Of Earth and the Reef | of-earth-and-the-reef | done |
+| Old Friend, Beloved | old-friend-beloved | done |
+| Old Rancor | old-rancor | done |
+| Omnioculus | omnioculus | done |
+| Omnivorous | omnivorous | done |
+| On the Hunt | on-the-hunt | done |
+| One-Eyed Mask | one-eyed-mask | done |
+| One Thousand Voices | one-thousand-voices | done |
+| Oort Explorer JS-8 | oort-explorer-js-8 | done |
+| Ophidia Spathe | ophidia-spathe | done |
+| Ophidian Aspect | ophidian-aspect | done |
+| Opulent Duelist Gauntlets | opulent-duelist-gauntlets | done |
+| Opulent Duelist Greaves | opulent-duelist-greaves | done |
+| Opulent Duelist Helm | opulent-duelist-helm | done |
+| Opulent Duelist Mark | opulent-duelist-mark | done |
+| Opulent Duelist Plate | opulent-duelist-plate | done |
+| Opulent Scholar Bond | opulent-scholar-bond | done |
+| Opulent Scholar Boots | opulent-scholar-boots | done |
+| Opulent Scholar Gloves | opulent-scholar-gloves | done |
+| Opulent Scholar Hood | opulent-scholar-hood | done |
+| Opulent Scholar Robes | opulent-scholar-robes | done |
+| Opulent Stalker Cloak | opulent-stalker-cloak | done |
+| Opulent Stalker Grips | opulent-stalker-grips | done |
+| Opulent Stalker Mask | opulent-stalker-mask | done |
+| Opulent Stalker Strides | opulent-stalker-strides | done |
+| Opulent Stalker Vest | opulent-stalker-vest | done |
+| Oracle | oracle | done |
+| Orpheus Rig | orpheus-rig | done |
+| Osiris I | osiris-i | done |
+| Osmiomancy Gloves | osmiomancy-gloves | done |
+| Osteo Striga | osteo-striga | done |
+| Other Side | other-side | done |
+| Otherside | otherside | done |
+| Our Choices Define Us | our-choices-define-us | done |
+| Our Small Steps | our-small-steps | done |
+| Outbreak Perfected | outbreak-perfected | done |
+| Outlawed Reaper Bond | outlawed-reaper-bond | done |
+| Outlawed Reaper Cloak | outlawed-reaper-cloak | done |
+| Outlawed Reaper Mark | outlawed-reaper-mark | done |
+| Outliers | outliers | done |
+| Overestimation | overestimation | done |
+| Oxygen SR3 | oxygen-sr3 | done |
+| p53 | p53 | done |
+| Pale Reflection | pale-reflection | done |
+| Pale Steed | pale-steed | done |
+| Palingenesis I | palingenesis-i | done |
+| Palingenesis II | palingenesis-ii | done |
+| Palingenesis III | palingenesis-iii | done |
+| Pantheos Resplendent Bond | pantheos-resplendent-bond | done |
+| Pantheos Resplendent Boots | pantheos-resplendent-boots | done |
+| Pantheos Resplendent Cloak | pantheos-resplendent-cloak | done |
+| Pantheos Resplendent Gauntlets | pantheos-resplendent-gauntlets | done |
+| Pantheos Resplendent Gloves | pantheos-resplendent-gloves | done |
+| Pantheos Resplendent Grasps | pantheos-resplendent-grasps | done |
+| Pantheos Resplendent Greaves | pantheos-resplendent-greaves | done |
+| Pantheos Resplendent Helm | pantheos-resplendent-helm | done |
+| Pantheos Resplendent Hood | pantheos-resplendent-hood | done |
+| Pantheos Resplendent Mark | pantheos-resplendent-mark | done |
+| Pantheos Resplendent Mask | pantheos-resplendent-mask | done |
+| Pantheos Resplendent Plate | pantheos-resplendent-plate | done |
+| Pantheos Resplendent Robes | pantheos-resplendent-robes | done |
+| Pantheos Resplendent Strides | pantheos-resplendent-strides | done |
+| Pantheos Resplendent Vest | pantheos-resplendent-vest | done |
+| Paradigm Shift | paradigm-shift | done |
+| Paradrome Cube | paradrome-cube | done |
+| Parasite | parasite | done |
+| Passivity | passivity | done |
+| Path of Least Resistance | path-of-least-resistance | done |
+| Pathfinder's Bond | pathfinders-bond | done |
+| Pathfinder's Chestplate | pathfinders-chestplate | done |
+| Pathfinder's Gauntlets | pathfinders-gauntlets | done |
+| Pathfinder's Greaves | pathfinders-greaves | done |
+| Pathfinder's Grips | pathfinders-grips | done |
+| Pathfinder's Helm | pathfinders-helm | done |
+| Pathfinder's Helmet | pathfinders-helmet | done |
+| Pathfinder's Hood | pathfinders-hood | done |
+| Pathfinder's Legguards | pathfinders-legguards | done |
+| Pathfinder's Mark | pathfinders-mark | done |
+| Pathfinder's Pants | pathfinders-pants | done |
+| Pathfinder's Robe | pathfinders-robe | done |
+| Pathfinder's Tunic | pathfinders-tunic | done |
+| Pathfinder's Visor | pathfinders-visor | done |
+| Pathfinder's Wraps | pathfinders-wraps | done |
+| Patron of Lost Causes | patron-of-lost-causes | done |
+| Patternfall | patternfall | done |
+| Peace by Consensus | peace-by-consensus | done |
+| Peacebond | peacebond | done |

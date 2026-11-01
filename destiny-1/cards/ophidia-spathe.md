@@ -1,0 +1,21 @@
+# Ophidia Spathe
+
+- Source: https://www.ishtar-collective.net/entries/ophidia-spathe
+
+Hunter,
+
+You are the blade.
+You are balance. You cut through the air with poise and grace.
+Your hands are quick. Your feet are light.
+You strike like silent lightning.
+Your light shines like a glistening edge in the sun.
+
+You are the snake.
+You are level and silent. You move with purpose.
+Your enemies feel fear in your presence.
+Your fangs are sharp and quick.
+Your eyes are clear and your wrath is blinding.
+
+You are the blade. You are the snake.
+
+Strike. Shimmer. Survive.

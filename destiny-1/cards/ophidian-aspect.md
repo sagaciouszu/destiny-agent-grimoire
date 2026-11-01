@@ -1,0 +1,13 @@
+# Ophidian Aspect
+
+- Source: https://www.ishtar-collective.net/entries/ophidian-aspect
+
+A torn and crumpled journal page, found on the street in the City:
+
+—not his lessons I remember so much as the words we exchanged in passing. I recall a trivial argument we had over some tale from the Golden Age. It might have been a love story, or a tragedy.
+
+A proud queen, forsaken by a lover obsessed with his past heroism, chooses to preserve her dignity in death rather than endure humiliation.
+
+He brought it up as an example of why we should not fear death, but even as he spoke, I thought to myself: what about those who looked to her to rule? Those whose lives depended on her own?
+
+Now, looking back, it strikes me that he talked with the arrogance of one who can always return from the Void. One who has contemplated the darkness so long he thinks of it as a friend, of sorts.

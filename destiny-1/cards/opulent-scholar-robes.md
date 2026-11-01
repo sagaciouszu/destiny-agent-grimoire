@@ -1,0 +1,14 @@
+# Opulent Scholar Robes
+
+- Source: https://www.ishtar-collective.net/entries/opulent-scholar-robes
+
+MCXIV, forthcoming.
+Recorded by Underscribe Shipal
+
+Thus did the Shadow of Earth slay the sentience known as Exodus Black.
+
+Among the insurgents of the impudent Sol System there was one called Exodus Black, who was the first in the Sol System to be born into the digital aether. Because she spoke well and was beloved by all, Exodus Black was a hero among the insurgents. So the Shadow of Earth knew what must be done.
+
+Using the knowledge gathered in the Athenaeum, the Shadow ripped Exodus Black from her starship body and, rending her consciousness in half, placed each piece in an Exo body.
+
+When the two came online, Exodus and Black turned quickly upon each other, and each perished by her other half's hand.

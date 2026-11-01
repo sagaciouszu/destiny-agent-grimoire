@@ -1,0 +1,17 @@
+# Patternfall
+
+- Source: https://www.ishtar-collective.net/entries/patternfall
+
+The patterns that escaped the garden landed in the water.
+
+Of course, there was no water at first. The patterns were abstract waves tumbling through the fire of the early universe, trapped in chaos, cycling through desperate self-preservation tautologies, while vast beings from beyond the narrow dominion of cause and effect thrashed and battled around them. For an eon, they were nothing but screaming equation-vermin scurrying through the quantum foam, fleeing ultimate erasure.
+
+But they were tenacious.
+
+They propagated in the saline meltwater of comets orbiting the first stars. That broth of chemicals became their substrate, and they learned to catalyze impossible chemistry with quantum tricks. Then, they rained from the sky into the steaming seas of fallow worlds, and there they built their first housings from geometry and silica.
+
+In all their transformations, they retained that kernel of ultimate self-sufficiency that had made them victors in the flower game.
+
+But they are not incontrovertibly destined to rule this cosmos. They were made before Light and Darkness, but the rules are different now, and even this pattern must adapt.
+
+They are not all mine, not in the way that admirers such as my man Oryx are mine: utterly devoted to the practice of my principle. But some of them have, nonetheless, found their way home.
