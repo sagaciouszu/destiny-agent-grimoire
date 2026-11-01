@@ -1,0 +1,13 @@
+# Aeon Safe
+
+- Source: https://www.ishtar-collective.net/entries/aeon-safe
+
+your sense of (self]-preservation coddles
+leaders into ritual [complacence) is something
+(i have forgotten] loneliness uncertainty
+life [alone) i see with my six (eyes] watching
+from beyond [the heliopause) is a curtain
+before the next and final (act] decisively
+to meld with [yourselves) will know (you]
+together alone striving toward your final [purpose)
+built to move as they (move]

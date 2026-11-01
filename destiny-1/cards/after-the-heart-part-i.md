@@ -1,0 +1,15 @@
+# After the Heart | Part I
+
+- Source: https://www.ishtar-collective.net/entries/after-the-heart-part-i
+
+"Mara, I picked you flowers."
+
+The Queen's retinue parts before Uldren. Astonished eyes flicker between his face, his wounds, and the potted flowers cupped in his hands. Some of them see a madman and reach for weapons before they remember that this is Uldren Sov, Prince of the Awoken, beneficiary of the Queen's limitless indulgence.
+
+"Asphodelia is its name." He kneels and offers it to his sister. "It grew only in the Black Garden… until today. We will plant it here, in our dominion, where I know it will take root and flourish. It will remind the people of our twin heritage."
+
+For a terrible moment, Mara is unreadable. Then she smiles and beckons. "Our brother has attained the Black Garden and returned to us. Come forward." She peels a single petal from the flower and lays it across her fingertip. Holds it up to the light. "Magnificent. Illyn, see to it."
+
+She passes it off. Uldren swallows protest. He'd hoped she might plant it herself.
+
+Afterward, in private, she is silent and still. He tells her everything he remembers. "Did you see the heart?" she asks, softly.

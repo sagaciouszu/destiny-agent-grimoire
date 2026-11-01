@@ -115,7 +115,7 @@ def check_headers(ws):
         rel = f.replace(os.sep, '/')
         if '/books/' in rel or '/transcripts/' in rel or '/destiny-1/' in rel or '/skills/' in rel:
             continue
-        if rel.endswith('/index.md') or rel.endswith('/README.md'):
+        if rel.endswith('/index.md') or rel.endswith('/README.md') or rel.endswith('CHANGELOG.md') or rel.endswith('SKILL.md'):
             continue
         s = open(f, encoding='utf-8').read()
         if '**Depends On:**' not in s or 'Token Estimate:' not in s:

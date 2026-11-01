@@ -1,0 +1,25 @@
+# A History of Starlight
+
+- Source: https://www.ishtar-collective.net/entries/a-history-of-starlight
+
+~
+
+To you as well. There has been no greater Dawning than this. The dawning of a new age, whether we call it one or not.
+
+I hope it is not the dawn of a new Collapse.
+
+~
+
+We are so focused on the return of our Light that we have forgotten how that Light was obscured. We can celebrate the Light, yes, but we must not be blinded by it.
+
+~
+
+And I appreciate it, Effie, but the greatest gift one could give is to heed my words. Besides, I have no need of an ornament for my ship. My traveling days are past.
+
+~
+
+Give it to the one who now flies it. I hope they think about what this all means… more than the rest of us.
+
+~
+
+Why do you think I have chosen to remain here? But… Happy Dawning to you as well, old friend. See you next year.

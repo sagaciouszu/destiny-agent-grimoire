@@ -22,7 +22,7 @@ def body(h):
     return '\n'.join(out).strip()
 
 def title(h):
-    tm=re.search(r'<title>(.*?) - Lore Entry',h)
+    tm=re.search(r'<title>(.*?)\s+[\u2014\u2013-]\s+Lore Entry',h)
     return html.unescape(tm.group(1).strip()) if tm else 'Unknown'
 
 # slugs from argv
