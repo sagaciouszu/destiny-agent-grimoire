@@ -34,19 +34,19 @@
 | All-Star Bond | all-star-bond | done |
 | All-Star Cloak | all-star-cloak | done |
 | All-Star Mark | all-star-mark | done |
-| Allies: Tower—Empress Caiatl | allies-towerempress-caiatl | done |
+| Allies: Tower-Empress Caiatl | allies-towerempress-caiatl | done |
 | Allstar Bond | allstar-bond | done |
 | Allstar Cloak | allstar-cloak | done |
 | Allstar Mark | allstar-mark | done |
 | Allstar Vector | allstar-vector | done |
 | Allstar Vector | allstar-vector-2 | done |
 | Alone as a God | alone-as-a-god | done |
-| Altars of Reflection—Assessment | altars-of-reflectionassessment | done |
-| Altars of Reflection—Conclusion | altars-of-reflectionconclusion | done |
-| Altars of Reflection—Conclusion [Draft] | altars-of-reflectionconclusion-draft | done |
-| Altars of Reflection—Control | altars-of-reflectioncontrol | done |
-| Altars of Reflection—Dispatch | altars-of-reflectiondispatch | done |
-| Altars of Reflection—New Input | altars-of-reflectionnew-input | done |
+| Altars of Reflection-Assessment | altars-of-reflectionassessment | done |
+| Altars of Reflection-Conclusion | altars-of-reflectionconclusion | done |
+| Altars of Reflection-Conclusion [Draft] | altars-of-reflectionconclusion-draft | done |
+| Altars of Reflection-Control | altars-of-reflectioncontrol | done |
+| Altars of Reflection-Dispatch | altars-of-reflectiondispatch | done |
+| Altars of Reflection-New Input | altars-of-reflectionnew-input | done |
 | Amnestia-S2 | amnestia-s2 | done |
 | An Evolution of Faith | an-evolution-of-faith | done |
 | An Insurmountable Skullfort | an-insurmountable-skullfort | done |
