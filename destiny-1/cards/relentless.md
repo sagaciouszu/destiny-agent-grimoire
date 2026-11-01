@@ -1,0 +1,20 @@
+# Relentless
+
+- Source: https://www.ishtar-collective.net/entries/relentless
+
+do you hear us
+YOU WANTED POWER
+It is not for you.
+W E H A V E A T A S K F O R  Y O U
+FIND THE WORTHY. BRING THEM.
+three keys
+THREE ARE REQUIRED
+Show them.
+E M P H A S I Z E I T
+EVERYTHING DIES. THEY ARE NO EXCEPTION.
+we're immortals, they'll say
+C O R R E C T.
+And yet, who dies more than they do?
+N O N E
+only when they accept this can they be born anew
+BE RELENTLESS.

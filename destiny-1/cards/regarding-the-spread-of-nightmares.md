@@ -1,0 +1,13 @@
+# Regarding the Spread of Nightmares
+
+- Source: https://www.ishtar-collective.net/entries/regarding-the-spread-of-nightmares
+
+Ikora,
+
+It's spreading.
+
+The Nightmares have begun propagating on celestial bodies well beyond the Moon. Is the Pyramid's power growing, or have we simply overlooked how far its reach extends? Neither answer would provide much comfort.
+
+The plague of Nightmares continues to grow as the Pyramid exerts its influence. We may not be able to defeat the distractions, but Vanguard support in suppressing this mounting threat could be of great use. We can provide a distraction of our own while I focus my attention where it is most desperately needed: uncovering the secrets inside the Pyramid. I sense there could be a greater danger lurking in the darkness, and the Pyramid may just be our key to stopping it.
+
+Every moment that goes by, we become more vulnerable, and our allies further endangered. I fear for my friends. This is the price we must pay, however. If we are to ensure a brighter future for us all, we will have to endure a darker present. But if they are trying to break me, they will have to try harder.

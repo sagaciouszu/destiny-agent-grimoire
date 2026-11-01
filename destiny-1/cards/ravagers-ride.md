@@ -1,0 +1,13 @@
+# Ravager's Ride
+
+- Source: https://www.ishtar-collective.net/entries/ravagers-ride
+
+"There's an old saying: 'If you walk long enough, you'll find yourself.' Trick is, this far out, you gotta find yourself before someone else does, cuz the only company the Shore offers is bad company.
+
+"Outlaws and enemies hide around every bend—stalk every rock, every crack. Even allies—them closest you call kin? Out here, where the only law is survival, loyalties can shift with the breeze. Bonds can break.
+
+"And trust is a lie easily dismissed when the tables turn and the bad times roll.
+
+"So walk weary, and stay ever alert. Should you find yourself out there… have one in the chamber and a steady aim, cuz chances are you won't like what you see."
+
+—Excerpt from C.C. LaGrange's translations of "Writings and Observations from the Tangled Shore: A Fallen Text"

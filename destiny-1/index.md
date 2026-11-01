@@ -2,103 +2,103 @@
 
 | Card | Slug | Status |
 |---|---|---|
-| Peaceful Shell | peaceful-shell | done |
-| Peacekeepers | peacekeepers | done |
-| Peenemünde, German Democratic Republic, 1954 | peenemunde-german-democratic-republic-1954 | done |
-| Pelorus Shell | pelorus-shell | done |
-| Penumbral Bond | penumbral-bond | done |
-| Penumbral Cloak | penumbral-cloak | done |
-| Penumbral Mark | penumbral-mark | done |
-| Peregrine Greaves | peregrine-greaves | done |
-| Perfect Paradox | perfect-paradox | done |
-| Perfect Pitch | perfect-pitch | done |
-| Perpetualis | perpetualis | done |
-| Personal Accountability | personal-accountability | done |
-| Petra | petra | done |
-| PETULANT | petulant | done |
-| Phantasmal Shell | phantasmal-shell | done |
-| Pharmakos Shell | pharmakos-shell | done |
-| Phlegethon I | phlegethon-i | done |
-| Phlegethon II | phlegethon-ii | done |
-| Phobos Warden Bond | phobos-warden-bond | done |
-| Phobos Warden Boots | phobos-warden-boots | done |
-| Phobos Warden Cloak | phobos-warden-cloak | done |
-| Phobos Warden Cowl | phobos-warden-cowl | done |
-| Phobos Warden Gauntlets | phobos-warden-gauntlets | done |
-| Phobos Warden Gloves | phobos-warden-gloves | done |
-| Phobos Warden Grasps | phobos-warden-grasps | done |
-| Phobos Warden Greaves | phobos-warden-greaves | done |
-| Phobos Warden Helm | phobos-warden-helm | done |
-| Phobos Warden Mark | phobos-warden-mark | done |
-| Phobos Warden Mask | phobos-warden-mask | done |
-| Phobos Warden Plate | phobos-warden-plate | done |
-| Phobos Warden Robes | phobos-warden-robes | done |
-| Phobos Warden Strides | phobos-warden-strides | done |
-| Phobos Warden Vest | phobos-warden-vest | done |
-| Phoenix Cradle | phoenix-cradle | done |
-| Phoenix Protocol | phoenix-protocol | done |
-| Phoenix's Ascent Bond | phoenixs-ascent-bond | done |
-| Phoenix's Fire | phoenixs-fire | done |
-| Phot0n | phot0n | done |
-| Pickman | pickman | done |
-| Piece of Mind | piece-of-mind | done |
-| Pilgrimage | pilgrimage | done |
-| Pine Ridge Reservation, South Dakota, 1960 | pine-ridge-reservation-south-dakota-1960 | done |
-| Planck's Stride | plancks-stride | done |
-| Plate of Agony | plate-of-agony | done |
-| Plate of Nohr | plate-of-nohr | done |
-| Plate of the Great Hunt | plate-of-the-great-hunt | done |
-| Plate of the Taken King | plate-of-the-taken-king | done |
-| Plate of Transcendence | plate-of-transcendence | done |
-| Pleased to Meet You | pleased-to-meet-you | done |
-| Pleiades Corrector | pleiades-corrector | done |
-| Pocket Notebook, 1966 | pocket-notebook-1966 | done |
-| Point-Contact Cannon Brace | point-contact-cannon-brace | done |
-| Point of Divergence | point-of-divergence | done |
-| Polaris Lance | polaris-lance | done |
-| Polychroma | polychroma | done |
-| Potential | potential | done |
-| Praefectus Bond | praefectus-bond | done |
-| Praefectus Boots | praefectus-boots | done |
-| Praefectus Cloak | praefectus-cloak | done |
-| Praefectus Cover | praefectus-cover | done |
-| Praefectus Cuirass | praefectus-cuirass | done |
-| Praefectus Gauntlets | praefectus-gauntlets | done |
-| Praefectus Gloves | praefectus-gloves | done |
-| Praefectus Greaves | praefectus-greaves | done |
-| Praefectus Grips | praefectus-grips | done |
-| Praefectus Helm | praefectus-helm | done |
-| Praefectus Mark | praefectus-mark | done |
-| Praefectus Mask | praefectus-mask | done |
-| Praefectus Plate | praefectus-plate | done |
-| Praefectus Robes | praefectus-robes | done |
-| Praefectus Strides | praefectus-strides | done |
-| Praxic Blade | praxic-blade | done |
-| Praxic Vestment | praxic-vestment | done |
-| Precious Scars | precious-scars | done |
-| Precipial | precipial | done |
-| Preparation | preparation | done |
-| Preservation | preservation | done |
-| Pressure | pressure | done |
-| Prismatic Hunter | prismatic-hunter | done |
-| Prismatic Titan | prismatic-titan | done |
-| Prismatic Warlock | prismatic-warlock | done |
-| Prison of Crumbled Forms | prison-of-crumbled-forms | done |
-| Pro Memoria | pro-memoria | done |
-| Process | process | done |
-| Prodigal Return | prodigal-return | done |
-| Project Proposal, 1961 | project-proposal-1961 | done |
-| Prometheus Lens | prometheus-lens | done |
-| Promethium Spur | promethium-spur | done |
-| Promised Reign Cloak | promised-reign-cloak | done |
-| Promised Reunion Mark | promised-reunion-mark | done |
-| Promised Victory Bond | promised-victory-bond | done |
-| Proportionality | proportionality | done |
-| Prosecutor | prosecutor | done |
-| PROTECTED | protected | done |
-| Protector of Ghosts | protector-of-ghosts | done |
-| Provoked | provoked | done |
-| Psychopomp | psychopomp | done |
-| Pulled Pork | pulled-pork | done |
-| PURITY | purity | done |
-| Pyrogale Gauntlets | pyrogale-gauntlets | done |
+| Pyrrhic Ascent Bond | pyrrhic-ascent-bond | done |
+| Pyrrhic Ascent Boots | pyrrhic-ascent-boots | done |
+| Pyrrhic Ascent Cloak | pyrrhic-ascent-cloak | done |
+| Pyrrhic Ascent Gauntlets | pyrrhic-ascent-gauntlets | done |
+| Pyrrhic Ascent Gloves | pyrrhic-ascent-gloves | done |
+| Pyrrhic Ascent Grasps | pyrrhic-ascent-grasps | done |
+| Pyrrhic Ascent Greaves | pyrrhic-ascent-greaves | done |
+| Pyrrhic Ascent Helm | pyrrhic-ascent-helm | done |
+| Pyrrhic Ascent Hood | pyrrhic-ascent-hood | done |
+| Pyrrhic Ascent Mark | pyrrhic-ascent-mark | done |
+| Pyrrhic Ascent Mask | pyrrhic-ascent-mask | done |
+| Pyrrhic Ascent Plate | pyrrhic-ascent-plate | done |
+| Pyrrhic Ascent Strides | pyrrhic-ascent-strides | done |
+| Pyrrhic Ascent Vest | pyrrhic-ascent-vest | done |
+| Pyrrhic Ascent Vestment | pyrrhic-ascent-vestment | done |
+| Python | python | done |
+| Qiao's Care | qiaos-care | done |
+| Qiao's Grin | qiaos-grin | done |
+| Qiao's Heart | qiaos-heart | done |
+| Qiao's Passing | qiaos-passing | done |
+| Qiao's Strides | qiaos-strides | done |
+| Qua Nilus II | qua-nilus-ii | done |
+| Queensfoil Censer | queensfoil-censer | done |
+| Queenslaw | queenslaw | done |
+| Question After Question | question-after-question | done |
+| Quicksilver Storm | quicksilver-storm | done |
+| Raconteur | raconteur | done |
+| Radiant Accipiter | radiant-accipiter | done |
+| Radiant Dance Machines | radiant-dance-machines | done |
+| Raiden Flux | raiden-flux | done |
+| Raids and Dungeons | raids-and-dungeons | done |
+| Raiju's Harness | raijus-harness | done |
+| Rain of Fire | rain-of-fire | done |
+| Raise | raise | done |
+| Rapacious Appetite | rapacious-appetite | done |
+| Rat King | rat-king | done |
+| Ravager's Ride | ravagers-ride | done |
+| Razor's Edge | razors-edge | done |
+| RE: Altars of Reflection-New Input | re-altars-of-reflectionnew-input | done |
+| Reach of the Flain | reach-of-the-flain | done |
+| Reacquaintance | reacquaintance | done |
+| react|choose|act | reactchooseact | done |
+| Realis | realis | done |
+| Recalcitrant Host | recalcitrant-host | done |
+| Reckless Endangerment | reckless-endangerment | done |
+| Reconciliations | reconciliations | done |
+| Reconsidering | reconsidering | done |
+| RECOVERED MEMORY; ANJOLI-7 | recovered-memory-anjoli-7 | done |
+| RECOVERED MEMORY; CLOVIS-43 | recovered-memory-clovis-43 | done |
+| RECOVERED MEMORY; HECTOR-6 | recovered-memory-hector-6 | done |
+| RECOVERED MEMORY; KNOX-4 | recovered-memory-knox-4 | done |
+| RECOVERED MEMORY; MIA-9 | recovered-memory-mia-9 | done |
+| RECOVERED MEMORY; NOE-2 | recovered-memory-noe-2 | done |
+| RECOVERED MEMORY; REBA-3 | recovered-memory-reba-3 | done |
+| RECOVERED MEMORY; UNA-8 | recovered-memory-una-8 | done |
+| RECOVERED MEMORY; WEN-1 | recovered-memory-wen-1 | done |
+| RECOVERED MEMORY; WESLEY-3 | recovered-memory-wesley-3 | done |
+| Recurrent Impact | recurrent-impact | done |
+| Red Death Reformed | red-death-reformed | done |
+| Red Tape | red-tape | done |
+| Redrix's Claymore | redrixs-claymore | done |
+| Reed's Regret | reeds-regret | done |
+| Reefborn Warbird | reefborn-warbird | done |
+| Reextinction | reextinction | done |
+| Refurbished A499 | refurbished-a499 | done |
+| Refusal | refusal | done |
+| Refusal of the Call | refusal-of-the-call | done |
+| Regarding Crota, Son of Oryx | regarding-crota-son-of-oryx | done |
+| Regarding Eris's Fireteam | regarding-eriss-fireteam | done |
+| Regarding Ghaul | regarding-ghaul | done |
+| Regarding Nightmares | regarding-nightmares | done |
+| Regarding Omnigul, Will of Crota | regarding-omnigul-will-of-crota | done |
+| Regarding Phogoth, the Untamed | regarding-phogoth-the-untamed | done |
+| Regarding Skolas | regarding-skolas | done |
+| Regarding Taniks, the Scarred | regarding-taniks-the-scarred | done |
+| Regarding the Fanatic | regarding-the-fanatic | done |
+| Regarding the Great Disaster | regarding-the-great-disaster | done |
+| Regarding the Hidden Swarm | regarding-the-hidden-swarm | done |
+| Regarding the Pyramid | regarding-the-pyramid | done |
+| Regarding the Spread of Nightmares | regarding-the-spread-of-nightmares | done |
+| Regarding Zydron, Gate Lord | regarding-zydron-gate-lord | done |
+| Regent | regent | done |
+| Regnant | regnant | done |
+| Relativism | relativism | done |
+| Relentless | relentless | done |
+| Reminiscing | reminiscing | done |
+| Renegade Leader | renegade-leader-2 | done |
+| Renewal Grasps | renewal-grasps | done |
+| Renunciation | renunciation | done |
+| Resonance Song | resonance-song | done |
+| Resonant Fury Bond | resonant-fury-bond | done |
+| Resonant Fury Boots | resonant-fury-boots | done |
+| Resonant Fury Cloak | resonant-fury-cloak | done |
+| Resonant Fury Cowl | resonant-fury-cowl | done |
+| Resonant Fury Gauntlets | resonant-fury-gauntlets | done |
+| Resonant Fury Gloves | resonant-fury-gloves | done |
+| Resonant Fury Greaves | resonant-fury-greaves | done |
+| Resonant Fury Grips | resonant-fury-grips | done |
+| Resonant Fury Helm | resonant-fury-helm | done |
+| Resonant Fury Mark | resonant-fury-mark | done |
