@@ -2,103 +2,103 @@
 
 | Card | Slug | Status |
 |---|---|---|
-| Pyrrhic Ascent Bond | pyrrhic-ascent-bond | done |
-| Pyrrhic Ascent Boots | pyrrhic-ascent-boots | done |
-| Pyrrhic Ascent Cloak | pyrrhic-ascent-cloak | done |
-| Pyrrhic Ascent Gauntlets | pyrrhic-ascent-gauntlets | done |
-| Pyrrhic Ascent Gloves | pyrrhic-ascent-gloves | done |
-| Pyrrhic Ascent Grasps | pyrrhic-ascent-grasps | done |
-| Pyrrhic Ascent Greaves | pyrrhic-ascent-greaves | done |
-| Pyrrhic Ascent Helm | pyrrhic-ascent-helm | done |
-| Pyrrhic Ascent Hood | pyrrhic-ascent-hood | done |
-| Pyrrhic Ascent Mark | pyrrhic-ascent-mark | done |
-| Pyrrhic Ascent Mask | pyrrhic-ascent-mask | done |
-| Pyrrhic Ascent Plate | pyrrhic-ascent-plate | done |
-| Pyrrhic Ascent Strides | pyrrhic-ascent-strides | done |
-| Pyrrhic Ascent Vest | pyrrhic-ascent-vest | done |
-| Pyrrhic Ascent Vestment | pyrrhic-ascent-vestment | done |
-| Python | python | done |
-| Qiao's Care | qiaos-care | done |
-| Qiao's Grin | qiaos-grin | done |
-| Qiao's Heart | qiaos-heart | done |
-| Qiao's Passing | qiaos-passing | done |
-| Qiao's Strides | qiaos-strides | done |
-| Qua Nilus II | qua-nilus-ii | done |
-| Queensfoil Censer | queensfoil-censer | done |
-| Queenslaw | queenslaw | done |
-| Question After Question | question-after-question | done |
-| Quicksilver Storm | quicksilver-storm | done |
-| Raconteur | raconteur | done |
-| Radiant Accipiter | radiant-accipiter | done |
-| Radiant Dance Machines | radiant-dance-machines | done |
-| Raiden Flux | raiden-flux | done |
-| Raids and Dungeons | raids-and-dungeons | done |
-| Raiju's Harness | raijus-harness | done |
-| Rain of Fire | rain-of-fire | done |
-| Raise | raise | done |
-| Rapacious Appetite | rapacious-appetite | done |
-| Rat King | rat-king | done |
-| Ravager's Ride | ravagers-ride | done |
-| Razor's Edge | razors-edge | done |
-| RE: Altars of Reflection-New Input | re-altars-of-reflectionnew-input | done |
-| Reach of the Flain | reach-of-the-flain | done |
-| Reacquaintance | reacquaintance | done |
-| react|choose|act | reactchooseact | done |
-| Realis | realis | done |
-| Recalcitrant Host | recalcitrant-host | done |
-| Reckless Endangerment | reckless-endangerment | done |
-| Reconciliations | reconciliations | done |
-| Reconsidering | reconsidering | done |
-| RECOVERED MEMORY; ANJOLI-7 | recovered-memory-anjoli-7 | done |
-| RECOVERED MEMORY; CLOVIS-43 | recovered-memory-clovis-43 | done |
-| RECOVERED MEMORY; HECTOR-6 | recovered-memory-hector-6 | done |
-| RECOVERED MEMORY; KNOX-4 | recovered-memory-knox-4 | done |
-| RECOVERED MEMORY; MIA-9 | recovered-memory-mia-9 | done |
-| RECOVERED MEMORY; NOE-2 | recovered-memory-noe-2 | done |
-| RECOVERED MEMORY; REBA-3 | recovered-memory-reba-3 | done |
-| RECOVERED MEMORY; UNA-8 | recovered-memory-una-8 | done |
-| RECOVERED MEMORY; WEN-1 | recovered-memory-wen-1 | done |
-| RECOVERED MEMORY; WESLEY-3 | recovered-memory-wesley-3 | done |
-| Recurrent Impact | recurrent-impact | done |
-| Red Death Reformed | red-death-reformed | done |
-| Red Tape | red-tape | done |
-| Redrix's Claymore | redrixs-claymore | done |
-| Reed's Regret | reeds-regret | done |
-| Reefborn Warbird | reefborn-warbird | done |
-| Reextinction | reextinction | done |
-| Refurbished A499 | refurbished-a499 | done |
-| Refusal | refusal | done |
-| Refusal of the Call | refusal-of-the-call | done |
-| Regarding Crota, Son of Oryx | regarding-crota-son-of-oryx | done |
-| Regarding Eris's Fireteam | regarding-eriss-fireteam | done |
-| Regarding Ghaul | regarding-ghaul | done |
-| Regarding Nightmares | regarding-nightmares | done |
-| Regarding Omnigul, Will of Crota | regarding-omnigul-will-of-crota | done |
-| Regarding Phogoth, the Untamed | regarding-phogoth-the-untamed | done |
-| Regarding Skolas | regarding-skolas | done |
-| Regarding Taniks, the Scarred | regarding-taniks-the-scarred | done |
-| Regarding the Fanatic | regarding-the-fanatic | done |
-| Regarding the Great Disaster | regarding-the-great-disaster | done |
-| Regarding the Hidden Swarm | regarding-the-hidden-swarm | done |
-| Regarding the Pyramid | regarding-the-pyramid | done |
-| Regarding the Spread of Nightmares | regarding-the-spread-of-nightmares | done |
-| Regarding Zydron, Gate Lord | regarding-zydron-gate-lord | done |
-| Regent | regent | done |
-| Regnant | regnant | done |
-| Relativism | relativism | done |
-| Relentless | relentless | done |
-| Reminiscing | reminiscing | done |
-| Renegade Leader | renegade-leader-2 | done |
-| Renewal Grasps | renewal-grasps | done |
-| Renunciation | renunciation | done |
-| Resonance Song | resonance-song | done |
-| Resonant Fury Bond | resonant-fury-bond | done |
-| Resonant Fury Boots | resonant-fury-boots | done |
-| Resonant Fury Cloak | resonant-fury-cloak | done |
-| Resonant Fury Cowl | resonant-fury-cowl | done |
-| Resonant Fury Gauntlets | resonant-fury-gauntlets | done |
-| Resonant Fury Gloves | resonant-fury-gloves | done |
-| Resonant Fury Greaves | resonant-fury-greaves | done |
-| Resonant Fury Grips | resonant-fury-grips | done |
-| Resonant Fury Helm | resonant-fury-helm | done |
-| Resonant Fury Mark | resonant-fury-mark | done |
+| Resonant Fury Mask | resonant-fury-mask | done |
+| Resonant Fury Plate | resonant-fury-plate | done |
+| Resonant Fury Robes | resonant-fury-robes | done |
+| Resonant Fury Strides | resonant-fury-strides | done |
+| Resonant Fury Vest | resonant-fury-vest | done |
+| Restless Dreams | restless-dreams | done |
+| Restless Shell | restless-shell | done |
+| Restlessness | restlessness | done |
+| Resurrecting Flight | resurrecting-flight | done |
+| Retrocausality | retrocausality | done |
+| Retrofit Escapade | retrofit-escapade | done |
+| Retrofuturist | retrofuturist | done |
+| Revanche I | revanche-i | done |
+| Revanche II | revanche-ii | done |
+| Revanche III | revanche-iii | done |
+| Revanche IV | revanche-iv | done |
+| Revanche V | revanche-v | done |
+| Revelations and Invitations | revelations-and-invitations | done |
+| Revenant | revenant | done |
+| Reverie Dawn Bond | reverie-dawn-bond | done |
+| Reverie Dawn Boots | reverie-dawn-boots | done |
+| Reverie Dawn Casque | reverie-dawn-casque | done |
+| Reverie Dawn Cloak | reverie-dawn-cloak | done |
+| Reverie Dawn Gauntlets | reverie-dawn-gauntlets | done |
+| Reverie Dawn Gloves | reverie-dawn-gloves | done |
+| Reverie Dawn Grasps | reverie-dawn-grasps | done |
+| Reverie Dawn Greaves | reverie-dawn-greaves | done |
+| Reverie Dawn Hauberk | reverie-dawn-hauberk | done |
+| Reverie Dawn Helm | reverie-dawn-helm | done |
+| Reverie Dawn Hood | reverie-dawn-hood | done |
+| Reverie Dawn Mark | reverie-dawn-mark | done |
+| Reverie Dawn Plate | reverie-dawn-plate | done |
+| Reverie Dawn Strides | reverie-dawn-strides | done |
+| Reverie Dawn Tabard | reverie-dawn-tabard | done |
+| Revision Zero | revision-zero | done |
+| Revolution | revolution | done |
+| Riddled with Lies | riddled-with-lies | done |
+| Right Side of Wrong | right-side-of-wrong | done |
+| Rihk | rihk | done |
+| Riis Racer | riis-racer | done |
+| Riiswalker | riiswalker | done |
+| Rime-coat Raiment | rime-coat-raiment | done |
+| Rimed Shell | rimed-shell | done |
+| Ringer | ringer | done |
+| Risen | risen | done |
+| Riskrunner | riskrunner | done |
+| Rivalry Match | rivalry-match | done |
+| Riven | riven | done |
+| River | river | done |
+| Robes of Detestation | robes-of-detestation | done |
+| Robes of Sekris | robes-of-sekris | done |
+| Robes of the Emperor's Minister | robes-of-the-emperors-minister | done |
+| Robes of the Fulminator | robes-of-the-fulminator | done |
+| Robes of the Great Hunt | robes-of-the-great-hunt | done |
+| Robes of Transcendence | robes-of-transcendence | done |
+| Roll Call | roll-call | done |
+| Ronin Shell | ronin-shell | done |
+| Rose and Bone | rose-and-bone | done |
+| Roving | roving | done |
+| Royal Chase | royal-chase | done |
+| Royal Executioner | royal-executioner | done |
+| RRHAPHY | rrhaphy | done |
+| RRHEXIS | rrhexis | done |
+| Ruinous Effigy | ruinous-effigy | done |
+| Rumors | rumors | done |
+| Rustpiercer | rustpiercer | done |
+| Sage Protector Bond | sage-protector-bond | done |
+| Sage Protector Boots | sage-protector-boots | done |
+| Sage Protector Cloak | sage-protector-cloak | done |
+| Sage Protector Cover | sage-protector-cover | done |
+| Sage Protector Cowl | sage-protector-cowl | done |
+| Sage Protector Gauntlets | sage-protector-gauntlets | done |
+| Sage Protector Gloves | sage-protector-gloves | done |
+| Sage Protector Greaves | sage-protector-greaves | done |
+| Sage Protector Grips | sage-protector-grips | done |
+| Sage Protector Helm | sage-protector-helm | done |
+| Sage Protector Mark | sage-protector-mark | done |
+| Sage Protector Plate | sage-protector-plate | done |
+| Sage Protector Robes | sage-protector-robes | done |
+| Sage Protector Strides | sage-protector-strides | done |
+| Sage Protector Vest | sage-protector-vest | done |
+| Sagira's Shell | sagiras-shell | done |
+| Sails of Osiris | sails-of-osiris | done |
+| Sailspy Pitchglass | sailspy-pitchglass | done |
+| Saint-14's Gray Pigeon | saint-14s-gray-pigeon | done |
+| Saint's Invocation | saints-invocation | done |
+| Saint's Vocation | saints-vocation | done |
+| Salvager's Salvo | salvagers-salvo | done |
+| Salvation's Grip | salvations-grip | done |
+| Sanguine Alchemy | sanguine-alchemy | done |
+| Saturn - VI | saturn-vi | done |
+| Savin | savin | done |
+| Savin | savin-2 | done |
+| Say It with a Dawning Gift | say-it-with-a-dawning-gift | done |
+| Scalar Potential | scalar-potential | done |
+| Scales | scales | done |
+| Scales of the Flain | scales-of-the-flain | done |
+| Scatterhorn Bond | scatterhorn-bond | done |
+| Scatterhorn Boots | scatterhorn-boots | done |
+| Scatterhorn Cloak | scatterhorn-cloak | done |

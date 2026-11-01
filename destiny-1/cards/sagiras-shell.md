@@ -1,0 +1,17 @@
+# Sagira's Shell
+
+- Source: https://www.ishtar-collective.net/entries/sagiras-shell
+
+"So that's it?" Sagira cried out, as Ikora began to walk away from her old mentor. "You're just going to let the Vanguard kick him out? After everything Osiris has done for you? He taught you everything you know!"
+
+Ikora pivoted sharply. "No. Osiris merely taught me everything HE knows."
+
+"Admit it, Ikora. Without Osiris, you would still be running training exercises with that loud brute, Shaxx."
+
+"It would be in your best interest to stop talking now, Sagira. The Crucible was my home."
+
+"You were wasting your talents! Osiris made you greater than what you were. And now he needs you for something truly important. Where's your loyalty? You owe him."
+
+"This conversation is over," Ikora said, and walked away.
+
+"You bet it is! We are outta here! You'll all be sorry, you ingrates."

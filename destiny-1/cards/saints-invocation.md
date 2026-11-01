@@ -1,0 +1,13 @@
+# Saint's Invocation
+
+- Source: https://www.ishtar-collective.net/entries/saints-invocation
+
+"A ship can be more than fancy machinery and a means of transportation.
+
+"It can be a destination in and of itself. A place of serenity. In times of war, those places are few and far between. Cherish the time in between battles. Allow yourself time to decompress, relax your mind and loosen your grip. Recharge. Those moments don't last long, but offer enough time for reflection and preparation.
+
+"Perhaps cleaning up an overstocked inventory is a cathartic act for you, Guardian. A short meditative stretch or simply resting one's eyes can afford you the clarity you'll need to stay sharp and focused on the battlefield.
+
+"Whatever that may be for you, be sure to grant yourself the break you need. Appreciate the momentary respite. May it be a reminder of the peace we hope to bring to the Last City."
+
+—Saint-14

@@ -1,0 +1,9 @@
+# Robes of Sekris
+
+- Source: https://www.ishtar-collective.net/entries/robes-of-sekris
+
+I promised Sekris a greater power than the favor of your Traveler. He died at Ghaul's hands still wondering what that could possibly be.
+
+In later days, my disguise could no longer fool him as it fooled others. His skill in designing and modifying mechanized life-forms was unparalleled and he made it clear he knew I was not what I appeared to be. I made it clear that, either way, he would continue to serve. But I think he guessed that my form and my strength are inextricably linked.
+
+—Calus, Emperor of the Cabal

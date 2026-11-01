@@ -1,0 +1,10 @@
+# Riskrunner
+
+- Source: https://www.ishtar-collective.net/entries/riskrunner
+
+SYSTEMS CHECKLIST:
+Insulated Weapons Frame: CHECK. Insulated Firing System: CHECK. Conductive Prongs: CHECK. Amplification Drivers: CHECK. Arc-core Replication Matrix: CHECK. Arc-core Chargers: CHECK. Feedback Reduction Loop: CHECK.
+Direct User Pain Blockers: UNAVAILABLE
+Ancillary operations listed under General Systems Review.
+NOTE: The user must receive incoming damage to increase outgoing damage. However, the value we predict the user will receive in return for their discomfort far exceeds any momentary pain – assuming, of course, the user survives the attack.
+In short: This may hurt. A lot.
