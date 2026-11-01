@@ -1,0 +1,16 @@
+# Waking Nightmare
+
+- Source: https://www.ishtar-collective.net/entries/waking-nightmare
+
+Ikora,
+
+The Nightmares continue to haunt us all. But we are fighting back. Taking power from them. Using the strength gained to fuel our crusade against the Darkness.
+
+I'm coming to understand what the costs will be. It will take more than many are willing to give to overcome this threat. The road ahead is treacherous and presents unforeseen challenges. Steel yourself.
+
+I still believe in a future where our pain and hardship was not in vain.
+
+We will make our trauma theirs. They will know what it means to suffer.
+
+Clarity in action,
+Eris Morn
