@@ -61,7 +61,7 @@ All content sourced from publicly available Destiny 2 lore. No original creative
 
 ## Progress
 
-110 / 110 books ingested (Destiny 2). 68 transcripts ingested. Compendium: 18 major + 11 minor characters, 1070 lines. Destiny 1: 90 / ~4000+ cards ingested (pages 1-5).
+110 / 110 books ingested (Destiny 2). 68 transcripts ingested. Compendium: 18 major + 11 minor characters, 1070 lines. Destiny 1: 190 / ~4000+ cards ingested (pages 1-10).
 Last scrape: 2026-10-30. Content through Renegades (Dec 2025).
 
 ## Audit Commands

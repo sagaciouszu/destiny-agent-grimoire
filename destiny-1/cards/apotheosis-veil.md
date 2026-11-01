@@ -1,0 +1,7 @@
+# Apotheosis Veil
+
+- Source: https://www.ishtar-collective.net/entries/apotheosis-veil
+
+"There are those who see the Void as dark. It is the folly of the simple mind, unable to perceive the brilliant richness of nothingness. The Void is not only the absence of Light, but Dark. To harness the Void is to enter a state of tranquility, free from the clatter of ordinary matter.
+Wear this Veil and feel the Void. It is not a force of malice, no more charitable or heinous than gravity. The Void is a tool to be wielded by the patient, nothing more and nothing less. If you respect the Void, then one day you too shall step upon this pristine realm."
+—Unknown Voidwalker

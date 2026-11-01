@@ -1,0 +1,15 @@
+# Ancient Apocalypse Helm
+
+- Source: https://www.ishtar-collective.net/entries/ancient-apocalypse-helm
+
+Drifter leaned his seat back, hands behind his head. He sat in an Arcadia-class jumpship as it roared over a supply train heading into the City. The Titan who owned the ship, sitting next to him, cursed as she tried to align the vessel with the speeding train below.
+
+"This better be worth it," she growled.
+
+"I told you, you'll get twice the rate for Motes in your next Gambit. I'm good for it. Trust." Drifter sat up straight. "Get in close. I'll take care of the rest. Just make sure I get a ride back."
+
+As he opened the ship's side hatch, howling air rushed into the cabin. He yelled over the din, "Good thing ya'll aren't a military. It's easier to bribe you this way."
+
+"Go play in the Ascendant Plane," the Titan yelled back.
+
+Drifter leapt off the ship and landed deftly on the train car below. He pulled a massive hand cannon and crawled forward, the wind ripping at his duster.
