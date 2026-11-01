@@ -1,0 +1,66 @@
+# Suspicions
+
+- Source: https://www.ishtar-collective.net/entries/suspicions
+
+RECORD: 2785K969$LUN-3.069
+IDENTITIES: Commander Kuang Xuan, Ivan Runski
+LOCATION: K1 Dig Site 1, Crew Quarters, Commander's Quarters
+THREAT DETECT: Level 4, 6, 7, 9—Psychosis [Dangerous], Psychosis, Unauthorized Cognizance, Crew Impairment
+THREAT RESPONSE: Exhibit Record 3521, FILE//REPORT TO RASPUTIN
+
+"Firewall! The transceiver no longer receives a signal. Who damaged it?"
+
+AI-COM/FRWL//TRANSCEIVER FUNCTIONAL.
+
+"We've never gone this long without a signal. Show me the records of activity around the transceiver for the last twenty-four hours."
+
+AI-COM/FRWL//HOLOGRAM\PROFFERED
+
+SILENCE//00:05:54
+
+"Commander?"
+
+"What?"
+
+"It's our shift. We're losing time."
+
+"I know that, Runski!"
+
+"Well, can we make it up from the next one?"
+
+"You'll get yours. Just shut up for a minute."
+
+SILENCE//00:01:22
+
+"Commander?"
+
+"Shut it. Firewall, open a channel to Captain Hou."
+
+AI-COM/FRWL//MENDACITY//CHANNEL OPEN.
+
+"Captain Hou, we have another security situation. I need you at the transceiver ASAP.
+
+"Captain Hou, acknowledge…
+
+"Firewall, present location of Captain Hou?"
+
+THREAT RESPONSE//COGNIZANCE//EFFICACY ASSESSMENT//MENDACITY\ASSESSED//15.9%
+AI-COM/FRWL//MENDACITY//HALL 3A, SITE 1
+
+"Firewall, show me Captain Hou."
+
+AI-COM/FRWL//HOLOGRAM//MENDACITY//PROFFERED
+
+"Captain Hou, acknowledge!"
+
+"Commander?"
+
+"Not now!"
+
+"But Commander, that can't be right."
+
+"What?"
+
+"Look, behind him in the hall. That's Lynn. She's in my reverie team."
+
+"What the hell?"

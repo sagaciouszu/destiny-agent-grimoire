@@ -1,0 +1,13 @@
+# Steelfeather Repeater
+
+- Source: https://www.ishtar-collective.net/entries/steelfeather-repeater
+
+"I feel the recoil of the weapon and loosen my grip. The more I fight it, the more it fights me.
+
+"I choose to let it lead.
+
+"It finds the milky cores and bursts them with a satisfying combustion, radiolarian fluid glinting in the light. It guides me as I support it.
+
+"We work in tandem, a brilliant dance of destruction, leaving nothing but ruin in our wake.  Nothing can stop this union."
+
+—Saint-14

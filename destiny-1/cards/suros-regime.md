@@ -1,0 +1,5 @@
+# SUROS Regime
+
+- Source: https://www.ishtar-collective.net/entries/suros-regime
+
+Few weapons have withstood the test of time longer than the trusty SUROS Regime. This is Golden Age tech brought to life by the fastidious engineers at SUROS. Its smart-matter frame is prized among Guardians for both efficiency and rarity. Some things never fall out of fashion.

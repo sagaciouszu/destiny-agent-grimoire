@@ -2,103 +2,103 @@
 
 | Card | Slug | Status |
 |---|---|---|
-| Shrewd Survivor Cowl | shrewd-survivor-cowl | done |
-| Shrewd Survivor Gauntlets | shrewd-survivor-gauntlets | done |
-| Shrewd Survivor Gloves | shrewd-survivor-gloves | done |
-| Shrewd Survivor Greaves | shrewd-survivor-greaves | done |
-| Shrewd Survivor Grips | shrewd-survivor-grips | done |
-| Shrewd Survivor Helm | shrewd-survivor-helm | done |
-| Shrewd Survivor Mark | shrewd-survivor-mark | done |
-| Shrewd Survivor Plate | shrewd-survivor-plate | done |
-| Shrewd Survivor Robe | shrewd-survivor-robe | done |
-| Shrewd Survivor Strides | shrewd-survivor-strides | done |
-| Shrewd Survivor Vest | shrewd-survivor-vest | done |
-| Sightline Survey | sightline-survey | done |
-| Silicon Neuroma | silicon-neuroma | done |
-| Singing | singing | done |
-| Sins of the Past | sins-of-the-past | done |
-| Síocháin's Scuba Shell | siochains-scuba-shell | done |
-| Sixth Sense | sixth-sense | done |
-| Sixth Wish | sixth-wish | done |
-| Skeleton Key | skeleton-key | done |
-| Skimmed Surface | skimmed-surface | done |
-| Skull of Dire Ahamkara | skull-of-dire-ahamkara | done |
-| Skull of the Flain | skull-of-the-flain | done |
-| Skyburner's Oath | skyburners-oath | done |
-| Slayer Baron Apothecary Satchel | slayer-baron-apothecary-satchel | done |
-| Slayer's Fang | slayers-fang | done |
-| Sleeper Simulant | sleeper-simulant | done |
-| Sleepless | sleepless | done |
-| Sleepless Flight | sleepless-flight | done |
-| Sloane: Overseer | sloane-overseer | done |
-| Sloane: Riastrad | sloane-riastrad | done |
-| Sloane: Wavebreaker | sloane-wavebreaker | done |
-| Sojourner's Tale | sojourners-tale | done |
-| Sol Pariah 6 | sol-pariah-6 | done |
-| Solar Sails | solar-sails | done |
-| Sola's Scar | solas-scar | done |
-| Sola's Scar (Adept) | solas-scar-adept | done |
-| Solipsism | solipsism | done |
-| Soloist Shell | soloist-shell | done |
-| Solstice Bond (Magnificent) | solstice-bond-magnificent | done |
-| Solstice Bond (Majestic) | solstice-bond-majestic | done |
-| Solstice Bond (Rekindled) | solstice-bond-rekindled | done |
-| Solstice Bond (Resplendent) | solstice-bond-resplendent | done |
-| Solstice Boots (Rekindled) | solstice-boots-rekindled | done |
-| Solstice Boots (Resplendent) | solstice-boots-resplendent | done |
-| Solstice Cloak (Magnificent) | solstice-cloak-magnificent | done |
-| Solstice Cloak (Majestic) | solstice-cloak-majestic | done |
-| Solstice Cloak (Rekindled) | solstice-cloak-rekindled | done |
-| Solstice Cloak (Resplendent) | solstice-cloak-resplendent | done |
-| Solstice Gauntlets (Rekindled) | solstice-gauntlets-rekindled | done |
-| Solstice Gauntlets (Resplendent) | solstice-gauntlets-resplendent | done |
-| Solstice Gloves (Rekindled) | solstice-gloves-rekindled | done |
-| Solstice Gloves (Resplendent) | solstice-gloves-resplendent | done |
-| Solstice Grasps (Rekindled) | solstice-grasps-rekindled | done |
-| Solstice Grasps (Resplendent) | solstice-grasps-resplendent | done |
-| Solstice Greaves (Rekindled) | solstice-greaves-rekindled | done |
-| Solstice Greaves (Resplendent) | solstice-greaves-resplendent | done |
-| Solstice Helm (Rekindled) | solstice-helm-rekindled | done |
-| Solstice Helm (Resplendent) | solstice-helm-resplendent | done |
-| Solstice Hood (Rekindled) | solstice-hood-rekindled | done |
-| Solstice Hood (Resplendent) | solstice-hood-resplendent | done |
-| Solstice Mark (Magnificent) | solstice-mark-magnificent | done |
-| Solstice Mark (Majestic) | solstice-mark-majestic | done |
-| Solstice Mark (Rekindled) | solstice-mark-rekindled | done |
-| Solstice Mark (Resplendent) | solstice-mark-resplendent | done |
-| Solstice Mask (Rekindled) | solstice-mask-rekindled | done |
-| Solstice Mask (Resplendent) | solstice-mask-resplendent | done |
-| Solstice Plate (Rekindled) | solstice-plate-rekindled | done |
-| Solstice Plate (Resplendent) | solstice-plate-resplendent | done |
-| Solstice Robes (Rekindled) | solstice-robes-rekindled | done |
-| Solstice Robes (Resplendent) | solstice-robes-resplendent | done |
-| Solstice Strides (Rekindled) | solstice-strides-rekindled | done |
-| Solstice Strides (Resplendent) | solstice-strides-resplendent | done |
-| Solstice Vest (Rekindled) | solstice-vest-rekindled | done |
-| Solstice Vest (Resplendent) | solstice-vest-resplendent | done |
-| Some Kind of Luck | some-kind-of-luck | done |
-| Someday | someday | done |
-| Something New | something-new | done |
-| Song for the Knife | song-for-the-knife | done |
-| Sorrow's Coronet Shell | sorrows-coronet-shell | done |
-| Sovereign Order | sovereign-order | done |
-| Sovereignty | sovereignty | done |
-| Spacewalk Bond | spacewalk-bond | done |
-| Spacewalk Boots | spacewalk-boots | done |
-| Spacewalk Cloak | spacewalk-cloak | done |
-| Spacewalk Cover | spacewalk-cover | done |
-| Spacewalk Cowl | spacewalk-cowl | done |
-| Spacewalk Gauntlets | spacewalk-gauntlets | done |
-| Spacewalk Gloves | spacewalk-gloves | done |
-| Spacewalk Grasps | spacewalk-grasps | done |
-| Spacewalk Greaves | spacewalk-greaves | done |
-| Spacewalk Helm | spacewalk-helm | done |
-| Spacewalk Mark | spacewalk-mark | done |
-| Spacewalk Plate | spacewalk-plate | done |
-| Spacewalk Robes | spacewalk-robes | done |
-| Spacewalk Strides | spacewalk-strides | done |
-| Spacewalk Vest | spacewalk-vest | done |
-| Sparagmos | sparagmos | done |
-| Speaker's Sight | speakers-sight | done |
-| Specter | specter | done |
-| Spectroscopic Shell | spectroscopic-shell | done |
+| Spectrum Shell | spectrum-shell | done |
+| Speed Metal Shell | speed-metal-shell | done |
+| Speleologist | speleologist | done |
+| Spicy Ramen Coupon | spicy-ramen-coupon | done |
+| Spinning | spinning | done |
+| Spiral-Bound Notebook, 1967-1968 | spiral-bound-notebook-1967-1968 | done |
+| Spirit of the Warmind | spirit-of-the-warmind | done |
+| Splinter of Bone | splinter-of-bone | done |
+| Sprint Finish | sprint-finish | done |
+| St0mp-EE5 | st0mp-ee5 | done |
+| Stag Pincer | stag-pincer | done |
+| Star-Crossed Mark | star-crossed-mark | done |
+| Star-Eater Scales | star-eater-scales | done |
+| Star Jasmine | star-jasmine | done |
+| Star Map Shell | star-map-shell | done |
+| Starfarer 7M | starfarer-7m | done |
+| Starfire Protocol | starfire-protocol | done |
+| Stark Baffler | stark-baffler | done |
+| Starscape Null | starscape-null | done |
+| Static Data Shell | static-data-shell | done |
+| Steelfeather Repeater | steelfeather-repeater | done |
+| Step into the Shade | step-into-the-shade | done |
+| Still Hunt | still-hunt | done |
+| Stochastic Variable | stochastic-variable | done |
+| Stoicism | stoicism | done |
+| Stormcaller | stormcaller | done |
+| Stormcaller | stormcaller-2 | done |
+| Stormchaser | stormchaser | done |
+| Stormdancer's Brace | stormdancers-brace | done |
+| Strand Log I | strand-log-i | done |
+| Strand Log II | strand-log-ii | done |
+| Strand Log III | strand-log-iii | done |
+| Strand Log IV | strand-log-iv | done |
+| Strides of Ascendancy | strides-of-ascendancy | done |
+| Strides of the Great Hunt | strides-of-the-great-hunt | done |
+| Strides of the Taken King | strides-of-the-taken-king | done |
+| Striker | striker | done |
+| Striker | striker-2 | done |
+| Stronghold | stronghold | done |
+| Struck by Wonder | struck-by-wonder | done |
+| Sturm | sturm | done |
+| Styx I | styx-i | done |
+| Styx II | styx-ii | done |
+| Sublimation | sublimation | done |
+| Sublime Bond | sublime-bond | done |
+| Sublime Cloak | sublime-cloak | done |
+| Sublime Mark | sublime-mark | done |
+| Submersion | submersion | done |
+| Succession | succession | done |
+| SUFFERING | suffering | done |
+| Suffering | suffering-2 | done |
+| Sunbracers | sunbracers | done |
+| Sunbreak Mark | sunbreak-mark | done |
+| Sunbreaker | sunbreaker | done |
+| Sunbreaker | sunbreaker-2 | done |
+| SUNDOWN DISTRESS | sundown-distress | done |
+| Sunshot | sunshot | done |
+| Sunstead Gauntlets (Majestic) | sunstead-gauntlets-majestic | done |
+| Sunstead Greaves (Majestic) | sunstead-greaves-majestic | done |
+| Sunstead Helm (Majestic) | sunstead-helm-majestic | done |
+| Sunstead Mark (Majestic) | sunstead-mark-majestic | done |
+| Sunstead Plate (Majestic) | sunstead-plate-majestic | done |
+| Supercluster | supercluster | done |
+| SUROS Regime | suros-regime | done |
+| Surveillance Transcript | surveillance-transcript | done |
+| Survivor's Epitaph | survivors-epitaph | done |
+| Survivor's Journey | survivors-journey | done |
+| Suspicions | suspicions | done |
+| SV-112 Predator | sv-112-predator | done |
+| Swarmers | swarmers | done |
+| Swashbuckler Shell | swashbuckler-shell | done |
+| Sweet Business | sweet-business | done |
+| Sweet Sorrow | sweet-sorrow | done |
+| Symmetry | symmetry | done |
+| Symmetry | symmetry-2 | done |
+| Symmetry Flight | symmetry-flight | done |
+| Synaptic Spear | synaptic-spear | done |
+| Synesthesia | synesthesia | done |
+| Synthoceps | synthoceps | done |
+| T = 0 | t-0 | done |
+| Tablet of Ruin | tablet-of-ruin | done |
+| Tachyon-4 | tachyon-4 | done |
+| Tainted | tainted | done |
+| Takanome Wings | takanome-wings | done |
+| Talons of the Flain | talons-of-the-flain | done |
+| Tarantula | tarantula-2 | done |
+| Targeted Redaction | targeted-redaction | done |
+| Tarnished Mettle | tarnished-mettle | done |
+| Tarrabah | tarrabah | done |
+| Tatarstan | tatarstan | done |
+| TAXIA | taxia | done |
+| Team Spirit | team-spirit | done |
+| Tears of Contrition | tears-of-contrition | done |
+| Techeun Force | techeun-force | done |
+| Techeun's Regalia Bond | techeuns-regalia-bond | done |
+| Techeun's Regalia Boots | techeuns-regalia-boots | done |
+| Techeun's Regalia Cloak | techeuns-regalia-cloak | done |
+| Techeun's Regalia Gauntlets | techeuns-regalia-gauntlets | done |
+| Techeun's Regalia Gloves | techeuns-regalia-gloves | done |
+| Techeun's Regalia Greaves | techeuns-regalia-greaves | done |

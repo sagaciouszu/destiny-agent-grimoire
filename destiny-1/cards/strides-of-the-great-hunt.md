@@ -1,0 +1,27 @@
+# Strides of the Great Hunt
+
+- Source: https://www.ishtar-collective.net/entries/strides-of-the-great-hunt
+
+Eris and Ikora stood over a graveyard of whispering bones.
+
+An hour ago, this was a vibrant army of Ahamkara.
+
+"What did they offer you?" said Eris. Her stare reached for a mile in front of them. So did the grave of bones.
+
+"The same as you, I'm sure," Ikora stood buoyed by a gentle flow of Light, above the whispering bones. It was easier to concentrate up here.
+
+"Everything they say is true," said Eris.
+
+Ikora looked down at her sharply. "Sentiment like that leads to morbid places," she cautioned.
+
+"Yes," came the reply.
+
+"If you guide your Light north, I'll take the south. This will be quick—"
+
+"I think they showed me my life before my Ghost."
+
+"Eris. Focus."
+
+"Yes."
+
+Together, the Guardians summoned a storm of Light that consumed the bones around them. They ignored the whispers, but the voices grew louder, harsher as the maelstrom progressed. Soon, they couldn't tell the difference between the whispers and the storm.

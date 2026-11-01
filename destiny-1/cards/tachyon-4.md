@@ -1,0 +1,15 @@
+# Tachyon-4
+
+- Source: https://www.ishtar-collective.net/entries/tachyon-4
+
+These days, it seems like everyone is getting into the ship business. While they deliberate performance, we actually deliver.
+
+We've been working tirelessly to produce generation-bending technology that's not only leveraging reliable Golden Age tech, but is also brave enough to pioneer the roadmap for the future.
+
+Omolon is proud to present Tachyon-4, the first interstellar ship with our proprietary liquid-cooled dual engines. They do all the work while you travel at near superluminal speeds* enjoying this sensationally sleek ride.
+
+Now you can look as cool as our engines run—and save the universe while you're at it.
+
+Tachyon-4. For the future.
+
+*Disclaimer: IN NO EVENT WILL OMOLON BE LIABLE FOR ANY LOST PROFITS, INDIRECT DAMAGES, OR CONSEQUENTIAL DAMAGES, HOWEVER CAUSED AND REGARDLESS OF THEORY OF LIABILITY, STEMMING FROM THE USE OF OR INABILITY TO USE THE TACHYON-4. ACTUAL SHIP SPEED MAY VARY.

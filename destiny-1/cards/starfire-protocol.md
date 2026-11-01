@@ -1,0 +1,7 @@
+# Starfire Protocol
+
+- Source: https://www.ishtar-collective.net/entries/starfire-protocol
+
+The Protocol is contained in the patterns on the robe that, if scanned at the molecular level, describe a Turing-compatible virtual computer and program that, when executed on said computer, calculates the entire Protocol, exactly as it was determined in the Precipice of Flame.
+
+This is of little interest to most Guardians, who can subconsciously "load" the program simply by looking at the pattern. In execution, the Protocol enhances the use of Solar Light to catalyze fusion. It is up to us to remember the deeper truth—that the Precipice showed us the uses of fire, that the highest form of fire is the stellar flame, and that no life would exist, anywhere in the cosmos, without the apocalyptic detonations of supernovae. Those who fear fire have forgotten that it is their true ancestor.

@@ -1,0 +1,13 @@
+# Sunshot
+
+- Source: https://www.ishtar-collective.net/entries/sunshot
+
+She bowed her head, heat shimmering from her fist. A silent salute to the Hive closing around her, their eyes forming a glowing jade ring.
+
+She was a Sunbreaker. A mercenary from days before the City. Not like the new Lights from the Tower. She was weary. But there was no rest out here, where the City Lights didn't reach. She and her allies were committed to their arduous, solitary task. But they could always use more numbers.
+
+Sometimes, they left trinkets for the City. Meant as challenge and bribe at once—we offer you this. Come find us.
+
+She had forged the Warlock gauntlets herself. Ouros laughed in her face when she told her their name. She wasn't very good at names.
+
+A gun. She would forge a gun, next. It would speak like her Hammer. And burn like fire. The ring of jade eyes closed on her. Liu Feng laughed, her arms open for a fiery embrace.

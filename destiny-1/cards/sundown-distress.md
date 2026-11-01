@@ -1,0 +1,17 @@
+# SUNDOWN DISTRESS
+
+- Source: https://www.ishtar-collective.net/entries/sundown-distress
+
+Mayday, Mayday, Mayday. All circum-Saturn stations monitoring GUARD, this is New Pacific Arcology, declaring a SUNDOWN loss of habitability event. We have 2.9 million souls aboard. We repeat, Titan is no longer safe for human life.
+
+We are experiencing massive tidal forces of unknown origin. Our physics cluster detects mass growl, phaeton strikes, and sterile neutrino scattering. Possible origins include a compact dark matter object, a lambda-field influence, or a polarized gravity device.
+
+Satellite lidar confirms a tidal bulge of 40 meters—400, repeat, 400 percent of ordinary tidal deformation and growing. We anticipate massive cryoseismic activity as the tidal effect recedes. Total crustal reflex will trigger a multiple hypocenter icequake swarm. Surface effects catastrophic.
+
+We are attempting to decouple tidal anchors and loosen the arcology substructure. Blue-water vessels are now transporting frozen citizens to lifters. We require all available ships with interplanetary capability to receive refugees. Contact New Pacific Traffic Control on approach.
+
+Be advised that we have no contact with any circum-Saturn ships or stations, and we are transmitting in the blind.
+
+This message will now repeat.
+
+Mayday, Mayday, Mayday. All circum-Saturn stations monitoring GUARD, this is New Pacific Arcology, declaring a SUNDOWN loss of habitability event. We have 2.9 million souls aboard. We repeat, Titan is no longer safe for human life.
