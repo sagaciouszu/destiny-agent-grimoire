@@ -1,0 +1,13 @@
+# Asher Mir's One-Way Ticket
+
+- Source: https://www.ishtar-collective.net/entries/asher-mirs-one-way-ticket
+
+Asher Mir loathes patrol duty.
+
+Zavala thinks about respect, so Zavala thinks it's because of the recruits who swarmed Echo Mesa in the wake of the Red War. They jeer at Asher over the radio and meet his impatient condescension with brash challenges: Come say that to my face. But Zavala is wrong.
+
+Cayde thinks about his free time, so Cayde thinks it's because Asher has better things to do. Why support a supply chain when you're dying of Vex flu? Sure, sure, it's not really flu; that's not the point. The guy's dying! But Cayde is wrong.
+
+Ikora used to be wrong, too, but now Ikora thinks about death. She knows Asher has not died since he was transformed. She knows what it is to sit paralyzed beside a radio, full of jealous fear, listening to a battle that you cannot join.
+
+They could bring him every jumpship in the system, she thinks, and he'd never leave the Rupture.

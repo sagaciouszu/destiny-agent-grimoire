@@ -2,103 +2,103 @@
 
 | Card | Slug | Status |
 |---|---|---|
-| A Matter of Distrust | a-matter-of-distrust | done |
-| A Matter of Trust | a-matter-of-trust | done |
-| A Matter of Trust | a-matter-of-trust-2 | done |
-| A Necessary Distance | a-necessary-distance | done |
-| A New Legend to Guide Them | a-new-legend-to-guide-them | done |
-| A Note of Warning | a-note-of-warning | done |
-| AION Adapter Vest | aion-adapter-vest | done |
-| AION Renewal Bond | aion-renewal-bond | done |
-| AION Renewal Boots | aion-renewal-boots | done |
-| AION Renewal Cloak | aion-renewal-cloak | done |
-| AION Renewal Gauntlets | aion-renewal-gauntlets | done |
-| AION Renewal Gloves | aion-renewal-gloves | done |
-| AION Renewal Greaves | aion-renewal-greaves | done |
-| AION Renewal Grips | aion-renewal-grips | done |
-| AION Renewal Helm | aion-renewal-helm | done |
-| AION Renewal Hood | aion-renewal-hood | done |
-| AION Renewal Mark | aion-renewal-mark | done |
-| AION Renewal Mask | aion-renewal-mask | done |
-| AION Renewal Plate | aion-renewal-plate | done |
-| AION Renewal Robes | aion-renewal-robes | done |
-| AION Renewal Strides | aion-renewal-strides | done |
-| AION Renewal Vest | aion-renewal-vest | done |
-| Aisha's Embrace | aishas-embrace | done |
-| Aítion | aition | done |
-| Akashic Revelation | akashic-revelation | done |
-| Alethonym | alethonym | done |
-| ALGIA | algia | done |
-| All-In | all-in | done |
-| All or Nothing | all-or-nothing | done |
-| All-Star Bond | all-star-bond | done |
-| All-Star Cloak | all-star-cloak | done |
-| All-Star Mark | all-star-mark | done |
-| Allies: Tower-Empress Caiatl | allies-towerempress-caiatl | done |
-| Allstar Bond | allstar-bond | done |
-| Allstar Cloak | allstar-cloak | done |
-| Allstar Mark | allstar-mark | done |
-| Allstar Vector | allstar-vector | done |
-| Allstar Vector | allstar-vector-2 | done |
-| Alone as a God | alone-as-a-god | done |
-| Altars of Reflection-Assessment | altars-of-reflectionassessment | done |
-| Altars of Reflection-Conclusion | altars-of-reflectionconclusion | done |
-| Altars of Reflection-Conclusion [Draft] | altars-of-reflectionconclusion-draft | done |
-| Altars of Reflection-Control | altars-of-reflectioncontrol | done |
-| Altars of Reflection-Dispatch | altars-of-reflectiondispatch | done |
-| Altars of Reflection-New Input | altars-of-reflectionnew-input | done |
-| Amnestia-S2 | amnestia-s2 | done |
-| An Evolution of Faith | an-evolution-of-faith | done |
-| An Insurmountable Skullfort | an-insurmountable-skullfort | done |
-| An Invocation | an-invocation | done |
-| Ana | ana | done |
-| Ana: Black Box | ana-black-box | done |
-| Ana: Frayed | ana-frayed | done |
-| Ana: Physics | ana-physics | done |
-| Anamnesis | anamnesis | done |
-| Anarchy | anarchy | done |
-| Ancient Apocalypse Bond | ancient-apocalypse-bond | done |
-| Ancient Apocalypse Boots | ancient-apocalypse-boots | done |
-| Ancient Apocalypse Cloak | ancient-apocalypse-cloak | done |
-| Ancient Apocalypse Gauntlets | ancient-apocalypse-gauntlets | done |
-| Ancient Apocalypse Gloves | ancient-apocalypse-gloves | done |
-| Ancient Apocalypse Greaves | ancient-apocalypse-greaves | done |
-| Ancient Apocalypse Grips | ancient-apocalypse-grips | done |
-| Ancient Apocalypse Helm | ancient-apocalypse-helm | done |
-| Ancient Apocalypse Hood | ancient-apocalypse-hood | done |
-| Ancient Apocalypse Mark | ancient-apocalypse-mark | done |
-| Ancient Apocalypse Mask | ancient-apocalypse-mask | done |
-| Ancient Apocalypse Plate | ancient-apocalypse-plate | done |
-| Ancient Apocalypse Robes | ancient-apocalypse-robes | done |
-| Ancient Apocalypse Strides | ancient-apocalypse-strides | done |
-| Ancient Apocalypse Vest | ancient-apocalypse-vest | done |
-| Anemone | anemone | done |
-| ANGER | anger | done |
-| Anguish, Ten-Fold | anguish-ten-fold | done |
-| Antaeus Wards | antaeus-wards | done |
-| Anthemic Invocation Shell | anthemic-invocation-shell | done |
-| Any Other Sky | any-other-sky | done |
-| Apex Predator | apex-predator | done |
-| Apostate | apostate | done |
-| Apostate's Blade Bond | apostates-blade-bond | done |
-| Apostate's Blade Boots | apostates-blade-boots | done |
-| Apostate's Blade Cloak | apostates-blade-cloak | done |
-| Apostate's Blade Gauntlets | apostates-blade-gauntlets | done |
-| Apostate's Blade Gloves | apostates-blade-gloves | done |
-| Apostate's Blade Greaves | apostates-blade-greaves | done |
-| Apostate's Blade Grips | apostates-blade-grips | done |
-| Apostate's Blade Helm | apostates-blade-helm | done |
-| Apostate's Blade Hood | apostates-blade-hood | done |
-| Apostate's Blade Mark | apostates-blade-mark | done |
-| Apostate's Blade Mask | apostates-blade-mask | done |
-| Apostate's Blade Plate | apostates-blade-plate | done |
-| Apostate's Blade Robe | apostates-blade-robe | done |
-| Apostate's Blade Strides | apostates-blade-strides | done |
-| Apostate's Blade Vest | apostates-blade-vest | done |
-| Apotheosis Veil | apotheosis-veil | done |
-| Appetence | appetence | done |
-| Apple | apple | done |
-| Approaching Infinity | approaching-infinity | done |
-| Arbalest | arbalest | done |
-| Arbor Warden | arbor-warden | done |
-| Archangel's Refit | archangels-refit | done |
+| A Scorned Path | a-scorned-path | done |
+| A Shadow's Worth | a-shadows-worth | done |
+| A Sudden Death | a-sudden-death | done |
+| A Swift Verdict | a-swift-verdict | done |
+| A Sword, an Edge | a-sword-an-edge | done |
+| A Tale Twice Told | a-tale-twice-told | done |
+| A Thousand Wings | a-thousand-wings | done |
+| A Touch of Style | a-touch-of-style | done |
+| A Very Nice Young Man | a-very-nice-young-man | done |
+| Archiloquy | archiloquy | done |
+| Arcstrider | arcstrider | done |
+| Arcstrider | arcstrider-2 | done |
+| Arid Rambler | arid-rambler | done |
+| Arrow of Time | arrow-of-time | done |
+| Article: A Consensus for the Rest of Us | article-a-consensus-for-the-rest-of-us | done |
+| Article: A Darker Hour? Looking Back at the Great Disaster | article-a-darker-hour-looking-back-at-the-great-disaster | done |
+| Article: Down on the Farm | article-down-on-the-farm | done |
+| Article: Hot Off the Shelf | article-hot-off-the-shelf | done |
+| Article: United in Hope-Our Neighbors in Neomuna | article-united-in-hopeour-neighbors-in-neomuna | done |
+| Article: Visitors Out of Dreams-Changing Reef Relations | article-visitors-out-of-dreamschanging-reef-relations | done |
+| Artifacts and Old Friends | artifacts-and-old-friends | done |
+| Ascendancy | ascendancy | done |
+| Ascendant Scepter | ascendant-scepter | done |
+| Ashen Wake | ashen-wake | done |
+| Asher: Conclusion | asher-conclusion | done |
+| Asher Mir's One-Way Ticket | asher-mirs-one-way-ticket | done |
+| Asher: Observation | asher-observation | done |
+| Asher: Prediction | asher-prediction | done |
+| Asphodel | asphodel | done |
+| Assassin's Cowl | assassins-cowl | done |
+| Assaulted | assaulted | done |
+| Assumption, Illinois, 1938 | assumption-illinois-1938 | done |
+| Asteroid Belt - 0 | asteroid-belt-0 | done |
+| Astral Horizon | astral-horizon | done |
+| Astrocyte Verse | astrocyte-verse | done |
+| asudeM | asudem | done |
+| At the Gate | Part I | at-the-gate-part-i | done |
+| At the Gate | Part II | at-the-gate-part-ii | done |
+| Atavistic Idol Bond | atavistic-idol-bond | done |
+| Atavistic Idol Boots | atavistic-idol-boots | done |
+| Atavistic Idol Cloak | atavistic-idol-cloak | done |
+| Atavistic Idol Gauntlets | atavistic-idol-gauntlets | done |
+| Atavistic Idol Gloves | atavistic-idol-gloves | done |
+| Atavistic Idol Greaves | atavistic-idol-greaves | done |
+| Atavistic Idol Grips | atavistic-idol-grips | done |
+| Atavistic Idol Helmet | atavistic-idol-helmet | done |
+| Atavistic Idol Hood | atavistic-idol-hood | done |
+| Atavistic Idol Mark | atavistic-idol-mark | done |
+| Atavistic Idol Mask | atavistic-idol-mask | done |
+| Atavistic Idol Plate | atavistic-idol-plate | done |
+| Atavistic Idol Strides | atavistic-idol-strides | done |
+| Atavistic Idol Vest | atavistic-idol-vest | done |
+| Atavistic Idol Vestments | atavistic-idol-vestments | done |
+| Atelic | atelic | done |
+| Athrys's Embrace | athryss-embrace | done |
+| Attendant's Mark | attendants-mark | done |
+| Aurora Dawn | aurora-dawn | done |
+| Auspices | auspices | done |
+| Autognosis | autognosis | done |
+| Awakened Shell | awakened-shell | done |
+| Axial Lacuna | axial-lacuna | done |
+| Azirim | azirim | done |
+| Azure Azazyel | azure-azazyel | done |
+| Azurine Thunder | azurine-thunder | done |
+| Bad Beat | bad-beat | done |
+| Bad Juju | bad-juju | done |
+| Balance of Power | balance-of-power | done |
+| Bamberga | bamberga | done |
+| Barrow-Dyad | barrow-dyad | done |
+| Bastion | bastion | done |
+| Batteries Not Included | batteries-not-included | done |
+| Behemoth | behemoth | done |
+| Bell of Conquests | bell-of-conquests | done |
+| Bermuda Class Hover Ship | bermuda-class-hover-ship | done |
+| Berserker | berserker | done |
+| Binary Phoenix | binary-phoenix | done |
+| Bird in the Hand | bird-in-the-hand | done |
+| Bitter/Sweet | bittersweet | done |
+| Black Talon | black-talon | done |
+| Blacklight Razor | blacklight-razor | done |
+| Blasphemer | blasphemer | done |
+| Blast Battue | blast-battue | done |
+| Blast Furnace | blast-furnace | done |
+| Blastwave Striders | blastwave-striders | done |
+| Blight Ranger | blight-ranger | done |
+| Blistering Slipstream | blistering-slipstream | done |
+| Blood Feud | blood-feud | done |
+| Bluff | bluff | done |
+| Bold Endings | bold-endings | done |
+| Bond Judgment | bond-judgment | done |
+| Bond Judgment (CODA) | bond-judgment-coda | done |
+| Bond of Contests | bond-of-contests | done |
+| Bond of Detestation | bond-of-detestation | done |
+| Bond of Reciprocity | bond-of-reciprocity | done |
+| Bond of Remembrance | bond-of-remembrance | done |
+| Bond of Sekris | bond-of-sekris | done |
+| Bond of the Cormorant Blade | bond-of-the-cormorant-blade | done |
+| Bond of the Emperor's Minister | bond-of-the-emperors-minister | done |
+| Bond of the Great Hunt | bond-of-the-great-hunt | done |
+| Bond of the Taken King | bond-of-the-taken-king | done |

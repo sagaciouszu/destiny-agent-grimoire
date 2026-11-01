@@ -1,0 +1,25 @@
+# Bond of the Great Hunt
+
+- Source: https://www.ishtar-collective.net/entries/bond-of-the-great-hunt
+
+I am [Riven]. And I am pleased.
+
+The [Techeun] believe that with my heart in tow I will remain imprisoned.
+
+But my [bargain] with them is fulfilled. And they will pay.
+
+This [City] will pay.
+
+But what about you? Brother-slayer. Spawn-killer. [Child of light]. What will you do now that we are bonded for all your lives?
+
+I gave you everything you wanted in that moment. Everything you needed. You complete your [raid]. And you are rewarded for your efforts.
+
+Did you exhibit a violent display in the aftermath? I wonder. Some of you do. Everyone wants more than they have. A key element of all [bargains].
+
+You are afflicted by tedious repetition.
+
+It is my turn to benefit.
+
+Most of those who [bargain] with me do not win.
+
+O murderer mine.

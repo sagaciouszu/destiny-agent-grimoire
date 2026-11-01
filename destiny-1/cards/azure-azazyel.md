@@ -1,0 +1,5 @@
+# Azure Azazyel
+
+- Source: https://www.ishtar-collective.net/entries/azure-azazyel
+
+We treated the ship like its name, like one of the Guardians of old. But I swear to you that Sparrows have personalities, even spirits. I know that sounds crazy, but I believe that. AA's name was cold, and the Sparrow was cold. You couldn't warm it up. But boy it could fly.
