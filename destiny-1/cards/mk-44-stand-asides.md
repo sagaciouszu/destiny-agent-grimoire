@@ -1,0 +1,6 @@
+# Mk. 44 Stand-Asides
+
+- Source: https://www.ishtar-collective.net/entries/mk-44-stand-asides
+
+The tree in the Garden with silver wings. The air around it is oppressive and inspires violence in those who even breathe a little in. Shards of the disastrous bark peel from it and litter the ground, and nothing grows in its shadow. It scintillates faintly at dusk. It has achieved its entelechy with every body falling, every civilization laid to waste, every leaf forged into instruments of ruin.
+The Gardener is hard to bother; she is constantly amidst her weeds, kneeling in the tangent dust, gloves covered in a mix of distant soils and metallic saps. She is listening to the music of the insects amidst the flowers, the unguent as it begins to drip from the ferns, the slight scratch of the Worm beneath, and not to you, and certainly not to your cries for help.

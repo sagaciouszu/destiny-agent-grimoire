@@ -1,0 +1,25 @@
+# Motion to Compel
+
+- Source: https://www.ishtar-collective.net/entries/motion-to-compel
+
+look
+
+Her plan is coming together.
+
+A L W A Y S T H E C L E V E R O N E
+
+Always the smug one.
+
+she plays with weighted odds
+
+Odds we weighted.
+
+SHALL WE?
+
+Intervene? No.
+
+not yet
+
+B E P A T I E N T
+
+Wait until the dynasty falls.

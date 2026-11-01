@@ -1,0 +1,19 @@
+# Message from Aunor VI
+
+- Source: https://www.ishtar-collective.net/entries/message-from-aunor-vi
+
+CORMORANT-LEVEL ENCRYPTED MESSAGE FOLLOWS. AUDIO UNAVAILABLE.
+
+This is stellar casework.
+
+And I'm glad you stayed the course. Having a hero of the Red War go rogue and side with the Drifter is not a scenario I wanted to consider.
+
+You've provided critical information on the Drifter's operation, but I need to know who his facilitators in this system are. Someone's providing him with raw materials to build his gear, and I know his accounts with the City don't have the kind of Glimmer to pay. Vanguard territory's been flooded with rogues since Gambit became the Tower's favorite pastime, so it could be anyone.
+
+My Ghost made some microphones for you, infused with Praxic wards. We've put them through rigorous durability testing.
+
+Anything short of the impact point on a Sunbreaker's hammer, and these things will keep recording.
+
+Bug the Drifter's hovel in the Annex and find out who's supplying him. I'm off to the lower boroughs of the City to see if I can head off one of Drifter's jobs in person.
+
+Praxic Flame be with you.

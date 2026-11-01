@@ -1,0 +1,13 @@
+# MIDA Multi-Tool
+
+- Source: https://www.ishtar-collective.net/entries/mida-multi-tool
+
+Zavala —
+A waste of time, as always. I won't confiscate the Red Death engrams, I won't roll back the SUROS Crucible firmware to its "original" (preposterously inflated) state. And I won't conduct any more "forensic inquiries" like this!
+
+My Redjacks unlocked your MIDA weapon's logs; simple enough once we used the rifle's own electronic warfare tools. The rifle was designed by primitive AI and manufactured for use by a "revolutionary government" named MIDA. Mars Is Damnably Arid, perhaps.
+
+Guerilla war suits these versatile weapons. But Rahool insists his records never hinted at a rebel group named MIDA. According to the rifle's cached messages, MIDA's brief reign killed a full ten percent of the Martian people.
+
+I gave Lakshmi the weapon for her take. She insinuates that it came from another timeline, perhaps through Golden Age experiments. That means it's outside your jurisdiction to ban.
+—Shaxx
