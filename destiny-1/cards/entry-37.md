@@ -1,0 +1,23 @@
+# Entry 37
+
+- Source: https://www.ishtar-collective.net/entries/entry-37
+
+Entry 37
+
+So this is what success looks like. We three, putting a stake in the ground for what we believe in.
+
+Some may disagree with what we're doing. I don't care. We have to champion all that we hold dear. Who we are: our values, our cultures… all that we believe in as human beings. This is why we founded the Black Armory.
+
+Our works. They're beautiful. All of them. Finely crafted. Made from the strongest of materials. Durable, accurate.
+
+It took me some time to create our first few designs, but I wanted to get them right. Make them distinct, to reflect who we are. Mothers. Fathers. Sons. Daughters. Friends. Lovers.
+
+If the day comes that we need to wield these weapons against—I don't even know what—they'll be there to remind us what we are fighting for, what we are defending. Where we come from.
+
+I am so lucky to have found Helga and Yuki, my co-founders, who share these feelings so deeply.
+
+The Black Armory owes its continued success to them. I am in awe. Helga's formerly from Clovis Bray. She handles the business side of things. Yuki's our resident engineer. Handles the science and mechanics of it all.
+
+Every day I get to admire these women and everything they do right. They put so much of themselves into our work. Their soul, their heritage. And they do it all for the cause.
+
+We've become one big family. I couldn't be happier.

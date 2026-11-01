@@ -1,0 +1,21 @@
+# Equitis Shade Rig
+
+- Source: https://www.ishtar-collective.net/entries/equitis-shade-rig
+
+The Cabal I knew treasured knowledge above all things. Of course they did. I was their model.
+
+We kept vaults of artifacts and texts in the great athenaeum worlds spread across the mother system.
+
+Texts about the exalted history of the Empire, and its eclectic people.
+
+Texts about the vast ennead, trapped and reaching out.
+
+Texts about the feats of will made possible by Light and Traveler-lore.
+
+Texts about… well, theorizing about the dark. So little is written, save for that which was recorded from the dreams of worms.
+
+The vaults housed technology and weapons gifted from countless indoctrinated worlds. And judging from their absence in this Red War, Dominus Ghaul's Legion has either forgotten or lost them all. The athenaeum worlds required learned guides to navigate: guides loyal to me. I've not heard from them in a very long time.
+
+A Shadow of your Guardian-tribe would be the ideal treasure hunter to plunder those repositories and take from the false empire the secrets that rightfully belong to me.
+
+—Calus, Emperor of the Cabal
