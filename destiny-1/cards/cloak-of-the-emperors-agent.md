@@ -1,0 +1,7 @@
+# Cloak of the Emperor's Agent
+
+- Source: https://www.ishtar-collective.net/entries/cloak-of-the-emperors-agent
+
+Ghaul was a masterful conspirator. He spent his whole life dedicated to a higher purpose. Few survive the gladiator pits. Even fewer rise to the rank of Primus. It is remarkable that a discarded runt managed to do both, all the while living a double life.
+
+It was only at the very end that I even began to suspect him. He possessed an absolute, single-minded dedication to his life of deceit. I see the same cunning in you, my dear Hunter.

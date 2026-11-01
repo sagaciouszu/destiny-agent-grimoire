@@ -1,0 +1,7 @@
+# Cuirass of the Emperor's Champion
+
+- Source: https://www.ishtar-collective.net/entries/cuirass-of-the-emperors-champion
+
+I've known you through many lives now: gladiator, Primus, usurper. With each new incarnation, I think we learn a little more about each other. How many more lives before our relationship becomes complete?
+
+But this life is my last, because there is no further that I can go. When next we meet, you will face one who has transcended even the gods. What will you be?

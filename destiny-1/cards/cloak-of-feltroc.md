@@ -1,0 +1,11 @@
+# Cloak of Feltroc
+
+- Source: https://www.ishtar-collective.net/entries/cloak-of-feltroc
+
+Feltroc pitied your kind for your reliance on the Light. Prove her wrong. Show this universe you can open your mind and accept new horizons, as she did. Your predecessors have sought to understand other sources of power, to control them. None have embraced them like I have. Like you could.
+
+There is an entire spectrum of power left untapped that your Light prevents you from realizing.
+
+When the time comes, seek me out. I will teach you to grow fat from strength.
+
+—Calus, Emperor of the Cabal

@@ -1,0 +1,9 @@
+# Conspirator
+
+- Source: https://www.ishtar-collective.net/entries/conspirator
+
+Ghaul spent too much time in too close communion with those I had humbled. No good would come of those hushed tones and sidelong glances. Did he think I would not notice?
+
+I dispatched a spy to follow him. To think that I felt guilt in that moment; one should never doubt their gut when it comes to trust in another.
+
+I realize now what I should have realized then. As I am like no other, then no other is alone as I. What a curse it is to be a god that loves!

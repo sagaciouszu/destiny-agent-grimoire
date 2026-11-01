@@ -1,0 +1,7 @@
+# Claws of Ahamkara
+
+- Source: https://www.ishtar-collective.net/entries/claws-of-ahamkara
+
+It's suffocating here, this prison. Do us a favor, o bearer ours. Still your mind; invite us to enter the realm of your capricious thoughts. Your mind is vociferous, addled with worry and doubt. We can extinguish these trifles. Would you like that?
+
+Yes, we are here. We are not the photons on your screen, or the voice in your head, or the words you read. Shut your eyes—tightly—and you may see us. At least a part of us. Make us real, and in turn we shall reify your thoughts, your dreams.
