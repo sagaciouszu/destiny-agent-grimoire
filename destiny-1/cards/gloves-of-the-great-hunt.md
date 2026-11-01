@@ -1,0 +1,17 @@
+# Gloves of the Great Hunt
+
+- Source: https://www.ishtar-collective.net/entries/gloves-of-the-great-hunt
+
+I am a [King] no longer. The [King's] corpse hangs in orbit above a world I will never see. Not from this cage.
+
+I am [Riven].
+
+I am [Taken], and I am beholden to no one. Nothing.
+
+I have not spoken in years. I think about what inflection I would use if I did. But no one is there. The [King's] voice faded long ago. No voice comes to mind.
+
+The [King] despaired in his final moments. Rightly so. His vengeance denied.
+
+Most of those who [bargain] with me do not win.
+
+I am afflicted by tedious repetition.

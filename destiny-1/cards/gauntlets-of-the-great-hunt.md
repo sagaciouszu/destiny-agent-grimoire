@@ -1,0 +1,15 @@
+# Gauntlets of the Great Hunt
+
+- Source: https://www.ishtar-collective.net/entries/gauntlets-of-the-great-hunt
+
+I am [Riven]. My work on the Dreaming [City] is complete.
+
+I have done everything [the Queen] asked of me. But this is a [bargain].
+
+I did so much more than that.
+
+[The Queen] and her ilk will not understand for some time, though I think [the Queen] can see the signs. What I carved into the small corners. In the Wall of [Wishes] itself.
+
+This will be a beautiful [City].
+
+But not a safe [City].

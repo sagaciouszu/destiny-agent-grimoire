@@ -1,0 +1,7 @@
+# Gloves of the Emperor's Agent
+
+- Source: https://www.ishtar-collective.net/entries/gloves-of-the-emperors-agent
+
+When you left me on the Leviathan, you left me with nothing. I hope you understand things are different now. I've been tested, and I have emerged from the other side.
+
+You always spoke of how adversity shaped the person you are, how it made you stronger. I see the truth of that now in a way that before I never could. I want you to see what I have learned. I want you to see what adversity has allowed me to become.

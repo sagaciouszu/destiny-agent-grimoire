@@ -1,0 +1,11 @@
+# Gray Hornet
+
+- Source: https://www.ishtar-collective.net/entries/gray-hornet
+
+"Does that thing fly?"
+
+"Why would you ask that?"
+
+"I'm telling you it looks heavy."
+
+"Don't be ridiculous. It's not heavy. You have triple-redundant shielding, sure, but that's because of the power under the hood. You put in an engine powerful enough, you can make a boulder fly. But this ain't no Boulder. You'll be zipping around the enemy so fast they'll wonder if you're even there. Try it. I'm telling you."

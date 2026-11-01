@@ -1,0 +1,18 @@
+# Graviton Lance
+
+- Source: https://www.ishtar-collective.net/entries/graviton-lance
+
+"So wait, that thing you found does… what?"
+"It fires black holes."
+"No it doesn't."
+"Oh yeah. It does. Actual, tiny, bullet-sized black holes."
+"Did you tell the others?"
+"Only that I found some weird gun in some overgrown tunnel back on Old Chicago. And that my Ghost was all, "THIS is why we were led here…'"
+"Yours talks that way too?"
+"What do you think?"
+"OK, OK, but the gun—are you going to tell them?"
+"Yeah, definitely."
+"When?"
+"Crucible."
+"Oh no."
+"Oh, yes."

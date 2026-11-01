@@ -1,0 +1,23 @@
+# Gnomic
+
+- Source: https://www.ishtar-collective.net/entries/gnomic
+
+He is he is not he is walking in the Garden. He is talking silent singing.
+
+^K^KV^V^V^V^V
+
+(Watch your six don't worry about me grow grow grow)
+
+He holsters his gun to gesture he holsters his gun to drink his gun is rusted into its holster and he will never pull it out again.
+
+(How bad can it be how bad can it be how can we grow grow grow)
+
+A Titan is a Wall a Shield a Cup filling itself to overflowing. The container changes the shape of its contents but the contents change the nature of the container and the nature is eternity.
+
+(Who knows what's listening it's listening it's saying grow grow grow)
+
+There is a shape that is his mind and the shape is protect the shape is sacrifice the shape is (grow)
+
+^V^V^V^V^V
+
+He was named too well he is his own grave and the cut on his left hand will never heal.
