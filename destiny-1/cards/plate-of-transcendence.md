@@ -1,0 +1,29 @@
+# Plate of Transcendence
+
+- Source: https://www.ishtar-collective.net/entries/plate-of-transcendence
+
+Yardarm-4 spun, looking around the grotto.
+
+"You hear that? Who is that?" Yardarm-4 had to stop himself from shouting.
+
+"I hear it," Rekkana and Lisbon-13 said as one. A chill ran through him. How had they heard the voice if it was in his head?
+
+All three Guardians called for their Ghosts.
+
+"Ghost?" Yardarm-4 was first. "What have we got?"
+
+Yardarm-4 started walking away even as his compatriots began talking with them.
+
+"What are you looking for?" his Ghost asked.
+
+"Anything. Everything. I… I'm not… Scan me. Look for something, someone else."
+
+"Wow. OK…" His Ghost didn't understand, but it did as asked. "So, uh, what exactly am I look—?"
+
+Yardarm-4 watched his Ghost's scan sputter out. Then the Ghost fell and clattered across the ground.
+
+As Yardarm-4 picked it up, he felt his Light fading.
+
+"Yardarm, Lisbon, you OK?" Rekkana asked from somewhere distant.
+
+"Yeah. Sure." But Yardarm-4 did not feel OK, and he was not sure about anything.

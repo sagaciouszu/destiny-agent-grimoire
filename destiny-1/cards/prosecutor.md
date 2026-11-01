@@ -1,0 +1,26 @@
+# Prosecutor
+
+- Source: https://www.ishtar-collective.net/entries/prosecutor
+
+A COURT
+A  V A U L T
+A Maelstrom.
+a cauldron
+A realm.
+A VOID
+A N  E Q U I N O X
+A meridian.
+A  S H I F T
+certainly
+Trials no more. Not like they were.
+A KEEP
+A  P A R A L L A X
+An apex.
+a plane
+A COURT
+A  V A U L T
+A Maelstrom.
+a cauldron.
+Of what?
+OF STARS
+O F  N I N E

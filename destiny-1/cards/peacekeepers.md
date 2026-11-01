@@ -1,0 +1,7 @@
+# Peacekeepers
+
+- Source: https://www.ishtar-collective.net/entries/peacekeepers
+
+Peacekeepers once patrolled the City before the Red Legion's attack. They were Guardians, but their interest was in protecting our core, our home. Most understood the value in exploration, but the peacekeepers were old guard, born in the aftermath of the Iron Lords. They lived through the Faction Wars; bore witness to what damage internal strife could bring to a fragile society. They vowed to keep the factions in check and stood at the gates as our walls expanded and our city became a home.
+
+Now, nothing remains of the order. Yet their legacy delivers a harsh truth: the Last Safe City was never truly safe.
