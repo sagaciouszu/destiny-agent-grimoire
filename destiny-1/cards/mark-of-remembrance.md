@@ -1,0 +1,12 @@
+# Mark of Remembrance
+
+- Source: https://www.ishtar-collective.net/entries/mark-of-remembrance
+
+A TALE FROM THE DARK AGE, PART TWO OF THREE
+ATOP A DUSTY CLIFFSIDE
+
+Saladin looks down the mountainside at the tank, then to the village. His fists tighten at his sides as the air around him begins to crackle.
+
+"If you miss—"
+
+He stops speaking as Efrideet grabs him by the metallic collar, pressing him over her head. Arc energy from both Lightbearers coalesces in a roaring storm around them—Saladin's crackling, barely contained, Efrideet's flowing, guiding. The mountain rumbles beneath her as she steps forward. Waves of gravel and dirt blast up behind her as she hurls the armored man off the cliffside like a javelin, their combined Arc energy singing like a drawn sword. Saladin's gilded form becomes a cannon shot, tearing holes through three layers of clouds as he rips down toward the Fallen Walker.

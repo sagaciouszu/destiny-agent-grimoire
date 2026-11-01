@@ -1,0 +1,11 @@
+# Lumina
+
+- Source: https://www.ishtar-collective.net/entries/lumina
+
+In young languages, we sketched for each other the seemings of stars and planets and the black between galaxies.
+
+We have devoted ourselves to listening. To the Cosmos, by crafting assemblers that can translate for us the mechanical language of Order. And to our own withins, by withstanding the howling storm until patience and humility made of chaos—if not sense, then at least peace.
+
+From beyond emptiness, a Gardener emerged, drawn from pseudophotons and impossible math. And our nest of colliding space dust was never the same.
+
+For it heard meaning in our roar.

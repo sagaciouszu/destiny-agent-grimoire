@@ -1,0 +1,15 @@
+# Mask of the Fulminator
+
+- Source: https://www.ishtar-collective.net/entries/mask-of-the-fulminator
+
+Calus gestured towards the crackling Arc storm before him. The energy mass shivered, tethered to a golden spindle in the center of the chamber.
+
+"You are marvelous," he said to the Arkborn. His eyes drank in the flickering light, reflecting nothing. "You will cast a glorious Shadow."
+
+A panel on the wall lit up in Cabal: THIS SHIP IS TINY.
+
+The emperor threw his head back and guffawed. "Compared to the interstellar conduits of your people anything would seem small. The Leviathan is formidable in its own right, I assure you."
+
+LEAVE MY PEOPLE BE. I WILL SERVE.
+
+"Of course. You are all I need. Your very presence eviscerates flesh." He gestured, and a metallic shell lowered from the darkness above. Now the Fulminator was free to walk the decks of her new flagship.

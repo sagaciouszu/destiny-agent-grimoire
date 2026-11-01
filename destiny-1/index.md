@@ -2,103 +2,103 @@
 
 | Card | Slug | Status |
 |---|---|---|
-| Ketchkiller's Gloves | ketchkillers-gloves | done |
-| Ketchkiller's Greaves | ketchkillers-greaves | done |
-| Ketchkiller's Grips | ketchkillers-grips | done |
-| Ketchkiller's Helmet | ketchkillers-helmet | done |
-| Ketchkiller's Hood | ketchkillers-hood | done |
-| Ketchkiller's Mark | ketchkillers-mark | done |
-| Ketchkiller's Mask | ketchkillers-mask | done |
-| Ketchkiller's Plate | ketchkillers-plate | done |
-| Ketchkiller's Robes | ketchkillers-robes | done |
-| Ketchkiller's Strides | ketchkillers-strides | done |
-| Ketchkiller's Vest | ketchkillers-vest | done |
-| Khepri's Horn | khepris-horn | done |
-| Khepri's Sting | khepris-sting | done |
-| Khrēsmoí | khresmoi | done |
-| Khvostov 7G-0X | khvostov-7g-0x | done |
-| Khvostov 7G-0X | khvostov-7g-0x-2 | done |
-| Kings | kings | done |
-| King's Wrath | kings-wrath | done |
-| Knucklehead Radar | knucklehead-radar | done |
-| Komodo-4FR | komodo-4fr | done |
-| Krill | krill | done |
-| Lakeside | lakeside | done |
-| Lamented | lamented | done |
-| Laminak Li | laminak-li | done |
-| Laminos | laminos | done |
-| Last Bargain | last-bargain | done |
-| Last Bastion Shell | last-bastion-shell | done |
-| Last Day | last-day | done |
-| Last Flight Home | last-flight-home | done |
-| Last of the Legion | last-of-the-legion | done |
-| Last Rite | last-rite | done |
-| Last Thursday | last-thursday | done |
-| Le Monarque | le-monarque | done |
-| Lease | lease | done |
-| Legacy: Hammer of Proving | legacy-hammer-of-proving | done |
-| Legacy: Splicer Gauntlet | legacy-splicer-gauntlet | done |
-| Legacy's Oath Bond | legacys-oath-bond | done |
-| Legacy's Oath Boots | legacys-oath-boots | done |
-| Legacy's Oath Cloak | legacys-oath-cloak | done |
-| Legacy's Oath Cowl | legacys-oath-cowl | done |
-| Legacy's Oath Gauntlets | legacys-oath-gauntlets | done |
-| Legacy's Oath Gloves | legacys-oath-gloves | done |
-| Legacy's Oath Greaves | legacys-oath-greaves | done |
-| Legacy's Oath Grips | legacys-oath-grips | done |
-| Legacy's Oath Helm | legacys-oath-helm | done |
-| Legacy's Oath Mark | legacys-oath-mark | done |
-| Legacy's Oath Mask | legacys-oath-mask | done |
-| Legacy's Oath Plate | legacys-oath-plate | done |
-| Legacy's Oath Robes | legacys-oath-robes | done |
-| Legacy's Oath Strides | legacys-oath-strides | done |
-| Legacy's Oath Vest | legacys-oath-vest | done |
-| Legend of Acrius | legend-of-acrius | done |
-| Legion Lost - 10 | legion-lost-10 | done |
-| Legion Lost - 11 | legion-lost-11 | done |
-| Legion Lost - 12 | legion-lost-12 | done |
-| Legion Lost - 13 | legion-lost-13 | done |
-| Legion Lost - 14 | legion-lost-14 | done |
-| Legion Lost - 15 | legion-lost-15 | done |
-| Legion Lost - 16 | legion-lost-16 | done |
-| Legion Lost - 17 | legion-lost-17 | done |
-| Less Is More | less-is-more | done |
-| Lethe | lethe | done |
-| Lethophobia | lethophobia | done |
-| LETTER 1 | letter-1 | done |
-| LETTER 2 | letter-2 | done |
-| LETTER 3 | letter-3 | done |
-| LETTER 4 | letter-4 | done |
-| LETTER 5 | letter-5 | done |
-| LETTER 6 | letter-6 | done |
-| LETTER 7 | letter-7 | done |
-| LETTER 8 | letter-8 | done |
-| LETTER 9 | letter-9 | done |
-| Letters | letters | done |
-| Leviathan's Breath | leviathans-breath | done |
-| Liar's Handshake | liars-handshake | done |
-| Liberated | liberated | done |
-| Lighter Days | lighter-days | done |
-| Lightkin Bond | lightkin-bond | done |
-| Lightkin Boots | lightkin-boots | done |
-| Lightkin Cloak | lightkin-cloak | done |
-| Lightkin Cover | lightkin-cover | done |
-| Lightkin Gauntlets | lightkin-gauntlets | done |
-| Lightkin Gloves | lightkin-gloves | done |
-| Lightkin Greaves | lightkin-greaves | done |
-| Lightkin Grips | lightkin-grips | done |
-| Lightkin Helm | lightkin-helm | done |
-| Lightkin Mark | lightkin-mark | done |
-| Lightkin Mask | lightkin-mask | done |
-| Lightkin Plate | lightkin-plate | done |
-| Lightkin Robes | lightkin-robes | done |
-| Lightkin Strides | lightkin-strides | done |
-| Lightkin Vest | lightkin-vest | done |
-| Liminal Vigil | liminal-vigil | done |
-| Line in the Sand | line-in-the-sand | done |
-| Lingering | lingering | done |
-| Lingering Dread | lingering-dread | done |
-| Lion Rampant | lion-rampant | done |
-| Lion's Pride | lions-pride | done |
-| Lion's Reign Mark | lions-reign-mark | done |
-| Liturgy | liturgy | done |
+| Loaded Question | loaded-question | done |
+| LOCATION UNKNOWN, UNIVERSE UNKNOWN, DATE UNKNOWN | location-unknown-universe-unknown-date-unknown | done |
+| Locus Locutus | locus-locutus | done |
+| Lodestar | lodestar | done |
+| Lodi, Wisconsin, 1929 | lodi-wisconsin-1929 | done |
+| Lodi, Wisconsin, 1962 | lodi-wisconsin-1962 | done |
+| Lone | lone | done |
+| Long Arm | long-arm | done |
+| Longing | longing | done |
+| Loose Ends, pt. I | loose-ends-pt-i | done |
+| Loose Ends, pt. II | loose-ends-pt-ii | done |
+| Loose Ends, pt. III | loose-ends-pt-iii | done |
+| Lord of Wolves | lord-of-wolves | done |
+| Loreley Splendor Helm | loreley-splendor-helm | done |
+| Lorentz Driver | lorentz-driver | done |
+| Loss of Light | loss-of-light | done |
+| Lost Legend | lost-legend | done |
+| Lost Pacific | lost-pacific | done |
+| Lost Signal | lost-signal | done |
+| Lucky Pants | lucky-pants | done |
+| Lucky Raspberry | lucky-raspberry | done |
+| Lumina | lumina | done |
+| Luminous Paragon | luminous-paragon | done |
+| Luna - 1 | luna-1 | done |
+| Luna - 2 | luna-2 | done |
+| Luna - 3 | luna-3 | done |
+| Luna - 4 | luna-4 | done |
+| Luna - 5 | luna-5 | done |
+| Luna - 6 | luna-6 | done |
+| Luna - 7 | luna-7 | done |
+| Luna - 8 | luna-8 | done |
+| Luna - 9 | luna-9 | done |
+| Lunafaction Boots | lunafaction-boots | done |
+| Luna's Howl | lunas-howl | done |
+| Luna's Howl | lunas-howl-2 | done |
+| LYSIS | lysis | done |
+| M-17 "Fast Talker" | m-17-fast-talker | done |
+| Machina Dei 4 | machina-dei-4 | done |
+| Magnetic Audiotape, 1962 | magnetic-audiotape-1962 | done |
+| Magnetic Audiovisual Tape, 1968 | magnetic-audiovisual-tape-1968 | done |
+| Magnolia | magnolia | done |
+| Malediction | malediction | done |
+| Malfeasance | malfeasance | done |
+| Mandate of Strength | mandate-of-strength | done |
+| Mantle of Battle Harmony | mantle-of-battle-harmony | done |
+| Mantle of Contests | mantle-of-contests | done |
+| Mark Judgment | mark-judgment | done |
+| Mark Judgment (CODA) | mark-judgment-coda | done |
+| Mark of Agony | mark-of-agony | done |
+| Mark of Contests | mark-of-contests | done |
+| Mark of Medal | mark-of-medal | done |
+| Mark of Nohr | mark-of-nohr | done |
+| Mark of Remembrance | mark-of-remembrance | done |
+| Mark of the Emperor's Champion | mark-of-the-emperors-champion | done |
+| Mark of the Great Hunt | mark-of-the-great-hunt | done |
+| Mark of the Taken King | mark-of-the-taken-king | done |
+| Mark Relentless | mark-relentless | done |
+| Mars - IV | mars-iv | done |
+| Martyr's Retribution | martyrs-retribution | done |
+| Mask of Bakris | mask-of-bakris | done |
+| Mask of Detestation | mask-of-detestation | done |
+| Mask of Fealty | mask-of-fealty | done |
+| Mask of Feltroc | mask-of-feltroc | done |
+| Mask of Nohr | mask-of-nohr | done |
+| Mask of Righteousness | mask-of-righteousness | done |
+| Mask of Rull | mask-of-rull | done |
+| Mask of Sekris | mask-of-sekris | done |
+| Mask of the Emperor's Agent | mask-of-the-emperors-agent | done |
+| Mask of the Flain | mask-of-the-flain | done |
+| Mask of the Fulminator | mask-of-the-fulminator | done |
+| Mask of the Great Hunt | mask-of-the-great-hunt | done |
+| Mask of the Quiet One | mask-of-the-quiet-one | done |
+| Mask of the Taken King | mask-of-the-taken-king | done |
+| Mask of Trepidation | mask-of-trepidation | done |
+| Mataiodoxía | mataiodoxia | done |
+| MCXII. | mcxii | done |
+| MCXLII. | mcxlii | done |
+| MCXLIII. | mcxliii | done |
+| MCXVII. | mcxvii | done |
+| MCXX. | mcxx | done |
+| MCXXV. | mcxxv | done |
+| MCXXXV. | mcxxxv | done |
+| Meaning | meaning | done |
+| Mechabre | mechabre | done |
+| Mechaneer's Tricksleeves | mechaneers-tricksleeves | done |
+| Medal Bond | medal-bond | done |
+| Medal Mantle | medal-mantle | done |
+| Medusa | medusa | done |
+| Mekone | mekone | done |
+| Melas Panoplia | melas-panoplia | done |
+| Memoranda, 1966 | memoranda-1966 | done |
+| Merciless | merciless | done |
+| Mercury-A | mercury-a | done |
+| Mercury - I | mercury-i | done |
+| Message from Aunor I | message-from-aunor-i | done |
+| Message from Aunor II | message-from-aunor-ii | done |
+| Message from Aunor III | message-from-aunor-iii | done |
+| Message from Aunor IV | message-from-aunor-iv | done |
+| Message from Aunor IX | message-from-aunor-ix | done |
+| Message from Aunor V | message-from-aunor-v | done |

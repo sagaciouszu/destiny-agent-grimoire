@@ -1,0 +1,13 @@
+# Merciless
+
+- Source: https://www.ishtar-collective.net/entries/merciless
+
+"The thought was simple enough—sync a weapon's firing and targeting systems to a caged onboard artificial intelligence programmed to actively seek fulfillment of the weapon's base driving function. Simply put, give the weapon an awareness of its purpose.
+
+"If the machine is meant to destroy, what would happen if we made it aware of its intended goal?
+
+"What would happen if it reacted to any failure to achieve that goal by focusing more intently on defining the parameters of said goal and adjusting its function to more aggressively seek out the successful execution of its purpose?
+
+"These are the questions we asked ourselves while engineering the initial prototype. The answers we found—I think you'll agree—were encouraging."
+
+– Incomplete record, author unknown

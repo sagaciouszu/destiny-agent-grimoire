@@ -1,5 +1,12 @@
 # Changelog
 
+## Session: Destiny 1 Grimoire Ingestion batch 14 (2026-11-01)
+
+### Added
+- 100 additional Destiny 1 grimoire cards (pages 71-75), total 1489 cards
+
+---
+
 ## Session: Destiny 1 Grimoire Ingestion batch 13 (2026-11-01)
 
 ### Added

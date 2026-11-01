@@ -1,0 +1,9 @@
+# Mask of Feltroc
+
+- Source: https://www.ishtar-collective.net/entries/mask-of-feltroc
+
+Feltroc, the Skull-Piercer, wore this last. A gun in her hands was a guarantee of victory. Whispers that my Shadows could kill from anywhere, as quickly as a spoken word, drew from her deeds.
+
+There is a tribe among Guardians with similar penchants for surgical strikes, is there not? Perhaps one of them could take her place.
+
+—Calus, Emperor of the Cabal

@@ -1,0 +1,27 @@
+# Message from Aunor I
+
+- Source: https://www.ishtar-collective.net/entries/message-from-aunor-i
+
+CORMORANT-LEVEL ENCRYPTED MESSAGE FOLLOWS. AUDIO UNAVAILABLE.
+
+My name is Aunor. I serve the Hidden and the Warlock Praxic Order. You and I have never met, but I hold you in high regard.
+
+You've accomplished wonders for this City, and humanity owes you a debt it cannot repay. A marvel for one so young.
+
+But, in true Guardian fashion, nothing you did for the City came from generosity.
+
+I think you want what everyone with power wants: more.
+
+The man called Drifter knows this. That man has done what past influencers could not: manipulate Guardians into dabbling with the dark.
+
+And yet the Vanguard stands by in silence.
+
+Commander Zavala and Ikora Rey know who he is and everything he stands for.
+
+They still let him bring his Gambit into the system. What's more, they have forbidden the Praxic Order from interfering.
+
+It's against everything the Praxics stand for. We won't abide it, and we're looking into his activities, building a case against him even the Vanguard can't ignore.
+
+Do me a favor. From one Guardian of this City to another.
+
+You're free to keep your business with him. Just give me the chance to convince you the Drifter's not to be trusted.

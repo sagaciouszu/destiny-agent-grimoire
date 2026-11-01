@@ -1,0 +1,9 @@
+# Mark Relentless
+
+- Source: https://www.ishtar-collective.net/entries/mark-relentless
+
+the edge of a system frays like string
+PATHS ARE CARVED BY MORE THAN RANGERS AND WAYFINDERS
+Out there in the remnants of old, the echo hums.
+W E H A D B E E N V I E W E D B E F O R E
+REMEMBER? DO YOU?

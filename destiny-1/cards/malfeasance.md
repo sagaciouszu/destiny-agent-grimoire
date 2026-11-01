@@ -1,0 +1,19 @@
+# Malfeasance
+
+- Source: https://www.ishtar-collective.net/entries/malfeasance
+
+Yes, I wrote you a note. I want you to burn this in your memory. If you're wielding this gun, I've already told you all this and more. But I want you to keep it fresh in mind.
+
+I want you to have this. You may need it. You and I have done a lot together in this system, and I hope and pray we'll get to do a lot more.
+
+It'll be a lot safer with you wearin' one of these. It's the culmination of a lot of things. Long time ago I set out to find a replacement for a weapon called Thorn. This will never be that, but to me, it's better. We built it together.
+
+And all of us, with this in hand? Even the Man with the Golden Gun should have pause.
+
+Maybe we can't out-shoot him. Maybe he can't be out-shot. But if we all take our shot together? We don't have to beat him to it.
+
+He'll die, too.
+
+Remember this. For when the day comes.
+
+—The Drifter
