@@ -1,0 +1,26 @@
+# Seventh Seraph Helmet
+
+- Source: https://www.ishtar-collective.net/entries/seventh-seraph-helmet
+
+Chapter 1: Out for Delivery
+
+Voronin nearly dropped the munitions he was carrying, which would have been a disaster for everyone in the vicinity. Certainly not as bad as whatever calamity they were prepping for, but bad enough to warrant the panic that coursed through his body. He hated these kinds of assignments.
+
+"Hey, Morozova!" Voronin called out to his ranking officer between heavy gasps. "Any idea where all these are going?"
+Morozova carefully placed her container on the ground, as if she was laying a child to bed. "No clue. Word just came from on high to double-time it, though. Something about Titan has got everyone spooked."
+
+Voronin removed his helmet and wiped the sweat from his brow. Titan? What the hell happened out there? Comms had been spotty and the orders that did get through were light on details: Procure munitions. Transpo munitions to coordinates provided. Stockpile munitions. Repeat. No HMMWVs either. This was meant to be low profile, staying off the roads.
+
+Where was all this firepower going, and what were we going to do with it when it got there? Voronin picked up his container and his pace.
+
+He trudged just shy of a click behind Morozova for what felt like hours. These containers were cumbersome and it was the height of the driest summer he could remember.
+
+When they reached their destination, they received a cursory greeting from Bykov, who was busy compiling a list of all the deliverables. Two soldiers, whom Voronin didn't recognize, were placing the containers in the mouth of a shaft that protruded from the ground. One punched in a command and the shipment vanished below the surface with a hollow pneumatic "whoomp."
+
+"Where does that go?" Voronin asked. Bykov's brows drew together and his expression hardened. He returned to his list.
+
+"Ready for the next round?" Morozova posed with more spunk than Voronin could muster in a year.
+
+"If we must."
+
+The sky grew gray, and clouds formed overhead as they left. Procure, repeat.

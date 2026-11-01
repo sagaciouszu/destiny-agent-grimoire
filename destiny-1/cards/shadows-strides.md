@@ -1,0 +1,17 @@
+# Shadow's Strides
+
+- Source: https://www.ishtar-collective.net/entries/shadows-strides
+
+You are one of them, so you must know:
+
+Whatever happened to that one of the Hunter-tribe who sought retribution on the Hive?
+
+Does she not frequent your Hunter dens?
+
+My scribes learned she was instrumental in the defeat of the Taken King, and before that, his son. By your hand.
+
+Send her my way if you see her. Please.
+
+I would so like to meet her.
+
+—Emperor Calus

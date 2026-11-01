@@ -1,0 +1,17 @@
+# Shadow's Greaves
+
+- Source: https://www.ishtar-collective.net/entries/shadows-greaves
+
+We found the Crown of Sorrow on a stray war moon. The Psions guessed that the ritual texts surrounding it claimed it was crafted in imitation of the Taken King's power to compel wills.
+
+It did the opposite, of course, and consumed my Loyalist Gahlran.
+
+That was my first encounter with the witch. She has been plaguing all my Loyalists since then, as a sort of viral language. Perhaps even you.
+
+But she can be beaten. The Hive are not true beings of the dark. Not compared to what I met at the black edge.
+
+Not compared to me.
+
+I shall find her and her Ascendant Plane before the end. And we will have words.
+
+—Emperor Calus

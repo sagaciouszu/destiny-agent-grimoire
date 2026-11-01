@@ -1,0 +1,13 @@
+# Shadow's Mark
+
+- Source: https://www.ishtar-collective.net/entries/shadows-mark
+
+Rull activated his staff's secondary configuration and fired a harpoon into Moli's exposed flank. The barbs pierced deep, and the giant beast of a Cabal let out a monstrous howl. Blind with pain, he began to run, dragging Rull behind like a harpooned whale dragging a ship.
+
+The honored Celebrant Moli ran through the streets of the Cabal homeworld on celebration day, howling in agony and dragging Rull behind. It was such a spectacle that no one was sure what exactly was happening or what to do about it.
+
+Moli ran all the way to Dominus Ghaul's ceremony and right up the steps before collapsing at his lord's feet. Rull realized that he now faced a choice—try to escape, or finish the job.
+
+Rull yanked out the harpoon before shoving it through Moli's neck. He had just enough time to pull off his helmet and smile in Ghaul's face before he was killed.
+
+Truly, Emperor Calus had delivered a warrior's paradise.

@@ -2,103 +2,103 @@
 
 | Card | Slug | Status |
 |---|---|---|
-| Resonant Fury Mask | resonant-fury-mask | done |
-| Resonant Fury Plate | resonant-fury-plate | done |
-| Resonant Fury Robes | resonant-fury-robes | done |
-| Resonant Fury Strides | resonant-fury-strides | done |
-| Resonant Fury Vest | resonant-fury-vest | done |
-| Restless Dreams | restless-dreams | done |
-| Restless Shell | restless-shell | done |
-| Restlessness | restlessness | done |
-| Resurrecting Flight | resurrecting-flight | done |
-| Retrocausality | retrocausality | done |
-| Retrofit Escapade | retrofit-escapade | done |
-| Retrofuturist | retrofuturist | done |
-| Revanche I | revanche-i | done |
-| Revanche II | revanche-ii | done |
-| Revanche III | revanche-iii | done |
-| Revanche IV | revanche-iv | done |
-| Revanche V | revanche-v | done |
-| Revelations and Invitations | revelations-and-invitations | done |
-| Revenant | revenant | done |
-| Reverie Dawn Bond | reverie-dawn-bond | done |
-| Reverie Dawn Boots | reverie-dawn-boots | done |
-| Reverie Dawn Casque | reverie-dawn-casque | done |
-| Reverie Dawn Cloak | reverie-dawn-cloak | done |
-| Reverie Dawn Gauntlets | reverie-dawn-gauntlets | done |
-| Reverie Dawn Gloves | reverie-dawn-gloves | done |
-| Reverie Dawn Grasps | reverie-dawn-grasps | done |
-| Reverie Dawn Greaves | reverie-dawn-greaves | done |
-| Reverie Dawn Hauberk | reverie-dawn-hauberk | done |
-| Reverie Dawn Helm | reverie-dawn-helm | done |
-| Reverie Dawn Hood | reverie-dawn-hood | done |
-| Reverie Dawn Mark | reverie-dawn-mark | done |
-| Reverie Dawn Plate | reverie-dawn-plate | done |
-| Reverie Dawn Strides | reverie-dawn-strides | done |
-| Reverie Dawn Tabard | reverie-dawn-tabard | done |
-| Revision Zero | revision-zero | done |
-| Revolution | revolution | done |
-| Riddled with Lies | riddled-with-lies | done |
-| Right Side of Wrong | right-side-of-wrong | done |
-| Rihk | rihk | done |
-| Riis Racer | riis-racer | done |
-| Riiswalker | riiswalker | done |
-| Rime-coat Raiment | rime-coat-raiment | done |
-| Rimed Shell | rimed-shell | done |
-| Ringer | ringer | done |
-| Risen | risen | done |
-| Riskrunner | riskrunner | done |
-| Rivalry Match | rivalry-match | done |
-| Riven | riven | done |
-| River | river | done |
-| Robes of Detestation | robes-of-detestation | done |
-| Robes of Sekris | robes-of-sekris | done |
-| Robes of the Emperor's Minister | robes-of-the-emperors-minister | done |
-| Robes of the Fulminator | robes-of-the-fulminator | done |
-| Robes of the Great Hunt | robes-of-the-great-hunt | done |
-| Robes of Transcendence | robes-of-transcendence | done |
-| Roll Call | roll-call | done |
-| Ronin Shell | ronin-shell | done |
-| Rose and Bone | rose-and-bone | done |
-| Roving | roving | done |
-| Royal Chase | royal-chase | done |
-| Royal Executioner | royal-executioner | done |
-| RRHAPHY | rrhaphy | done |
-| RRHEXIS | rrhexis | done |
-| Ruinous Effigy | ruinous-effigy | done |
-| Rumors | rumors | done |
-| Rustpiercer | rustpiercer | done |
-| Sage Protector Bond | sage-protector-bond | done |
-| Sage Protector Boots | sage-protector-boots | done |
-| Sage Protector Cloak | sage-protector-cloak | done |
-| Sage Protector Cover | sage-protector-cover | done |
-| Sage Protector Cowl | sage-protector-cowl | done |
-| Sage Protector Gauntlets | sage-protector-gauntlets | done |
-| Sage Protector Gloves | sage-protector-gloves | done |
-| Sage Protector Greaves | sage-protector-greaves | done |
-| Sage Protector Grips | sage-protector-grips | done |
-| Sage Protector Helm | sage-protector-helm | done |
-| Sage Protector Mark | sage-protector-mark | done |
-| Sage Protector Plate | sage-protector-plate | done |
-| Sage Protector Robes | sage-protector-robes | done |
-| Sage Protector Strides | sage-protector-strides | done |
-| Sage Protector Vest | sage-protector-vest | done |
-| Sagira's Shell | sagiras-shell | done |
-| Sails of Osiris | sails-of-osiris | done |
-| Sailspy Pitchglass | sailspy-pitchglass | done |
-| Saint-14's Gray Pigeon | saint-14s-gray-pigeon | done |
-| Saint's Invocation | saints-invocation | done |
-| Saint's Vocation | saints-vocation | done |
-| Salvager's Salvo | salvagers-salvo | done |
-| Salvation's Grip | salvations-grip | done |
-| Sanguine Alchemy | sanguine-alchemy | done |
-| Saturn - VI | saturn-vi | done |
-| Savin | savin | done |
-| Savin | savin-2 | done |
-| Say It with a Dawning Gift | say-it-with-a-dawning-gift | done |
-| Scalar Potential | scalar-potential | done |
-| Scales | scales | done |
-| Scales of the Flain | scales-of-the-flain | done |
-| Scatterhorn Bond | scatterhorn-bond | done |
-| Scatterhorn Boots | scatterhorn-boots | done |
-| Scatterhorn Cloak | scatterhorn-cloak | done |
+| Scatter Signal | scatter-signal | done |
+| Scatterhorn Gauntlets | scatterhorn-gauntlets | done |
+| Scatterhorn Grasps | scatterhorn-grasps | done |
+| Scatterhorn Greaves | scatterhorn-greaves | done |
+| Scatterhorn Helm | scatterhorn-helm | done |
+| Scatterhorn Hood | scatterhorn-hood | done |
+| Scatterhorn Mark | scatterhorn-mark | done |
+| Scatterhorn Mask | scatterhorn-mask | done |
+| Scatterhorn Plate | scatterhorn-plate | done |
+| Scatterhorn Robe | scatterhorn-robe | done |
+| Scatterhorn Strides | scatterhorn-strides | done |
+| Scatterhorn Vest | scatterhorn-vest | done |
+| Scatterhorn Wraps | scatterhorn-wraps | done |
+| Scavenger's Fate | scavengers-fate | done |
+| Schadenfreude | schadenfreude | done |
+| Scream-Eyed | scream-eyed | done |
+| Scribetrace Shell | scribetrace-shell | done |
+| Sealed Ahamkara Grasps | sealed-ahamkara-grasps | done |
+| Searching | searching | done |
+| SEAT OF RUIN | seat-of-ruin | done |
+| Secant Filaments | secant-filaments | done |
+| Second Chance | second-chance | done |
+| Second Gift | second-gift | done |
+| Second Wish | second-wish | done |
+| Sedderik Assur | sedderik-assur | done |
+| Seed of Silver Wings | seed-of-silver-wings | done |
+| Seeds and Cuttings | seeds-and-cuttings | done |
+| Seer Shell | seer-shell | done |
+| Sehrish | sehrish | done |
+| Semiotician | semiotician | done |
+| Semitone Shift | semitone-shift | done |
+| Sentinel | sentinel | done |
+| Sentinel | sentinel-2 | done |
+| Seraph Cipher | seraph-cipher | done |
+| Serpent's Glory Mantle | serpents-glory-mantle | done |
+| Service of Luzaku | service-of-luzaku | done |
+| Seventh Seraph Bond | seventh-seraph-bond | done |
+| Seventh Seraph Boots | seventh-seraph-boots | done |
+| Seventh Seraph Cloak | seventh-seraph-cloak | done |
+| Seventh Seraph Cowl | seventh-seraph-cowl | done |
+| Seventh Seraph Gauntlets | seventh-seraph-gauntlets | done |
+| Seventh Seraph Gloves | seventh-seraph-gloves | done |
+| Seventh Seraph Greaves | seventh-seraph-greaves | done |
+| Seventh Seraph Grips | seventh-seraph-grips | done |
+| Seventh Seraph Helmet | seventh-seraph-helmet | done |
+| Seventh Seraph Hood | seventh-seraph-hood | done |
+| Seventh Seraph Mark | seventh-seraph-mark | done |
+| Seventh Seraph Plate | seventh-seraph-plate | done |
+| Seventh Seraph Robes | seventh-seraph-robes | done |
+| Seventh Seraph Strides | seventh-seraph-strides | done |
+| Seventh Seraph Vest | seventh-seraph-vest | done |
+| Seventh Wish | seventh-wish | done |
+| Severance Enclosure | severance-enclosure | done |
+| Severing | severing | done |
+| Shadebinder | shadebinder | done |
+| Shadestalker Bond | shadestalker-bond | done |
+| Shadestalker Boots | shadestalker-boots | done |
+| Shadestalker Cape | shadestalker-cape | done |
+| Shadestalker Gauntlets | shadestalker-gauntlets | done |
+| Shadestalker Gloves | shadestalker-gloves | done |
+| Shadestalker Greaves | shadestalker-greaves | done |
+| Shadestalker Grips | shadestalker-grips | done |
+| Shadestalker Helm | shadestalker-helm | done |
+| Shadestalker Hood | shadestalker-hood | done |
+| Shadestalker Mark | shadestalker-mark | done |
+| Shadestalker Mask | shadestalker-mask | done |
+| Shadestalker Plate | shadestalker-plate | done |
+| Shadestalker Robes | shadestalker-robes | done |
+| Shadestalker Strides | shadestalker-strides | done |
+| Shadestalker Vest | shadestalker-vest | done |
+| Shadow on a Wall | shadow-on-a-wall | done |
+| Shadow Price | shadow-price | done |
+| Shadow Trespass | shadow-trespass | done |
+| Shadow's Bond | shadows-bond | done |
+| Shadow's Boots | shadows-boots | done |
+| Shadow's Cloak | shadows-cloak | done |
+| Shadow's Gauntlets | shadows-gauntlets | done |
+| Shadow's Gloves | shadows-gloves | done |
+| Shadow's Greaves | shadows-greaves | done |
+| Shadow's Grips | shadows-grips | done |
+| Shadow's Helm | shadows-helm | done |
+| Shadow's Mark | shadows-mark | done |
+| Shadow's Mask | shadows-mask | done |
+| Shadow's Mind | shadows-mind | done |
+| Shadow's Plate | shadows-plate | done |
+| Shadow's Robes | shadows-robes | done |
+| Shadow's Strides | shadows-strides | done |
+| Shadow's Vest | shadows-vest | done |
+| Shards of Galanor | shards-of-galanor | done |
+| Shattered Cipher | shattered-cipher | done |
+| Shayura's Wrath | shayuras-wrath | done |
+| SHE FALLS | she-falls | done |
+| SHE RISES | she-rises | done |
+| Shell of Gilgamesh | shell-of-gilgamesh | done |
+| Shinobu's Vow | shinobus-vow | done |
+| Showdown | showdown | done |
+| Shrewd Survivor Bond | shrewd-survivor-bond | done |
+| Shrewd Survivor Boots | shrewd-survivor-boots | done |
+| Shrewd Survivor Cloak | shrewd-survivor-cloak | done |
+| Shrewd Survivor Cover | shrewd-survivor-cover | done |

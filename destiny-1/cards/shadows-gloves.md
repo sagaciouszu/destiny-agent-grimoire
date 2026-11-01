@@ -1,0 +1,13 @@
+# Shadow's Gloves
+
+- Source: https://www.ishtar-collective.net/entries/shadows-gloves
+
+Integration of the Hive into the ranks of the new Empire has proven difficult.
+
+They need a guide. A handler. The Crown was supposed to solve this for us.
+
+Look at them run about the Menagerie, howling like convicts. Their antics amuse me, but they cannot be controlled. It pains me to think it, but perhaps the Hive shall be the first client species of the Empire with no Shadow.
+
+I'll need one of your Guardian-tribe to lead them. Some day. Of all the Lights, yours may be able to drive them, manipulate them. Their kind is drawn inexorably to masters of the Void.
+
+—Emperor Calus
