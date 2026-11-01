@@ -1,0 +1,11 @@
+# Fighting Lion
+
+- Source: https://www.ishtar-collective.net/entries/fighting-lion
+
+Wei Ning punched the mountain. It moved.  A microscopic shudder, but enough to make her punch it again. "They're just angry that you keep winning without a gun." Her Ghost danced fretfully around her fist. "That's why they say these things. Jealousy."
+
+"I tell you," Ning grunted, shattering granite, "someday they'll lose their smart guns and fancy ships, and then they'll wish they'd listened! There's one weapon you can always count on, and it's your strong hand."
+
+"Eriana would be sad to hear you dismissing machines." Her Ghost bobbed slyly up to her shoulder. "Eriana would ask if those mighty hands could build a machine in the image of your strength. Just like she was made in the image of a woman."
+
+Wei Ning tapped her fists together. "Huh," she said.

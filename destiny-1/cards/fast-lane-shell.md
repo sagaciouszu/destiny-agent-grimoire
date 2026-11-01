@@ -1,0 +1,23 @@
+# Fast Lane Shell
+
+- Source: https://www.ishtar-collective.net/entries/fast-lane-shell
+
+"I need a new project."
+
+"Disagree." Marcus's Ghost floated over to where he sat with his head down on his workbench, and gently bumped his temple. "I see three half-finished Sparrows in this room alone, and you still haven't done that thing Ikora asked you to do. You're plenty busy."
+
+Marcus tilted his head to glare at his Ghost. "Didi. Be serious."
+
+"I am."
+
+Marcus groaned.
+
+"Fine." Didi floated over to the wall where Marcus's bright red Sparrow-racing jacket dangled from a hook. "You know, I've always wanted one of these. For me."
+
+"Really?"
+
+"Is that weird?"
+
+"No!" Marcus jumped to his feet. "It's aces. Of course you need a racing shell. I'm going to make you the flashiest shell you've ever seen." He grabbed his Ghost out of the air and kissed her shell. "Thank you, Didi!"
+
+"You're the one—never mind." Didi bumped her Guardian's forehead affectionately. "You're welcome, Marcus."
