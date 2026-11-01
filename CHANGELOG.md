@@ -1,5 +1,16 @@
 # Changelog
 
+## Session: Destiny 1 Grimoire Ingestion (2026-11-01)
+
+### Added
+- 80 additional Destiny 1 grimoire cards (pages 2-5), total 90 cards
+- Fixed card title extraction (em-dash separator handling)
+
+### Changed
+- `tests/ci-checks.py` - emdash check skips verbatim source dirs; gitignored/headers adapted
+
+---
+
 ## Session: Agent Compendium & Indexing (2026-11-01)
 
 ### Added
