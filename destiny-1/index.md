@@ -2,103 +2,103 @@
 
 | Card | Slug | Status |
 |---|---|---|
-| Ticuu's Divination | ticuus-divination | done |
-| Tigerspite | tigerspite | done |
-| Tilt Fuse | tilt-fuse | done |
-| Time Lapse | time-lapse | done |
-| Timeless Bond | timeless-bond | done |
-| Timeworn Wayfarer | timeworn-wayfarer | done |
-| Tino | tino | done |
-| TM-Cogburn Custom Cover | tm-cogburn-custom-cover | done |
-| TM-Cogburn Custom Gauntlets | tm-cogburn-custom-gauntlets | done |
-| TM-Cogburn Custom Legguards | tm-cogburn-custom-legguards | done |
-| TM-Cogburn Custom Mark | tm-cogburn-custom-mark | done |
-| TM-Cogburn Custom Plate | tm-cogburn-custom-plate | done |
-| TM-Earp Custom Chaps | tm-earp-custom-chaps | done |
-| TM-Earp Custom Cloaked Stetson | tm-earp-custom-cloaked-stetson | done |
-| TM-Earp Custom Grips | tm-earp-custom-grips | done |
-| TM-Earp Custom Hood | tm-earp-custom-hood | done |
-| TM-Earp Custom Vest | tm-earp-custom-vest | done |
-| TM-Moss Custom Bond | tm-moss-custom-bond | done |
-| TM-Moss Custom Duster | tm-moss-custom-duster | done |
-| TM-Moss Custom Gloves | tm-moss-custom-gloves | done |
-| TM-Moss Custom Hat | tm-moss-custom-hat | done |
-| TM-Moss Custom Pants | tm-moss-custom-pants | done |
-| To All Guardians | to-all-guardians | done |
-| To Asher Mir | to-asher-mir | done |
-| To Be Remembered | to-be-remembered | done |
-| To Ikora Rey | to-ikora-rey | done |
-| To Map the Unknown | to-map-the-unknown | done |
-| To My Queen | to-my-queen | done |
-| To Osiris | to-osiris | done |
-| To the Drifter | to-the-drifter | done |
-| To the Stranger | to-the-stranger | done |
-| To the Witch Queen | to-the-witch-queen | done |
-| To Zavala | to-zavala | done |
-| Toland I | toland-i | done |
-| Tomb Rider | tomb-rider | done |
-| Tommy's Matchbook | tommys-matchbook | done |
-| Tomorrow | tomorrow | done |
-| Tomorrow's Answer | tomorrows-answer | done |
-| Tomorrow's Answer | tomorrows-answer-2 | done |
-| Torn Journal Page, 1968 | torn-journal-page-1968 | done |
-| Touch of Malice | touch-of-malice | done |
-| Trackless Waste | trackless-waste | done |
-| Tractor Cannon | tractor-cannon | done |
-| Tradition Is Bigger Than You | tradition-is-bigger-than-you | done |
-| Traitor's Fate | traitors-fate | done |
-| Transfiguration | transfiguration | done |
-| Transformations of Matter | transformations-of-matter | done |
-| Transversive Steps | transversive-steps | done |
-| Trauermarsch | trauermarsch | done |
-| Traveler's Chosen | travelers-chosen | done |
-| Traveler's Judgment 5 | travelers-judgment-5 | done |
-| Treacherous Contacts | treacherous-contacts | done |
-| Trespasser | trespasser | done |
-| Trichromatica | trichromatica | done |
-| Trinity Ghoul | trinity-ghoul | done |
-| Tripwire Canary | tripwire-canary | done |
-| Triton Vice | triton-vice | done |
-| Tropopause | tropopause | done |
-| Trust and Hope | trust-and-hope | done |
-| Truth | truth | done |
-| Truth Tinkered | truth-tinkered | done |
-| Turmoil Engine | turmoil-engine | done |
-| Turn | turn | done |
-| Turncoat | turncoat | done |
-| Turris Shade Gauntlets | turris-shade-gauntlets | done |
-| Turris Shade Greaves | turris-shade-greaves | done |
-| Turris Shade Helm | turris-shade-helm | done |
-| Turris Shade Mark | turris-shade-mark | done |
-| Turris Shade Plate | turris-shade-plate | done |
-| Tusked Allegiance Bond | tusked-allegiance-bond | done |
-| Tusked Allegiance Boots | tusked-allegiance-boots | done |
-| Tusked Allegiance Cloak | tusked-allegiance-cloak | done |
-| Tusked Allegiance Gauntlets | tusked-allegiance-gauntlets | done |
-| Tusked Allegiance Gloves | tusked-allegiance-gloves | done |
-| Tusked Allegiance Greaves | tusked-allegiance-greaves | done |
-| Tusked Allegiance Grips | tusked-allegiance-grips | done |
-| Tusked Allegiance Helmet | tusked-allegiance-helmet | done |
-| Tusked Allegiance Hood | tusked-allegiance-hood | done |
-| Tusked Allegiance Mark | tusked-allegiance-mark | done |
-| Tusked Allegiance Mask | tusked-allegiance-mask | done |
-| Tusked Allegiance Plate | tusked-allegiance-plate | done |
-| Tusked Allegiance Robes | tusked-allegiance-robes | done |
-| Tusked Allegiance Strides | tusked-allegiance-strides | done |
-| Tusked Allegiance Vest | tusked-allegiance-vest | done |
-| Twelfth Wish | twelfth-wish | done |
-| Twilight Oath | twilight-oath | done |
-| Two Cells | two-cells | done |
-| Two-Tailed Fox | two-tailed-fox | done |
-| Tymbal Lucidae | tymbal-lucidae | done |
-| Tyrannocide I | tyrannocide-i | done |
-| Tyrannocide II | tyrannocide-ii | done |
-| Tyrannocide III | tyrannocide-iii | done |
-| Tyrannocide IV | tyrannocide-iv | done |
-| Tyrannocide V | tyrannocide-v | done |
-| Tyranny of Heaven | tyranny-of-heaven | done |
-| UESC Echo-type Shell | uesc-echo-type-shell | done |
-| UESC Rover | uesc-rover | done |
-| UESC Sprinter | uesc-sprinter | done |
-| Ulterior Observation | ulterior-observation | done |
-| Unanswered Ante Shell | unanswered-ante-shell | done |
+| Unanswered Questions | unanswered-questions | done |
+| Unauthorized Departure | unauthorized-departure | done |
+| UNBORN | unborn | done |
+| Unbound Astronaut Shell | unbound-astronaut-shell | done |
+| Unbridled Iridescence | unbridled-iridescence | done |
+| Uncivil Discourse | uncivil-discourse | done |
+| Undefeated | undefeated | done |
+| Undeterred | undeterred | done |
+| Uneasy Feeling | uneasy-feeling | done |
+| Unexpected Resurgence | unexpected-resurgence | done |
+| Unfamiliar | unfamiliar | done |
+| Unfinal Shapes | unfinal-shapes | done |
+| Unforeseen Consequences | unforeseen-consequences | done |
+| Unforgiven | unforgiven | done |
+| Unified Theory | unified-theory | done |
+| Universal Wavefunction | universal-wavefunction | done |
+| Unknown Space | unknown-space | done |
+| unsecured/OUTCRY | unsecuredoutcry | done |
+| Untamed | untamed | done |
+| Untethered Edge Bond | untethered-edge-bond | done |
+| Untethered Edge Boots | untethered-edge-boots | done |
+| Untethered Edge Cape | untethered-edge-cape | done |
+| Untethered Edge Gauntlets | untethered-edge-gauntlets | done |
+| Untethered Edge Gloves | untethered-edge-gloves | done |
+| Untethered Edge Greaves | untethered-edge-greaves | done |
+| Untethered Edge Grips | untethered-edge-grips | done |
+| Untethered Edge Helm | untethered-edge-helm | done |
+| Untethered Edge Hood | untethered-edge-hood | done |
+| Untethered Edge Mark | untethered-edge-mark | done |
+| Untethered Edge Mask | untethered-edge-mask | done |
+| Untethered Edge Plate | untethered-edge-plate | done |
+| Untethered Edge Robes | untethered-edge-robes | done |
+| Untethered Edge Strides | untethered-edge-strides | done |
+| Untethered Edge Vest | untethered-edge-vest | done |
+| Until Its Return | until-its-return | done |
+| Unwavering Duty | unwavering-duty | done |
+| Uprising | uprising | done |
+| Uranus - VII | uranus-vii | done |
+| Ursa Furiosa | ursa-furiosa | done |
+| V: A Sinister Plot | v-a-sinister-plot | done |
+| V. As a Stranger Give It Welcome | v-as-a-stranger-give-it-welcome | done |
+| V - CREDIBLE THREAT | v-credible-threat | done |
+| V: Echoes Followed by Silence | v-echoes-followed-by-silence | done |
+| V - Eris Morn - Mimesis | v-eris-morn-mimesis | done |
+| Valiant Memory | valiant-memory | done |
+| Valus Forge's Epilogue | valus-forges-epilogue | done |
+| Valus Forge's Prologue | valus-forges-prologue | done |
+| Vance: Auspex | vance-auspex | done |
+| Vance: Canary | vance-canary | done |
+| Vance: Passeri | vance-passeri | done |
+| Vanguard Armor | vanguard-armor | done |
+| Vanguard Dare Cloak | vanguard-dare-cloak | done |
+| Vanishing Point | vanishing-point | done |
+| Vantage Point | vantage-point | done |
+| V-Brevity Code | vbrevity-code | done |
+| Veiled Threat | veiled-threat | done |
+| Veiled Tithes Bond | veiled-tithes-bond | done |
+| Veiled Tithes Boots | veiled-tithes-boots | done |
+| Veiled Tithes Cloak | veiled-tithes-cloak | done |
+| Veiled Tithes Gauntlets | veiled-tithes-gauntlets | done |
+| Veiled Tithes Gloves | veiled-tithes-gloves | done |
+| Veiled Tithes Greaves | veiled-tithes-greaves | done |
+| Veiled Tithes Grips | veiled-tithes-grips | done |
+| Veiled Tithes Helm | veiled-tithes-helm | done |
+| Veiled Tithes Hood | veiled-tithes-hood | done |
+| Veiled Tithes Mark | veiled-tithes-mark | done |
+| Veiled Tithes Mask | veiled-tithes-mask | done |
+| Veiled Tithes Plate | veiled-tithes-plate | done |
+| Veiled Tithes Robes | veiled-tithes-robes | done |
+| Veiled Tithes Strides | veiled-tithes-strides | done |
+| Veiled Tithes Vest | veiled-tithes-vest | done |
+| Veles-X | veles-x | done |
+| Venus - II | venus-ii | done |
+| Verglas Curve | verglas-curve | done |
+| Verity's Brow | veritys-brow | done |
+| Vermicular Mandible | vermicular-mandible | done |
+| Vesper of Radius | vesper-of-radius | done |
+| Vespulaser | vespulaser | done |
+| Vest of Feltroc | vest-of-feltroc | done |
+| Vest of the Ace-Defiant | vest-of-the-ace-defiant | done |
+| Vest of the Emperor's Agent | vest-of-the-emperors-agent | done |
+| Vest of the Great Hunt | vest-of-the-great-hunt | done |
+| Vest of the Taken King | vest-of-the-taken-king | done |
+| Vest of Transcendence | vest-of-transcendence | done |
+| Vest of Trepidation | vest-of-trepidation | done |
+| Vestment of the Taken King | vestment-of-the-taken-king | done |
+| Veteran Legend Bond | veteran-legend-bond | done |
+| Veteran Legend Boots | veteran-legend-boots | done |
+| Veteran Legend Casque | veteran-legend-casque | done |
+| Veteran Legend Cloak | veteran-legend-cloak | done |
+| Veteran Legend Gauntlets | veteran-legend-gauntlets | done |
+| Veteran Legend Gloves | veteran-legend-gloves | done |
+| Veteran Legend Grasps | veteran-legend-grasps | done |
+| Veteran Legend Greaves | veteran-legend-greaves | done |
+| Veteran Legend Helm | veteran-legend-helm | done |
+| Veteran Legend Hood | veteran-legend-hood | done |
+| Veteran Legend Mark | veteran-legend-mark | done |
+| Veteran Legend Plate | veteran-legend-plate | done |
+| Veteran Legend Robes | veteran-legend-robes | done |
+| Veteran Legend Strides | veteran-legend-strides | done |
