@@ -224,9 +224,21 @@ Ingestion status per book. Status: pending | in-progress | done | partial.
 |---|---|---|---|
 | The Maraid | book-the-maraid | done | 11 entries |
 
+## Compendium (Agent-Optimized)
+- `compendium/index.md` - character line index (18 major + 11 minor characters, 1070 lines)
+- `compendium/characters/<slug>.md` - per-character dialogue files
+- `compendium/characters/minor.md` - characters with fewer than 5 lines
+
+## Destiny 1 (In Progress)
+- `destiny-1/README.md` - grimoire ingestion in progress (10 cards ingested, ~4000+ pending)
+- `destiny-1/index.md` - ingested card index
+- `destiny-1/cards/<slug>.md` - individual card text
+- Status: in-progress | Source: Ishtar Collective Grimoire Cards
+
+
 ---
 
-**Progress: 109 / ~100+ books ingested.**
+**Progress: 110 / 110 books ingested (Destiny 2). Destiny 1: 10 / ~4000+ cards ingested.**
 **Transcripts: 68 ingested (51 original + 17 additional from YouTube/Destinypedia).**
 **Last Scrape:** 2026-10-30 | **Last Major Update:** Renegades (Dec 2, 2025) | **Patch:** Year of Prophecy (Season 28) | **Content Through:** Renegades campaign, Glory Beyond, Tapes, Imperium, Lawless Frontier
 **Transcript index: transcripts/index.md (6-dimensional: by arc, by beat, by character, by release, by topic, by source)**

@@ -1,0 +1,270 @@
+# Eris Morn
+
+> **Depends On:** compendium/index.md
+> **Token Estimate:** ~6633 tokens
+
+> Lines: 260 | Sources: transcripts
+> Agent use: pull character voice, quotes, interaction patterns.
+
+## Lines
+
+- "She did possess great ambition. (about Wei Ning)" - additional-edge-of-fate-contact-drifter
+- "You did well to find this point of infestation." - contact-io
+- "The Darkness changes its environment as the Traveler did." - contact-io
+- "You are our hand in the field, Guardian. Charge the Seed so that we may interpret the Darkness' intentions." - contact-io
+- "The Seed's corruption is a necessity, and a deed better left in noble hands. See it done." - contact-io
+- "First plundered by Cabal, now beset with the rot of Darkness. Even the purity once endowed by the Traveler wavers." - contact-io
+- "Do you sense the gravity here, Guardian? A sullen pit that sinks to spoil. The Pyramids bring entropy, and we will restore order." - contact-io
+- "The great game is in motion. Charge the Seed so that we may commune once more with the Dark." - contact-io
+- "The Pyramid reaches out. Contain it!" - contact-io
+- "They seek strength, as we do. Though they lack the constitution to control it." - contact-io
+- "This is different. The Nightmares were simply an interpretation. What we have before us is the source, directly viewed, and not to be underestimated." - contact-io
+- "We cannot lose this position, Guardian. Savathûn's clutches tighten if we hesitate." - contact-io
+- "Io is a sacred place, not a slop hall for haggard buzzards." - contact-io
+- "Guardian, you are not alone. Our foes seek to claim power from the Darkness." - contact-io
+- "Yes. Contain the spread of this infestation, and we will utilize what we capture to decipher the Pyramid's intentions." - contact-io
+- "The Darkness tempts our aggressors with promises of power. Are they fodder? An offering to our cause?" - contact-io
+- "The Warmind's fall was unsettling. The Darkness would not have approached had Rasputin been a credible threat. We were fools to expect anything less." - contact-io
+- "Commander Zavala has far more to orchestrate than a back-alley brawl, rat." - contact-io
+- "Oh? Is that why you're here? Some noble vocation?" - contact-io
+- "Absolutely not." - contact-io
+- "If we tap this font of power, others will come to challenge. Collect whatever Darkness they hold." - contact-io
+- "Staunch the flow of Darkness, Guardian." - contact-io
+- "Guardian. Our foes mean to interrupt our work. Cut them down." - contact-io
+- "Power. One last gasp before they fade into obscurity." - contact-io
+- "Invaders, typically, are not afforded pity." - contact-io
+- "Savathûn seeks to disrupt. Work with purpose, before there is nothing left to salvage." - contact-io
+- "There's still space on the outskirts, Drifter, should you wish to observe rather than act." - contact-io
+- "Guardian -" - contact-io
+- "Good Luck." - contact-io
+- "The denizens of this world swarm to stake their claims. Show them what comes from their recklessness." - contact-io
+- "Our attempt at alignment has drawn attention." - contact-io
+- "Savathûn obscures our vision. Fear not the Witch Queen's tricks, Little Light." - contact-io
+- "I feel their hooks…at every moment, Little Light." - contact-io
+- "Taken! Destroy them, Guardian." - contact-io
+- "Pawns of the Witch Queen! Protect the contraption!" - contact-io
+- "Taken scouts. Wipe them away before Savathûn takes notice!" - contact-io
+- "Savathûn's pets swarm our containment unit!" - contact-io
+- "The Witch Queen's wretched marionette, and upon its tongue, her violent regards." - contact-io
+- "They come for the Seed. Savathûn commands great strength to wield Quria so. The Seed must survive. Fight well." - contact-io
+- "She has found us! Drawn to the coalescing Dark. Stand fast!" - contact-io
+- "Guardian, the Taken draw power from nearby infestations of Darkness. They must not stop us now." - contact-io
+- "The witch sends a sword. Brash. Is this desperation or a show of strength?" - contact-io
+- "Savathûn… our actions have sent reverberations through her web. Prepare yourself, Guardian. This battle is not over." - contact-io
+- "Pull back your contraption. The Taken have found us!" - contact-io
+- "New growths, Guardian. They sustain this Taken monstrosity. Break them." - contact-io
+- "Zavala? Our operation is progressing. In time, the answers will be made clear." - contact-io
+- "I…" - contact-io
+- "As it should be, old friend." - contact-io
+- "The Pyramid on the Moon was a herald, of that I am sure. Thanks to their efforts, we will soon know more of their message." - contact-io
+- "Why have they not simply ended it? Do they fear us so little? Or, like the Seed, is our cultivation not yet complete?" - contact-io
+- "You have moved us forward. And yet, my mind rests on one thought. Why not simply press us at the City? Do they suspect such an act would awaken the Traveler? We must find answers." - contact-io
+- "The Pyramids cast wide shadows. I sometimes find myself adrift in them. Eriana would tell me: a Light can never be lost, for they are the beacons by which others find their way." - contact-io
+- "It did not take them long to arrive once the Undying Mind was slain. They were close. Bearing witness. Perched along our borders with patient determination…and we did nothing." - contact-io
+- "Well done. Our answer draws ever nearer." - contact-io
+- "The Jovian monarch… its steady presence falters against the Pyramid; pushed away on gentle ripples. Darkness burrows into the cosmic fabric here, emanating distance and entropy. This is not a product of design. It is their nature to divide." - contact-io
+- "The Seed wilts. Do you feel it? See it blench against grander purpose? A cost to all things, Guardian. Debts paid." - contact-io
+- "We find ourselves one turn closer to an unveiling. The message clarifies, but one page is not enough. We will need volumes." - contact-io
+- "Return to us when you have intercepted another message. Savathûn cannot deny us forever." - contact-io
+- "Well done. Savathûn's hold loosens ever so slightly." - contact-io
+- "Savathûn's incantations break momentarily, but there is still much to uncover. You have done well to empower the Seed, Guardian." - contact-io
+- "Under the presumption that you'd survive long enough to pay the dividends?" - contact-io
+- "Like rats on sinking ships." - contact-io
+- "Our sorrows are winds and storms, rat. Violent. But passing." - contact-io
+- "It's a title." - contact-io
+- "To pull the Darkness from our foes… It is not an act I take lightly. We have no other choice but to align the Seed." - contact-io
+- "Go on." - contact-io
+- "Why?" - contact-io
+- "The stars whisper your name, Germaine. Truth seeks you." - contact-io
+- "And yet, I see only a meretricious rogue." - contact-io
+- "Hmm." - contact-io
+- "Hmm." - contact-io
+- "Is that so? Of all the vaults in the City, none held any value for you?" - contact-io
+- "And yet here you are." - contact-io
+- "I wonder what Saint-14 would do if we unleashed him on the Pyramids. He never did get to face his army of Darkness." - contact-io
+- "Perhaps it is better to leave him atop his Lighthouse sifting wheat from chaff." - contact-io
+- "I didn't take you as the type to swoon." - contact-io
+- "She was a treasure. You knew her?" - contact-io
+- "She did possess great ambition." - contact-io
+- "I'll speak with him. He's… in a foul mood." - contact-io
+- "He chose to find a way to live." - contact-io
+- "You know a great deal about biding time, don't you?" - contact-io
+- "I know enough to say Asher Mir is wrong." - contact-io
+- "He theorized several versions of their composition, destructive capabilities, numbers. As terrifying as Asher's theories seemed at the time, he never imagined a scenario in which they came in peace." - contact-io
+- "When we decipher the next message, I will inform the Hidden. Together, we will make sense of the Pyramid's arrival." - contact-io
+- "Ikora leads the City in siege preparations. She hasn't time to speak." - contact-io
+- "Clearing space in your doomsday shelter already? Aren't you tired of cowering under floorboards, relying on hope and prayers?" - contact-io
+- "Why are you not there now?" - contact-io
+- "Quicken your pace, both of you. Soon our prize will be spent, and there are miles to go before we rest." - contact-io
+- "Something has shifted. Io is not as it was before." - contact-io
+- "It's the life that once was. It is pale. Gaunt. In retreat." - contact-io
+- "Our work has produced more foot traffic, more dust, I'm sure." - contact-io
+- "Zavala can… tend towards micromanagement." - contact-io
+- "Enough. Bickering does not serve us." - contact-io
+- "We are overwhelmed. Retreat, and we will prepare ourselves better for the next assault." - contact-io
+- "We are not able to win every engagement. There will be another chance, of that I am sure." - contact-io
+- "Bah! There's no point continuing this attempt. Regroup. There's more battles to come." - contact-io
+- "We cannot hold this position any longer without risking our work. Take what we have and leave." - contact-io
+- "We believe it originated from the Dreadnaught. Oryx's flagship… the throne of a king long deposed." - echoed-warnings-espial
+- "Go to Trostland, Guardian. The corruption that spread from the Dreadnaught must be found and cut out. And the Drifter and I will staunch its source." - echoed-warnings-espial
+- "Rifts, yes. I fear the Taken may not be as leaderless as we hoped. But if the Hive sisters had the inclination, they would have grasped control by now. A Taken Queen. A crown unclaimed does not sit idle long." - echoed-warnings-espial
+- "Flayed of its living flesh." - echoed-warnings-espial
+- "Inside its fetid halls once again. Even without its navigator, this ship holds many terrors." - echoed-warnings-espial
+- "Its flesh is being consumed by Taken decay." - echoed-warnings-espial
+- "We cannot allow this. Drifter, with me." - echoed-warnings-espial
+- "An anchor, deployed from the Dreadnaught. Is it attempting to Take the planet? No, an eversion!" - echoed-warnings-espial
+- "Remove the Taken! Send them screaming into the Ascendant Plane!" - echoed-warnings-espial
+- "The anchor is exposed. Guardian, approach with caution." - echoed-warnings-espial
+- "The Eversion Anchor has pulled the Guardian to its point of origin." - echoed-warnings-recce
+- "Guardian. We have discovered a piece of the Tablets of Ruin." - echoed-warnings-recce
+- "Someone - no. Taken! Get back!" - echoed-warnings-recce
+- "[gasps] I sense a familiar presence. Fingertips on the surface… No. This is new… Something's wrong! We must find the Guardian." - echoed-warnings-recce
+- "[grunts in pain] Vile… creature!" - echoed-warnings-recce
+- "[gasps, breathes raggedly in pain]" - echoed-warnings-recce
+- "[gasps] [inhales shakily] [exhales] [pants] [laughs joyously] [laughter fades away]" - echoed-warnings-recce
+- "We have you. Take him." - glory-beyond-additional-drifter-dialogue
+- "You were never at risk of losing yourself the Nine." - glory-beyond-additional-drifter-dialogue
+- "Nevertheless, Dredgen Bael remains on the loose. Dark Guardian cells across the system are resurgent." - glory-beyond-additional-drifter-dialogue
+- "And what will you do about it?" - glory-beyond-additional-drifter-dialogue
+- "A worthy pursuit… Here. To replace what you lost." - glory-beyond-additional-drifter-dialogue
+- "A token to remind you that wherever you are… you have a home to come back to. And a fireteam to welcome you." - glory-beyond-additional-drifter-dialogue
+- "Unlikely." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "He had good reason to put a crew together and move quickly. A vision. I was called off my post and thrown into a rescue mission for a former criminal because Drifter had a vision. This is a lot of risk to save one reckless criminal. We already have the Imperium's data. a criminal." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "You know he has not been such for some time. Anor, you claim to know his heart. But he stood for us on Kepler as he has many times. Maybe, but he didn't do the leg work on the data he stole. It's hard not to think it's a con like it always is. Still, he has stayed between the lines these last few years. I'll give him the chance to explain himself." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "Are you all right?" - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "This is the soul of a celestial body. One of the nine. They are speaking without the emissary. You've done well to find him, Guardian. My new throne may be able to assist us against the Nine." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "And yours? If Lodi was unaware that a nine uplifted a Dredgen, what information could he possibly have? Three of the nine is dead. Turmoil is brewing on Earth. The Drifter's vision is nine in origin. and you refuse help. The god of vengeance doesn't need an emissary." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "No, I'm not going to ditch you for him. Can't you have a little faith?" - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "He isn't the mentor you want. The Drifter left your cult long ago." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "Not mockery, continuity. I carry the mantle now. And I know you, Aunor. You're a Praxic warlock. You crave justice. Why die for a criminal?" - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "No more questions." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "What do you think you're doing, rat?" - mysterious-disturbance-prophecy-dungeon-introduction
+- "You're a fool if you think I'll let you run amok in the Nine Realms with the Guardian in tow." - mysterious-disturbance-prophecy-dungeon-introduction
+- "Prepare to expand your mind, Guardian." - prophecy
+- "I would love to kill you." - prophecy
+- "The Nine can see the weft and weave of fate. Eyes up. There is much to learn from them." - prophecy
+- "Guardian, do you read?" - prophecy
+- "You need a handler, rat. And the Guardian needs support." - prophecy
+- "The Pyramids call, and so relics of the Dark shall respond." - prophecy
+- "The Tower is on edge. Distracted. For once, I can work unabated." - prophecy
+- "Guardian? Where are you? That looks like a slice of Titan." - prophecy
+- "No. It has eyes on you. It knows what you did on Titan. But… What are the Nine trying to say?" - prophecy
+- "What?" - prophecy
+- "Sloane claims she lets you roam free at the Deep Six refineries." - prophecy
+- "The Vanguard trusts you in ways I will never understand." - prophecy
+- "It's a trust we can use." - prophecy
+- "What?" - prophecy
+- "What a senseless question." - prophecy
+- "Stay off this channel. Should I need you, I'll call - wait." - prophecy
+- "Does that oaf still keep that skull with him?" - prophecy
+- "Desperate times. This… 'lil ditty. Did it go… ? [hums]" - prophecy
+- "Savathûn's Song. It's a viral chant. It can never be unheard. Now that Savathûn has announced herself, relics of the Dark across the system have begun to awaken… Tell Shaxx to remove that Skull immediately." - prophecy
+- "What did that oaf say?" - prophecy
+- "This looks like the New Pacific Arcology." - prophecy
+- "The Hive nest there, in the ruins of the Golden Age. And a leviathan of untold strength has made it her home." - prophecy
+- "The Hive are the children of Darkness. As we are of the Light. I'll speak to Sloane. Maybe she's seen something." - prophecy
+- "What?" - prophecy
+- "I have no idea who you're talking about." - prophecy
+- "It's like they carved a sector of Mercury onto this plane. Saint and Osiris need to hear about this." - prophecy
+- "I don't fathom." - prophecy
+- "What do you mean news travels slow between Saint and Osiris?" - prophecy
+- "That doesn't mean they don't." - prophecy
+- "I know it. What would you do if your loved ones returned?" - prophecy
+- "Exactly. The pigeon and the phoenix exalt in their own way. Leave them be." - prophecy
+- "Who?" - prophecy
+- "Wouldn't be sittin' here flappin' gums with you." - prophecy
+- "This looks like Mercury. But no traces of Osiris's Light. Or Saint's. It's a counterfeit." - prophecy
+- "It must be part of their answer to the question. How insufferable." - prophecy
+- "What do you seek? A means to walk the corridors of time? Haven't you learned from Osiris' mistake?" - prophecy
+- "Were you saying something, rat? My channel cut out." - prophecy
+- "Rat." - prophecy
+- "What do you seek here, in this oubliette of the Nine?" - prophecy
+- "Does Zavala know you're here:" - prophecy
+- "You watch the Emissary. And vice versa. What do the Nine want with you?" - prophecy
+- "With a slice of the Nine Realms attached to your cargo bay." - prophecy
+- "This reminds me of the Quarry near Asher's lab." - prophecy
+- "This is the last place the Traveler touched in our solar system. Perhaps the Darkness wishes to undo the work of the Traveler. What are the Nine trying to say with this? Is this their answer to the question?" - prophecy
+- "Or the Moon. Depending on the weather." - prophecy
+- "All of what?" - prophecy
+- "It hasn't come to that. Not yet." - prophecy
+- "It hasn't been dark enough." - prophecy
+- "We'll live in the night if we have to. I've been there before. So have you. So has the Guardian." - prophecy
+- "No. But necessary. For what follows." - prophecy
+- "Dawn." - prophecy
+- "What is it now?" - prophecy
+- "The City scholars publish a new dictionary every couple of years…" - prophecy
+- "Uh huh." - prophecy
+- "I'm surprised you can read." - prophecy
+- "Ikora and Zavala are dear friends. Even if we don't always see eye to eye… to eye." - prophecy
+- "Ghostless or not, my objectives would not change." - prophecy
+- "And you think those with Ghosts do?" - prophecy
+- "Rasputin?" - prophecy
+- "There's no humor in that. Rasputin murdered the Iron Lords. Stayed in the shadows to save himself as humankind burned." - prophecy
+- "Darkness has encroached Mars." - prophecy
+- "Ana's working on bringing the Warmind back online. Have faith." - prophecy
+- "The two of you think alike. Her plan might surprise you." - prophecy
+- "She doesn't want to impress you. No one does." - prophecy
+- "Perhaps it's Ana Bray they're watching." - prophecy
+- "What seat?" - prophecy
+- "[laughs] Look at the Hunters, rat. Your question answers itself." - prophecy
+- "He is welcome to try." - prophecy
+- "Rat!" - prophecy
+- "Rasputin prevented an extinction-level event when he smashed the Almighty above the City." - prophecy
+- "And for now the Warmind is gone. What will we do the next time the clock strikes midnight?" - prophecy
+- "That Eris perished in the tunnels under the Moon, along with her Ghost and her friends. She died not knowing whether anything in this universe could bring hope against the likes of Crota and the Hive. She had the Light. And it was not enough." - prophecy
+- "She died with hope in her grasp. With that hope came one last life." - prophecy
+- "Some people are fools." - prophecy
+- "She should learn from you?" - prophecy
+- "Then we learned nothing." - prophecy
+- "Zavala will disagree." - prophecy
+- "Light and Dark are not the same." - prophecy
+- "That's your answer? That's incomprehensible." - prophecy
+- "Which part?" - prophecy
+- "We have research to conduct, rat. You drag the Guardian into another mess like this, and I'll push you through an airlock." - prophecy
+- "Rat. You're useless." - prophecy
+- "So you do understand the stakes of this reality. And you allowed the rat to lead the Guardian into dire straits. The person you were would never have allowed this to come to pass." - prophecy
+- "If that's true, I would have you pass a word to the Nine." - prophecy
+- "Run." - prophecy
+- "Frenzied creatures swarm the tree once more. Do not let them keep us from the message of the Pyramids." - quest-interference-means-to-an-end-week-5
+- "The servants of Savathûn fight to keep us from the messages of Darkness. Use the Seed to dispel their foul influence." - quest-interference-means-to-an-end-week-5
+- "Savathûn's forces reach toward the Darkness. Use the Seed to burn them away." - quest-interference-means-to-an-end-week-5
+- "Savathûn's influence over the Cradle grows. Retake the Tree of Silver Wings." - quest-interference-means-to-an-end-week-5
+- "The Pyramids speak to us, but Savathûn's forces interfere. Banish them so our studies can continue." - quest-interference-means-to-an-end-week-5
+- "Enemies of the Light swarm the roots of the great tree. Bring the Seed and banish them once more." - quest-interference-means-to-an-end-week-5
+- "Savathûn's forces attack the Cradle. Destroy them, and use the Seed to reveal the secrets that sleep within." - quest-interference-means-to-an-end-week-5
+- "Nokris is but a grave-sewn puppet. Believe nothing you hear in this place, Guardian. Fight well." - quest-interference-means-to-an-end-week-5
+- "Interesting. This phrasing is directed at an equal. The message here is a "gift." Something offered… in an outstretched hand." - quest-interference-means-to-an-end-week-5
+- "Commander. To what do we owe this pleasure?" - quest-interference-means-to-an-end-week-5
+- "Playful?" - quest-interference-means-to-an-end-week-5
+- "Come have a look at the latest." - quest-interference-means-to-an-end-week-5
+- "A "gift."" - quest-interference-means-to-an-end-week-5
+- "I don't remember agreeing to anything." - quest-interference-means-to-an-end-week-5
+- "We wield their gift against them." - quest-interference-means-to-an-end-week-5
+- "Then it will be surrendered to the Vanguard for containment." - quest-interference-means-to-an-end-week-5
+- "Savathûn will not confront us directly. It is not her way." - quest-interference-means-to-an-end-week-5
+- "Thank you." - quest-interference-means-to-an-end-week-5
+- "You lose me either way. Drifter, there is no future where I stand by a Dredgen's side. I am your partner, not an obedient pet. Instead… what if I take the Nine into own hands? Seize them as I did the Hive. Evert their machinations. I will glean what I can so we may divert our prophesized extinction. I have foiled gods before. The Nine are no different." - renegades-quest-additional-drifter-dialogue
+- "Then the God of Vengeance will bleed a planet." - renegades-quest-additional-drifter-dialogue
+- "Communion Attempt Number 34. I begin. I hold the ritual space. Tithe my offering to the celestial bodies of Sol. Formless bodies, take refuge in my limbs. Poetry bled from the ache of dark matter, grant speech with my offering. Grant SPEECH with my OFFERING. … You may speak now! I offer physicality. I offer warmth, I offer taste. I offer Glimmer. I offer tithes. I mastered the Hive. I am not supplicating myself to a stranger in order to communicate. I do not need an Emissary. Why do you refuse me? Communion Attempt Number 35. [sighs] I begin." - renegades-quest-additional-drifter-dialogue
+- "We will reveal the conspiracy surrounding the Imperium and the Nine. This "Bael"… did you know him?" - renegades-quest-additional-drifter-dialogue
+- "The Vanguard may admonish us, but they understand the necessity of our actions. They won't interfere. Do you trust these Pikers?" - renegades-quest-additional-drifter-dialogue
+- "The Tharsis Reformation are of the Conductor's cohort, no?" - renegades-quest-additional-drifter-dialogue
+- "Guardian. Your quarry flees. Pursue it." - renegades-quest-additional-drifter-dialogue
+- "What the Nine present to us is only the surface. There is a deeper truth to uncover. Give me time. Patience." - renegades-quest-additional-drifter-dialogue
+- "Something for us to look forward to." - renegades-quest-additional-drifter-dialogue
+- "Something near Mars, but away from orbit. This signature is of the Nine." - renegades-quest-additional-drifter-dialogue
+- "You will not have your back to a wall… because it will be to mine and the Guardian's." - renegades-quest-additional-drifter-dialogue
+- "Whatever they reach out to take, we will hold fast together. Trust." - renegades-quest-additional-drifter-dialogue
+- "Emissary, what were those numbers?" - renegades-quest-additional-drifter-dialogue
+- "Unlikely." - renegades-quest-additional-drifter-dialogue
+- "Cut into the rift, Guardian! Cut the space between!" - rites-of-the-deep-renascence
+- "Guardian. Behold the vast cathedral of my soul. As Hive, I slit Savathûn's throat. In doing so, I made an incision into the Ascendant Plane. This became a world. A throne. It will protect my essence and restore my form. Here, I am resurrected. Here, I am omnipotent." - rites-of-the-deep-renascence
+- "Drifter." - rites-of-the-deep-renascence
+- "No. My end… was not bitter. It was sweet. This is my vindication. They were wrong. All of them. I am not sick, I am not mad. And I am no lost cause fit only for self-sacrifice. My throne… is wondrous, and eternal… as am I." - rites-of-the-deep-renascence
+- "Guardian. I have not sat idle in this place. I have heard whispers through the wall… Is it true? Has the Taken King returned?" - rites-of-the-deep-renascence
+- "I formed my throne with the stroke of a sword… as the Hive gods did long ago. Their tribute and blood coalesced into worlds. You have seen Oryx's throne. His Dreadnaught, his court. What he called the High War. Here, the memory of the Taken King recognises his equal. His killer. His heir. You. But his sisters will come to claim him, as brother and as instrument of power. Xivu Arath was sundered from her throne, as she was sundered from her siblings. She would retake it all and return to their path of death and conquest. While Savathûn in her High Coven, having claimed the Light, wishes to escape. Both the vows made to the worms and the lie that drove the siblings to that bargain. But their designs will be unmade. Their desires, their undoing. I name my throne the High Heresy, formed in opposition to the Hive. Here, I am heresiarch. Here, I am jailer. For my throne will be Oryx's prison." - rites-of-the-deep-renascence
+- "Mmm. Why?" - semaphore-signals-iii-drifter-and-eris
+- "A gift, then?" - semaphore-signals-iii-drifter-and-eris
+- "The sentiment is appreciated… but no. You know what you possess. These relics are not simple curiosities to be hoarded. They might serve a greater purpose." - semaphore-signals-iii-drifter-and-eris
+- "Am I your conscience? Discover this for yourself. They are reliquaries, objects of great power. The Darkness moves just beneath its skin. Do you feel it? It ruptures. Flows. Envelops." - semaphore-signals-iii-drifter-and-eris
+- "And I enjoy your silence." - semaphore-signals-iii-drifter-and-eris

@@ -26,14 +26,19 @@ Any agent (Drifter persona, lore research, etc.) may reference these files at wi
 - `index.md` - Master book list with ingestion status (pending/done/partial).
 - `books/<slug>.md` - Full text of each ingested book, entries as `##` sections.
 - `transcripts/<slug>.md` - Transcripts (quest dialogue) as ingested.
-- `tests/` - Validation and verification scripts (28 scripts).
+- `compendium/` - Agent-optimized character line index (per-character files, load only what you need).
+- `destiny-1/` - Destiny 1 grimoire (in progress).
+- `tests/` - Validation and verification scripts (29 scripts).
 - `drifter-master-audit.sh` - Unified audit runner (stays at root).
+- `scripts/ingest-grimoire.py` - Ingest Destiny 1 grimoire cards from Ishtar Collective.
 
 ## How to use
 
 1. Check `index.md` for a book's status and slug.
 2. Read `books/<slug>.md` for the full lore text.
 3. Entries within a book are separated by `## Entry Title` headers.
+4. For character dialogue, load `compendium/characters/<slug>.md` instead of scanning all transcripts.
+5. Destiny 1 content is pending; see `destiny-1/README.md`.
 
 ## Ingestion rules
 
@@ -56,7 +61,7 @@ All content sourced from publicly available Destiny 2 lore. No original creative
 
 ## Progress
 
-110 / 110 books ingested. 68 transcripts ingested.
+110 / 110 books ingested (Destiny 2). 68 transcripts ingested. Compendium: 18 major + 11 minor characters, 1070 lines. Destiny 1: 10 / ~4000+ cards ingested.
 Last scrape: 2026-10-30. Content through Renegades (Dec 2025).
 
 ## Audit Commands

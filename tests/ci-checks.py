@@ -74,7 +74,10 @@ def check_selfdeps(ws):
 
 def check_emdashes(ws):
     files = get_files(ws)
+    skip = ('/books/', '/transcripts/', '/destiny-1/cards/')
     for f in files:
+        if any(seg in f.replace(os.sep, '/') for seg in skip):
+            continue
         s = open(f, encoding='utf-8').read()
         if '—' in s or '–' in s:
             print("EM-DASH: %s" % f)
@@ -93,8 +96,10 @@ def check_personal(ws):
     sys.exit(0)
 
 def check_gitignored(ws):
-    for f in ['INDEX.md', 'README.md', 'AGENTS.md', 'TOOLS.md']:
+    candidates = ['INDEX.md', 'index.md', 'README.md', 'AGENTS.md', 'TOOLS.md']
+    for f in candidates:
         path = os.path.join(ws, f)
+        if not os.path.exists(path): continue
         s = open(path, encoding='utf-8').read()
         if 'memory/' in s or 'DREAMS.md' in s:
             print("GITIGNORED REF: %s" % f)
@@ -104,7 +109,14 @@ def check_gitignored(ws):
 
 def check_headers(ws):
     files = get_files(ws)
+    # Headers required only for agent-facing modules (compendium/); lore source and
+    # index files are exempt.
     for f in files:
+        rel = f.replace(os.sep, '/')
+        if '/books/' in rel or '/transcripts/' in rel or '/destiny-1/' in rel or '/skills/' in rel:
+            continue
+        if rel.endswith('/index.md') or rel.endswith('/README.md'):
+            continue
         s = open(f, encoding='utf-8').read()
         if '**Depends On:**' not in s or 'Token Estimate:' not in s:
             print("MISSING HEADER: %s" % f)

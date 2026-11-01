@@ -1,0 +1,496 @@
+# Drifter
+
+> **Depends On:** compendium/index.md
+> **Token Estimate:** ~23247 tokens
+
+> Lines: 486 | Sources: transcripts
+> Agent use: pull character voice, quotes, interaction patterns.
+
+## Lines
+
+- "You little sleuth. (to Lodi)" - additional-edge-of-fate-contact-drifter
+- "Informant? Well, well… first it's a contact, then it's an informant. They're taking a liking to you. (to Lodi)" - additional-edge-of-fate-contact-drifter
+- "Couldn't help but count while you all were calling the Nine, but, uh… where was III?" - additional-edge-of-fate-contact-drifter
+- "Yeah, but something's not right here." - additional-edge-of-fate-contact-drifter
+- "You weren't around for the Dark Ages, were you?" - additional-edge-of-fate-contact-drifter
+- "Ooh, Moondust, you've got a mean streak." - additional-edge-of-fate-contact-drifter
+- "Mini-bank en route. Put you mean faces on." - additional-edge-of-fate-contact-drifter
+- "Clean up and move out." - additional-edge-of-fate-contact-drifter
+- "Inspiring heroics. I'm all riled." - additional-edge-of-fate-contact-drifter
+- "Kid reminds me of Wei Ning. Nothing wrong with a little white hat every now and then." - additional-edge-of-fate-contact-drifter
+- "Had to pay her tab a few times. Cleared me out. (about Wei Ning)" - additional-edge-of-fate-contact-drifter
+- "Bingo. Methane makes them wig out. (about Taken on Titan)" - additional-edge-of-fate-contact-drifter
+- "Ooh, Moondust, you've got a mean streak." - additional-edge-of-fate-contact-drifter
+- "I can't tell if that look in your eye is determination… or rage. Word is, you and Cayde had a pretty good partnership. That's rare. From what I could tell, that guy preferred to work alone. Maybe he liked how you pulped a Hive god or two. I know that's why I like ya. Listen, don't let his death weigh on you. Somewhere out there, someone's got a bullet with your name on it. Same for him. Same for me. Nothin' we can do. So go out on your terms with a gun in your hand and loot in your pockets. Haha! Only way to live. The Derelict's always in orbit if you wanna… vent." - caydes-death
+- "Yeah, but something's not right here." - contact-io
+- "Sounds peachy." - contact-io
+- "Time to be good guys. Dark up, kick in some teeth, and bank those Motes! WOO!" - contact-io
+- "A whole lotta incoming. Hey, Moondust, you got anything for this?" - contact-io
+- "Constitution. I like the way you talk." - contact-io
+- "Vanguard tussled with this on the Moon, right? Should be easy." - contact-io
+- "Ah, that Seed's bringing in all sorts of funk. Bogeys. Inbound!" - contact-io
+- "Bank down! Ring that dinner bell. Stretch. Soup's on!" - contact-io
+- "World's just bones on bones. Been like that forever." - contact-io
+- "Pyramid's going nuts. This is the hotspot, that's for sure. Bank down!" - contact-io
+- "Bring 'em down and bank those Motes!" - contact-io
+- "Showtime! Signals going haywire all around ya." - contact-io
+- "Never seen a free meal, and I've been around a long time." - contact-io
+- "That Pyramid cuts a sinister figure. Too bad your Golden Age basket case couldn't pull the trigger." - contact-io
+- "Your big blue boss looks rattled, brother. I'd be worried." - contact-io
+- "All right. All right. Just…looking out." - contact-io
+- "Bank incoming! [shivers] I'm starting to catch a streak of that hero feel." - contact-io
+- "Nah. Just the show, Moondust." - contact-io
+- "You know the rub. Bank those motes… and snag one for ol' Drifter." - contact-io
+- "All right. Your show, Moondust." - contact-io
+- "So this is the plan. All right… bank down." - contact-io
+- "Hey, Hero. Ready for a gunfight?" - contact-io
+- "Mini-bank in transit. You're up, brother." - contact-io
+- "And keep 'em off my bank. Paint's barely dry." - contact-io
+- "Bank firing in. Kid, you're on deck." - contact-io
+- "Ooh, Moondust, you've got a mean streak. [laughs]" - contact-io
+- "What do you think your competitors want with all this Darkness?" - contact-io
+- "Pretty grim." - contact-io
+- "Salvage ain't so bad." - contact-io
+- "Maybe I'll save you a spot." - contact-io
+- "Transmat firing! Watch your limbs." - contact-io
+- "Lady…you are freaky. Drifter like." - contact-io
+- "You weren't around for the Dark Ages, were you?" - contact-io
+- "Hey, those aren't my Taken. Get them off my gear!" - contact-io
+- "Bank offline! Taken signatures all over it." - contact-io
+- "Bank's cut off, partner. Sweep it clean!" - contact-io
+- "Hey… HEY! Taken stooges are messing up my bank!" - contact-io
+- "Taken blocking my gear! Clear 'em out!" - contact-io
+- "Something big's moving in." - contact-io
+- "Hey, hotshot. Big nasty Taken headed your way. Keep that bank in one piece." - contact-io
+- "Eh, something's jamming the signal. Ooh, you've got company. Slug it out a bit. Gonna get a frickin' wrench." - contact-io
+- "Picking something up… Those are Taken signatures. You've got incoming." - contact-io
+- "You can either start chanting or buy me a few minutes. Let Drifter work!" - contact-io
+- "Taken energy spiking." - contact-io
+- "Free and clear. Nice." - contact-io
+- "Sure is a lot of bluster just to show up and want to chat. Take a tip from your ol' pal, Drifter. When someone's talking, don't watch the mouth. Ya dig?" - contact-io
+- "It's no wonder those City chumps talk you up all the time. But we go way back. Might even rattle off a few boasts myself. "Yeah, I know the hero. Came up under ol' Drifter's wing running Gambit!" Ah! Roll's right off the tongue. Probably plays great with a tune." - contact-io
+- "Sharp shooting. You're topped off. Time to scoot." - contact-io
+- "Clean up and move out." - contact-io
+- "You know… I'm taking odds on how all this shakes out." - contact-io
+- "Heh, Drifter gets by." - contact-io
+- "Hell of a sight out there. Real… something." - contact-io
+- "Uh, that name gets around." - contact-io
+- "Hmph. Funny." - contact-io
+- "Warlords used that line all the time. Dark Age ideas die hard, I guess." - contact-io
+- "So…what? Is it the eyes? They give you space magic? Pact with the devil?" - contact-io
+- "Small talk. Common curio. Hot gossip is you're wishing on a star. All the rage these days." - contact-io
+- "I'm as true as they come." - contact-io
+- "Don't cuss at me." - contact-io
+- "Vanguard came to me pretty quick when they couldn't find Osiris." - contact-io
+- "You should have heard the offers I turned down." - contact-io
+- "That's the problem with you Guardians. So materialistic." - contact-io
+- "Keeping my ear to the ground." - contact-io
+- "Seems like a lot of effort just to kill a man twice." - contact-io
+- "Raw deal for the chaff." - contact-io
+- "Inspiring heroics. I'm all riled." - contact-io
+- "Kid reminds me of Wei Ning. Nothing wrong with a little white hat every now and then." - contact-io
+- "Had to pay her tab a few times. Cleared me out." - contact-io
+- "[sighs] That Awoken is yelling at me again." - contact-io
+- "His own fault. Never seen a man choose to die slow." - contact-io
+- "Nah, just took him a while to realise he's bleeding out." - contact-io
+- "You and me both, Moondust. Peas in a pod." - contact-io
+- "Uh, Moondust… you ever get a look inside that Pyramid?" - contact-io
+- "Spill." - contact-io
+- "Put a gun in a man's hand, he'll start looking for a fight." - contact-io
+- "Want me to run it by ol' Rey Rey?" - contact-io
+- "Fair enough. Sheepdogs just bark." - contact-io
+- "Mini-bank's brimmin'. Lay low for a bit, kid. You're starting to draw some heat." - contact-io
+- "No bother. Right insulation. A good blanket." - contact-io
+- "In and out. This place is tapped. Scrubbing the bank for our next drop." - contact-io
+- "No kidding. Look in the sky." - contact-io
+- "Sounds like retreat's the right idea." - contact-io
+- "Lot of maintenance frames sweeping down here." - contact-io
+- "Feels more like someone spying." - contact-io
+- "Say, Hero, if you ever get bored of that squawk box, I can hook you up with some new tech." - contact-io
+- "Got a visitor… again. Hey, Cue Ball, got some time to kill?" - contact-io
+- "Not checking in on anyone?" - contact-io
+- "Someone special?" - contact-io
+- "Bank's getting dinged up. This is a lost cause, Brother. Scoot, and we'll try again when things aren't so hot." - contact-io
+- "I'm not gonna risk my gear for nothing. Break off and we'll try again later." - contact-io
+- "That's enough for now. We'll come back when things calm down." - contact-io
+- "Things aren't going our way, pal. I'm calling my gear back before it gets too banged up. Get outta there." - contact-io
+- "Hey, hey. Let's be straight with each other. I know the Vanguard's watching me. Probably want you to snitch, am I right? [laughs] If you're considering, I get it. Ol' Drifter likes to play both sides, too. But think about it. You stand with them, you're a dead woman walking. Gambit's pissed off a whole lotta dangerous people. You stand with me, I got your back. Trust. So what'll it be?" - decision-point-stand-with-the-drifter
+- "Hahaha! You got grit, kid. I admire a woman willing to risk the trust of everyone who's ever been kind to her. But lemme set the record straight - you're choosin' to walk with a monster. Monsters survive. Trust. People change. Priorities change. Stick with me, and you'll see that. Now. As a symbol of our new partnership. I need a favor from ya. Got a shipment waiting in the Tangled Shore. Pick it up for me. I'll tell Spider you're comin'." - decision-point-stand-with-the-drifter
+- "Hey, hey. Let's be straight with each other. I know the Vanguard's watching me. Probably want you to snitch, am I right? [laughs] If you're considering, I get it. Ol' Drifter likes to play both sides, too. But think about it. You stand with them, you're a dead woman walking. Gambit's pissed off a whole lotta dangerous people. You stand with me, I got your back. Trust. So what'll it be?" - decision-point-stand-with-the-vanguard
+- "You're pickin' the Vanguard over me, huh? [chuckles] You punk. But every woman's got to have a code. I get it. I got one, too. Out of respect for principles (and a righteous fear of Ikora's big-ass shotgun)… you do you, kid. But, I'm gonna change your mind about me. Whoever, or whatever you think I am… You're wrong. How's that suit ya? Snitch." - decision-point-stand-with-the-vanguard
+- "Saladin Forge! To what do I owe the pleasure?" - depth-reception-iii-drifter-and-saladin
+- "Yeah, I remember. You left out the part where you threatened to burn it down." - depth-reception-iii-drifter-and-saladin
+- "With how your pack of wolves tipped their bartender? Not much! That place never got too busy, but… I had my regulars, and they all had their problems. Some of 'em just weren't that easy to see from on top of a mountain. Maybe I wanted to call them to your attention." - depth-reception-iii-drifter-and-saladin
+- "Not better. Just different." - depth-reception-iii-drifter-and-saladin
+- "Everything's got value, old Wolf. You just gotta know where to look." - depth-reception-iii-drifter-and-saladin
+- "I've counted you one of my crew for a while now. We've never been on a job together, but you've done more than your fair share. And now you've mastered the frontier. Everyone who gets as good as you? My crew asks them to pick a name. And you should pick yours soon. Dredgen." - dredgen-title
+- "I'll keep it short. Energy's getting yanked on down from the Dreadnaught into Savathûn's throne world - a whole damn lot of it. Maybe she knows something we don't. Maybe... we can beat it out of her. Either way, sure ain't for nothing good." - echoed-warnings-anchored-thrones
+- "Yeah, yeah... I know how it goes." - echoed-warnings-anchored-thrones
+- "Hey, killer. Luzaku and Fynch got us in here without Savathûn knowin'. But she'll get all three eyes on us soon enough. Which is fine by me - I'm spoilin' for a fight." - echoed-warnings-anchored-thrones
+- "I doubt that, wormbreath. Just stay out of our way." - echoed-warnings-anchored-thrones
+- "There's a tangle of Taken energy down in the Temple of Cunning. Everything points to a new Eversion Anchor - same as the one in the EDZ. Nothin' happens down here without Savathûn's say-so. She must want it for a reason. Got no idea how it fits in with the Dreadnaught, though." - echoed-warnings-anchored-thrones
+- "The anchors move through the Ascendant Plane like a knife through Taken butter. No easy thing. It's hard to punch a hole; even harder to keep it open. But cutting right through a throne world? Those are like barnacles on the backside of the Ascendant Plane. That kinda power makes me nervous." - echoed-warnings-anchored-thrones
+- "There it is. Just as creepy as you left it." - echoed-warnings-anchored-thrones
+- "You gonna listen to that? You're gonna let Savathûn talk about Eris like she knew her? You knew her. She never looked away from danger. Always got right into the thick of things. Y'know, she found something in me I thought I'd… lost. Now she's dead. And what she found's dead too. I just can't shake it. That bone-deep feeling. And I felt it before. She's gone… because I cared." - echoed-warnings-anchored-thrones
+- "[sighs] Figured I owed you an explanation before I went dark. I'll make it quick. I tried to find a way to... bring her back. Heh. Don't ask me what I did, but... it didn't work. So I thought to myself, hey, I got what I always got. What's left for me, anyway? Nothin'. Knew it'd happen again. I was a fool to hope. But I couldn't help myself. I just wanted you to know, well... it's nothing personal. It's all me. This is who I am. Always has been. So don't come lookin'. I was already halfway gone." - echoed-warnings-drifters-private-call
+- "Hey, hero. How you livin'? Word on the ground is somethin' big landed in the EDZ. Vanguard needs you to check it out." - echoed-warnings-espial
+- "That means Taken. Me 'n Eris are on our way to Saturn's orbit." - echoed-warnings-espial
+- "The impact site is nearby. Got you as close as I could. Get to Hangman's Pass. We're on our approach to the Dreadnaught now." - echoed-warnings-espial
+- "Whatever landed in the EDZ is punching holes into the Ascendant Plane." - echoed-warnings-espial
+- "Got eyes on the Dreadnaught. Something's wrong. It's being… skinned alive." - echoed-warnings-espial
+- "I'll find an LZ." - echoed-warnings-espial
+- "We're on board." - echoed-warnings-espial
+- "Ugh, looks worse inside. Cut right down to the bone." - echoed-warnings-espial
+- "Taken blight pushin' you out. Find a way around it." - echoed-warnings-espial
+- "Somethin' is doing this on purpose. The Taken are always lookin' for someone with a backbone strong enough to lead 'em. It's one thing to pull Taken from the Ascendant Plane and make 'em dance. But wringin' out new ones…" - echoed-warnings-espial
+- "Yeah. Let's keep movin'." - echoed-warnings-espial
+- "Turnin' Earth inside out. Pullin' the Ascendant Plane into our reality. Shut it down, hero." - echoed-warnings-espial
+- "Hey! We lost you for a minute there. Says you're on the Dreadnaught?" - echoed-warnings-recce
+- "We'll meet up with you, hero." - echoed-warnings-recce
+- "A long time ago, Oryx wrote down how to Take. Put it on those tablets… But they're all lost or locked down. Or they should be. What's a piece doin' here?" - echoed-warnings-recce
+- "We got this, Guardian. Hold your position." - echoed-warnings-recce
+- "Maybe we can… make our way back, or-" - echoed-warnings-recce
+- "No!" - echoed-warnings-recce
+- "Grab the artifact and follow my signal! That thing's got her!" - echoed-warnings-recce
+- "It's taking her deeper in the Dreadnaught! Hold on, Moondust! We can't leave her! We need to get Eris out of here, we need- [distant, steady gunshots] Help! Please! Anyone! [distant gunshots becoming erratic] [frustrated yell]" - echoed-warnings-recce
+- "[gasps] Eris… [grunts] No, no, no, no, no, no… [pants] Moondust? [whimpers] It's OK… [sobs] I gotcha. I gotcha… I gotcha… Moonlight… [sobs]" - echoed-warnings-recce
+- "Hey, hero. Taken across the system are… misbehavin'. Eris says she can see them all connected through the dark, movin' together. They're hoping… praying. For a new way to Take. Eris heard them whisper life into a new leader on the Ascendant Plane. The Lord of Every Nothing. They're the combined will of the Taken, evolvin' them into somethin' new. Keep your Blade sharp. The future's all knives and teeth." - ghost-commune-drifter-renegades
+- "My jumpship's screamin' warnings at me, gang. If they start shootin', I don't know how long I can dance with 'em." - glory-beyond-additional-drifter-dialogue
+- "That don't sound too fun for either of us, but thanks all the same. And, uh, Blue? I'm sorry." - glory-beyond-additional-drifter-dialogue
+- "You've got 'em on the ropes! Here until you need me, Blue. You got my number?" - glory-beyond-additional-drifter-dialogue
+- "That's Bael above! Keep it movin' - I'll deal with him." - glory-beyond-additional-drifter-dialogue
+- "Blue? Blue!!" - glory-beyond-additional-drifter-dialogue
+- "Blue? Blue!!" - glory-beyond-additional-drifter-dialogue
+- "\[Static\]" - glory-beyond-additional-drifter-dialogue
+- "Hope you're comfy in the trunk, Guardian. Only room for me and Blue up here. Couldn't let you hog all the glory." - glory-beyond-additional-drifter-dialogue
+- "\[gasps\] evades Bael and the Threshers." - glory-beyond-additional-drifter-dialogue
+- "\[grunts\] You don't have to do this, kid." - glory-beyond-additional-drifter-dialogue
+- "Thanks, fireteam-" - glory-beyond-additional-drifter-dialogue
+- "\[exhales deeply\]" - glory-beyond-additional-drifter-dialogue
+- "Yeah. With them too. I know I played it reckless, but cozying up to Bael was the best way to protect the crew. Kinda plan that makes sense when it's just me on my own… Less so when there's other folks… When there's you." - glory-beyond-additional-drifter-dialogue
+- "I know." - glory-beyond-additional-drifter-dialogue
+- "Yeah, yeah. Dredgen Vale's still out there too. There'll be a reckoning when new meets old, the system caught in between." - glory-beyond-additional-drifter-dialogue
+- "I'm not sure what our hero's thinking these days, but the Vanguard and I are done. I'm lucky they're letting me keep Gambit." - glory-beyond-additional-drifter-dialogue
+- "Blue and I… had a heart-to-heart. Pretty much ordered me to get out there and clean up my own mess… for once. So, I reckon I'll go hunt me some Dredgens. And deal with VI and the Nine as they come." - glory-beyond-additional-drifter-dialogue
+- "I know." - glory-beyond-additional-drifter-dialogue
+- "Yeah, yeah. Dredgen Vale's still out there too. There'll be a reckoning when new meets old, the system caught in between." - glory-beyond-additional-drifter-dialogue
+- "I'm not sure what our hero's thinking these days, but the Vanguard and I are done. I'm lucky they're letting me keep Gambit." - glory-beyond-additional-drifter-dialogue
+- "Hey. If I tell you what I know about the Emissary, will you promise to stop wasting your time on her? She used to be Reefborn. Loyal to the Queen. Then she died. Ghost picked her up. Took the name Orin. Then she went lookin' for the Nine. She needed power. She got it. But now she's somethin' else. She has no past to uncover. She's not what she was. Neither am I. So stop lookin' for her." - he-doth-protest-too-much
+- "Hey hero, you uh… feel any different after Kepler? Because I do. And now they've showed me a vision I can't shake. They did a number on you, too, I reckon. What is it they call you? The weapon. You and me. We saved the system. Saved everybody. And three of the nine left us with a prophecy. Bind the nine or everything dies. The vanguard classified the prophecy. Kepler never happened. That don't sit with me cuz the nine are everywhere. Every win. And now there's rumors of new threats. Ones we didn't see coming. That doesn't just happen. It's the nine. And I'm putting together a crew to prove it. What do you say? Weapon." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "Aunor and I have been heads down for the last two months, and we're no closer to knowing what the prophecy means. But the death of three has changed Earth, even if it's not obvious to the naked eye. Infrastructure damaged by matter transmutation. Nitrogen replacing oxygen in localized areas. The Vanguard is understandably fixated on controlling the chaos, but citizens can tell something's off. It's dangerous institutional naval gazing. You forget to look up. So, I've been feeding intel to a good friend. He sees what I'm seeing." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "Specs tipped me off. There's something new on the horizon. I knew without a doubt the nine were involved. So I rounded up crew to prove it. Eris, the god of vengeance herself. Eido, resident bookworm. And a stray. Seems the vanguard assigned a warlock of the Praxic order to be my hall monitor. Our normal." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "Whatever's in that data disc, they're willing to kill for. We have to get it home and decrypt it quick. Just keep this rust bucket flying." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "Bickering won't save us." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "Don't look. Thanks for nothing." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "That's it. Everybody out. That means you too, hero." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "The Imperium troops are boarding. We can't let them take back the disc." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "Hide yourselves." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "We're not done fighting yet. Idol." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "Get moving, will you?" - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "Heat up here." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "Heat. Heat." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "I've been waiting so long for this bridge and hope." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "Yeah." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "Hey, I'm up to my chin in stasis." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "Hearing you makes it so. Moonlight." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "I thought I left the dredges behind. This lightbearer, his name's Bael. Dredging. Bael. I don't know why they're showing me something I thought I buried, but I was right. The nine ain't done with us." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "How?" - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "Damn, lost a little skin there. Thanks for the save, hero. Thought I was going to end up chilling drinks for the Imperium." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "Bael, he uh... Hey, can you get my left leg? gets falling asleep in here." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "Okay, fine. Fine. You talk like the emissary talks. It can't be the night. And that's why it has to be." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "Knock that off. Just tell Arnor to hurry up and disable that tractor beam so we can blow this fuel depot." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "Get those engines running, hero, and I'll take us out of here. We don't want to be anywhere near that dredging. One of the nine. Bael's no emissary, but one of them's still wearing him like a suit." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "What is that?" - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "Start the engines. Take off as soon as you can." - imperium-zagan-gloriosus-additional-drifter-dialogue
+- "Hey there, hero. While you were taking a dip in the methane, I detected something on the ocean floor… and it ain't native to Titan. I've seen it before. On the Glykon. On the Leviathan. On my own ship, too. An organism that's all about forming psychic connections. Seems it's growing like coral down in the depths. I'm thinking we gather it up and use it to amplify Sloane's link to the creature. I can modify my Gambit equipment to bank that stuff and harness its power… but I'll need some Golden Age parts to do it. Just so happens the Arcology is full of Golden Age tech waiting to be salvaged. You help me collect it, and I'll fix up the bank. Then it's just a matter of… well, heh, diving into the depths of the methane sea and dredging up what Sloane needs. All while trying not to drown, of course. Nothing you can't handle! So what do you say? Ready for another swim?" - into-the-depths-i-speak-with-drifter
+- "Oh! Hey there, Valus." - into-the-depths-iii-return-to-the-helm
+- "Nah. You know it's Drifter these days. Has been for a long time." - into-the-depths-iii-return-to-the-helm
+- "How's she holdin' up?" - into-the-depths-iii-return-to-the-helm
+- "Yeah… that's a bad hand to be dealt. Maybe this can wait. Unless you wanna tip one back? Talk about the bad ol' days?" - into-the-depths-iii-return-to-the-helm
+- "Mm, only one way to find out." - into-the-depths-iii-return-to-the-helm
+- "Why not?" - into-the-depths-iii-return-to-the-helm
+- "[chuckles] I think Caiatl's actually mellowed that old Wolf out a bit." - into-the-depths-iii-return-to-the-helm
+- "What's the word, brother? All this Golden Age tech is impressive stuff. Almost makes you wonder how they lost back then… ya dig? About that… if we're looking to win this time, I need Savathûn's swamp to wash up a few finishing touches for my rig. Crackin' skulls and lootin' hauls is your bag, hero. That's why you're headed to her throne world. That Pyramid Savvy brought down-it's cut off from the Witness. Scorn bigwigs been diggin' tech we can use out of that burning heap. All you have to do is find 'em and take it. Then you let ol' Drifter worry about the kit-bashin'. Easy. Hey, uh… one more thing. Xivu drippin' nonsense in your head too? She's been recounting some of my… more "heroic" exploits. Dark Age's been on my mind. You know how the past is. You pull the trigger, and people die… so you don't have to. Then someone comes along and wants to forgive you for that. Like it's fine. Won't ask what Xivu's dredgin' up for a killer like you. Wouldn't be polite. Thunderguns down there, though? Been under pressure so long, everybody's looking for cracks. Don't get me wrong! Coin to table, she's been through it. But I don't think Sloane's looking to be told it's fine. 'Cause it ain't. 'Cause it needs to be ugly to win. And then… you live with it. See ya on the other side." - into-the-depths-iv-speak-with-drifter
+- "[laughs] Someone like you? I know you all keep tabs on me." - invitation-of-the-nine-mystery-and-potential-visit-1
+- "Well, that's why I'm still breathing, brother. Gambit is a chance at salvation. Take it." - invitation-of-the-nine-mystery-and-potential-visit-1
+- "Behind you." - invitation-of-the-nine-mystery-and-potential-visit-1
+- "[laughs]" - invitation-of-the-nine-mystery-and-potential-visit-1
+- "Whoa, boy. Easy. Easy now…" - invitation-of-the-nine-mystery-and-potential-visit-1
+- "Nah, not anymore. It's Drifter now." - invitation-of-the-nine-mystery-and-potential-visit-1
+- "A gift?" - invitation-of-the-nine-mystery-and-potential-visit-1
+- "What gift?" - invitation-of-the-nine-mystery-and-potential-visit-1
+- "Yeah. Me too." - invitation-of-the-nine-mystery-and-potential-visit-6
+- "Oh, we, uh - Namqi and me were… were buddies. Met in a little dive on Ceres. Used to play cards. He talked about you a lot. Said the Queen trusts you to talk to the Nine for her. [scoffs] That true?" - invitation-of-the-nine-mystery-and-potential-visit-6
+- "Yeah. Well… you ever need a shoulder to cry on, I'm here for you." - invitation-of-the-nine-mystery-and-potential-visit-6
+- "There is nothing out there for you, Orin!" - invitation-of-the-nine-mystery-and-potential-visit-7
+- "I don't use that name! Not anymore!" - invitation-of-the-nine-mystery-and-potential-visit-7
+- "Hand to my heart, I'm not lying." - invitation-of-the-nine-mystery-and-potential-visit-7
+- "Orin, please!" - invitation-of-the-nine-mystery-and-potential-visit-7
+- "[growl of frustration] You wanna go back to a thousand years of the Traveler's dogma, kid? Give up your freedom? Fine. You do you." - invitation-of-the-nine-mystery-and-potential-visit-7
+- "[laughs] Might just pull this scam off. And when the time comes, we'll finally be in the clear." - invitation-of-the-nine-mystery-and-potential-visit-8
+- "Huh." - invitation-of-the-nine-mystery-and-potential-visit-8
+- "A horse." - invitation-of-the-nine-mystery-and-potential-visit-8
+- "OK…" - invitation-of-the-nine-mystery-and-potential-visit-8
+- "All right. Thanks for the memories, you lunatic. Anything else I can do for you?" - invitation-of-the-nine-mystery-and-potential-visit-8
+- "[laughs] Might just pull this scam off. And when the time comes, we'll finally be in the clear." - invitation-of-the-nine-mystery-and-potential-visit-9
+- "Huh." - invitation-of-the-nine-mystery-and-potential-visit-9
+- "A horse." - invitation-of-the-nine-mystery-and-potential-visit-9
+- "OK…" - invitation-of-the-nine-mystery-and-potential-visit-9
+- "All right. Thanks for the memories, you lunatic. Anything else I can do for you?" - invitation-of-the-nine-mystery-and-potential-visit-9
+- "[Referenced in entry] - "He's been feeding us intel and wants to meet. If the intel is as good as he claims, maybe I won't arrest him. Maybe."" - lore-entries-additional-drifter-dialogue
+- ""That crew can handle gods. That's why they're out there. And why Aunor is with them." / Ikora: "The Earth and the city need us, Ikora. We patrol the Earth and our territories until we find the source of these phenomena."" - lore-entries-additional-drifter-dialogue
+- ""Barant Imperium came up outta nowhere-and they brought new energy tech with'em. I kitbashed this beauty 'outta their goods."" - lore-entries-additional-drifter-dialogue
+- ""Nothing kills a Guardian faster than another Guardian." - "Yes, I wrote you a note. I want you to burn this in your memory. If you're wielding this gun, I've already told you all this and more. But I want you to keep it fresh in mind." - "I want you to have this. You may need it. You and I have done a lot together in this system, and I hope and pray we'll get to do a lot more." - "It'll be a lot safer with you wearin' one of these. It's the culmination of a lot of things. Long time ago I set out to find a replacement for a weapon called Thorn. This will never be that, but to me, it's better. We built it together." - "We don't have to beat him to it. He'll die, too. Remember this. For when the day comes."" - lore-entries-additional-drifter-dialogue
+- ""Nice work, hotshot. You're almost ready to go grab that gun." - "According to those blueprints, the one thing the Fallen haven't worked out yet is how to stabilize the Stasis energy. So I whipped up a prototype of my own." - "This should help you get the gun firing."" - lore-entries-additional-drifter-dialogue
+- ""I share all this with you hoping for your confidence. The Drifter is not to be trusted. Involve yourself with him and the Dredgens at your own risk. Even if you carry their name, it's not too late to make the right choice. Don't end up like the Ghost in your hand. He did not die well."" - lore-entries-additional-drifter-dialogue
+- ""Nobody moves, but everybody gets hurt!"" - lore-entries-additional-drifter-dialogue
+- ""I don't know if you can… stand to hear my voice right now. I was there. I was- Sorry. [clears his throat] Eris had a message for her 'knife'. You keen on a little vengeance, killer? She kept plans for times like this - piles of balled-up scribbled paper and ink, in her old place in the City. Hadn't been staying there for a while, but... it's full of her things. You've probably walked by it a hundred times. I'll send you a pin. Whatever she left you there, you take it up, and you kill what killed her. I'll throw my cannon in on that too."" - lore-entries-additional-drifter-dialogue
+- ""Hey, uh… probably didn't expect to hear from me again, huh? Bailing was a bad move. I admit it. Soon as I turned around, I picked up Sloane's message. I thought she was gonna chew me out. She didn't. Just told me what I needed to do next. Anyway, I'm here now, and Eris needs me. Need us. Find me on the Dreadnaught." - "Call me crazy. Hell, most already do." - "That's it! Get those pieces together!" - "The Hive gods were conjured back by their natures. Yeah, I read the Books of Sorrow! A fella gets curious." - "I thought you were gone, I…" - "Always were."" - lore-entries-additional-drifter-dialogue
+- ""Hey Hero, or is it Killer? Hard to tell these days. You notice the Taken in there ain't singing the same song as the ones the Echo has all riled up? Yeah, me too. Wonder what that's about. Anyway, I've pulled out that little shard of Dark you freed up. Wicked piece of work there: still sharp and cold as ice. Wouldn't want to be on the wrong end of it, so that's why I'm giving it to you. Put it to the throat of every monster you meet on Oryx's ship, would ya?"" - lore-entries-additional-drifter-dialogue
+- ""Hit back, killer. Run 'em down." - "Not anymore. She's dead." / "That's all." - "Here's something big about the Taken: they need someone to tell them what to do. Oryx, the Witness... bet Mara could grab 'em, too, if she wanted. Hell, even I can get ahold of 'em for Gambit. So, I got a question for you, killer: Who told them to murder Eris?" - "Hey, Eris. When you got all Hive-like to take on Xivu, I knew you'd be there when the job was done." - "Just like Oryx. Just like me." - "Put down your fear, Drifter." (Eris to Drifter)" - lore-entries-additional-drifter-dialogue
+- ""A whole lotta incoming. Hey, Moondust, you got anything for this?" - "Bank incoming! [shivers] I'm starting to catch a streak of that hero feel." - "Nah. Just the show, Moondust." - "You know the rub. Bank those motes… and snag one for ol' Drifter." - "Hey, Hero. Ready for a gunfight?" - "Mini-bank in transit. You're up, brother." - "And keep 'em off my bank. Paint's barely dry." - "Hey… HEY! Taken stooges are messing up my bank!" - "Taken blocking my gear! Clear 'em out!" - "Bank's cut off, partner. Sweep it clean!" - "Hey, those aren't my Taken." - "Got a visitor… again. Hey, Cue Ball, got some time to kill?" - "Not checking in on anyone?" - "Someone special?" - "Send me your report. Today." - "Say, Hero, if you ever get bored of that squawk box, I can hook you up with some new tech." - "Does that thing you've made even still have Light?" - "Enough. Bickering does not serve us." - "Bank those motes… and snag one for ol' Drifter." - "All right. Your show, Moondust."" - lore-entries-additional-drifter-dialogue
+- ""Heh, you ready to get paid, Guardian?" - "Hey, at least try to make it sound fun. Or they won't come back." - "Hey, we're just here to see what they have to say about Light and Dark. In and out, got it?" - "Hey. Pot, kettle, black." - "Now that we agree on." - "Hey. Three Eyes. Shaxx says you sang him a lil' ditty." - "Shaxx. Chunky Titan. One horn." - "Hey, Three Eyes. Check this out." - "Hey, Moondust. You're no Vanguard. Why do you hang with them?" - "You should take it easy. Learn to relax. You're Ghostless now. Go live your life." - "Yeah, guess I wouldn't want to be stuck herding cats and doing paperwork either. Shaxx would do it just to spite y'all." - "Hey. How you living, Moondust?" - "Why does everybody say it like that?" - "That's some bloodlust, Hero. It hit me when you were tearing that last pack of Taken apart. What the Nine are trying to say: Light. Dark. It don't matter." - "Didn't say the same. Just - the difference don't matter." - "So, uh, I went and looked up one of those nicknames you gave me: 'meretricious rogue.'" - "Listen, Moondust. Hand to my heart, I am flattered. But Drifter ain't got time for all that! Let's keep this businesslike." - "Yeah. I'm better at math, though." - "I'm surprised you can read." - "Yeah, I'm better at math, though."" - lore-entries-additional-drifter-dialogue
+- ""Thanks for helping your ol' pal Drifter with this… delicate situation, hero. I had a delivery headed towards the Last City when these House Salvation goons hijacked it. Now I just need you to get in there and… expedite my shipment. I'll let you know what we're looking for once you're inside." - "I don't blame House Salvation for skimming a little cream off the trade routes. Couldn't have been easy after their head honcho got turned into a popsicle. But I didn't think they have the guts to try something like this!"" - lore-entries-additional-drifter-dialogue
+- ""It is unkind to withhold knowledge. Unkindness was never my aim." - "You know I don't hear that enough." - "Power is freedom and everybody's chasing it. From the biggest freaky moth monster to the lowest space pirate." - "Yeah, I might look that way from the outside. But they've got to fight for everything they get. That's just survival. A meal and a bed that don't come at the end of a blade. That's freedom." - "Eramiskel seeks freedom for our people. But her freedom is vengeful. She wishes to be free from her shame. She will sacrifice Eliksni lives in its pursuit. And it will never end." - "Thank you."" - lore-entries-additional-drifter-dialogue
+- ""Hey there, hero. While you were taking a dip in the methane, I detected something on the ocean floor… and it ain't native to Titan." - "Everything's got value, old Wolf. You just gotta know where to look." - "We didn't have linear fusions in the Dark Age. But we made it work." - "Nah. Dark Age version was better." - "I'll take a hard projectile over energy any day. No better way to make sure the target is dead." - "Energy is for silencing barriers. Fists are all I need to administer blunt-force trauma." - "I forget you used to be a Warlord." - "What do you mean 'used to?'" - "I did. But I never stopped being me." - "'Warlord' is too many syllables." - "You pull the trigger, and people die… so you don't have to. Then someone comes along and wants to forgive you for that. Like it's fine. 'Cause it needs to be ugly to win. And then… you live with it." - "Hit back, killer. Run 'em down." - "Not anymore. She's dead." / "That's all." - "Here's something big about the Taken: they need someone to tell them what to do."" - lore-entries-additional-drifter-dialogue
+- ""I found a few pieces myself on Earth. It's a sure sign the nine got their eyes on you. I used to think they were telling us to be strategic. Think it through. Play the long game. But now I think it's a reminder that we're just placeholders stored in a little box they call time until they're all burned out. Like Orin. Maybe that's just my guilty conscience talking. Go out there and prove me wrong, hero. I'm begging you." - "I'd sure like to know what they all mean. Wouldn't you? Do it to it, hero." - "Last time I found one of these pieces, I was having a hard time fixing to bug out of..."" - lore-entries-additional-drifter-dialogue
+- ""Hey, hero. Taken across the system are… misbehavin'. Eris says she can see them all connected through the dark, movin' together. They're hoping… praying. For a new way to Take. Eris heard them whisper life into a new leader on the Ascendant Plane. The Lord of Every Nothing. They're the combined will of the Taken, evolvin' them into somethin' new. Keep your Blade sharp. The future's all knives and teeth."" - lore-entries-additional-drifter-dialogue
+- ""Hey there, hero. I'm leaving a few breadcrumbs for ya, just in case things go sideways. I know what it looks like, dragging the crew into an op behind Zavala's back. But you saw that vision the Nine sent me. It ain't just another bad dream. They were vague, as usual but - I know they're threatening Eris, straight up - and you know how that sits with me. I can't change fate - better to lean into it." - "Hope you're listening, hero. Like I said, I… might have to make a few radical moves coming up. It's gonna rock the fireteam. Blue won't like it. For Eris. So for now, let's keep this between us. I'll see you on the other side." - "Hey, hero. You gotta know I had nothing to do with the Tharsis Nightfall attack. Bael sprung it as soon as I took off to meet him. Sorry I had to shrug you in orbit. I hope Bael just needed guidance, but he's a Dredgen - through and through. And now… so many Lights lost… I tried to reach out to Blue. She's cut me off."" - lore-entries-additional-drifter-dialogue
+- ""Arm yourself, Guardian. The Drifter keeps no medical provisions or supplies. But guns are ubiquitous." - "She's probably upset he's in danger. What a selfless Ghost for a scoundrel." (Aunor about Drifter's Ghost) - "Unlikely." (Eris about the Ghost being selfless) - "KNOW THIS FALSE WEAPON IN EVERY FUTURE YOU ARE A JAILER" (Nine message)" - lore-entries-additional-drifter-dialogue
+- ""My jumpship's screamin' warnings at me, gang. If they start shootin', I don't know how long I can dance with 'em." - "That don't sound too fun for either of us, but thanks all the same. And, uh, Blue? I'm sorry." - "You've got 'em on the ropes! Here until you need me, Blue. You got my number?" - "Hope you're comfy in the trunk, Guardian. Only room for me and Blue up here. Couldn't let you hog all the glory." - "\[gasps\] evades Bael and the Threshers." - "\[grunts\] You don't have to do this, kid." - "Thanks, fireteam-" - "\[exhales deeply\]" - "Yeah. With them too. I know I played it reckless, but cozying up to Bael was the best way to protect the crew." - "I know." - "Yeah, yeah. Dredgen Vale's still out there too." - "I'm not sure what our hero's thinking these days, but the Vanguard and I are done. I'm lucky they're letting me keep Gambit." - "Blue and I… had a heart-to-heart. Pretty much ordered me to get out there and clean up my own mess… for once. So, I reckon I'll go hunt me some Dredgens. And deal with VI and the Nine as they come."" - lore-entries-additional-drifter-dialogue
+- ""Y'know, some days I still wake up scared. Even when I can't remember my dreams." - "Hey. You find that joy yet?" - "That's not my name." (about being called Germaine)" - lore-entries-additional-drifter-dialogue
+- ""It is unkind to withhold knowledge. Unkindness was never my aim." - "You know I don't hear that enough." - "Power is freedom and everybody's chasing it. From the biggest freaky moth monster to the lowest space pirate." - "Yeah, I might look that way from the outside. But they've got to fight for everything they get. That's just survival. A meal and a bed that don't come at the end of a blade. That's freedom." - "Eramiskel seeks freedom for our people. But her freedom is vengeful. She wishes to be free from her shame. She will sacrifice Eliksni lives in its pursuit. And it will never end." - "Thank you."" - lore-entries-additional-drifter-dialogue
+- "Hey, I know everything's gone whackadoo out there. It's not everyday a paracausal Pyramid shows up on our doorstep. But Eris is lookin' into the Darkness. And I'll be helpin' with that. However - If we want intel on the Dark, quick n' dirty, the Nine have seen it all. I say we head down into the Haul, ask 'em one question, simple and clean: What is the Darkness? What do ya say, partner? How about one more ride with the Drifter?" - mysterious-disturbance-prophecy-dungeon-introduction
+- "Eris?" - mysterious-disturbance-prophecy-dungeon-introduction
+- "You want in on this? Fine." - mysterious-disturbance-prophecy-dungeon-introduction
+- "Heh, you ready to get paid, Guardian?" - prophecy
+- "Hey, at least try to make it sound fun. Or they won't come back. You're killing me, Three Eyes." - prophecy
+- "Hey, we're just here to see what they have to say about Light and Dark. In and out, got it?" - prophecy
+- "What? Where?" - prophecy
+- "What? Where?" - prophecy
+- "What is the Darkness?" - prophecy
+- "Well, that's our question, you lunatic!" - prophecy
+- "Eris? I got this. Go back to yelling at that tree on Io." - prophecy
+- "Hmph. Suit yourself, Three Eyes." - prophecy
+- "With the black fleet in town, all of my Hive knickknacks have been making… a ruckus." - prophecy
+- "Really creeps me out." - prophecy
+- "Yeah, it's a… it's a real good time." - prophecy
+- "The only things that's missing is the Pyramid that's parked over the arcology. I got eyes on it." - prophecy
+- "Hell if I know. Hey!" - prophecy
+- "What do you mean it knows what I did on Titan? I do a lot of things. Everywhere. Hello?" - prophecy
+- "I always meant to go back to Titan. Gambit makes a killing out there." - prophecy
+- "Roam free? I pay her for access to that rig. And I have to sweep Hive just to get in. When I asked to lower said fee, she shoved me into a locker." - prophecy
+- "Hey. Pot, kettle, black." - prophecy
+- "Now that we agree on." - prophecy
+- "Hey. Three Eyes. Shaxx says you sang him a lil' ditty." - prophecy
+- "Shaxx. Chunky Titan. One horn. Did you sing him a song on the Moon?" - prophecy
+- "Yeah. I didn't think so." - prophecy
+- "Uh, I didn't hang up." - prophecy
+- "In the Tower? Yeah. Hangs it over his spot. I wouldn't have tangoed with that thing." - prophecy
+- "That would be the one. Heh. What is it?" - prophecy
+- "Sister, I already tried." - prophecy
+- "No." - prophecy
+- "On Titan? What's that got to do with the Darkness? Sloane has that neighborhood on lockdown." - prophecy
+- "I danced with the Dark. The Hive are NOT the Dark." - prophecy
+- "Brother Vance. So sad." - prophecy
+- "Seeing Mercury makes me think of the cultists who ran around chasing Osiris' coattails. They used to run the Trials. They used to mean something. Be sombodies. No one talks to Vance anymore. I mean, I do. I still don't have some of those guns." - prophecy
+- "Yeah. Never mind." - prophecy
+- "Yeah, well, make sure you tell 'em both. News travels slow between those two." - prophecy
+- "I told you don't cuss at me." - prophecy
+- "Well, call me old-fashioned, but if I broke time to save my knight in shining armor, I'd want 'em to stop foolin' around and climb my tower. But, uh, word on the wind is, no one's seen 'em meet in person." - prophecy
+- "You saying you heard different." - prophecy
+- "I don't have those. But, if I did… Wouldn't be sittin' here flappin' gums with you." - prophecy
+- "Heh. Yeah. Maybe. What would you do if you could get 'em back?" - prophecy
+- "Your fireteam." - prophecy
+- "Yeah. That's fair." - prophecy
+- "This is Nine space. They control reality here. And they did this for a reason." - prophecy
+- "I'm launching spectral analysis off the Guardian's position… It's not exactly our Mercury. No Tree of Probabilities… no Infinite Forest." - prophecy
+- "Osiris took the Sundial with him… wherever it is he went. I always wanted to take that thing for a spin." - prophecy
+- "Let's see. Power on switch here. Signal jammer here. Choose frequency, and… Hey, Orin. You there? Orin!" - prophecy
+- "I noticed you all stopped tryin' to… boil my brain lately. And I know you love tryin' to spook me. So, what's the deal? You scared, now that Savathûn's rode into town?" - prophecy
+- "So, the Nine still need you out there?" - prophecy
+- "Yeah, that's what I thought." - prophecy
+- "Just yellin' at the wind, Three Eyes." - prophecy
+- "That's a first. What's up, you lunatic?" - prophecy
+- "You mean Eris? Yeah, I guess she did know Orin back in the day. What'd you say?" - prophecy
+- "I trust no one, you psychopath." - prophecy
+- "Well, hell if I know. I don't understand people like them." - prophecy
+- "Friends." - prophecy
+- "What the hell does that mean? You know what - okay, I'll bite." - prophecy
+- "Okay, why is it getting hot? Do you feel that, Guardian? I can't… I can't see anything." - prophecy
+- "What's that smell?" - prophecy
+- "Am I dead? I hope so, because what I'm smelling, I don't want to be touching." - prophecy
+- "Get me outta here." - prophecy
+- "Holy hell, what're you doing now? It's too bright!" - prophecy
+- "[grunts] Hey, watch it! What was that? That's not funny." - prophecy
+- "Okay, when I said "get me outta here," I meant I'm done with your bull-" - prophecy
+- "Don't touch me." - prophecy
+- "You call this a game?" - prophecy
+- "Get me outta here, Orin! It won't let go. I can smell it rotting!" - prophecy
+- "I said I'm done!" - prophecy
+- "What the hell is wrong with you, you lunatic?" - prophecy
+- "What's up, Three Eyes?" - prophecy
+- "For the last time, I'm just helping the Vanguard out on a consultation basis." - prophecy
+- "What Zavala doesn't know he won't have to worry about." - prophecy
+- "You stay outta this, lunatic!" - prophecy
+- "Nothin'. Drifter's just… passin' through." - prophecy
+- "Well." - prophecy
+- "On Io? That's where that Pyramid parked. Right over the Tree of Silver Wings." - prophecy
+- "Must be. Too bad I don't speak lunatic." - prophecy
+- "Hey, Three Eyes. You spending all your time on Io now?" - prophecy
+- "What do you think of all this?" - prophecy
+- "The black fleet. The end of the line. End of the Light." - prophecy
+- "How do you know?" - prophecy
+- "Look at the sky. Nightfall's comin'." - prophecy
+- "It ain't pleasant." - prophecy
+- "And what's that?" - prophecy
+- "Hey, Three Eyes. Check this out." - prophecy
+- "I finally opened my Dawning gift from Eva Levante. She got me this bulldozer of a book from the Golden Age. It's full of definitions of words! Never seen anything like it. Heh, must've had a lotta time back then." - prophecy
+- "So, uh, I went and looked up one of those nicknames you gave me: "meretricious rogue."" - prophecy
+- "Listen, Moondust. Hand to my heart, I am flattered. But Drifter ain't got time for all that! Let's keep this businesslike." - prophecy
+- "Yeah. I'm better at math, though." - prophecy
+- "Hey, Moondust. You're no Vanguard. Why do you hang with them?" - prophecy
+- "You should take it easy. Learn to relax. You're Ghostless now. Go live your life. Vanguard business won't end well for you." - prophecy
+- "I've known Ghostless all my lives. Trust me. Live it while you can. No one gets a happy ending." - prophecy
+- "Actually, no. Guess I don't." - prophecy
+- "This is Mars… one of the old man's many homes. I always wondered if his bite was as bad as his bark. But he went down like a punk. Heh." - prophecy
+- "That's his name. Osiris was bankin' on him. Kicked down that old Russian's door and threatened him with a gun to get him to help. He didn't know I was watching. And laughing. Heh." - prophecy
+- "Well, yeah. When you put it that way, it doesn't sound funny at all, Three Eyes!" - prophecy
+- "Yeah, so what? We knew THAT the second the Pyramids jumped into the system and punched Rasputin in the head." - prophecy
+- "Yeah, well, the old man went down like a sack full'a Ghosts. Maybe Ana can find a sturdier case to put him in. Like a… vending machine or something." - prophecy
+- "If she wants to impress me, she should get a job - Hunter Vanguard, for instance." - prophecy
+- "Mars. Home of the oldest earthling in the system. Now, what're y'all trying to say with this?" - prophecy
+- "Yeah, they're not the only ones - I been waiting on her to take that seat. Why haven't you numbskulls filled it?" - prophecy
+- "Cayde-6's personal toilet. Hunter Vanguard seat." - prophecy
+- "Yeah, guess I wouldn't want to be stuck herding cats and doing paperwork either. Shaxx would do it just to spite y'all." - prophecy
+- "Hey. How you living, Moondust?" - prophecy
+- "Why does everybody say it like that? "Extinction-level event." We're down to one city! I could cause an extinction-level event." - prophecy
+- "Sister, I've had a bug-out bag since the Dark Age. I'll be all right." - prophecy
+- "You've changed since the last time I saw you, Three Eyes. I mean, since you were Two Eyes way back when. Not that we called you that. [laughs]" - prophecy
+- "Nope. It still ain't." - prophecy
+- "Some people might envy just one last life." - prophecy
+- "If this were authentic Mars, Ana Bray's setup would be a short walk from away. That sister needs to get her head out of the past. She could be so much more." - prophecy
+- "Shouldn't everyone?" - prophecy
+- "I wouldn't say that. Clearly, the Nine pass no judgment on Dark or Light. And they love passing judgment. Trust. That means in their eyes, the two are the same." - prophecy
+- "That's some bloodlust, Hero. It hit me when you were tearing that last pack of Taken apart. What the Nine are trying to say: Light. Dark. It don't matter." - prophecy
+- "Didn't say the same. Just - the difference don't matter." - prophecy
+- "I mean, that's just your opinion, man. Nah, I think this made sense." - prophecy
+- "Well… we got paid, didn't we?" - prophecy
+- "Uh… you're welcome. Let us know if there's anything else we can do." - prophecy
+- "Relax, Moondust. We got what we came for. Let's leave the giant head alone." - prophecy
+- "Hey. What the hell are you doin' with that gun? That's the Last Word! [chuckles] You know you can trust me. But the man who gave you that? He's the one who walked into hell and spread my friend's ashes on the side of a rock. You… You are such a punk. Trying to play both of us, huh? You are insane. I dig it. But ask yourself: what's to stop that man from doing you in like he's done with so many of my friends? I'll be seein' you. Punk." - quest-a-darker-path-the-draw
+- "As my new partner, couple things about me you should know: I've been pitting a lot of very bad people against some good ones. Could end up being trouble for the City and there's already been some collateral damage. Hand to my heart I regret anyone who takes a dirt nap on account'a me. But I didn't survive by being indecisive. Through every age and era, Drifter's done what he had to. The Warlords and the Iron Lords taught me that the Light is no gift. It brought hell to earth, and when we begged to die, it said hell no. They say the Dark Age was untold suffering. I could tell you a lot. Maybe next time. Go find the other tapes. I made you tapes. [chuckles]" - quest-bomb-threat-the-investigation
+- "What. Is. This? The heart of an Ascendant Primeval. I'll take that, thank you very much. We'll use it later. While I have you here… Get this: a while back this punk stole something… important to me. Thing is, he's like us - ever-living till you get his Ghost. But seeing as I ain't laid eyes on him in something like forever, guessing his Ghost probably got… got. So do me a favor and, uh, go see if that punk has what's mine, huh? I'd do it myself, but as you can see, I'm a busy man. Besides, you're the closest thing to reliable I've met in a century." - quest-city-of-secrets-darkness-in-the-light
+- "You been my crew for a while, sister. Gambit. Prime. All the good work. And against my better judgment… I trust you. Just a little. But if you're gonna keep hanging with ol' Drifter, there's some things you should know. I've prepared a little survival guide for ya, from the ultimate prepper himself. Heh. That's me. Step one? Get your ass to Europe." - quest-cold-feet-honor-among-thieves
+- "Putting Stasis into a Grenade Launcher, huh? Heh. Wish I'd thought of that. Listen, I think the Fallen have bitten off a little more than they can chew here. What do you say we take this thing off their hands? See if you can find intel on where they're keeping the prototype. In the meantime, I'm gonna call in a favor from the Shore…" - quest-collect-intel-the-stasis-prototype
+- "I finally have an answer for the Man with the Golden Gun. And it's something you and me built together. What do you say we call it Malfeasance? Sure, I shot bigger guns. But this thing is weaponized heat death… pure atrophy. And it's the key to my freedom from HIM. Fact is, you don't outdraw that Gunslinger. No one can. But my entire crew - armed with THIS? We don't have to outdraw him. We just have to get our shots in. He dies, too. And make no mistake. You're part of my crew now." - quest-dark-weapon-core-darkness-in-the-light
+- "OK, sister, this'll be a cake walk. You're just pickin' up a stash. Clear out the area. I got Vanguard snitches breathing down my neck. We don't need anybody followin' you." - quest-dead-drop-honor-among-thieves
+- "Patching you the XYZ to the pickup site now. You're looking' for a big pile of salvage. You'll know it when you see it." - quest-dead-drop-honor-among-thieves
+- "You're close. It's just around the corner." - quest-dead-drop-honor-among-thieves
+- "Huh. Transmat's down. Maybe the beacon's busted? Eh… Tell you what. Fallen crews around here jack Vanguard gear all the time. See if you can find a spare beacon. I, uh, got a call coming through that I gotta take." - quest-dead-drop-honor-among-thieves
+- "Hey, transmat's coming through fine, but a little Spider just told me Shin Malphur's been spotted in the EDZ. Remember him? Famous renegade. Golden Gun. Mad-on for revenge. He and I had an arrangement. The EDZ was NOT part of that arrangement. Come on back to base. We gotta regroup." - quest-dead-drop-honor-among-thieves
+- "As my new partner, couple things about me you should know: I've been pitting a lot of very bad people against some good ones. Could end up being trouble for the City and there's already been some collateral damage. Hand to my heart I regret anyone who takes a dirt nap on account'a me. But I didn't survive by being indecisive. Through every age and era, Drifter's done what he had to. The Warlords and the Iron Lords taught me that the Light is no gift. It brought hell to earth, and when we begged to die, it said hell no. They say the Dark Age was untold suffering. I could tell you a lot. Maybe next time. Go find the other tapes. I made you tapes. [chuckles]" - quest-drifters-hideaway-honor-among-thieves
+- "So there you have it, snitch. Not gonna hide what I've done, but I'm not braggin', either. Just tryin' to stay alive the best way I know how. You go tell your heroes. Hope they got the dirt they were lookin' for. Just know that there's too much at stake - you ain't stoppin' me. Many have tried. They're, uh… well, they're dead now." - quest-hard-truths-the-investigation
+- "Dark Age was different times. We had no City. Warlords and Iron Lords tore up the whole world tryin' to prove who was better, what was worth fighting for. I was busy tryin' not to starve. You ever go hungry 'til you keeled over? We did that a lot in the Dark Age. Our Ghosts would bring us back - still hungry. Really pissed me off. This one time I found a village to hide out in. Bunch of huts, really. Good people. They gave me work, and I kept my Light a secret while I performed some minor miracles. Then the Iron Lords rolled into town. My Ghost stayed outta sight, and they were none the wiser. They cut a deal with us (as if we had a choice) - paid us to let let them hide out 'til some Warlords showed up. Then ambushed 'em. But we all got caught in the crossfire. My neighbor's kid told me something that still bounces 'round my head to this day. Right before the light went out in her tiny eyes, she whispered, "I can't feel anything." Yeah. I couldn't either. That's all I got. Cut the tape." - quest-hidden-messages-honor-among-thieves
+- "Hey, kid. It's me. The Drifter. And this is "How to Drift," Part Three: Never Trust Your Ghost. He's a tool. A connection to the Light. Not a friend - not in any way that counts. You think he's saving your hide, bringing you back? He's saving his own. I don't care what your Guardian dogma says. I don't care what your little buddy has told you. We don't know what Ghosts are. They sound friendly, right? But I met some Ghosts in the Dark Age would kill you for a blue engram. Then spit on your grave. All so they could grow their Light a little more. Make a "stronger connection to the Traveler." Whatever the hell that means. You're an idiot if you think those Ghosts aren't still around. Take mine, for example. Really creeps me out… Cut the tape, Ghost. And don't gimme that look. You know where we stand." - quest-hidden-messages-honor-among-thieves
+- "If you're gonna hang with me, you need to know about the Shadows of Yor. They follow the edicts of a very bad man named Dredgen Yor. And what're his Shadows after? Everything the Light can't provide. I thought they could help me find an answer to the battles of Light versus Light that raged during the Dark Age. But the longer I flew with them, the more I saw they're blind as all those who follow the Traveler. One albatross for another. I was done with 'em. And that title I give out? Dredgen? I did it to piss them off. Draw the Shadows out where I could see 'em. Worked like a charm. I love all you lil' Guardians. You're so forthright. So eager to please. That make you angry? Good. Use it." - quest-hidden-messages-honor-among-thieves
+- "You can't be the Drifter's partner and not know about Shin Malphur. The Man with the Golden Gun is still out there. He's a hero. The stuff of legend. Naturally, he's after my Ghost. He wouldn't be the first. But everyone and their grandma has a Malfeasance Hand Cannon by now. I think we're OK if Mr. Malphur ever shows his face. He follows the Light like a zealot, and he ends all those who would consort with the dark because of one man who went rogue. It's not his Golden Gun you should be afraid of, kid. It's his idea that one man can decide he makes the rules, and when you cross him, he can take everything from you. Doesn't sit right with me. Never will." - quest-hidden-messages-honor-among-thieves
+- "Mighty kind of the Vanguard to let me sleep in the Annex. Doesn't get cold down there. Much. Do I trust them for it? Hell no. They're gettin' people killed just like the Iron Lords. Yes, people. Like you and me. Just 'cuz we got the Light doesn't mean we ever stop bein' that. Don't you let them tell you otherwise. And that mission statement of theirs? Protecting the City? Heh. Humanity's done, kid. You can't save 'em. Even if you could wrap a Ward of Dawn around this whole town, they'd start dying all on their own. Every single one you save becomes just a memory. I don't need any more of those. You'll get there. You'll see." - quest-hidden-messages-honor-among-thieves
+- "I thought the City had made you all soft. But there's this hardliner - a Warlock named Aunor. Pretty sure she's trying to kill me. She crashed a handoff between me and the Shadows of Yor in Midtown. My, uh, buddies took a hostage, and she took out a City block getting them back. Some people didn't make it out. How's that for hypocrisy? She jumped the shark on that one. I woulda' talked them down. No one had to get hurt. I hope the Vanguard are happy. I heard word from Hunter dens across the City. This Aunor's been building a crew to look into me and the Shadows. Buncha clowns. One'a them is this Guardian - a hero of the Red War just like you - one'a Cayde's friends… just like you. A Gambit regular. 'Cept they're a snitch. Have been all this time. I don't mind. As long as they keep bringing Motes, we're square. You watch your back out there, partner. Your friends might not be what they seem." - quest-hidden-messages-honor-among-thieves
+- "Hey, you made it to the last part of my lil' seminar. You caught me without much else to say. Already talked your ear off. But I guess there is one thing. I want you to know that you're the closest thing to a wheel-horse I've had in, oh, a thousand years. I can see you making that face like you just swallowed some Scorn blood. "Wheel-horse" is an expression, kid. It's Dark Age for "we're tight." That's what you kids say, right? So here's something I never had the chance to tell anyone else on account of they're dead or tryin'a kill me. Don't give in to hope. That gets you killed. Take every day as it is. Trade your jumpship for a long-range hauler and see the universe while you can. I want the best for you, kid. And you won't find that in this system. Speaking of which. the Collapse wasn't the last extinction-level event to hit humanity. Ol' Drifter's seen another one comin'. Everything I'm building in the Nine Realms is preparation. There's a few seats I'm savin'. One of 'em is for you. If you want it." - quest-hidden-messages-honor-among-thieves
+- "Let me have a look at that thing. I like that rough-around-the-edges look that Fallen tech has. Reminds me of the Dark Age. Smash together some bits and pieces, and pray to no one that it works. You could tear up the field in Gambit with this. Lay some traps. Catch some Taken. Bring it through sometime, all right? I wanna see what you can do when you're packin' Darkness." - quest-rendezvous-with-drifter-the-stasis-prototype
+- "Big Boss Blue said you were coming. Offered me some made-up job: plugging the Pyramid's leaks, keeping the Dark bottled up. Said it was "compulsory." I don't mind a little charity, but you ask me, containment's just like holding your breath. Gotta let it out every now and then. Pyramids are making some moves. Moondust thinks we can use the Darkness we catch to charge that Seed. Might cut through all that pesky interference in the Cradle. Might let her tell you what Savathûn doesn't want you to know. Good thing too, cuz it is wacky out there. Haha. Look around. Cabal, Fallen, bunch of unsavory types looking to stake their claim. Jokers can't even see we're boxed in. All bets on you to pull through. Heh, no pressure." - quest-speak-with-the-drifter-in-the-face-of-darkness
+- "Putting Stasis into a Grenade Launcher, huh? Heh. Wish I'd thought of that. Listen, I think the Fallen have bitten off a little more than they can chew here. What do you say we take this thing off their hands? See if you can find intel on where they're keeping the prototype. In the meantime, I'm gonna call in a favor from the Shore…" - quest-speak-with-the-drifter-the-stasis-prototype
+- "Well? Whadya think? Pretty good, right? Gambit's my pride and joy, but Prime's a whole new song and dance. If I did this right - and I think I did this right - you freaks will line up for this 'til the sun goes out. What's this all for? [chuckles] Why don't you head on up to the Derelict for a behind-the-scenes tour?" - quest-synthesis-gambit-in-its-prime
+- "Dark Age was different times. We had no City. Warlords and Iron Lords tore up the whole world tryin' to prove who was better, what was worth fighting for. I was busy tryin' not to starve. You ever go hungry 'til you keeled over? We did that a lot in the Dark Age. Our Ghosts would bring us back - still hungry. Really pissed me off. This one time I found a village to hide out in. Bunch of huts, really. Good people. They gave me work, and I kept my Light a secret while I performed some minor miracles. Then the Iron Lords rolled into town. My Ghost stayed outta sight, and they were none the wiser. They cut a deal with us (as if we had a choice) - paid us to let let them hide out 'til some Warlords showed up. Then ambushed 'em. But we all got caught in the crossfire. My neighbor's kid told me something that still bounces 'round my head to this day. Right before the light went out in her tiny eyes, she whispered, "I can't feel anything." Yeah. I couldn't either. That's all I got. Cut the tape." - quest-the-survival-guide-the-investigation
+- "Hey, kid. It's me. The Drifter. And this is "How to Drift," Part Three: Never Trust Your Ghost. He's a tool. A connection to the Light. Not a friend - not in any way that counts. You think he's saving your hide, bringing you back? He's saving his own. I don't care what your Guardian dogma says. I don't care what your little buddy has told you. We don't know what Ghosts are. They sound friendly, right? But I met some Ghosts in the Dark Age would kill you for a blue engram. Then spit on your grave. All so they could grow their Light a little more. Make a "stronger connection to the Traveler." Whatever the hell that means. You're an idiot if you think those Ghosts aren't still around. Take mine, for example. Really creeps me out… Cut the tape, Ghost. And don't gimme that look. You know where we stand." - quest-the-survival-guide-the-investigation
+- "If you're gonna hang with me, you need to know about the Shadows of Yor. They follow the edicts of a very bad man named Dredgen Yor. And what're his Shadows after? Everything the Light can't provide. I thought they could help me find an answer to the battles of Light versus Light that raged during the Dark Age. But the longer I flew with them, the more I saw they're blind as all those who follow the Traveler. One albatross for another. I was done with 'em. And that title I give out? Dredgen? I did it to piss them off. Draw the Shadows out where I could see 'em. Worked like a charm. I love all you lil' Guardians. You're so forthright. So eager to please. That make you angry? Good. Use it." - quest-the-survival-guide-the-investigation
+- "You can't be the Drifter's partner and not know about Shin Malphur. The Man with the Golden Gun is still out there. He's a hero. The stuff of legend. Naturally, he's after my Ghost. He wouldn't be the first. But everyone and their grandma has a Malfeasance Hand Cannon by now. I think we're OK if Mr. Malphur ever shows his face. He follows the Light like a zealot, and he ends all those who would consort with the dark because of one man who went rogue. It's not his Golden Gun you should be afraid of, kid. It's his idea that one man can decide he makes the rules, and when you cross him, he can take everything from you. Doesn't sit right with me. Never will." - quest-the-survival-guide-the-investigation
+- "Mighty kind of the Vanguard to let me sleep in the Annex. Doesn't get cold down there. Much. Do I trust them for it? Hell no. They're gettin' people killed just like the Iron Lords. Yes, people. Like you and me. Just 'cuz we got the Light doesn't mean we ever stop bein' that. Don't you let them tell you otherwise. And that mission statement of theirs? Protecting the City? Heh. Humanity's done, kid. You can't save 'em. Even if you could wrap a Ward of Dawn around this whole town, they'd start dying all on their own. Every single one you save becomes just a memory. I don't need any more of those. You'll get there. You'll see." - quest-the-survival-guide-the-investigation
+- "I thought the City had made you all soft. But there's this hardliner - a Warlock named Aunor. Pretty sure she's trying to kill me. She crashed a handoff between me and the Shadows of Yor in Midtown. My, uh, buddies took a hostage, and she took out a City block getting them back. Some people didn't make it out. How's that for hypocrisy? She jumped the shark on that one. I woulda' talked them down. No one had to get hurt. I hope the Vanguard are happy. I heard word from Hunter dens across the City. This Aunor's been building a crew to look into me and the Shadows. Buncha clowns. One'a them is this Guardian - a hero of the Red War just like you - one'a Cayde's friends… just like you. A Gambit regular. 'Cept they're a snitch. Have been all this time. I don't mind. As long as they keep bringing Motes, we're square. You watch your back out there, partner. Your friends might not be what they seem." - quest-the-survival-guide-the-investigation
+- "Hey, you made it to the last part of my lil' seminar. You caught me without much else to say. Already talked your ear off. But I guess there is one thing. I want you to know that you're the closest thing to a wheel-horse I've had in, oh, a thousand years. I can see you making that face like you just swallowed some Scorn blood. "Wheel-horse" is an expression, kid. It's Dark Age for "we're tight." That's what you kids say, right? So here's something I never had the chance to tell anyone else on account of they're dead or tryin'a kill me. Don't give in to hope. That gets you killed. Take every day as it is. Trade your jumpship for a long-range hauler and see the universe while you can. I want the best for you, kid. And you won't find that in this system. Speaking of which. the Collapse wasn't the last extinction-level event to hit humanity. Ol' Drifter's seen another one comin'. Everything I'm building in the Nine Realms is preparation. There's a few seats I'm savin'. One of 'em is for you. If you want it." - quest-the-survival-guide-the-investigation
+- "Well, that took you a while. You getting old? [laughs] I saw you snag that engram. You think no one was looking? You ready to get Dark? Chuck it on the Pyre and let's see what ol' Drifter can cook up for ya. Been kit-bashing gear since that jerk Ghost pulled me outta my grave. Got a knack for it, I guess. I'll work you up something nice." - quest-umbral-engram-in-the-face-of-darkness
+- "We understand each other a little better now, huh, kid? Just be careful. Seems everyone who knows me is either trying to kill me or… [laughs] dead. Lotta people comin' for my Ghost. You're stickin' your neck out by gettin' so chummy with me. But hey. If that day comes? They'll eat bullets from both of us. Trust." - quest-were-in-this-together-now-honor-among-thieves
+- "Y'all helped me get Gambit going. And for that, I will be ever grateful. But I've expanded my operation. I call this new scam Gambit Prime. Consider it a down payment on a dream. Give it a try, hotshot. You were my inspiration." - quest-who-are-you-gambit-in-its-prime
+- "You and Aunor make a pretty good fireteam, hero. Even if you did use my face as a barricade. And now that we got that Imperium disk in hand - we're gonna need more than one hard-headed Praxic to decrypt it. We're gonna need the local crime syndicates. I've got some irons in the fire with Spider for an intro. Fellow miscreants like that one respect two things: Money and blood. We'll get you set up on buildin' a reputation for yourself out here on Tharsis, gaining leverage on the local miscreants. But as the Nine Weapon, there's something you gotta know, first. I know I sold you on this job as a scam on the Imperium… but you heard on that ship what I've known all along. The Nine are backing the Imperium at the top. They surprised me with that junior Dredgen, but - they're pulling his strings, too. I've had the same nightmare since Kepler. A vision that runs and smells and tastes on repeat every time I close my eyes. Hand to my heart, I know the threat. If I don't do it, they hurt her. Back on that ship…" - renegades-quest-additional-drifter-dialogue
+- "Bael knew me as a Dredgen. Heard stories of the sad old days and… wanted a close-up look. Thought that was all there was to connect us. But there's more. Couple months ago, I had this vision. Didn't know if I was cracking up or what. Because when I came to… I tasted granite and battery acid. And I knew… I KNEW it came from the Nine." - renegades-quest-additional-drifter-dialogue
+- "Been analyzing Imperium tech. There's an energy signature in it that may be anti-Light in nature. And my Ghost, Blue, picks today to go rebel on me. Thought I'd be behaving lately, too. She says she'd like your help getting her voice back online. She lost it helping me out a long time ago. Do her a solid, yeah? She's never asked me for this. Knab some kitbash parts 'round Tharsis." - renegades-quest-additional-drifter-dialogue
+- "Years ago, my Ghost lost her voice when I got us into an ice-cold situation on one of the Cabal Emperor's Athenaeum worlds. A couple other Lights didn't make it out, but thanks to her, I did. Hand to my heart, I regret it-and I thought she and I were making progress, especially after Kepler. She's clearly holding some grudges, but-thanks for helping her just the same. Now let's see what we can do to take this fight to the Imperium." - renegades-quest-additional-drifter-dialogue
+- "Did it work?" - renegades-quest-additional-drifter-dialogue
+- "Hello to you, too." - renegades-quest-additional-drifter-dialogue
+- "Guardian, thank you for fixing my Ghost. This is Blue. Named her because of that sunny personality." - renegades-quest-additional-drifter-dialogue
+- "Hey hero. Heard you been getting into it with the syndicates. You're the talk of Tharsis. I need your ear for a sec. Away from Blue. That data disk we lifted? I got a line on a way to break it open. You know the Pikers: Eliksni punks who don't care for Houses or the Traveler. Treat Servitors on the same level as Dregs. They're atheists, radicals-wild children. These kids been scrapping with the Imperium for a minute now. Got Splicer Shanks that can crack the disk we stole-unlike our Ghosts. Spider and Riliks-the Piker's leader-got an exchange set up. Down in the dunes, on Spider's fancy new boat. He's been hounding me to send you his way. Go meet 'em. Get a Shank. Keep Spider happy. He talks syndicate, the syndicates got numbers, and we need numbers to stop the Imperium. They know we got the plans for their Nightfall station on that disk. It's over silver bullet-we get in, we'll know how to take their superweapon off the table. Wish I could go with you but… I gotta chase down some loose ends elsewhere. Do me a favour-take Blue with you? Tell her… Well, don't tell her anything. You saw what they want me to do. What they said I'm gonna do-or did already. She'll sniff me out and she'll say I'm runnin', but I ain't! I ain't leavin' her, I just-she needs to stay here, to do this job. Don't let her come after me. And if she tries-you keep her away." - renegades-quest-additional-drifter-dialogue
+- "We both know I've done worse, Blue. Sorry, fireteam. I need Bael to trust me. He's just a kid. And a Guardian… is a terrible thing to waste." - renegades-quest-additional-drifter-dialogue
+- "No!" - renegades-quest-additional-drifter-dialogue
+- "VI didn't mince words. Someone will die if I don't follow what fate laid out for me. I gotta assume it's you. Can't lose you again." - renegades-quest-additional-drifter-dialogue
+- "I'll see what I can dig up on the inside. But what if they figure me out and cut me down?" - renegades-quest-additional-drifter-dialogue
+- "Now that Blue's tinkered up, she's going whole hog on that Imperium data. Encryption's a pile though. It's gonna take time, dig?" - renegades-quest-additional-drifter-dialogue
+- "Not personally. But the Dredgens… that's my baggage. I'll clean it up. First, we gotta make good on our deal with the Pikers." - renegades-quest-additional-drifter-dialogue
+- "Ops ain't been cleared on Venus since it popped back into Sol. Legal ones, anyway. Guess they still aren't." - renegades-quest-additional-drifter-dialogue
+- "Hell no. But if it gets us what we need to move one step ahead of the Imperium, of the Nine… I'll roll those dice." - renegades-quest-additional-drifter-dialogue
+- "Yeah. Dropped out of her control. Traded in that cozy collective for slick threads. Their boss owes me… in cards, among other things." - renegades-quest-additional-drifter-dialogue
+- "Back on target, hero. Let's push; we don't have time to waste." - renegades-quest-additional-drifter-dialogue
+- "Maybe this is what the Prophecy meant by "bind the Nine"? Gods don't tend to like being tied down. Maybe III's expecting us to slug it out with the Imperium to prevent extinction." - renegades-quest-additional-drifter-dialogue
+- "They're just in our way. The real fight's with the Imperium." - renegades-quest-additional-drifter-dialogue
+- "Hey, Spider. Our Weapon's ready for a planet-side pickup. Send out that Hawk! Whoa. You pick that up on the Vanguard sats? Some kinda… high-yield energy emission." - renegades-quest-additional-drifter-dialogue
+- "Listen. If it comes down to it, I stole the Imperium's data. It's me Bael wants. If we got our backs to a wall, just let me play my hand." - renegades-quest-additional-drifter-dialogue
+- "You don't know what the Nine can take from us, Eris. I've felt it, and I've seen it. They'll rip the years away until we got nothing." - renegades-quest-additional-drifter-dialogue
+- "Hey hero. Heard you been getting into it with the syndicates. You're the talk of Tharsis. I need your ear for a sec. Away from Blue. That data disk we lifted? I got a line on a way to break it open. You know the Pikers: Eliksni punks who don't care for Houses or the Traveler. Treat Servitors on the same level as Dregs. They're atheists, radicals-wild children. These kids been scrapping with the Imperium for a minute now. Got Splicer Shanks that can crack the disk we stole-unlike our Ghosts. Spider and Riliks-the Piker's leader-got an exchange set up. Down in the dunes, on Spider's fancy new boat. He's been hounding me to send you his way. Go meet 'em. Get a Shank. Keep Spider happy. He talks syndicate, the syndicates got numbers, and we need numbers to stop the Imperium. They know we got the plans for their Nightfall station on that disk. It's over silver bullet-we get in, we'll know how to take their superweapon off the table. Wish I could go with you but… I gotta chase down some loose ends elsewhere. Do me a favour-take Blue with you? Tell her… Well, don't tell her anything. You saw what they want me to do. What they said I'm gonna do-or did already. She'll sniff me out and she'll say I'm runnin', but I ain't! I ain't leavin' her, I just-she needs to stay here, to do this job. Don't let her come after me. And if she tries-you keep her away." - renegades-quest-additional-drifter-dialogue
+- "Hey there, hero. I'm leaving a few breadcrumbs for ya, just in case things go sideways. I know what it looks like, dragging the crew into an op behind Zavala's back. But you saw that vision the Nine sent me. It ain't just another bad dream. They were vague, as usual but - I know they're threatening Eris, straight up - and you know how that sits with me. I can't change fate - better to lean into it." - renegades-quest-additional-drifter-dialogue
+- "Hope you're listening, hero. Like I said, I… might have to make a few radical moves coming up. It's gonna rock the fireteam. Blue won't like it. For Eris. So for now, let's keep this between us. I'll see you on the other side." - renegades-quest-additional-drifter-dialogue
+- "Hey, hero. You gotta know I had nothing to do with the Tharsis Nightfall attack. Bael sprung it as soon as I took off to meet him. Sorry I had to shrug you in orbit. I hope Bael just needed guidance, but he's a Dredgen - through and through. And now… so many Lights lost… I tried to reach out to Blue. She's cut me off." - renegades-quest-additional-drifter-dialogue
+- "Hey, hero." - renegades-quest-additional-drifter-dialogue
+- "Arm yourself, Guardian. The Drifter keeps no medical provisions or supplies. But guns are ubiquitous." - renegades-quest-additional-drifter-dialogue
+- "Hey, uh… probably didn't expect to hear from me again, huh? Bailing was a bad move. I admit it. Soon as I turned around, I picked up Sloane's message. I thought she was gonna chew me out. She didn't. Just told me what I needed to do next. Anyway, I'm here now, and Eris needs me. Need us. Find me on the Dreadnaught." - rites-of-the-deep-renascence
+- "Call me crazy. Hell, most already do. But I can't shake this. I won't. The Dreadnaught has one foot in the Ascendant Plane. Maybe… that's how she reached out. Find her. She's here. I should've known… I should've known. It'd take more than that." - rites-of-the-deep-renascence
+- "So I hear you got some shards of Oryx's sword, Willbreaker. Puttin' it back together won't be easy. All that Taken mojo you picked up from Sloane is a good start. But jammin' it into Crota's hilt? That'll take some real freaky Hive magic. Eris ain't here, so… I'm stepping up. It ain't the same, but I picked up a few tricks along the way. I'll do my part, and you do you, hero." - rites-of-the-deep-renascence
+- "That's it! Get those pieces together!" - rites-of-the-deep-renascence
+- "That thing's unstable, but we can still do this. Get to the rift, and I'll be ready." - rites-of-the-deep-renascence
+- "You - you are the one who wounds! You are the blade-undulled! Damn it, Toland. I… She is the… blade-unforgotten! She is the… deep-scoured, vengeance-fed deathless! I am… I'm… oh, hell, just kill something with the damn sword!" - rites-of-the-deep-renascence
+- "The Hive gods were conjured back by their natures. Yeah, I read the Books of Sorrow! A fella gets curious. Anyway, Eris was the God of Vengeance. So go get some!" - rites-of-the-deep-renascence
+- "Eris! Do it, Guardian! I'm on my way!" - rites-of-the-deep-renascence
+- "I thought you were gone, I…" - rites-of-the-deep-renascence
+- "Always were." - rites-of-the-deep-renascence
+- "Hey, hero. Got an update for ya. Sounds like you and Eris and Sloane have the Taken stuff under control, so I'm headed out on recon duty. Haul's stayin' parked right where it is. This is a short trip, don't you fret. But it's like Sloane said: it got "Hive god" worse around here, and now our backup plans need backup plans. So here's mine. That ain't all the pieces of Oryx's sword. Not by a long shot. I'm putting some feelers out. Hunting down where those pieces have wandered off to. You never know when you might need a wicked Hive sword. So everything's under control. No need to worry about old Drifter. I'll give you a shout when I've got somethin'." - rites-of-the-deep-speak-to-drifter
+- "Hey there, Captain! Figured I'd better take over while Mithrax is preoccupied. I heard he's dealing with some family issues. From what I could gather, he tried to shut Eido out from all this pirate business. Mighta lost his temper. Definitely lost face. [sighs] Poor Eido. What do they say? "Never meet your heroes"? Kinda tough when your hero's your dad. No surprise to me Mithrax has got some secrets. Everybody's got something that keeps 'em up at night. I'm sure they'll work it out. Folks have a way of putting aside their differences when the world's at stake. Heh, just look at me and Zavala! Or me and Ikora. Or me and… anybody, really." - sails-of-the-shipstealer-iii-visit-the-holoprojector
+- "It is unkind to withhold knowledge. Unkindness was never my aim." - sails-of-the-shipstealer-power-is-freedom
+- "You know I don't hear that enough." - sails-of-the-shipstealer-power-is-freedom
+- "Power is freedom and everybody's chasing it. From the biggest freaky moth monster to the lowest space pirate. But while the Lucent Hive are loyal to Savathûn and the Pirates enjoy a startling degree of freedom already - they are not constrained by office or honor. They are ruled only by their own desires." - sails-of-the-shipstealer-power-is-freedom
+- "Yeah, I might look that way from the outside. But they've got to fight for everything they get. That's just survival. A meal and a bed that don't come at the end of a blade. That's freedom." - sails-of-the-shipstealer-power-is-freedom
+- "Thank you." - sails-of-the-shipstealer-power-is-freedom
+- "You know I don't hear that enough." - sails-of-the-shipstealer-power-is-freedom
+- "Glad I caught you, Guardian. I didn't want you setting off after Eramis without a little warning first. What's that look? You don't survive as long as me without being able to smell trouble. And honestly, kid, you stink of it. You've been cutting a swath through those pirates out there, but… don't get complacent. Watch your opponent, but watch your back, too. You're going after chunks of a dead disciple of the Witness - and you've almost got 'em all. That's some serious juju. The stakes are high. That's when folks tend to get… unpredictable." - sails-of-the-shipstealer-vii-visit-the-star-chart
+- "Thanks for helping your ol' pal Drifter with this... delicate situation, hero. I had a delivery headed towards the Last City when these House Salvation goons hijacked it. Now I just need you to get in there and... expedite my shipment. I'll let you know what we're looking for once you're inside." - secure-the-cargo
+- "I don't blame House Salvation for skimming a little cream off the trade routes. Couldn't have been easy after their head honcho got turned into a popsicle. But I didn't think they have the guts to try something like this! Once we get my cargo back, you'll see what I mean." - secure-the-cargo
+- "Gettin' warmer. Our misappropriated shipment is just ahead." - secure-the-cargo
+- "I'm there in spirit, boss. I... finessed the Guardian into doing the actual rescuing." - secure-the-cargo
+- "About that... first, let's discuss the matter of our hazard pay." - secure-the-cargo
+- "Sure thing, boss. We'll just ship you back to the Tangled Shore. Queen Mara's got a handsome bounty on your ugly mug. Could be quite the payday." - secure-the-cargo
+- "[chuckles] Hear that, hero? We got ourselves a new ride! Just gotta break it out of impound." - secure-the-cargo
+- "While you were hiding in your kennel?" - secure-the-cargo
+- "Sounds ominous. But I'm sure the Guardian can handle it." - secure-the-cargo
+- "You weren't lying about these House Salvation jokers! They're all riled up. What'd you say they're looking for?" - secure-the-cargo
+- "Mm, that's awfully esoteric for a buncha rubes like these. They gotta be taking orders from someone. Who the hell's calling the shots around here." - secure-the-cargo
+- "That must be the big boss in charge. Take 'em out, hero!" - secure-the-cargo
+- "Aw, hell. The Witness must've broken Eramis out. No wonder House Salvation's scrambling." - secure-the-cargo
+- "Price of her freedom, I bet." - secure-the-cargo
+- "Luckily, we got a clean ship, and a dirty crew to chase her with." - secure-the-cargo
+- "Come on now, Spider. I'll treat her like she was my own." - secure-the-cargo
+- "Only thing you better worry about is the welcome you'll get back in the Last City. Let's ride, Guardian!" - secure-the-cargo
+- "I kept this part quiet. I think half of those pirate lords didn't know what they had to begin with. They knew these things were powerful, but not why. Crack one open, and you'd find a fingerbone, or a knot of old hair. Strong stuff. Smells awful. Ask me how I know, heh. I been holdin' on to 'em, but… I figured you might want 'em." - semaphore-signals-iii-drifter-and-eris
+- "I thought to myself… "You know who might like something strange and unsettling? Eris Morn."" - semaphore-signals-iii-drifter-and-eris
+- "Well… yeah, Moondust. You could call it a gift." - semaphore-signals-iii-drifter-and-eris
+- "And what's that?" - semaphore-signals-iii-drifter-and-eris
+- "Ooh! I like listenin' to you talk." - semaphore-signals-iii-drifter-and-eris
+- "I told you not to look into the Emissary and you did it anyway. You know how many people I killed for less? Shut up. Don't answer that. I don't need the sass right now. I'm in over my head, kid. Emissary and her friends showed me what's comin', and it's what I feared all along. Put aside your dogma. The fight that's coming can't be won with Light alone. Gambit's your salvation and mine. See you on the field." - the-bigger-game
+- "I found a few pieces myself on Earth. It's a sure sign the nine got their eyes on you. I used to think they were telling us to be strategic. Think it through. Play the long game. But now I think it's a reminder that we're just placeholders stored in a little box they call time until they're all burned out. Like Orin. Maybe that's just my guilty conscience talking. Go out there and prove me wrong, hero. I'm begging you." - the-drifter-correspondence-edge-of-fate
+- "I'd sure like to know what they all mean. Wouldn't you? Do it to it, hero." - the-drifter-correspondence-edge-of-fate
+- "Last time I found one of these pieces, I was having a hard time fixing to bug out of..." - the-drifter-correspondence-edge-of-fate
+- "That's from a golden age game called chess. I found a few pieces myself on Earth. It's a sure sign the nine got their eyes on you." - the-drifter-correspondence-edge-of-fate
+- "Hit back, killer. Run 'em down." - the-nether-second-boss-heresy
+- "Not anymore. She's dead." - the-nether-second-boss-heresy
+- "That's all." - the-nether-second-boss-heresy
+- "Here's something big about the Taken: they need someone to tell them what to do. Oryx, the Witness... bet Mara could grab 'em, too, if she wanted. Hell, even I can get ahold of 'em for Gambit. So, I got a question for you, killer: Who told them to murder Eris?" - the-nether-second-boss-heresy
+- "Well, look at you. You been collectin' names. Buildin' a reputation. Your legend keeps growin'. The Nine. The Shadows of Yor. Shin Malphur. I keep tabs, and they're all talkin' 'bout you. Everything you touch changes. And some folks hate change. You watch your back. Reckoner." - the-reckoner
+- "Hey - word around the Tower is that you snuck your way into a Cryptarch vault. Took somethin' that wasn't yours. It's a strong move that the Vanguard won't like. If they find out. I dig it. Hey, do me a solid. I'm a scavenger. Live a hard life. If you make your way back into that vault - grab something for me, will ya?" - the-rumor-mill
+- "Hold up. You SAW that damn card game? Nah, nah, nah. Not good. They're given' you visions, too. I'll say it straight - I got a bad habit of biting off more'n I can chew. But hey. Guy's gotta eat. And the deal that got me the Haul… it just looked so damn tasty. But damn. They're reaching out to you. No, ma'am. You keep clear of that little blue psycho. Leave this to me. You see her again, you turn the other way, understand? Trust nothing you hear." - word-of-warning
