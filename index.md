@@ -238,7 +238,7 @@ Ingestion status per book. Status: pending | in-progress | done | partial.
 
 ---
 
-**Progress: 110 / 110 books ingested (Destiny 2). Destiny 1: 290 / ~4000+ cards ingested (pages 1-15).**
+**Progress: 110 / 110 books ingested (Destiny 2). Destiny 1: 390 / ~4000+ cards ingested (pages 1-20).**
 **Transcripts: 68 ingested (51 original + 17 additional from YouTube/Destinypedia).**
 **Last Scrape:** 2026-10-30 | **Last Major Update:** Renegades (Dec 2, 2025) | **Patch:** Year of Prophecy (Season 28) | **Content Through:** Renegades campaign, Glory Beyond, Tapes, Imperium, Lawless Frontier
 **Transcript index: transcripts/index.md (6-dimensional: by arc, by beat, by character, by release, by topic, by source)**

@@ -1,0 +1,10 @@
+# Boots of the Fulminator
+
+- Source: https://www.ishtar-collective.net/entries/boots-of-the-fulminator
+
+The Fulminator noticed a difference in her fellow Shadows as they prepared for war.
+The usual bickering, fostered by the multispecies makeup of Calus's enforcer group, vanished overnight as they faced the task they had gathered to complete: kill Dominus Ghaul.
+
+Calus had recruited them through bribery or promises of wealth and resources for their homeworlds. None of them expected to survive their mission. The might of the Red Legion had grown vast. This acceptance brought them together.
+
+The Fulminator didn't understand, or care. As long as Calus left the Arkborn to their interstellar conduits, she would do what she had done since the day she came aboard the Leviathan: destroy the enemies of the emperor.

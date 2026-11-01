@@ -1,0 +1,7 @@
+# Boots of the Emperor's Minister
+
+- Source: https://www.ishtar-collective.net/entries/boots-of-the-emperors-minister
+
+Your reassimiliation into the empires is likely to be cause for concern. You'll understand that it will come with some preconditions. After all, we can't have it appear that I've played favorites. But there's no cause for alarm; your reeducation is merely a formality.
+
+While I may forgive you, the rest of the empire will need some time. It's important to show the people how you have changed. It won't be forever, just however long it takes to earn your place at my side once more.

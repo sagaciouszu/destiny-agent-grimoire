@@ -2,103 +2,103 @@
 
 | Card | Slug | Status |
 |---|---|---|
-| A Scorned Path | a-scorned-path | done |
-| A Shadow's Worth | a-shadows-worth | done |
-| A Sudden Death | a-sudden-death | done |
-| A Swift Verdict | a-swift-verdict | done |
-| A Sword, an Edge | a-sword-an-edge | done |
-| A Tale Twice Told | a-tale-twice-told | done |
-| A Thousand Wings | a-thousand-wings | done |
-| A Touch of Style | a-touch-of-style | done |
-| A Very Nice Young Man | a-very-nice-young-man | done |
-| Archiloquy | archiloquy | done |
-| Arcstrider | arcstrider | done |
-| Arcstrider | arcstrider-2 | done |
-| Arid Rambler | arid-rambler | done |
-| Arrow of Time | arrow-of-time | done |
-| Article: A Consensus for the Rest of Us | article-a-consensus-for-the-rest-of-us | done |
-| Article: A Darker Hour? Looking Back at the Great Disaster | article-a-darker-hour-looking-back-at-the-great-disaster | done |
-| Article: Down on the Farm | article-down-on-the-farm | done |
-| Article: Hot Off the Shelf | article-hot-off-the-shelf | done |
-| Article: United in Hope-Our Neighbors in Neomuna | article-united-in-hopeour-neighbors-in-neomuna | done |
-| Article: Visitors Out of Dreams-Changing Reef Relations | article-visitors-out-of-dreamschanging-reef-relations | done |
-| Artifacts and Old Friends | artifacts-and-old-friends | done |
-| Ascendancy | ascendancy | done |
-| Ascendant Scepter | ascendant-scepter | done |
-| Ashen Wake | ashen-wake | done |
-| Asher: Conclusion | asher-conclusion | done |
-| Asher Mir's One-Way Ticket | asher-mirs-one-way-ticket | done |
-| Asher: Observation | asher-observation | done |
-| Asher: Prediction | asher-prediction | done |
-| Asphodel | asphodel | done |
-| Assassin's Cowl | assassins-cowl | done |
-| Assaulted | assaulted | done |
-| Assumption, Illinois, 1938 | assumption-illinois-1938 | done |
-| Asteroid Belt - 0 | asteroid-belt-0 | done |
-| Astral Horizon | astral-horizon | done |
-| Astrocyte Verse | astrocyte-verse | done |
-| asudeM | asudem | done |
-| At the Gate | Part I | at-the-gate-part-i | done |
-| At the Gate | Part II | at-the-gate-part-ii | done |
-| Atavistic Idol Bond | atavistic-idol-bond | done |
-| Atavistic Idol Boots | atavistic-idol-boots | done |
-| Atavistic Idol Cloak | atavistic-idol-cloak | done |
-| Atavistic Idol Gauntlets | atavistic-idol-gauntlets | done |
-| Atavistic Idol Gloves | atavistic-idol-gloves | done |
-| Atavistic Idol Greaves | atavistic-idol-greaves | done |
-| Atavistic Idol Grips | atavistic-idol-grips | done |
-| Atavistic Idol Helmet | atavistic-idol-helmet | done |
-| Atavistic Idol Hood | atavistic-idol-hood | done |
-| Atavistic Idol Mark | atavistic-idol-mark | done |
-| Atavistic Idol Mask | atavistic-idol-mask | done |
-| Atavistic Idol Plate | atavistic-idol-plate | done |
-| Atavistic Idol Strides | atavistic-idol-strides | done |
-| Atavistic Idol Vest | atavistic-idol-vest | done |
-| Atavistic Idol Vestments | atavistic-idol-vestments | done |
-| Atelic | atelic | done |
-| Athrys's Embrace | athryss-embrace | done |
-| Attendant's Mark | attendants-mark | done |
-| Aurora Dawn | aurora-dawn | done |
-| Auspices | auspices | done |
-| Autognosis | autognosis | done |
-| Awakened Shell | awakened-shell | done |
-| Axial Lacuna | axial-lacuna | done |
-| Azirim | azirim | done |
-| Azure Azazyel | azure-azazyel | done |
-| Azurine Thunder | azurine-thunder | done |
-| Bad Beat | bad-beat | done |
-| Bad Juju | bad-juju | done |
-| Balance of Power | balance-of-power | done |
-| Bamberga | bamberga | done |
-| Barrow-Dyad | barrow-dyad | done |
-| Bastion | bastion | done |
-| Batteries Not Included | batteries-not-included | done |
-| Behemoth | behemoth | done |
-| Bell of Conquests | bell-of-conquests | done |
-| Bermuda Class Hover Ship | bermuda-class-hover-ship | done |
-| Berserker | berserker | done |
-| Binary Phoenix | binary-phoenix | done |
-| Bird in the Hand | bird-in-the-hand | done |
-| Bitter/Sweet | bittersweet | done |
-| Black Talon | black-talon | done |
-| Blacklight Razor | blacklight-razor | done |
-| Blasphemer | blasphemer | done |
-| Blast Battue | blast-battue | done |
-| Blast Furnace | blast-furnace | done |
-| Blastwave Striders | blastwave-striders | done |
-| Blight Ranger | blight-ranger | done |
-| Blistering Slipstream | blistering-slipstream | done |
-| Blood Feud | blood-feud | done |
-| Bluff | bluff | done |
-| Bold Endings | bold-endings | done |
-| Bond Judgment | bond-judgment | done |
-| Bond Judgment (CODA) | bond-judgment-coda | done |
-| Bond of Contests | bond-of-contests | done |
-| Bond of Detestation | bond-of-detestation | done |
-| Bond of Reciprocity | bond-of-reciprocity | done |
-| Bond of Remembrance | bond-of-remembrance | done |
-| Bond of Sekris | bond-of-sekris | done |
-| Bond of the Cormorant Blade | bond-of-the-cormorant-blade | done |
-| Bond of the Emperor's Minister | bond-of-the-emperors-minister | done |
-| Bond of the Great Hunt | bond-of-the-great-hunt | done |
-| Bond of the Taken King | bond-of-the-taken-king | done |
+| Bond Relentless | bond-relentless | done |
+| Boomslang-4fr | boomslang-4fr | done |
+| Boots of Ascendancy | boots-of-ascendancy | done |
+| Boots of Detestation | boots-of-detestation | done |
+| Boots of Feltroc | boots-of-feltroc | done |
+| Boots of Sekris | boots-of-sekris | done |
+| Boots of the Ace-Defiant | boots-of-the-ace-defiant | done |
+| Boots of the Assembler | boots-of-the-assembler | done |
+| Boots of the Emperor's Agent | boots-of-the-emperors-agent | done |
+| Boots of the Emperor's Minister | boots-of-the-emperors-minister | done |
+| Boots of the Fulminator | boots-of-the-fulminator | done |
+| Boots of the Great Hunt | boots-of-the-great-hunt | done |
+| Boots of the Taken King | boots-of-the-taken-king | done |
+| Boots of Trepidation | boots-of-trepidation | done |
+| Borealis | borealis | done |
+| Borrowed Time | borrowed-time | done |
+| Boxing Day | boxing-day | done |
+| Brass Attacks | brass-attacks | done |
+| Brass Gardeners | brass-gardeners | done |
+| Brave Titan's Mark | brave-titans-mark | done |
+| BrayTech Absolute Zero Mark | braytech-absolute-zero-mark | done |
+| BrayTech Combat Vest | braytech-combat-vest | done |
+| BrayTech Iron-Heart Engine | braytech-iron-heart-engine | done |
+| BrayTech Osprey | braytech-osprey | done |
+| BrayTech Researcher's Bond | braytech-researchers-bond | done |
+| BrayTech Researcher's Boots | braytech-researchers-boots | done |
+| BrayTech Researcher's Gloves | braytech-researchers-gloves | done |
+| BrayTech Researcher's Hood | braytech-researchers-hood | done |
+| BrayTech Researcher's Robes | braytech-researchers-robes | done |
+| BrayTech Sn0Boots | braytech-sn0boots | done |
+| BrayTech Sn0Helm | braytech-sn0helm | done |
+| BrayTech Sn0Mask | braytech-sn0mask | done |
+| BrayTech Sn0Treads | braytech-sn0treads | done |
+| BrayTech Survival Mitts | braytech-survival-mitts | done |
+| BrayTech Thermal Grips | braytech-thermal-grips | done |
+| BrayTech Winter Cloak | braytech-winter-cloak | done |
+| BrayTech Winter Wolf | braytech-winter-wolf | done |
+| Brazen Spark | brazen-spark | done |
+| Breachlight | breachlight | done |
+| Breakneck | breakneck | done |
+| Brephos I | brephos-i | done |
+| Brephos II | brephos-ii | done |
+| Brephos III | brephos-iii | done |
+| Briarbinds | briarbinds | done |
+| Brigand's Law | brigands-law | done |
+| Brigantine Brut | brigantine-brut | done |
+| Bright Side of a Bad Idea | bright-side-of-a-bad-idea | done |
+| Broodweaver | broodweaver | done |
+| Brya's Love | bryas-love | done |
+| Bucca's Jollyboat | buccas-jollyboat | done |
+| Building | building | done |
+| Bump in the Night | bump-in-the-night | done |
+| Buoy Buddy Ghost | buoy-buddy-ghost | done |
+| Buried Bloodline | buried-bloodline | done |
+| Burnout | burnout | done |
+| Buzzard | buzzard | done |
+| Buzzard | buzzard-2 | done |
+| Buzzard (Adept) | buzzard-adept | done |
+| By Thy Tongue Be Damned | by-thy-tongue-be-damned | done |
+| Cacosmia | cacosmia | done |
+| Caiatl I | caiatl-i | done |
+| Cais | cais | done |
+| Calamity Rig Bond | calamity-rig-bond | done |
+| Calamity Rig Boots | calamity-rig-boots | done |
+| Calamity Rig Cloak | calamity-rig-cloak | done |
+| Calamity Rig Cover | calamity-rig-cover | done |
+| Calamity Rig Gauntlets | calamity-rig-gauntlets | done |
+| Calamity Rig Gloves | calamity-rig-gloves | done |
+| Calamity Rig Greaves | calamity-rig-greaves | done |
+| Calamity Rig Helm | calamity-rig-helm | done |
+| Calamity Rig Mark | calamity-rig-mark | done |
+| Calamity Rig Mask | calamity-rig-mask | done |
+| Calamity Rig Plate | calamity-rig-plate | done |
+| Calamity Rig Robes | calamity-rig-robes | done |
+| Calamity Rig Sleeves | calamity-rig-sleeves | done |
+| Calamity Rig Strides | calamity-rig-strides | done |
+| Calamity Rig Vest | calamity-rig-vest | done |
+| Caliban's Hand | calibans-hand | done |
+| Call | call | done |
+| CAMOUFLAGE | camouflage | done |
+| Candescent Bond | candescent-bond | done |
+| Candescent Boots | candescent-boots | done |
+| Candescent Cloak | candescent-cloak | done |
+| Candescent Gauntlets | candescent-gauntlets | done |
+| Candescent Gloves | candescent-gloves | done |
+| Candescent Greaves | candescent-greaves | done |
+| Candescent Grips | candescent-grips | done |
+| Candescent Helm | candescent-helm | done |
+| Candescent Hood | candescent-hood | done |
+| Candescent Mark | candescent-mark | done |
+| Candescent Mask | candescent-mask | done |
+| Candescent Plate | candescent-plate | done |
+| Candescent Robes | candescent-robes | done |
+| Candescent Strides | candescent-strides | done |
+| Candescent Vest | candescent-vest | done |
+| Canis Major | canis-major | done |
+| Carapace of the Flain | carapace-of-the-flain | done |
+| Carding | carding | done |
+| Caretaker | caretaker | done |
+| Caretaker | caretaker-2 | done |

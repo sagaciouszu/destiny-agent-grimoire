@@ -1,0 +1,7 @@
+# BrayTech Sn0Helm
+
+- Source: https://www.ishtar-collective.net/entries/braytech-sn0helm
+
+"Our scouts have had a problem with their helmets fogging up. There's nothing worse than trying to scan a unique mineral deposit out in a storm and getting a face full of fog. With the new sn0helms we've installed thermal piping and a bunch of moisture regulators—this way, we'll always be able to keep cool heads in the field. Just not literally."
+
+—Fabrication Engineer, BrayTech R&D

@@ -1,0 +1,9 @@
+# BrayTech Sn0Mask
+
+- Source: https://www.ishtar-collective.net/entries/braytech-sn0mask
+
+To: wibray
+CC: CB Leadership, atvon
+Re: Quarter Update
+New arctic line is on track to hit Milestone Silver. Current risks lie with key Priority 1 issues with the Sn0Treads design, but we've recently requested additional resources to mitigate that. I've spoken with the head engineer, and she's confident we will deliver on schedule. This is one of the strongest teams we've put together, and so far the results have been outstanding. The mask in particular received high praise for its extreme clarity, and an overall positive user evaluation.
+Individual lead notes are attached. No reply all.

@@ -1,0 +1,26 @@
+# Boxing Day
+
+- Source: https://www.ishtar-collective.net/entries/boxing-day
+
+RECORD: 8844J366$LUN-1.187 [RECUSAL MIRROR RECORD]
+IDENTITIES: Dr. Janet Green
+LOCATION: K1 Dig Site 1, Crew Quarters, Room 403
+THREAT DETECT: Level 5, 8, 9—Possible Exotic, Possible Psychosis, Crew Impairment
+THREAT RESPONSE: Forward for Medical Review
+[REVISED RESPONSE]: Exhibit Record 755, FILE//REPORT TO RASPUTIN
+
+"Hey, Mouse. Sad news today. Clovis Bray has come to box it up. Commander says that we don't need it anymore because we built the transceiver. And the doctor says the box will help protect us.
+
+"I don't like it. The idea of trapping it like that. Alone in the dark. Forever crying out but Mama can't hear you.
+
+"They're going to box it up, study and poke you.
+
+"They're even moving it away, to a new facility. I might not see it again.
+
+"I might not see you again.
+
+"That's too sad. Mama's too sad right now. We'll talk more later."
+
+SILENCE//00:02:27
+
+"What's the point?"
