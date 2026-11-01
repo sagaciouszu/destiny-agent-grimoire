@@ -1,0 +1,9 @@
+# The Jade Rabbit
+
+- Source: https://www.ishtar-collective.net/entries/the-jade-rabbit
+
+Do you ever wonder who you were before you were resurrected? Do you experience debilitating anxiety when you think about the cold, crushing fist of death? Has the desire to lie facedown on the floor for hours at a time been holding YOU back?
+
+From the people that brought you Lunal comes prescription-strength Immortalia: a revolutionary new combat elixir shown to relieve the crippling existential crises of your second life. Immortalia can reduce symptoms of listlessness, cynicism, and social anxiety. Side effects may include dancing, salty behavior, and acts of group heroism.
+
+Do not take Immortalia while operating all-terrain thrust bikes.

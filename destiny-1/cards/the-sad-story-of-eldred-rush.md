@@ -1,0 +1,15 @@
+# The Sad Story of Eldred Rush
+
+- Source: https://www.ishtar-collective.net/entries/the-sad-story-of-eldred-rush
+
+"I'll tell ya of Eldred Rush. He didn't come out this way looking for trouble. He ain't a fool, neither. He knew trouble waited. He just didn't care. Couldn't, some would say.
+
+"Eldred was a prospector of sorts, digging around these parts in search of memories he considered gold. He had a mission, personal and pure: Find the rock on which his people fell. Some tell that he was the first Guardian to walk this deep. It's not true, but fits his tale and makes for a better legend.
+
+"Lonely Eldred walked these lashed lands cycle-upon-cycle, avoiding conflict when he could, but always hitting back when push came to shove. He was a gentle man, but violent when riled.
+
+"Eventually he found the spot where ancient survivors of an ancient collapse huddled and died. There, at the site of all he had lost—in an old life that was long since beyond his grasp—Eldred buried the dead he could not remember but felt in his heart.
+
+"Never saw Eldred again. No one did."
+
+—Excerpt from C.C. LaGrange's translations of "Writings and Observations from the Tangled Shore: A Fallen Text"

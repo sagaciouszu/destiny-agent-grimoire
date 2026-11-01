@@ -1,0 +1,13 @@
+# The Prospector
+
+- Source: https://www.ishtar-collective.net/entries/the-prospector
+
+"Get your axe and your pick and your shovel and your spine. We're goin' prospectin'."
+"What?"
+"That. The quote. I don't get it."
+"It's an old saying. It's about puttin' in a hard day's work."
+"Seems… antiquated."
+"How so?"
+"My grenade launcher's full auto and goes boom on command. What do I need hand tools for?"
+"It's a metaphor. It ain't literal. At least not anymore. Your launcher is your hand tool."
+"Ahh. Got it. Good to know."

@@ -1,0 +1,16 @@
+# The Sundaresh Experiment 13-R
+
+- Source: https://www.ishtar-collective.net/entries/the-sundaresh-experiment-13-r
+
+Esi: Is that… radiolarian fluid?!
+Sundaresh: Close the bulkhead, Chioma.
+Esi: Where did you even—
+Sundaresh: The excesses from Shim's siphons were just being discarded. This is better.
+Esi: And you're using it as, what? A propellant?
+Sundaresh: A coolant. If the Vex decide to simulate things in physical space such that we can experience them natively, we must understand more than just their physiology. We are too focused on the abstract and the theoretical and the simulated, love. We are scientists, yes, but Humans also make tools.
+Esi: That meditation sim really had an effect on you.
+Sundaresh: Hush.
+Esi: A ship built with repurposed Ishtar construction materials, integrating Vex technology almost as an afterthought.
+Sundaresh: You disapprove.
+Esi: The last time I questioned an idea like this, it ended up saving us from simulation purgatory. I would be a fool to disapprove.
+Sundaresh: Then come here and let's celebrate.
