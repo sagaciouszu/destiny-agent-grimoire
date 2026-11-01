@@ -1,0 +1,13 @@
+# Insigne Shade Cover
+
+- Source: https://www.ishtar-collective.net/entries/insigne-shade-cover
+
+The Cabal I remember were an eclectic people. There were so many indoctrinated species among us they defied reckoning. The Red Legion have changed all that in my absence. To add insult to my exile, they imprisoned me aboard the Leviathan with only warrior Loyalists to attend me. I raged for the better half of a century. It felt like a century, at least.
+
+Now I have returned, and I brought distinction with me. My Shadows are each the zenith of their kind, taken from countless worlds as I made my way back from the deep. But my search continues. I have not found my Shadow of Shadows. The one with the fortitude to stand by my side at the end.
+
+Your kind are warrior-scholars of the highest order. Rarely have I seen such insight and analysis paired with killing potential, even among the Psions.
+
+A Shadow of your Guardian-tribe would be an ideal scout to find others, and persuade them to walk with us through these golden halls.
+
+—Calus, Emperor of the Cabal

@@ -2,103 +2,103 @@
 
 | Card | Slug | Status |
 |---|---|---|
-| Greaves of Rull | greaves-of-rull | done |
-| Greaves of the Emperor's Champion | greaves-of-the-emperors-champion | done |
-| Greaves of the Great Hunt | greaves-of-the-great-hunt | done |
-| Greaves of the Taken King | greaves-of-the-taken-king | done |
-| Gridskipper | gridskipper | done |
-| Grimoire: Allies-Eliksni | grimoire-allieseliksni | done |
-| Grimoire: BRAVE Arsenal | grimoire-brave-arsenal | done |
-| Grimoire: Enemies-Reaver Vandal | grimoire-enemiesreaver-vandal | done |
-| Grimoire: Eris Morn-Hive God of Vengeance | grimoire-eris-mornhive-god-of-vengeance | done |
-| Grimoire: The City-Onslaught | grimoire-the-cityonslaught | done |
-| Grimoire: The City-Praxic Order | grimoire-the-citypraxic-order | done |
-| Grimoire: The Ironwood Tree | grimoire-the-ironwood-tree | done |
-| Grips of Exaltation | grips-of-exaltation | done |
-| Grips of Feltroc | grips-of-feltroc | done |
-| Grips of the Ace-Defiant | grips-of-the-ace-defiant | done |
-| Grips of the Flain | grips-of-the-flain | done |
-| Grips of the Great Hunt | grips-of-the-great-hunt | done |
-| Grips of Trepidation | grips-of-trepidation | done |
-| Growing | growing | done |
-| Gryphon | gryphon | done |
-| Guardian's Angel Shell | guardians-angel-shell | done |
-| Guiding Light | guiding-light | done |
-| Gunslinger | gunslinger | done |
-| Gunslinger | gunslinger-2 | done |
-| Gwinnith | gwinnith | done |
-| Gwisin Vest | gwisin-vest | done |
-| Gyrfalcon's Hauberk | gyrfalcons-hauberk | done |
-| Hallowfire Heart | hallowfire-heart | done |
-| Hammerhead | hammerhead | done |
-| Hard Light | hard-light | done |
-| Hardline | hardline | done |
-| Hardy's Calm | hardys-calm | done |
-| Hardy's Control | hardys-control | done |
-| Hardy's Journey | hardys-journey | done |
-| Hardy's Orders | hardys-orders | done |
-| Hardy's Steps | hardys-steps | done |
-| Harmonia | harmonia | done |
-| Hastilude | hastilude | done |
-| Hawkmoon | hawkmoon | done |
-| Hazardous Propulsion | hazardous-propulsion | done |
-| Hazeema | hazeema | done |
-| HE DREAMS | he-dreams | done |
-| HE SEES | he-sees | done |
-| HE WAKES | he-wakes | done |
-| Headless Horsepower | headless-horsepower | done |
-| Headpiece of the Emperor's Minister | headpiece-of-the-emperors-minister | done |
-| Heart of Inmost Light | heart-of-inmost-light | done |
-| Heartshadow | heartshadow | done |
-| Heaven or Hell | heaven-or-hell | done |
-| Hecuba-S | hecuba-s | done |
-| Heir Apparent | heir-apparent | done |
-| Heirloom | heirloom | done |
-| Heliotrope | heliotrope | done |
-| Hellebore | hellebore | done |
-| Helm of Agony | helm-of-agony | done |
-| Helm of Righteousness | helm-of-righteousness | done |
-| Helm of Saint-14 | helm-of-saint-14 | done |
-| Helm of the Ace-Defiant | helm-of-the-ace-defiant | done |
-| Helm of the Emperor's Champion | helm-of-the-emperors-champion | done |
-| Helm of the Great Hunt | helm-of-the-great-hunt | done |
-| Helm of the Taken King | helm-of-the-taken-king | done |
-| Hemlock | hemlock | done |
-| Heresiology | heresiology | done |
-| Heretic | heretic | done |
-| Heretic's Fervor | heretics-fervor | done |
-| Hero's Wake | heros-wake | done |
-| Hexed Shell | hexed-shell | done |
-| Hiding at Home | hiding-at-home | done |
-| Hiera Hodos | hiera-hodos | done |
-| Hierarchy of Needs | hierarchy-of-needs | done |
-| High Gravitas | high-gravitas | done |
-| Hoarfrost-Z | hoarfrost-z | done |
-| Holborn's Splint | holborns-splint | done |
-| Holdfast Bond | holdfast-bond | done |
-| Holdfast Cloak | holdfast-cloak | done |
-| Holdfast Mark | holdfast-mark | done |
-| Holiday Cheer | holiday-cheer | done |
-| Holland, Occupied Netherlands, 1944 | holland-occupied-netherlands-1944 | done |
-| Hollow Denial | hollow-denial | done |
-| Hollow Words | hollow-words | done |
-| Home Away | home-away | done |
-| Home, pt. I | home-pt-i | done |
-| Home, pt. II | home-pt-ii | done |
-| Home, pt. III | home-pt-iii | done |
-| Home, pt. IV | home-pt-iv | done |
-| Honored | honored | done |
-| Hood of the Great Hunt | hood-of-the-great-hunt | done |
-| Hood of the Taken King | hood-of-the-taken-king | done |
-| Hooks of the Flain | hooks-of-the-flain | done |
-| Horus Shell | horus-shell | done |
-| Hostile Territory | hostile-territory | done |
-| Hullabaloo | hullabaloo | done |
-| Hung Jury SR4 | hung-jury-sr4 | done |
-| Hunter's Journal | hunters-journal | done |
-| Hushed Syrinx | hushed-syrinx | done |
-| Husk's Cloak | husks-cloak | done |
-| Hyperborean Pinion | hyperborean-pinion | done |
-| I. | i | done |
-| I - ACCEPTANCE | i-acceptance | done |
-| I Am Alive | i-am-alive | done |
+| I. A Path's End | i-a-paths-end | done |
+| I - Ambush | i-ambush | done |
+| I: An Introduction to Consequence | i-an-introduction-to-consequence | done |
+| I: Cages | i-cages | done |
+| I. Debriefing | i-debriefing | done |
+| I: Eggcloth | i-eggcloth | done |
+| I - Eris Morn - Prolegomenon | i-eris-morn-prolegomenon | done |
+| I. Impact | i-impact | done |
+| I. KETCH | i-ketch | done |
+| I. Now and hereafter | i-now-and-hereafter | done |
+| Ice Breaker | ice-breaker | done |
+| Icefall Mantle | icefall-mantle | done |
+| Identity | identity | done |
+| I-From Great Distance | ifrom-great-distance | done |
+| Igneous Hammer | igneous-hammer | done |
+| Igneous Hammer (Adept) | igneous-hammer-adept | done |
+| Ignition Code | ignition-code | done |
+| II. A perfect when | ii-a-perfect-when | done |
+| II: An Audience with Slaughter | ii-an-audience-with-slaughter | done |
+| II. Death and Desertion | ii-death-and-desertion | done |
+| II - Devotion | ii-devotion | done |
+| II: For Fear of the Conquering Hero | ii-for-fear-of-the-conquering-hero | done |
+| II - FRACTURES | ii-fractures | done |
+| II: Freedom | ii-freedom | done |
+| II: Hollowhot | ii-hollowhot | done |
+| II: Identity | ii-identity | done |
+| II. Isolated Incidents | ii-isolated-incidents | done |
+| II - JURISDICTION | ii-jurisdiction | done |
+| II. Lost | ii-lost | done |
+| I.I: Of Tattered Blood and Broken Bone | ii-of-tattered-blood-and-broken-bone | done |
+| II. RATIONS | ii-rations | done |
+| II - Savathûn - Imago Unfurl | ii-savathun-imago-unfurl | done |
+| II. The Cost of War | ii-the-cost-of-war | done |
+| II - The Pigeon and the Splicer | ii-the-pigeon-and-the-splicer | done |
+| II - The Whispering Dark | ii-the-whispering-dark | done |
+| II. The Wolf | ii-the-wolf | done |
+| II. Theory | ii-theory | done |
+| II - Wake | ii-wake | done |
+| II-Countback | iicountback | done |
+| III: A Fire Inside | iii-a-fire-inside | done |
+| III. Amanda Dreams | iii-amanda-dreams | done |
+| III: Bannercloth | iii-bannercloth | done |
+| III - Chosen | iii-chosen | done |
+| III - Cold Forging | iii-cold-forging | done |
+| III. Down? | iii-down | done |
+| III - Gifts from the Shore | iii-gifts-from-the-shore | done |
+| III. Heart-Truth | iii-heart-truth | done |
+| III: Just a Kindness | iii-just-a-kindness | done |
+| III. Legacy | iii-legacy | done |
+| III. Memento | iii-memento | done |
+| I.II: Of Tattered Blood and Broken Bone | iii-of-tattered-blood-and-broken-bone | done |
+| III - Plea Deal | iii-plea-deal | done |
+| III - Risen from Bones | iii-risen-from-bones | done |
+| III: Ritualistic Circle Pit | iii-ritualistic-circle-pit | done |
+| III. Searching | iii-searching | done |
+| III: Self | iii-self | done |
+| III. The Traitor | iii-the-traitor | done |
+| III - TRUST | iii-trust | done |
+| III. WORTH | iii-worth | done |
+| III - Xivu Arath - Battlesong | iii-xivu-arath-battlesong | done |
+| I.III: Of Tattered Blood and Broken Bone | iiii-of-tattered-blood-and-broken-bone | done |
+| III-Thrysiks | iiithrysiks | done |
+| I.IV: Of Tattered Blood and Broken Bone | iiv-of-tattered-blood-and-broken-bone | done |
+| Ikora I | ikora-i | done |
+| Ikora II | ikora-ii | done |
+| Ikora's Resolve | ikoras-resolve | done |
+| Ill Omen | ill-omen | done |
+| Illicit Reaper Bond | illicit-reaper-bond | done |
+| Illicit Reaper Cloak | illicit-reaper-cloak | done |
+| Illicit Reaper Mark | illicit-reaper-mark | done |
+| Illuminus Cloak (Majestic) | illuminus-cloak-majestic | done |
+| Illuminus Grasps (Majestic) | illuminus-grasps-majestic | done |
+| Illuminus Mask (Majestic) | illuminus-mask-majestic | done |
+| Illuminus Strides (Majestic) | illuminus-strides-majestic | done |
+| Illuminus Vest (Majestic) | illuminus-vest-majestic | done |
+| Illyn | illyn | done |
+| Imagining | imagining | done |
+| Immaru | immaru | done |
+| Impact Trajectory | impact-trajectory | done |
+| Impact Velocity | impact-velocity | done |
+| Imperial Incubator | imperial-incubator | done |
+| Imperial Needle | imperial-needle | done |
+| Imperious Sun Shell | imperious-sun-shell | done |
+| Implement of Curiosity | implement-of-curiosity | done |
+| Imponent I | imponent-i | done |
+| Imponent II | imponent-ii | done |
+| Imponent III | imponent-iii | done |
+| Imponent IV | imponent-iv | done |
+| Imponent V | imponent-v | done |
+| In Memoriam Shell | in-memoriam-shell | done |
+| Inaugural Address | inaugural-address | done |
+| Infiltrator Shell | infiltrator-shell | done |
+| Infinite Paths 8 | infinite-paths-8 | done |
+| Injection | injection | done |
+| Inside Line | inside-line | done |
+| Insigne Shade Bond | insigne-shade-bond | done |
+| Insigne Shade Boots | insigne-shade-boots | done |
+| Insigne Shade Cover | insigne-shade-cover | done |
+| Insigne Shade Gloves | insigne-shade-gloves | done |
+| Insigne Shade Robes | insigne-shade-robes | done |

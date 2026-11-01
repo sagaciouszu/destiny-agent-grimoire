@@ -1,0 +1,35 @@
+# I: Cages
+
+- Source: https://www.ishtar-collective.net/entries/i-cages
+
+I.I
+Flesh and mind are but cages—become unbound, or remain ever unworthy.
+
+I.II
+This flesh—your flesh—is weak, old.
+
+I.III
+Handed down by priors unworthy of evolution.
+
+I.IV
+Had those before been more than common, your flesh would not be this flesh—their flesh—but other, new.
+
+I.V
+New is never given, but claimed.
+
+I.VI
+To claim evolution one must be unmade.
+
+I.VII
+Free of cages—flesh and mind.
+
+"Evolution is claimed only through our unmaking."
+—1st Understanding, 7th Book of Sorrow
+
+These pages, and the Understandings gleaned, are our best efforts at a translation of incomplete discovery.
+
+The exact intent of the Hive's ceremony—ceremonies—in regard to their varied ideals regarding evolution is beyond our current knowledge.
+
+Nonetheless, we continue to piece together truths from dead words and arcane ritual. The purpose of our efforts, however sinister they may appear, is to grasp the unknown so it may be challenged should the time come when we are faced with its ire.
+
+—hand-scrawled note accompanying Teben Grey's personal translation of ancient Hive text

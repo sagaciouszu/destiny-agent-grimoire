@@ -1,0 +1,13 @@
+# Insigne Shade Boots
+
+- Source: https://www.ishtar-collective.net/entries/insigne-shade-boots
+
+The Cabal I knew would have had a place at my side at the dimming of the world. The Red Legion do not.
+
+But the end is coming either way. I have not foreseen it; I have outraced it. Nothing will stop it. It renders all things and all meanings obsolete. The universe troubles itself with numbers, wishes, the dreams of worms, the hissing silence at the black edge, the echoes of a false god.
+
+None of it matters except this.
+
+A Shadow of your Guardian-tribe is exactly what I need to herald what's coming. I know your kind. You bend reality when it suits you, and break reality when it bothers you. At the end of all things, I will need something like you, with the weft and weave of the universe at your fingertips. To help me usher in the end.
+
+—Calus, Emperor of the Cabal

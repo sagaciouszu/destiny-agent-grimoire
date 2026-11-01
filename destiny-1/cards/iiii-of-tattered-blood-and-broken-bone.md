@@ -1,0 +1,27 @@
+# I.III: Of Tattered Blood and Broken Bone
+
+- Source: https://www.ishtar-collective.net/entries/iiii-of-tattered-blood-and-broken-bone
+
+AZAVATH'S EAGER EMBRACE
+
+"You, of us all, have suffered and survived, brother.
+"To many, your severing is a mark of shame.
+"To many, you should have fallen to dust before returning to the depths in defeat.
+"My ire, as echoed by my Song, would challenge these claims.
+"Those who demean you…
+"Akrazul, the Severed Knight.
+"Akrazul, the Shamed.
+"The Weak.
+"The Undone.
+"They are one and the same with those who never dared face the undying Light.
+"They are the enemies of our promised morrow.
+"Those who watched from the shadows while your bone shattered and your limb was cast into the hollowed dark beneath this Moon's scarred surface.
+"I too see the sin in our dear sister's words.
+"More so in her intention.
+"But I also see a pride in all we were meant to be—all we were promised.
+"Why, then, give thanks to 'heirs' come to offer salvation, when such a gift is beyond their giving?
+"I am with you, dear sister.
+"I am with you, dear brother.
+"Let us each suffer to ensure the path—till dust or ash or Gods standing high upon eternity, burdened by our sacrifice.
+"For are we not worthy?
+"If not by ancestral right, then as those wretched few who would never seek power, but to keep its disease from the hands of the corrupt?"
