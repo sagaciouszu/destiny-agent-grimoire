@@ -1,0 +1,8 @@
+# Legend of Acrius
+
+- Source: https://www.ishtar-collective.net/entries/legend-of-acrius
+
+That really is the entire myth. A Cabal named Acrius desires the sun, and he takes it and becomes the first Emperor of the Cabal. Other scholars have already noted the parallels and differences with our own ancient Earth myth of Icarus, which famously has a far more humbling ending. I am more interested in how Cabal leaders throughout history have deployed this legend as a rhetorical and political justification for conquest. Among the most relevant such figures is Dominus Ghaul himself, who appears to have a personal affinity for the Acrius myth.
+
+I must also note here that, while linguistic analysis of the Cabal language and its many dialects is incomplete, they do not appear to have a word for the concept of "hubris."
+—Research notes of Tyra Karn

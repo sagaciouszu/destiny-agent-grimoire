@@ -1,0 +1,11 @@
+# Line in the Sand
+
+- Source: https://www.ishtar-collective.net/entries/line-in-the-sand
+
+"The Vex are oppressive; Minotaurs fall over themselves to get the jump on me. I've exhausted my options. I need to use the distance to my advantage. I peer out over the rock's edge—they seem to have lost me in the scuffle.
+
+"The gentle hum begins, and I feel my weapon charging between my hands. I take out two with the first shot. Another two with the next. They scatter now, confused and irate. They seek me out desperately. All I can offer is another barrage that depletes their numbers and creates more scrap. The last two couldn't get within ten meters of me. It's a small victory, and I am alone once more.
+
+"It helps to set boundaries."
+
+—Saint-14

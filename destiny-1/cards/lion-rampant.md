@@ -1,0 +1,7 @@
+# Lion Rampant
+
+- Source: https://www.ishtar-collective.net/entries/lion-rampant
+
+"O, lion! Stretch your wicked claws toward the stars and rend a hole in the sky itself! Let the stars cascade down around you. Leap high and tear again at the night! Rip every fearful comet and burning meteor out of the cosmos and swim in that ocean of light! Drink deep of it. Grow powerful. Carve pathways through the unknown, o defender! O enforcer from on-high!"
+
+—Traditional Titan meditation

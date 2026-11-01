@@ -1,0 +1,12 @@
+# Knucklehead Radar
+
+- Source: https://www.ishtar-collective.net/entries/knucklehead-radar
+
+"If you were rich, what would you do with all your money?"
+"Uh… I dunno. Maybe start my own business. Be some kinda bounty hunter."
+"What you mean, bounty hunter? We got thousands of Guardians running around, bounty-hunting anything that moves!"
+"Nuh-uh! That's all just sport. Them Awoken out in the Reef, I figure they might pay me to hunt folks down. And I got a secret. It's gonna gimme a real leg up on all them Guardians who come to copycat me when they see what a good idea I got."
+"Yeah? What is it?"
+"This Hunter, she sold me a visor that lets you find all the stupid enemies in a crowd. Called it 'knucklehead radar' or something like that."
+"Huh. How's it work?"
+"Couldn't tell ya."
