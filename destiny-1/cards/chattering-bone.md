@@ -1,0 +1,15 @@
+# Chattering Bone
+
+- Source: https://www.ishtar-collective.net/entries/chattering-bone
+
+Nadiya sipped her tea, calm and collected. Shinobu sat back, looking perplexed. "Really, the entire summer?"
+
+The serpent that claimed to look like her mother sat across from the two of them, smiling broadly. "Why would I lie? I'm telling you, the whole summer you wore that dress. We had to tackle you to get the thing off of you, get you to bathe."
+
+The serpent plucked the dainty cup from the white saucer and set it to her lips before continuing. "Your brother called you stinkbug for years. Until… you know."
+
+Nadiya reached over and took the other Hunter's hand in her own. "It would lie because it's fulfilling your wish, Nobu."
+
+Shinobu searched the serpent's face. Her mother just smiled again, all teeth and secrets. Shinobu felt tears at the corners of her eyes. Her voice was barely a whisper. "Okay. Now."
+
+The burst from the pulse rifle was loud, and Nadiya pulled the trigger again and again and again.

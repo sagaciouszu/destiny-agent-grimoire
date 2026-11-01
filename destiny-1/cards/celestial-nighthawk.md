@@ -1,0 +1,13 @@
+# Celestial Nighthawk
+
+- Source: https://www.ishtar-collective.net/entries/celestial-nighthawk
+
+I'm on the ground, half inside Mav's Ward. Lucky for me, it's my head that's half in. The stars over my head are going out one at a time, but that could just be Taken goo blocking my sight.
+
+This giant one-eyed nightmare we woke up is real unhappy to see us. This wasn't the plan—we just came here to rob him.
+
+Luna's dry. The 'horn's dull. Mav's either laughing, or screaming for her life spraying lead everywhere. She's floating past Psions that won't stop splitting. STOP SPLITTING.
+
+We're almost out of time. We have one shot.
+So I pull out the bird and give this sucker the finger.
+One red-hot glowing finger.
