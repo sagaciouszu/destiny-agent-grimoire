@@ -1,0 +1,25 @@
+# Holiday Cheer
+
+- Source: https://www.ishtar-collective.net/entries/holiday-cheer
+
+"Winter's touch will soon be gone, clouds will part and light returns
+Darkness pales before the dawn, blinding light forever burns
+Dawning comes but once a year, let your voice sing out with cheer
+See the ground bejeweled with snow, shake the gloom out of your heart
+Bathed in firelight's soothing glow, cold cannot keep us apart
+Dawning comes but once a year, let your voice sing out with cheer
+Hug your family's bodies close, take their warmth and make it last
+Banish all your thoughts morose, cleanse your mind of visions past
+Dawning comes but once a year, let your voice sing out with cheer"
+
+"…"
+
+"What?"
+
+"A little creepy, isn't it?"
+
+"I don't have Skorri's talent."
+
+"We… should take another crack at it before they get back from the Cosmodrome."
+
+"Yeah, you're probably right."

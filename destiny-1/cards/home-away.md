@@ -1,0 +1,21 @@
+# Home Away
+
+- Source: https://www.ishtar-collective.net/entries/home-away
+
+Del-3 watches the churning waves of the methane sea and sighs.
+
+It's not just that she wants to go back to the City; she wants to go back in time. Before the Red War, before they lost so many people. The Dawning isn't the same without them. Ari told her the day she flew to Titan that she'd "get her legs" soon enough. But if this cold, unsteady, lonely place is what she has to look forward to every year, she doesn't really see the point.
+
+She's trying so hard to fight back tears that she doesn't notice her CO. "Del."
+
+She snaps to attention. "Deputy Commander," she says. "Sorry, I was—"
+
+"At ease, soldier," Sloane says warmly. "Come inside. Dinner's ready."
+
+Dinner?
+
+Del follows Sloane into the mess hall, ducking under a paper snowflake hung from the ceiling. The big, ugly metal slab of a table is covered with a blue and silver tablecloth. Ration food is spread out like a makeshift feast. Ari is lighting candles.
+
+"What is this?" Del asks.
+
+Sloane's smile is sheepish but proud. "It's not the Tower, but no reason the celebrations shouldn't reach all the way out here. Come on. Let's tuck in."
