@@ -2,103 +2,103 @@
 
 | Card | Slug | Status |
 |---|---|---|
-| The Huckleberry | the-huckleberry | done |
-| The Iron Lord's Tale | the-iron-lords-tale | done |
-| The Jade Rabbit | the-jade-rabbit | done |
-| The Kell | the-kell | done |
-| The Lament | the-lament | done |
-| The Lantern of Osiris | the-lantern-of-osiris | done |
-| The Last City | the-last-city | done |
-| The Last Word | the-last-word | done |
-| The Leaders Who Guide Us | the-leaders-who-guide-us | done |
-| The Length of a Chain | Part I | the-length-of-a-chain-part-i | done |
-| The Length of a Chain | Part II | the-length-of-a-chain-part-ii | done |
-| The Leviathan | the-leviathan | done |
-| The Liar's Trap | the-liars-trap | done |
-| The Lonely and the Dead | the-lonely-and-the-dead | done |
-| The Long Con | the-long-con | done |
-| The Long Goodbye | the-long-goodbye | done |
-| The Long Walk | the-long-walk | done |
-| The Machine Child | the-machine-child | done |
-| The Maelstrom | the-maelstrom | done |
-| The Manticore | the-manticore | done |
-| The Messenger | the-messenger | done |
-| The Messenger (Adept) | the-messenger-adept | done |
-| The Mountaintop | the-mountaintop | done |
-| The Mountaintop | the-mountaintop-2 | done |
-| The Navigator | the-navigator | done |
-| The New Normal | the-new-normal | done |
-| The Nine | the-nine | done |
-| The Number | the-number | done |
-| The Pain of What's Right | the-pain-of-whats-right | done |
-| The Palindrome | the-palindrome | done |
-| The Path of Burning Steps | the-path-of-burning-steps | done |
-| The Pilgrims, the Birds, and the Traveler | the-pilgrims-the-birds-and-the-traveler | done |
-| The Price of a Double-Sided Coin | the-price-of-a-double-sided-coin | done |
-| The Prod | the-prod | done |
-| The Prospector | the-prospector | done |
-| The Queenbreaker | the-queenbreaker | done |
-| The Ragged Valley Sprint | the-ragged-valley-sprint | done |
-| The Ravine | the-ravine | done |
-| The Recluse | the-recluse | done |
-| The Recluse | the-recluse-2 | done |
-| The Red Box | the-red-box | done |
-| The Right Choice | the-right-choice | done |
-| The Sad Story of Eldred Rush | the-sad-story-of-eldred-rush | done |
-| The Salt Mines | the-salt-mines | done |
-| The Scholar | the-scholar | done |
-| The Seeking Verse | the-seeking-verse | done |
-| The Severance | the-severance | done |
-| The Sixth Coyote | the-sixth-coyote | done |
-| The Sixth Seal, Part I | the-sixth-seal-part-i | done |
-| The Sixth Seal, Part II | the-sixth-seal-part-ii | done |
-| The Spark | the-spark | done |
-| The Stacks | the-stacks | done |
-| The Stag | the-stag | done |
-| The Stargazer | the-stargazer | done |
-| The Strider | the-strider | done |
-| The Summoner | the-summoner | done |
-| The Sun - IX | the-sun-ix | done |
-| The Sundaresh Experiment 13-R | the-sundaresh-experiment-13-r | done |
-| The Supremacy | the-supremacy | done |
-| THE SWARM | the-swarm | done |
-| The Tall Tale | the-tall-tale | done |
-| The Tenth Avatar | the-tenth-avatar | done |
-| The Threats We Face | the-threats-we-face | done |
-| The Time-Worn Spire | the-time-worn-spire | done |
-| The Tower | the-tower | done |
-| The Traveler | the-traveler | done |
-| The Unclaimed Lightbearer | the-unclaimed-lightbearer | done |
-| The Underdog | the-underdog | done |
-| The Unsolvable Problem | the-unsolvable-problem | done |
-| The Village | the-village | done |
-| The Vision | the-vision | done |
-| The Visitor | the-visitor | done |
-| The Vow | the-vow | done |
-| The Wager | the-wager | done |
-| The Wardcliff Coil | the-wardcliff-coil | done |
-| The Watchful Eye | the-watchful-eye | done |
-| The Water Sun, Part I | the-water-sun-part-i | done |
-| The Water Sun, Part II | the-water-sun-part-ii | done |
-| The Wavewarden | the-wavewarden | done |
-| The We Before Us | the-we-before-us | done |
-| The Wise-Woman's Tale | the-wise-womans-tale | done |
-| The Witch | the-witch | done |
-| The Xûrfboard | the-xurfboard | done |
-| Theogonía | theogonia | done |
-| Theomakhía | theomakhia | done |
-| These Bad Lands | these-bad-lands | done |
-| Thetis Brave | thetis-brave | done |
-| Thin Line | thin-line | done |
-| Thin Precipice | thin-precipice | done |
-| Third Gift | third-gift | done |
-| Third Iteration | third-iteration | done |
-| Third Wish | third-wish | done |
-| Thirteenth Wish | thirteenth-wish | done |
-| Thorn | thorn | done |
-| Threaded Needle | threaded-needle | done |
-| Threadrunner | threadrunner | done |
-| Three-Oh-Three | three-oh-three | done |
-| Throne | throne | done |
-| Through the Gate | through-the-gate | done |
-| Thunderlord | thunderlord | done |
+| Ticuu's Divination | ticuus-divination | done |
+| Tigerspite | tigerspite | done |
+| Tilt Fuse | tilt-fuse | done |
+| Time Lapse | time-lapse | done |
+| Timeless Bond | timeless-bond | done |
+| Timeworn Wayfarer | timeworn-wayfarer | done |
+| Tino | tino | done |
+| TM-Cogburn Custom Cover | tm-cogburn-custom-cover | done |
+| TM-Cogburn Custom Gauntlets | tm-cogburn-custom-gauntlets | done |
+| TM-Cogburn Custom Legguards | tm-cogburn-custom-legguards | done |
+| TM-Cogburn Custom Mark | tm-cogburn-custom-mark | done |
+| TM-Cogburn Custom Plate | tm-cogburn-custom-plate | done |
+| TM-Earp Custom Chaps | tm-earp-custom-chaps | done |
+| TM-Earp Custom Cloaked Stetson | tm-earp-custom-cloaked-stetson | done |
+| TM-Earp Custom Grips | tm-earp-custom-grips | done |
+| TM-Earp Custom Hood | tm-earp-custom-hood | done |
+| TM-Earp Custom Vest | tm-earp-custom-vest | done |
+| TM-Moss Custom Bond | tm-moss-custom-bond | done |
+| TM-Moss Custom Duster | tm-moss-custom-duster | done |
+| TM-Moss Custom Gloves | tm-moss-custom-gloves | done |
+| TM-Moss Custom Hat | tm-moss-custom-hat | done |
+| TM-Moss Custom Pants | tm-moss-custom-pants | done |
+| To All Guardians | to-all-guardians | done |
+| To Asher Mir | to-asher-mir | done |
+| To Be Remembered | to-be-remembered | done |
+| To Ikora Rey | to-ikora-rey | done |
+| To Map the Unknown | to-map-the-unknown | done |
+| To My Queen | to-my-queen | done |
+| To Osiris | to-osiris | done |
+| To the Drifter | to-the-drifter | done |
+| To the Stranger | to-the-stranger | done |
+| To the Witch Queen | to-the-witch-queen | done |
+| To Zavala | to-zavala | done |
+| Toland I | toland-i | done |
+| Tomb Rider | tomb-rider | done |
+| Tommy's Matchbook | tommys-matchbook | done |
+| Tomorrow | tomorrow | done |
+| Tomorrow's Answer | tomorrows-answer | done |
+| Tomorrow's Answer | tomorrows-answer-2 | done |
+| Torn Journal Page, 1968 | torn-journal-page-1968 | done |
+| Touch of Malice | touch-of-malice | done |
+| Trackless Waste | trackless-waste | done |
+| Tractor Cannon | tractor-cannon | done |
+| Tradition Is Bigger Than You | tradition-is-bigger-than-you | done |
+| Traitor's Fate | traitors-fate | done |
+| Transfiguration | transfiguration | done |
+| Transformations of Matter | transformations-of-matter | done |
+| Transversive Steps | transversive-steps | done |
+| Trauermarsch | trauermarsch | done |
+| Traveler's Chosen | travelers-chosen | done |
+| Traveler's Judgment 5 | travelers-judgment-5 | done |
+| Treacherous Contacts | treacherous-contacts | done |
+| Trespasser | trespasser | done |
+| Trichromatica | trichromatica | done |
+| Trinity Ghoul | trinity-ghoul | done |
+| Tripwire Canary | tripwire-canary | done |
+| Triton Vice | triton-vice | done |
+| Tropopause | tropopause | done |
+| Trust and Hope | trust-and-hope | done |
+| Truth | truth | done |
+| Truth Tinkered | truth-tinkered | done |
+| Turmoil Engine | turmoil-engine | done |
+| Turn | turn | done |
+| Turncoat | turncoat | done |
+| Turris Shade Gauntlets | turris-shade-gauntlets | done |
+| Turris Shade Greaves | turris-shade-greaves | done |
+| Turris Shade Helm | turris-shade-helm | done |
+| Turris Shade Mark | turris-shade-mark | done |
+| Turris Shade Plate | turris-shade-plate | done |
+| Tusked Allegiance Bond | tusked-allegiance-bond | done |
+| Tusked Allegiance Boots | tusked-allegiance-boots | done |
+| Tusked Allegiance Cloak | tusked-allegiance-cloak | done |
+| Tusked Allegiance Gauntlets | tusked-allegiance-gauntlets | done |
+| Tusked Allegiance Gloves | tusked-allegiance-gloves | done |
+| Tusked Allegiance Greaves | tusked-allegiance-greaves | done |
+| Tusked Allegiance Grips | tusked-allegiance-grips | done |
+| Tusked Allegiance Helmet | tusked-allegiance-helmet | done |
+| Tusked Allegiance Hood | tusked-allegiance-hood | done |
+| Tusked Allegiance Mark | tusked-allegiance-mark | done |
+| Tusked Allegiance Mask | tusked-allegiance-mask | done |
+| Tusked Allegiance Plate | tusked-allegiance-plate | done |
+| Tusked Allegiance Robes | tusked-allegiance-robes | done |
+| Tusked Allegiance Strides | tusked-allegiance-strides | done |
+| Tusked Allegiance Vest | tusked-allegiance-vest | done |
+| Twelfth Wish | twelfth-wish | done |
+| Twilight Oath | twilight-oath | done |
+| Two Cells | two-cells | done |
+| Two-Tailed Fox | two-tailed-fox | done |
+| Tymbal Lucidae | tymbal-lucidae | done |
+| Tyrannocide I | tyrannocide-i | done |
+| Tyrannocide II | tyrannocide-ii | done |
+| Tyrannocide III | tyrannocide-iii | done |
+| Tyrannocide IV | tyrannocide-iv | done |
+| Tyrannocide V | tyrannocide-v | done |
+| Tyranny of Heaven | tyranny-of-heaven | done |
+| UESC Echo-type Shell | uesc-echo-type-shell | done |
+| UESC Rover | uesc-rover | done |
+| UESC Sprinter | uesc-sprinter | done |
+| Ulterior Observation | ulterior-observation | done |
+| Unanswered Ante Shell | unanswered-ante-shell | done |
