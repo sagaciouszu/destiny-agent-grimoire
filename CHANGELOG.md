@@ -1,5 +1,14 @@
 # Changelog
 
+## Session: Indexing & Compendium (2026-11-01)
+
+### Added
+- destiny-1/index.json - machine-readable slug->title map (2889 entries)
+- destiny-1/README.md agent query guide
+- Updated skill with index.json lookup method
+
+---
+
 ## Session: Destiny 1 Grimoire Ingestion batch 28 (2026-11-01)
 
 ### Added

@@ -230,8 +230,9 @@ Ingestion status per book. Status: pending | in-progress | done | partial.
 - `compendium/characters/minor.md` - characters with fewer than 5 lines
 
 ## Destiny 1 (In Progress)
-- `destiny-1/README.md` - grimoire ingestion in progress (10 cards ingested, ~4000+ pending)
-- `destiny-1/index.md` - ingested card index
+- `destiny-1/README.md` - grimoire ingestion in progress (2889 cards ingested, ~4000+ pending)
+- `destiny-1/index.md` - ingested card index (table)
+- `destiny-1/index.json` - machine-readable slug->title map (O(1) lookup)
 - `destiny-1/cards/<slug>.md` - individual card text
 - Status: in-progress | Source: Ishtar Collective Grimoire Cards
 

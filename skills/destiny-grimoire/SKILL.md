@@ -36,6 +36,11 @@ Agent-optimized archive of Destiny 2 lore (110 books, 68 transcripts, 473 verifi
 1. Check `index.md` for the book slug and status.
 2. Read `books/<slug>.md`.
 
+### Destiny 1 grimoire
+1. Look up slug in `destiny-1/index.json` (O(1)) or `destiny-1/index.md`.
+2. Read `destiny-1/cards/<slug>.md`.
+3. Keyword search: `grep -rli "keyword" destiny-1/cards/`.
+
 ### Transcript dialogue
 1. Check `transcripts/index.md` (6-dimensional index: by arc, beat, character, release, topic, source).
 2. Read `transcripts/<slug>.md`.
