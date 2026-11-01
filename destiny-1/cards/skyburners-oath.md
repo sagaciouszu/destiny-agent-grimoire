@@ -1,0 +1,7 @@
+# Skyburner's Oath
+
+- Source: https://www.ishtar-collective.net/entries/skyburners-oath
+
+Some grunts are born to fight the war. Yes, they're loyal and true, and when the call comes "hot drop in five," well, they're always first in the queue. But I'm not one of them. I'm no hero, I'm in no hurry to die. I shot my own squad on Phobos, when death came to wear us like armor. I rode the Primus's ship that rammed the Hive Dreadnaught. Second wave out the hatch. We won that fight. We're not dead, so we won.
+
+Now this is the end, brothers, our final fight. Ghaul's here to finish it. Mars taught us how to fight Guardians. The Hive taught us how to eat their Light. Remember that we made it possible. The Red Legion ends it. But we held the line, and we didn't die. That's victory. It says so on the gun.

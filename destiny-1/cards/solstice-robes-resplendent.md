@@ -1,0 +1,15 @@
+# Solstice Robes (Resplendent)
+
+- Source: https://www.ishtar-collective.net/entries/solstice-robes-resplendent
+
+Nethe Pav breathed, tried to find time within time. She was cut off from her exit, the path in front of her blocked by rubble from her own blast. She had taken out three Cabal—they'd fired on her nonstop for what felt like hours but was surely minutes—and now there was one left, wounded, still behind her. She figured she could just leave it.
+
+She was wrong. From behind her came sounds of the lumbering beast. Turning, she fired.
+
+Nothing. Her weapon was dead or jammed or—it didn't matter. She threw it down and crouched behind a pillar with her blade as the Cabal fired. Once. Twice. Click.
+
+The clatter of its rifle hitting the ground. Nethe peered around the pillar in time to see it advancing with its own blade drawn.
+
+Leaping from cover, she went for the neck. So did he.
+
+They both connected.

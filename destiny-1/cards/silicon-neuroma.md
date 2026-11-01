@@ -1,0 +1,15 @@
+# Silicon Neuroma
+
+- Source: https://www.ishtar-collective.net/entries/silicon-neuroma
+
+A staggering Vex detonates, and the Exo Hunter is torn in two. One half sinks beneath the lake's opaque surface.
+
+Asher's eyes go wide and he freezes. Whatever they'd stumbled into down here was multiplicatively more lethal. He reloads his fusion rifle and looks around wildly.
+
+The other Hunter—she's the only other one left alive, no, stay calm—throws a smoke bomb and disappears. Asher barely has time to react before the Hunter reappears on high ground and draws a bow of Void energy, almost in slow motion.
+
+Crack! Crack! Crack! Ten Vex fall. Asher watches them disintegrate, looks back up to the Hunter—but the yell of gratitude catches in his throat as four Vex shimmer into existence behind her.
+
+Asher can't watch this time. He frantically searches for a way out… and a tentacle grabs his Ghost.
+
+A millisecond of pain in his shoulder and everything goes white.
