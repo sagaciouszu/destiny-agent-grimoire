@@ -1,0 +1,15 @@
+# Zenith of Your Kind
+
+- Source: https://www.ishtar-collective.net/entries/zenith-of-your-kind
+
+I have come to admire how you rally against the impossible. It's not your continual success that amuses me—your Light assures victory—it's your refusal to kneel. You fight and you die without a second thought. For what? Personal glory? Wealth? The wretched denizens of your refugee city?
+
+You have made bitter foes of races older, nobler, and worthier than you.
+
+You struggle so vainly and valiantly when you have so little. When you are so little. Everything this universe has thrown against you and still you persist.
+
+I could finish you. And you would not be at my side at the dimming of the world. You, the Guardian of Guardians.
+
+If I wished it, you would die your final death. But I won't. Why? Because I'm in love.
+
+—Calus, Emperor of the Cabal

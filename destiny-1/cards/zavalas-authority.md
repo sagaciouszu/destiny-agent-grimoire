@@ -1,0 +1,23 @@
+# Zavala's Authority
+
+- Source: https://www.ishtar-collective.net/entries/zavalas-authority
+
+Zavala: The problem with Rasputin is that it's a machine.
+
+Cayde-6: You know, I'm standing right here.
+
+Z: There's a difference between a trigger-happy Exo and artificial intelligence. Rasputin is satisfied. Complete. It regards itself as the pinnacle of creation. It doesn't want to be equal, or stand around a table and banter. It wants to be better, and we've programmed it to get what it wants. That's the nature of the machine.
+
+C6: Of THAT machine.
+
+Z: The problem with Rasputin is that we made it what it is, we modeled it, and it learned well.
+
+C6: So you don't trust machines, but *I'm* OK 'cause I'm one of the good ones. That's not very generous, boss.
+
+Z: I don't remember saying that you were OK.
+
+C6: …
+
+Z: What?
+
+C6: IKORA! ZAVALA MADE A JOKE! You're not Ikora. Where's Ikora? IKORA!

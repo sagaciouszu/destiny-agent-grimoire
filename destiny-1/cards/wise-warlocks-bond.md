@@ -1,0 +1,11 @@
+# Wise Warlock's Bond
+
+- Source: https://www.ishtar-collective.net/entries/wise-warlocks-bond
+
+Look around you. Wherever you are. Really look.
+No matter where you stand, no matter what lies before you, millions of infinite mysteries hide within your view. Think about that. And then know that you will one day know the answers to all of them.
+You are a Warlock. Your armor is wisdom, your weapons wit and ingenuity. You hold the power to draw strength from the places where imagination and possibility collide.
+The universe is a complex machine. But all machines can be understood, taken apart, modified, improved.
+All you have to do is look.
+
+—Ikora Rey
