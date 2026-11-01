@@ -1,0 +1,17 @@
+# The Armamentarium
+
+- Source: https://www.ishtar-collective.net/entries/the-armamentarium
+
+True freedom is an iron-clad lock
+And the most useful key, a rock
+The tastiest spice is hunger
+And the truest certainty—wonder.
+
+The best repair is but destruction,
+The purest ignorance, instruction
+The safest shelter is an offensive,
+And to fall in battle is true ascension
+
+Brothers and sisters, bear thy arms and be merry
+To the front, to battle!
+Defeat is a sickness and we've found the cure
