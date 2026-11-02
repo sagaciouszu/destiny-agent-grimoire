@@ -6,11 +6,17 @@ An agent-first lore archive for the Destiny universe. All content is served via 
 
 ## Quick start
 
-The database is a build artifact and is not committed. Build it once after cloning (~2 minutes; prebuilt copies are attached to releases):
+The database is a build artifact and is not committed. Bootstrap it once after cloning - pick one:
 
 ```bash
+# Option 1: download the prebuilt release asset (seconds)
+curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db -o db/grimoire.db
+
+# Option 2: build from your checkout (~2 minutes, matches this commit)
 python3 db/migrate.py
 ```
+
+Agent repos (`how-to-drift-for-agents`, `eris-morn`) present this choice in their `./setup.sh` on first run.
 
 ```bash
 # Database stats
@@ -58,7 +64,7 @@ sqlite3 db/grimoire.db "SELECT slug, title, item_type FROM items WHERE item_type
 ```
 db/  - query.py + schema.sql + README.md + migrate.py (grimoire.db is built, not committed)
 source/  - raw markdown source (books/, cards/, transcripts/, records/, items/, interactions/)
-compendium/  - markdown character line index (fallback for agents that don't speak SQL)
+compendium/  - character quote index; feeds the characters/character_lines tables at migration (agents should prefer the database)
 archive/  - raw scraper data (JSONL)
 scripts/  - ingestion scripts
 tests/  - audit + CI scripts (DB-backed)

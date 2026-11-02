@@ -15,7 +15,7 @@ Use this when you need canonical Destiny lore for storytelling, lore check, agen
 ## Location
 
 - Repo root: `~/Work/destiny-agent-grimoire/` (or wherever cloned)
-- **Primary:** `db/grimoire.db` (SQLite + FTS5; build with `python3 db/migrate.py` if missing, or use a prebuilt release asset)
+- **Primary:** `db/grimoire.db` (SQLite + FTS5; if missing, bootstrap: `curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db -o db/grimoire.db` for the prebuilt asset, or `python3 db/migrate.py` to build from checkout)
 - **Symlinked in Drifter agent:** `lore/` -> `~/Work/destiny-agent-grimoire/`
 
 ## Data covering
