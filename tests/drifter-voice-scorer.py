@@ -21,7 +21,7 @@ def ngrams(tokens, n):
 
 def load_corpus():
     lines = []
-    for p in glob.glob(os.path.join(ARCHIVE, "transcripts/*.md")):
+    for p in glob.glob(os.path.join(ARCHIVE, "source/transcripts/*.md")):
         basename = os.path.basename(p)
         # Destinypedia in-game quotes: extract quoted Drifter lines
         if basename == "ingame-quotes-drifter-destinypedia.md":

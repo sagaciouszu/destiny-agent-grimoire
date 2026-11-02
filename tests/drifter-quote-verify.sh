@@ -11,7 +11,7 @@ python3 - "$ARCHIVE" "$WORKSPACE" << 'PY'
 import re, glob, os, sys
 archive, ws = sys.argv[1], sys.argv[2]
 canon=[]
-for p in glob.glob(archive+'/transcripts/*.md'):
+for p in glob.glob(archive+'/source/transcripts/*.md'):
     for line in open(p,encoding='utf-8',errors='ignore'):
         m=re.match(r'^\*(?:The )?Drifter:\*\s*(.*)$',line.strip())
         if m: canon.append(m.group(1).strip())
@@ -20,7 +20,7 @@ def norm(s):
     s=re.sub(r'[^a-z0-9 ]+',' ',s); s=re.sub(r'\s+',' ',s).strip(); return s
 canon_norm=[norm(q) for q in canon]
 corpus=''
-for p in glob.glob(archive+'/books/*.md')+glob.glob(archive+'/transcripts/*.md'):
+for p in glob.glob(archive+'/source/books/*.md')+glob.glob(archive+'/source/transcripts/*.md'):
     corpus += '\n'+open(p,encoding='utf-8',errors='ignore').read()
 corpus_norm=norm(corpus)
 files=[]

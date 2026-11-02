@@ -5,8 +5,8 @@ WORKSPACE="${WORKSPACE:-$(cd "$(dirname "$0")/../../how-to-drift-for-agents" && 
 echo "=== DRIFTER ARCHIVE VALIDATION ==="
 echo ""
 
-BOOKS=$(ls "$ARCHIVE/books"/*.md 2>/dev/null | wc -l)
-TRANSCRIPTS=$(ls "$ARCHIVE/transcripts"/*.md 2>/dev/null | grep -v 'index.md' | wc -l)
+BOOKS=$(ls "$ARCHIVE/source/books"/*.md 2>/dev/null | wc -l)
+TRANSCRIPTS=$(ls "$ARCHIVE/source/transcripts"/*.md 2>/dev/null | grep -v 'index.md' | wc -l)
 echo "Books: $BOOKS"
 echo "Transcripts: $TRANSCRIPTS"
 echo "Workspace .md files: $(find "$WORKSPACE" -name '*.md' | wc -l)"
@@ -65,7 +65,7 @@ python3 - "$WORKSPACE" "$ARCHIVE" << 'PY'
 import re, glob, os, sys
 ws, archive = sys.argv[1], sys.argv[2]
 canon=[]
-for p in glob.glob(archive+'/transcripts/*.md'):
+for p in glob.glob(archive+'/source/transcripts/*.md'):
     for line in open(p,encoding='utf-8',errors='ignore'):
         m=re.match(r'^\*(?:The )?Drifter:\*\s*(.*)$',line.strip())
         if m: canon.append(m.group(1).strip())
@@ -74,7 +74,7 @@ def norm(s):
     s=re.sub(r'[^a-z0-9 ]+',' ',s); s=re.sub(r'\s+',' ',s).strip(); return s
 canon_norm=[norm(q) for q in canon]
 corpus=''
-for p in glob.glob(archive+'/books/*.md')+glob.glob(archive+'/transcripts/*.md'):
+for p in glob.glob(archive+'/source/books/*.md')+glob.glob(archive+'/source/transcripts/*.md'):
     corpus += '\n'+open(p,encoding='utf-8',errors='ignore').read()
 corpus_norm=norm(corpus)
 files=[]
@@ -89,6 +89,8 @@ for f in files:
             if len(q)>6: allq.add(q)
 unv=[q for q in allq if not (any(norm(q) in cn or cn in norm(q) for cn in canon_norm) or norm(q) in corpus_norm)]
 print("unverified quotes:",len(unv))
+for u in unv[:10]:
+    print("  ", u)
 PY
 echo ""
 

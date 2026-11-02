@@ -33,8 +33,8 @@ echo "Workspace: $WORKSPACE"
 echo ""
 
 echo "--- 1. Archive Integrity ---"
-run_check "Books exist (109+)" "[ $(ls $ARCHIVE/books/*.md 2>/dev/null | wc -l) -ge 100 ]"
-run_check "Transcripts exist (60+)" "[ $(ls $ARCHIVE/transcripts/*.md 2>/dev/null | grep -v index | wc -l) -ge 60 ]"
+run_check "Books exist (109+)" "[ $(ls $ARCHIVE/source/books/*.md 2>/dev/null | wc -l) -ge 100 ]"
+run_check "Transcripts exist (60+)" "[ $(ls $ARCHIVE/source/transcripts/*.md 2>/dev/null | grep -v index | wc -l) -ge 60 ]"
 run_check "Index exists" "[ -f $ARCHIVE/index.md ]"
 
 echo ""
