@@ -2,7 +2,7 @@
 
 An agent-first lore archive for the Destiny universe. All content is served via a single SQLite database with FTS5 full-text search. No external services needed.
 
-**Version:** 1.0.0
+**Version:** 1.1.0
 
 ## Quick start
 
