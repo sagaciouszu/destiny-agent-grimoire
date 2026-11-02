@@ -7,7 +7,7 @@
 - Verified full Ishtar Collective coverage: 0 missing item slugs, all 135 interaction pages, all 110 books, 2889 D1 cards, 71 records
 - Scraped all 1130 additional Ishtar transcript pages (68 -> 1198 transcripts), incl. quest-step dialogue for every expansion
 - Added 19 cutscene compilation transcripts (30-video archive, subtitle-only) with unique-match speaker attribution
-- Database: 1219 transcripts, 60,847 transcript lines, 126,428 FTS entries
+- Database: 1221 transcripts, 62,639 transcript lines, 128,220 FTS entries
 
 ### Cleanup
 

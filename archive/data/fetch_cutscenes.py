@@ -46,6 +46,8 @@ VIDEOS = [
     ('J5XLsdUGmkc', 'Destiny 2: Episode 1 Echoes Movie - All Cutscenes & Dialogue (Season 24)'),
     ('7xamvoVrrYU', 'Destiny 2: Episode 2 Revenant Movie - All Cutscenes & Dialogue (Season 25)'),
     ('t_ECtup2WAY', 'Destiny 2: Episode 3 Heresy Movie - All Cutscenes & Dialogue (Season 26)'),
+    ('O6N7h1F92Qs', 'Destiny 1: The Movie (2014-2017) All Cutscenes + DLC'),
+    ('8gMDQ4tOyFg', 'Destiny 1 - The Movie (All Cutscenes)'),
 ]
 
 STAGE = re.compile(r'^\[(music|musical|song|singing|humming|applause|laughter|chuckles|gasps?|crowd|static|interference|whirring|thrumming|beeping|alarm|rain|wind|thunder|explosion|gunfire|footsteps|door|roar|growl|screech|whispering|voices|echo)[^\]]*\]$', re.I)
