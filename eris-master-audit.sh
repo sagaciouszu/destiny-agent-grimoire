@@ -10,9 +10,12 @@ run() {
     if bash "$1" >/dev/null 2>&1; then echo "  ✓ [$2] PASS"; PASS=$((PASS+1));
     else echo "  ✗ [$2] FAIL"; FAIL=$((FAIL+1)); fi
 }
-run "$ARCHIVE/tests/test-db.sh" "Database Integrity"
+run "$ARCHIVE/tests/test-db.sh" "Database Integrity (29 checks)"
 run "$ARCHIVE/tests/compendium-check.sh" "Compendium Files"
 run "$ARCHIVE/tests/lore-integrity.sh" "Lore Archive Integrity"
+run "$ARCHIVE/tests/conversation-test.sh" "Drifter Conversation (SQLite)"
+run "$ARCHIVE/tests/eris-conversation-test.sh" "Eris Conversation (SQLite)"
+run "$ARCHIVE/tests/validate.sh" "Archive & Quote Validation"
 echo ""
 echo "============================================================"
 echo "  SCORECARD: $PASS / $((PASS+FAIL)) SUITES PASSED ($FAIL failed)"
