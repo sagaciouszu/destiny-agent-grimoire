@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.0.0 --- SQLite-first (2026-11-02)
+## v1.0.0 - SQLite-first (2026-11-02)
 
 ### Highlights
 
