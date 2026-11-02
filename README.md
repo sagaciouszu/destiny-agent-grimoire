@@ -1,81 +1,130 @@
 # Destiny Agent Grimoire
 
-<p align="center">
-  <img src='https://img.shields.io/github/v/tag/sagaciouszu/destiny-agent-grimoire?label=version&color=blue' alt='Version'/>
-  <img src='https://github.com/sagaciouszu/destiny-agent-grimoire/actions/workflows/ci.yml/badge.svg' alt='CI'/>
-  <img src='https://img.shields.io/badge/books-110-orange' alt='Books'/>
-  <img src='https://img.shields.io/badge/transcripts-68-orange' alt='Transcripts'/>
-  <img src='https://img.shields.io/badge/quotes-473%20verified-orange' alt='Quotes'/>
-  <img src='https://img.shields.io/badge/Made%20with-Motes-00FF00' alt='Made with Motes'/>
-  <img src='https://img.shields.io/badge/Made%20with-Parts%20of%20Ghosts-FFFFFF' alt='Made with Parts of Ghosts'/>
-</p>
+An agent-first lore archive for the Destiny universe. All content is served via a single SQLite database with FTS5 full-text search. No external services needed.
 
-<p align="center">
-  <img src="header.png" alt="Destiny Agent Grimoire - Your Ghost Is Not An Agent" width="100%"/>
-</p>
+**Version:** 1.0.0
 
-**Version:** 0.3.0 | **Status:** Development
+## Quick start
 
-> ⚠️ **WARNING:** This repository is under heavy development while the knowledge base is being constructed. Expect frequent changes, incomplete data, and shifting structure. The author's prowess is not to be trusted with anything important. Use at your own risk.
+```bash
+# Database stats
+python3 db/query.py stats
 
-A shared, indexed repository of Destiny 2 lore ingested from the Ishtar Collective.
-Any agent (Drifter persona, lore research, etc.) may reference these files at will.
+# Full-text search
+python3 db/query.py search "Crota" --limit 5
+python3 db/query.py search "Eris" --type transcripts --limit 10
 
-## Structure
+# Character dialogue  
+python3 db/query.py character "eris" --limit 20
+python3 db/query.py character "drifter" --limit 20
 
-- `db/grimoire.db` - SQLite database (primary data store, FTS5 search).
-- `db/query.py` - Agent query interface (search, character, item, stats).
-- `db/schema.sql` - Database DDL.
-- `db/README.md` - Query examples and table reference.
-- `compendium/` - Agent-optimized character line index (markdown fallback).
-- `destiny-1/` - Destiny 1 grimoire (complete, 2889 cards, markdown).
-- `interactions/` - Character dialogue index (markdown).
-- `items/` - Gear lore (markdown).
-- `records/` - Triumphs and seals (markdown).
-- `scripts/` - Ingestion scripts.
-- `tests/` - Validation scripts.
-- `archive/` - Raw scrape data (JSONL).
-- `drifter-master-audit.sh` - Unified audit runner.
+# Item details
+python3 db/query.py item "0a0x-nightmask"
+```
 
-## How to use
+Or with raw SQL:
 
-1. Query the database: `python3 db/query.py search "keyword" --limit 5`
-2. Character lines: `python3 db/query.py character "eris" --limit 20`
-3. Item details: `python3 db/query.py item "<slug>"`
-4. Database stats: `python3 db/query.py stats`
-5. Direct SQL: `sqlite3 db/grimoire.db "SELECT ... FROM fts WHERE fts MATCH 'keyword'"`
+```bash
+sqlite3 db/grimoire.db "SELECT title, text FROM fts WHERE fts MATCH 'hive' LIMIT 5"
+sqlite3 db/grimoire.db "SELECT speaker, line FROM transcript_lines WHERE speaker LIKE '%Eris%' LIMIT 10"
+sqlite3 db/grimoire.db "SELECT slug, title, item_type FROM items WHERE item_type LIKE '%Exotic%' LIMIT 20"
+```
 
-## Ingestion rules
+## Contents
 
-- Only lore body text is kept - site navigation, headers, footers, category lists, timeline widgets, and "Discuss this transcript" links are stripped.
-- If an entry cannot be fetched, the book is marked `partial` with a note; nothing is invented.
-- Capitalization matters: "Guardian" (capitalized) generally refers to the player character.
+| Table | Rows | Purpose |
+|-------|------|---------|
+| books | 110 | Book-level metadata (title, slug, release) |
+| book_entries | 1158 | Individual lore entries within the books |
+| transcripts | 68 | Quest transcript headers |
+| transcript_lines | 1709 | Canon dialogue (speaker, line, norm_line) |
+| grimoire_cards | 2889 | Destiny 1 grimoire cards |
+| interactions | 2699 | Single/short dialogue beats by character |
+| items | 58764 | Weapons, armor, gear lore + flavor text |
+| records | 71 | Triumphs/seals with canonical text |
+| characters | 18 | Named characters extracted from dialogue |
+| character_lines | 1054 | Character-quotes ready for agent use |
+| fts | 67290 | FTS5 full-text search over all tables |
+| meta | 1 | DB version + last updated |
 
-## Source & Attributions
+## Repository layout
 
-All content sourced from https://www.ishtar-collective.net (Ishtar Collective).
-Book list mirrored from https://www.ishtar-collective.net/books.
+```
+db/          --- grimoire.db + query.py + schema.sql + README.md + migrate.py
+source/      --- raw markdown source (books/, cards/, transcripts/, records/, items/, interactions/)
+compendium/  --- markdown character line index (fallback for agents that don't speak SQL)
+archive/     --- raw scraper data (JSONL)
+scripts/     --- ingestion scripts
+tests/       --- audit + CI scripts (DB-backed)
+skills/      --- agent-facing SKILL.md
+index.md     --- brief overview pointing to the database
+```
 
-Fan-made collection. Not affiliated with or endorsed by Bungie.
+## How agents should use this
 
-- **Destiny 2** - © Bungie, Inc. All lore, characters, locations are Bungie's property.
-- **Ishtar Collective** (https://www.ishtar-collective.net) - Primary source for all ingested lore text.
-- **Destiny Lore Vault** (YouTube) - Audio recordings of key transcripts.
+1. Load `skills/destiny-grimoire/SKILL.md` into your agent registry.
+2. Query via `db/query.py` for all structured lookups. Tiny context footprint.
+3. Only load `compendium/characters/<slug>.md` if you need quote-arrays as plain markdown fallback.
+4. Never parse raw markdown of `source/` unless strictly necessary.
+5. The DB lives in one file. No external connections, no web scraping needed at runtime.
 
-All content sourced from publicly available Destiny 2 lore. No original creative content is claimed.
+## Database schema
 
-## Progress
+See `db/schema.sql`. Tables that matter to agents:
 
-Database-first archive: 110 books, 68 transcripts, 2889 Destiny 1 cards, 2699+ interactions, 58764 items, 71 records, 18 characters (1054 lines). FTS5 search enabled.
-Last scrape: 2026-10-30. Content through Renegades (Dec 2025).
+### `transcript_lines`
+```sql
+SELECT t.title, tl.speaker, tl.line
+FROM transcript_lines tl
+JOIN transcripts t ON t.id = tl.transcript_id
+WHERE tl.speaker LIKE '%Eris%';
+```
 
-## Audit Commands
-- `bash tests/validate.sh` - consistency check (quotes, links, index)
-- `bash tests/drifter-test-suite.sh` - voice validation (19 scenarios)
-- `bash tests/drifter-module-test.sh` - module checks (201 checks)
-- `bash drifter-master-audit.sh` - unified audit (17 suites)
-- `bash tests/drifter-quote-verify.sh` - quote verification
-- `bash tests/drifter-ci.sh` - full CI pipeline (25 checks)
-- `bash tests/lore-integrity.sh` - archive integrity (8 checks)
-- `bash tests/lore-quote-count.sh` - quote count (473 lines)
-- `bash tests/lore-format.sh` - transcript format (68/68)
+### `items` (by category)
+```sql
+SELECT slug, title, text, item_type FROM items 
+WHERE item_type LIKE '%Exoth%' AND text != '' LIMIT 20;
+```
+
+### `fts` (full-text search across all tables)
+```sql
+SELECT title, text FROM fts WHERE fts MATCH 'crota' LIMIT 5;
+```
+
+## Repo philosophy
+
+- **Database first.** The markdown corpus in `source/` is the ingestion source. Query via database.
+- **Token-minimal.** Agents should query rather than read files. One database call gives canonical lore.
+- **Agnostic.** No specific agent persona lives here. Drifter and Eris agents reference this DB via `lore/` symlink.
+
+## Update procedure
+
+```bash
+# scrape more content from Ishtar Collective
+python3 archive/scrape.py interactions <start> <end>
+python3 archive/scrape.py items <start> <end>
+
+# re-run the database migration
+python3 db/migrate.py
+
+# verify
+bash tests/test-db.sh
+bash eris-master-audit.sh
+bash drifter-master-audit.sh
+```
+
+## Rules
+
+1. No em-dashes or en-dashes anywhere in agent files.
+2. No unverified quotes: everything in `character_lines` traces to canonical transcript lines.
+3. Do not paraphrase lore as quotes. Use the verbatim text from the DB.
+4. Do not edit the markdown source unless adding new Ishtar data.
+5. Content sourced from https://www.ishtar-collective.net (Ishtar Collective).
+
+## Attribution
+
+Fan-made archive. Not affiliated with or endorsed by Bungie.
+
+- **Destiny 2** and Destiny 1: © Bungie, Inc. All lore, characters, locations are Bungie's property.
+- **Ishtar Collective** (https://www.ishtar-collective.net): Primary source for all ingested text.
+- **Destiny Lore Vault** (YouTube) and **Destinypedia**: Bootstrap sources for specific transcripts.
