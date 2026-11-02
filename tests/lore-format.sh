@@ -9,7 +9,7 @@ echo "=== LORE FORMAT VERIFICATION ==="
 echo ""
 
 PASS=0; FAIL=0
-for f in "$ARCHIVE"/transcripts/*.md; do
+for f in "$ARCHIVE"/source/transcripts/*.md; do
     [ "$(basename "$f")" = "index.md" ] && continue
     # Check file has a title
     if ! head -1 "$f" | grep -q '^#'; then
