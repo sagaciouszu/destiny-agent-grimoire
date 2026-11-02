@@ -66,7 +66,7 @@ All content sourced from publicly available Destiny 2 lore. No original creative
 
 ## Progress
 
-Database-first archive: 110 books, 68 transcripts, 2889 Destiny 1 cards, 2699+ interactions, 19501+ items, 71 records, 18 characters (1054 lines). FTS5 search enabled.
+Database-first archive: 110 books, 68 transcripts, 2889 Destiny 1 cards, 2699+ interactions, 58764 items, 71 records, 18 characters (1054 lines). FTS5 search enabled.
 Last scrape: 2026-10-30. Content through Renegades (Dec 2025).
 
 ## Audit Commands

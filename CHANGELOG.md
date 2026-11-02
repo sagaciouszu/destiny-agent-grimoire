@@ -22,10 +22,10 @@
 - Transcripts: 68 (1070 dialogue lines)
 - Destiny 1 Grimoire: 2889 cards
 - Interactions: 2699+ character dialogue entries
-- Items: 19501+ gear/weapon/armor entries (scraping ongoing)
+- Items: 58764 gear/weapon/armor entries (complete)
 - Records: 71 triumphs/seals
 - Characters: 18 named characters (1054 verified lines)
-- FTS index: 25588+ entries
+- FTS index: 66651 entries
 
 ### Database Tables
 - books, book_entries
