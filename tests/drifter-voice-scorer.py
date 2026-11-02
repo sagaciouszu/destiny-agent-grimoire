@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 Drifter Statistical Voice Similarity Scorer
-Compares a candidate response against the 473 canonical Drifter transcript lines
-using vocabulary overlap, character/word n-gram similarity, sentence-length
-distribution, and signature marker density.
+Compares a candidate response against the canonical Drifter transcript lines
+in the grimoire database using vocabulary overlap, character/word n-gram
+similarity, sentence-length distribution, and signature marker density.
 
 Usage:
   ./drifter-voice-scorer.py "Hey, hero. Bank those Motes! Heh. Trust."
@@ -20,6 +20,21 @@ def ngrams(tokens, n):
     return [tuple(tokens[i:i+n]) for i in range(len(tokens)-n+1)]
 
 def load_corpus():
+    """Load canonical Drifter lines from the grimoire DB (fallback: source markdown)."""
+    here = os.path.dirname(os.path.abspath(__file__))
+    candidates = [
+        os.environ.get("GRIMOIRE_DB", ""),
+        os.path.join(here, "..", "db", "grimoire.db"),
+    ]
+    for db in candidates:
+        if db and os.path.exists(db):
+            import sqlite3
+            conn = sqlite3.connect(db)
+            rows = [r[0] for r in conn.execute(
+                "SELECT line FROM transcript_lines WHERE speaker LIKE '%Drifter%' AND is_stage_dir=0")]
+            conn.close()
+            if rows:
+                return rows
     lines = []
     for p in glob.glob(os.path.join(ARCHIVE, "source/transcripts/*.md")):
         basename = os.path.basename(p)

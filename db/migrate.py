@@ -118,6 +118,105 @@ def migrate():
                 tl_count += 1
     print(f'transcripts: {t_count}, lines: {tl_count}')
 
+    # Web transcript pages (archive/data/transcripts_web.jsonl, scraped from Ishtar)
+    # Junk speakers are footer "related content" blocks, not dialogue.
+    web_jsonl = os.path.join(ROOT, 'archive', 'data', 'transcripts_web.jsonl')
+    if os.path.exists(web_jsonl):
+        import html as html_mod
+        JUNK_SPEAKERS = {'Category', 'Quest', 'Ghost Scan', 'Sources', 'Note'}
+        covered = set()
+        for r in conn.execute('SELECT slug FROM transcripts').fetchall():
+            covered.add(r[0])
+        w_count = 0
+        wl_count = 0
+        for ln in open(web_jsonl, encoding='utf-8'):
+            try:
+                d = json.loads(ln)
+            except Exception:
+                continue
+            slug = d.get('slug', '')
+            if not slug or slug in covered:
+                continue
+            covered.add(slug)
+            cur = conn.execute('INSERT INTO transcripts (slug,title,release,characters,arc,source_url) VALUES (?,?,?,?,?,?)',
+                (slug, d.get('title', ''), '', '', '', d.get('source_url', '')))
+            tid = cur.lastrowid
+            w_count += 1
+            seen_page = set()
+            seq = 0
+            for line in d.get('lines', []):
+                sp = line.get('speaker', '')
+                txt = html_mod.unescape(line.get('text', '')).strip()
+                if sp in JUNK_SPEAKERS or not txt:
+                    continue
+                key = (sp, txt)
+                if key in seen_page:
+                    continue
+                seen_page.add(key)
+                stage = 0 if sp else 1
+                if not sp:
+                    sp = 'Narration'
+                conn.execute('INSERT INTO transcript_lines (transcript_id,seq,speaker,line,norm_line,is_stage_dir) VALUES (?,?,?,?,?,?)',
+                    (tid, seq, sp, txt, norm_text(txt), stage))
+                seq += 1
+                wl_count += 1
+        print(f'web transcripts: {w_count}, web lines: {wl_count}')
+        t_count += w_count
+        tl_count += wl_count
+
+    # Cutscene transcripts (archive/data/cutscenes.jsonl, YouTube captions)
+    # Lines start as speaker 'Cutscene'; unique-match attribution runs after.
+    cut_jsonl = os.path.join(ROOT, 'archive', 'data', 'cutscenes.jsonl')
+    if os.path.exists(cut_jsonl):
+        STAGE_DIR = re.compile(r'^\[[^\]]+\]$')
+        covered = set(r[0] for r in conn.execute('SELECT slug FROM transcripts').fetchall())
+        c_count = 0
+        cl_count = 0
+        for ln in open(cut_jsonl, encoding='utf-8'):
+            try:
+                d = json.loads(ln)
+            except Exception:
+                continue
+            slug = d.get('slug', '')
+            if not slug or slug in covered:
+                continue
+            covered.add(slug)
+            cur = conn.execute('INSERT INTO transcripts (slug,title,release,characters,arc,source_url) VALUES (?,?,?,?,?,?)',
+                (slug, d.get('title', ''), 'Cutscene', '', '', d.get('source_url', '')))
+            tid = cur.lastrowid
+            c_count += 1
+            seq = 0
+            seen = set()
+            for line in d.get('lines', []):
+                txt = line.get('text', '').strip()
+                if not txt or txt in seen:
+                    continue
+                seen.add(txt)
+                if STAGE_DIR.match(txt):
+                    sp, stage = 'Narration', 1
+                else:
+                    sp, stage = 'Cutscene', 0
+                conn.execute('INSERT INTO transcript_lines (transcript_id,seq,speaker,line,norm_line,is_stage_dir) VALUES (?,?,?,?,?,?)',
+                    (tid, seq, sp, txt, norm_text(txt), stage))
+                seq += 1
+                cl_count += 1
+        # Attribute cutscene lines whose normalized text uniquely matches a known speaker
+        attributed = conn.execute("""
+            UPDATE transcript_lines SET speaker = (
+                SELECT t2.speaker FROM transcript_lines t2
+                WHERE t2.norm_line = transcript_lines.norm_line
+                  AND t2.speaker NOT IN ('Cutscene','Narration')
+                GROUP BY t2.speaker LIMIT 1
+            )
+            WHERE speaker = 'Cutscene'
+              AND (SELECT COUNT(DISTINCT t3.speaker) FROM transcript_lines t3
+                   WHERE t3.norm_line = transcript_lines.norm_line
+                     AND t3.speaker NOT IN ('Cutscene','Narration')) = 1
+        """).rowcount
+        print(f'cutscene transcripts: {c_count}, lines: {cl_count}, attributed: {attributed}')
+        t_count += c_count
+        tl_count += cl_count
+
     # Grimoire cards
     cards = glob.glob(os.path.join(ROOT, 'source', 'cards', '*.md'))
     g_count = 0

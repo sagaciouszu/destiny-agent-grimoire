@@ -24,10 +24,11 @@ for r in conn.execute("SELECT line FROM transcript_lines WHERE speaker LIKE '%Dr
     if r[0]:
         cn = norm(r[0])
         canon_norm.add(cn)
-        # Add fragments for better matching
-        for sentence in re.split(r'(?<=[.!?])\s+', cn):
-            if len(sentence) > 8:
-                canon_norm.add(sentence)
+        # Add sentence fragments: split the RAW line first (norm strips periods)
+        for sentence in re.split(r'(?<=[.!?])\s+', r[0]):
+            cs = norm(sentence)
+            if len(cs) > 8:
+                canon_norm.add(cs)
 
 # Build corpus: collect per-table norm_text columns + known titles
 tables = [
@@ -77,6 +78,15 @@ for f in files:
             # 2b. Corpus substring match via big combined corpus
             if nq in big_corpus:
                 continue
+            # 2c. Sentence-level match (dropped attributions): split RAW quote first
+            raw_sents = [s for s in re.split(r'(?<=[.!?])\s+', q) if len(s.strip()) >= 10]
+            if raw_sents:
+                norm_sents = [norm(s) for s in raw_sents]
+                norm_sents = [s for s in norm_sents if len(s) >= 15]
+                if norm_sents:
+                    s_hits = sum(1 for s in norm_sents if s in big_corpus)
+                    if s_hits / len(norm_sents) >= 0.6:
+                        continue
             # 3. Corpus word-level substring per-table
             if any(nq in cp for cp in corpus_parts):
                 continue
