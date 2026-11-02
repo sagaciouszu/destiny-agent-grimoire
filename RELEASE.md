@@ -12,15 +12,15 @@ SQLite-backed Destiny lore archive for agent consumption. Single file (`db/grimo
 |-------|------|----------|
 | books | 110 | All 110 Ishtar lore books (complete) |
 | book_entries | 1158 | 1-51 entries per book |
-| transcripts | 68 | 68 quest transcripts |
-| transcript_lines | 1709 | Every dialogue line, including narration |
+| transcripts | 1219 | Quest + cutscene + web transcripts (complete) |
+| transcript_lines | 60847 | Every dialogue line, including narration |
 | grimoire_cards | 2889 | All 2889 Destiny 1 grimoire cards (complete) |
 | interactions | 2699 | All 135 Ishtar interaction pages |
 | items | 58764 | All Ishtar items; 42693 with flavor text |
 | records | 71 | All 71 triumphs/seals |
 | characters | 18 | Named characters extracted from dialogue |
 | character_lines | 1054 | Verified canon dialogue for queries |
-| fts | 67290 | FTS5 full-text search over all tables |
+| fts | 126428 | FTS5 full-text search over all tables |
 
 Coverage verified by diffing scraped slugs against Ishtar's live pages: no missing slugs.
 
@@ -29,7 +29,11 @@ Coverage verified by diffing scraped slugs against Ishtar's live pages: no missi
 ### db/
 - `db/migrate.py` widened parsers: quoted-source books, YT/weblore transcripts as speaker rows, prose as `Narration`
 - `norm_text` / `norm_line` / `norm_body` columns + indexes for SQL substring matching
-- Quote verification scripts are DB-backed (~2s for 2893 quotes)
+- Quote verification scripts are DB-backed (~3s for 2897 quotes), with sentence-level matching for quotes that drop mid-line attributions
+
+### new sources
+- All 1130 additional Ishtar transcript pages scraped (`archive/data/transcripts_web.jsonl`), junk footer rows filtered
+- 19 cutscene compilation transcripts from a 30-video archive (`archive/data/cutscenes.jsonl`): captions only, no video download; unique-match speaker attribution against known dialogue
 
 ### cleanup
 - `source/items/` and `source/interactions/` removed (items live in `archive/data/items.jsonl`; interactions in `archive/data/interactions.jsonl`)
@@ -51,12 +55,12 @@ Both agents query `db/query.py` or raw SQL; neither parses `source/` markdown at
 
 - drifter-master-audit.sh: 17/17 PASS
 - eris-master-audit.sh (this repo): 6/6 PASS
-- eris-master-audit.sh (eris-morn): 3/3 PASS
+- eris-master-audit.sh (eris-morn): 8/8 PASS
 - test-db.sh: 29/29 PASS
 - lore-integrity.sh: 17/17 PASS
 - conversation tests: 2/2 PASS (all queries hit SQLite)
-- drifter-quote-verify.sh: 2893 checked, 0 unverified, ~2s
-- eris-quote-verify.sh: 0 unverified
+- drifter-quote-verify.sh: 2897 checked, 0 unverified, ~3s
+- eris-quote-verify.sh: 678 checked, 0 unverified
 
 ## Attribution
 

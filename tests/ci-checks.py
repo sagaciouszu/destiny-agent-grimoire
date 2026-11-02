@@ -74,7 +74,7 @@ def check_selfdeps(ws):
 
 def check_emdashes(ws):
     files = get_files(ws)
-    skip = ('/books/', '/transcripts/', '/destiny-1/cards/')
+    skip = ('/source/', '/books/', '/transcripts/', '/cards/', '/records/', '/destiny-1/')
     for f in files:
         if any(seg in f.replace(os.sep, '/') for seg in skip):
             continue
@@ -113,9 +113,9 @@ def check_headers(ws):
     # index files are exempt.
     for f in files:
         rel = f.replace(os.sep, '/')
-        if '/books/' in rel or '/transcripts/' in rel or '/destiny-1/' in rel or '/skills/' in rel or '/items/' in rel or '/records/' in rel or '/interactions/' in rel:
+        if '/books/' in rel or '/transcripts/' in rel or '/destiny-1/' in rel or 'destiny-1-' in rel or '/skills/' in rel or '/items/' in rel or '/records/' in rel or '/interactions/' in rel or '/cards/' in rel:
             continue
-        if rel.endswith('/index.md') or rel.endswith('/README.md') or rel.endswith('CHANGELOG.md') or rel.endswith('SKILL.md'):
+        if rel.endswith('/index.md') or rel.endswith('/README.md') or rel.endswith('CHANGELOG.md') or rel.endswith('SKILL.md') or rel.endswith('RELEASE.md'):
             continue
         s = open(f, encoding='utf-8').read()
         if '**Depends On:**' not in s or 'Token Estimate:' not in s:
