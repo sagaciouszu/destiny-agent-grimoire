@@ -50,14 +50,14 @@ sqlite3 db/grimoire.db "SELECT slug, title, item_type FROM items WHERE item_type
 ## Repository layout
 
 ```
-db/          --- grimoire.db + query.py + schema.sql + README.md + migrate.py
-source/      --- raw markdown source (books/, cards/, transcripts/, records/, items/, interactions/)
-compendium/  --- markdown character line index (fallback for agents that don't speak SQL)
-archive/     --- raw scraper data (JSONL)
-scripts/     --- ingestion scripts
-tests/       --- audit + CI scripts (DB-backed)
-skills/      --- agent-facing SKILL.md
-index.md     --- brief overview pointing to the database
+db/  - grimoire.db + query.py + schema.sql + README.md + migrate.py
+source/  - raw markdown source (books/, cards/, transcripts/, records/, items/, interactions/)
+compendium/  - markdown character line index (fallback for agents that don't speak SQL)
+archive/  - raw scraper data (JSONL)
+scripts/  - ingestion scripts
+tests/  - audit + CI scripts (DB-backed)
+skills/  - agent-facing SKILL.md
+index.md  - brief overview pointing to the database
 ```
 
 ## How agents should use this
