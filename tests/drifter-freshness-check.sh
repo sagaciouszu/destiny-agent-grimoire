@@ -1,42 +1,40 @@
 #!/bin/bash
-# Drifter Lore Freshness Check
-# Checks if the lore archive needs updating.
-# Usage: ./drifter-freshness-check.sh
-
-ARCHIVE="${ARCHIVE:-$(cd "$(dirname "$0")/.." && pwd)}"
-WORKSPACE="${WORKSPACE:-$(cd "$(dirname "$0")/../../how-to-drift-for-agents" && pwd)}"
+# Drifter Lore Freshness Check (SQLite)
+DB="$(cd "$(dirname "$0")/.." && pwd)/db/grimoire.db"
+if [ ! -f "$DB" ]; then echo "FAIL: database not found at $DB"; exit 1; fi
 
 echo "=== DRIFTER LORE FRESHNESS CHECK ==="
 echo ""
-
-# Check last scrape date
-LAST_SCRAPE=$(grep -oE 'Last Scrape.*[0-9]{4}-[0-9]{2}-[0-9]{2}' "$ARCHIVE/index.md" | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}' | head -1)
-echo "Last scrape date: $LAST_SCRAPE"
+LAST_SCRAPE=$(sqlite3 "$DB" "SELECT value FROM meta WHERE key='last_updated'")
+echo "Database last updated: $LAST_SCRAPE"
 echo "Current date: $(date +%Y-%m-%d)"
-echo ""
-
-# Check if stale (more than 30 days)
 if [ -n "$LAST_SCRAPE" ]; then
     LAST_EPOCH=$(date -d "$LAST_SCRAPE" +%s 2>/dev/null || echo "0")
     NOW_EPOCH=$(date +%s)
-    DIFF_DAYS=$(( (NOW_EPOCH - LAST_EPOCH) / 86400 ))
-    echo "Days since last scrape: $DIFF_DAYS"
-    if [ "$DIFF_DAYS" -gt 30 ]; then
-        echo "WARNING: Lore archive is $DIFF_DAYS days old. Consider re-scraping."
+    AGE_DAYS=$(( (NOW_EPOCH - LAST_EPOCH) / 86400 ))
+    echo "Database age: $AGE_DAYS days"
+    if [ "$AGE_DAYS" -gt 30 ]; then
+        echo "WARNING: Database is $AGE_DAYS days old. Consider re-scraping."
     else
-        echo "OK: Lore archive is fresh ($DIFF_DAYS days old)."
+        echo "OK: Database is fresh ($AGE_DAYS days old)."
     fi
 else
-    echo "WARNING: Could not determine last scrape date."
+    echo "WARNING: Could not determine database age."
 fi
 echo ""
-
-# Check book count
-BOOKS=$(ls "$ARCHIVE/books"/*.md 2>/dev/null | wc -l)
-TRANSCRIPTS=$(ls "$ARCHIVE/transcripts"/*.md 2>/dev/null | grep -v 'index.md' | wc -l)
-echo "Books: $BOOKS (expected ~109)"
-echo "Transcripts: $TRANSCRIPTS (expected ~68)"
-echo ""
-
+BOOKS=$(sqlite3 "$DB" "SELECT COUNT(*) FROM books")
+ENTRIES=$(sqlite3 "$DB" "SELECT COUNT(*) FROM book_entries")
+TRANSCRIPTS=$(sqlite3 "$DB" "SELECT COUNT(*) FROM transcripts")
+CARDS=$(sqlite3 "$DB" "SELECT COUNT(*) FROM grimoire_cards")
+INTERACTIONS=$(sqlite3 "$DB" "SELECT COUNT(*) FROM interactions")
+ITEMS=$(sqlite3 "$DB" "SELECT COUNT(*) FROM items")
+RECORDS=$(sqlite3 "$DB" "SELECT COUNT(*) FROM records")
+echo "Books: $BOOKS"
+echo "Book entries: $ENTRIES"
+echo "Transcripts: $TRANSCRIPTS"
+echo "Grimoire cards: $CARDS"
+echo "Interactions: $INTERACTIONS"
+echo "Items: $ITEMS"
+echo "Records: $RECORDS"
 echo ""
 echo "=== FRESHNESS CHECK COMPLETE ==="

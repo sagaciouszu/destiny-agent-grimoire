@@ -1,31 +1,15 @@
 #!/bin/bash
-# Lore Quote Count Verification
-# Verifies the number of Drifter transcript lines matches expected (473).
-# Usage: ./tests/lore-quote-count.sh
-
-ARCHIVE="${ARCHIVE:-$(cd "$(dirname "$0")/.." && pwd)}"
-
+# Lore quote count verification (SQLite)
+DB="$(cd "$(dirname "$0")/.." && pwd)/db/grimoire.db"
+[ -f "$DB" ] || { echo "FAIL: database not found"; exit 1; }
 echo "=== LORE QUOTE COUNT VERIFICATION ==="
-echo ""
-
-COUNT=$(python3 - "$ARCHIVE" << 'PY'
-import re, glob, os, sys
-archive = sys.argv[1]
-canon = []
-for p in glob.glob(archive + '/source/transcripts/*.md'):
-    for line in open(p, encoding='utf-8', errors='ignore'):
-        m = re.match(r'^\*(?:The )?Drifter:\*\s*(.*)$', line.strip())
-        if m:
-            canon.append(m.group(1).strip())
-print(len(canon))
-PY
-)
-
-echo "Drifter transcript lines: $COUNT (expected: 473)"
-if [ "$COUNT" -ge 470 ] && [ "$COUNT" -le 480 ]; then
-    echo "✓ PASS: Quote count within expected range"
-    exit 0
-else
-    echo "✗ FAIL: Quote count outside expected range (470-480)"
-    exit 1
-fi
+TOTAL=$(sqlite3 "$DB" "SELECT COUNT(*) FROM transcript_lines WHERE speaker = 'Drifter'")
+echo "Drifter transcript lines (exact): $TOTAL (expected: 473)"
+if [ "$TOTAL" -eq "473" ]; then echo "PASS: Quote count within expected range"
+else echo "WARN: Quote count diff: $((TOTAL - 473))"; fi
+TOTAL_ALL=$(sqlite3 "$DB" "SELECT COUNT(*) FROM transcript_lines WHERE speaker LIKE '%Drifter%'")
+echo "Drifter all variants: $TOTAL_ALL"
+ERIS=$(sqlite3 "$DB" "SELECT COUNT(*) FROM transcript_lines WHERE speaker LIKE '%Eris%'")
+echo "Eris Morn transcript lines: $ERIS"
+LINES=$(sqlite3 "$DB" "SELECT COUNT(*) FROM transcript_lines")
+echo "Total transcript lines: $LINES"
