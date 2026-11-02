@@ -31,7 +31,7 @@ def parse(h):
     body=body.replace('—','-').replace('–','-')
     return {'title':title,'speaker':speaker,'quote':body,'release':release}
 
-index_path='interactions/index.json'
+index_path='db/interactions-generated-index.json'
 os.makedirs('interactions',exist_ok=True)
 data={'count':0,'entries':[]}
 if os.path.exists(index_path):
