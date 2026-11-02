@@ -229,6 +229,18 @@ Ingestion status per book. Status: pending | in-progress | done | partial.
 - `compendium/characters/<slug>.md` - per-character dialogue files
 - `compendium/characters/minor.md` - characters with fewer than 5 lines
 
+## Interactions (Character Dialogue)
+- `interactions/README.md` - agent query guide
+- `interactions/index.json` - machine-readable index (slug, title, speaker, quote, release)
+- Status: in-progress (20 ingested, ~3100+ pending)
+
+## Items (Gear Lore)
+- `items/README.md` - pending ingestion (~3200+ items)
+
+## Records (Triumphs & Seals)
+- `records/README.md` - pending ingestion (~57 records)
+
+
 ## Destiny 1 (In Progress)
 - `destiny-1/README.md` - grimoire ingestion in progress (2889 cards ingested, ~4000+ pending)
 - `destiny-1/index.md` - ingested card index (table)

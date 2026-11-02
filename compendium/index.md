@@ -34,6 +34,10 @@
 
 See `characters/minor.md` (11 characters, 16 lines total).
 
+## Related
+
+- `interactions/index.json` - character dialogue from Ishtar interactions (20 ingested, ~3100+ pending).
+
 ## Totals
 
 - Major characters: 18

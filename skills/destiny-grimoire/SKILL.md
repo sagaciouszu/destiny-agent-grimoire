@@ -41,6 +41,13 @@ Agent-optimized archive of Destiny 2 lore (110 books, 68 transcripts, 473 verifi
 2. Read `destiny-1/cards/<slug>.md`.
 3. Keyword search: `grep -rli "keyword" destiny-1/cards/`.
 
+### Character interactions
+1. Look up in `interactions/index.json` (filter by speaker/keyword).
+2. Quote field contains the full dialogue.
+
+### Items / Records
+- `items/README.md` and `records/README.md` document pending ingestion.
+
 ### Transcript dialogue
 1. Check `transcripts/index.md` (6-dimensional index: by arc, beat, character, release, topic, source).
 2. Read `transcripts/<slug>.md`.

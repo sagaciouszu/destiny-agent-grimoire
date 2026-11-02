@@ -1,5 +1,21 @@
 # Changelog
 
+## Session: Ishtar Indexing (2026-11-02)
+
+### Added
+- interactions/ directory: character dialogue index (20 ingested, ~3100+ pending)
+- interactions/index.json - machine-readable index (slug, title, speaker, quote, release)
+- interactions/README.md - agent query guide
+- items/ directory: gear lore (pending, ~3200+ items)
+- records/ directory: triumphs and seals (pending, ~57 records)
+- scripts/ingest-interaction.py - interaction ingestion script
+- Updated index.md, README.md, skill with new content types
+
+### Changed
+- compendium/index.md - added Related section (interactions)
+
+---
+
 ## Session: Indexing & Compendium (2026-11-01)
 
 ### Added
