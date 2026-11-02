@@ -1,24 +1,31 @@
 # Changelog
 
-## v1.1.0 - Full coverage: Ishtar + web transcripts + cutscenes (2026-11-02)
+## v1.2.0 - Web transcripts + cutscenes + quote-verify hardening (2026-11-02)
+
+### Coverage
+
+- Scraped all 1130 additional Ishtar transcript pages (68 -> 1198 transcripts), incl. quest-step dialogue for every expansion
+- Added 23 cutscene compilation transcripts (D1 + D2, captions only, no video download) with unique-match speaker attribution (406 lines)
+- Database: 1221 transcripts, 62,639 transcript lines, 128,220 FTS entries
+
+### Tests
+
+- `drifter-quote-verify.sh`: sentence-level matching for dropped attributions; canon fragments split from raw lines (norm strips periods)
+- `drifter-voice-scorer.py`: DB-backed corpus (1001 Drifter lines)
+- `ci-checks.py`: source-lore exemptions, RELEASE.md header exemption
+- `tests/lore-format.sh`: path fixed for `source/transcripts/` reorganization
+
+## v1.1.0 - Ishtar coverage complete + source trim (2026-11-02)
 
 ### Coverage
 
 - Verified full Ishtar Collective coverage: 0 missing item slugs, all 135 interaction pages, all 110 books, 2889 D1 cards, 71 records
-- Scraped all 1130 additional Ishtar transcript pages (68 -> 1198 transcripts), incl. quest-step dialogue for every expansion
-- Added 19 cutscene compilation transcripts (30-video archive, subtitle-only) with unique-match speaker attribution
-- Database: 1221 transcripts, 62,639 transcript lines, 128,220 FTS entries
 
 ### Cleanup
 
 - Removed redundant `source/items/` and `source/interactions/` markdown (items/interactions ingest from `archive/data/*.jsonl`)
 - `source/` now contains exactly what `db/migrate.py` consumes: books, transcripts, cards, records
 - RELEASE.md added with verified totals and test results
-
-### Tests
-
-- `drifter-quote-verify.sh`: sentence-level matching for dropped attributions; canon fragments split from raw lines (norm strips periods)
-- `tests/lore-format.sh`: path fixed for `source/transcripts/` reorganization
 
 ## v1.0.0 - SQLite-first (2026-11-02)
 

@@ -1,4 +1,4 @@
-# Release v1.1.0 - Destiny Agent Grimoire
+# Release v1.2.0 - Destiny Agent Grimoire
 
 **Date:** 2026-11-02
 
