@@ -9,7 +9,7 @@ Source: https://www.ishtar-collective.net/interactions
 - Lookup by keyword: grep the quote field or use python.
 
 ## Status
-- Ingested: 800 | Total: ~3100+ interactions across ~100 pages
+- Ingested: 900 | Total: ~3100+ interactions across ~100 pages
 - Enumeration: https://www.ishtar-collective.net/interactions/page/N
 
 ## Ingestion
