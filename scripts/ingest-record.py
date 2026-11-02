@@ -25,8 +25,8 @@ def parse(h):
     body=body.replace('—','-').replace('–','-')
     return {'title':title,'body':body,'release':release}
 
-out_dir='records/entries'
-index_path='records/index.json'
+out_dir='source/records'
+index_path='db/records-generated-index.json'
 os.makedirs(out_dir,exist_ok=True)
 data={'count':0,'entries':[]}
 if os.path.exists(index_path):

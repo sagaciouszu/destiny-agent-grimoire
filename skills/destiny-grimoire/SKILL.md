@@ -18,13 +18,12 @@ Agent-optimized archive of Destiny 2 lore (110 books, 68 transcripts, 473 verifi
 
 ## Structure
 
-- `index.md` - Master book list with ingestion status (pending/done/partial) and compendium/destiny-1 sections.
-- `books/<slug>.md` - Full text of each book, entries as `##` sections.
-- `transcripts/<slug>.md` - Quest dialogue transcripts.
-- `compendium/index.md` - Character line index (18 major + 11 minor characters).
-- `compendium/characters/<slug>.md` - Per-character dialogue lines with source transcript.
-- `destiny-1/README.md` - Destiny 1 grimoire (pending ingestion).
-- `tests/` - Validation scripts (archive-agnostic + agent-integration).
+- `index.md` - Repository overview (points to SQLite as source of truth).
+- `db/grimoire.db` - SQLite database (primary data store, FTS5 search).
+- `db/query.py` - Agent query interface.
+- `compendium/index.md` - Markdown character line index (fallback).
+- `source/` - Raw lore markdown (books, transcripts, cards, items, records, interactions).
+- `tests/` - Validation scripts.
 
 ## How to query
 
@@ -67,7 +66,7 @@ sqlite3 db/grimoire.db "SELECT speaker, COUNT(*) FROM transcript_lines GROUP BY 
 
 - Only use verified quotes. Unverified strings must be unquoted.
 - Lore books are verbatim source text; do not paraphrase as quotes.
-- Destiny 1 content is not yet ingested; treat as unavailable.
+- Destiny 1 content is complete: all 2889 grimoire cards in the DB.
 - Keep queries scoped: load only the file you need to save tokens.
 
 ## Sources

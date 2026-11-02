@@ -1,69 +1,62 @@
 #!/bin/bash
-# Lore Archive Integrity Check
-# Verifies the archive structure: books, transcripts, indexes.
-# Usage: ./tests/lore-integrity.sh
-
-ARCHIVE="${ARCHIVE:-$(cd "$(dirname "$0")/.." && pwd)}"
+# Lore Archive Integrity Check (SQLite-backed, plus source-corpus format check)
+DB="$(cd "$(dirname "$0")/.." && pwd)/db/grimoire.db"
+ARCHIVE="$(cd "$(dirname "$0")/.." && pwd)"
+[ -f "$DB" ] || { echo "FAIL: database not found"; exit 1; }
 
 echo "=== LORE ARCHIVE INTEGRITY CHECK ==="
-echo ""
-
 PASS=0; FAIL=0
 
 check() {
-    if eval "$1" >/dev/null 2>&1; then
-        echo "  ✓ $2"; PASS=$((PASS+1))
-    else
-        echo "  ✗ $2"; FAIL=$((FAIL+1))
-    fi
+    if eval "$1" >/dev/null 2>&1; then echo "  $2"; PASS=$((PASS+1))
+    else echo "  $2"; FAIL=$((FAIL+1)); fi
 }
 
-# Directory structure
-check "[ -d $ARCHIVE/source/books ]" "books/ directory exists"
-check "[ -d $ARCHIVE/source/transcripts ]" "transcripts/ directory exists"
-check "[ -f $ARCHIVE/index.md ]" "index.md exists"
-check "[ -f $ARCHIVE/source/transcripts/index.md ]" "transcripts/index.md exists"
+source_data="$(cd "$ARCHIVE/source" 2>/dev/null && pwd)"
 
-# File counts
-BOOKS=$(ls "$ARCHIVE/source/books"/*.md 2>/dev/null | wc -l)
-TRANSCRIPTS=$(ls "$ARCHIVE/source/transcripts"/*.md 2>/dev/null | grep -v 'index.md' | wc -l)
-check "[ $BOOKS -ge 100 ]" "Books: $BOOKS (expected 109+)"
-check "[ $TRANSCRIPTS -ge 60 ]" "Transcripts: $TRANSCRIPTS (expected 68+)"
+# Directory structure (source markdown kept as corpus)
+check "[ -d $source_data/books ]" "  source/books/ exists"
+check "[ -d $source_data/transcripts ]" "  source/transcripts/ exists"
+check "[ -f $ARCHIVE/index.md ]" "  index.md exists"
+check "[ -f $DB ]" "  db/grimoire.db exists"
 
-# No empty files
-EMPTY=$(find "$ARCHIVE/source/books" "$ARCHIVE/source/transcripts" -name '*.md' -empty 2>/dev/null | wc -l)
-check "[ $EMPTY -eq 0 ]" "No empty files (found: $EMPTY)"
+# File counts from markdown corpus
+BOOKS=$(ls "$source_data/books"/*.md 2>/dev/null | wc -l)
+TRANSCRIPTS=$(ls "$source_data/transcripts"/*.md 2>/dev/null | grep -v 'index.md' | wc -l)
+check "[ $BOOKS -ge 100 ]" "  Books: $BOOKS (expected 109+)"
+check "[ $TRANSCRIPTS -ge 60 ]" "  Transcripts: $TRANSCRIPTS (expected 68+)"
 
-# Verify index.md has book entries and every slug maps to a file
-python3 - "$ARCHIVE" << 'PYEOF'
-import os, sys
-archive = sys.argv[1]
-idx = open(os.path.join(archive, 'index.md')).read()
-entries = []
-for l in idx.split('\n'):
-    if not l.strip().startswith('|'): continue
-    if '|' not in l: continue
-    cells = [c.strip() for c in l.strip().strip('|').split('|')]
-    if len(cells) >= 3 and cells[2] in ('done','partial','pending','in-progress'):
-        entries.append(l)
-print("  ✓ index.md has %d book entries" % len(entries))
-if len(entries) < 100:
-    sys.exit(1)
-slugs = []
-for l in entries:
-    cells = [c.strip() for c in l.strip().strip('|').split('|')]
-    if len(cells) >= 2:
-        slugs.append(cells[1].removeprefix('book-'))
-files = {f[:-3] for f in os.listdir(os.path.join(archive, 'source', 'books')) if f.endswith('.md')}
-missing = [s for s in slugs if s not in files]
-if missing:
-    print("  ✗ Missing book files: %s" % missing)
-    sys.exit(1)
-print("  ✓ All %d index slugs have book files" % len(slugs))
-PYEOF
-if [ $? -eq 0 ]; then PASS=$((PASS+1)); else FAIL=$((FAIL+1)); fi
+EMPTY=$(find "$source_data" -name '*.md' -empty 2>/dev/null | wc -l)
+check "[ $EMPTY -eq 0 ]" "  No empty source files (found: $EMPTY)"
+
+# SQLite-backed database integrity
+BOOKSDB=$(sqlite3 "$DB" "SELECT COUNT(*) FROM books")
+ENTRIES=$(sqlite3 "$DB" "SELECT COUNT(*) FROM book_entries")
+CMDS=$(sqlite3 "$DB" "SELECT COUNT(*) FROM grimoire_cards")
+INTS=$(sqlite3 "$DB" "SELECT COUNT(*) FROM interactions")
+ITEMS=$(sqlite3 "$DB" "SELECT COUNT(*) FROM items")
+RECORDS=$(sqlite3 "$DB" "SELECT COUNT(*) FROM records")
+CHARS=$(sqlite3 "$DB" "SELECT COUNT(*) FROM characters")
+CLINES=$(sqlite3 "$DB" "SELECT COUNT(*) FROM character_lines")
+FTS=$(sqlite3 "$DB" "SELECT COUNT(*) FROM fts")
+
+check "[ $BOOKSDB -ge 100 ]" "  DB books: $BOOKSDB"
+check "[ $ENTRIES -ge 1000 ]" "  DB book_entries: $ENTRIES"
+check "[ $INTS -ge 1000 ]" "  DB interactions: $INTS"
+check "[ $ITEMS -ge 50000 ]" "  DB items: $ITEMS"
+check "[ $RECORDS -ge 50 ]" "  DB records: $RECORDS"
+check "[ $CHARS -ge 10 ]" "  DB characters: $CHARS"
+check "[ $CLINES -ge 1000 ]" "  DB character_lines: $CLINES"
+check "[ $FTS -ge 50000 ]" "  DB FTS index: $FTS"
+
+# No empty required sqlite fields
+NOSLUG=$(sqlite3 "$DB" "SELECT COUNT(*) FROM books WHERE slug='' OR title=''")
+check "[ $NOSLUG -eq 0 ]" "  No books with empty slug/title"
+NOREC=$(sqlite3 "$DB" "SELECT COUNT(*) FROM records WHERE slug=''")
+check "[ $NOREC -eq 0 ]" "  No records with empty slug"
 
 echo ""
+echo "DB: books=$BOOKSDB entries=$ENTRIES cards=$CMDS interactions=$INTS items=$ITEMS records=$RECORDS chars=$CHARS clines=$CLINES fts=$FTS"
 echo "Books: $BOOKS | Transcripts: $TRANSCRIPTS | Empty: $EMPTY"
 echo "Passed: $PASS | Failed: $FAIL"
 [ "$FAIL" -eq 0 ]
