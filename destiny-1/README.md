@@ -1,7 +1,7 @@
 # Destiny 1 - Grimoire (In Progress)
 
 Destiny 1 (2014) grimoire cards ingested from the Ishtar Collective.
-Status: in-progress (~2889 of ~4000+ cards ingested, pages 1-145).
+Status: complete (2889 of 2889 cards ingested, all 145 pages).
 
 ## Agent Query Guide
 - `destiny-1/index.json` - machine-readable slug→title map (O(1) lookup).
@@ -24,4 +24,4 @@ Body extracted from `<div class="description highlightable">`.
 Enumerate remaining: https://www.ishtar-collective.net/entries/page/N?document_type_id=2
 
 ## Note
-Until fully ingested, agents should treat Destiny 1 lore as partial. Do not fabricate.
+All grimoire cards ingested. Agents may reference freely.

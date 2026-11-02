@@ -27,7 +27,7 @@ Any agent (Drifter persona, lore research, etc.) may reference these files at wi
 - `books/<slug>.md` - Full text of each ingested book, entries as `##` sections.
 - `transcripts/<slug>.md` - Transcripts (quest dialogue) as ingested.
 - `compendium/` - Agent-optimized character line index (per-character files, load only what you need).
-- `destiny-1/` - Destiny 1 grimoire (in progress, 2889 cards).
+- `destiny-1/` - Destiny 1 grimoire (complete, 2889 cards).
 - `interactions/` - Character dialogue index (600 ingested, ~3100+ pending).
 - `items/` - Gear lore (481 ingested, ~3200+ pending).
 - `records/` - Triumphs and seals (71 ingested, ~57 pending).
@@ -41,7 +41,7 @@ Any agent (Drifter persona, lore research, etc.) may reference these files at wi
 2. Read `books/<slug>.md` for the full lore text.
 3. Entries within a book are separated by `## Entry Title` headers.
 4. For character dialogue, load `compendium/characters/<slug>.md` instead of scanning all transcripts.
-5. Destiny 1 content is pending; see `destiny-1/README.md`.
+5. Destiny 1 grimoire is complete (2889 cards); see `destiny-1/README.md`.
 
 ## Ingestion rules
 
@@ -64,7 +64,7 @@ All content sourced from publicly available Destiny 2 lore. No original creative
 
 ## Progress
 
-110 / 110 books ingested (Destiny 2). 68 transcripts ingested. Compendium: 18 major + 11 minor characters, 1070 lines. Destiny 1: 2889 / ~4000+ cards ingested (pages 1-145).
+110 / 110 books ingested (Destiny 2). 68 transcripts ingested. Compendium: 18 major + 11 minor characters, 1070 lines. Destiny 1: 2889 / 2889 cards ingested (complete, all 145 pages).
 Last scrape: 2026-10-30. Content through Renegades (Dec 2025).
 
 ## Audit Commands

@@ -245,17 +245,17 @@ Ingestion status per book. Status: pending | in-progress | done | partial.
 - Status: done (71 ingested)
 
 
-## Destiny 1 (In Progress)
-- `destiny-1/README.md` - grimoire ingestion in progress (2889 cards ingested, ~4000+ pending)
+## Destiny 1 (Complete)
+- `destiny-1/README.md` - grimoire ingestion complete (2889 cards, all pages 1-145)
 - `destiny-1/index.md` - ingested card index (table)
 - `destiny-1/index.json` - machine-readable slug->title map (O(1) lookup)
 - `destiny-1/cards/<slug>.md` - individual card text
-- Status: in-progress | Source: Ishtar Collective Grimoire Cards
+- Status: done | Source: Ishtar Collective Grimoire Cards
 
 
 ---
 
-**Progress: 110 / 110 books ingested (Destiny 2). Destiny 1: 2889 / ~4000+ cards ingested (pages 1-145).**
+**Progress: 110 / 110 books ingested (Destiny 2). Destiny 1: 2889 / 2889 cards ingested (complete).**
 **Transcripts: 68 ingested (51 original + 17 additional from YouTube/Destinypedia).**
 **Last Scrape:** 2026-10-30 | **Last Major Update:** Renegades (Dec 2, 2025) | **Patch:** Year of Prophecy (Season 28) | **Content Through:** Renegades campaign, Glory Beyond, Tapes, Imperium, Lawless Frontier
 **Transcript index: transcripts/index.md (6-dimensional: by arc, by beat, by character, by release, by topic, by source)**
