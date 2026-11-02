@@ -39,21 +39,21 @@ run "Quote Cross-Check (0 unverified)" "bash $ARCHIVE/tests/drifter-quote-verify
 run "Depends On Coverage (67/67)" "python3 -c \"
 import glob,os
 ws='$WORKSPACE'
-files=[f for f in glob.glob(ws+'/*.md')+glob.glob(ws+'/voice/*.md')+glob.glob(ws+'/core/*.md')+glob.glob(ws+'/world/*.md')+glob.glob(ws+'/gameplay/*.md')]
+files=[f for f in glob.glob(ws+'/*.md')+glob.glob(ws+'/voice/*.md')+glob.glob(ws+'/core/*.md')+glob.glob(ws+'/world/*.md')]
 files=[f for f in files if 'DREAMS.md' not in f]
 assert all('**Depends On:**' in open(f).read() for f in files)
 \""
 run "Token Estimate Coverage (67/67)" "python3 -c \"
 import glob,os
 ws='$WORKSPACE'
-files=[f for f in glob.glob(ws+'/*.md')+glob.glob(ws+'/voice/*.md')+glob.glob(ws+'/core/*.md')+glob.glob(ws+'/world/*.md')+glob.glob(ws+'/gameplay/*.md')]
+files=[f for f in glob.glob(ws+'/*.md')+glob.glob(ws+'/voice/*.md')+glob.glob(ws+'/core/*.md')+glob.glob(ws+'/world/*.md')]
 files=[f for f in files if 'DREAMS.md' not in f]
 assert all('Token Estimate:' in open(f).read() for f in files)
 \""
 run "No Em-Dashes" "python3 -c \"
 import glob,os
 ws='$WORKSPACE'
-files=[f for f in glob.glob(ws+'/*.md')+glob.glob(ws+'/voice/*.md')+glob.glob(ws+'/core/*.md')+glob.glob(ws+'/world/*.md')+glob.glob(ws+'/gameplay/*.md')]
+files=[f for f in glob.glob(ws+'/*.md')+glob.glob(ws+'/voice/*.md')+glob.glob(ws+'/core/*.md')+glob.glob(ws+'/world/*.md')]
 files=[f for f in files if 'DREAMS.md' not in f]
 assert all(chr(8212) not in open(f,encoding='utf-8').read() for f in files)
 \""

@@ -15,6 +15,9 @@ This directory contains validation scripts for the archive.
 - `conversation-test.sh` / `eris-conversation-test.sh` - agent queries hit SQLite
 - `ci-checks.py` - stale refs, em-dashes (agent files), personal paths, headers, circular/self deps
 
+### Utilities
+- `yt-transcript.sh` / `yt-batch.sh` - YouTube caption extraction (subtitle-only, no video) to `source/transcripts/`
+
 ### Agent-integration (test a specific agent persona against this archive)
 - `drifter-*` scripts - validate the Drifter agent's voice, modules, scenarios, etc.
 - `drifter-quote-verify.sh` - all quoted strings in Drifter files trace to the DB (DB-backed, ~3s)
