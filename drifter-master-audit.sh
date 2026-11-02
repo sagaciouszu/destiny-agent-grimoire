@@ -31,7 +31,7 @@ run "10-Turn Emotional Arc" "bash $ARCHIVE/tests/drifter-multiturn-test.sh | gre
 run "Scenario Simulator" "bash $ARCHIVE/tests/drifter-scenario-simulator.sh 'Tell me about Malfeasance' | grep -qE 'PASS|PARTIAL'"
 run "Tape Generator" "bash $ARCHIVE/tests/drifter-tape-generator.sh 'ghosts' | grep -q 'PASS'"
 run "Gambit Sim (auto)" "bash $ARCHIVE/tests/drifter-gambit-sim.sh --auto | grep -q 'VICTORY'"
-run "Lore Freshness" "bash $ARCHIVE/tests/drifter-freshness-check.sh | grep -q 'OK: Lore archive is fresh'"
+run "Lore Freshness" "bash $ARCHIVE/tests/drifter-freshness-check.sh | grep -q 'OK: Database is fresh'"
 run "Conflict Check" "bash $ARCHIVE/tests/drifter-conflict-check.sh 2>&1 | grep -q 'CONFLICT CHECK COMPLETE'"
 run "Voice Consistency" "bash $ARCHIVE/tests/drifter-voice-consistency.sh | grep -q 'VOICE CONSISTENCY CHECK COMPLETE'"
 run "Quote Cross-Check (0 unverified)" "bash $ARCHIVE/tests/drifter-quote-verify.sh | grep -q 'PASS'"
