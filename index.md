@@ -2,11 +2,11 @@
 
 Master Index. The canonical source of truth for all lore is the SQLite database:
 
-- `db/grimoire.db` — SQLite database with FTS5 full-text search
-- `python3 db/query.py stats` — full row counts by table
-- `python3 db/query.py search "<keyword>" --limit 5` — full-text search
-- `python3 db/query.py character "<name>" --limit 20` — character dialogue
-- `python3 db/query.py item "<slug>"` — item details
+- `db/grimoire.db` - SQLite database with FTS5 full-text search
+- `python3 db/query.py stats` - full row counts by table
+- `python3 db/query.py search "<keyword>" --limit 5` - full-text search
+- `python3 db/query.py character "<name>" --limit 20` - character dialogue
+- `python3 db/query.py item "<slug>"` - item details
 
 ## Database Totals
 
@@ -38,5 +38,5 @@ Master Index. The canonical source of truth for all lore is the SQLite database:
 
 ## Legacy / Additional
 
-- `destiny-1-legacy-card-index.md` — the pre-DB markdown index for Destiny 1 grimoire cards (archived reference only)
+- `destiny-1-legacy-card-index.md` - the pre-DB markdown index for Destiny 1 grimoire cards (archived reference only)
 - All lore is now in `db/grimoire.db`. Markdown exists as source-of-truth for the migration script.
