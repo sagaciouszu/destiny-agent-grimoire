@@ -166,7 +166,7 @@ def migrate():
     print(f'records: {r_count}')
 
     # Characters + character_lines (from compendium)
-    comp_dir = os.path.join(ROOT, 'source', 'compendium', 'characters')
+    comp_dir = os.path.join(ROOT, 'compendium', 'characters')
     c_count = 0
     cl_count = 0
     if os.path.isdir(comp_dir):
