@@ -232,12 +232,12 @@ Ingestion status per book. Status: pending | in-progress | done | partial.
 ## Interactions (Character Dialogue)
 - `interactions/README.md` - agent query guide
 - `interactions/index.json` - machine-readable index (slug, title, speaker, quote, release)
-- Status: in-progress (1500 ingested, ~3100+ pending)
+- Status: in-progress (1600 ingested, ~3100+ pending)
 
 ## Items (Gear Lore)
 - `items/README.md` - agent query guide
 - `items/index.json` - machine-readable index
-- Status: in-progress (1381 ingested, ~3200+ pending)
+- Status: in-progress (1481 ingested, ~3200+ pending)
 
 ## Records (Triumphs & Seals)
 - `records/README.md` - agent query guide
