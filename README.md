@@ -6,6 +6,12 @@ An agent-first lore archive for the Destiny universe. All content is served via 
 
 ## Quick start
 
+The database is a build artifact and is not committed. Build it once after cloning (~2 minutes; prebuilt copies are attached to releases):
+
+```bash
+python3 db/migrate.py
+```
+
 ```bash
 # Database stats
 python3 db/query.py stats
@@ -36,21 +42,21 @@ sqlite3 db/grimoire.db "SELECT slug, title, item_type FROM items WHERE item_type
 |-------|------|---------|
 | books | 110 | Book-level metadata (title, slug, release) |
 | book_entries | 1158 | Individual lore entries within the books |
-| transcripts | 1221 | Quest transcript headers |
-| transcript_lines | 62639 | Canon dialogue (speaker, line, norm_line) |
+| transcripts | 1222 | Quest transcript headers |
+| transcript_lines | 64034 | Canon dialogue (speaker, line, norm_line) |
 | grimoire_cards | 2889 | Destiny 1 grimoire cards |
 | interactions | 2699 | Single/short dialogue beats by character |
 | items | 58764 | Weapons, armor, gear lore + flavor text |
 | records | 71 | Triumphs/seals with canonical text |
 | characters | 18 | Named characters extracted from dialogue |
 | character_lines | 1054 | Character-quotes ready for agent use |
-| fts | 128220 | FTS5 full-text search over all tables |
+| fts | 129615 | FTS5 full-text search over all tables |
 | meta | 1 | DB version + last updated |
 
 ## Repository layout
 
 ```
-db/  - grimoire.db + query.py + schema.sql + README.md + migrate.py
+db/  - query.py + schema.sql + README.md + migrate.py (grimoire.db is built, not committed)
 source/  - raw markdown source (books/, cards/, transcripts/, records/, items/, interactions/)
 compendium/  - markdown character line index (fallback for agents that don't speak SQL)
 archive/  - raw scraper data (JSONL)

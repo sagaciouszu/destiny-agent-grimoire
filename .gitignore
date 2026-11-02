@@ -14,3 +14,6 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Built database (regenerate with python3 db/migrate.py; released as an asset)
+db/grimoire.db

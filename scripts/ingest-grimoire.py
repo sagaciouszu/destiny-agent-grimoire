@@ -26,21 +26,16 @@ def title(h):
     tm=re.search(r'<title>(.*?)\s+[\u2014\u2013-]\s+Lore Entry',h)
     return html.unescape(tm.group(1).strip()) if tm else 'Unknown'
 
-out_dir='/home/sredshaw/Work/destiny-agent-grimoire/destiny-1/cards'
-index_path='/home/sredshaw/Work/destiny-agent-grimoire/destiny-1/index.md'
+out_dir='source/cards'
 os.makedirs(out_dir,exist_ok=True)
 
-# existing slugs
-existing=set()
-if os.path.exists(index_path):
-    for line in open(index_path,encoding='utf-8'):
-        m=re.match(r'^\|.*\|\s*(\S+)\s*\|\s*done\s*\|$', line.strip())
-        if m: existing.add(m.group(1))
+# existing slugs (migrate.py globs source/cards/*.md)
+existing={f[:-3] for f in os.listdir(out_dir) if f.endswith('.md')}
 
 new_rows=[]
 for slug in sys.argv[1:]:
     if slug in existing:
-        print('skip (already indexed):',slug); continue
+        print('skip (already ingested):',slug); continue
     url='https://www.ishtar-collective.net/entries/'+slug
     print('fetching',slug,flush=True)
     try:
@@ -59,10 +54,4 @@ for slug in sys.argv[1:]:
     existing.add(slug)
     time.sleep(0.4)
 
-if not os.path.exists(index_path):
-    with open(index_path,'w',encoding='utf-8') as f:
-        f.write('# Destiny 1 Grimoire - Ingested Cards\n\n| Card | Slug | Status |\n|---|---|---|\n')
-if new_rows:
-    with open(index_path,'a',encoding='utf-8') as f:
-        f.write('\n'.join(new_rows)+'\n')
 print('done, ingested',len(new_rows))
