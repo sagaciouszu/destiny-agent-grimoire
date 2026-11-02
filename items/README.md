@@ -1,7 +1,7 @@
 # Items - Gear Lore (Pending)
 
 Destiny item lore (weapons, armor, ghosts, ships, etc.) from Ishtar Collective.
-Status: in-progress. Ingested: 1181. Source: https://www.ishtar-collective.net/items (~3200+ items across ~100 pages).
+Status: in-progress. Ingested: 1281. Source: https://www.ishtar-collective.net/items (~3200+ items across ~100 pages).
 
 ## Enumeration
 https://www.ishtar-collective.net/items/page/N
