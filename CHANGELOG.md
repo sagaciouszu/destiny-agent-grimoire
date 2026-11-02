@@ -1,5 +1,45 @@
 # Changelog
 
+## v1.0.0 - Database Restructure (2026-11-02)
+
+### Added
+- SQLite database (`db/grimoire.db`) with FTS5 full-text search
+- `db/query.py` - agent query interface (search, character, item, stats)
+- `db/schema.sql` - database DDL
+- `db/README.md` - query examples and table reference
+- `tests/test-db.sh` - database integrity test (29 checks)
+- `archive/` - raw scrape data (JSONL)
+- `source/` - original markdown source files
+
+### Changed
+- Reorganized repository: markdown data files moved to `source/`
+- Database is now the primary data store
+- Updated README, skill, and tests for database-first workflow
+- Consolidated CHANGELOG (removed per-scrape entries)
+
+### Data Totals
+- Books: 110 (1158 entries)
+- Transcripts: 68 (1070 dialogue lines)
+- Destiny 1 Grimoire: 2889 cards
+- Interactions: 2699+ character dialogue entries
+- Items: 19501+ gear/weapon/armor entries (scraping ongoing)
+- Records: 71 triumphs/seals
+- Characters: 18 named characters (1054 verified lines)
+- FTS index: 25588+ entries
+
+### Database Tables
+- books, book_entries
+- transcripts, transcript_lines
+- grimoire_cards
+- interactions
+- items
+- records
+- characters, character_lines
+- fts (FTS5 full-text search)
+- meta
+
+---
+
 ## Session: Ishtar Indexing batch 15 (2026-11-02)
 
 ### Added

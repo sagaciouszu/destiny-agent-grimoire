@@ -23,25 +23,27 @@ Any agent (Drifter persona, lore research, etc.) may reference these files at wi
 
 ## Structure
 
-- `index.md` - Master book list with ingestion status (pending/done/partial).
-- `books/<slug>.md` - Full text of each ingested book, entries as `##` sections.
-- `transcripts/<slug>.md` - Transcripts (quest dialogue) as ingested.
-- `compendium/` - Agent-optimized character line index (per-character files, load only what you need).
-- `destiny-1/` - Destiny 1 grimoire (complete, 2889 cards).
-- `interactions/` - Character dialogue index (1600 ingested, ~3100+ pending).
-- `items/` - Gear lore (1481 ingested, ~3200+ pending).
-- `records/` - Triumphs and seals (71 ingested, ~57 pending).
-- `scripts/` - Ingestion scripts (grimoire, interaction).
-- `tests/` - Validation and verification scripts (29 scripts).
-- `drifter-master-audit.sh` - Unified audit runner (stays at root).
+- `db/grimoire.db` - SQLite database (primary data store, FTS5 search).
+- `db/query.py` - Agent query interface (search, character, item, stats).
+- `db/schema.sql` - Database DDL.
+- `db/README.md` - Query examples and table reference.
+- `compendium/` - Agent-optimized character line index (markdown fallback).
+- `destiny-1/` - Destiny 1 grimoire (complete, 2889 cards, markdown).
+- `interactions/` - Character dialogue index (markdown).
+- `items/` - Gear lore (markdown).
+- `records/` - Triumphs and seals (markdown).
+- `scripts/` - Ingestion scripts.
+- `tests/` - Validation scripts.
+- `archive/` - Raw scrape data (JSONL).
+- `drifter-master-audit.sh` - Unified audit runner.
 
 ## How to use
 
-1. Check `index.md` for a book's status and slug.
-2. Read `books/<slug>.md` for the full lore text.
-3. Entries within a book are separated by `## Entry Title` headers.
-4. For character dialogue, load `compendium/characters/<slug>.md` instead of scanning all transcripts.
-5. Destiny 1 grimoire is complete (2889 cards); see `destiny-1/README.md`.
+1. Query the database: `python3 db/query.py search "keyword" --limit 5`
+2. Character lines: `python3 db/query.py character "eris" --limit 20`
+3. Item details: `python3 db/query.py item "<slug>"`
+4. Database stats: `python3 db/query.py stats`
+5. Direct SQL: `sqlite3 db/grimoire.db "SELECT ... FROM fts WHERE fts MATCH 'keyword'"`
 
 ## Ingestion rules
 
@@ -64,7 +66,7 @@ All content sourced from publicly available Destiny 2 lore. No original creative
 
 ## Progress
 
-110 / 110 books ingested (Destiny 2). 68 transcripts ingested. Compendium: 18 major + 11 minor characters, 1070 lines. Destiny 1: 2889 / 2889 cards ingested (complete, all 145 pages).
+Database-first archive: 110 books, 68 transcripts, 2889 Destiny 1 cards, 2699+ interactions, 19501+ items, 71 records, 18 characters (1054 lines). FTS5 search enabled.
 Last scrape: 2026-10-30. Content through Renegades (Dec 2025).
 
 ## Audit Commands
