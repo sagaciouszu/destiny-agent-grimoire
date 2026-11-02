@@ -23,7 +23,7 @@ check "[ -f $DB ]" "  db/grimoire.db exists"
 # File counts from markdown corpus
 BOOKS=$(ls "$source_data/books"/*.md 2>/dev/null | wc -l)
 TRANSCRIPTS=$(ls "$source_data/transcripts"/*.md 2>/dev/null | grep -v 'index.md' | wc -l)
-check "[ $BOOKS -ge 100 ]" "  Books: $BOOKS (expected 109+)"
+check "[ $BOOKS -ge 110 ]" "  Books: $BOOKS (expected 110+)"
 check "[ $TRANSCRIPTS -ge 60 ]" "  Transcripts: $TRANSCRIPTS (expected 68+)"
 
 EMPTY=$(find "$source_data" -name '*.md' -empty 2>/dev/null | wc -l)
