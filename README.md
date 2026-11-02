@@ -14,7 +14,7 @@
   <img src="header.png" alt="Destiny Agent Grimoire - Your Ghost Is Not An Agent" width="100%"/>
 </p>
 
-**Version:** 0.2.3 | **Status:** Development
+**Version:** 0.3.0 | **Status:** Development
 
 > ⚠️ **WARNING:** This repository is under heavy development while the knowledge base is being constructed. Expect frequent changes, incomplete data, and shifting structure. The author's prowess is not to be trusted with anything important. Use at your own risk.
 
