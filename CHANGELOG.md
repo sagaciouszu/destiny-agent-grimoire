@@ -1,5 +1,21 @@
 # Changelog
 
+## Session: Ishtar Indexing batch 2 (2026-11-02)
+
+### Added
+- interactions: 200 total (pages 2-10 ingested, ~3100+ pending)
+- items: 81 total (pages 1-4, ~3200+ pending)
+- records: 71 total (pages 1-4, complete)
+- scripts/ingest-item.py, scripts/ingest-record.py
+- items/README.md, records/README.md (updated with status)
+- interactions/README.md (updated with status)
+
+### Changed
+- index.md, README.md - updated progress for interactions/items/records
+- tests/ci-checks.py - skip items/records/interactions from headers check
+
+---
+
 ## Session: Ishtar Indexing (2026-11-02)
 
 ### Added

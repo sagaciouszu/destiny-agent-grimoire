@@ -28,9 +28,9 @@ Any agent (Drifter persona, lore research, etc.) may reference these files at wi
 - `transcripts/<slug>.md` - Transcripts (quest dialogue) as ingested.
 - `compendium/` - Agent-optimized character line index (per-character files, load only what you need).
 - `destiny-1/` - Destiny 1 grimoire (in progress, 2889 cards).
-- `interactions/` - Character dialogue index (20 ingested, ~3100+ pending).
-- `items/` - Gear lore (pending, ~3200+ items).
-- `records/` - Triumphs and seals (pending, ~57 records).
+- `interactions/` - Character dialogue index (200 ingested, ~3100+ pending).
+- `items/` - Gear lore (81 ingested, ~3200+ pending).
+- `records/` - Triumphs and seals (71 ingested, ~57 pending).
 - `scripts/` - Ingestion scripts (grimoire, interaction).
 - `tests/` - Validation and verification scripts (29 scripts).
 - `drifter-master-audit.sh` - Unified audit runner (stays at root).
