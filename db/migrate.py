@@ -178,18 +178,31 @@ def migrate():
                 r_count += 1
             except: pass
     else:
-        idx_path = os.path.join(ROOT, 'records', 'records-index.json')
-        if os.path.exists(idx_path):
-            idx = json.load(open(idx_path))
-            for e in idx.get('entries', []):
-                slug = e.get('slug','')
-                body_path = os.path.join(ROOT, 'source', 'records', slug+'.md')
-                body = ''
-                if os.path.exists(body_path):
-                    body = open(body_path, encoding='utf-8').read()
-                conn.execute('INSERT OR IGNORE INTO records (slug,title,body,norm_body,release,source_url) VALUES (?,?,?,?,?,?)',
-                    (slug, e.get('title',''), body, norm_text(body), e.get('release',''), f'https://www.ishtar-collective.net/records/{slug}'))
-                r_count += 1
+        # Read from source markdown
+        base = os.path.join(ROOT, 'source', 'records')
+        for path in sorted(glob.glob(os.path.join(base, '*.md'))):
+            slug = os.path.basename(path)[:-3]
+            text = open(path, encoding='utf-8', errors='ignore').read()
+            lines = text.split('\n')
+            title = lines[0].lstrip('# ').strip() if lines else ''
+            # Extract body: skip title line, meta lines, spacer
+            body_lines = []
+            started = False
+            for ln in lines[1:]:
+                if ln.startswith(('- Source:','- Release:','- Key Lore:')):
+                    started = True
+                    continue
+                if started:
+                    body_lines.append(ln)
+            body = '\n'.join(body_lines).strip()
+            # parse release from meta
+            rel = ''
+            for ln in lines[:5]:
+                if ln.startswith('- Release:'):
+                    rel = ln.replace('- Release:','').strip()
+            conn.execute('INSERT OR IGNORE INTO records (slug,title,body,norm_body,release,source_url) VALUES (?,?,?,?,?,?)',
+                (slug, title, body, norm_text(body), rel, f'https://www.ishtar-collective.net/records/{slug}'))
+            r_count += 1
     print(f'records: {r_count}')
 
     # Characters + character_lines (from compendium)
