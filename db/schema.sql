@@ -15,9 +15,11 @@ CREATE TABLE IF NOT EXISTS book_entries (
     book_id INTEGER NOT NULL REFERENCES books(id) ON DELETE CASCADE,
     title TEXT,
     body TEXT,
+    norm_text TEXT,
     seq INTEGER
 );
 CREATE INDEX IF NOT EXISTS idx_book_entries_book ON book_entries(book_id);
+CREATE INDEX IF NOT EXISTS idx_book_entries_norm ON book_entries(norm_text);
 
 CREATE TABLE IF NOT EXISTS transcripts (
     id INTEGER PRIMARY KEY,
@@ -36,19 +38,23 @@ CREATE TABLE IF NOT EXISTS transcript_lines (
     seq INTEGER,
     speaker TEXT,
     line TEXT,
+    norm_line TEXT,
     is_stage_dir INTEGER DEFAULT 0
 );
 CREATE INDEX IF NOT EXISTS idx_tl_transcript ON transcript_lines(transcript_id);
 CREATE INDEX IF NOT EXISTS idx_tl_speaker ON transcript_lines(speaker);
+CREATE INDEX IF NOT EXISTS idx_tl_norm ON transcript_lines(norm_line);
 
 CREATE TABLE IF NOT EXISTS grimoire_cards (
     id INTEGER PRIMARY KEY,
     slug TEXT UNIQUE NOT NULL,
     title TEXT,
     body TEXT,
+    norm_body TEXT,
     game TEXT DEFAULT 'Destiny 1'
 );
 CREATE INDEX IF NOT EXISTS idx_gc_slug ON grimoire_cards(slug);
+CREATE INDEX IF NOT EXISTS idx_gc_norm ON grimoire_cards(norm_body);
 
 CREATE TABLE IF NOT EXISTS interactions (
     id INTEGER PRIMARY KEY,
@@ -56,33 +62,39 @@ CREATE TABLE IF NOT EXISTS interactions (
     title TEXT,
     speaker TEXT,
     text TEXT,
+    norm_text TEXT,
     release TEXT,
     source_url TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_int_slug ON interactions(slug);
 CREATE INDEX IF NOT EXISTS idx_int_speaker ON interactions(speaker);
+CREATE INDEX IF NOT EXISTS idx_int_norm ON interactions(norm_text);
 
 CREATE TABLE IF NOT EXISTS items (
     id INTEGER PRIMARY KEY,
     slug TEXT UNIQUE NOT NULL,
     title TEXT,
     text TEXT,
+    norm_text TEXT,
     release TEXT,
     item_type TEXT,
     source_url TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_items_slug ON items(slug);
 CREATE INDEX IF NOT EXISTS idx_items_type ON items(item_type);
+CREATE INDEX IF NOT EXISTS idx_items_norm ON items(norm_text);
 
 CREATE TABLE IF NOT EXISTS records (
     id INTEGER PRIMARY KEY,
     slug TEXT UNIQUE NOT NULL,
     title TEXT,
     body TEXT,
+    norm_body TEXT,
     release TEXT,
     source_url TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_records_slug ON records(slug);
+CREATE INDEX IF NOT EXISTS idx_records_norm ON records(norm_body);
 
 CREATE TABLE IF NOT EXISTS characters (
     id INTEGER PRIMARY KEY,
@@ -95,11 +107,13 @@ CREATE TABLE IF NOT EXISTS character_lines (
     id INTEGER PRIMARY KEY,
     character_id INTEGER NOT NULL REFERENCES characters(id) ON DELETE CASCADE,
     text TEXT NOT NULL,
+    norm_text TEXT,
     source_type TEXT,
     source_slug TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_cl_character ON character_lines(character_id);
 CREATE INDEX IF NOT EXISTS idx_cl_source ON character_lines(source_type, source_slug);
+CREATE INDEX IF NOT EXISTS idx_cl_norm ON character_lines(norm_text);
 
 CREATE TABLE IF NOT EXISTS meta (
     key TEXT PRIMARY KEY,

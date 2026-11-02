@@ -32,6 +32,14 @@ def parse_speaker_line(ln):
         return m.group(1).strip(), m.group(2).strip()
     return None, None
 
+def norm_text(s):
+    """Normalize text for fast substring matching."""
+    s = s.lower()
+    s = s.replace('…','...').replace('’',"'").replace('—','-').replace('–','-')
+    s = re.sub(r'[^a-z0-9 ]+',' ',s)
+    s = re.sub(r'\s+',' ',s)
+    return s.strip()
+
 def migrate():
     if os.path.exists(DB_PATH):
         os.remove(DB_PATH)
@@ -50,8 +58,8 @@ def migrate():
         bid = cur.lastrowid
         book_count += 1
         for i, (st, sb) in enumerate(sections):
-            conn.execute('INSERT INTO book_entries (book_id,title,body,seq) VALUES (?,?,?,?)',
-                (bid, st, sb, i))
+            conn.execute('INSERT INTO book_entries (book_id,title,body,norm_text,seq) VALUES (?,?,?,?,?)',
+                (bid, st, sb, norm_text(sb), i))
             entry_count += 1
     print(f'books: {book_count}, entries: {entry_count}')
 
@@ -82,11 +90,30 @@ def migrate():
         tid = cur.lastrowid
         t_count += 1
         seq = 0
+        # Audio-quoted line format: '- "quote text"' (no *Speaker:* wrapper)
+        is_quoted_file = slug.startswith(('ingame-quotes-', 'youtube-', 'weblore-'))
+        if slug.startswith('weblore'):
+            print(f'  DEBUG: {slug} is_quoted={is_quoted_file}, line_count={len(lines)}')
         for ln in lines:
+            if is_quoted_file:
+                m = re.match(r'^-?\s*"(.+?)"\s*(?:(?:-|\u2014)\s*\w.*\s*)?$', ln.strip())
+                if m:
+                    line = m.group(1).strip()
+                    conn.execute('INSERT INTO transcript_lines (transcript_id,seq,speaker,line,norm_line,is_stage_dir) VALUES (?,?,?,?,?,0)',
+                        (tid, seq, 'Drifter', line, norm_text(line)))
+                    seq += 1
+                    tl_count += 1
+                continue
             sp, line = parse_speaker_line(ln)
             if sp and line:
-                conn.execute('INSERT INTO transcript_lines (transcript_id,seq,speaker,line,is_stage_dir) VALUES (?,?,?,?,0)',
-                    (tid, seq, sp, line))
+                conn.execute('INSERT INTO transcript_lines (transcript_id,seq,speaker,line,norm_line,is_stage_dir) VALUES (?,?,?,?,?,0)',
+                    (tid, seq, sp, line, norm_text(line)))
+                seq += 1
+                tl_count += 1
+            elif not is_quoted_file and len(ln.strip()) > 20 and not ln.startswith('#') and not ln.startswith('-'):
+                # Stage direction / narration line
+                conn.execute('INSERT INTO transcript_lines (transcript_id,seq,speaker,line,norm_line,is_stage_dir) VALUES (?,?,?,?,?,1)',
+                    (tid, seq, 'Narration', ln.strip(), norm_text(ln.strip())))
                 seq += 1
                 tl_count += 1
     print(f'transcripts: {t_count}, lines: {tl_count}')
@@ -100,8 +127,8 @@ def migrate():
         lines = text.split('\n')
         title = lines[0].lstrip('# ').strip() if lines else ''
         body = '\n'.join(lines[2:]).strip()
-        conn.execute('INSERT OR IGNORE INTO grimoire_cards (slug,title,body,game) VALUES (?,?,?,?)',
-            (slug, title, body, 'Destiny 1'))
+        conn.execute('INSERT OR IGNORE INTO grimoire_cards (slug,title,body,norm_body,game) VALUES (?,?,?,?,?)',
+            (slug, title, body, norm_text(body), 'Destiny 1'))
         g_count += 1
     print(f'grimoire cards: {g_count}')
 
@@ -116,8 +143,8 @@ def migrate():
                 slug = d.get('slug','')
                 if slug in seen: continue
                 seen.add(slug)
-                conn.execute('INSERT OR IGNORE INTO interactions (slug,title,speaker,text,release,source_url) VALUES (?,?,?,?,?,?)',
-                    (slug, d.get('title',''), d.get('speaker',''), d.get('text',''), d.get('release',''), d.get('url','')))
+                conn.execute('INSERT OR IGNORE INTO interactions (slug,title,speaker,text,norm_text,release,source_url) VALUES (?,?,?,?,?,?,?)',
+                    (slug, d.get('title',''), d.get('speaker',''), d.get('text',''), norm_text(d.get('text','')), d.get('release',''), d.get('url','')))
                 i_count += 1
             except: pass
     print(f'interactions: {i_count}')
@@ -133,8 +160,8 @@ def migrate():
                 slug = d.get('slug','')
                 if slug in seen: continue
                 seen.add(slug)
-                conn.execute('INSERT OR IGNORE INTO items (slug,title,text,release,item_type,source_url) VALUES (?,?,?,?,?,?)',
-                    (slug, d.get('title',''), d.get('text',''), d.get('release',''), d.get('type',''), d.get('url','')))
+                conn.execute('INSERT OR IGNORE INTO items (slug,title,text,norm_text,release,item_type,source_url) VALUES (?,?,?,?,?,?,?)',
+                    (slug, d.get('title',''), d.get('text',''), norm_text(d.get('text','')), d.get('release',''), d.get('type',''), d.get('url','')))
                 it_count += 1
             except: pass
     print(f'items: {it_count}')
@@ -146,7 +173,7 @@ def migrate():
         for ln in open(rec_jsonl, encoding='utf-8'):
             try:
                 d = json.loads(ln)
-                conn.execute('INSERT OR IGNORE INTO records (slug,title,body,release,source_url) VALUES (?,?,?,?,?)',
+                conn.execute('INSERT OR IGNORE INTO records (slug,title,body,norm_body,release,source_url) VALUES (?,?,?,?,?,?)',
                     (d.get('slug',''), d.get('title',''), d.get('body',''), d.get('release',''), d.get('url','')))
                 r_count += 1
             except: pass
@@ -160,8 +187,8 @@ def migrate():
                 body = ''
                 if os.path.exists(body_path):
                     body = open(body_path, encoding='utf-8').read()
-                conn.execute('INSERT OR IGNORE INTO records (slug,title,body,release,source_url) VALUES (?,?,?,?,?)',
-                    (slug, e.get('title',''), body, e.get('release',''), f'https://www.ishtar-collective.net/records/{slug}'))
+                conn.execute('INSERT OR IGNORE INTO records (slug,title,body,norm_body,release,source_url) VALUES (?,?,?,?,?,?)',
+                    (slug, e.get('title',''), body, norm_text(body), e.get('release',''), f'https://www.ishtar-collective.net/records/{slug}'))
                 r_count += 1
     print(f'records: {r_count}')
 
@@ -188,8 +215,8 @@ def migrate():
             for m in re.finditer(r'^- "(.+?)"\s*-\s*(\S+)', text, re.M):
                 text_line = m.group(1)
                 src = m.group(2)
-                conn.execute('INSERT INTO character_lines (character_id,text,source_type,source_slug) VALUES (?,?,?,?)',
-                    (cid, text_line, 'transcript', src))
+                conn.execute('INSERT INTO character_lines (character_id,text,norm_text,source_type,source_slug) VALUES (?,?,?,?,?)',
+                    (cid, text_line, norm_text(text_line), 'transcript', src))
                 cl_count += 1
     print(f'characters: {c_count}, lines: {cl_count}')
 
