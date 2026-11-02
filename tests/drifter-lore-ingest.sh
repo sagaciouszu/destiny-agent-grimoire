@@ -15,7 +15,7 @@ if [ -z "$URL" ] || [ -z "$SLUG" ]; then
     exit 1
 fi
 
-OUTPUT="$ARCHIVE/transcripts/$SLUG.md"
+OUTPUT="$ARCHIVE/source/transcripts/$SLUG.md"
 
 echo "=== DRIFTER LORE INGESTION ==="
 echo "URL: $URL"
@@ -51,5 +51,5 @@ echo "$CONTENT" | head -100 >> "$OUTPUT"
 
 echo ""
 echo "Saved to $OUTPUT"
-echo "Next: review the file, extract Drifter dialogue, and add to transcripts/index.md"
+echo "Next: review the file, extract Drifter dialogue, and add to source/transcripts/index.md"
 echo "=== INGESTION COMPLETE ==="

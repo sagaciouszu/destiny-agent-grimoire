@@ -3,7 +3,7 @@
 # Usage: ./drifter-search.sh "search term" [directory]
 # Searches all Drifter transcripts and agent files for matching quotes
 
-SEARCH_DIR="${2:-${ARCHIVE:-$(cd "$(dirname "$0")" && pwd)}/transcripts}"
+SEARCH_DIR="${2:-${ARCHIVE:-$(cd "$(dirname "$0")/.." && pwd)}/source/transcripts}"
 PATTERN="$1"
 
 if [ -z "$PATTERN" ]; then

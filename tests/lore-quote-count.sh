@@ -12,7 +12,7 @@ COUNT=$(python3 - "$ARCHIVE" << 'PY'
 import re, glob, os, sys
 archive = sys.argv[1]
 canon = []
-for p in glob.glob(archive + '/transcripts/*.md'):
+for p in glob.glob(archive + '/source/transcripts/*.md'):
     for line in open(p, encoding='utf-8', errors='ignore'):
         m = re.match(r'^\*(?:The )?Drifter:\*\s*(.*)$', line.strip())
         if m:
