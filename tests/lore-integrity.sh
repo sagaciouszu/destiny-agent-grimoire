@@ -19,19 +19,19 @@ check() {
 }
 
 # Directory structure
-check "[ -d $ARCHIVE/books ]" "books/ directory exists"
-check "[ -d $ARCHIVE/transcripts ]" "transcripts/ directory exists"
+check "[ -d $ARCHIVE/source/books ]" "books/ directory exists"
+check "[ -d $ARCHIVE/source/transcripts ]" "transcripts/ directory exists"
 check "[ -f $ARCHIVE/index.md ]" "index.md exists"
-check "[ -f $ARCHIVE/transcripts/index.md ]" "transcripts/index.md exists"
+check "[ -f $ARCHIVE/source/transcripts/index.md ]" "transcripts/index.md exists"
 
 # File counts
-BOOKS=$(ls "$ARCHIVE/books"/*.md 2>/dev/null | wc -l)
-TRANSCRIPTS=$(ls "$ARCHIVE/transcripts"/*.md 2>/dev/null | grep -v 'index.md' | wc -l)
+BOOKS=$(ls "$ARCHIVE/source/books"/*.md 2>/dev/null | wc -l)
+TRANSCRIPTS=$(ls "$ARCHIVE/source/transcripts"/*.md 2>/dev/null | grep -v 'index.md' | wc -l)
 check "[ $BOOKS -ge 100 ]" "Books: $BOOKS (expected 109+)"
 check "[ $TRANSCRIPTS -ge 60 ]" "Transcripts: $TRANSCRIPTS (expected 68+)"
 
 # No empty files
-EMPTY=$(find "$ARCHIVE/books" "$ARCHIVE/transcripts" -name '*.md' -empty 2>/dev/null | wc -l)
+EMPTY=$(find "$ARCHIVE/source/books" "$ARCHIVE/source/transcripts" -name '*.md' -empty 2>/dev/null | wc -l)
 check "[ $EMPTY -eq 0 ]" "No empty files (found: $EMPTY)"
 
 # Verify index.md has book entries and every slug maps to a file
@@ -54,7 +54,7 @@ for l in entries:
     cells = [c.strip() for c in l.strip().strip('|').split('|')]
     if len(cells) >= 2:
         slugs.append(cells[1].removeprefix('book-'))
-files = {f[:-3] for f in os.listdir(os.path.join(archive, 'books')) if f.endswith('.md')}
+files = {f[:-3] for f in os.listdir(os.path.join(archive, 'source', 'books')) if f.endswith('.md')}
 missing = [s for s in slugs if s not in files]
 if missing:
     print("  ✗ Missing book files: %s" % missing)

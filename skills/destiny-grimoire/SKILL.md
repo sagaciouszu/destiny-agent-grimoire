@@ -28,32 +28,39 @@ Agent-optimized archive of Destiny 2 lore (110 books, 68 transcripts, 473 verifi
 
 ## How to query
 
+Use `db/query.py` for all queries. It wraps SQLite with FTS5 full-text search.
+
+### Full-text search
+```bash
+python3 db/query.py search "Crota" --limit 5
+python3 db/query.py search "Eris" --type transcripts --limit 10
+python3 db/query.py search "hive" --type books
+```
+
 ### Character dialogue
-1. Open `compendium/index.md` to find the character and line count.
-2. Load `compendium/characters/<slug>.md` for that character's verified lines.
+```bash
+python3 db/query.py character "eris" --limit 20
+python3 db/query.py character "drifter" --limit 20
+```
 
-### Book lore
-1. Check `index.md` for the book slug and status.
-2. Read `books/<slug>.md`.
+### Item details
+```bash
+python3 db/query.py item "0a0x-nightmask"
+```
 
-### Destiny 1 grimoire (COMPLETE - 2889 cards)
-1. Look up slug in `destiny-1/index.json` (O(1)) or `destiny-1/index.md`.
-2. Read `destiny-1/cards/<slug>.md`.
-3. Keyword search: `grep -rli "keyword" destiny-1/cards/`.
+### Database stats
+```bash
+python3 db/query.py stats
+```
 
-### Character interactions
-1. Look up in `interactions/index.json` (filter by speaker/keyword).
-2. Quote field contains the full dialogue.
-
-### Items / Records
-- `items/README.md` and `records/README.md` document pending ingestion.
-
-### Transcript dialogue
-1. Check `transcripts/index.md` (6-dimensional index: by arc, beat, character, release, topic, source).
-2. Read `transcripts/<slug>.md`.
+### Direct SQL (advanced)
+```bash
+sqlite3 db/grimoire.db "SELECT title, text FROM fts WHERE fts MATCH 'hive' LIMIT 5"
+sqlite3 db/grimoire.db "SELECT speaker, COUNT(*) FROM transcript_lines GROUP BY speaker ORDER BY 2 DESC LIMIT 10"
+```
 
 ### Quote verification
-- All quotes in agent files are verified against `transcripts/*.md` (473 Drifter lines) + `books/*.md`.
+- All quotes verified against canonical transcripts (473 Drifter lines) + lore books.
 - Run `tests/drifter-quote-verify.sh` to re-verify.
 
 ## Rules
