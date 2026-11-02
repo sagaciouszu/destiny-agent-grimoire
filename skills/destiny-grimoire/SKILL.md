@@ -1,74 +1,78 @@
 ---
 name: destiny-grimoire
-description: 'Query the Destiny Agent Grimoire for verified Destiny 2 lore, character dialogue, books, and transcripts. Use when an agent needs Destiny lore, character quotes, faction info, or transcript references. Triggers: destiny, lore, grimoire, character lines, transcript, book, quote, faction, location.'
+description: 'Query the Destiny Agent Grimoire for verified Destiny lore, character dialogue, seal/triumph records, item flavor text, Hive/Oryx/Savathûn canon, grimoire cards and more. Use when an agent needs to pull canonical Destiny lore, look up character quotes, search factions, get item flavor text, check book transcripts, or complete conversations involving specific characters. Triggers: destiny, lore, grimoire, character lines, transcript, book, quote, faction, location, Obelisk, Hive, Crota, Oryx, Savathûn, Eris Morn, Drifter, Gambit.'
 license: MIT
 metadata:
-  tags: "Destiny, Lore, Grimoire, Characters, Transcripts, Books"
+  tags: "Destiny, Lore, Grimoire, Characters, Transcripts, Books, Items, Records"
   category: "reference"
 ---
 
 # Destiny Agent Grimoire
 
-Agent-optimized archive of Destiny 2 lore (110 books, 68 transcripts, 473 verified Drifter lines, 1070 indexed character lines). Use this to pull verified lore on demand without scanning the full corpus.
+Agent-optimized Destiny lore archive. Query via SQLite. Single file, no external APIs.
+Use this when you need canonical Destiny lore for storytelling, lore check, agent persona, or fact-checking.
 
 ## Location
 
 - Repo root: `~/Work/destiny-agent-grimoire/` (or wherever cloned)
-- Symlink in how-to-drift: `lore/` -> `~/Work/destiny-agent-grimoire/`
+- **Primary:** `db/grimoire.db` (SQLite + FTS5)
+- **Symlinked in Drifter agent:** `lore/` -> `~/Work/destiny-agent-grimoire/`
 
-## Structure
+## Data covering
 
-- `index.md` - Repository overview (points to SQLite as source of truth).
-- `db/grimoire.db` - SQLite database (primary data store, FTS5 search).
-- `db/query.py` - Agent query interface.
-- `compendium/index.md` - Markdown character line index (fallback).
-- `source/` - Raw lore markdown (books, transcripts, cards, items, records, interactions).
-- `tests/` - Validation scripts.
+| Table | Rows | Content |
+|-------|------|---------|
+| books | 110 | Book metadata |
+| book_entries | 1158 | Lore entries within books |
+| transcripts | 68 | Quest transcript headers |
+| transcript_lines | 1709 | Canon character dialogue |
+| grimoire_cards | 2889 | Destiny 1 grimoire cards |
+| interactions | 2699 | Short character dialogue beats |
+| items | 58764 | Weapons / armor / gear lore + flavor |
+| records | 71 | Triumphs / seals |
+| characters | 18 | Named characters |
+| character_lines | 1054 | Canon character quotes for agents |
+| fts | 67290 | FTS5 search index |
 
 ## How to query
 
-Use `db/query.py` for all queries. It wraps SQLite with FTS5 full-text search.
+Use `db/query.py` for everything. Interface wraps common patterns.
 
-### Full-text search
 ```bash
+# Full-text search
 python3 db/query.py search "Crota" --limit 5
 python3 db/query.py search "Eris" --type transcripts --limit 10
 python3 db/query.py search "hive" --type books
-```
 
-### Character dialogue
-```bash
+# Character dialogue
 python3 db/query.py character "eris" --limit 20
 python3 db/query.py character "drifter" --limit 20
-```
+python3 db/query.py character "saint-14" --limit 20
 
-### Item details
-```bash
+# Item details
 python3 db/query.py item "0a0x-nightmask"
-```
 
-### Database stats
-```bash
+# Database stats
 python3 db/query.py stats
 ```
 
-### Direct SQL (advanced)
+## Direct SQL (advanced)
+
 ```bash
 sqlite3 db/grimoire.db "SELECT title, text FROM fts WHERE fts MATCH 'hive' LIMIT 5"
-sqlite3 db/grimoire.db "SELECT speaker, COUNT(*) FROM transcript_lines GROUP BY speaker ORDER BY 2 DESC LIMIT 10"
+sqlite3 db/grimoire.db "SELECT speaker, line FROM transcript_lines WHERE speaker LIKE '%Eris%' LIMIT 10"
+sqlite3 db/grimoire.db "SELECT slug, title, item_type, text FROM items WHERE item_type LIKE '%Exotic%' AND text != '' LIMIT 20"
 ```
-
-### Quote verification
-- All quotes verified against canonical transcripts (473 Drifter lines) + lore books.
-- Run `tests/drifter-quote-verify.sh` to re-verify.
 
 ## Rules
 
-- Only use verified quotes. Unverified strings must be unquoted.
-- Lore books are verbatim source text; do not paraphrase as quotes.
-- Destiny 1 content is complete: all 2889 grimoire cards in the DB.
-- Keep queries scoped: load only the file you need to save tokens.
+1. **Only use verified quotes.** Canon is what lives in `transcript_lines` and `character_lines`. Do not paraphrase lore as quotes.
+2. **SQLite-first.** Do not read raw markdown from `source/` at query time; it is only the ingestion source.
+3. **Keep queries scoped.** Small `--limit N` values preserve token budget.
+4. **Do not edit this data directly.** The migration reads `source/` markdown + `archive/data/*.jsonl` and rebuilds the DB.
+5. **Eris Morn and The Drifter agents** both reference this database via a `lore/` symlink.
 
 ## Sources
 
-All content from https://www.ishtar-collective.net (Ishtar Collective). Fan-made, not affiliated with Bungie.
+All content sourced from https://www.ishtar-collective.net (Ishtar Collective).
+Bungie Inc owns all Destiny property. Fan-built, not affiliated.
