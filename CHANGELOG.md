@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.1.0 - Ishtar coverage complete + source trim (2026-11-02)
+
+- Verified full Ishtar Collective coverage: 0 missing item slugs, all 135 interaction pages, all 110 books, 2889 D1 cards, 71 records
+- Removed redundant `source/items/` and `source/interactions/` markdown (items/interactions ingest from `archive/data/*.jsonl`)
+- `source/` now contains exactly what `db/migrate.py` consumes: books, transcripts, cards, records
+- RELEASE.md added with verified totals and test results
+
 ## v1.0.0 - SQLite-first (2026-11-02)
 
 ### Highlights
@@ -7,7 +14,7 @@
 - Migrated all lore from markdown to a single SQLite file: `db/grimoire.db` (93 MB)
 - Added `norm_text` columns + indexes for SQL-based substring matching against all corpora
 - 58,764 items, 2,699 interactions, 71 records complete
-- 66,853-row FTS5 index
+- 67,290-row FTS5 index
 - Agents (Drifter, Eris) use `db/query.py` and `sqlite3 db/grimoire.db` for all lore lookups
 - Tests: 30 scripts, all DB-backed, all pass
 
@@ -25,7 +32,7 @@
 | records | 71 | Triumphs and seals |
 | characters | 18 | Named characters |
 | character_lines | 1054 | Character quotes |
-| fts | 66853 | FTS5 search index |
+| fts | 67290 | FTS5 search index |
 | meta | 1 | DB version |
 
 ### Repository restructuring
