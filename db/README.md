@@ -2,7 +2,7 @@
 
 SQLite database for the Destiny lore repository. Single file, no external connections, no APIs.
 
-File: `grimoire.db` (SQLite, FTS5 full-text search enabled)
+File: `grimoire.db` (SQLite, FTS5 full-text search enabled). Built from `source/` + `archive/` by `migrate.py`; not committed, prebuilt copies attached to releases.
 
 ## Quick start
 
@@ -38,7 +38,7 @@ sqlite3 db/grimoire.db "SELECT slug, title, item_type FROM items WHERE item_type
 |-------|---------|
 | `books` | 110 lore books (slug, title, source_url, entry_count) |
 | `book_entries` | 1158 entries within books (FK to books) |
-| `transcripts` | 1221 transcript headers (quest + cutscene + web) |
+| `transcripts` | 1222 transcript headers (quest + cutscene + web) |
 | `transcript_lines` | Canonical dialogue by speaker |
 | `grimoire_cards` | 2889 Destiny 1 grimoire cards |
 | `interactions` | 2699 short character dialogue beats |

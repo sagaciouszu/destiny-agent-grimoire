@@ -2,11 +2,18 @@
 
 ## v1.2.0 - Web transcripts + cutscenes + quote-verify hardening (2026-11-02)
 
+### Packaging
+
+- `db/grimoire.db` is now a build artifact: stripped from git (exceeded GitHub's 100MB limit), gitignored, rebuilt via `python3 db/migrate.py`, prebuilt copy attached to the release
+- Cutscene caption verification suite (`tests/cutscene-verify.sh`, 8-gram shingles): 7/7 master-audit suites
+- Legacy ingest scripts removed (superseded by `archive/` scrapers); remaining scripts use repo-relative paths
+- MIT LICENSE added to agent repositories (matching their stated badges)
+
 ### Coverage
 
 - Scraped all 1130 additional Ishtar transcript pages (68 -> 1198 transcripts), incl. quest-step dialogue for every expansion
 - Added 23 cutscene compilation transcripts (D1 + D2, captions only, no video download) with unique-match speaker attribution (406 lines)
-- Database: 1221 transcripts, 62,639 transcript lines, 128,220 FTS entries
+- Database: 1222 transcripts, 64,034 transcript lines, 129,615 FTS entries
 
 ### Tests
 
@@ -63,7 +70,7 @@
 
 ## Tests and audit
 
-- `eris-master-audit.sh`: 6/6 pass
+- `eris-master-audit.sh` (grimoire): 7/7 pass; (eris-morn): 8/8 pass
 - `drifter-master-audit.sh`: 17/17 pass
 - `tests/test-db.sh`: 29/29 pass
 - `tests/lore-integrity.sh`: 17/17 pass

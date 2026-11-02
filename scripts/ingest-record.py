@@ -26,13 +26,9 @@ def parse(h):
     return {'title':title,'body':body,'release':release}
 
 out_dir='source/records'
-index_path='db/records-generated-index.json'
 os.makedirs(out_dir,exist_ok=True)
-data={'count':0,'entries':[]}
-if os.path.exists(index_path):
-    try: data=json.load(open(index_path,encoding='utf-8'))
-    except Exception: data={'count':0,'entries':[]}
-existing={e['slug'] for e in data.get('entries',[])}
+# existing slugs (migrate.py globs source/records/*.md)
+existing={f[:-3] for f in os.listdir(out_dir) if f.endswith('.md')}
 
 new=[]
 for slug in sys.argv[1:]:
@@ -45,14 +41,9 @@ for slug in sys.argv[1:]:
     except Exception as e:
         print('  FAIL',e); continue
     info=parse(h)
-    entry={'slug':slug,'title':info['title'],'body':info['body'],'release':info['release']}
-    data['entries'].append(entry)
     existing.add(slug)
     new.append(slug)
     content='# %s\n\n- Source: https://www.ishtar-collective.net/records/%s\n- Release: %s\n\n%s\n' % (info['title'],slug,info['release'],info['body'])
     open(os.path.join(out_dir,slug+'.md'),'w',encoding='utf-8').write(content)
     time.sleep(0.4)
-data['count']=len(data['entries'])
-with open(index_path,'w',encoding='utf-8') as f:
-    json.dump(data,f,ensure_ascii=False,separators=(',',':'))
-print('done, ingested',len(new),'total',data['count'])
+print('done, ingested',len(new))

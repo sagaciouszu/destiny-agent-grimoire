@@ -15,7 +15,7 @@ Use this when you need canonical Destiny lore for storytelling, lore check, agen
 ## Location
 
 - Repo root: `~/Work/destiny-agent-grimoire/` (or wherever cloned)
-- **Primary:** `db/grimoire.db` (SQLite + FTS5)
+- **Primary:** `db/grimoire.db` (SQLite + FTS5; build with `python3 db/migrate.py` if missing, or use a prebuilt release asset)
 - **Symlinked in Drifter agent:** `lore/` -> `~/Work/destiny-agent-grimoire/`
 
 ## Data covering
@@ -24,15 +24,15 @@ Use this when you need canonical Destiny lore for storytelling, lore check, agen
 |-------|------|---------|
 | books | 110 | Book metadata |
 | book_entries | 1158 | Lore entries within books |
-| transcripts | 1221 | Quest transcript headers |
-| transcript_lines | 62639 | Canon character dialogue |
+| transcripts | 1222 | Quest transcript headers |
+| transcript_lines | 64034 | Canon character dialogue |
 | grimoire_cards | 2889 | Destiny 1 grimoire cards |
 | interactions | 2699 | Short character dialogue beats |
 | items | 58764 | Weapons / armor / gear lore + flavor |
 | records | 71 | Triumphs / seals |
 | characters | 18 | Named characters |
 | character_lines | 1054 | Canon character quotes for agents |
-| fts | 128220 | FTS5 search index |
+| fts | 129615 | FTS5 search index |
 
 ## How to query
 

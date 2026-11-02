@@ -5,7 +5,7 @@
 
 > Agent-optimized index of character dialogue extracted from transcripts.
 > Load only the character file you need. Do not load all files unless necessary.
-> Sources: transcripts/*.md (68 transcripts, Destiny 2).
+> Sources: source/transcripts/ (1222 transcripts in the current database).
 
 ## Major Characters (own file)
 

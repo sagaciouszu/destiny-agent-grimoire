@@ -4,7 +4,7 @@
 
 ## What is this
 
-SQLite-backed Destiny lore archive for agent consumption. Single file (`db/grimoire.db`, 93 MB), no external connections. All content ingested from the Ishtar Collective across every content type they host.
+SQLite-backed Destiny lore archive for agent consumption. Single file (`db/grimoire.db`, 121 MB), no external connections. Built from the committed sources via `python3 db/migrate.py`; the prebuilt database is attached to this release as an asset. All content ingested from the Ishtar Collective across every content type they host.
 
 ## Data totals (db/grimoire.db)
 
@@ -12,15 +12,15 @@ SQLite-backed Destiny lore archive for agent consumption. Single file (`db/grimo
 |-------|------|----------|
 | books | 110 | All 110 Ishtar lore books (complete) |
 | book_entries | 1158 | 1-51 entries per book |
-| transcripts | 1221 | Quest + cutscene + web transcripts (complete) |
-| transcript_lines | 62639 | Every dialogue line, including narration |
+| transcripts | 1222 | Quest + cutscene + web transcripts (complete) |
+| transcript_lines | 64034 | Every dialogue line, including narration |
 | grimoire_cards | 2889 | All 2889 Destiny 1 grimoire cards (complete) |
 | interactions | 2699 | All 135 Ishtar interaction pages |
 | items | 58764 | All Ishtar items; 42693 with flavor text |
 | records | 71 | All 71 triumphs/seals |
 | characters | 18 | Named characters extracted from dialogue |
 | character_lines | 1054 | Verified canon dialogue for queries |
-| fts | 128220 | FTS5 full-text search over all tables |
+| fts | 129615 | FTS5 full-text search over all tables |
 
 Coverage verified by diffing scraped slugs against Ishtar's live pages: no missing slugs.
 
@@ -54,7 +54,7 @@ Both agents query `db/query.py` or raw SQL; neither parses `source/` markdown at
 ## Test results
 
 - drifter-master-audit.sh: 17/17 PASS
-- eris-master-audit.sh (this repo): 6/6 PASS
+- eris-master-audit.sh (this repo): 7/7 PASS (incl. cutscene caption verification)
 - eris-master-audit.sh (eris-morn): 8/8 PASS
 - test-db.sh: 29/29 PASS
 - lore-integrity.sh: 17/17 PASS
