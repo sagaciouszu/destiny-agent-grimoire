@@ -1,5 +1,13 @@
 # Changelog
 
+## Session: Ishtar Indexing batch 7 (2026-11-02)
+
+### Added
+- interactions: 800 total (pages 36-40 ingested)
+- items: 681 total (pages 30-34 ingested)
+
+---
+
 ## Session: Ishtar Indexing batch 6 (2026-11-02)
 
 ### Added
