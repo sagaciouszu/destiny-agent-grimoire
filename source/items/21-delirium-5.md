@@ -1,6 +1,0 @@
-# 21% Delirium
-
-- Source: https://www.ishtar-collective.net/items/21-delirium-5
-- Release: Monument of Triumph
-
-
