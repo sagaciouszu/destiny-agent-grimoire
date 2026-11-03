@@ -1,8 +1,5 @@
 node_modules
 _site
-Gemfile
-Gemfile.lock
-_config.yml
 package.json
 package-lock.json
 vendor
