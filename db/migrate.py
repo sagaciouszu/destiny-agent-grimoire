@@ -390,6 +390,13 @@ def migrate():
                     cl_count += 1
     print(f'characters: {c_count}, lines: {cl_count}')
 
+    # Fill missing item types from duplicate titles, when the source has one
+    conn.execute(
+        "UPDATE items SET item_type=(SELECT b.item_type FROM items b "
+        "WHERE b.title=items.title AND b.item_type != '' LIMIT 1) "
+        "WHERE item_type='' AND EXISTS (SELECT 1 FROM items b "
+        "WHERE b.title=items.title AND b.item_type != '')")
+
     # Build FTS index (global rowid sequence)
     print('building FTS index...')
     fts_id = 0

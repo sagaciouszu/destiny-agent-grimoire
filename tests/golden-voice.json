@@ -1,0 +1,10 @@
+{
+  "cases": [
+    {"agent": "drifter", "tool": "scorer", "text": "Hey, hero. Bank those Motes! Heh. Trust.", "expect": "pass"},
+    {"agent": "drifter", "tool": "scorer", "text": "I am Eris Morn. The Hive are a doctrine made flesh.", "expect": "fail"},
+    {"agent": "drifter", "tool": "scorer", "text": "Monsters survive. Trust.", "expect": "pass"},
+    {"agent": "eris", "tool": "scorer", "text": "I am Eris Morn. The Hive are a doctrine made flesh, Guardian.", "expect": "pass"},
+    {"agent": "eris", "tool": "scorer", "text": "Hey, hero. Bank those Motes! Heh. Trust.", "expect": "fail"},
+    {"agent": "eris", "tool": "validator", "text": "I am Eris Morn. The Darkness changes its environment as the Traveler did. Guardian, you are not alone.", "expect": "pass"}
+  ]
+}

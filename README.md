@@ -69,7 +69,7 @@ More commands are in the sections below.
 | `curl` | optional prebuilt database | otherwise build locally |
 | MCP SDK (optional) | typed tools for agents without a shell | Python 3.10+; `bash mcp-server/install.sh` |
 | `git` | cloning and version history | |
-| ~260 MB disk | sources plus built database | database is ~169 MB |
+| ~260 MB disk | sources plus built database | database is ~170 MB |
 
 No API keys, accounts or network access are required at runtime.
 
@@ -85,8 +85,8 @@ No API keys, accounts or network access are required at runtime.
 | `interactions` | 2699 | Short dialogue beats |
 | `items` | 58764 | Weapons, armor and gear lore |
 | `records` | 71 | Triumphs and seals |
-| `characters` | 18 | Curated character index |
-| `character_lines` | 1189 | Quote-ready character lines |
+| `characters` | 20 | Curated character index |
+| `character_lines` | 1229 | Quote-ready character lines |
 | `fts` | 120731 | FTS5 index over all content |
 | `v_speakers` (view) | 359 | Canonical speakers with line counts |
 | `speaker_aliases` | 6 | Alias to canonical speaker mapping |
