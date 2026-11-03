@@ -27,6 +27,16 @@
   h1, h2, h3, h4, h5, h6 { font-weight: 700; letter-spacing: 0.04em; }
   .font-display { font-weight: 800; }
   strong { font-weight: 600; }
+
+  /* Icons render from external SVG files, so color them at the image level. */
+  img[src*="/assets/icons/"] { filter: brightness(0) invert(1); }
+
+  /* Keep section headings compact and put their icon on the right. */
+  .prose h1, .prose h2, .prose h3, .prose h4 { margin-top: 1.15rem; margin-bottom: 0.45rem; }
+  .prose h2:has(> img) { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
+  .prose h2:has(> img) > img { order: 2; margin: 0; flex: none; }
+  .prose p, .prose ul, .prose ol, .prose table, .prose pre { margin-top: 0.55rem; margin-bottom: 0.85rem; }
+  .prose li { margin-top: 0.2rem; margin-bottom: 0.2rem; }
 </style>
 
 <link href="https://fonts.cdnfonts.com/css/neue-haas-grotesk-display-pro" rel="stylesheet">

@@ -20,27 +20,33 @@ layout: default
   </div>
 </section>
 
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
   <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
     <a href="{{ '/grimoire/' | relative_url }}" class="group rounded-2xl border border-white/10 bg-panel p-6 hover:border-gold-500/40 transition">
-      <img src="{{ '/assets/icons/collections.svg' | relative_url }}" alt="" class="h-8 w-8 text-white" />
-      <h3 class="mt-3 font-display font-semibold text-white group-hover:text-gold-400">Grimoire</h3>
+      <div class="flex items-center justify-between gap-3">
+        <h3 class="font-display font-semibold text-white group-hover:text-gold-400">Grimoire</h3>
+        <img src="{{ '/assets/icons/collections.svg' | relative_url }}" alt="" class="h-7 w-7 flex-none" />
+      </div>
       <p class="mt-2 text-sm text-slate-400">SQLite + FTS5 lore archive with provenance and verification gates.</p>
     </a>
     <a href="{{ '/agents/' | relative_url }}" class="group rounded-2xl border border-white/10 bg-panel p-6 hover:border-gold-500/40 transition">
-      <img src="{{ '/assets/icons/ghost.svg' | relative_url }}" alt="" class="h-8 w-8 text-white" />
-      <h3 class="mt-3 font-display font-semibold text-white group-hover:text-gold-400">Agents</h3>
+      <div class="flex items-center justify-between gap-3">
+        <h3 class="font-display font-semibold text-white group-hover:text-gold-400">Agents</h3>
+        <img src="{{ '/assets/icons/ghost.svg' | relative_url }}" alt="" class="h-7 w-7 flex-none" />
+      </div>
       <p class="mt-2 text-sm text-slate-400">Drifter and Eris Morn, backed by the same canonical lore.</p>
     </a>
     <a href="{{ '/grimoire/#compendium' | relative_url }}" class="group rounded-2xl border border-white/10 bg-panel p-6 hover:border-gold-500/40 transition">
-      <img src="{{ '/assets/icons/meditations.svg' | relative_url }}" alt="" class="h-8 w-8 text-white" />
-      <h3 class="mt-3 font-display font-semibold text-white group-hover:text-gold-400">Compendium</h3>
+      <div class="flex items-center justify-between gap-3">
+        <h3 class="font-display font-semibold text-white group-hover:text-gold-400">Compendium</h3>
+        <img src="{{ '/assets/icons/meditations.svg' | relative_url }}" alt="" class="h-7 w-7 flex-none" />
+      </div>
       <p class="mt-2 text-sm text-slate-400">Character dialogue index extracted from transcripts.</p>
     </a>
   </div>
 </section>
 
-<section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
   <article class="prose prose-invert max-w-none">
     {{ content }}
   </article>
