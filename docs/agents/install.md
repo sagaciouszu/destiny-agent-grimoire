@@ -1,4 +1,5 @@
 ---
+section: agents
 layout: page
 title: Deploy the Agents
 category: Agents & Instructions · Install
@@ -65,62 +66,13 @@ block inside each workspace.
 bash scripts/sync-live-agents.sh --openclaw</code></pre>
 
 The sync writes `~/.openclaw/workspace-drifter` and `~/.openclaw/workspace-eris`.
-Consult agents are wired in OpenClaw configuration with `subagents.allowAgents`
-and a read-only tool deny list.
+The sync writes the workspaces. Add the consult agent entries to OpenClaw
+configuration (`subagents.allowAgents` plus a read-only tools deny list) so the
+primaries may call them.
 
 </details>
 
-<details class="section">
-<summary><span class="section-title" role="heading" aria-level="2" id="other-platforms">Other agent platforms <a class="heading-anchor" href="#other-platforms" aria-label="Permalink to Other agent platforms">#</a></span></summary>
-
-OpenCode and OpenClaw are the first-class bindings: the sync script knows their
-layouts and installs the series for them. Other runtimes use the generic agent
-contract, which is just files.
-
-### Runtimes that read AGENTS.md
-
-Clone the agent repository, run `setup.sh`, and load `AGENTS.md` as the agent's
-standing instructions. Runtimes that support an `AGENTS.md` convention, or any
-tool that can load a Markdown instruction file, need no adapter.
-
-<pre><code>git clone https://github.com/sagaciouszu/how-to-drift-for-agents.git
-cd how-to-drift-for-agents
-./setup.sh</code></pre>
-
-Use `INDEX.md` as the map, `TOOLS.md` for the query surface, and the agent's
-`core/`, `voice/`, `world/` and `reference/` directories as the deep material.
-The `lore/` link supplies the archive. Keep the runtime's working directory at
-the repository root, or set `WORKSPACE` to it.
-
-### MCP-capable clients
-
-The persona and the canon are separate concerns. Load `AGENTS.md` for the voice,
-then register the Grimoire MCP server for the tools:
-
-<pre><code>bash lore/mcp-server/install.sh</code></pre>
-
-The server is local stdio and read-only. A client that only accepts remote MCP
-servers needs a local bridge; a client with shell access can start
-`lore/mcp-server/run.sh` directly. The installer prints the exact path.
-
-### Skill-based runtimes
-
-If the runtime loads skill files, point it at
-`lore/skills/destiny-grimoire/SKILL.md`. The skill describes the query commands
-and the quote policy without requiring MCP.
-
-### Runtimes with no filesystem access
-
-You can still paste `AGENTS.md` and the relevant `core/` files as a system
-prompt, but the agent loses canon queries and quote verification. Treat that as a
-degraded deployment and do not present guesses as verified lore.
-
-### What the sync does not do
-
-It does not install into arbitrary runtimes, write another platform's config, or
-copy credentials. Those bindings stay deliberately manual.
-
-</details>
+<p class="muted">Using another runtime? See <a href="{{ '/agents/platforms/' | url }}">Platform support</a>.</p>
 
 <details class="section">
 <summary><span class="section-title" role="heading" aria-level="2" id="multiple-agents">Running more than one agent <a class="heading-anchor" href="#multiple-agents" aria-label="Permalink to Running more than one agent">#</a></span></summary>

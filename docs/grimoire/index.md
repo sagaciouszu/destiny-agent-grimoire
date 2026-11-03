@@ -1,4 +1,5 @@
 ---
+section: grimoire
 layout: page
 title: The Grimoire
 category: The Grimoire · Overview

@@ -5,6 +5,12 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("assets");
 
   const md = markdownIt({ html: true, linkify: true }).use(markdownItAnchor, {
+    slugify: (value) => value
+      .trim()
+      .toLowerCase()
+      .replace(/\./g, "-")
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-"),
     permalink: markdownItAnchor.permalink.linkInsideHeader({
       symbol: "#",
       placement: "after",

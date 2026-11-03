@@ -45,6 +45,7 @@ description: One canonical Destiny lore archive and the independent agents built
       <div class="category-links">
         <a href="{{ '/agents/' | url }}">How the series works</a>
         <a href="{{ '/agents/install/' | url }}">Deploy an agent</a>
+        <a href="{{ '/agents/platforms/' | url }}">Platform support</a>
       </div>
     </div>
   </article>
