@@ -53,6 +53,32 @@ There are four supported ways to read the archive:
 The CLI and the MCP server call the same Python API. A fix or a permission rule
 applies to both.
 
+## The MCP tools
+
+The MCP adapter exposes twelve read-only tools. Each wraps one slice of the query
+layer, so an agent can ask a direct question instead of constructing shell
+commands.
+
+- `search` — full-text search across books, transcripts, cards, interactions,
+  items and records, with an optional source filter.
+- `character` — curated lines for a character, or every transcript line with
+  `all_lines`.
+- `character_info` — aliases, curated quote count and spoken-line count for a
+  character.
+- `item` — item lore and metadata by slug.
+- `find_item` — find items by a title or slug fragment.
+- `book` — book metadata and its entries.
+- `transcript` — transcript metadata and dialogue lines, optionally filtered by
+  speaker.
+- `record` — a triumph or seal by slug or title.
+- `list_records` — cheap listings of books, characters, speakers or records.
+- `stats` — row counts, top item types and top speakers.
+- `verify` — check one quote, optionally with a speaker and exact mode.
+- `verify_many` — check up to twenty quotes in one call.
+
+All twelve share the same normalisation and read-only database connection. A
+quote that fails `verify` is not canon, whichever interface asked.
+
 ## The series
 
 The Grimoire is the shared canon for a series of independent agents. A small
