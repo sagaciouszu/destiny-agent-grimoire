@@ -1,6 +1,7 @@
 ---
 layout: home
 title: Destiny Agent Grimoire
+permalink: /
 ---
 
 ## Quick start

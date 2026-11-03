@@ -15,3 +15,9 @@ exclude:
   - vendor
   - .bundle
   - node_modules
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      permalink: /:basename/
