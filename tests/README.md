@@ -47,6 +47,18 @@ agent-agnostic except the explicitly named Drifter/Eris integration suites.
 - `drifter-quote-lookup.sh` - fast lookup over the Drifter `reference/quote-inverted-index.json`
   (regenerate with `tests/build-quote-index.py`, freshness gated by the module test)
 
+## Extended (on demand)
+
+- `extended-suite.sh` - runs the four suites below plus the MCP contract
+- `robustness-test.py` - corrupt/truncated/missing databases, edge inputs,
+  read-only enforcement, 160 concurrent queries, injection attempts
+- `mcp-matrix-test.py` - 125 MCP calls, all six tools, 3 concurrent clients,
+  strict parity with the API, clean malformed-call errors, output caps
+- `checksum-test.sh` - verified download, missing checksum warning, mismatch
+  rejection with no partial or installed database
+- `db-source-crosscheck.py` - DB slugs vs source files, compendium coverage,
+  provenance URLs, index completeness
+
 ## Onboarding and links (on demand)
 
 - `onboarding-smoke.sh` - both agents, symlink and clone modes, fully offline:

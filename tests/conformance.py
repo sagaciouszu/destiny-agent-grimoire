@@ -242,6 +242,12 @@ if 'grimoire' in REPOS:
             issues.append(('grimoire', 'mcp-server/requirements.lock.txt', 'missing hash-locked dependencies'))
         if '--require-hashes' not in installer:
             issues.append(('grimoire', 'mcp-server/install.sh', 'does not enforce hashes'))
+        skill_path = os.path.join(gr, 'skills', 'destiny-grimoire', 'SKILL.md')
+        skill = open(skill_path, encoding='utf-8').read()
+        skill_missing = [t for t in manifest if t not in skill]
+        if skill_missing:
+            issues.append(('grimoire', 'skills/destiny-grimoire/SKILL.md',
+                           f'missing MCP tools: {sorted(skill_missing)}'))
     except (FileNotFoundError, KeyError, json.JSONDecodeError) as e:
         issues.append(('grimoire', 'mcp', f'cannot verify MCP contract: {e}'))
 
