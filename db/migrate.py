@@ -26,6 +26,21 @@ def parse_md_sections(path):
         sections.append((cur_title, '\n'.join(cur_body).strip()))
     return title, sections, lines
 
+# Canonical speaker names: alias variants -> canonical form (STANDARDS.md).
+# Contextual qualifiers ("Drifter (Tape 1)", "Eris Morn (communion)") are kept:
+# they carry real media/scene meaning and LIKE queries still match the base name.
+SPEAKER_ALIASES = {
+    'Commander Zavala': 'Zavala',
+    'Cayde': 'Cayde-6',
+    'Eris': 'Eris Morn',
+    'Eris morn': 'Eris Morn',
+    'Ikora Rey': 'Ikora',
+    'Chiomi Esi': 'Chioma Esi',
+}
+
+def canon_speaker(sp):
+    return SPEAKER_ALIASES.get(sp, sp)
+
 def deep_unescape(s):
     """Unescape repeatedly: some Ishtar pages are double-escaped (&amp;amp;)."""
     import html as _html
@@ -237,6 +252,11 @@ def migrate():
         t_count += c_count
         tl_count += cl_count
 
+    # Canonicalize speaker aliases across every loader (transcripts + interactions)
+    for alias, canon in SPEAKER_ALIASES.items():
+        conn.execute('UPDATE transcript_lines SET speaker=? WHERE speaker=?', (canon, alias))
+        conn.execute('UPDATE interactions SET speaker=? WHERE speaker=?', (canon, alias))
+
     # Grimoire cards
     cards = glob.glob(os.path.join(ROOT, 'source', 'cards', '*.md'))
     g_count = 0
@@ -246,8 +266,15 @@ def migrate():
         lines = text.split('\n')
         title = lines[0].lstrip('# ').strip() if lines else ''
         body = '\n'.join(lines[2:]).strip()
-        conn.execute('INSERT OR IGNORE INTO grimoire_cards (slug,title,body,norm_body,game) VALUES (?,?,?,?,?)',
-            (slug, title, body, norm_text(body), 'Destiny 1'))
+        src_url = ''
+        for ln in lines[:6]:
+            if ln.strip().startswith('- Source:'):
+                src_url = ln.split('Source:', 1)[1].strip()
+                break
+        if not src_url:
+            src_url = f'https://www.ishtar-collective.net/entries/{slug}'
+        conn.execute('INSERT OR IGNORE INTO grimoire_cards (slug,title,body,norm_body,game,source_url) VALUES (?,?,?,?,?,?)',
+            (slug, title, body, norm_text(body), 'Destiny 1', src_url))
         g_count += 1
     print(f'grimoire cards: {g_count}')
 

@@ -5,7 +5,7 @@
 
 > Agent-optimized index of character dialogue extracted from transcripts.
 > Load only the character file you need. Do not load all files unless necessary.
-> Sources: source/transcripts/ (1222 transcripts in the current database).
+> Sources: source/transcripts/ plus the live transcript corpus in `lore/db/grimoire.db`.
 
 ## Major Characters (own file)
 
@@ -36,7 +36,6 @@ See `characters/minor.md` (11 characters, 16 lines total).
 
 ## Related
 
-- `interactions/index.json` - character dialogue from Ishtar interactions (20 ingested, ~3100+ pending).
 
 ## Totals
 
