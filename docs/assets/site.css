@@ -661,6 +661,96 @@ pre:hover .copy-button,
   .toc ul { columns: 1; }
 }
 
+
+/* Agent profiles and roster */
+
+.agent-profile {
+  padding: 1.7rem 0 1.4rem;
+  border-top: 1px solid var(--line);
+  scroll-margin-top: 5.5rem;
+}
+
+.agent-profile:first-of-type {
+  border-top: 0;
+  padding-top: 0.4rem;
+}
+
+.agent-role {
+  margin: 0 0 0.35rem;
+  color: var(--gold);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.agent-profile h2 {
+  margin: 0 0 0.7rem;
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+}
+
+.agent-ask {
+  margin-top: 1rem;
+  color: var(--muted);
+}
+
+.agent-ask strong { color: var(--heading); }
+
+.agent-source {
+  margin: 0.4rem 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.agent-source span { margin-inline: 0.45rem; }
+
+.agent-roster-section {
+  margin-top: 3rem;
+  padding-top: 1.8rem;
+  border-top: 1px solid var(--line-strong);
+}
+
+.section-head p {
+  max-width: var(--measure);
+  margin: 0 0 1.2rem;
+  color: var(--muted);
+}
+
+.agent-roster {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: 0 2.4rem;
+}
+
+.agent-roster-item {
+  padding: 1rem 0 1.1rem;
+  border-top: 1px solid var(--line);
+  scroll-margin-top: 5.5rem;
+}
+
+.agent-roster-item h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.2rem;
+}
+
+.agent-roster-item p {
+  margin-bottom: 0.45rem;
+}
+
+.agent-roster-item .agent-source { margin-top: 0.6rem; }
+
+.roster-empty {
+  max-width: var(--measure);
+  margin-top: 1.2rem;
+  padding: 0.9rem 1rem;
+  border-left: 1px solid var(--gold-dim);
+  color: var(--muted);
+}
+
+@media (max-width: 600px) {
+  .agent-roster { grid-template-columns: 1fr; }
+}
+
 /* Footer */
 
 .site-footer {
