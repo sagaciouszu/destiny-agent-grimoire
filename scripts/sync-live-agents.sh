@@ -1,13 +1,23 @@
 #!/bin/bash
-# Sync both agent repos into the live OpenCode agents directory.
-# Preserves runtime memory, lore links and the nested Eris agent.
-# Usage: scripts/sync-live-agents.sh [--dry-run]
+# Sync both agent repos into a live runtime workspace.
+# Preserves runtime memory, lore links and nested agent directories.
+# Usage: scripts/sync-live-agents.sh [--openclaw] [--dry-run]
 set -e
 HERE="$(cd "$(dirname "$0")/.." && pwd)"
 WORK="$(dirname "$HERE")"
-DEST="${OPENCODE_AGENTS:-$HOME/.config/opencode/agents}"
 DRY=""
-[ "${1:-}" = "--dry-run" ] && DRY="--dry-run"
+TARGET="opencode"
+DEST="${OPENCODE_AGENTS:-$HOME/.config/opencode/agents}"
+
+for arg in "$@"; do
+    case "$arg" in
+        --openclaw)
+            TARGET="openclaw"
+            DEST="${OPENCLAW_WORKSPACE:-$HOME/.openclaw/workspace-drifter}" ;;
+        --dry-run) DRY="--dry-run" ;;
+        *) echo "usage: $0 [--openclaw] [--dry-run]" >&2; exit 2 ;;
+    esac
+done
 
 [ -d "$DEST" ] || { echo "FATAL: $DEST missing"; exit 1; }
 
@@ -24,4 +34,6 @@ rsync -a --delete $DRY \
 
 echo "synced Drifter -> $DEST"
 echo "synced Eris    -> $DEST/eris"
-[ -z "$DRY" ] && command -v opencode >/dev/null && opencode reload >/dev/null 2>&1 && echo "opencode reloaded"
+if [ -z "$DRY" ] && [ "$TARGET" = "opencode" ] && command -v opencode >/dev/null; then
+    opencode reload >/dev/null 2>&1 && echo "opencode reloaded"
+fi

@@ -57,7 +57,7 @@ conn.close()
 
 files = []
 for root, _, fs in os.walk(ws):
-    if '/lore' in root or '/.git' in root:
+    if '/lore' in root or '/.git' in root or '/eris' in root:
         continue
     for f in fs:
         if f.endswith('.md'): files.append(os.path.join(root, f))

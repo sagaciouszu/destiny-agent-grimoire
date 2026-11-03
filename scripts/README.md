@@ -17,7 +17,7 @@ Both are resumable (existing slugs are skipped) and format output as
 |--------|---------|
 | `release-stage.sh <version> [--dry-run]` | copy the database, write `SHA256SUMS`, print publish commands |
 | `backup.sh [zip]` | rolling archive backup without the database, plus checksum |
-| `sync-live-agents.sh [--dry-run]` | rsync both agents into `~/.config/opencode/agents`, preserving runtime memory |
+| `sync-live-agents.sh [--openclaw] [--dry-run]` | rsync both agents into OpenCode or OpenClaw, preserving runtime memory |
 | `../db/build-slim.py [out]` | 95 MB core database: books, transcripts, interactions, records (no items/cards) |
 
 Bulk content (items, interactions, web transcripts, cutscene captions) uses

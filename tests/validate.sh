@@ -48,7 +48,7 @@ import os, re, glob, sys
 ws = sys.argv[1]
 files = []
 for root,_,fs in os.walk(ws):
-    if '/lore' in root or '/.git' in root:
+    if '/lore' in root or '/.git' in root or '/eris' in root:
         continue
     for f in fs:
         if f.endswith('.md'):
@@ -83,7 +83,7 @@ for p in glob.glob(archive+'/source/books/*.md')+glob.glob(archive+'/source/tran
 corpus_norm=norm(corpus)
 files=[]
 for root,_,fs in os.walk(ws):
-    if '/lore' in root or '/.git' in root:
+    if '/lore' in root or '/.git' in root or '/eris' in root:
         continue
     for f in fs:
         if f.endswith('.md'): files.append(os.path.join(root,f))
