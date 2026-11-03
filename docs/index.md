@@ -1,15 +1,15 @@
 ---
 layout: default
 title: Destiny Agent Grimoire
-description: A searchable Destiny lore archive and two character agents that read from it.
+description: A searchable Destiny lore archive and a growing number of character agents that read from it.
 ---
 
 <section class="hero">
   <p class="kicker">Destiny lore · for people and their agents</p>
   <h1>Destiny Agent Grimoire</h1>
   <p class="lede">
-    One searchable archive of Destiny's books, dialogue and gear lore — plus two
-    character agents who read from it. Every quote keeps its source, and you can
+    One searchable archive of Destiny's books, dialogue and gear lore — plus a growing
+    number of character agents that read from it. Every quote keeps its source, and you can
     check a line before you use it.
   </p>
   <div class="hero-actions">
