@@ -268,3 +268,11 @@ Rules:
   full history stays in `CHANGELOG.md`.
 - Do not restate what the repository is or who it is for.
 - The heading sequence is identical across both agent repos; `tests/conformance.py` enforces the sections, order and length.
+
+## 15. Licensing
+
+- Original code, tests and documentation are MIT licensed (`LICENSE`).
+- Destiny lore, text, characters and art belong to Bungie. The project is
+  fan-made and non-commercial; no license is granted to Bungie IP.
+- Every repository carries a `NOTICE` describing that split, and its README has a
+  Licensing subsection. `tests/conformance.py` enforces both.
