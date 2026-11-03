@@ -3,6 +3,7 @@
 import os, re, json, glob, sqlite3, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SCHEMA_VERSION = '1.0.1'
 DB_PATH = os.path.join(ROOT, 'db', 'grimoire.db')
 SCHEMA = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'schema.sql')
 
@@ -408,7 +409,8 @@ def migrate():
     for iid, slug, title, speaker, text in conn.execute('SELECT id,slug,title,speaker,text FROM interactions').fetchall():
         add_fts(title, text, speaker, source='interaction')
     for iid, slug, title, text in conn.execute('SELECT id,slug,title,text FROM items').fetchall():
-        add_fts(title, text, source='item')
+        if text:  # stat-only items have no searchable text
+            add_fts(title, text, source='item')
     for rid, slug, title, body in conn.execute('SELECT id,slug,title,body FROM records').fetchall():
         add_fts(title, body, source='record')
     print(f'fts entries: {fts_id}')
@@ -443,7 +445,7 @@ def migrate():
 
     # Meta
     for k, v in [
-        ('version','1.0.0'),
+        ('version',SCHEMA_VERSION),
         ('last_updated','2026-11-02'),
         ('books', str(book_count)),
         ('book_entries', str(entry_count)),

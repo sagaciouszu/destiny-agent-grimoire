@@ -92,7 +92,11 @@ check('documented content counts hold', counts)
 
 def indexes():
     assert conn.execute('SELECT COUNT(*) FROM verify_fts').fetchone()[0] == 120731
-    assert conn.execute("SELECT COUNT(*) FROM fts").fetchone()[0] == 136802
+    expected = conn.execute(
+        "SELECT (SELECT COUNT(*) FROM transcript_lines)+(SELECT COUNT(*) FROM book_entries)"
+        "+(SELECT COUNT(*) FROM grimoire_cards)+(SELECT COUNT(*) FROM interactions)"
+        "+(SELECT COUNT(*) FROM items WHERE text!='')+(SELECT COUNT(*) FROM records)").fetchone()[0]
+    assert conn.execute('SELECT COUNT(*) FROM fts').fetchone()[0] == expected
 
 check('search and verification indexes are complete', indexes)
 

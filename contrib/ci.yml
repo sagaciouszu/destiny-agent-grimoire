@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Build database
+        run: python3 db/migrate.py
+
+      - name: Conformance
+        run: python3 tests/conformance.py
+
+      - name: Database checks
+        run: bash tests/test-db.sh
+
+      - name: Query interface
+        run: bash tests/query-interface-test.sh
+
+      - name: Retrieval evaluation
+        run: python3 tests/retrieval-eval.py
+
+      - name: MCP dependencies
+        run: |
+          python3 -m venv mcp-server/.venv
+          mcp-server/.venv/bin/pip install --require-hashes -r mcp-server/requirements.lock.txt
+
+      - name: MCP contract
+        run: mcp-server/.venv/bin/python tests/mcp-test.py

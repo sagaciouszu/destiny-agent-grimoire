@@ -11,7 +11,7 @@
   <img src='https://img.shields.io/badge/tests-11%2F11%20passing-brightgreen' alt='Tests'/>
 </p>
 
-**Version:** 1.7.1 | **Last push:** 2026-11-03 | **Status:** Active
+**Version:** 1.8.0 | **Last push:** 2026-11-03 | **Status:** Active
 
 One canonical, agent-first Destiny lore archive: a single SQLite database with
 FTS5 search, built from committed sources, with a documented quote policy and
@@ -69,7 +69,7 @@ More commands are in the sections below.
 | `curl` | optional prebuilt database | otherwise build locally |
 | MCP SDK (optional) | typed tools for agents without a shell | Python 3.10+; `bash mcp-server/install.sh` |
 | `git` | cloning and version history | |
-| ~260 MB disk | sources plus built database | database is ~170 MB |
+| ~260 MB disk | sources plus built database | database is ~169 MB |
 
 No API keys, accounts or network access are required at runtime.
 
@@ -87,7 +87,7 @@ No API keys, accounts or network access are required at runtime.
 | `records` | 71 | Triumphs and seals |
 | `characters` | 18 | Curated character index |
 | `character_lines` | 1189 | Quote-ready character lines |
-| `fts` | 136802 | FTS5 index over all content |
+| `fts` | 120731 | FTS5 index over all content |
 | `v_speakers` (view) | 359 | Canonical speakers with line counts |
 | `speaker_aliases` | 6 | Alias to canonical speaker mapping |
 | `verify_fts` (index) | 120731 | Fast quote verification |
@@ -157,8 +157,13 @@ bash grimoire-master-audit.sh
 bash drifter-master-audit.sh
 bash eris-master-audit.sh
 
+# stage a release (copy, checksums, publish commands), backup, sync agents
+bash scripts/release-stage.sh <version>
+bash scripts/backup.sh
+bash scripts/sync-live-agents.sh
+
 # release the database as an asset (digest checked against local sha256)
-gh release upload <tag> db/grimoire.db --clobber
+gh release upload <tag> db/grimoire.db SHA256SUMS --clobber
 ```
 
 The change procedure is section 10 of `STANDARDS.md`. A rolling backup of the

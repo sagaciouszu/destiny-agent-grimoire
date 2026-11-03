@@ -52,6 +52,7 @@ SHARED = [
     (r'\| `transcripts` \| \d+', '| `transcripts` | {transcripts}'),
     (r'\| transcript_lines \| \d+', '| transcript_lines | {lines}'),
     (r'\| fts \| \d+', '| fts | {fts}'),
+    (r'\| `fts` \| \d+', '| `fts` | {fts}'),
     (r'\| character_lines \| \d+', '| character_lines | {character_lines}'),
     (r'\| `character_lines` \| \d+', '| `character_lines` | {character_lines}'),
     (r'\| books \| \d+', '| books | {books}'),

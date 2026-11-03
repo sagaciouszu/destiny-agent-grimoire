@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.8.0 - Leaner index and operations tooling (2026-11-03)
+
+- stat-only items excluded from FTS (136,802 -> 120,731 rows)
+- schema version file and database gate (1.0.1)
+- item provenance audit, retrieval eval, DB/source cross-check
+- slim database builder (95 MB), release/backup/sync scripts
+- CI workflow for build, conformance, database, interface, retrieval, MCP
+
 ## v1.7.1 - Clone-mode quote scan fix (2026-11-03)
 
 - drifter-quote-verify excludes the cloned lore archive (fresh-clone audit 18/18)
