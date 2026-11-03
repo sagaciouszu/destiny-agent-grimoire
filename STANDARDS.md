@@ -1,7 +1,7 @@
 # Standards
 
 > **Depends On:** none (standards reference)
-> **Token Estimate:** ~2.4K tokens
+> **Token Estimate:** ~3.3K tokens
 
 The contract every file, script, and database row in this repository must meet.
 Verification gates (section 7) enforce these rules; a change that breaks them is
@@ -167,3 +167,82 @@ The Drifter and Eris repositories mirror each other so one method serves both.
 - Backup: rolling zip of the repo minus the database.
 - Consumers get `setup.sh`: seeds memory templates, bootstraps the database
   (prebuilt asset or local build), never blocks.
+
+## 12. README contract
+
+Every repository README follows the same order. The first screen is for humans;
+the agent contract comes after it.
+
+1. `# Title`
+2. Banner image (`header.png`, centered, full width)
+3. Badge row: version, last push, license, tests (agent repos add flavor badges)
+4. Metadata line: `**Version:** x.y.z | **Last push:** YYYY-MM-DD | **Status:** Active`
+5. One-paragraph purpose
+6. `## Quick start (humans)` with copy-paste commands
+7. `## Requirements` table (tools, disk, no runtime network)
+8. Content section (`## What is inside` for the archive)
+9. `## For agents` (entry points, load tiers, data access, quote policy, matrix)
+10. `## Repository layout`
+11. `## Verification` table with commands and expected results
+12. `## Maintenance` (archive) or `## Troubleshooting` (agents)
+13. `## License and attribution`
+
+Rules:
+
+- Agent READMEs are structurally identical: same headings, same order, same
+  requirement and verification table shapes. Only persona facts, counts and
+  badges differ.
+- `Version` matches the latest git tag; `Last push` matches the HEAD commit date.
+  `tests/sync-readme-meta.py` stamps both and `--check` enforces them.
+- No em-dashes or en-dashes. No personal paths. Every referenced path resolves.
+- The agent README must state the platform entry point, the load tiers and the
+  quote-safety command; the archive README must state the database bootstrap and
+  the maintenance procedure.
+
+## 13. Agent document contract
+
+Both agents ship the same document set with the same section skeletons. Only
+persona facts, counts and links differ.
+
+| File | Required sections (in order) |
+|------|------------------------------|
+| `SOUL.md` | Who You Are, Voice, Response Protocol, History, Relationships, Boundaries, Memory, Canon and Quotes, Companion Files, Last Updated |
+| `AGENTS.md` | Role, Hard rules, Canon and quoting, Data access, Load protocol, Platform bindings, Connection matrix |
+| `INDEX.md` | Entry points, Connection matrix, Core files, Modules, Load protocol, Canon and verification, Topic map, Last Updated |
+| `TOOLS.md` | Runtime tools, Data access, Verification, Conventions |
+| `USER.template.md` | The User, Relationship, Continuity |
+| `RELEASE.md` | Highlights, Verification |
+
+Rules:
+
+- The heading sequence is identical across the two agents for every file above;
+  `tests/conformance.py` fails on drift.
+- `SOUL.md` is persona; `AGENTS.md` is contract; `INDEX.md` is the map;
+  `TOOLS.md` is commands and conventions. Do not duplicate one into another.
+- `USER.template.md` is runtime state, seeded by `setup.sh`, and gitignored once
+  copied to `USER.md`.
+- Every file starts with the `Depends On` and `Token Estimate` header block.
+
+## 14. Release notes
+
+`RELEASE.md` and the published GitHub release body are the same short document.
+
+```
+# vX.Y.Z - <theme>
+
+**YYYY-MM-DD**
+
+## What's Changed
+
+- 5 to 7 user-visible bullets
+
+## Verification
+
+<suite totals on one line>
+```
+
+- The archive adds `## Asset` with the file, size and rebuild command.
+- Keep the body under 40 lines. It is a release summary, not the changelog; the
+  full history stays in `CHANGELOG.md`.
+- Do not restate what the repository is or who it is for.
+- The heading sequence is identical across both agent repos; `tests/conformance.py` enforces the sections, order and length.

@@ -10,6 +10,10 @@ Checks every tracked text file in all three repositories:
   - ci-checks per agent repo (stale names, circular/self deps, dashes, personal
     paths, gitignored refs in instructions, headers)
   - no tracked symlinks in any repo
+  - README contract: order, metadata, banner, version/last push (STANDARDS 12)
+  - README commands point at existing scripts; agent repos stay structurally parallel
+  - shared agent documents have identical section sequences (STANDARDS 13)
+  - release notes stay short and follow the What's Changed / Verification shape
 
 Usage: python3 tests/conformance.py [--fix-tokens]
 Exit 1 when violations remain.
@@ -20,7 +24,7 @@ import subprocess
 import sys
 import glob
 
-HERE = os.path.dirname(os.path.abspath(__file__))
+HERE = os.path.dirname(os.path.realpath(__file__))
 GR = os.path.dirname(HERE)
 WORK = os.path.dirname(GR)
 REPOS = {k: v for k, v in {
@@ -93,6 +97,120 @@ for name, root in REPOS.items():
                 else:
                     issues.append((name, rel, f'token estimate ~{m.group(1)}K vs measured ~{actual/1000:.1f}K ({drift:.0f}% off)'))
 
+# README contract (STANDARDS section 12)
+README_SECTIONS = {
+    'grimoire': ['## Quick start (humans)', '## Requirements', '## What is inside',
+                 '## For agents', '## Repository layout', '## Maintenance',
+                 '## Verification', '## License and attribution'],
+    'drifter': ['## Quick start (humans)', '## Requirements', '## For agents',
+                '## Repository layout', '## Verification', '## Troubleshooting',
+                '## License and attribution'],
+}
+README_SECTIONS['eris'] = README_SECTIONS['drifter']
+README_META = re.compile(r'\*\*Version:\*\* \S+ \| \*\*Last push:\*\* \d{4}-\d{2}-\d{2} \| \*\*Status:\*\* Active')
+agent_sequences = {}
+for name, root in REPOS.items():
+    path = os.path.join(root, 'README.md')
+    if not os.path.exists(path):
+        issues.append((name, 'README.md', 'missing'))
+        continue
+    text = open(path, encoding='utf-8').read()
+    first = next((l for l in text.splitlines() if l.strip()), '')
+    if not first.startswith('# '):
+        issues.append((name, 'README.md', 'first line is not an H1 title'))
+    if 'header.png' not in text or not os.path.exists(os.path.join(root, 'header.png')):
+        issues.append((name, 'README.md', 'missing banner (header.png)'))
+    if not README_META.search(text):
+        issues.append((name, 'README.md', 'missing version/last push metadata line'))
+    seq = [h for h in README_SECTIONS[name] if h in text]
+    if seq != README_SECTIONS[name]:
+        missing = [h for h in README_SECTIONS[name] if h not in text]
+        issues.append((name, 'README.md', f'missing required sections: {missing}'))
+    else:
+        pos = [text.index(h) for h in README_SECTIONS[name]]
+        if pos != sorted(pos):
+            issues.append((name, 'README.md', 'sections out of order'))
+    if name != 'grimoire':
+        agent_sequences[name] = tuple(h for h in text.splitlines() if h.startswith('## '))
+if len(agent_sequences) == 2 and len(set(agent_sequences.values())) > 1:
+    issues.append(('agents', 'README.md', 'Drifter and Eris README section order differs'))
+
+# README commands must point at real scripts
+CMD_REF = re.compile(r'^(?:bash|sh|python3)\s+([A-Za-z0-9_][A-Za-z0-9_./-]*\.(?:sh|py))', re.M)
+for name, root in REPOS.items():
+    path = os.path.join(root, 'README.md')
+    if not os.path.exists(path):
+        continue
+    text = open(path, encoding='utf-8').read()
+    for ref in sorted(set(CMD_REF.findall(text))):
+        cands = [os.path.join(root, ref), os.path.join(root, 'lore', ref)]
+        for other in REPOS.values():
+            cands += [os.path.join(other, ref), os.path.join(other, 'lore', ref)]
+        if not any(os.path.exists(c) for c in cands):
+            issues.append((name, 'README.md', f'command targets missing script `{ref}`'))
+
+# Agent repositories stay structurally parallel
+if 'drifter' in REPOS and 'eris' in REPOS:
+    d_root, e_root = REPOS['drifter'], REPOS['eris']
+    try:
+        d_ig = open(os.path.join(d_root, '.gitignore'), encoding='utf-8').read()
+        e_ig = open(os.path.join(e_root, '.gitignore'), encoding='utf-8').read()
+        if d_ig != e_ig:
+            issues.append(('agents', '.gitignore', 'Drifter and Eris .gitignore differ'))
+    except FileNotFoundError:
+        pass
+
+    def norm_setup(text):
+        text = text.replace('The Drifter', 'AGENT').replace('Eris Morn', 'AGENT')
+        text = text.replace('Drifter', 'AGENT')
+        return text.replace('drifter-core.md', 'CORE.md').replace('eris-core.md', 'CORE.md')
+
+    try:
+        d_sh = norm_setup(open(os.path.join(d_root, 'setup.sh'), encoding='utf-8').read())
+        e_sh = norm_setup(open(os.path.join(e_root, 'setup.sh'), encoding='utf-8').read())
+        if d_sh != e_sh:
+            issues.append(('agents', 'setup.sh', 'setup scripts diverge beyond agent names'))
+    except FileNotFoundError:
+        pass
+
+# Shared agent documents must keep the same section sequence (STANDARDS 13)
+PARITY_DOCS = ('SOUL.md', 'AGENTS.md', 'INDEX.md', 'TOOLS.md',
+               'USER.template.md', 'RELEASE.md')
+if 'drifter' in REPOS and 'eris' in REPOS:
+    for doc in PARITY_DOCS:
+        sequences = {}
+        for name in ('drifter', 'eris'):
+            path = os.path.join(REPOS[name], doc)
+            if not os.path.exists(path):
+                issues.append((name, doc, 'missing shared document'))
+                continue
+            text = open(path, encoding='utf-8').read()
+            sequences[name] = tuple(l for l in text.splitlines() if l.startswith('## '))
+        if len(sequences) == 2 and sequences['drifter'] != sequences['eris']:
+            issues.append(('agents', doc, 'section sequence differs between agents'))
+
+# Release notes stay short and scannable (STANDARDS 14)
+REL_SECTIONS = ["## What's Changed", '## Verification']
+for name, root in REPOS.items():
+    path = os.path.join(root, 'RELEASE.md')
+    if not os.path.exists(path):
+        issues.append((name, 'RELEASE.md', 'missing'))
+        continue
+    text = open(path, encoding='utf-8').read()
+    lines = text.splitlines()
+    if not lines or not lines[0].startswith('# v'):
+        issues.append((name, 'RELEASE.md', 'first line must be `# vX.Y.Z - theme`'))
+    if len(lines) > 40:
+        issues.append((name, 'RELEASE.md', f'{len(lines)} lines (limit 40)'))
+    required = REL_SECTIONS + (['## Asset'] if name == 'grimoire' else [])
+    present = [h for h in required if h in text]
+    if present != required:
+        issues.append((name, 'RELEASE.md', f'missing sections: {[h for h in required if h not in text]}'))
+    else:
+        pos = [text.index(h) for h in required]
+        if pos != sorted(pos):
+            issues.append((name, 'RELEASE.md', 'sections out of order'))
+
 # tracked symlinks are runtime state, never repository content
 for name, root in REPOS.items():
     try:
@@ -129,6 +247,13 @@ if os.path.exists(CI_CHECKS):
             if r.returncode != 0:
                 out = (r.stdout or r.stderr).strip().splitlines()
                 issues.append((name, 'ci-checks', f'{chk}: {out[-1] if out else "failed"}'))
+
+META_SCRIPT = os.path.join(HERE, 'sync-readme-meta.py')
+if os.path.exists(META_SCRIPT):
+    r = subprocess.run([sys.executable, META_SCRIPT, '--check'], capture_output=True, text=True)
+    if r.returncode != 0:
+        for line in (r.stdout or r.stderr).strip().splitlines():
+            issues.append(('README', 'metadata', line.strip()))
 
 print(f'files scanned: {sum(len(files_of(r)) for r in REPOS.values())}')
 if globals().get('_missing_refs'):

@@ -4,157 +4,175 @@
   <img src='header.png' alt='Destiny Agent Grimoire' width='100%'/>
 </p>
 
-An agent-first lore archive for the Destiny universe. All content is served via a single SQLite database with FTS5 full-text search. No external services needed.
+<p align="center">
+  <img src='https://img.shields.io/github/v/tag/sagaciouszu/destiny-agent-grimoire?label=version&color=blue' alt='Version'/>
+  <img src='https://img.shields.io/github/last-commit/sagaciouszu/destiny-agent-grimoire?label=last%20push&color=blue' alt='Last push'/>
+  <img src='https://img.shields.io/badge/license-MIT-green' alt='License'/>
+  <img src='https://img.shields.io/badge/tests-11%2F11%20passing-brightgreen' alt='Tests'/>
+</p>
 
-**Version:** 1.3.0
+**Version:** 1.3.0 | **Last push:** 2026-11-02 | **Status:** Active
 
-## Quick start
+One canonical, agent-first Destiny lore archive: a single SQLite database with
+FTS5 search, built from committed sources, with a documented quote policy and
+verification gates. No external services at runtime.
 
-The database is a build artifact and is not committed. Bootstrap it once after cloning - pick one:
+## Quick start (humans)
+
+The database is a build artifact and is not committed. Pick one:
 
 ```bash
+git clone https://github.com/sagaciouszu/destiny-agent-grimoire.git
+cd destiny-agent-grimoire
+
 # Option 1: download the prebuilt release asset (seconds)
 curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db -o db/grimoire.db
 
-# Option 2: build from your checkout (~2 minutes, matches this commit)
+# Option 2: build from this checkout (~2 minutes, matches this commit)
 python3 db/migrate.py
 ```
 
-Agent repos (`how-to-drift-for-agents`, `eris-morn`) present this choice in their own `setup.sh` on first run.
+Query it:
 
 ```bash
-# Database stats
 python3 db/query.py stats
-
-# Full-text search
 python3 db/query.py search "Crota" --limit 5
 python3 db/query.py search "Eris" --type transcripts --limit 10
-
-# Character dialogue  
 python3 db/query.py character "eris" --limit 20
-python3 db/query.py character "drifter" --limit 20
-
-# Item details
 python3 db/query.py item "0a0x-nightmask"
-
-# Quote safety: verify a quote against canon (exit 1 if absent)
-python3 db/query.py verify "I am Eris Morn."
-
-# Cheap discovery
+python3 db/query.py verify "I am Eris Morn."     # exit 1 when not canon
 python3 db/query.py list speakers --limit 20
 ```
 
-Add `--json` to any command for compact machine-readable output.
-
-Or with raw SQL:
+Add `--json` to any command for compact machine-readable output. Raw SQL works
+too:
 
 ```bash
 sqlite3 db/grimoire.db "SELECT title, text FROM fts WHERE fts MATCH 'hive' LIMIT 5"
 sqlite3 db/grimoire.db "SELECT speaker, line FROM transcript_lines WHERE speaker LIKE '%Eris%' LIMIT 10"
-sqlite3 db/grimoire.db "SELECT slug, title, item_type FROM items WHERE item_type LIKE '%Exotic%' LIMIT 20"
 ```
 
-## Contents
+The two agent repositories (`how-to-drift-for-agents`, `eris-morn`) run this
+bootstrap automatically through their own `setup.sh`.
+
+## Requirements
+
+| Requirement | Needed for | Notes |
+|---|---|---|
+| `python3` 3.8+ | migration, query CLI, tests | standard library only |
+| `sqlite3` | optional raw SQL | the CLI uses Python's built-in driver |
+| `curl` | optional prebuilt database | otherwise build locally |
+| `git` | cloning and version history | |
+| ~200 MB disk | sources plus built database | database is ~128 MB |
+
+No API keys, accounts or network access are required at runtime.
+
+## What is inside
 
 | Table | Rows | Purpose |
-|-------|------|---------|
-| books | 110 | Book-level metadata (title, slug, release) |
-| book_entries | 1158 | Individual lore entries within the books |
-| transcripts | 1229 | Quest transcript headers |
-| transcript_lines | 71221 | Canon dialogue (speaker, line, norm_line) |
-| grimoire_cards | 2889 | Destiny 1 grimoire cards |
-| interactions | 2699 | Single/short dialogue beats by character |
-| items | 58764 | Weapons, armor, gear lore + flavor text |
-| records | 71 | Triumphs/seals with canonical text |
-| characters | 18 | Named characters extracted from dialogue |
-| character_lines | 1189 | Character-quotes ready for agent use |
-| fts | 136802 | FTS5 full-text search over all tables |
-| meta | 1 | DB version + last updated |
+|---|---|---|
+| `books` | 110 | Book-level metadata |
+| `book_entries` | 1158 | Lore entries within books |
+| `transcripts` | 1229 | Transcript headers |
+| `transcript_lines` | 71221 | Canon dialogue (speaker, line) |
+| `grimoire_cards` | 2889 | Destiny 1 grimoire cards |
+| `interactions` | 2699 | Short dialogue beats |
+| `items` | 58764 | Weapons, armor and gear lore |
+| `records` | 71 | Triumphs and seals |
+| `characters` | 18 | Curated character index |
+| `character_lines` | 1189 | Quote-ready character lines |
+| `fts` | 136802 | FTS5 index over all content |
+| `v_speakers` (view) | 359 | Canonical speakers with line counts |
+| `speaker_aliases` | 6 | Alias to canonical speaker mapping |
+
+Every content row carries provenance. Speaker aliases are canonicalized during
+migration. The full contract is `STANDARDS.md`.
+
+## For agents
+
+- **Skill:** `skills/destiny-grimoire/SKILL.md` is the drop-in agent skill.
+- **Interface:** `python3 db/query.py search|character|item|verify|list|stats`.
+  `verify` is the quote-safety primitive (exit 1 when absent); every command
+  accepts `--json`; search returns snippets unless `--full`.
+- **Discovery:** `db/capabilities.json` is a machine-readable manifest of tables,
+  views, commands and contracts.
+- **Search surface:** FTS5 with a `source` column for exact type filters.
+- **Policy:** `STANDARDS.md` defines schema, naming, provenance, quote policy and
+  verification gates.
+- **Never** parse `source/` markdown at runtime. Query the database.
+- **Output budget:** always pass `--limit`; assume 20 to 40 lines per call.
+
+Connection matrix:
+
+| From | To | Mechanism |
+|---|---|---|
+| agent repos | this archive | `lore/` symlink or clone, then `lore/db/query.py` |
+| agent `setup.sh` | this archive | clone or symlink, download or build the database |
+| release workflow | consumers | `grimoire.db` attached to each release, checksum verified |
 
 ## Repository layout
 
 ```
-db/  - query.py + schema.sql + README.md + migrate.py (grimoire.db is built, not committed)
-source/  - raw markdown source (books/, cards/, transcripts/, records/, items/, interactions/)
-compendium/  - character quote index; feeds the characters/character_lines tables at migration (agents should prefer the database)
-archive/  - raw scraper data (JSONL)
-scripts/  - ingestion scripts
-tests/  - audit + CI scripts (DB-backed)
-skills/  - agent-facing SKILL.md
-index.md  - brief overview pointing to the database
-STANDARDS.md  - the contract: schema, naming, provenance, gates, connection matrix
-destiny-1-legacy-card-index.md  - archived pre-database D1 card index (historical)
+db/          # query.py, schema.sql, migrate.py, capabilities.json (grimoire.db is built)
+source/      # ingested markdown: books, cards, transcripts, records, items, interactions
+compendium/  # character quote index that feeds the characters tables
+archive/     # raw scraper output (JSONL) and fetchers
+scripts/     # ingestion helpers
+tests/       # archive gates, agent suites, shared runner, conformance
+skills/      # agent-facing SKILL.md
+index.md     # short pointer to the database
+STANDARDS.md # the contract: schema, naming, provenance, gates, README rules
 ```
 
-## How agents should use this
-
-1. Load `skills/destiny-grimoire/SKILL.md` into your agent registry.
-2. Query via `db/query.py` for all structured lookups. Tiny context footprint.
-3. Only load `compendium/characters/<slug>.md` if you need quote-arrays as plain markdown fallback.
-4. Never parse raw markdown of `source/` unless strictly necessary.
-5. The DB lives in one file. No external connections, no web scraping needed at runtime.
-
-## Database schema
-
-See `db/schema.sql`. Tables that matter to agents:
-
-### `transcript_lines`
-```sql
-SELECT t.title, tl.speaker, tl.line
-FROM transcript_lines tl
-JOIN transcripts t ON t.id = tl.transcript_id
-WHERE tl.speaker LIKE '%Eris%';
-```
-
-### `items` (by category)
-```sql
-SELECT slug, title, text, item_type FROM items 
-WHERE item_type LIKE '%Exoth%' AND text != '' LIMIT 20;
-```
-
-### `fts` (full-text search across all tables)
-```sql
-SELECT title, text FROM fts WHERE fts MATCH 'crota' LIMIT 5;
-```
-
-## Repo philosophy
-
-- **Database first.** The markdown corpus in `source/` is the ingestion source. Query via database.
-- **Token-minimal.** Agents should query rather than read files. One database call gives canonical lore.
-- **Agnostic.** No specific agent persona lives here. Drifter and Eris agents reference this DB via `lore/` symlink.
-
-## Update procedure
+## Maintenance
 
 ```bash
-# scrape more content from Ishtar Collective
+# ingest more content (Ishtar page ranges, caption fetchers)
 python3 archive/scrape.py interactions <start> <end>
 python3 archive/scrape.py items <start> <end>
+python3 archive/data/fetch_transcripts_web.py
+python3 archive/data/fetch_cutscenes.py
 
-# re-run the database migration
+# rebuild and sync documented counts
 python3 db/migrate.py
-
-# sync documentation count claims to the database
 python3 tests/sync-doc-counts.py
+python3 tests/sync-readme-meta.py
 
-# verify
-bash tests/test-db.sh
+# verify everything
 bash grimoire-master-audit.sh
 bash drifter-master-audit.sh
 bash eris-master-audit.sh
+
+# release the database as an asset (digest checked against local sha256)
+gh release upload <tag> db/grimoire.db --clobber
 ```
 
-## Rules
+The change procedure is section 10 of `STANDARDS.md`. A rolling backup of the
+repository minus the database lives outside the tree.
 
-1. No em-dashes or en-dashes anywhere in agent files.
-2. No unverified quotes: everything in `character_lines` traces to canonical transcript lines.
-3. Do not paraphrase lore as quotes. Use the verbatim text from the DB.
-4. Do not edit the markdown source unless adding new Ishtar data.
-5. Content sourced from https://www.ishtar-collective.net (Ishtar Collective).
+## Verification
 
-## Attribution
+| Suite | Command | Expected |
+|---|---|---|
+| Archive audit | `bash grimoire-master-audit.sh` | 11/11 |
+| Drifter agent audit | `bash drifter-master-audit.sh` | 18/18 |
+| Eris agent audit | `bash eris-master-audit.sh` | 13/13 |
+| Database integrity | `bash tests/test-db.sh` | 35 checks |
+| Query interface | `bash tests/query-interface-test.sh` | 23 checks |
+| Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 |
+| File conformance | `python3 tests/conformance.py` | PASS |
 
-Fan-made archive. Not affiliated with or endorsed by Bungie.
+Agent audits need their workspaces present; the archive audit skips
+workspace-only suites when they are absent.
 
-- **Destiny 2** and Destiny 1: © Bungie, Inc. All lore, characters, locations are Bungie's property.
-- **Ishtar Collective** (https://www.ishtar-collective.net): Primary source for all ingested text.
-- **Destiny Lore Vault** (YouTube) and **Destinypedia**: Bootstrap sources for specific transcripts.
+## License and attribution
+
+MIT licensed. Fan-made. Not affiliated with or endorsed by Bungie.
+
+- **Destiny 2** and **Destiny 1** content is Bungie's property.
+- **Ishtar Collective** (https://www.ishtar-collective.net): primary text source.
+- **Destiny Lore Vault** (YouTube): bootstrap source for specific transcripts.
+- **Destinypedia**: bootstrap source for specific dialogue.
+
+Cutscene transcripts come from YouTube captions (auto-generated, corroboration
+verified). Content and provenance are documented in `STANDARDS.md`.
