@@ -73,6 +73,16 @@ sqlite3 db/grimoire.db "SELECT slug, title, item_type FROM items WHERE item_type
 - `items.norm_text` for substring matching
 - All FTS5 virtual table columns via `MATCH '<term>'`
 
+## Schema version
+
+`SCHEMA_VERSION` is the source of truth. `migrate.py` writes it to `meta.version`;
+`tests/test-db.sh` fails when the database and the file disagree.
+
+## Slim profile
+
+`python3 db/build-slim.py [out]` builds a 95 MB core database with books,
+transcripts, interactions and records, but without items or grimoire cards.
+
 ## Extras
 
 - `api.py` - importable query layer shared by the CLI and the MCP server
