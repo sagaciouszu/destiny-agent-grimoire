@@ -82,6 +82,8 @@ bash mcp-server/install.sh     # once: venv + official SDK
 # register mcp-server/run.sh in the client (install.sh prints the snippet)
 ```
 
+It ships with this archive, so one install serves every agent that mounts it.
+
 Tools: `search`, `character`, `item`, `verify`, `list_records`, `stats`. The
 server is read-only, exposes no arbitrary SQL, clamps limits to 1-100 and trims
 full text to 4000 characters. Full details: `mcp-server/README.md`.
