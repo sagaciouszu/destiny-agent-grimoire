@@ -28,6 +28,8 @@ or shared by every agent in the series.
 - `agent-layout-test.sh` - deployment shape: manifest-driven per-agent dirs, no
   `lore` symlink inside `agents/`, only entry agents active, companions and peer
   blocks installed from `series/agents.json`
+- `agent-template-test.py` - generates a throwaway agent from `series/_template`
+  and validates its files, audit gates, duplicate refusal and id safety
 - `sync-readme-meta.py` - stamp or check version and last-push metadata in the
   three READMEs (`--check` for CI)
 - `source-overlap-verify.py` - curated markdown vs live Ishtar, filename/slug

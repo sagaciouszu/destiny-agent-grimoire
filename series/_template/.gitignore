@@ -1,0 +1,18 @@
+# Runtime memory (personal conversation data)
+USER.md
+DREAMS.md
+core/user-memory.md
+core/journal.md
+core/session-state.md
+core/cross-session-memory.md
+memory/
+
+# Canon checkout
+lore
+
+# Local tooling
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
