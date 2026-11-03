@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.5.0 - Faster verification and hardened delivery (2026-11-03)
+
+- verify_fts index: quote checks ~58 ms -> ~1.4 ms; database 164 MB, reproducible
+- onboarding verifies the prebuilt database against release SHA256SUMS
+- MCP dependencies hash-locked (`--require-hashes`); stdio-only posture documented
+- corrupt/truncated/missing databases fail cleanly; query and quote lengths bounded
+- extended regression: robustness, MCP matrix, checksum faults, DB/source cross-check
+- seeded runtime memory is owner-only (0600)
+
 ## v1.4.0 - MCP adapter and attribution-aware verification (2026-11-03)
 
 - verify gains `--speaker` (attribution) and `--exact` (full line); MCP exposes both
