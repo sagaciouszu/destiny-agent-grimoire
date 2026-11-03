@@ -15,10 +15,10 @@ if [ -d "$WORK/how-to-drift-for-agents" ] && [ -d "$WORK/eris-morn" ]; then
 else
     SRC="$TMP/src"
     mkdir -p "$SRC/how-to-drift-for-agents/core" "$SRC/eris-morn/core"
-    printf -- '---\nmode: all\n---\n\n> **Depends On:** drifter-core.md, INDEX.md\n\nEntry.\n' > "$SRC/how-to-drift-for-agents/drifter.md"
+    printf -- '---\nmode: primary\n---\n\n> **Depends On:** drifter-core.md, INDEX.md\n\nEntry.\n' > "$SRC/how-to-drift-for-agents/drifter.md"
     printf '# Companion\n' > "$SRC/how-to-drift-for-agents/core/guardrails.md"
     printf '# Readme\n' > "$SRC/how-to-drift-for-agents/README.md"
-    printf -- '---\nmode: all\n---\n\n> **Depends On:** eris-core.md, INDEX.md\n\nEntry.\n' > "$SRC/eris-morn/eris.md"
+    printf -- '---\nmode: primary\n---\n\n> **Depends On:** eris-core.md, INDEX.md\n\nEntry.\n' > "$SRC/eris-morn/eris.md"
     printf '# Companion\n' > "$SRC/eris-morn/core/guardrails.md"
     printf '# Readme\n' > "$SRC/eris-morn/README.md"
 fi
@@ -39,18 +39,20 @@ check() { if eval "$2" >/dev/null 2>&1; then echo "  ✓ $1"; PASS=$((PASS+1)); 
 
 check "lore symlink removed from agents root" '[ -z "$(find "$DEST" -type l -name lore -print -quit)" ]'
 check "no lore directory left behind" '[ ! -e "$DEST/lore" ]'
-check "entry agents stay active as drifter and eris" \
-    '! grep -q "^disabled: true$" "$DEST/drifter.md" && ! grep -q "^disabled: true$" "$DEST/eris.md"'
+check "entry and consult agents stay active" \
+    '! grep -q "^disabled: true$" "$DEST/drifter.md" && ! grep -q "^disabled: true$" "$DEST/eris.md" && ! grep -q "^disabled: true$" "$DEST/drifter-consult.md" && ! grep -q "^disabled: true$" "$DEST/eris-consult.md"'
+check "primaries are primary-only" 'grep -q "^mode: primary$" "$DEST/drifter.md" && grep -q "^mode: primary$" "$DEST/eris.md"'
+check "consult copies are read-only subagents" 'grep -q "^mode: subagent$" "$DEST/drifter-consult.md" && grep -q "action: edit" "$DEST/drifter-consult.md" && grep -q "action: shell" "$DEST/drifter-consult.md" && grep -q "action: subagent" "$DEST/drifter-consult.md"'
 check "series registry is installed" '[ -f "$(dirname "$DEST")/series/agents.json" ]'
 check "both entries carry the series block" 'grep -q "series:begin" "$DEST/drifter.md" && grep -q "series:begin" "$DEST/eris.md"'
-check "entries list each other as peers" 'grep -q "Hive expert" "$DEST/drifter.md" && grep -q "Gambit handler" "$DEST/eris.md"'
+check "entries point at consult peers" 'grep -q "Hive expert" "$DEST/drifter.md" && grep -q "Gambit handler" "$DEST/eris.md"'
 check "peer directories are read-denied" 'grep -qF "agents/eris/**" "$DEST/drifter.md" && grep -qF "agents/drifter/**" "$DEST/eris.md"'
 check "eris entry references its own directory" 'grep -q "eris/INDEX.md" "$DEST/eris.md"'
 check "drifter entry references its own directory" 'grep -q "drifter/INDEX.md" "$DEST/drifter.md"'
-check "only two markdown files lack the disabled marker" \
-    '[ "$(grep -rL --include="*.md" "^disabled: true$" "$DEST" | wc -l)" -eq 2 ]'
+check "only four markdown files lack the disabled marker" \
+    '[ "$(grep -rL --include="*.md" "^disabled: true$" "$DEST" | wc -l)" -eq 4 ]'
 check "every companion file is disabled" \
-    '[ "$(grep -rl --include="*.md" "^disabled: true$" "$DEST" | wc -l)" -eq "$(( $(find "$DEST" -name "*.md" | wc -l) - 2 ))" ]'
+    '[ "$(grep -rl --include="*.md" "^disabled: true$" "$DEST" | wc -l)" -eq "$(( $(find "$DEST" -name "*.md" | wc -l) - 4 ))" ]'
 
 BAD="$TMP/bad-registry.json"
 printf '%s' '{"series":"x","agents":[{"id":"evil","name":"Evil","source":"how-to-drift-for-agents","entry":"../../evil.md"}]}' > "$BAD"
