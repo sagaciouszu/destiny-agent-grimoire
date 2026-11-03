@@ -1,6 +1,8 @@
 # Changelog
 
-## v1.9.0 - Compendium and coverage (2026-11-03)
+## v0.10.0 - Compendium and coverage (2026-11-03)
+
+Versioning reset: this line stays below 1.0 until a major milestone.
 
 - compendium adds Ikora Rey and Mara Sov (20 characters, 1,229 quotes)
 - 1,003 item types backfilled; remaining blanks are source-optional
