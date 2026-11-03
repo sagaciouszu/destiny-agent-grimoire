@@ -37,7 +37,7 @@ if len(REPOS) < 3:
     print(f'note: {3 - len(REPOS)} agent repo(s) not present; validating {len(REPOS)} repo(s)')
 FIX = '--fix-tokens' in sys.argv
 
-SKIP_DIRS = {'.git', 'lore', '__pycache__', '.venv', 'node_modules', 'source', 'archive', 'docs', '_template'}
+SKIP_DIRS = {'.git', 'lore', '__pycache__', '.venv', 'node_modules', 'source', 'archive', 'docs'}
 SKIP_FILES = {'CHANGELOG.md'}
 
 def token_estimate(text):
