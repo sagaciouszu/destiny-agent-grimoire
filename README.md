@@ -192,8 +192,9 @@ MIT licensed. Fan-made. Not affiliated with or endorsed by Bungie.
 - **Destiny community**: transcription, analysis and preservation, with
   **special thanks to every Guardian making their own fate in 2026 and beyond**.
 
-Both are monumental labors of love, and neither this archive nor the community
-around it would exist without the efforts of everyone who has worked on Destiny.
+All the community projects out there are continual labors of love. Neither this
+archive nor the community around it would exist without the efforts of everyone
+who has worked on Destiny.
 
 Cutscene transcripts come from YouTube captions (auto-generated, corroboration
 verified). Content and provenance are documented in `STANDARDS.md`.
