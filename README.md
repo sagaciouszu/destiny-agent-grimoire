@@ -186,6 +186,7 @@ MIT licensed. Fan-made. Not affiliated with or endorsed by Bungie.
 - **Ishtar Collective** (https://www.ishtar-collective.net): primary text source.
 - **Destiny Lore Vault** (YouTube): bootstrap source for specific transcripts.
 - **Destinypedia**: bootstrap source for specific dialogue.
+- **Special thanks** to every Guardian making their own fate in 2026 and beyond.
 
 Cutscene transcripts come from YouTube captions (auto-generated, corroboration
 verified). Content and provenance are documented in `STANDARDS.md`.
