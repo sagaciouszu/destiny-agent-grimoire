@@ -3,7 +3,7 @@
 # Scans all agent files for contradictory statements.
 # Usage: ./drifter-conflict-check.sh
 
-WORKSPACE="${WORKSPACE:-$(cd "$(dirname "$0")/../../how-to-drift-for-agents" && pwd)}"
+WORKSPACE="${WORKSPACE:-$(bash "$(dirname "$0")/resolve-workspace.sh" "$0")}"
 echo "=== DRIFTER CONFLICT CHECK ==="
 echo ""
 

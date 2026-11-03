@@ -4,7 +4,7 @@
 # All checks use the DB's normalized text columns. Runs in <5 seconds.
 
 DB="$(cd "$(dirname "$0")/.." && pwd)/db/grimoire.db"
-WORKSPACE="${WORKSPACE:-$(cd "$(dirname "$0")/../../how-to-drift-for-agents" && pwd)}"
+WORKSPACE="${WORKSPACE:-$(bash "$(dirname "$0")/resolve-workspace.sh" "$0")}"
 [ -f "$DB" ] || { echo "FAIL: database not found at $DB - bootstrap: ./setup.sh, or python3 db/migrate.py (see README)"; exit 1; }
 
 python3 - "$DB" "$WORKSPACE" << 'PYEOF'

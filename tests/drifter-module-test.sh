@@ -4,7 +4,7 @@
 # Also runs structural, consistency, and hygiene checks.
 # Usage: ./drifter-module-test.sh
 
-WORKSPACE="${WORKSPACE:-$(cd "$(dirname "$0")/../../how-to-drift-for-agents" && pwd)}"
+WORKSPACE="${WORKSPACE:-$(bash "$(dirname "$0")/resolve-workspace.sh" "$0")}"
 ARCHIVE="${ARCHIVE:-$(cd "$(dirname "$0")/.." && pwd)}"
 MANIFEST="$WORKSPACE/core/test-manifest.txt"
 PASS=0; FAIL=0; TOTAL=0

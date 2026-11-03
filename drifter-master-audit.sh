@@ -3,7 +3,7 @@
 # Usage: ./drifter-master-audit.sh
 
 ARCHIVE="${ARCHIVE:-$(cd "$(dirname "$0")" && pwd)}"
-WORKSPACE="${WORKSPACE:-$(cd "$(dirname "$0")/../how-to-drift-for-agents" && pwd)}"
+WORKSPACE="${WORKSPACE:-$(bash "$(dirname "$0")/tests/resolve-workspace.sh" "$0")}"
 
 PASS=0; FAIL=0; TOTAL=0
 run() {
@@ -19,6 +19,7 @@ run() {
 
 echo "============================================================"
 echo "  THE DRIFTER - MASTER AUDIT (ALL CHECKS)"
+[ -n "$WORKSPACE" ] && [ -f "$WORKSPACE/drifter.md" ] || { echo "FATAL: drifter workspace unresolved (WORKSPACE=$WORKSPACE) - set WORKSPACE= or run from the agent repo"; exit 1; }
 echo "============================================================"
 echo ""
 
