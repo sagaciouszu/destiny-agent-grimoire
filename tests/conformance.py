@@ -251,6 +251,19 @@ if 'grimoire' in REPOS:
     except (FileNotFoundError, KeyError, json.JSONDecodeError) as e:
         issues.append(('grimoire', 'mcp', f'cannot verify MCP contract: {e}'))
 
+# Licensing split: LICENSE (MIT) plus NOTICE in every repo
+for name, root in REPOS.items():
+    lic = os.path.join(root, 'LICENSE')
+    notice = os.path.join(root, 'NOTICE')
+    if not os.path.exists(lic) or 'MIT License' not in open(lic, encoding='utf-8').read():
+        issues.append((name, 'LICENSE', 'missing MIT license'))
+    if not os.path.exists(notice):
+        issues.append((name, 'NOTICE', 'missing'))
+    else:
+        text = open(notice, encoding='utf-8').read()
+        if 'MIT License' not in text or 'Bungie' not in text:
+            issues.append((name, 'NOTICE', 'must state MIT and Bungie IP ownership'))
+
 # tracked symlinks are runtime state, never repository content
 for name, root in REPOS.items():
     try:
