@@ -179,7 +179,7 @@ repository minus the database lives outside the tree.
 | Eris agent audit | run tests/master-audit.sh in eris-morn | 15/15 |
 | Database integrity | `bash tests/test-db.sh` | 38 checks |
 | Query interface | `bash tests/query-interface-test.sh` | 41 checks |
-| Agent layout | `bash tests/agent-layout-test.sh` | 12 checks |
+| Agent layout | `bash tests/agent-layout-test.sh` | 14 checks |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 checks |
 | MCP contract | `mcp-server/.venv/bin/python tests/mcp-test.py` | 7/7 checks |
 | File conformance | `python3 tests/conformance.py` | PASS |
