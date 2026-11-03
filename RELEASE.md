@@ -1,4 +1,4 @@
-# v1.9.0 - Compendium and coverage
+# v0.10.0 - Compendium and coverage
 
 **2026-11-03**
 
