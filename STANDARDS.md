@@ -31,6 +31,18 @@ a change that is not done.
 | `tests/sync-doc-counts.py` | all three repos | rewrites documented counts from the DB |
 | release workflow | consumers | `db/grimoire.db` attached as a release asset (checksum-verified) |
 
+### Symlinks
+
+- `lore/` is runtime state, not repository content: `setup.sh` creates it as a
+  symlink to a local checkout, or clones the repo in place. It is gitignored in
+  both agent repos.
+- No tracked symlinks in any of the three repositories. A tracked absolute
+  symlink (for example `lore -> /home/<user>/...`) breaks every clone: it arrives
+  dangling, and `setup.sh` would otherwise mistrust it as an existing archive.
+- `setup.sh` treats a dangling `lore/` symlink as absent: it removes it and then
+  symlinks or clones as requested.
+- A symlink target is never a commit-time fact; it is resolved per machine.
+
 ## 3. Database contract
 
 | Table | Required | Optional (may be empty) | Notes |

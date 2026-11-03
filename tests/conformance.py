@@ -9,6 +9,7 @@ Checks every tracked text file in all three repositories:
   - grimoire persona-agnosticism (persona words only in explicitly named tests)
   - ci-checks per agent repo (stale names, circular/self deps, dashes, personal
     paths, gitignored refs in instructions, headers)
+  - no tracked symlinks in any repo
 
 Usage: python3 tests/conformance.py [--fix-tokens]
 Exit 1 when violations remain.
@@ -91,6 +92,18 @@ for name, root in REPOS.items():
                     token_fixes += 1
                 else:
                     issues.append((name, rel, f'token estimate ~{m.group(1)}K vs measured ~{actual/1000:.1f}K ({drift:.0f}% off)'))
+
+# tracked symlinks are runtime state, never repository content
+for name, root in REPOS.items():
+    try:
+        listed = subprocess.run(['git', '-C', root, 'ls-files', '-s'],
+                                capture_output=True, text=True, check=True).stdout
+    except Exception:
+        continue
+    for line in listed.splitlines():
+        if line.startswith('120000 '):
+            issues.append((name, line.split('\t')[-1],
+                           'tracked symlink (runtime-only; gitignore it)'))
 
 # grimoire persona-agnosticism: no *instructional* persona content. Naming a
 # character (compendium, provenance, connection matrix) is legitimate data.
