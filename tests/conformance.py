@@ -99,10 +99,10 @@ for name, root in REPOS.items():
 
 # README contract (STANDARDS section 12)
 README_SECTIONS = {
-    'grimoire': ['## Quick start (humans)', '## Requirements', '## What is inside',
+    'grimoire': ['## Quick start (Guardians)', '## Requirements', '## What is inside',
                  '## For agents', '## Repository layout', '## Maintenance',
                  '## Verification', '## License and attribution'],
-    'drifter': ['## Quick start (humans)', '## Requirements', '## For agents',
+    'drifter': ['## Quick start (Guardians)', '## Requirements', '## For agents',
                 '## Repository layout', '## Verification', '## Troubleshooting',
                 '## License and attribution'],
 }
@@ -174,7 +174,7 @@ if 'drifter' in REPOS and 'eris' in REPOS:
         pass
 
 # Shared agent documents must keep the same section sequence (STANDARDS 13)
-PARITY_DOCS = ('SOUL.md', 'AGENTS.md', 'INDEX.md', 'TOOLS.md',
+PARITY_DOCS = ('SOUL.md', 'AGENTS.md', 'INDEX.md', 'TOOLS.md', 'IDENTITY.md',
                'USER.template.md', 'RELEASE.md')
 if 'drifter' in REPOS and 'eris' in REPOS:
     for doc in PARITY_DOCS:
@@ -188,6 +188,13 @@ if 'drifter' in REPOS and 'eris' in REPOS:
             sequences[name] = tuple(l for l in text.splitlines() if l.startswith('## '))
         if len(sequences) == 2 and sequences['drifter'] != sequences['eris']:
             issues.append(('agents', doc, 'section sequence differs between agents'))
+        if doc == 'IDENTITY.md' and len(sequences) == 2:
+            fields = {}
+            for name in ('drifter', 'eris'):
+                text = open(os.path.join(REPOS[name], doc), encoding='utf-8').read()
+                fields[name] = tuple(re.findall(r'^- \*\*([^*]+):\*\*', text, re.M))
+            if fields['drifter'] != fields['eris']:
+                issues.append(('agents', doc, 'identity fields differ between agents'))
 
 # Release notes stay short and scannable (STANDARDS 14)
 REL_SECTIONS = ["## What's Changed", '## Verification']

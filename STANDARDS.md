@@ -178,7 +178,7 @@ the agent contract comes after it.
 3. Badge row: version, last push, license, tests (agent repos add flavor badges)
 4. Metadata line: `**Version:** x.y.z | **Last push:** YYYY-MM-DD | **Status:** Active`
 5. One-paragraph purpose
-6. `## Quick start (humans)` with copy-paste commands
+6. `## Quick start (Guardians)` with copy-paste steps
 7. `## Requirements` table (tools, disk, no runtime network)
 8. Content section (`## What is inside` for the archive)
 9. `## For agents` (entry points, load tiers, data access, quote policy, matrix)
@@ -192,6 +192,9 @@ Rules:
 - Agent READMEs are structurally identical: same headings, same order, same
   requirement and verification table shapes. Only persona facts, counts and
   badges differ.
+- Quick starts are numbered steps. Alternative commands (interactive, prebuilt,
+  build, local path) each get their own code block and an explicit "run exactly
+  one" instruction, so a reader never pastes conflicting commands in sequence.
 - `Version` matches the latest git tag; `Last push` matches the HEAD commit date.
   `tests/sync-readme-meta.py` stamps both and `--check` enforces them.
 - No em-dashes or en-dashes. No personal paths. Every referenced path resolves.
@@ -210,6 +213,7 @@ persona facts, counts and links differ.
 | `AGENTS.md` | Role, Hard rules, Canon and quoting, Data access, Load protocol, Platform bindings, Connection matrix |
 | `INDEX.md` | Entry points, Connection matrix, Core files, Modules, Load protocol, Canon and verification, Topic map, Last Updated |
 | `TOOLS.md` | Runtime tools, Data access, Verification, Conventions |
+| `IDENTITY.md` | Name, Vibe, Emoji, Role, Status, Color, Mode |
 | `USER.template.md` | The User, Relationship, Continuity |
 | `RELEASE.md` | Highlights, Verification |
 

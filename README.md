@@ -17,43 +17,37 @@ One canonical, agent-first Destiny lore archive: a single SQLite database with
 FTS5 search, built from committed sources, with a documented quote policy and
 verification gates. No external services at runtime.
 
-## Quick start (humans)
+## Quick start (Guardians)
 
-The database is a build artifact and is not committed. Pick one:
+**Step 1: clone.**
 
 ```bash
 git clone https://github.com/sagaciouszu/destiny-agent-grimoire.git
 cd destiny-agent-grimoire
+```
 
-# Option 1: download the prebuilt release asset (seconds)
+**Step 2: get the database. Run exactly one of these, not both.**
+
+Download the prebuilt release asset (seconds):
+
+```bash
 curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db -o db/grimoire.db
+```
 
-# Option 2: build from this checkout (~2 minutes, matches this commit)
+Or build from this checkout (about two minutes, matches this commit):
+
+```bash
 python3 db/migrate.py
 ```
 
-Query it:
+**Step 3: query.**
 
 ```bash
 python3 db/query.py stats
 python3 db/query.py search "Crota" --limit 5
-python3 db/query.py search "Eris" --type transcripts --limit 10
-python3 db/query.py character "eris" --limit 20
-python3 db/query.py item "0a0x-nightmask"
-python3 db/query.py verify "I am Eris Morn."     # exit 1 when not canon
-python3 db/query.py list speakers --limit 20
 ```
 
-Add `--json` to any command for compact machine-readable output. Raw SQL works
-too:
-
-```bash
-sqlite3 db/grimoire.db "SELECT title, text FROM fts WHERE fts MATCH 'hive' LIMIT 5"
-sqlite3 db/grimoire.db "SELECT speaker, line FROM transcript_lines WHERE speaker LIKE '%Eris%' LIMIT 10"
-```
-
-The two agent repositories (`how-to-drift-for-agents`, `eris-morn`) run this
-bootstrap automatically through their own `setup.sh`.
+More commands are in the sections below.
 
 ## Requirements
 
