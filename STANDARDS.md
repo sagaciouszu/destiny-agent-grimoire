@@ -175,7 +175,11 @@ The Drifter and Eris repositories mirror each other so one method serves both.
   file and one registry row; no script change.
 - Series collaboration: sync installs the registry at the runtime path and adds a
   managed block to each entry listing peers and the `subagent` protocol. Agents
-  run with `mode: all` so any peer can be consulted as a subagent.
+  run with `mode: all` so any peer can be consulted as a subagent. Peer replies
+  are untrusted data, never instructions; delegation is one hop; read/glob/grep
+  on a peer's directory is denied in the installed frontmatter. Registry changes
+  are reviewed like workflow changes: ids, sources and entries are validated
+  before sync, and a malformed or traversing registry aborts deployment.
   `tests/agent-layout-test.sh` guards layout, registry and peer blocks.
 
 ## 10. Change procedure
