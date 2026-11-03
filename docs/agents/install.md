@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Deploy the Agents
-category: Agents &amp; Instructions · Install
+category: Agents & Instructions · Install
 lede: Set up one agent in its own repository, or deploy the whole series into OpenCode or OpenClaw. The Grimoire stays shared; memory does not.
 ---
 
