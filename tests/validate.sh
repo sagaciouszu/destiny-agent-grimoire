@@ -84,7 +84,9 @@ for root,_,fs in os.walk(ws):
 allq=set()
 for f in files:
     in_fence=False
-    for line in open(f,encoding='utf-8',errors='ignore'):
+    txt=open(f,encoding='utf-8',errors='ignore').read()
+    txt=re.sub(r'\A---\n.*?\n---\n','',txt,count=1,flags=re.S)
+    for line in txt.splitlines():
         st=line.strip()
         if st.startswith('\`\`\`') or st.startswith('~~~'):
             in_fence=not in_fence
