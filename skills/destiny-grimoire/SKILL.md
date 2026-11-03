@@ -24,15 +24,15 @@ Use this when you need canonical Destiny lore for storytelling, lore check, agen
 |-------|------|---------|
 | books | 110 | Book metadata |
 | book_entries | 1158 | Lore entries within books |
-| transcripts | 1222 | Quest transcript headers |
-| transcript_lines | 64034 | Canon character dialogue |
+| transcripts | 1225 | Quest transcript headers |
+| transcript_lines | 69213 | Canon character dialogue |
 | grimoire_cards | 2889 | Destiny 1 grimoire cards |
 | interactions | 2699 | Short character dialogue beats |
 | items | 58764 | Weapons / armor / gear lore + flavor |
 | records | 71 | Triumphs / seals |
 | characters | 18 | Named characters |
-| character_lines | 1054 | Canon character quotes for agents |
-| fts | 129615 | FTS5 search index |
+| character_lines | 1189 | Canon character quotes for agents |
+| fts | 134794 | FTS5 search index |
 
 ## How to query
 

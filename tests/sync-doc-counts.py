@@ -31,6 +31,7 @@ C = {
     'eris': q("SELECT COUNT(*) FROM transcript_lines WHERE speaker LIKE '%Eris%' AND is_stage_dir=0"),
     'drifter': q("SELECT COUNT(*) FROM transcript_lines WHERE speaker LIKE '%Drifter%'"),
     'drifter_exact': q("SELECT COUNT(*) FROM transcript_lines WHERE speaker = 'Drifter'"),
+    'character_lines': q('SELECT COUNT(*) FROM character_lines'),
 }
 conn.close()
 
@@ -40,6 +41,9 @@ SHARED = [
     (r'\| `transcripts` \| \d+', '| `transcripts` | {transcripts}'),
     (r'\| transcript_lines \| \d+', '| transcript_lines | {lines}'),
     (r'\| fts \| \d+', '| fts | {fts}'),
+    (r'\| character_lines \| \d+', '| character_lines | {character_lines}'),
+    (r'18 characters \(\d+ canon lines\)', '18 characters ({character_lines} canon lines)'),
+    (r'18 characters \(\d+ lines\)', '18 characters ({character_lines} lines)'),
     (r'\d{3,5} transcript headers', '{transcripts} transcript headers'),
     (r'\d{3,5} transcripts \(\d{4,6} dialogue lines', '{transcripts} transcripts ({lines} dialogue lines'),
     (r'\d{3,5} transcripts \(\d{4,6} lines\)', '{transcripts} transcripts ({lines} lines)'),
