@@ -1,11 +1,7 @@
 ---
 layout: page
 title: Agents
-icon: fas fa-users
-order: 3
 ---
-
-# Agents
 
 Independent Destiny character agents born from the same canonical grimoire.
 

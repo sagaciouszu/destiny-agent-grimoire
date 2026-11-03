@@ -1,11 +1,7 @@
 ---
 layout: page
 title: Getting Started
-icon: fas fa-rocket
-order: 1
 ---
-
-# Getting started
 
 ## Prerequisites
 
@@ -46,4 +42,4 @@ python3 db/query.py verify "I am Eris Morn."
 ## Agent setup
 
 Each agent repo contains a `setup.sh` that links to this archive and bootstraps the
-database. See the Agents tab.
+database.
