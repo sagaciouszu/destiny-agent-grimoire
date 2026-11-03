@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+- Centralized agent testing: Eris suites moved to `tests/` beside the Drifter's;
+  one shared `tests/agent-audit.sh` runner and `tests/check-agent-structure.py`
+  (dependency resolution, tokens, dashes, INDEX completeness, personal paths)
+- Renamed the archive-wide audit to `grimoire-master-audit.sh` (was misnamed
+  `eris-master-audit.sh`); `eris-master-audit.sh` now audits the Eris workspace
+- Agent repos: no local `tests/`, `lore/` is runtime-only, identical `.gitignore`,
+  identical `setup.sh` structure; Drifter 18 suites, Eris 13, archive 11
+- INDEX completeness fixed (`core/relationship-evolution.md`), quote index
+  regenerated from canon, tracked-symlink gate added
+
 ## v1.3.0 - Standards + agent interface v2 (2026-11-02)
 
 - STANDARDS.md: schema contract, naming/canonical speakers, provenance, quote policy, verification gates, connection matrix

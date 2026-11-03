@@ -1,40 +1,62 @@
 # Tests
 
-This directory contains validation scripts for the archive.
+Validation for the archive and for the two agent workspaces. Every suite here is
+agent-agnostic except the explicitly named Drifter/Eris integration suites.
 
-## Categories
+## Shared agent runner
 
-### Archive-agnostic (test the data, not any agent persona)
-- `test-db.sh` - database integrity (29 checks: tables, FTS, orphans, counts)
-- `validate.sh` - consistency check (quotes, links, index)
-- `lore-integrity.sh` - archive structure (books, transcripts, index, slug/file mapping)
-- `lore-quote-count.sh` - per-character transcript line counts vs database
+- `agent-audit.sh <drifter|eris>` - one runner for both agents: per-agent voice,
+  quote, module and scenario suites plus common checks (dependency headers, token
+  estimates, dashes, INDEX completeness, personal paths)
+- `resolve-workspace.sh <caller> [drifter|eris]` - layout-independent workspace
+  resolution (`lore/` may be a symlink or a clone)
+- Root wrappers: `drifter-master-audit.sh` (18 suites), `eris-master-audit.sh`
+  (13 suites), `grimoire-master-audit.sh` (11 suites, archive-wide)
+
+## Archive integrity
+
+- `test-db.sh` - database integrity (35 checks: tables, FTS, orphans, counts,
+  entity leakage, speaker canon, provenance, `v_speakers`, `speaker_aliases`)
+- `lore-integrity.sh` - archive structure (books, transcripts, cards, records)
 - `lore-format.sh` - source markdown transcript format (68/68)
+- `lore-quote-count.sh` - per-character transcript line counts vs the database
 - `compendium-check.sh` - compendium files present and non-empty
-- `query-interface-test.sh` - the agent-facing query.py contract (23 checks)
-- `cutscene-verify.sh` - cutscene captions vs canonical transcripts (8-gram shingles: corroboration, encoding, attribution)
-- `conversation-test.sh` / `eris-conversation-test.sh` - agent queries hit SQLite
-- `ci-checks.py` - stale refs, em-dashes (agent files), personal paths, headers, circular/self deps
-- `sync-doc-counts.py` - rewrite doc count claims from the database (`--check` for CI-style staleness gate)
-- `conformance.py` - per-file conformance across all three repos (headers, refs, token-estimate accuracy, persona-agnostic grimoire)
-- `source-overlap-verify.py` - curated markdown vs live Ishtar overlap + filename/source-slug integrity
+- `validate.sh` - Drifter workspace consistency (links, quotes)
+- `drifter-xref-validate.sh` - Drifter cross-reference resolver
+- `ci-checks.py` - stale names, circular/self dependencies, dashes, personal
+  paths, gitignored refs, headers (also invoked by `conformance.py`)
+- `conformance.py` - per-file conformance across all three repos (headers, refs,
+  token accuracy, persona-agnostic grimoire, tracked symlinks)
+- `source-overlap-verify.py` - curated markdown vs live Ishtar, filename/slug
 - `speaker-audit.py` - parse-noise regression gate for speaker names
-- `live-sample-verify.py` - on-demand live coverage probe per content type (network)
+- `sync-doc-counts.py` - rewrite documented counts from the database
+  (`--check` for the CI-style staleness gate)
+- `live-sample-verify.py` - on-demand live coverage probe (network)
 
-### Utilities
-- `yt-transcript.sh` / `yt-batch.sh` - YouTube caption extraction (subtitle-only, no video) to `source/transcripts/`
+## Agent integration
 
-### Agent-integration (test a specific agent persona against this archive)
-- `drifter-*` scripts - validate the Drifter agent's voice, modules, scenarios, etc.
-- `drifter-quote-verify.sh` - all quoted strings in Drifter files trace to the DB (DB-backed, ~3s)
-- `drifter-master-audit.sh` (at repo root) - unified Drifter audit (17 suites)
-- `eris-master-audit.sh` (at repo root) - unified Eris audit (6 suites)
+- `drifter-*.sh`, `drifter-voice-scorer.py` - Drifter voice, scenarios, quotes,
+  modules, freshness, conflicts, gambit and tape simulation
+- `eris-*.sh`, `eris-voice-scorer.py` - Eris voice, scenarios, quotes, modules,
+  multi-turn arc and contamination scan
+- `drifter-quote-verify.sh` / `eris-quote-verify.sh` - every quoted string in the
+  agent files traces to the database
+- `drifter-quote-lookup.sh` - fast lookup over the Drifter `reference/quote-inverted-index.json`
+  (regenerate with `tests/build-quote-index.py`, freshness gated by the module test)
 
-These integration tests are kept here for backward compatibility with consumers
-(e.g., how-to-drift-for-agents). They are not required for archive integrity.
+## Standalone utilities
 
-## Scrapers (archive/data/)
-- `archive/data/fetch_transcripts_web.py` - all Ishtar transcript pages -> `transcripts_web.jsonl`
-- `archive/data/fetch_cutscenes.py` - cutscene compilation captions (subtitle-only, no video) -> `cutscenes.jsonl`
+- `drifter-coin.sh` - in-character coin flip for decisions
+- `drifter-load.sh` - print a tiered load profile (minimal/standard/deep)
+- `drifter-pre-response.sh` - pre-response validation pipeline
+- `drifter-story-generator.sh` - story scaffold from a topic
+- `yt-transcript.sh` / `yt-batch.sh` - caption extraction (subtitle-only)
+
+## Scrapers (`archive/data/`)
+
+- `archive/data/fetch_transcripts_web.py` - Ishtar transcript pages ->
+  `transcripts_web.jsonl`
+- `archive/data/fetch_cutscenes.py` - cutscene compilation captions ->
+  `cutscenes.jsonl`
 
 Both feed `db/migrate.py`; re-run migrate after fetching.
