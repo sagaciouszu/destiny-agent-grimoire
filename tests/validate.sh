@@ -83,8 +83,15 @@ for root,_,fs in os.walk(ws):
         if f.endswith('.md'): files.append(os.path.join(root,f))
 allq=set()
 for f in files:
+    in_fence=False
     for line in open(f,encoding='utf-8',errors='ignore'):
-        for m in re.finditer(r'"([^"]+)"',line):
+        st=line.strip()
+        if st.startswith('\`\`\`') or st.startswith('~~~'):
+            in_fence=not in_fence
+            continue
+        if in_fence: continue
+        prose=re.sub(r'`[^`]*`','',line)
+        for m in re.finditer(r'"([^"]+)"',prose):
             q=m.group(1).strip()
             if len(q)>6: allq.add(q)
 unv=[q for q in allq if not (any(norm(q) in cn or cn in norm(q) for cn in canon_norm) or norm(q) in corpus_norm)]

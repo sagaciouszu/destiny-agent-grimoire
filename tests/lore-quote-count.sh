@@ -1,7 +1,7 @@
 #!/bin/bash
 # Lore quote count verification (SQLite)
 DB="$(cd "$(dirname "$0")/.." && pwd)/db/grimoire.db"
-[ -f "$DB" ] || { echo "FAIL: database not found"; exit 1; }
+[ -f "$DB" ] || { echo "FAIL: database not found at $DB - bootstrap: ./setup.sh, or python3 db/migrate.py (see README)"; exit 1; }
 echo "=== LORE QUOTE COUNT VERIFICATION ==="
 TOTAL=$(sqlite3 "$DB" "SELECT COUNT(*) FROM transcript_lines WHERE speaker = 'Drifter'")
 echo "Drifter transcript lines (exact): $TOTAL (DB now includes quoted + narration lines)"

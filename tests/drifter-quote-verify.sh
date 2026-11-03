@@ -5,7 +5,7 @@
 
 DB="$(cd "$(dirname "$0")/.." && pwd)/db/grimoire.db"
 WORKSPACE="${WORKSPACE:-$(cd "$(dirname "$0")/../../how-to-drift-for-agents" && pwd)}"
-[ -f "$DB" ] || { echo "FAIL: database not found at $DB"; exit 1; }
+[ -f "$DB" ] || { echo "FAIL: database not found at $DB - bootstrap: ./setup.sh, or python3 db/migrate.py (see README)"; exit 1; }
 
 python3 - "$DB" "$WORKSPACE" << 'PYEOF'
 import re, os, sys, sqlite3
@@ -63,8 +63,16 @@ for root, _, fs in os.walk(ws):
 unv = []
 total = 0
 for f in files:
+    in_fence = False
     for line in open(f, encoding='utf-8', errors='ignore'):
-        for m in re.finditer(r'"([^"]+)"', line):
+        st = line.strip()
+        if st.startswith('```') or st.startswith('~~~'):
+            in_fence = not in_fence
+            continue
+        if in_fence:
+            continue
+        prose = re.sub(r'`[^`]*`', '', line)
+        for m in re.finditer(r'"([^"]+)"', prose):
             q = m.group(1).strip()
             if len(q) <= 6: continue
             total += 1

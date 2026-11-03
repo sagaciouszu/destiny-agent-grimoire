@@ -1,7 +1,7 @@
 #!/bin/bash
 # Database integrity test
 DB="$(cd "$(dirname "$0")/.." && pwd)/db/grimoire.db"
-if [ ! -f "$DB" ]; then echo "FAIL: database not found"; exit 1; fi
+if [ ! -f "$DB" ]; then echo "FAIL: database not found at $DB - bootstrap: ./setup.sh, or python3 db/migrate.py (see README)"; exit 1; fi
 
 echo "=== DATABASE INTEGRITY TEST ==="
 PASS=0; FAIL=0

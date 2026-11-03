@@ -1,6 +1,7 @@
 #!/bin/bash
 # Agent conversation test: pulls lore from the SQLite database
 DB="$(cd "$(dirname "$0")/.." && pwd)/db/grimoire.db"
+[ -f "$DB" ] || { echo "FAIL: database not found at $DB - bootstrap: ./setup.sh, or python3 db/migrate.py (see README)"; exit 1; }
 python3 - "$DB" << 'PYEOF'
 import sqlite3, sys
 db = sys.argv[1]

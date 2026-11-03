@@ -2,7 +2,7 @@
 # Lore Archive Integrity Check (SQLite-backed, plus source-corpus format check)
 DB="$(cd "$(dirname "$0")/.." && pwd)/db/grimoire.db"
 ARCHIVE="$(cd "$(dirname "$0")/.." && pwd)"
-[ -f "$DB" ] || { echo "FAIL: database not found"; exit 1; }
+[ -f "$DB" ] || { echo "FAIL: database not found at $DB - bootstrap: ./setup.sh, or python3 db/migrate.py (see README)"; exit 1; }
 
 echo "=== LORE ARCHIVE INTEGRITY CHECK ==="
 PASS=0; FAIL=0
