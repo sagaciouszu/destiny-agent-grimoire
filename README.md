@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <img src='https://img.shields.io/github/v/tag/sagaciouszu/destiny-agent-grimoire?label=version&color=blue' alt='Version'/>
+  <img src='https://img.shields.io/github/v/release/sagaciouszu/destiny-agent-grimoire?label=version&color=blue' alt='Version'/>
   <a href='https://github.com/sagaciouszu/destiny-agent-grimoire/actions/workflows/ci.yml'><img src='https://github.com/sagaciouszu/destiny-agent-grimoire/actions/workflows/ci.yml/badge.svg' alt='CI'/></a>
   <img src='https://img.shields.io/github/last-commit/sagaciouszu/destiny-agent-grimoire?label=last%20push&color=blue' alt='Last push'/>
   <img src='https://img.shields.io/badge/license-MIT-green' alt='License'/>
