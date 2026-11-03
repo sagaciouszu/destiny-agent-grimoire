@@ -32,7 +32,7 @@ python3 db/query.py find-item "nightmask" --limit 10
 python3 db/query.py record "am-i-to-cast-a-shadow"
 
 # Discovery listings (all read commands accept --offset)
-python3 db/query.py list books|characters|speakers|records [--limit N] [--offset N]
+python3 db/query.py list <books|characters|speakers|records> [--limit N] [--offset N]
 
 # Any command: --json for compact machine-readable output
 ```

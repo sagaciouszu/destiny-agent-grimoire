@@ -122,7 +122,7 @@ content type against Ishtar; `tests/drifter-voice-consistency.sh` /
 
 ## 8. Agent interface contract
 
-- Interface: `python3 db/query.py search|character|character-info|item|book|transcript|find-item|record|verify|verify-many|list|stats`;
+- Interface: one of `python3 db/query.py search|character|character-info|item|book|transcript|find-item|record|verify|verify-many|list|stats`;
   `sqlite3` is the escape hatch. No markdown parsing at runtime.
 - Shared query layer: `db/api.py` returns data; the CLI formats it and the MCP
   server exposes the same functions as typed tools. One implementation.
