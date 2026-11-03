@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.10.0 - Compendium and coverage (2026-11-03)
+## v0.19.0 - Compendium and coverage (2026-11-03)
 
 Versioning reset: this line stays below 1.0 until a major milestone.
 
@@ -18,13 +18,13 @@ Versioning reset: this line stays below 1.0 until a major milestone.
 - CI active at `.github/workflows/ci.yml`
 
 
-## v1.8.1 - Character lookup and ranking fixes (2026-11-03)
+## v0.18.1 - Character lookup and ranking fixes (2026-11-03)
 
 - exact character resolution (drifter no longer resolves to Blue's Ghost)
 - title-boosted relevance with item penalty; --no-rank available
 - docs for ranking and offsets
 
-## v1.8.0 - Leaner index and operations tooling (2026-11-03)
+## v0.18.0 - Leaner index and operations tooling (2026-11-03)
 
 - stat-only items excluded from FTS (136,802 -> 120,731 rows)
 - schema version file and database gate (1.0.1)
@@ -32,12 +32,12 @@ Versioning reset: this line stays below 1.0 until a major milestone.
 - slim database builder (95 MB), release/backup/sync scripts
 - CI workflow for build, conformance, database, interface, retrieval, MCP
 
-## v1.7.1 - Clone-mode quote scan fix (2026-11-03)
+## v0.17.1 - Clone-mode quote scan fix (2026-11-03)
 
 - drifter-quote-verify excludes the cloned lore archive (fresh-clone audit 18/18)
 - removed an unrelated session note accidentally committed in v1.7.0
 
-## v1.7.0 - Retrieval quality and deeper MCP (2026-11-03)
+## v0.17.0 - Retrieval quality and deeper MCP (2026-11-03)
 
 - retrieval eval harness (15 queries); relevance ordering now default
 - item_title_fts index for fast find_item title lookup
@@ -46,7 +46,7 @@ Versioning reset: this line stays below 1.0 until a major milestone.
 - verification cache for repeated MCP calls
 - database 170 MB, 38 checks, interface 29 checks, matrix 141 calls
 
-## v1.6.0 - MCP reading tools and pagination (2026-11-03)
+## v0.16.0 - MCP reading tools and pagination (2026-11-03)
 
 - MCP: book, transcript, find_item and record tools; ten tools total
 - Pagination (`offset`) across tools and CLI; book/transcript totals
@@ -54,7 +54,7 @@ Versioning reset: this line stays below 1.0 until a major milestone.
 - Read-only/idempotent tool annotations; CLI parity for all reading commands
 - Interface 27 checks; MCP matrix 138 calls across ten tools and four resources
 
-## v1.5.0 - Faster verification and hardened delivery (2026-11-03)
+## v0.15.0 - Faster verification and hardened delivery (2026-11-03)
 
 - verify_fts index: quote checks ~58 ms -> ~1.4 ms; database 164 MB, reproducible
 - onboarding verifies the prebuilt database against release SHA256SUMS
@@ -63,7 +63,7 @@ Versioning reset: this line stays below 1.0 until a major milestone.
 - extended regression: robustness, MCP matrix, checksum faults, DB/source cross-check
 - seeded runtime memory is owner-only (0600)
 
-## v1.4.0 - MCP adapter and attribution-aware verification (2026-11-03)
+## v0.14.0 - MCP adapter and attribution-aware verification (2026-11-03)
 
 - verify gains `--speaker` (attribution) and `--exact` (full line); MCP exposes both
 - CLI limits decoupled from MCP: API up to 10,000, MCP clamps to 1-100
@@ -77,7 +77,7 @@ Versioning reset: this line stays below 1.0 until a major milestone.
 - `tests/mcp-test.py`: tool contract, read-only guard, limit clamping and a real
   stdio handshake; skips without the optional venv
 
-## v1.3.1 - Documentation and verification overhaul (2026-11-02)
+## v0.13.1 - Documentation and verification overhaul (2026-11-02)
 
 - README standard: banner, version, last push, Guardian-first quick start, agent
   contract, layout, verification, troubleshooting; gated by conformance
@@ -99,7 +99,7 @@ Versioning reset: this line stays below 1.0 until a major milestone.
 - INDEX completeness fixed (`core/relationship-evolution.md`), quote index
   regenerated from canon, tracked-symlink gate added
 
-## v1.3.0 - Standards + agent interface v2 (2026-11-02)
+## v0.13.0 - Standards + agent interface v2 (2026-11-02)
 
 - STANDARDS.md: schema contract, naming/canonical speakers, provenance, quote policy, verification gates, connection matrix
 - Database to standards: speaker alias canonicalization at migration (0 variants), grimoire_cards.source_url (2889/2889), speaker_aliases table, v_speakers view, capabilities.json manifest
@@ -109,7 +109,7 @@ Versioning reset: this line stays below 1.0 until a major milestone.
 - Cutscene corpus: 31 videos, 47,576 lines (auto-generated captions, quality-gated)
 - Counts: 1229 transcripts, 71,221 lines, FTS 136,802, 1,189 character quotes
 
-## v1.2.0 - Web transcripts + cutscenes + quote-verify hardening (2026-11-02)
+## v0.12.0 - Web transcripts + cutscenes + quote-verify hardening (2026-11-02)
 
 ### Packaging
 
@@ -133,7 +133,7 @@ Versioning reset: this line stays below 1.0 until a major milestone.
 - `ci-checks.py`: source-lore exemptions, RELEASE.md header exemption
 - `tests/lore-format.sh`: path fixed for `source/transcripts/` reorganization
 
-## v1.1.0 - Ishtar coverage complete + source trim (2026-11-02)
+## v0.11.0 - Ishtar coverage complete + source trim (2026-11-02)
 
 ### Coverage
 
@@ -145,7 +145,7 @@ Versioning reset: this line stays below 1.0 until a major milestone.
 - `source/` now contains exactly what `db/migrate.py` consumes: books, transcripts, cards, records
 - RELEASE.md added with verified totals and test results
 
-## v1.0.0 - SQLite-first (2026-11-02)
+## v0.10.0 - SQLite-first (2026-11-02)
 
 ### Highlights
 
