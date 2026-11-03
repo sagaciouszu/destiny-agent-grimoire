@@ -391,25 +391,25 @@ def migrate():
     # Build FTS index (global rowid sequence)
     print('building FTS index...')
     fts_id = 0
-    def add_fts(title, text, speaker='', body=''):
+    def add_fts(title, text, speaker='', body='', source=''):
         nonlocal fts_id
         fts_id += 1
-        conn.execute('INSERT INTO fts (rowid,title,text,speaker,body) VALUES (?,?,?,?,?)',
-            (fts_id, title, text or '', speaker, body or ''))
+        conn.execute('INSERT INTO fts (rowid,title,text,speaker,body,source) VALUES (?,?,?,?,?,?)',
+            (fts_id, title, text or '', speaker, body or '', source))
     for bid, slug, title in conn.execute('SELECT id,slug,title FROM books').fetchall():
         for eid, etitle, ebody in conn.execute('SELECT id,title,body FROM book_entries WHERE book_id=?', (bid,)).fetchall():
-            add_fts(f'{title}: {etitle}', ebody)
+            add_fts(f'{title}: {etitle}', ebody, source='book_entry')
     for tid, slug, title in conn.execute('SELECT id,slug,title FROM transcripts').fetchall():
         for tlid, sp, line in conn.execute('SELECT id,speaker,line FROM transcript_lines WHERE transcript_id=?', (tid,)).fetchall():
-            add_fts(title, line, sp)
+            add_fts(title, line, sp, source='transcript_line')
     for gid, slug, title, body in conn.execute('SELECT id,slug,title,body FROM grimoire_cards').fetchall():
-        add_fts(title, body)
+        add_fts(title, body, source='grimoire_card')
     for iid, slug, title, speaker, text in conn.execute('SELECT id,slug,title,speaker,text FROM interactions').fetchall():
-        add_fts(title, text, speaker)
+        add_fts(title, text, speaker, source='interaction')
     for iid, slug, title, text in conn.execute('SELECT id,slug,title,text FROM items').fetchall():
-        add_fts(title, text)
+        add_fts(title, text, source='item')
     for rid, slug, title, body in conn.execute('SELECT id,slug,title,body FROM records').fetchall():
-        add_fts(title, body)
+        add_fts(title, body, source='record')
     print(f'fts entries: {fts_id}')
 
     # Meta

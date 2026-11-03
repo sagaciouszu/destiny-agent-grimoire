@@ -11,6 +11,7 @@ This directory contains validation scripts for the archive.
 - `lore-quote-count.sh` - per-character transcript line counts vs database
 - `lore-format.sh` - source markdown transcript format (68/68)
 - `compendium-check.sh` - compendium files present and non-empty
+- `query-interface-test.sh` - the agent-facing query.py contract (23 checks)
 - `cutscene-verify.sh` - cutscene captions vs canonical transcripts (8-gram shingles: corroboration, encoding, attribution)
 - `conversation-test.sh` / `eris-conversation-test.sh` - agent queries hit SQLite
 - `ci-checks.py` - stale refs, em-dashes (agent files), personal paths, headers, circular/self deps

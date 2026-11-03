@@ -101,8 +101,10 @@ content type against Ishtar; `tests/drifter-voice-consistency.sh` /
 
 ## 8. Agent interface contract
 
-- Interface is `python3 db/query.py <search|character|item|stats>`; `sqlite3` is
-  the escape hatch. No markdown parsing at runtime.
+- Interface: `python3 db/query.py search|character|item|verify|list|stats`;
+  `sqlite3` is the escape hatch. No markdown parsing at runtime.
+- Every command supports `--json`; search returns snippets unless `--full`;
+  `verify` exits 1 when a quote is absent (quote-safety primitive).
 - FTS is the search surface: `fts` holds exactly the indexable rows, `MATCH`
   syntax, porter stemming.
 - Output budget: `--limit` on every query; agents should assume 20-40 lines per
