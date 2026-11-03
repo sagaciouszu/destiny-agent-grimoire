@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Agents &amp; Instructions
-category: Agents &amp; Instructions · Overview
+title: Agents & Instructions
+category: Agents & Instructions · Overview
 lede: Independent character agents, one shared canon. The Drifter and Eris Morn keep their own voices, memory and tests, and meet only in the archive.
 ---
 
