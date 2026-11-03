@@ -11,7 +11,7 @@
   <img src='https://img.shields.io/badge/tests-11%2F11%20passing-brightgreen' alt='Tests'/>
 </p>
 
-**Version:** 1.3.1 | **Last push:** 2026-11-02 | **Status:** Active
+**Version:** 1.3.1 | **Last push:** 2026-11-03 | **Status:** Active
 
 One canonical, agent-first Destiny lore archive: a single SQLite database with
 FTS5 search, built from committed sources, with a documented quote policy and
@@ -85,6 +85,8 @@ migration. The full contract is `STANDARDS.md`.
 ## For agents
 
 - **Skill:** `skills/destiny-grimoire/SKILL.md` is the drop-in agent skill.
+- **MCP:** `mcp-server/run.sh` exposes the same tools over stdio for runtimes
+  without shell access; read-only, official SDK, optional install.
 - **Interface:** `python3 db/query.py search|character|item|verify|list|stats`.
   `verify` is the quote-safety primitive (exit 1 when absent); every command
   accepts `--json`; search returns snippets unless `--full`.
@@ -114,6 +116,7 @@ archive/     # raw scraper output (JSONL) and fetchers
 scripts/     # ingestion helpers
 tests/       # archive gates, agent suites, shared runner, conformance
 skills/      # agent-facing SKILL.md
+mcp-server/  # optional MCP adapter (stdio, read-only)
 index.md     # short pointer to the database
 STANDARDS.md # the contract: schema, naming, provenance, gates, README rules
 ```

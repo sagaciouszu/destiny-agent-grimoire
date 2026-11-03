@@ -52,6 +52,8 @@ agent-agnostic except the explicitly named Drifter/Eris integration suites.
 - `onboarding-smoke.sh` - both agents, symlink and clone modes, fully offline:
   clone, setup, audit, clean working tree (24 checks)
 - `link-check.py` - external URL health for the READMEs (`--all` includes badges)
+- `mcp-test.py` - MCP tool contract, read-only guard and stdio handshake
+  (`mcp-server/.venv/bin/python tests/mcp-test.py`; skips without the venv)
 
 ## Standalone utilities
 

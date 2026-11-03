@@ -1,0 +1,86 @@
+# Grimoire MCP server
+
+Typed tool access to `db/grimoire.db` over the Model Context Protocol (stdio).
+Uses the official MCP Python SDK (`mcp==2.3.0`). Read-only.
+
+## Why
+
+The CLI (`db/query.py`) needs a shell and Python on the agent host. MCP clients
+can call the same database as tools from any runtime: OpenCode, Claude Desktop,
+Cursor, or a hosted agent. Quote policy and output limits are enforced here, not
+in prose.
+
+## Install
+
+```bash
+bash mcp-server/install.sh
+```
+
+That creates `mcp-server/.venv`, installs the pinned SDK and prints a client
+config snippet. Agent workspaces can do it during onboarding:
+
+```bash
+WITH_MCP=1 ./setup.sh
+```
+
+The virtualenv is gitignored. The CLI stays dependency-free; only this adapter
+needs the SDK.
+
+## Run
+
+```bash
+./mcp-server/run.sh
+```
+
+It speaks MCP on stdio and exits when the client disconnects.
+
+## Client configuration
+
+OpenCode (`~/.config/opencode/opencode.json`):
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "grimoire": {
+        "type": "local",
+        "command": ["/absolute/path/to/destiny-agent-grimoire/mcp-server/run.sh"]
+      }
+    }
+  }
+}
+```
+
+From an agent workspace, the archive is usually mounted at `lore/`, so the same
+path is `<agent>/lore/mcp-server/run.sh`. Use an absolute path in client config.
+
+## Tools
+
+| Tool | Arguments | Returns |
+|---|---|---|
+| `search` | `query`, `type?`, `limit=10`, `full=false` | rows with snippet or full text |
+| `character` | `name`, `about?`, `all_lines=false`, `limit=20` | `{found, header, rows}` |
+| `item` | `slug` | item row, `text` trimmed |
+| `verify` | `quote` | `{quote, verified, matches}` |
+| `list_records` | `kind`, `limit=50` | books, characters, speakers, records |
+| `stats` | none | row counts, top item types, top speakers |
+
+All limits clamp to 1-100. Full text is trimmed to 4000 characters per row.
+`verify` is the quote-safety primitive: `verified` is true only for canonical text.
+
+## Safety
+
+- SQLite is opened with URI `mode=ro`; writes fail at the driver level.
+- No arbitrary SQL tool is exposed. The five query shapes are the whole surface.
+- No network access. The database path is resolved from `GRIMOIRE_DB` or
+  `db/grimoire.db`.
+
+## Test
+
+```bash
+mcp-server/.venv/bin/python tests/mcp-test.py
+```
+
+Covers tool registration, search, verify accept/reject, limit clamping, the
+read-only guard and a real stdio handshake (`initialize`, `tools/list`,
+`tools/call`).

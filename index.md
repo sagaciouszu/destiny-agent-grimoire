@@ -12,6 +12,7 @@ Short orientation. Counts and the full guide live in `README.md`; the contract i
 | Schema and table contract | `db/README.md`, `db/schema.sql` |
 | Naming, provenance, quote policy, gates | `STANDARDS.md` |
 | Machine-readable interface | `db/capabilities.json` |
+| MCP adapter (optional) | `mcp-server/README.md` |
 
 ## Quick commands
 

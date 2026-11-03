@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+- MCP adapter: `mcp-server/` uses the official SDK (stdio, read-only) to expose
+  `search`, `character`, `item`, `verify`, `list_records`, `stats` as typed tools;
+  install with `bash mcp-server/install.sh` or `WITH_MCP=1 ./setup.sh`
+- `db/api.py`: shared importable query layer behind both the CLI and the MCP
+  server; CLI output unchanged (23/23 interface checks)
+- `tests/mcp-test.py`: tool contract, read-only guard, limit clamping and a real
+  stdio handshake; skips without the optional venv
+
 ## v1.3.1 - Documentation and verification overhaul (2026-11-02)
 
 - README standard: banner, version, last push, Guardian-first quick start, agent
