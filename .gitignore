@@ -26,3 +26,4 @@ mcp-server/.venv/
 docs/_site/
 docs/vendor/
 docs/.bundle/
+docs/.jekyll-cache/
