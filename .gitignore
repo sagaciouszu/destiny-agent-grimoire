@@ -22,6 +22,3 @@ db/grimoire.db-*
 # MCP server virtualenv (optional dependency)
 mcp-server/.venv/
 
-# Static site build
-docs/_site/
-docs/node_modules/
