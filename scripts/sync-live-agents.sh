@@ -72,6 +72,16 @@ EXCLUDES=(
     --exclude 'core/session-state.md' --exclude 'core/cross-session-memory.md'
 )
 
+require_ready() {
+    [ -f "$1/persona.json" ] || return 0
+    python3 - "$1/persona.json" <<'PY'
+import json, sys
+data = json.load(open(sys.argv[1], encoding='utf-8'))
+if not data.get('ready'):
+    sys.exit(f"agent not ready: {data.get('id')} persona.json ready=false")
+PY
+}
+
 # Validate the registry up front: process substitution hides exit codes.
 manifest ids >/dev/null || { echo "FATAL: invalid series registry: $MANIFEST" >&2; exit 1; }
 
@@ -103,6 +113,7 @@ if [ "$TARGET" = "opencode" ]; then
     while IFS=$'\t' read -r id source entry; do
         src="$WORK/$source"
         [ -d "$src" ] || { echo "FATAL: source missing: $src" >&2; exit 1; }
+        require_ready "$src" || exit 1
         $DRY mkdir -p "$DEST/$id"
         rsync -a --delete $DRY "${EXCLUDES[@]}" "$src/" "$DEST/$id/"
         if [ -f "$DEST/$id/$entry" ]; then
@@ -273,6 +284,7 @@ else
     while IFS=$'\t' read -r id source entry; do
         src="$WORK/$source"
         [ -d "$src" ] || { echo "FATAL: source missing: $src" >&2; exit 1; }
+        require_ready "$src" || exit 1
         target="$OC_ROOT/workspace-$id"
         $DRY mkdir -p "$target"
         rsync -a --delete $DRY "${EXCLUDES[@]}" "$src/" "$target/"
