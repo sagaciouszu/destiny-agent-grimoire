@@ -1,7 +1,7 @@
 # Standards
 
 > **Depends On:** none (standards reference)
-> **Token Estimate:** ~1.7K tokens
+> **Token Estimate:** ~2.4K tokens
 
 The contract every file, script, and database row in this repository must meet.
 Verification gates (section 7) enforce these rules; a change that breaks them is
@@ -106,6 +106,8 @@ match a recomputation of their source text.
 | `tests/speaker-audit.py` | reclassified parse noise must not reappear |
 | `tests/sync-doc-counts.py --check` | docs counts match the database |
 | `drifter-master-audit.sh` / `eris-master-audit.sh` (shared `tests/agent-audit.sh`) | agent-side suites (voice, quotes, modules, dependency coverage, index completeness, hygiene) |
+| `tests/agent-audit.sh` | single runner: per-agent suites plus shared structure checks |
+| `tests/check-agent-structure.py` | dependency resolution, token headers, dashes, INDEX completeness, personal paths (both agents) |
 | `tests/conformance.py` | per-file headers, token accuracy, refs, persona-agnosticism; runs `ci-checks` per agent repo |
 | `tests/ci-checks.py` (via conformance) | stale names, circular/self dependencies, headers, em-dashes, personal paths, gitignored refs in instructions |
 
@@ -128,16 +130,37 @@ content type against Ishtar; `tests/drifter-voice-consistency.sh` /
 - Nothing in this repo may assume a specific agent platform. Files are plain
   markdown/yaml/binary data with the documented contracts above.
 
-## 9. Change procedure
+## 9. Agent workspace contract
+
+The Drifter and Eris repositories mirror each other so one method serves both.
+
+- Root: `AGENTS.md`, `INDEX.md`, `SOUL.md`, `IDENTITY.md`, `TOOLS.md`,
+  `<agent>.md` (platform entry), `<agent>-core.md`, `<agent>-voice.md`,
+  `README.md`, `RELEASE.md`.
+- Shared directories: `core/`, `voice/`, `world/`, `reference/`.
+- `setup.sh` is identical apart from the agent name, banner and core-file hint.
+- `.gitignore` is identical.
+- No local `tests/` directory: every suite lives here in `tests/` and runs through
+  `lore/` (symlink or clone). Verification entry point:
+  `bash lore/<agent>-master-audit.sh`.
+- `tests/agent-audit.sh <agent>` is the single runner. Per-agent suites are added
+  there, never duplicated in the agent repos.
+- `tests/check-agent-structure.py` enforces, for both agents: every declared
+  dependency resolves (runtime memory falls back to its template), token headers
+  exist, no em/en dashes, INDEX lists every module and every reference resolves,
+  and no personal paths appear.
+
+## 10. Change procedure
 
 1. Ingest (`archive/` scrapers or `scripts/ingest-*`) into the documented paths.
 2. `python3 db/migrate.py` (rebuild; verify counts in stdout).
 3. `python3 tests/sync-doc-counts.py` (docs counts).
-4. Run the gates in section 7 (both agent audits + fresh-clone spot check for
-   layout changes).
+4. Run the gates in section 7: `grimoire-master-audit.sh`, both agent wrappers
+   (`drifter-master-audit.sh`, `eris-master-audit.sh`), and a fresh-clone spot
+   check for layout changes.
 5. Commit. Refresh the backup and the release asset after major milestones.
 
-## 10. Packaging
+## 11. Packaging
 
 - Database: build artifact, attached to releases (`gh release upload <tag> db/grimoire.db --clobber`),
   digest verified against local sha256.
