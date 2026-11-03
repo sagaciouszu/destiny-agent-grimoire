@@ -6,7 +6,10 @@ HERE="$(cd "$(dirname "$0")/.." && pwd)"
 OUT="${1:-$HOME/destiny-agent-grimoire-backup.zip}"
 rm -f "$OUT" "$OUT.sha256"
 cd "$(dirname "$HERE")"
-zip -rq "$OUT" "$(basename "$HERE")" -x "$(basename "$HERE")/db/grimoire.db"
+zip -rq "$OUT" "$(basename "$HERE")" \
+  -x "$(basename "$HERE")/db/grimoire.db" \
+     "$(basename "$HERE")/mcp-server/.venv/*" \
+     "*/__pycache__/*"
 sha256sum "$OUT" > "$OUT.sha256"
 ls -lh "$OUT" | awk '{print "backup:", $5, $9}'
 cat "$OUT.sha256"

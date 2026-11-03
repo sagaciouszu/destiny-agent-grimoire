@@ -15,8 +15,8 @@ $DRY mkdir -p "$STAGE"
 $DRY cp --reflink=auto "$DB" "$STAGE/grimoire.db"
 $DRY cp "$HERE/RELEASE.md" "$STAGE/RELEASE.md"
 $DRY bash -c "cd '$STAGE' && sha256sum grimoire.db > SHA256SUMS"
-$DRY cat "$STAGE/SHA256SUMS"
-$DRY cat <<EOF
+[ -z "$DRY" ] && cat "$STAGE/SHA256SUMS"
+cat <<EOF
 
 Publish:
   cd $HERE
