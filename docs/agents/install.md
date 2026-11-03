@@ -71,6 +71,41 @@ and a read-only tool deny list.
 </details>
 
 <details class="section">
+<summary><span class="section-title" role="heading" aria-level="2" id="multiple-agents">Running more than one agent <a class="heading-anchor" href="#multiple-agents" aria-label="Permalink to Running more than one agent">#</a></span></summary>
+
+The deployment is built for the whole series at once. You do not need a second
+install for Eris, and you do not need to choose one agent permanently.
+
+### OpenCode
+
+The sync installs `drifter` and `eris` as primary agents, plus the two consult
+copies. Each session selects one primary. Use the agent picker when starting a
+session, or set `default_agent` in `~/.config/opencode/opencode.json` to the one
+you want preselected.
+
+Running both at the same time is normal: they are separate agents with separate
+sessions and separate runtime memory. Switching agents does not merge their
+memories or their voices.
+
+### OpenClaw
+
+Each primary is a separate OpenClaw agent with its own workspace, `agentDir` and
+session store. One gateway can host both. Add channel bindings only if you want
+inbound messages routed to a specific agent; otherwise select the agent directly.
+
+<pre><code>openclaw agents list
+openclaw agents list --bindings</code></pre>
+
+### What is shared, and what is not
+
+The SQLite archive is opened read-only, so concurrent queries are safe. What the
+agents share is canon. What they do not share is runtime memory, private notes or
+voice files. Consult copies can read the archive and answer a peer, but cannot
+write or read the peer's directory.
+
+</details>
+
+<details class="section">
 <summary><span class="section-title" role="heading" aria-level="2" id="consult">Read-only consultation <a class="heading-anchor" href="#consult" aria-label="Permalink to Read-only consultation">#</a></span></summary>
 
 A primary agent consults a peer by calling the subagent tool with the peer's
