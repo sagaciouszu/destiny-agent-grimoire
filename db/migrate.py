@@ -435,6 +435,12 @@ def migrate():
     v_count = conn.execute('SELECT COUNT(*) FROM verify_fts').fetchone()[0]
     print(f'verification entries: {v_count}')
 
+    conn.execute(
+        "INSERT INTO item_title_fts(title, slug, item_type, release) "
+        "SELECT title, slug, item_type, release FROM items WHERE title != ''")
+    t_count = conn.execute('SELECT COUNT(*) FROM item_title_fts').fetchone()[0]
+    print(f'item title entries: {t_count}')
+
     # Meta
     for k, v in [
         ('version','1.0.0'),

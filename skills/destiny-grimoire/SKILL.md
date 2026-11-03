@@ -34,6 +34,7 @@ Use this when you need canonical Destiny lore for storytelling, lore check, agen
 | character_lines | 1189 | Canon character quotes for agents |
 | fts | 136802 | FTS5 search index |
 | verify_fts | 120731 | Fast quote verification index |
+| item_title_fts | 58764 | Item title lookup index |
 
 ## How to query
 
@@ -86,8 +87,10 @@ bash mcp-server/install.sh     # once: venv + official SDK
 It ships with this archive, so one install serves every agent that mounts it.
 
 Tools: `search`, `character`, `item`, `verify`, `list_records`, `stats`,
-`book`, `transcript`, `find_item`, `record`. Resources: `grimoire://books`,
-`grimoire://characters`, `grimoire://records`, `grimoire://stats`. The
+`book`, `transcript`, `find_item`, `record`, `verify_many`, `character_info`.
+Resources: `grimoire://books`,
+`grimoire://characters`, `grimoire://records`, `grimoire://stats`, plus
+`grimoire://book/{slug}` templates. The
 server is read-only, exposes no arbitrary SQL, clamps limits to 1-100 and trims
 full text to 4000 characters. Full details: `mcp-server/README.md`.
 

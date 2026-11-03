@@ -142,3 +142,9 @@ CREATE VIRTUAL TABLE IF NOT EXISTS verify_fts USING fts5(
     norm, source UNINDEXED, slug UNINDEXED, speaker UNINDEXED,
     tokenize='porter unicode61'
 );
+
+-- Item title lookup for find_item (titles only; lore text stays in fts)
+CREATE VIRTUAL TABLE IF NOT EXISTS item_title_fts USING fts5(
+    title, slug UNINDEXED, item_type UNINDEXED, release UNINDEXED,
+    tokenize='unicode61'
+);

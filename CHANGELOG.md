@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.7.0 - Retrieval quality and deeper MCP (2026-11-03)
+
+- retrieval eval harness (15 queries); relevance ordering now default
+- item_title_fts index for fast find_item title lookup
+- search totals/next_offset; verify_many (20); character_info
+- MCP resource templates (book/transcript/character/record) and two prompts
+- verification cache for repeated MCP calls
+- database 170 MB, 38 checks, interface 29 checks, matrix 141 calls
+
 ## v1.6.0 - MCP reading tools and pagination (2026-11-03)
 
 - MCP: book, transcript, find_item and record tools; ten tools total

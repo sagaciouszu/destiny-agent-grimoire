@@ -15,7 +15,7 @@ agent-agnostic except the explicitly named Drifter/Eris integration suites.
 
 ## Archive integrity
 
-- `test-db.sh` - database integrity (37 checks: tables, FTS, orphans, counts,
+- `test-db.sh` - database integrity (38 checks: tables, FTS, orphans, counts,
   entity leakage, speaker canon, provenance, `v_speakers`, `speaker_aliases`)
 - `lore-integrity.sh` - archive structure (books, transcripts, cards, records)
 - `lore-format.sh` - source markdown transcript format (68/68)
@@ -52,7 +52,7 @@ agent-agnostic except the explicitly named Drifter/Eris integration suites.
 - `extended-suite.sh` - runs the four suites below plus the MCP contract
 - `robustness-test.py` - corrupt/truncated/missing databases, edge inputs,
   read-only enforcement, 160 concurrent queries, injection attempts
-- `mcp-matrix-test.py` - MCP calls across all ten tools (138-200 per run), 3 concurrent clients,
+- `mcp-matrix-test.py` - MCP calls across all twelve tools (140-200 per run), 3 concurrent clients,
   strict parity with the API, clean malformed-call errors, output caps
 - `checksum-test.sh` - verified download, missing checksum warning, mismatch
   rejection with no partial or installed database

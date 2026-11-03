@@ -9,6 +9,7 @@ Run:  ./mcp-server/run.sh            (uses mcp-server/.venv)
 """
 import json
 import os
+from functools import lru_cache
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -65,7 +66,7 @@ def _trim(text, limit=MAX_TEXT):
 
 @server.tool(annotations=READ_ONLY)
 def search(query: str, type: str | None = None, limit: int = 10, full: bool = False,
-           offset: int = 0) -> dict:
+           offset: int = 0, rank: bool = True) -> dict:
     """Full-text search over books, transcripts, cards, items and records.
 
     Args:
@@ -74,13 +75,17 @@ def search(query: str, type: str | None = None, limit: int = 10, full: bool = Fa
         limit: Maximum rows (1-100).
         full: Return full text instead of bounded snippets.
         offset: Rows to skip (0-10000).
+        rank: Order by FTS relevance instead of insertion order.
     """
     rows = _api(api.search, query, type=type, limit=_limit(limit, 10), full=full,
-                offset=_offset(offset))
+                offset=_offset(offset), rank=rank)
+    total = _api(api.search_total, query, type=type)
     if full:
         for r in rows:
             r['text'] = _trim(r.get('text', ''))
-    return {'count': len(rows), 'rows': rows}
+    nxt = _offset(offset) + len(rows)
+    return {'count': len(rows), 'total': total,
+            'next_offset': nxt if nxt < total else None, 'rows': rows}
 
 
 @server.tool(annotations=READ_ONLY)
@@ -114,6 +119,11 @@ def item(slug: str) -> dict:
     return row
 
 
+@lru_cache(maxsize=512)
+def _verify_cached(quote, speaker, exact):
+    return json.dumps(api.verify(quote, speaker=speaker, exact=exact), sort_keys=True)
+
+
 @server.tool(annotations=READ_ONLY)
 def verify(quote: str, speaker: str | None = None, exact: bool = False) -> dict:
     """Check a quote against canon. Use before quoting anything.
@@ -126,7 +136,10 @@ def verify(quote: str, speaker: str | None = None, exact: bool = False) -> dict:
     Returns verified=true only when the text traces to canonical content, with
     source, speaker and exact-match flags.
     """
-    return _api(api.verify, quote, speaker=speaker, exact=exact)
+    try:
+        return json.loads(_verify_cached(quote, speaker or '', exact))
+    except (ValueError, FileNotFoundError) as e:
+        raise ToolError(str(e)) from e
 
 
 @server.tool(annotations=READ_ONLY)
@@ -146,6 +159,31 @@ def list_records(kind: str, limit: int = 50, offset: int = 0) -> dict:
 def stats() -> dict:
     """Row counts plus top item types and speakers."""
     return _api(api.stats)
+
+
+@server.tool(annotations=READ_ONLY)
+def verify_many(quotes: list[str], speaker: str | None = None, exact: bool = False) -> dict:
+    """Verify up to 20 quotes in one call.
+
+    Args:
+        quotes: 1-20 strings to check.
+        speaker: Require this attribution for every quote.
+        exact: Require full canonical lines.
+    """
+    return _api(api.verify_many, quotes, speaker=speaker, exact=exact)
+
+
+@server.tool(annotations=READ_ONLY)
+def character_info(name: str) -> dict:
+    """Character metadata, aliases and line counts.
+
+    Args:
+        name: Character name or slug.
+    """
+    res = _api(api.character_info, name)
+    if res is None:
+        raise ToolError(f'character not found: {name}')
+    return res
 
 
 @server.tool(annotations=READ_ONLY)
@@ -233,6 +271,56 @@ def records_resource() -> str:
                  mime_type='application/json')
 def stats_resource() -> str:
     return json.dumps(api.stats()['counts'], ensure_ascii=False)
+
+
+@server.resource('grimoire://book/{slug}', name='book', description='A lore book with entries',
+                 mime_type='application/json')
+def book_resource(slug: str) -> str:
+    res = api.book(slug, limit=10000, full=True)
+    if res is None:
+        raise ValueError(f'book not found: {slug}')
+    return json.dumps(res, ensure_ascii=False)
+
+
+@server.resource('grimoire://transcript/{slug}', name='transcript',
+                 description='A transcript with dialogue', mime_type='application/json')
+def transcript_resource(slug: str) -> str:
+    res = api.transcript(slug, limit=2000, full=True)
+    if res is None:
+        raise ValueError(f'transcript not found: {slug}')
+    return json.dumps(res, ensure_ascii=False)
+
+
+@server.resource('grimoire://character/{slug}', name='character',
+                 description='Character metadata and curated quotes', mime_type='application/json')
+def character_resource(slug: str) -> str:
+    info = api.character_info(slug)
+    if info is None:
+        raise ValueError(f'character not found: {slug}')
+    lines = api.character(slug, limit=10000)
+    return json.dumps({'info': info, 'lines': lines['rows'] if lines else []}, ensure_ascii=False)
+
+
+@server.resource('grimoire://record/{slug}', name='record', description='A triumph or seal',
+                 mime_type='application/json')
+def record_resource(slug: str) -> str:
+    res = api.record(slug)
+    if res is None:
+        raise ValueError(f'record not found: {slug}')
+    return json.dumps(res, ensure_ascii=False)
+
+
+@server.prompt(name='quote_safe_lookup', description='Look up lore and return only verified quotes')
+def quote_safe_lookup(topic: str) -> str:
+    return (f'Find canonical Destiny lore about "{topic}". Search the grimoire, then '
+            'call verify with the speaker and exact=true for every line before quoting it. '
+            'If verify fails, do not quote the line.')
+
+
+@server.prompt(name='character_brief', description='Build a source-backed character brief')
+def character_brief(name: str) -> str:
+    return (f'Use character_info("{name}") and character("{name}"), then summarize the '
+            'character using only verified lines. Attribute every quote to its speaker.')
 
 
 def main():

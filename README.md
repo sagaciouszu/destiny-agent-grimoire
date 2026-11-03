@@ -11,7 +11,7 @@
   <img src='https://img.shields.io/badge/tests-11%2F11%20passing-brightgreen' alt='Tests'/>
 </p>
 
-**Version:** 1.6.0 | **Last push:** 2026-11-03 | **Status:** Active
+**Version:** 1.7.0 | **Last push:** 2026-11-03 | **Status:** Active
 
 One canonical, agent-first Destiny lore archive: a single SQLite database with
 FTS5 search, built from committed sources, with a documented quote policy and
@@ -69,7 +69,7 @@ More commands are in the sections below.
 | `curl` | optional prebuilt database | otherwise build locally |
 | MCP SDK (optional) | typed tools for agents without a shell | Python 3.10+; `bash mcp-server/install.sh` |
 | `git` | cloning and version history | |
-| ~250 MB disk | sources plus built database | database is ~164 MB |
+| ~260 MB disk | sources plus built database | database is ~170 MB |
 
 No API keys, accounts or network access are required at runtime.
 
@@ -91,6 +91,7 @@ No API keys, accounts or network access are required at runtime.
 | `v_speakers` (view) | 359 | Canonical speakers with line counts |
 | `speaker_aliases` | 6 | Alias to canonical speaker mapping |
 | `verify_fts` (index) | 120731 | Fast quote verification |
+| `item_title_fts` (index) | 58764 | Item title lookup |
 
 Every content row carries provenance. Speaker aliases are canonicalized during
 migration. The full contract is `STANDARDS.md`.
@@ -170,8 +171,8 @@ repository minus the database lives outside the tree.
 | Archive audit | `bash grimoire-master-audit.sh` | 11/11 |
 | Drifter agent audit | `bash drifter-master-audit.sh` | 18/18 |
 | Eris agent audit | `bash eris-master-audit.sh` | 13/13 |
-| Database integrity | `bash tests/test-db.sh` | 37 checks |
-| Query interface | `bash tests/query-interface-test.sh` | 27 checks |
+| Database integrity | `bash tests/test-db.sh` | 38 checks |
+| Query interface | `bash tests/query-interface-test.sh` | 29 checks |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 |
 | MCP contract | `mcp-server/.venv/bin/python tests/mcp-test.py` | 6/6 |
 | File conformance | `python3 tests/conformance.py` | PASS |
