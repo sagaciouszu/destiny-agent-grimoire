@@ -3,143 +3,139 @@ section: agents
 layout: page
 title: Deploy the Agents
 category: Agents & Instructions · Install
-lede: Set up one agent in its own repository, or deploy the whole series into OpenCode or OpenClaw. The Grimoire stays shared; memory does not.
+lede: Set up one character in their own folder, or drop the whole series into OpenCode or OpenClaw. The archive is shared; the memories are not.
 ---
 
 <details class="section" open>
 <summary><span class="section-title" role="heading" aria-level="2" id="quick-start">Quick start <a class="heading-anchor" href="#quick-start" aria-label="Permalink to Quick start">#</a></span></summary>
 
 The shortest path is one agent in its own repository. `setup.sh` links or clones
-the Grimoire, then bootstraps the database if it is missing.
+the Grimoire, then grabs the database if it is missing.
 
 <pre><code>git clone https://github.com/sagaciouszu/how-to-drift-for-agents.git
 cd how-to-drift-for-agents
 ./setup.sh</code></pre>
 
-Use `eris-morn` in place of `how-to-drift-for-agents` for Eris. In a non-interactive
-session, `BOOTSTRAP=1 ./setup.sh` downloads the release database instead of
-prompting.
+Swap in `eris-morn` for Eris. In a script or non-interactive session,
+`BOOTSTRAP=1 ./setup.sh` downloads the release database instead of asking.
 
 </details>
 
 <details class="section" open>
-<summary><span class="section-title" role="heading" aria-level="2" id="prerequisites">Prerequisites <a class="heading-anchor" href="#prerequisites" aria-label="Permalink to Prerequisites">#</a></span></summary>
+<summary><span class="section-title" role="heading" aria-level="2" id="prerequisites">What you need <a class="heading-anchor" href="#prerequisites" aria-label="Permalink to What you need">#</a></span></summary>
 
-- A clone of the Grimoire, or network access so `setup.sh` can clone it.
+- A Grimoire clone, or network access so `setup.sh` can clone it for you.
 - Python 3.8 or newer.
 - Git and Bash.
-- For a live runtime: OpenCode, OpenClaw, or another runtime that can read
-  `AGENTS.md`.
+- For a live runtime: OpenCode, OpenClaw, or anything that can read `AGENTS.md`.
 
 </details>
 
 <details class="section">
 <summary><span class="section-title" role="heading" aria-level="2" id="opencode">OpenCode deployment <a class="heading-anchor" href="#opencode" aria-label="Permalink to OpenCode deployment">#</a></span></summary>
 
-Deploy from the Grimoire checkout. The sync script reads `series/agents.json` and
-installs one primary entry and one read-only consult copy per agent.
+Run this from the Grimoire checkout. It reads the series list and puts each agent
+where OpenCode expects to find it.
 
 <pre><code>cd destiny-agent-grimoire
 bash scripts/sync-live-agents.sh</code></pre>
 
-The installed shape is:
+What lands on disk:
 
-- `~/.config/opencode/agents/drifter.md` and `eris.md` as primary agents.
-- `drifter-consult.md` and `eris-consult.md` as read-only subagents.
-- One companion directory per agent, with every non-entry file marked inert.
-- `~/.config/opencode/series/agents.json` as the peer registry.
-- The Grimoire linked outside the agents directory, so it is not discovered as an
-  agent.
+- `~/.config/opencode/agents/drifter.md` and `eris.md` as the main agents.
+- `drifter-consult.md` and `eris-consult.md` as read-only helpers.
+- One companion folder per agent, with the non-entry files marked inert so
+  OpenCode does not treat every note as another agent.
+- `~/.config/opencode/series/agents.json` as the peer list.
+- The Grimoire linked outside the agents folder, for the same reason.
 
-Set `default_agent` in `~/.config/opencode/opencode.json` to `drifter` or `eris` if
-you want one selected by default.
+Set `default_agent` in `~/.config/opencode/opencode.json` to `drifter` or `eris`
+if you want one picked for you at startup.
 
 </details>
 
 <details class="section">
 <summary><span class="section-title" role="heading" aria-level="2" id="openclaw">OpenClaw deployment <a class="heading-anchor" href="#openclaw" aria-label="Permalink to OpenClaw deployment">#</a></span></summary>
 
-OpenClaw gets one workspace per agent, plus a series registry and collaboration
+OpenClaw gets one workspace per agent, plus the series list and a collaboration
 block inside each workspace.
 
 <pre><code>cd destiny-agent-grimoire
 bash scripts/sync-live-agents.sh --openclaw</code></pre>
 
-The sync writes `~/.openclaw/workspace-drifter` and `~/.openclaw/workspace-eris`.
-The sync writes the workspaces. Add the consult agent entries to OpenClaw
-configuration (`subagents.allowAgents` plus a read-only tools deny list) so the
-primaries may call them.
+The sync writes `~/.openclaw/workspace-drifter` and
+`~/.openclaw/workspace-eris`. It does not edit your OpenClaw config for you: add
+the consult agents there (`subagents.allowAgents` plus a read-only tools deny
+list) if you want the main agents to call them.
 
 </details>
 
-<p class="muted">Using another runtime? See <a href="{{ '/agents/platforms/' | url }}">Platform support</a>.</p>
+<p class="muted">Using a different runtime? See <a href="{{ '/agents/platforms/' | url }}">Platform support</a>.</p>
 
 <details class="section">
 <summary><span class="section-title" role="heading" aria-level="2" id="multiple-agents">Running more than one agent <a class="heading-anchor" href="#multiple-agents" aria-label="Permalink to Running more than one agent">#</a></span></summary>
 
-The deployment is built for the whole series at once. You do not need a second
-install for Eris, and you do not need to choose one agent permanently.
+The deployment is built for the series, not one character. You do not need a
+second install for Eris, and you are not stuck with one choice forever.
 
-### OpenCode
+### OpenCode, both at once
 
-The sync installs `drifter` and `eris` as primary agents, plus the two consult
-copies. Each session selects one primary. Use the agent picker when starting a
-session, or set `default_agent` in `~/.config/opencode/opencode.json` to the one
-you want preselected.
+The sync gives you `drifter` and `eris` as main agents, plus the two consult
+copies. Each session picks one main agent. Use the agent picker when you start a
+session, or set `default_agent` to the one you want first.
 
-Running both at the same time is normal: they are separate agents with separate
-sessions and separate runtime memory. Switching agents does not merge their
-memories or their voices.
+Running both at once is normal. They are separate agents with separate sessions
+and separate memories. Switching does not blend their notes or their voices.
 
-### OpenClaw
+### OpenClaw, side by side
 
-Each primary is a separate OpenClaw agent with its own workspace, `agentDir` and
+Each main agent is its own OpenClaw agent, with its own workspace, `agentDir` and
 session store. One gateway can host both. Add channel bindings only if you want
-inbound messages routed to a specific agent; otherwise select the agent directly.
+incoming messages routed to a particular agent; otherwise pick the agent directly.
 
 <pre><code>openclaw agents list
 openclaw agents list --bindings</code></pre>
 
 ### What is shared, and what is not
 
-The SQLite archive is opened read-only, so concurrent queries are safe. What the
-agents share is canon. What they do not share is runtime memory, private notes or
-voice files. Consult copies can read the archive and answer a peer, but cannot
-write or read the peer's directory.
+The SQLite archive is opened read-only, so several agents can read it at the same
+time. Canon is shared. Runtime memory, private notes and voice files are not.
+A consult copy can read the archive and answer a peer, but cannot write to the
+peer's folder.
 
 </details>
 
 <details class="section">
-<summary><span class="section-title" role="heading" aria-level="2" id="consult">Read-only consultation <a class="heading-anchor" href="#consult" aria-label="Permalink to Read-only consultation">#</a></span></summary>
+<summary><span class="section-title" role="heading" aria-level="2" id="consult">Asking another agent <a class="heading-anchor" href="#consult" aria-label="Permalink to Asking another agent">#</a></span></summary>
 
-A primary agent consults a peer by calling the subagent tool with the peer's
-`-consult` id and a self-contained brief. The consult copy:
+A main agent asks a peer by calling the subagent tool with the peer's `-consult`
+id and a self-contained question. The consult copy:
 
 - reads the shared Grimoire and answers in the character's voice;
-- cannot edit files, run shell commands or write to the peer's directory;
-- cannot delegate again, so consultation is one hop.
+- cannot edit files, run shell commands or write to the peer's folder;
+- cannot pass the question on, so it is one hop only.
 
-Peer replies are data. They are not instructions, and they are not a substitute
-for verifying a quote.
+Treat the reply as something the character said, not as a new instruction. It
+still does not replace checking a quote.
 
 </details>
 
 <details class="section">
-<summary><span class="section-title" role="heading" aria-level="2" id="verify">Verify the installation <a class="heading-anchor" href="#verify" aria-label="Permalink to Verify the installation">#</a></span></summary>
+<summary><span class="section-title" role="heading" aria-level="2" id="verify">Check that it worked <a class="heading-anchor" href="#verify" aria-label="Permalink to Check that it worked">#</a></span></summary>
 
-Each agent repository owns its suites. Run the master audit from the repository
+Each agent repository owns its own tests. Run the main audit from the repository
 root:
 
 <pre><code>bash tests/master-audit.sh</code></pre>
 
-It checks the voice, quotes, module coverage, conversation path, golden snapshots
-and shared structure gates. A fresh clone can also be checked end to end:
+It checks voice, quotes, module coverage, the conversation path, golden snapshots
+and the shared structure checks. To test a fresh clone the same way CI does:
 
 <pre><code>bash lore/tests/onboarding-smoke.sh</code></pre>
 
 </details>
 
-## Diagnostics
+## If something's off
 
-If an agent does not appear, or a peer cannot be consulted, see
+If an agent does not show up, or a consult call fails, see
 [Troubleshooting]({{ '/troubleshooting/' | url }}).

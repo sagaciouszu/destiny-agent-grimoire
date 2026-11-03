@@ -1,18 +1,19 @@
 ---
 layout: default
 title: Destiny Agent Grimoire
-description: One canonical Destiny lore archive and the independent agents built from it.
+description: A searchable Destiny lore archive and two character agents that read from it.
 ---
 
 <section class="hero">
-  <p class="kicker">Canonical Destiny lore · agent interface</p>
+  <p class="kicker">Destiny lore · for people and their agents</p>
   <h1>Destiny Agent Grimoire</h1>
   <p class="lede">
-    One archive of Destiny lore, built to be read by people and queried by agents.
-    Every line carries its source, and every quote can be checked before it is used.
+    One searchable archive of Destiny's books, dialogue and gear lore — plus two
+    character agents who read from it. Every quote keeps its source, and you can
+    check a line before you use it.
   </p>
   <div class="hero-actions">
-    <a class="button button-primary" href="{{ '/grimoire/install/' | url }}">Install the Grimoire</a>
+    <a class="button button-primary" href="{{ '/grimoire/install/' | url }}">Get the archive</a>
     <a class="button" href="{{ '/agents/' | url }}">Meet the agents</a>
   </div>
 </section>
@@ -23,12 +24,14 @@ description: One canonical Destiny lore archive and the independent agents built
     <div>
       <h2>The Grimoire</h2>
       <p>
-        A single SQLite archive with full-text search, provenance for every row,
-        and a quote-verification layer. It is the canon that every agent reads.
+        A single database of 110 books, 1,229 transcripts, 2,889 grimoire cards
+        and 58,764 items. Search it from the command line, or plug it into an AI
+        client through the MCP server.
       </p>
       <div class="category-links">
-        <a href="{{ '/grimoire/' | url }}">What it contains</a>
-        <a href="{{ '/grimoire/install/' | url }}">Install and query it</a>
+        <a href="{{ '/grimoire/' | url }}">See what's inside</a>
+        <a href="{{ '/grimoire/install/' | url }}">Install it</a>
+        <a href="{{ '/grimoire/mcp/' | url }}">Connect an MCP client</a>
       </div>
     </div>
   </article>
@@ -38,14 +41,14 @@ description: One canonical Destiny lore archive and the independent agents built
     <div>
       <h2>Agents &amp; Instructions</h2>
       <p>
-        The Drifter and Eris Morn are independent character agents. They keep
-        separate voices and memory, share only the Grimoire, and can consult each
-        other through read-only copies.
+        The Drifter and Eris Morn are separate characters with their own voices,
+        memories and tests. They share the archive and can quietly ask each other
+        for help, without sharing private notes.
       </p>
       <div class="category-links">
-        <a href="{{ '/agents/' | url }}">How the series works</a>
-        <a href="{{ '/agents/install/' | url }}">Deploy an agent</a>
-        <a href="{{ '/agents/platforms/' | url }}">Platform support</a>
+        <a href="{{ '/agents/' | url }}">Meet the series</a>
+        <a href="{{ '/agents/install/' | url }}">Set one up</a>
+        <a href="{{ '/agents/platforms/' | url }}">Other platforms</a>
       </div>
     </div>
   </article>
@@ -55,11 +58,12 @@ description: One canonical Destiny lore archive and the independent agents built
     <div>
       <h2>Troubleshooting</h2>
       <p>
-        Symptoms, causes and fixes for the database, the MCP server, agent
-        deployment and quote checks.
+        Missing database, no tools in your client, an agent that will not appear,
+        or a quote that keeps failing. Start with the symptom and work back to the
+        cause.
       </p>
       <div class="category-links">
-        <a href="{{ '/troubleshooting/' | url }}">Open the troubleshooting guide</a>
+        <a href="{{ '/troubleshooting/' | url }}">Fix a problem</a>
       </div>
     </div>
   </article>
