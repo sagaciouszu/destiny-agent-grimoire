@@ -44,6 +44,7 @@ check "entry agents stay active as drifter and eris" \
 check "series registry is installed" '[ -f "$(dirname "$DEST")/series/agents.json" ]'
 check "both entries carry the series block" 'grep -q "series:begin" "$DEST/drifter.md" && grep -q "series:begin" "$DEST/eris.md"'
 check "entries list each other as peers" 'grep -q "Hive expert" "$DEST/drifter.md" && grep -q "Gambit handler" "$DEST/eris.md"'
+check "peer directories are read-denied" 'grep -qF "agents/eris/**" "$DEST/drifter.md" && grep -qF "agents/drifter/**" "$DEST/eris.md"'
 check "eris entry references its own directory" 'grep -q "eris/INDEX.md" "$DEST/eris.md"'
 check "drifter entry references its own directory" 'grep -q "drifter/INDEX.md" "$DEST/drifter.md"'
 check "only two markdown files lack the disabled marker" \
