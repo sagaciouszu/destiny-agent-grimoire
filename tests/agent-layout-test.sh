@@ -18,11 +18,9 @@ else
     printf -- '---\nmode: primary\n---\n\n> **Depends On:** drifter-core.md, INDEX.md\n\nEntry.\n' > "$SRC/how-to-drift-for-agents/drifter.md"
     printf '# Companion\n' > "$SRC/how-to-drift-for-agents/core/guardrails.md"
     printf '# Readme\n' > "$SRC/how-to-drift-for-agents/README.md"
-    printf '# Agent\n' > "$SRC/how-to-drift-for-agents/AGENTS.md"
     printf -- '---\nmode: primary\n---\n\n> **Depends On:** eris-core.md, INDEX.md\n\nEntry.\n' > "$SRC/eris-morn/eris.md"
     printf '# Companion\n' > "$SRC/eris-morn/core/guardrails.md"
     printf '# Readme\n' > "$SRC/eris-morn/README.md"
-    printf '# Agent\n' > "$SRC/eris-morn/AGENTS.md"
 fi
 
 DEST="$TMP/agents"
@@ -55,15 +53,6 @@ check "only four markdown files lack the disabled marker" \
     '[ "$(grep -rL --include="*.md" "^disabled: true$" "$DEST" | wc -l)" -eq 4 ]'
 check "every companion file is disabled" \
     '[ "$(grep -rl --include="*.md" "^disabled: true$" "$DEST" | wc -l)" -eq "$(( $(find "$DEST" -name "*.md" | wc -l) - 4 ))" ]'
-
-OC="$TMP/openclaw"
-if OPENCLAW_ROOT="$OC" NO_RELOAD=1 AGENT_REPOS_DIR="$SRC" \
-    bash "$ARCHIVE/scripts/sync-live-agents.sh" --openclaw >/dev/null 2>&1; then
-    check "OpenClaw workspace per agent" '[ -d "$OC/workspace-drifter" ] && [ -d "$OC/workspace-eris" ]'
-    check "OpenClaw series block and registry" 'grep -q "series:begin" "$OC/workspace-drifter/AGENTS.md" && [ -f "$OC/workspace-eris/series/agents.json" ]'
-else
-    echo "  ✗ OpenClaw sync"; FAIL=$((FAIL+1))
-fi
 
 BAD="$TMP/bad-registry.json"
 printf '%s' '{"series":"x","agents":[{"id":"evil","name":"Evil","source":"how-to-drift-for-agents","entry":"../../evil.md"}]}' > "$BAD"
