@@ -1,7 +1,7 @@
 # Standards
 
 > **Depends On:** none (standards reference)
-> **Token Estimate:** ~3.3K tokens
+> **Token Estimate:** ~4.3K tokens
 
 The contract every file, script, and database row in this repository must meet.
 Verification gates (section 7) enforce these rules; a change that breaks them is
