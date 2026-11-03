@@ -1,3 +1,12 @@
+## v0.20.0 - Series, isolation and test ownership (2026-11-03)
+
+- `series/agents.json` drives deployment; agents install as `<id>.md` + `<id>/`.
+- Read-only `-consult` subagents; primaries are primary-only; peer reads denied.
+- Drifter and Eris suites moved into their repos; the grimoire audit is shared-only (9 suites).
+- Input hardening: literal FTS fallback, speaker boundary matching, bidi/control stripping, LIKE escaping.
+- CI runs robustness and agent-layout gates with least-privilege permissions.
+- OpenClaw parity: one workspace per agent, series blocks, read-only consult wiring.
+
 # Changelog
 
 ## v0.19.0 - Compendium and coverage (2026-11-03)

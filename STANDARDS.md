@@ -181,6 +181,11 @@ The Drifter and Eris repositories mirror each other so one method serves both.
   on a peer's directory is denied in the installed frontmatter. Registry changes
   are reviewed like workflow changes: ids, sources and entries are validated
   before sync, and a malformed or traversing registry aborts deployment.
+- OpenClaw parity: sync writes one workspace per agent (`workspace-<id>`) and a
+  workspace-local `series/agents.json`, and adds the same one-hop collaboration
+  block. Consult agents are separate config entries with `exec`, `write`, `edit`,
+  `apply_patch`, spawn/send/message and browser tools denied; primaries allow
+  only the consult ids as subagents.
   `tests/agent-layout-test.sh` guards layout, registry and peer blocks.
 
 ## 10. Change procedure
