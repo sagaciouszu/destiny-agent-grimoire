@@ -140,6 +140,7 @@ python3 tests/sync-doc-counts.py
 bash tests/test-db.sh
 bash grimoire-master-audit.sh
 bash drifter-master-audit.sh
+bash eris-master-audit.sh
 ```
 
 ## Rules
