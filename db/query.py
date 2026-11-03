@@ -118,13 +118,13 @@ def cmd_verify(args):
         print(json.dumps(res, ensure_ascii=False, separators=(',', ':')))
     elif res['verified']:
         label = ' (exact)' if res['exact'] else ''
-        print(f'VERIFIED{label}: "{quote}"')
+        print(f'VERIFIED{label}: "{res["quote"]}"')
         for h in res['matches']:
             sp = f" | speaker: {h['speaker']}" if h['speaker'] else ''
             ex = ' | exact' if h['exact'] else ''
             print(f"  [{h['source']}] {h['slug']}{sp}{ex}")
     else:
-        print(f'NOT FOUND: "{quote}"')
+        print(f'NOT FOUND: "{res["quote"]}"')
     return 0 if res['verified'] else 1
 
 

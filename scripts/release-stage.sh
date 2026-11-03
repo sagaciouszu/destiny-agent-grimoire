@@ -4,9 +4,12 @@
 set -e
 HERE="$(cd "$(dirname "$0")/.." && pwd)"
 VERSION="${1:?usage: release-stage.sh <version> [--dry-run]}"
+case "$VERSION" in
+    *[!0-9.]*|.*|*.) echo "FATAL: version must be numeric semver, e.g. 0.20.0" >&2; exit 2 ;;
+esac
 DRY=""
 [ "${2:-}" = "--dry-run" ] && DRY="echo"
-STAGE="${STAGE_DIR:-/home/sredshaw/releases}/v$VERSION"
+STAGE="${STAGE_DIR:-$HOME/releases}/v$VERSION"
 DB="$HERE/db/grimoire.db"
 
 [ -f "$DB" ] || { echo "FATAL: build the database first"; exit 1; }
@@ -14,7 +17,7 @@ echo "staging v$VERSION -> $STAGE"
 $DRY mkdir -p "$STAGE"
 $DRY cp --reflink=auto "$DB" "$STAGE/grimoire.db"
 $DRY cp "$HERE/RELEASE.md" "$STAGE/RELEASE.md"
-$DRY bash -c "cd '$STAGE' && sha256sum grimoire.db > SHA256SUMS"
+$DRY bash -c 'cd "$1" && sha256sum grimoire.db > SHA256SUMS' _ "$STAGE"
 [ -z "$DRY" ] && cat "$STAGE/SHA256SUMS"
 cat <<EOF
 

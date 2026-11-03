@@ -63,6 +63,16 @@ def verify_works():
     assert server.verify('not a canon line at all zzz')['verified'] is False
 
 
+def input_safety():
+    assert server.search('looked (')['count'] > 0
+    assert server.verify('Absolutely not.', speaker='Eris')['verified'] is True
+    assert server.verify('Absolutely not.', speaker='ris')['verified'] is False
+    prompt = server.quote_safe_lookup('Looked "up"\nthat\tword')
+    assert '\n' not in prompt and '\t' not in prompt
+    assert 'Looked' in prompt and 'that word' in prompt
+    assert 'Looked \'up\' that word' in prompt
+
+
 def limits_clamped():
     res = server.search('hive', limit=10_000)
     assert res['count'] <= 100, f"{res['count']} rows returned"
@@ -125,6 +135,7 @@ print('MCP contract test')
 check('twelve tools registered', tools_listed)
 check('search returns rows', search_works)
 check('verify accepts and rejects', verify_works)
+check('input safety and prompt sanitizing', input_safety)
 check('limit is clamped', limits_clamped)
 check('connection is read-only', read_only)
 check('stdio protocol smoke', protocol_smoke)

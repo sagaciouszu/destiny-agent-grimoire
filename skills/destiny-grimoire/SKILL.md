@@ -73,6 +73,10 @@ python3 db/query.py verify "Absolutely not." --speaker "Eris Morn" --exact
 - `search --type books|transcripts|grimoire|interactions|items|records`
 - `character --about <term>` filters, `character --all` uses raw transcript lines
 - `verify` exits 1 when the quote is not in canon
+- `search` accepts unquoted multi-word input; punctuation is treated literally
+  when it is not valid FTS5 syntax
+- `verify --speaker` matches on name boundaries and ignores a leading "The":
+  `Eris` and `Drifter` pass, `ris` and `Morn` do not
 
 ## MCP server (optional)
 
@@ -110,7 +114,7 @@ sqlite3 db/grimoire.db "SELECT slug, title, item_type, text FROM items WHERE ite
 
 ## Rules
 
-1. **Only use verified quotes.** Canon is what lives in `transcript_lines` and `character_lines`. Do not paraphrase lore as quotes.
+1. **Only use verified quotes.** Canon is what lives in `transcript_lines` and `character_lines`. Do not paraphrase lore as quotes. Run `verify` with the speaker and `--exact` before quoting; if it fails, do not quote the line.
 2. **SQLite-first.** Do not read raw markdown from `source/` at query time; it is only the ingestion source.
 3. **Keep queries scoped.** Small `--limit N` values preserve token budget.
 4. **Do not edit this data directly.** The migration reads `source/` markdown + `archive/data/*.jsonl` and rebuilds the DB.

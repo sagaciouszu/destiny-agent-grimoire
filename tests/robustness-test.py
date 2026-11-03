@@ -85,7 +85,7 @@ try:
 
     check('empty query rejected', lambda: raises(lambda: api.search('')))
     check('long query rejected', lambda: raises(lambda: api.search('a' * 501)))
-    check('malformed FTS rejected cleanly', lambda: raises(lambda: api.search("'; DROP TABLE items; --")))
+    check('injection text searched literally', lambda: isinstance(api.search("'; DROP TABLE items; --"), list))
     check('long quote rejected', lambda: raises(lambda: api.verify('x' * 2001)))
     check('empty quote rejected', lambda: raises(lambda: api.verify('')))
     check('unicode query works', lambda: api.search('savathûn', limit=2) is not None)
@@ -138,7 +138,6 @@ try:
         cases = [
             'db/query.py search ""',
             'db/query.py search "' + 'a' * 501 + '"',
-            'db/query.py search "\'; DROP TABLE items; --"',
             'db/query.py item nope-nope',
             'db/query.py character "Nobody Here"',
             'db/query.py verify ""',
@@ -150,6 +149,14 @@ try:
             clean_failure('python3 db/query.py stats', env={'GRIMOIRE_DB': path})
 
     check('CLI fails without tracebacks', cli_errors)
+
+    def injection_is_clean():
+        r = run('python3 db/query.py search "\'; DROP TABLE items; --"',
+                env={'GRIMOIRE_DB': DB})
+        assert r.returncode in (0, 1), r.returncode
+        assert 'Traceback' not in r.stderr
+
+    check('injection attempts never traceback', injection_is_clean)
 
     def json_outputs():
         for c in ('search hive --limit 2', 'character eris --limit 2',

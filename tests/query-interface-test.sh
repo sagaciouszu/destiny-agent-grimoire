@@ -28,6 +28,16 @@ check "$Q search 'looked -word' --limit 1 >/dev/null" "search tolerates leading 
 check "$Q search looked up that word --limit 1 >/dev/null" "search joins unquoted words"
 check "$Q search '\"' 2>&1 | grep -q 'searchable word'" "search rejects punctuation-only cleanly"
 check "$Q verify Absolutely not. --speaker 'Eris Morn' --exact | grep -q VERIFIED" "verify joins unquoted words"
+check "$Q verify 'Absolutely not.' --speaker Eris | grep -q VERIFIED" "verify accepts a name prefix"
+check "! $Q verify 'Absolutely not.' --speaker Morn | grep -q VERIFIED" "verify rejects a name fragment"
+check "! $Q verify 'Absolutely not.' --speaker ris | grep -q VERIFIED" "verify rejects a mid-word fragment"
+check "! $Q book '%' 2>&1 | grep -q '^===' " "book treats % literally"
+check "! $Q character '%' 2>&1 | grep -q '^===' " "character treats % literally"
+if $Q search "$(printf 'crota\u202e')" --limit 1 | python3 -c 'import sys; sys.exit(1 if "\u202e" in sys.stdin.read() else 0)'; then
+    echo "  ✓ search strips bidi overrides"; PASS=$((PASS+1))
+else
+    echo "  ✗ search strips bidi overrides"; FAIL=$((FAIL+1))
+fi
 check "$Q character eris --limit 2 | grep -q 'Eris Morn'" "character curated quotes"
 check "$Q character eris --about hive --all --limit 3 | grep -qi 'hive'" "character --about filter"
 check "$Q character eris --limit 2 --json | python3 -c 'import json,sys; json.load(sys.stdin)'" "character --json parses"

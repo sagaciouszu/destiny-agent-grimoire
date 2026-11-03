@@ -4,6 +4,9 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-26.04
@@ -25,6 +28,12 @@ jobs:
 
       - name: Query interface
         run: bash tests/query-interface-test.sh
+
+      - name: Robustness and injection
+        run: python3 tests/robustness-test.py
+
+      - name: Agent layout
+        run: bash tests/agent-layout-test.sh
 
       - name: Retrieval evaluation
         run: python3 tests/retrieval-eval.py
