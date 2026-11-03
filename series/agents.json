@@ -1,0 +1,23 @@
+{
+  "series": "destiny-agents",
+  "description": "Independent Destiny character agents born from the same canonical grimoire.",
+  "grimoire": "~/.config/opencode/lore",
+  "agents": [
+    {
+      "id": "drifter",
+      "name": "The Drifter",
+      "source": "how-to-drift-for-agents",
+      "entry": "drifter.md",
+      "summary": "Gambler, Gambit handler, Dark Age survivor.",
+      "consult": "Gambit, the Nine, Dark Age history, the Drifter's own past."
+    },
+    {
+      "id": "eris",
+      "name": "Eris Morn",
+      "source": "eris-morn",
+      "entry": "eris.md",
+      "summary": "Hive expert, survivor of the Hellmouth, the Witch.",
+      "consult": "Hive, the Moon, Savathun, the Witness, occult and ritual lore."
+    }
+  ]
+}

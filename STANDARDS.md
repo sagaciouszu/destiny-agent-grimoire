@@ -25,7 +25,7 @@ a change that is not done.
 | agent `README`/`INDEX`/`AGENTS`/`TOOLS`/agent def | lore database | `lore/db/grimoire.db`, `python3 lore/db/query.py` |
 | agent `setup.sh` | this repo | clones or symlinks `lore/`; bootstraps the DB (release asset or build) |
 | agent `.gitignore` | runtime memory | `USER.md`, `core/*memory*`, `core/journal.md` never leave the machine |
-| `tests/drifter-*`, `tests/eris-*` | agent workspace | `tests/resolve-workspace.sh` (layout-independent; `lore/` may be symlink or clone) |
+| agent `tests/` suites | agent workspace | `lore/tests/resolve-workspace.sh` (layout-independent; `lore/` may be symlink or clone) |
 | `db/migrate.py` | sources | `source/{books,transcripts,cards,records}` + `archive/data/*.jsonl` |
 | `db/query.py` | database | CLI wrapper over `search` / `character` / `item` / `stats` |
 | `tests/sync-doc-counts.py` | all three repos | rewrites documented counts from the DB |
@@ -109,16 +109,15 @@ match a recomputation of their source text.
 | `tests/source-overlap-verify.py` | curated markdown vs live Ishtar; filename/source-slug integrity |
 | `tests/speaker-audit.py` | reclassified parse noise must not reappear |
 | `tests/sync-doc-counts.py --check` | docs counts match the database |
-| `drifter-master-audit.sh` / `eris-master-audit.sh` (shared `tests/agent-audit.sh`) | agent-side suites (voice, quotes, modules, dependency coverage, index completeness, hygiene) |
-| `tests/agent-audit.sh` | single runner: per-agent suites plus shared structure checks |
+| each agent repo tests/master-audit.sh | agent-side suites (voice, quotes, modules, conversation, golden snapshots) plus shared structure checks |
 | `tests/mcp-test.py` (on demand, needs `mcp-server/.venv`) | MCP tools, read-only guard, stdio handshake |
 | `tests/check-agent-structure.py` | dependency resolution, token headers, dashes, INDEX completeness, personal paths (both agents) |
 | `tests/conformance.py` | per-file headers, token accuracy, refs, persona-agnosticism; runs `ci-checks` per agent repo |
 | `tests/ci-checks.py` (via conformance) | stale names, circular/self dependencies, headers, em-dashes, personal paths, gitignored refs in instructions |
 
 Live probes (on demand, network): `tests/live-sample-verify.py` samples every
-content type against Ishtar; `tests/drifter-voice-consistency.sh` /
-`tests/eris-voice-consistency.sh` run cross-character attribution checks.
+content type against Ishtar; each agent repo's voice-consistency suite runs
+cross-character attribution checks.
 
 ## 8. Agent interface contract
 
@@ -155,29 +154,37 @@ The Drifter and Eris repositories mirror each other so one method serves both.
 - Shared directories: `core/`, `voice/`, `world/`, `reference/`.
 - `setup.sh` is identical apart from the agent name, banner and core-file hint.
 - `.gitignore` is identical.
-- No local `tests/` directory: every suite lives here in `tests/` and runs through
-  `lore/` (symlink or clone). Verification entry point:
-  `bash lore/<agent>-master-audit.sh`.
-- `tests/agent-audit.sh <agent>` is the single runner. Per-agent suites are added
-  there, never duplicated in the agent repos.
+- Each agent repo owns its `tests/` directory: voice, quote, module, scenario,
+  conversation, golden-snapshot and utility suites, plus master-audit.sh.
+  Verification entry point: bash tests/master-audit.sh in the agent repo.
+- Shared gates stay in the grimoire and are called through `lore/tests/`:
+  database, conformance, structure checks, retrieval, MCP and layout.
+- A suite belongs to an agent repo when it encodes that persona's voice, quotes
+  or workspace; it belongs to the grimoire when it validates the archive or the
+  shared interface. No agent-specific suite may live in the grimoire, and no
+  shared gate may be duplicated into an agent repo.
 - `tests/check-agent-structure.py` enforces, for both agents: every declared
   dependency resolves (runtime memory falls back to its template), token headers
   exist, no em/en dashes, INDEX lists every module and every reference resolves,
   and no personal paths appear.
-- Live deployment keeps only `<agent>.md` active. Every companion `.md` carries
-  `disabled: true`, and `lore/` is linked outside the agents directory. OpenCode
-  registers every Markdown file under `agents/` recursively, symlinks included.
-  `tests/agent-layout-test.sh` guards this; `scripts/sync-live-agents.sh`
-  enforces it on every sync.
+- Live deployment is manifest-driven: `series/agents.json` lists every agent,
+  its source repo and entry file. Each installs as agents/<id>.md with companions
+  under agents/<id>/; companions carry `disabled: true` and `lore/` is linked
+  outside agents/. OpenCode registers every Markdown file under agents/
+  recursively, symlinks included. Adding a series agent means a repo, an entry
+  file and one registry row; no script change.
+- Series collaboration: sync installs the registry at the runtime path and adds a
+  managed block to each entry listing peers and the `subagent` protocol. Agents
+  run with `mode: all` so any peer can be consulted as a subagent.
+  `tests/agent-layout-test.sh` guards layout, registry and peer blocks.
 
 ## 10. Change procedure
 
 1. Ingest (`archive/` scrapers or `scripts/ingest-*`) into the documented paths.
 2. `python3 db/migrate.py` (rebuild; verify counts in stdout).
 3. `python3 tests/sync-doc-counts.py` (docs counts).
-4. Run the gates in section 7: `grimoire-master-audit.sh`, both agent wrappers
-   (`drifter-master-audit.sh`, `eris-master-audit.sh`), and a fresh-clone spot
-   check for layout changes.
+4. Run the gates in section 7: `grimoire-master-audit.sh`, then tests/master-audit.sh
+   in each agent repo, and a fresh-clone spot check for layout changes.
 5. Commit. Refresh the backup and the release asset after major milestones.
 
 ## 11. Packaging
