@@ -75,7 +75,8 @@ check "[ \"$JOURNAL\" = \"delete\" ] && [ $SIDECARS -eq 0 ]" "no WAL sidecars (j
 
 # Check meta table
 META_VERSION=$(sqlite3 "$DB" "SELECT value FROM meta WHERE key='version'")
-check "[ -n \"$META_VERSION\" ]" "meta version set ($META_VERSION)"
+FILE_VERSION=$(cat "$(dirname "$DB")/SCHEMA_VERSION" 2>/dev/null || true)
+check "[ -n \"$META_VERSION\" ] && [ \"$META_VERSION\" = \"$FILE_VERSION\" ]" "schema version matches file ($META_VERSION)"
 
 echo ""
 echo "Passed: $PASS | Failed: $FAIL"
