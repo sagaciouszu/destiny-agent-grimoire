@@ -38,6 +38,8 @@ for repo, root in REPOS.items():
         if rel.startswith('source/') or os.path.basename(rel) in SKIP_FILES:
             continue
         path = os.path.join(root, rel)
+        if not os.path.exists(path):
+            continue
         fence = False
         for line in open(path, encoding='utf-8', errors='ignore'):
             text = line.strip()

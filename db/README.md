@@ -59,7 +59,7 @@ sqlite3 db/grimoire.db "SELECT slug, title, item_type FROM items WHERE item_type
 | `interactions` | 2699 short character dialogue beats |
 | `items` | Weapons, armor, gear lore + flavor text |
 | `records` | 71 triumphs/seals with canonical text |
-| `characters` | 18 named characters |
+| `characters` | 20 named characters |
 | `character_lines` | Canon character quotes ready for agent use |
 | `fts` | FTS5 search over all tables |
 | `verify_fts` | normalized text + provenance for fast quote verification |

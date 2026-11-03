@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+- item types backfilled from duplicate titles (1,003 rows; 3,634 remain source-blank)
+- compendium expanded with Ikora Rey and Mara Sov (20 characters, 1,229 quotes)
+- golden voice snapshots for both agents (6 fixed verdicts)
+- documentation command audit (180 commands) and copy-safe command forms
+- CI active at `.github/workflows/ci.yml`
+
+
 ## v1.8.1 - Character lookup and ranking fixes (2026-11-03)
 
 - exact character resolution (drifter no longer resolves to Blue's Ghost)

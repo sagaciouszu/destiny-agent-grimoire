@@ -29,6 +29,15 @@ jobs:
       - name: Retrieval evaluation
         run: python3 tests/retrieval-eval.py
 
+      - name: Documentation audit
+        run: python3 tests/docs-audit.py
+
+      - name: Item audit
+        run: python3 tests/item-audit.py
+
+      - name: Golden voice snapshots
+        run: bash tests/golden-voice-test.sh
+
       - name: MCP dependencies
         run: |
           python3 -m venv mcp-server/.venv
@@ -36,3 +45,6 @@ jobs:
 
       - name: MCP contract
         run: mcp-server/.venv/bin/python tests/mcp-test.py
+
+      - name: MCP matrix
+        run: mcp-server/.venv/bin/python tests/mcp-matrix-test.py

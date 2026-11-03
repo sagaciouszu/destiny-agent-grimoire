@@ -30,8 +30,8 @@ Use this when you need canonical Destiny lore for storytelling, lore check, agen
 | interactions | 2699 | Short character dialogue beats |
 | items | 58764 | Weapons / armor / gear lore + flavor |
 | records | 71 | Triumphs / seals |
-| characters | 18 | Named characters |
-| character_lines | 1189 | Canon character quotes for agents |
+| characters | 20 | Named characters |
+| character_lines | 1229 | Canon character quotes for agents |
 | fts | 120731 | FTS5 search index |
 | verify_fts | 120731 | Fast quote verification index |
 | item_title_fts | 58764 | Item title lookup index |
