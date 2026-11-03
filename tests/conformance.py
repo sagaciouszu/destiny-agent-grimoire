@@ -99,10 +99,10 @@ for name, root in REPOS.items():
 
 # README contract (STANDARDS section 12)
 README_SECTIONS = {
-    'grimoire': ['## Quick start (Guardians)', '## Requirements', '## What is inside',
+    'grimoire': ['## Quick start for Guardians', '## Requirements', '## What is inside',
                  '## For agents', '## Repository layout', '## Maintenance',
                  '## Verification', '## License and attribution'],
-    'drifter': ['## Quick start (Guardians)', '## Requirements', '## For agents',
+    'drifter': ['## Quick start for Guardians', '## Requirements', '## For agents',
                 '## Repository layout', '## Verification', '## Troubleshooting',
                 '## License and attribution'],
 }

@@ -178,7 +178,7 @@ the agent contract comes after it.
 3. Badge row: version, last push, license, tests (agent repos add flavor badges)
 4. Metadata line: `**Version:** x.y.z | **Last push:** YYYY-MM-DD | **Status:** Active`
 5. One-paragraph purpose
-6. `## Quick start (Guardians)` with copy-paste steps
+6. `## Quick start for Guardians` with copy-paste steps
 7. `## Requirements` table (tools, disk, no runtime network)
 8. Content section (`## What is inside` for the archive)
 9. `## For agents` (entry points, load tiers, data access, quote policy, matrix)

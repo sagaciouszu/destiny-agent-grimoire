@@ -17,7 +17,7 @@ One canonical, agent-first Destiny lore archive: a single SQLite database with
 FTS5 search, built from committed sources, with a documented quote policy and
 verification gates. No external services at runtime.
 
-## Quick start (Guardians)
+## Quick start for Guardians
 
 **Step 1: clone.**
 
