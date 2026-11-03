@@ -26,6 +26,10 @@ done
 ENT=$(sqlite3 "$DB" "SELECT (SELECT COUNT(*) FROM transcript_lines WHERE line LIKE '%&#%' OR line LIKE '%&amp;%') + (SELECT COUNT(*) FROM items WHERE item_type LIKE '%&#%' OR item_type LIKE '%&amp;%' OR text LIKE '%&#%' OR text LIKE '%&amp;%') + (SELECT COUNT(*) FROM interactions WHERE text LIKE '%&#%' OR text LIKE '%&amp;%') + (SELECT COUNT(*) FROM book_entries WHERE body LIKE '%&#%' OR body LIKE '%&amp;%') + (SELECT COUNT(*) FROM grimoire_cards WHERE body LIKE '%&#%' OR body LIKE '%&amp;%') + (SELECT COUNT(*) FROM records WHERE body LIKE '%&#%' OR body LIKE '%&amp;%')")
 check "[ $ENT -eq 0 ]" "no HTML entity leakage ($ENT rows)"
 # Standards gates (see STANDARDS.md)
+VSPK=$(sqlite3 "$DB" "SELECT COUNT(*) FROM v_speakers" 2>/dev/null || echo 0)
+check "[ $VSPK -gt 50 ]" "v_speakers view populated ($VSPK speakers)"
+ALIASES=$(sqlite3 "$DB" "SELECT COUNT(*) FROM speaker_aliases" 2>/dev/null || echo 0)
+check "[ $ALIASES -ge 6 ]" "speaker_aliases table populated ($ALIASES aliases)"
 VARIANTS=$(sqlite3 "$DB" "SELECT COUNT(*) FROM transcript_lines WHERE speaker IN ('Commander Zavala','Cayde','Eris','Eris morn','Ikora Rey','Chiomi Esi')")
 check "[ $VARIANTS -eq 0 ]" "speakers canonical (no alias variants: $VARIANTS)"
 CARDURL=$(sqlite3 "$DB" "SELECT COUNT(*) FROM grimoire_cards WHERE source_url IS NULL OR source_url NOT LIKE 'https://www.ishtar-collective.net/%'")

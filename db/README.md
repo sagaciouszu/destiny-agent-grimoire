@@ -65,6 +65,12 @@ sqlite3 db/grimoire.db "SELECT slug, title, item_type FROM items WHERE item_type
 - `items.norm_text` for substring matching
 - All FTS5 virtual table columns via `MATCH '<term>'`
 
+## Extras
+
+- `capabilities.json` - machine-readable interface manifest (tables, views, commands, contracts)
+- `v_speakers` view - canonical speakers with line counts
+- `speaker_aliases` table - alias -> canonical mapping applied at migration
+
 ## Query pattern for agents
 
 The canonical interface is `db/query.py` which wraps common SQL patterns. All results are returned to stdout as plain text. Use `--limit N` to bound output.
