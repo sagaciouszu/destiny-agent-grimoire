@@ -6,6 +6,7 @@
 DB="$(cd "$(dirname "$0")/.." && pwd)/db/grimoire.db"
 WORKSPACE="${WORKSPACE:-$(bash "$(dirname "$0")/resolve-workspace.sh" "$0")}"
 [ -f "$DB" ] || { echo "FAIL: database not found at $DB - bootstrap: ./setup.sh, or python3 db/migrate.py (see README)"; exit 1; }
+[ -n "$WORKSPACE" ] && [ -d "$WORKSPACE" ] || { echo "FATAL: workspace unresolved (WORKSPACE=$WORKSPACE) - set WORKSPACE or run from the agent repo"; exit 1; }
 
 python3 - "$DB" "$WORKSPACE" << 'PYEOF'
 import re, os, sys, sqlite3
@@ -13,7 +14,6 @@ db, ws = sys.argv[1], sys.argv[2]
 
 def norm(s):
     s = s.lower().replace('\u2026','...').replace('\u2019',"'").replace('\u2014','-').replace('\u2013','-')
-    s = re.sub(r'[^a-z0-g ]+',' ',s)
     s = re.sub(r'[^a-z0-9 ]+',' ',s); s = re.sub(r'\s+',' ',s).strip()
     return s
 
@@ -97,6 +97,14 @@ for f in files:
                     s_hits = sum(1 for s in norm_sents if s in big_corpus)
                     if s_hits / len(norm_sents) >= 0.6:
                         continue
+            # 2d. Word-bigram coverage: only for long quotes (>= 15 words) where
+            #     dropped attributions fragment sentences. Parity with eris-quote-verify.
+            words = nq.split()
+            if len(words) >= 15:
+                bigrams = [' '.join(words[i:i+2]) for i in range(len(words)-1)]
+                hits = sum(1 for b in bigrams if (' ' + b + ' ') in (' ' + big_corpus + ' '))
+                if bigrams and hits / len(bigrams) >= 0.8:
+                    continue
             # 3. Corpus word-level substring per-table
             if any(nq in cp for cp in corpus_parts):
                 continue

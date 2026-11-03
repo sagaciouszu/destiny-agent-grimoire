@@ -7,6 +7,7 @@ RESPONSE="$1"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 LORE_ROOT="${2:-$(cd "$SCRIPT_DIR/.." && pwd)}"
 WORKSPACE="${3:-$(bash "$SCRIPT_DIR/resolve-workspace.sh" "$0")}"
+[ -n "$WORKSPACE" ] && [ -d "$WORKSPACE" ] || { echo "FATAL: workspace unresolved (WORKSPACE=$WORKSPACE) - set WORKSPACE or run from the agent repo"; exit 1; }
 
 echo "=== DRIFTER PRE-RESPONSE VALIDATION ==="
 echo ""
@@ -39,7 +40,13 @@ echo ""
 
 # 2. Consistency check
 echo "--- Archive Consistency ---"
-"$SCRIPT_DIR/validate.sh" 2>&1 | grep -E "unverified quotes:|missing:|VALIDATION COMPLETE|Books:|Transcripts:" | head -10
+VAL_OUT=$("$SCRIPT_DIR/validate.sh" 2>&1)
+echo "$VAL_OUT" | grep -E "unverified quotes:|missing:|VALIDATION COMPLETE|Books:|Transcripts:" | head -10
+if echo "$VAL_OUT" | grep -qE "missing: [1-9]|unverified quotes: [1-9]"; then
+    ARCHIVE_RESULT=1
+else
+    ARCHIVE_RESULT=0
+fi
 echo ""
 
 # 3. Quote lookup (find relevant quotes for the response topic)
@@ -63,12 +70,18 @@ echo ""
 
 # 4. Final verdict
 echo "=== PRE-RESPONSE VALIDATION COMPLETE ==="
-if [ $VOICE_RESULT -eq 0 ]; then
+if [ -z "$RESPONSE" ]; then
+    echo "○ Voice: SKIPPED (no response text)"
+elif [ $VOICE_RESULT -eq 0 ]; then
     echo "✓ Voice: PASS"
 else
     echo "✗ Voice: FAIL (see above)"
 fi
-echo "✓ Archive: Consistent"
+if [ "$ARCHIVE_RESULT" -eq 0 ]; then
+    echo "✓ Archive: Consistent"
+else
+    echo "✗ Archive: ISSUES FOUND (see above)"
+fi
 if [ "$DB_READY" -eq 1 ]; then
     echo "✓ Quotes: Indexed (FTS)"
 else
