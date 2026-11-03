@@ -7,7 +7,7 @@
 - **STANDARDS.md** - the contract: schema rules, canonical speaker names, provenance, quote policy, verification gates, connection matrix
 - **Agent interface v2** - snippet-first search with `--full` escape, `--json` on every command, `verify` quote-safety primitive, `list` discovery, `character --about/--all`
 - **Fixed:** `search --type` compared FTS rowids against table rowids; FTS now carries a source column so filters are exact
-- **Database to standards** - speaker aliases canonicalized at migration (0 variants), `speaker_aliases` table, `v_speakers` view, `capabilities.json` manifest, every card has a source URL
+- **Database to standards** - speaker aliases canonicalized at migration (0 variants), `speaker_aliases` table, `v_speakers` view, `db/capabilities.json` manifest, every card has a source URL
 - **Data integrity** - HTML entity leakage eliminated, compendium multi-quote parser fixed (+135 recovered quotes, 0 broken provenance), 108 dead book links gone, one mislabeled transcript rebuilt from live
 - **Verification** - conformance sweep across all three repos, source-overlap and speaker audits gated into the master audit, 35 database checks, 23 interface checks
 - **Cutscene corpus** - 31 compilations, auto-generated captions (disclosed), corroboration-verified
