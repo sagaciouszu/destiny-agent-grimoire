@@ -12,6 +12,8 @@ import os, re, glob, sys
 ws = sys.argv[1]
 files = []
 for root,_,fs in os.walk(ws):
+    if '/lore' in root or '/.git' in root:
+        continue
     for f in fs:
         if f.endswith('.md'):
             files.append(os.path.join(root,f))

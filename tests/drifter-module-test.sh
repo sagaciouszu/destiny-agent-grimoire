@@ -65,22 +65,23 @@ check "setup.sh exists and is executable" "[ -x $WORKSPACE/setup.sh ]"
 # --- Hygiene checks ---
 echo ""
 echo "--- Hygiene Checks ---"
-check "no em-dashes in workspace" "! grep -rl '—' $WORKSPACE --include='*.md' 2>/dev/null | grep -v .git | grep -q ."
-check "no en-dashes in workspace" "! grep -rl '–' $WORKSPACE --include='*.md' 2>/dev/null | grep -v .git | grep -q ."
-check "no personal paths in workspace" "! grep -rn '/home/sredshaw' $WORKSPACE --include='*.md' --include='*.sh' 2>/dev/null | grep -v .git | grep -q ."
-check "no API keys or tokens" "! grep -rniE 'api[_-]?key|password|bearer|sk-[a-z0-9]{20,}|ghp_[a-z0-9]{20,}|AKIA[0-9A-Z]{16}' $WORKSPACE --include='*.md' --include='*.sh' 2>/dev/null | grep -v .git | grep -q ."
+check "no em-dashes in workspace" "! grep -rl '—' $WORKSPACE --include='*.md' --exclude-dir=lore --exclude-dir=.git 2>/dev/null | grep -q ."
+check "no en-dashes in workspace" "! grep -rl '–' $WORKSPACE --include='*.md' --exclude-dir=lore --exclude-dir=.git 2>/dev/null | grep -q ."
+check "no personal paths in workspace" "! grep -rn '/home/sredshaw' $WORKSPACE --include='*.md' --include='*.sh' --exclude-dir=lore --exclude-dir=.git 2>/dev/null | grep -q ."
+check "no API keys or tokens" "! grep -rniE 'api[_-]?key|password|bearer|sk-[a-z0-9]{20,}|ghp_[a-z0-9]{20,}|AKIA[0-9A-Z]{16}' $WORKSPACE --include='*.md' --include='*.sh' --exclude-dir=lore --exclude-dir=.git 2>/dev/null | grep -q ."
+check "quote inverted index fresh" "WORKSPACE=$WORKSPACE python3 $ARCHIVE/tests/build-quote-index.py --check --quiet"
 
 # --- Header checks ---
 echo ""
 echo "--- Header Checks ---"
-check "all .md files have Depends On" "[ $(grep -rl 'Depends On' $WORKSPACE --include='*.md' 2>/dev/null | grep -v .git | wc -l) -ge 65 ]"
-check "all .md files have Token Estimate" "[ $(grep -rl 'Token Estimate' $WORKSPACE --include='*.md' 2>/dev/null | grep -v .git | wc -l) -ge 65 ]"
+check "all .md files have Depends On" "[ $(grep -rl 'Depends On' $WORKSPACE --include='*.md' --exclude-dir=lore --exclude-dir=.git 2>/dev/null | wc -l) -ge 65 ]"
+check "all .md files have Token Estimate" "[ $(grep -rl 'Token Estimate' $WORKSPACE --include='*.md' --exclude-dir=lore --exclude-dir=.git 2>/dev/null | wc -l) -ge 65 ]"
 check "no circular dependencies" "bash $(dirname "$0")/drifter-conflict-check.sh 2>/dev/null | grep -q 'No circular' || python3 -c \"import sys; sys.exit(0)\""
 
 # --- Lore symlink ---
 echo ""
 echo "--- Lore Symlink ---"
-check "lore symlink exists" "[ -L $WORKSPACE/lore ]"
+check "lore present (symlink or clone)" "[ -L $WORKSPACE/lore ] || [ -d $WORKSPACE/lore ]"
 check "lore resolves to valid dir" "[ -d $WORKSPACE/lore ]"
 
 # --- Summary ---
