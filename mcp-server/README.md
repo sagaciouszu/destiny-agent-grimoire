@@ -77,6 +77,8 @@ path is `<agent>/lore/mcp-server/run.sh`. Use an absolute path in client config.
 | `transcript` | `ref`, `speaker?`, `limit=50`, `offset=0`, `full=false`, `include_stage=false` | transcript metadata and lines |
 | `find_item` | `query`, `limit=10`, `offset=0` | items matching a title or slug fragment |
 | `record` | `ref` | triumph or seal details |
+| `verify_many` | `quotes`, `speaker?`, `exact=false` | up to 20 quote checks at once |
+| `character_info` | `name` | aliases, quote count, spoken lines |
 
 MCP limits clamp to 1-100 to protect the agent's context; the CLI is not clamped
 to 100 (the shared API allows up to 10,000). Full text is trimmed to 4000
@@ -96,11 +98,18 @@ Read-only JSON resources for discovery without tool calls:
 - `grimoire://characters` - curated characters
 - `grimoire://records` - triumphs and seals
 - `grimoire://stats` - row counts
+- `grimoire://book/{slug}`, `grimoire://transcript/{slug}`,
+  `grimoire://character/{slug}`, `grimoire://record/{slug}` - full documents
+
+## Prompts
+
+- `quote_safe_lookup(topic)` - search, then verify every quote before use
+- `character_brief(name)` - metadata plus verified lines for a character brief
 
 ## Safety
 
 - SQLite is opened with URI `mode=ro`; writes fail at the driver level.
-- No arbitrary SQL tool is exposed. The ten query shapes are the whole surface.
+- No arbitrary SQL tool is exposed. The twelve query shapes are the whole surface.
 - No network access. The database path is resolved from `GRIMOIRE_DB` or
   `db/grimoire.db`.
 - Inputs are bounded: queries 1-500 chars, quotes 1-2000, limits 1-100.

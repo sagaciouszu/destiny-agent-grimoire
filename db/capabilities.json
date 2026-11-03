@@ -61,6 +61,12 @@
     },
     "record": {
       "usage": "query.py record \"<slug or title>\" [--json]"
+    },
+    "verify_many": {
+      "usage": "query.py verify-many \"<q1>\" \"<q2>\" ... [--speaker NAME] [--exact] [--json]"
+    },
+    "character_info": {
+      "usage": "query.py character-info \"<name>\" [--json]"
     }
   },
   "contracts": {
@@ -79,8 +85,10 @@
     "tools": [
       "search",
       "character",
+      "character_info",
       "item",
       "verify",
+      "verify_many",
       "list_records",
       "stats",
       "book",
@@ -93,7 +101,15 @@
       "grimoire://books",
       "grimoire://characters",
       "grimoire://records",
-      "grimoire://stats"
+      "grimoire://stats",
+      "grimoire://book/{slug}",
+      "grimoire://transcript/{slug}",
+      "grimoire://character/{slug}",
+      "grimoire://record/{slug}"
+    ],
+    "prompts": [
+      "quote_safe_lookup",
+      "character_brief"
     ]
   }
 }

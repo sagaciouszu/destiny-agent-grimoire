@@ -59,6 +59,7 @@ a change that is not done.
 | `character_lines` | character_id, text, source_type, source_slug | norm_text | source_slug must resolve in `transcripts` |
 | `fts` | | | exactly one row per indexed content row (1:1) |
 | `verify_fts` | | | normalized text + provenance; mirrors indexable rows for fast quote checks |
+| `item_title_fts` | | | item titles for fast name lookup |
 
 Global rules:
 - No duplicate slugs per table; no empty required fields; every row's text is

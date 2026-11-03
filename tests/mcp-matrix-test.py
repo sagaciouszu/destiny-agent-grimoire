@@ -107,6 +107,11 @@ async def matrix(s):
     assert items['count'] == len(items['rows']) and items['total'] >= items['count']
     assert (await call(s, 'find_item', {'query': 'nightmask', 'limit': 1, 'offset': 1}))['offset'] == 1
     assert (await call(s, 'record', {'ref': 'am-i-to-cast-a-shadow'}))['title']
+    vm = await call(s, 'verify_many', {'quotes': ['I am Eris Morn.', 'not canon zzz']})
+    assert vm['total'] == 2 and vm['verified'] == 1
+    ci = await call(s, 'character_info', {'name': 'eris'})
+    assert ci['quotes'] == 262 and 'Eris' in ci['aliases']
+    assert (await call(s, 'search', {'query': 'hive', 'limit': 2, 'rank': False}))['count'] == 2
 
 
 async def parity(s):
@@ -170,8 +175,9 @@ async def main():
         async with ClientSession(r, w) as s:
             await s.initialize()
             tools = {t.name for t in (await s.list_tools()).tools}
-            report('ten tools listed', tools == {'search', 'character', 'item', 'verify', 'list_records',
-                                                 'stats', 'book', 'transcript', 'find_item', 'record'}, str(tools))
+            report('twelve tools listed', tools == {'search', 'character', 'character_info',
+                                                    'item', 'verify', 'verify_many', 'list_records',
+                                                    'stats', 'book', 'transcript', 'find_item', 'record'}, str(tools))
             for name, fn in (('tool matrix (80+ calls)', matrix), ('MCP matches API', parity),
                              ('malformed calls fail cleanly', errors)):
                 try:
@@ -185,9 +191,20 @@ async def main():
                 assert {'grimoire://books', 'grimoire://characters', 'grimoire://records', 'grimoire://stats'} <= uris, uris
                 body = await s.read_resource('grimoire://books')
                 assert 'Book' in body.contents[0].text
-                report('four resources listed and readable', True)
+                book_doc = await s.read_resource('grimoire://book/a-man-with-no-name')
+                assert 'Dogma' in book_doc.contents[0].text
+                report('resources and templates readable', True)
             except Exception as e:
-                report('four resources listed', False, f'{type(e).__name__}: {e}')
+                report('resources and templates readable', False, f'{type(e).__name__}: {e}')
+            try:
+                prompts = await s.list_prompts()
+                names = {p.name for p in prompts.prompts}
+                assert {'quote_safe_lookup', 'character_brief'} <= names, names
+                prompt = await s.get_prompt('quote_safe_lookup', {'topic': 'Crota'})
+                assert prompt.messages
+                report('prompts listed and rendered', True)
+            except Exception as e:
+                report('prompts listed and rendered', False, f'{type(e).__name__}: {e}')
     try:
         await concurrent()
         report('3 concurrent clients (45 calls)', True)

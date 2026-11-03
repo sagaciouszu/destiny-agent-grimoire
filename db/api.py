@@ -91,7 +91,7 @@ def _limit(value, default):
 
 
 @_guard
-def search(term, type=None, limit=10, full=False, offset=0):
+def search(term, type=None, limit=10, full=False, offset=0, rank=True):
     """Full-text search. Returns rows with a snippet unless full=True."""
     if not term or len(term) > 500:
         raise ValueError('query must be 1-500 characters')
@@ -106,14 +106,15 @@ def search(term, type=None, limit=10, full=False, offset=0):
             params.append(TYPE_TO_SOURCE[type])
         params.append(_limit(limit, 10))
         params.append(_offset(offset))
+        order = ' ORDER BY rank' if rank else ''
         try:
             if full:
                 rows = conn.execute(
-                    f'SELECT title, speaker, text, source FROM fts WHERE {where} LIMIT ? OFFSET ?', params).fetchall()
+                    f'SELECT title, speaker, text, source FROM fts WHERE {where}{order} LIMIT ? OFFSET ?', params).fetchall()
             else:
                 rows = conn.execute(
                     f"SELECT title, speaker, source, snippet(fts, 1, '[', ']', '…', 10) AS snip "
-                    f'FROM fts WHERE {where} LIMIT ? OFFSET ?', params).fetchall()
+                    f'FROM fts WHERE {where}{order} LIMIT ? OFFSET ?', params).fetchall()
         except sqlite3.OperationalError as e:
             raise ValueError(f'invalid search query: {e}') from e
         return [dict(r) for r in rows]
@@ -260,6 +261,62 @@ def verify(quote, speaker=None, exact=False):
 
 @_guard
 @_guard
+def search_total(term, type=None):
+    """Total FTS matches for a query (for paging)."""
+    if not term or len(term) > 500:
+        raise ValueError('query must be 1-500 characters')
+    if type is not None and type not in TYPE_TO_SOURCE:
+        raise ValueError(f'type must be one of: {", ".join(TYPE_TO_SOURCE)}')
+    conn = connect()
+    try:
+        where = 'fts MATCH ?'
+        params = [term]
+        if type:
+            where += ' AND source = ?'
+            params.append(TYPE_TO_SOURCE[type])
+        return conn.execute(f'SELECT COUNT(*) FROM fts WHERE {where}', params).fetchone()[0]
+    finally:
+        conn.close()
+
+
+@_guard
+def verify_many(quotes, speaker=None, exact=False):
+    """Verify up to 20 quotes in one call."""
+    if not isinstance(quotes, (list, tuple)) or not quotes:
+        raise ValueError('quotes must be a list of 1-20 strings')
+    if len(quotes) > 20:
+        raise ValueError('at most 20 quotes per call')
+    results = [verify(q, speaker=speaker, exact=exact) for q in quotes]
+    return {'verified': sum(1 for r in results if r['verified']), 'total': len(results),
+            'results': results}
+
+
+@_guard
+def character_info(name):
+    """Character metadata, aliases and line counts."""
+    conn = connect()
+    try:
+        ch = conn.execute(
+            "SELECT id, name, slug FROM characters WHERE name LIKE ? OR slug LIKE ?",
+            (f'%{name}%', f'%{name.lower().replace(" ", "-")}%')).fetchone()
+        if not ch:
+            return None
+        quotes = conn.execute('SELECT COUNT(*) FROM character_lines WHERE character_id=?', (ch['id'],)).fetchone()[0]
+        sources = {r[0]: r[1] for r in conn.execute(
+            'SELECT source_type, COUNT(*) FROM character_lines WHERE character_id=? GROUP BY source_type',
+            (ch['id'],)).fetchall()}
+        spoken = conn.execute(
+            "SELECT COUNT(*) FROM transcript_lines WHERE speaker LIKE ? AND is_stage_dir=0",
+            (f"%{ch['name']}%",)).fetchone()[0]
+        aliases = [r[0] for r in conn.execute(
+            'SELECT alias FROM speaker_aliases WHERE canonical=? ORDER BY alias', (ch['name'],)).fetchall()]
+        return {'name': ch['name'], 'slug': ch['slug'], 'quotes': quotes,
+                'spoken_lines': spoken, 'sources': sources, 'aliases': aliases}
+    finally:
+        conn.close()
+
+
+@_guard
 def book(ref, limit=20, offset=0, full=False):
     """Book metadata and entries. ref accepts a slug or a title fragment."""
     conn = connect()
@@ -319,13 +376,29 @@ def find_item(query, limit=10, offset=0):
         raise ValueError('query must be 1-200 characters')
     conn = connect()
     try:
-        where = 'slug = ? OR title LIKE ?'
-        params = [query, f'%{query}%']
-        total = conn.execute(f'SELECT COUNT(*) FROM items WHERE {where}', params).fetchone()[0]
-        rows = conn.execute(
-            f'SELECT slug, title, item_type, release FROM items WHERE {where} '
-            f'ORDER BY CASE WHEN slug = ? THEN 0 ELSE 1 END, title LIMIT ? OFFSET ?',
-            params + [query, _limit(limit, 10), _offset(offset)]).fetchall()
+        tokens = re.findall(r'[A-Za-z0-9]+', query)
+        fts_query = ' '.join(f'{t}*' for t in tokens) if tokens else ''
+        rows = []
+        total = 0
+        if fts_query:
+            try:
+                total = conn.execute(
+                    'SELECT COUNT(*) FROM item_title_fts WHERE item_title_fts MATCH ?',
+                    (fts_query,)).fetchone()[0]
+                rows = conn.execute(
+                    'SELECT slug, title, item_type, release FROM item_title_fts '
+                    'WHERE item_title_fts MATCH ? ORDER BY rank, title LIMIT ? OFFSET ?',
+                    (fts_query, _limit(limit, 10), _offset(offset))).fetchall()
+            except sqlite3.OperationalError:
+                rows, total = [], 0
+        if not rows:
+            where = 'slug = ? OR title LIKE ?'
+            params = [query, f'%{query}%']
+            total = conn.execute(f'SELECT COUNT(*) FROM items WHERE {where}', params).fetchone()[0]
+            rows = conn.execute(
+                f'SELECT slug, title, item_type, release FROM items WHERE {where} '
+                f'ORDER BY CASE WHEN slug = ? THEN 0 ELSE 1 END, title LIMIT ? OFFSET ?',
+                params + [query, _limit(limit, 10), _offset(offset)]).fetchall()
         return {'count': len(rows), 'total': total, 'limit': _limit(limit, 10),
                 'offset': _offset(offset), 'rows': [dict(r) for r in rows]}
     finally:

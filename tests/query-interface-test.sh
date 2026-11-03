@@ -33,6 +33,8 @@ check "$Q book 'a-man-with-no-name' --limit 2 | grep -q 'A Man with No Name'" "b
 check "$Q transcript 'savathuns-spire' --limit 2 | grep -q 'Eris Morn'" "transcript reads lines"
 check "$Q find-item 'nightmask' | grep -q '0a0x-nightmask'" "find-item matches titles"
 check "$Q record 'am-i-to-cast-a-shadow' | grep -q 'Am I to cast'" "record reads a seal"
+check "$Q verify-many 'I am Eris Morn.' 'not canon zzz' | grep -q '1 of 2 verified'" "verify-many batches quotes"
+check "$Q character-info eris | grep -q 'Curated quotes: 262'" "character-info reports counts"
 check "$Q verify 'completely fabricated sentence xyzzy'; [ \$? -eq 1 ]" "verify unknown exits 1"
 check "$Q verify 'Absolutely not.' --exact --json | python3 -c 'import json,sys; d=json.load(sys.stdin); assert d[\"verified\"] and d[\"matches\"][0][\"exact\"]'" "verify --exact --json parses"
 check "$Q list books --limit 3 | grep -q 'entry_count'" "list books"

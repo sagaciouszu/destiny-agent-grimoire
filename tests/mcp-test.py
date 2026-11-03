@@ -43,7 +43,8 @@ def tools_listed():
     tools = srv._tool_manager.list_tools()
     names = {t.name for t in tools}
     want = {'search', 'character', 'item', 'verify', 'list_records', 'stats',
-            'book', 'transcript', 'find_item', 'record'}
+            'book', 'transcript', 'find_item', 'record', 'verify_many',
+            'character_info'}
     assert want <= names, f'missing tools: {want - names}'
 
 
@@ -121,7 +122,7 @@ def protocol_smoke():
 
 
 print('MCP contract test')
-check('ten tools registered', tools_listed)
+check('twelve tools registered', tools_listed)
 check('search returns rows', search_works)
 check('verify accepts and rejects', verify_works)
 check('limit is clamped', limits_clamped)

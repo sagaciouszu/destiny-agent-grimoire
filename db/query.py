@@ -9,7 +9,9 @@ Usage:
                            [--limit N] [--json] [--full]
   query.py character "<name>" [--about <term>] [--limit N] [--all] [--json]
   query.py item "<slug>" [--json]
-  query.py verify "<quote>" [--json]
+  query.py verify "<quote>" [--speaker NAME] [--exact] [--json]
+  query.py verify-many "<q1>" "<q2>" ... [--speaker NAME] [--exact] [--json]
+  query.py character-info "<name>" [--json]
   query.py list books|characters|speakers|records [--limit N] [--offset N] [--json]
   query.py book "<slug or title>" [--limit N] [--offset N] [--full] [--json]
   query.py transcript "<slug or title>" [--speaker NAME] [--limit N] [--offset N] [--full] [--json]
@@ -37,13 +39,14 @@ def emit(rows, as_json, human_fn):
 
 def cmd_search(args):
     out = api.search(args.query, type=args.type, limit=args.limit, full=args.full,
-                     offset=args.offset)
+                     offset=args.offset, rank=args.rank)
+    total = api.search_total(args.query, type=args.type)
     if args.full:
         emit(out, args.json, lambda rs: [print(f"[{r['source']}] {r['title']}: {r['text'][:200]}") for r in rs])
     else:
         emit(out, args.json, lambda rs: [print(f"[{r['source']}] {r['title']}: {r['snip']}") for r in rs])
     if not args.json:
-        print(f'\n{len(out)} results')
+        print(f'\n{len(out)} results of {total}')
     return 0 if out else 1
 
 
@@ -78,6 +81,32 @@ def cmd_item(args):
         print(f"Release: {row['release']}")
         print(f"Source: {row['source_url']}")
         print(f"\n{row['text']}")
+    return 0
+
+
+def cmd_verify_many(args):
+    res = api.verify_many(args.quotes, speaker=args.speaker, exact=args.exact)
+    if args.json:
+        print(json.dumps(res, ensure_ascii=False, separators=(',', ':')))
+    else:
+        for r in res['results']:
+            print(('VERIFIED: ' if r['verified'] else 'NOT FOUND: ') + f'"{r["quote"]}"')
+        print(f"\n{res['verified']} of {res['total']} verified")
+    return 0 if res['verified'] == res['total'] else 1
+
+
+def cmd_character_info(args):
+    res = api.character_info(args.name)
+    if res is None:
+        print(f'Character not found: {args.name}', file=sys.stderr)
+        return 1
+    if args.json:
+        print(json.dumps(res, ensure_ascii=False, separators=(',', ':')))
+    else:
+        print(f"=== {res['name']} ({res['slug']}) ===")
+        print(f"Curated quotes: {res['quotes']} | spoken lines: {res['spoken_lines']}")
+        print(f"Sources: {res['sources']}")
+        print(f"Aliases: {', '.join(res['aliases']) or 'none'}")
     return 0
 
 
@@ -200,6 +229,10 @@ def main(argv=None):
     s.add_argument('--offset', type=int, default=0)
     s.add_argument('--json', action='store_true')
     s.add_argument('--full', action='store_true', help='full text instead of snippets')
+    s.add_argument('--rank', dest='rank', action='store_true', default=True,
+                   help='order by FTS relevance (default)')
+    s.add_argument('--no-rank', dest='rank', action='store_false',
+                   help='keep insertion order')
     s.set_defaults(func=cmd_search)
 
     c = sub.add_parser('character', help='Character lines')
@@ -259,6 +292,18 @@ def main(argv=None):
     rc.add_argument('ref')
     rc.add_argument('--json', action='store_true')
     rc.set_defaults(func=cmd_record)
+
+    vm = sub.add_parser('verify-many', help='Verify up to 20 quotes at once')
+    vm.add_argument('quotes', nargs='+')
+    vm.add_argument('--speaker')
+    vm.add_argument('--exact', action='store_true')
+    vm.add_argument('--json', action='store_true')
+    vm.set_defaults(func=cmd_verify_many)
+
+    ci = sub.add_parser('character-info', help='Character metadata and line counts')
+    ci.add_argument('name')
+    ci.add_argument('--json', action='store_true')
+    ci.set_defaults(func=cmd_character_info)
 
     st = sub.add_parser('stats', help='Database statistics')
     st.add_argument('--json', action='store_true')
