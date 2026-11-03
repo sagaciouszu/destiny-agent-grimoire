@@ -51,6 +51,15 @@ check "only two markdown files lack the disabled marker" \
 check "every companion file is disabled" \
     '[ "$(grep -rl --include="*.md" "^disabled: true$" "$DEST" | wc -l)" -eq "$(( $(find "$DEST" -name "*.md" | wc -l) - 2 ))" ]'
 
+BAD="$TMP/bad-registry.json"
+printf '%s' '{"series":"x","agents":[{"id":"evil","name":"Evil","source":"how-to-drift-for-agents","entry":"../../evil.md"}]}' > "$BAD"
+if SERIES_MANIFEST="$BAD" AGENT_REPOS_DIR="$SRC" OPENCODE_AGENTS="$DEST" NO_RELOAD=1 \
+    bash "$ARCHIVE/scripts/sync-live-agents.sh" >/dev/null 2>&1; then
+    echo "  ✗ registry rejects path traversal"; FAIL=$((FAIL+1))
+else
+    echo "  ✓ registry rejects path traversal"; PASS=$((PASS+1))
+fi
+
 echo ""
 echo "Passed: $PASS | Failed: $FAIL"
 [ "$FAIL" -eq 0 ]

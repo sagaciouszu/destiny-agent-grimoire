@@ -12,7 +12,7 @@
 set -e
 HERE="$(cd "$(dirname "$0")/.." && pwd)"
 WORK="${AGENT_REPOS_DIR:-$(dirname "$HERE")}"
-MANIFEST="$HERE/series/agents.json"
+MANIFEST="${SERIES_MANIFEST:-$HERE/series/agents.json}"
 DRY=""
 TARGET="opencode"
 DEST="${OPENCODE_AGENTS:-$HOME/.config/opencode/agents}"
@@ -32,9 +32,26 @@ done
 
 manifest() {
     python3 - "$MANIFEST" "$@" <<'PY'
-import json, sys
+import json, os, sys
+import re
 manifest = json.load(open(sys.argv[1], encoding='utf-8'))
 mode = sys.argv[2] if len(sys.argv) > 2 else 'rows'
+seen = set()
+for a in manifest.get('agents', []):
+    ident = a.get('id', '')
+    source = a.get('source', '')
+    entry = a.get('entry', '')
+    if not re.fullmatch(r'[a-z0-9][a-z0-9-]*', ident):
+        sys.exit(f'FATAL: invalid agent id: {ident!r}')
+    if ident in seen:
+        sys.exit(f'FATAL: duplicate agent id: {ident}')
+    seen.add(ident)
+    if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._-]*', source):
+        sys.exit(f'FATAL: invalid source for {ident}: {source!r}')
+    if entry != os.path.basename(entry) or not entry.endswith('.md'):
+        sys.exit(f'FATAL: entry must be a bare .md filename for {ident}: {entry!r}')
+    if not a.get('name'):
+        sys.exit(f'FATAL: missing name for {ident}')
 if mode == 'entries':
     print('\n'.join(a.get('entry', '') for a in manifest['agents']))
 elif mode == 'ids':
@@ -50,6 +67,9 @@ EXCLUDES=(
     --exclude 'memory/' --exclude 'core/user-memory.md' --exclude 'core/journal.md'
     --exclude 'core/session-state.md' --exclude 'core/cross-session-memory.md'
 )
+
+# Validate the registry up front: process substitution hides exit codes.
+manifest ids >/dev/null || { echo "FATAL: invalid series registry: $MANIFEST" >&2; exit 1; }
 
 if [ "$TARGET" = "opencode" ]; then
     # One-time migration from the old flat Drifter layout to agents/drifter/.
@@ -157,11 +177,15 @@ for agent in agents:
         'your expertise.',
         '',
     ]
+    def clean(value):
+        value = re.sub(r'[\r\n<>]+', ' ', value or '')
+        return re.sub(r'\s+', ' ', value).strip()[:200]
+
     for peer in peers:
-        summary = (peer.get('summary') or '').strip()
-        consult = (peer.get('consult') or '').strip()
-        lines.append(f"- **{peer.get('name', peer.get('id'))}** (`{peer.get('id')}`) - "
-                     f'{summary} Consult for: {consult}')
+        summary = clean(peer.get('summary'))
+        consult = clean(peer.get('consult'))
+        lines.append(f"- **{clean(peer.get('name', peer.get('id')))}** "
+                     f"(`{peer.get('id')}`) - {summary} Consult for: {consult}")
     lines += [
         '',
         f'Registry: `{registry}`.',
