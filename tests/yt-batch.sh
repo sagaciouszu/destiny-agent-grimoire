@@ -19,17 +19,19 @@ if [ -z "$URLS" ]; then
 fi
 
 COUNT=0
-for URL in $URLS; do
+while IFS= read -r URL; do
+    [ -n "$URL" ] || continue
     COUNT=$((COUNT + 1))
     echo "=== Processing video $COUNT: $URL ==="
     VIDEO_ID=$(echo "$URL" | sed -n 's/.*[?&]v=\([^&]*\).*/\1/p; s/.*youtu\.be\/\([^?]*\).*/\1/p')
     if [ -z "$VIDEO_ID" ]; then
         VIDEO_ID="$URL"
     fi
-    OUTPUT="$OUTPUT_DIR/yt-$VIDEO_ID-transcript.txt"
+    SAFE_ID=$(printf '%s' "$VIDEO_ID" | tr -c 'A-Za-z0-9_-' '_' | cut -c1-64)
+    OUTPUT="$OUTPUT_DIR/yt-$SAFE_ID-transcript.txt"
     "$SCRIPT_DIR/yt-transcript.sh" "$URL" "$OUTPUT" 2>&1 | tail -3
     echo "Saved to: $OUTPUT"
     echo ""
-done
+done <<< "$URLS"
 
 echo "=== Batch complete: $COUNT videos processed ==="

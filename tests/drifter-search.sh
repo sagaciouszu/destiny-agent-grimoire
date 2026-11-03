@@ -22,12 +22,12 @@ echo ""
 
 # Search transcripts
 echo "--- TRANSCRIPTS ---"
-grep -rn -i "$PATTERN" "$SEARCH_DIR" --include="*.md" | head -50
+grep -rn -i -- "$PATTERN" "$SEARCH_DIR" --include="*.md" | head -50
 
 # Search agent files
 echo ""
 echo "--- AGENT FILES ---"
-grep -rn -i "$PATTERN" ${WORKSPACE:-$(bash "$(dirname "$0")/resolve-workspace.sh" "$0")} --include="*.md" | head -30
+grep -rn -i -- "$PATTERN" "${WORKSPACE:-$(bash "$(dirname "$0")/resolve-workspace.sh" "$0")}" --include="*.md" | head -30
 
 echo ""
 echo "=== Search complete ==="

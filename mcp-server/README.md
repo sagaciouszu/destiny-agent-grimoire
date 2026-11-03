@@ -113,6 +113,13 @@ Read-only JSON resources for discovery without tool calls:
 - No network access. The database path is resolved from `GRIMOIRE_DB` or
   `db/grimoire.db`.
 - Inputs are bounded: queries 1-500 chars, quotes 1-2000, limits 1-100.
+- User text is never interpolated into SQL. Search runs as FTS5 syntax when
+  valid and falls back to quoted literal terms, so punctuation cannot break or
+  escape the query.
+- Prompts are sanitized: control characters and bidi/zero-width marks are
+  stripped, double quotes neutralized, and topics capped at 300 chars.
+- `verify` matches speakers on name boundaries and ignores a leading "The";
+  `ris` and `Morn` do not satisfy `Eris Morn`, while `Eris` and `Drifter` do.
 
 ## Transport security
 

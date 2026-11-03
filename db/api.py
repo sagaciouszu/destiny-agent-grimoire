@@ -24,7 +24,8 @@ def db_path():
     return os.environ.get('GRIMOIRE_DB') or DEFAULT_DB
 
 
-_CONTROL = re.compile(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]')
+_CONTROL = re.compile(
+    r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f\u00ad\u200b-\u200f\u202a-\u202e\u2060-\u2064\u2066-\u2069\ufeff]')
 
 
 def clean_input(value, limit):
@@ -58,6 +59,18 @@ def fts_query(conn, term):
     safe = literal_fts(term)
     conn.execute('SELECT 1 FROM fts WHERE fts MATCH ? LIMIT 1', (safe,)).fetchone()
     return safe
+
+
+def _speaker_matches(want, speaker):
+    """Attribution match on name boundaries: 'Eris' and 'The Drifter' pass,
+    'ris' and 'Morn' do not."""
+    def canon(value):
+        value = ' '.join((value or '').split()).casefold()
+        return value[4:] if value.startswith('the ') else value
+    want, speaker = canon(want), canon(speaker)
+    if not want or not speaker:
+        return False
+    return speaker == want or speaker.startswith(want + ' ')
 
 
 def norm(s):
@@ -102,8 +115,13 @@ def _resolve(conn, table, ref, cols):
     if row:
         return row
     return conn.execute(
-        f"SELECT {cols} FROM {table} WHERE title LIKE ? ORDER BY title LIMIT 1",
-        (f"%{ref.replace('-', ' ')}%",)).fetchone()
+        f"SELECT {cols} FROM {table} WHERE title LIKE ? ESCAPE '\\' ORDER BY title LIMIT 1",
+        (f"%{_like(ref.replace('-', ' '))}%",)).fetchone()
+
+
+def _like(value):
+    """Escape LIKE wildcards so user input matches literally, not by pattern."""
+    return value.replace('\\', '\\\\').replace('%', '\\%').replace('_', '\\_')
 
 
 def _resolve_character(conn, name):
@@ -115,13 +133,15 @@ def _resolve_character(conn, name):
     if row:
         return row
     row = conn.execute(
-        'SELECT id, name, slug FROM characters WHERE LOWER(name) LIKE LOWER(?) OR LOWER(slug) LIKE LOWER(?) '
-        'ORDER BY LENGTH(name) LIMIT 1', (f'{q}%', f'{slug}%')).fetchone()
+        "SELECT id, name, slug FROM characters WHERE LOWER(name) LIKE LOWER(?) ESCAPE '\\' "
+        "OR LOWER(slug) LIKE LOWER(?) ESCAPE '\\' "
+        'ORDER BY LENGTH(name) LIMIT 1', (f'{_like(q)}%', f'{_like(slug)}%')).fetchone()
     if row:
         return row
     return conn.execute(
-        'SELECT id, name, slug FROM characters WHERE LOWER(name) LIKE LOWER(?) OR LOWER(slug) LIKE LOWER(?) '
-        'ORDER BY LENGTH(name) LIMIT 1', (f'%{q}%', f'%{slug}%')).fetchone()
+        "SELECT id, name, slug FROM characters WHERE LOWER(name) LIKE LOWER(?) ESCAPE '\\' "
+        "OR LOWER(slug) LIKE LOWER(?) ESCAPE '\\' "
+        'ORDER BY LENGTH(name) LIMIT 1', (f'%{_like(q)}%', f'%{_like(slug)}%')).fetchone()
 
 
 def _guard(fn):
@@ -189,13 +209,13 @@ def character(name, about=None, all_lines=False, limit=20, offset=0):
     """
     conn = connect()
     try:
-        pattern = f'%{about.lower()}%' if about else None
+        pattern = f'%{_like(about.lower())}%' if about else None
         if all_lines:
-            params = [f'%{name}%']
+            params = [f'%{_like(name)}%']
             sql = ("SELECT line AS text, speaker, '' AS source_slug FROM transcript_lines "
-                   'WHERE speaker LIKE ? AND is_stage_dir=0')
+                   "WHERE speaker LIKE ? ESCAPE '\\' AND is_stage_dir=0")
             if pattern:
-                sql += ' AND LOWER(line) LIKE ?'
+                sql += " AND LOWER(line) LIKE ? ESCAPE '\\'"
                 params.append(pattern)
             sql += ' LIMIT ? OFFSET ?'
             params.append(_limit(limit, 20))
@@ -209,7 +229,7 @@ def character(name, about=None, all_lines=False, limit=20, offset=0):
         params = [ch['id']]
         sql = "SELECT text, '' AS speaker, source_slug FROM character_lines WHERE character_id = ?"
         if pattern:
-            sql += ' AND LOWER(text) LIKE ?'
+            sql += " AND LOWER(text) LIKE ? ESCAPE '\\'"
             params.append(pattern)
         sql += ' LIMIT ? OFFSET ?'
         params.append(_limit(limit, 20))
@@ -302,8 +322,7 @@ def verify(quote, speaker=None, exact=False):
     if exact:
         hits = [h for h in hits if h['norm'] == nq]
     if speaker:
-        want = speaker.casefold()
-        hits = [h for h in hits if h['speaker'] and want in h['speaker'].casefold()]
+        hits = [h for h in hits if h['speaker'] and _speaker_matches(speaker, h['speaker'])]
 
     seen, uniq = set(), []
     for h in hits:
@@ -407,8 +426,8 @@ def transcript(ref, speaker=None, limit=50, offset=0, full=False, include_stage=
         if not include_stage:
             where.append('is_stage_dir = 0')
         if speaker:
-            where.append('speaker LIKE ?')
-            params.append(f'%{speaker}%')
+            where.append("speaker LIKE ? ESCAPE '\\'")
+            params.append(f'%{_like(speaker)}%')
         clause = ' AND '.join(where)
         total = conn.execute(f'SELECT COUNT(*) FROM transcript_lines WHERE {clause}', params).fetchone()[0]
         rows = conn.execute(
@@ -447,8 +466,8 @@ def find_item(query, limit=10, offset=0):
             except sqlite3.OperationalError:
                 rows, total = [], 0
         if not rows:
-            where = 'slug = ? OR title LIKE ?'
-            params = [query, f'%{query}%']
+            where = "slug = ? OR title LIKE ? ESCAPE '\\'"
+            params = [query, f'%{_like(query)}%']
             total = conn.execute(f'SELECT COUNT(*) FROM items WHERE {where}', params).fetchone()[0]
             rows = conn.execute(
                 f'SELECT slug, title, item_type, release FROM items WHERE {where} '

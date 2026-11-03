@@ -46,9 +46,11 @@ if [ -z "$SUBFILE" ]; then
 fi
 
 # Convert VTT to plain text (strip timestamps and tags)
-python3 -c "
+TMP_CLEAN="$(mktemp)"
+python3 - "$SUBFILE" > "$TMP_CLEAN" <<'PYEOF'
+
 import re, sys
-with open('$SUBFILE', 'r') as f:
+with open(sys.argv[1], 'r') as f:
     content = f.read()
 # Remove VTT header
 content = re.sub(r'WEBVTT.*?\n\n', '', content, flags=re.DOTALL)
@@ -66,13 +68,14 @@ for line in lines:
         result.append(line)
         prev = line
 print('\n'.join(result))
-" > /tmp/transcript_clean.txt
+PYEOF
 
 if [ -n "$OUTPUT" ]; then
-    cp /tmp/transcript_clean.txt "$OUTPUT"
+    cp "$TMP_CLEAN" "$OUTPUT" && rm -f "$TMP_CLEAN"
     echo "Transcript saved to: $OUTPUT"
 else
-    cat /tmp/transcript_clean.txt
+    cat "$TMP_CLEAN"
+    rm -f "$TMP_CLEAN"
 fi
 
 # Cleanup

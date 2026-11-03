@@ -11,5 +11,6 @@ zip -rq "$OUT" "$(basename "$HERE")" \
      "$(basename "$HERE")/mcp-server/.venv/*" \
      "*/__pycache__/*"
 sha256sum "$OUT" > "$OUT.sha256"
+chmod 600 "$OUT" "$OUT.sha256"
 ls -lh "$OUT" | awk '{print "backup:", $5, $9}'
 cat "$OUT.sha256"

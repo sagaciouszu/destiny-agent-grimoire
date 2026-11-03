@@ -11,7 +11,7 @@ agent-agnostic except the explicitly named Drifter/Eris integration suites.
 - `resolve-workspace.sh <caller> [drifter|eris]` - layout-independent workspace
   resolution (`lore/` may be a symlink or a clone)
 - Root wrappers: `drifter-master-audit.sh` (18 suites), `eris-master-audit.sh`
-  (13 suites), `grimoire-master-audit.sh` (11 suites, archive-wide)
+  (13 suites), `grimoire-master-audit.sh` (12 suites, archive-wide)
 
 ## Archive integrity
 
@@ -28,6 +28,8 @@ agent-agnostic except the explicitly named Drifter/Eris integration suites.
 - `conformance.py` - per-file conformance across all three repos (headers, refs,
   token accuracy, persona-agnostic grimoire, tracked symlinks, README contract,
   command targets, agent document parity)
+- `agent-layout-test.sh` - deployment shape: no `lore` symlink inside `agents/`,
+  only the two entry agents active, every companion file marked `disabled`
 - `sync-readme-meta.py` - stamp or check version and last-push metadata in the
   three READMEs (`--check` for CI)
 - `source-overlap-verify.py` - curated markdown vs live Ishtar, filename/slug

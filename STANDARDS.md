@@ -164,6 +164,11 @@ The Drifter and Eris repositories mirror each other so one method serves both.
   dependency resolves (runtime memory falls back to its template), token headers
   exist, no em/en dashes, INDEX lists every module and every reference resolves,
   and no personal paths appear.
+- Live deployment keeps only `<agent>.md` active. Every companion `.md` carries
+  `disabled: true`, and `lore/` is linked outside the agents directory. OpenCode
+  registers every Markdown file under `agents/` recursively, symlinks included.
+  `tests/agent-layout-test.sh` guards this; `scripts/sync-live-agents.sh`
+  enforces it on every sync.
 
 ## 10. Change procedure
 
