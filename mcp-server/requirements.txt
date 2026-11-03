@@ -1,2 +1,3 @@
-# Official MCP Python SDK. Pin the major series: v2 renamed FastMCP to MCPServer.
+# Source pin. The hash-locked set actually installed is requirements.lock.txt.
+# Regenerate the lock after changing this pin.
 mcp==2.3.0

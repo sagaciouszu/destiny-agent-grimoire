@@ -33,6 +33,7 @@ Use this when you need canonical Destiny lore for storytelling, lore check, agen
 | characters | 18 | Named characters |
 | character_lines | 1189 | Canon character quotes for agents |
 | fts | 136802 | FTS5 search index |
+| verify_fts | 120731 | Fast quote verification index |
 
 ## How to query
 

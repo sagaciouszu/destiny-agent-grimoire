@@ -5,7 +5,7 @@ set -e
 HERE="$(cd "$(dirname "$0")" && pwd)"
 VENV="$HERE/.venv"
 PY="$VENV/bin/python"
-REQ="$HERE/requirements.txt"
+REQ="$HERE/requirements.lock.txt"
 
 if ! command -v python3 >/dev/null 2>&1; then
     echo "python3 is required for the MCP adapter" >&2
@@ -24,8 +24,7 @@ fi
 if [ ! -x "$PY" ]; then
     python3 -m venv "$VENV"
 fi
-"$VENV/bin/pip" install -q --upgrade pip
-"$VENV/bin/pip" install -q -r "$REQ"
+"$VENV/bin/pip" install -q --require-hashes -r "$REQ"
 
 echo "MCP adapter ready: $HERE/run.sh"
 echo ""

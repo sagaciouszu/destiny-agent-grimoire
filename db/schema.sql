@@ -136,3 +136,9 @@ CREATE VIRTUAL TABLE IF NOT EXISTS fts USING fts5(
     title, text, speaker, body, source,
     tokenize='porter unicode61'
 );
+
+-- Fast quote verification: normalized text with provenance (documents only)
+CREATE VIRTUAL TABLE IF NOT EXISTS verify_fts USING fts5(
+    norm, source UNINDEXED, slug UNINDEXED, speaker UNINDEXED,
+    tokenize='porter unicode61'
+);

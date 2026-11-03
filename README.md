@@ -69,7 +69,7 @@ More commands are in the sections below.
 | `curl` | optional prebuilt database | otherwise build locally |
 | MCP SDK (optional) | typed tools for agents without a shell | Python 3.10+; `bash mcp-server/install.sh` |
 | `git` | cloning and version history | |
-| ~200 MB disk | sources plus built database | database is ~128 MB |
+| ~250 MB disk | sources plus built database | database is ~164 MB |
 
 No API keys, accounts or network access are required at runtime.
 
@@ -90,6 +90,7 @@ No API keys, accounts or network access are required at runtime.
 | `fts` | 136802 | FTS5 index over all content |
 | `v_speakers` (view) | 359 | Canonical speakers with line counts |
 | `speaker_aliases` | 6 | Alias to canonical speaker mapping |
+| `verify_fts` (index) | 120731 | Fast quote verification |
 
 Every content row carries provenance. Speaker aliases are canonicalized during
 migration. The full contract is `STANDARDS.md`.
@@ -97,12 +98,10 @@ migration. The full contract is `STANDARDS.md`.
 ## For agents
 
 - **Skill:** `skills/destiny-grimoire/SKILL.md` is the drop-in agent skill.
-- **MCP (optional):** one adapter serves every agent that mounts this archive.
-  `mcp-server/run.sh` exposes `search`, `character`, `item`, `verify`,
-  `list_records`, `stats` as typed tools, so clients need no shell, path glue or
-  SQL. The server enforces read-only access, no arbitrary SQL, 1-100 limits and
-  quote verification. Install with `bash mcp-server/install.sh`; details in
-  `mcp-server/README.md`.
+- **MCP (optional):** `mcp-server/run.sh` serves typed tools to non-shell clients
+  over local stdio; one adapter covers every agent that mounts this archive.
+  Install with `bash mcp-server/install.sh`; tools, limits, client config and
+  security: `mcp-server/README.md`.
 - **Interface:** `python3 db/query.py search|character|item|verify|list|stats`.
   `verify` is the quote-safety primitive (exit 1 when absent); every command
   accepts `--json`; search returns snippets unless `--full`.
@@ -171,7 +170,7 @@ repository minus the database lives outside the tree.
 | Archive audit | `bash grimoire-master-audit.sh` | 11/11 |
 | Drifter agent audit | `bash drifter-master-audit.sh` | 18/18 |
 | Eris agent audit | `bash eris-master-audit.sh` | 13/13 |
-| Database integrity | `bash tests/test-db.sh` | 36 checks |
+| Database integrity | `bash tests/test-db.sh` | 37 checks |
 | Query interface | `bash tests/query-interface-test.sh` | 23 checks |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 |
 | MCP contract | `mcp-server/.venv/bin/python tests/mcp-test.py` | 6/6 |

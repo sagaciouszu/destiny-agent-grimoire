@@ -234,8 +234,14 @@ if 'grimoire' in REPOS:
             issues.append(('grimoire', 'mcp', f'tool drift: manifest={sorted(manifest)} '
                            f'server={sorted(implemented)} docs={sorted(docs)}'))
         req = open(os.path.join(gr, 'mcp-server', 'requirements.txt'), encoding='utf-8').read()
+        lock_path = os.path.join(gr, 'mcp-server', 'requirements.lock.txt')
+        installer = open(os.path.join(gr, 'mcp-server', 'install.sh'), encoding='utf-8').read()
         if 'mcp==' not in req:
             issues.append(('grimoire', 'mcp-server/requirements.txt', 'SDK is not pinned'))
+        if not os.path.exists(lock_path) or '--hash=sha256:' not in open(lock_path, encoding='utf-8').read():
+            issues.append(('grimoire', 'mcp-server/requirements.lock.txt', 'missing hash-locked dependencies'))
+        if '--require-hashes' not in installer:
+            issues.append(('grimoire', 'mcp-server/install.sh', 'does not enforce hashes'))
     except (FileNotFoundError, KeyError, json.JSONDecodeError) as e:
         issues.append(('grimoire', 'mcp', f'cannot verify MCP contract: {e}'))
 

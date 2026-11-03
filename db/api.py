@@ -124,8 +124,51 @@ def item(slug):
         conn.close()
 
 
+def _verify_scan(conn, nq):
+    """Substring scan across every source (fallback and mid-word fragments)."""
+    hits = []
+    rows = conn.execute(
+        'SELECT t.slug, tl.speaker, tl.norm_line AS norm FROM transcript_lines tl '
+        'JOIN transcripts t ON t.id=tl.transcript_id WHERE tl.norm_line LIKE ? LIMIT 3',
+        (f'%{nq}%',)).fetchall()
+    hits += [{'source': 'transcript', 'slug': r[0], 'speaker': r[1], 'norm': r[2]} for r in rows]
+    rows = conn.execute(
+        'SELECT b.slug, e.norm_text AS norm FROM book_entries e JOIN books b ON b.id=e.book_id '
+        'WHERE e.norm_text LIKE ? LIMIT 3', (f'%{nq}%',)).fetchall()
+    hits += [{'source': 'book', 'slug': r[0], 'speaker': '', 'norm': r[1]} for r in rows]
+    plain = [
+        ('grimoire_cards', 'norm_body', 'grimoire_card', False),
+        ('interactions', 'norm_text', 'interaction', True),
+        ('items', 'norm_text', 'item', False),
+        ('records', 'norm_body', 'record', False),
+    ]
+    for tbl, nrm, source, has_speaker in plain:
+        cols = (f'slug, speaker, {nrm} AS norm' if has_speaker
+                else f"slug, {nrm} AS norm, '' AS speaker")
+        rows = conn.execute(
+            f'SELECT {cols} FROM {tbl} WHERE {nrm} LIKE ? LIMIT 3', (f'%{nq}%',)).fetchall()
+        hits += [{'source': source, 'slug': r[0], 'speaker': r[1], 'norm': r[2]} for r in rows]
+    return hits
+
+
+def _verify_index(conn, nq):
+    """Phrase lookup over the verification index; miss falls back to a scan."""
+    phrase = '"' + nq.replace('"', '""') + '"'
+    try:
+        rows = conn.execute(
+            'SELECT norm, source, slug, speaker FROM verify_fts '
+            'WHERE verify_fts MATCH ? LIMIT 500', (phrase,)).fetchall()
+    except sqlite3.OperationalError:
+        return []
+    return [{'source': r[1], 'slug': r[2], 'speaker': r[3], 'norm': r[0]}
+            for r in rows if nq in (r[0] or '')]
+
+
 def verify(quote, speaker=None, exact=False):
     """Check a quoted string against canon.
+
+    Uses the verification index (normalized phrase lookup) and falls back to a
+    substring scan for mid-word fragments or index misses.
 
     speaker: only accept matches attributed to this speaker (drops sources with
              no speaker, such as books and items).
@@ -137,33 +180,14 @@ def verify(quote, speaker=None, exact=False):
     if not quote or len(quote) > 2000:
         raise ValueError('quote must be 1-2000 characters')
     nq = norm(quote)
-    hits = []
     if not nq:
         return {'quote': quote, 'verified': False, 'speaker': speaker,
                 'exact': exact, 'matches': []}
     conn = connect()
     try:
-        rows = conn.execute(
-            'SELECT t.slug, tl.speaker, tl.norm_line AS norm FROM transcript_lines tl '
-            'JOIN transcripts t ON t.id=tl.transcript_id WHERE tl.norm_line LIKE ? LIMIT 3',
-            (f'%{nq}%',)).fetchall()
-        hits += [{'source': 'transcript', 'slug': r[0], 'speaker': r[1], 'norm': r[2]} for r in rows]
-        rows = conn.execute(
-            'SELECT b.slug, e.norm_text AS norm FROM book_entries e JOIN books b ON b.id=e.book_id '
-            'WHERE e.norm_text LIKE ? LIMIT 3', (f'%{nq}%',)).fetchall()
-        hits += [{'source': 'book', 'slug': r[0], 'speaker': '', 'norm': r[1]} for r in rows]
-        plain = [
-            ('grimoire_cards', 'norm_body', 'grimoire_card', False),
-            ('interactions', 'norm_text', 'interaction', True),
-            ('items', 'norm_text', 'item', False),
-            ('records', 'norm_body', 'record', False),
-        ]
-        for tbl, nrm, source, has_speaker in plain:
-            cols = (f'slug, speaker, {nrm} AS norm' if has_speaker
-                    else f"slug, {nrm} AS norm, '' AS speaker")
-            rows = conn.execute(
-                f'SELECT {cols} FROM {tbl} WHERE {nrm} LIKE ? LIMIT 3', (f'%{nq}%',)).fetchall()
-            hits += [{'source': source, 'slug': r[0], 'speaker': r[1], 'norm': r[2]} for r in rows]
+        hits = _verify_index(conn, nq)
+        if not hits:
+            hits = _verify_scan(conn, nq)
     finally:
         conn.close()
 
