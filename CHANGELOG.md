@@ -1,6 +1,16 @@
 # Changelog
 
-## Unreleased
+## v1.3.1 - Documentation and verification overhaul (2026-11-02)
+
+- README standard: banner, version, last push, Guardian-first quick start, agent
+  contract, layout, verification, troubleshooting; gated by conformance
+- Release notes compacted to What's Changed / Verification / Asset, capped at 40 lines
+- SOUL, TOOLS, INDEX, IDENTITY and templates share one section order across agents
+- New gates: README contract, command targets, agent parity (setup, gitignore,
+  document sections, load tiers), release-note shape, tracked symlinks
+- New tests: offline onboarding smoke (24 checks), link checker (private-aware),
+  README metadata stamper
+- Fixed: conformance path resolution through the `lore/` symlink; `orix` -> `oryx`
 
 - Centralized agent testing: Eris suites moved to `tests/` beside the Drifter's;
   one shared `tests/agent-audit.sh` runner and `tests/check-agent-structure.py`
