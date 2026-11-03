@@ -23,6 +23,7 @@ import re
 import subprocess
 import sys
 import glob
+import json
 
 HERE = os.path.dirname(os.path.realpath(__file__))
 GR = os.path.dirname(HERE)
@@ -217,6 +218,26 @@ for name, root in REPOS.items():
         pos = [text.index(h) for h in required]
         if pos != sorted(pos):
             issues.append((name, 'RELEASE.md', 'sections out of order'))
+
+# MCP contract stays in sync: manifest, server decorators, README table
+if 'grimoire' in REPOS:
+    gr = REPOS['grimoire']
+    cap_path = os.path.join(gr, 'db', 'capabilities.json')
+    srv_path = os.path.join(gr, 'mcp-server', 'server.py')
+    readme_path = os.path.join(gr, 'mcp-server', 'README.md')
+    try:
+        manifest = set(json.load(open(cap_path, encoding='utf-8'))['mcp']['tools'])
+        srv = open(srv_path, encoding='utf-8').read()
+        implemented = set(re.findall(r'@server\.tool\(\)\ndef (\w+)\(', srv))
+        docs = set(re.findall(r'^\| `(\w+)` \|', open(readme_path, encoding='utf-8').read(), re.M))
+        if not (manifest == implemented == docs):
+            issues.append(('grimoire', 'mcp', f'tool drift: manifest={sorted(manifest)} '
+                           f'server={sorted(implemented)} docs={sorted(docs)}'))
+        req = open(os.path.join(gr, 'mcp-server', 'requirements.txt'), encoding='utf-8').read()
+        if 'mcp==' not in req:
+            issues.append(('grimoire', 'mcp-server/requirements.txt', 'SDK is not pinned'))
+    except (FileNotFoundError, KeyError, json.JSONDecodeError) as e:
+        issues.append(('grimoire', 'mcp', f'cannot verify MCP contract: {e}'))
 
 # tracked symlinks are runtime state, never repository content
 for name, root in REPOS.items():

@@ -50,6 +50,8 @@ def _limit(value, default):
 
 def search(term, type=None, limit=10, full=False):
     """Full-text search. Returns rows with a snippet unless full=True."""
+    if not term or len(term) > 500:
+        raise ValueError('query must be 1-500 characters')
     if type is not None and type not in TYPE_TO_SOURCE:
         raise ValueError(f'type must be one of: {", ".join(TYPE_TO_SOURCE)}')
     conn = connect()
@@ -60,13 +62,16 @@ def search(term, type=None, limit=10, full=False):
             where += ' AND source = ?'
             params.append(TYPE_TO_SOURCE[type])
         params.append(_limit(limit, 10))
-        if full:
-            rows = conn.execute(
-                f'SELECT title, speaker, text, source FROM fts WHERE {where} LIMIT ?', params).fetchall()
-        else:
-            rows = conn.execute(
-                f"SELECT title, speaker, source, snippet(fts, 1, '[', ']', '…', 10) AS snip "
-                f'FROM fts WHERE {where} LIMIT ?', params).fetchall()
+        try:
+            if full:
+                rows = conn.execute(
+                    f'SELECT title, speaker, text, source FROM fts WHERE {where} LIMIT ?', params).fetchall()
+            else:
+                rows = conn.execute(
+                    f"SELECT title, speaker, source, snippet(fts, 1, '[', ']', '…', 10) AS snip "
+                    f'FROM fts WHERE {where} LIMIT ?', params).fetchall()
+        except sqlite3.OperationalError as e:
+            raise ValueError(f'invalid search query: {e}') from e
         return [dict(r) for r in rows]
     finally:
         conn.close()
@@ -129,6 +134,8 @@ def verify(quote, speaker=None, exact=False):
 
     Returns {'quote', 'verified', 'speaker', 'exact', 'matches'}.
     """
+    if not quote or len(quote) > 2000:
+        raise ValueError('quote must be 1-2000 characters')
     nq = norm(quote)
     hits = []
     if not nq:

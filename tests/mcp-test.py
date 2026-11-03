@@ -109,6 +109,12 @@ def protocol_smoke():
         call = recv(3)
         text = json.dumps(call)
         assert 'verified' in text and 'true' in text, call
+        send({'jsonrpc': '2.0', 'id': 4, 'method': 'tools/call',
+              'params': {'name': 'item', 'arguments': {'slug': 'does-not-exist'}}})
+        err = recv(4)
+        assert err['result'].get('isError') is True, err
+        msg = err['result']['content'][0]['text']
+        assert 'not found' in msg and 'Traceback' not in msg, msg
     finally:
         proc.terminate()
 

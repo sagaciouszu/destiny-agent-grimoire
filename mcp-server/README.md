@@ -85,7 +85,7 @@ instead of matching a fragment.
 ## Safety
 
 - SQLite is opened with URI `mode=ro`; writes fail at the driver level.
-- No arbitrary SQL tool is exposed. The five query shapes are the whole surface.
+- No arbitrary SQL tool is exposed. The six query shapes are the whole surface.
 - No network access. The database path is resolved from `GRIMOIRE_DB` or
   `db/grimoire.db`.
 
