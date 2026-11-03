@@ -39,8 +39,8 @@ check() { if eval "$2" >/dev/null 2>&1; then echo "  ✓ $1"; PASS=$((PASS+1)); 
 
 check "lore symlink removed from agents root" '[ -z "$(find "$DEST" -type l -name lore -print -quit)" ]'
 check "no lore directory left behind" '[ ! -e "$DEST/lore" ]'
-check "entry agents stay active" \
-    '! grep -q "^disabled: true$" "$DEST/drifter.md" && ! grep -q "^disabled: true$" "$DEST/eris/eris.md"'
+check "entry agents stay active as drifter and eris" \
+    '! grep -q "^disabled: true$" "$DEST/drifter.md" && ! grep -q "^disabled: true$" "$DEST/eris.md"'
 check "only two markdown files lack the disabled marker" \
     '[ "$(grep -rL --include="*.md" "^disabled: true$" "$DEST" | wc -l)" -eq 2 ]'
 check "every companion file is disabled" \
