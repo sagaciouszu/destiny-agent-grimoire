@@ -112,7 +112,8 @@ def main():
                 done.add(json.loads(ln)['video_id'])
             except Exception:
                 pass
-    todo = [(v, t) for v, t in VIDEOS if v not in done]
+    only = set(sys.argv[1:])
+    todo = [(v, t) for v, t in VIDEOS if v not in done and (not only or v in only)]
     print(f'{len(VIDEOS)} videos, {len(done)} done, {len(todo)} to fetch')
     errs = 0
     with open(OUT, 'a') as f:
@@ -120,11 +121,12 @@ def main():
             vtt = os.path.join(WORK, vid + '.en.vtt')
             if not os.path.exists(vtt):
                 url = f'https://www.youtube.com/watch?v={vid}'
-                r = subprocess.run(
-                    ['yt-dlp', '--skip-download', '--write-subs', '--write-auto-subs',
-                     '--sub-langs', 'en-orig,en', '--sub-format', 'vtt',
-                     '-o', os.path.join(WORK, vid), url],
-                    capture_output=True, text=True, timeout=300)
+                args = ['yt-dlp', '--skip-download', '--write-subs', '--write-auto-subs',
+                        '--sub-langs', 'en-orig,en', '--sub-format', 'vtt',
+                        '-o', os.path.join(WORK, vid), url]
+                if os.environ.get('YT_CLIENT'):
+                    args[1:1] = ['--extractor-args', 'youtube:player_client=' + os.environ['YT_CLIENT']]
+                r = subprocess.run(args, capture_output=True, text=True, timeout=300)
                 if r.returncode != 0:
                     errs += 1
                     print(f'ERR {vid}: {r.stderr.strip()[-200:]}', file=sys.stderr)
