@@ -1,7 +1,7 @@
 #!/bin/bash
 # Drifter Lore Freshness Check (SQLite)
 DB="$(cd "$(dirname "$0")/.." && pwd)/db/grimoire.db"
-if [ ! -f "$DB" ]; then echo "FAIL: database not found at $DB"; exit 1; fi
+if [ ! -f "$DB" ]; then echo "FAIL: database not found at $DB - bootstrap: ./setup.sh, or python3 db/migrate.py (see README)"; exit 1; fi
 
 echo "=== DRIFTER LORE FRESHNESS CHECK ==="
 echo ""

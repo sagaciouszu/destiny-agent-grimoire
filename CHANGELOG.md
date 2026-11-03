@@ -7,6 +7,7 @@
 - `db/grimoire.db` is now a build artifact: stripped from git (exceeded GitHub's 100MB limit), gitignored, rebuilt via `python3 db/migrate.py`, prebuilt copy attached to the release
 - Cutscene caption verification suite (`tests/cutscene-verify.sh`, 8-gram shingles): 7/7 master-audit suites
 - Legacy ingest scripts removed (superseded by `archive/` scrapers); remaining scripts use repo-relative paths
+- Preload checks print bootstrap guidance when the database is missing (no dead ends for agents)
 - MIT LICENSE added to agent repositories (matching their stated badges)
 
 ### Coverage

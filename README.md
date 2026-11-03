@@ -16,7 +16,7 @@ curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest
 python3 db/migrate.py
 ```
 
-Agent repos (`how-to-drift-for-agents`, `eris-morn`) present this choice in their `./setup.sh` on first run.
+Agent repos (`how-to-drift-for-agents`, `eris-morn`) present this choice in their own `setup.sh` on first run.
 
 ```bash
 # Database stats

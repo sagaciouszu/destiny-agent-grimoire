@@ -36,14 +36,15 @@ run "Conflict Check" "bash $ARCHIVE/tests/drifter-conflict-check.sh 2>&1 | grep 
 run "Voice Consistency" "bash $ARCHIVE/tests/drifter-voice-consistency.sh | grep -q 'VOICE CONSISTENCY CHECK COMPLETE'"
 run "Quote Cross-Check (0 unverified)" "bash $ARCHIVE/tests/drifter-quote-verify.sh | grep -q 'PASS'"
 
-run "Depends On Coverage (67/67)" "python3 -c \"
+MD_COUNT=$(python3 -c "import glob; ws='$WORKSPACE'; print(len([f for f in glob.glob(ws+'/*.md')+glob.glob(ws+'/voice/*.md')+glob.glob(ws+'/core/*.md')+glob.glob(ws+'/world/*.md') if 'DREAMS.md' not in f]))")
+run "Depends On Coverage ($MD_COUNT/$MD_COUNT)" "python3 -c \"
 import glob,os
 ws='$WORKSPACE'
 files=[f for f in glob.glob(ws+'/*.md')+glob.glob(ws+'/voice/*.md')+glob.glob(ws+'/core/*.md')+glob.glob(ws+'/world/*.md')]
 files=[f for f in files if 'DREAMS.md' not in f]
 assert all('**Depends On:**' in open(f).read() for f in files)
 \""
-run "Token Estimate Coverage (67/67)" "python3 -c \"
+run "Token Estimate Coverage ($MD_COUNT/$MD_COUNT)" "python3 -c \"
 import glob,os
 ws='$WORKSPACE'
 files=[f for f in glob.glob(ws+'/*.md')+glob.glob(ws+'/voice/*.md')+glob.glob(ws+'/core/*.md')+glob.glob(ws+'/world/*.md')]

@@ -7,7 +7,7 @@
 # Usage: ./tests/cutscene-verify.sh
 
 DB="${DB:-$(cd "$(dirname "$0")/.." && pwd)/db/grimoire.db}"
-[ -f "$DB" ] || { echo "FAIL: database not found at $DB"; exit 1; }
+[ -f "$DB" ] || { echo "FAIL: database not found at $DB - bootstrap: ./setup.sh, or python3 db/migrate.py (see README)"; exit 1; }
 
 echo "=== CUTSCENE CAPTION VERIFICATION ==="
 echo ""
