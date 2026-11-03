@@ -4,8 +4,7 @@ title: Destiny Agent Grimoire
 permalink: /
 ---
 
-* Table of contents
-{:toc}
+${toc}
 
 ## <img src="/destiny-agent-grimoire/assets/icons/collections.svg" class="inline h-5 w-5 text-white align-text-bottom" alt=""> Quick start {#quick-start}
 

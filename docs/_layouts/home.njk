@@ -5,7 +5,7 @@ layout: default
   <div class="absolute inset-0 bg-gradient-to-br from-deep via-panel to-deep"></div>
   <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
     <div class="max-w-3xl">
-      <span class="inline-flex items-center rounded-full bg-gold-500/10 text-gold-400 border border-gold-500/30 px-3 py-1 text-xs font-semibold uppercase tracking-wider">Canonical Destiny lore</span>
+      <span class="inline-flex items-center rounded-full bg-arc/10 text-arc border border-arc/30 px-3 py-1 text-xs font-semibold uppercase tracking-wider">Canonical Destiny lore</span>
       <h1 class="mt-6 text-4xl sm:text-6xl font-display font-extrabold tracking-tight text-white">
         {{ site.title }}
       </h1>
@@ -13,7 +13,7 @@ layout: default
         {{ site.description }}
       </p>
       <div class="mt-8 flex flex-wrap gap-3">
-        <a href="{{ '/getting-started/' | relative_url }}" class="inline-flex items-center rounded-xl bg-gold-500 px-5 py-3 text-sm font-semibold text-deep shadow-sm hover:bg-gold-400">Get started</a>
+        <a href="{{ '/getting-started/' | url }}" class="inline-flex items-center rounded-xl bg-arc px-5 py-3 text-sm font-semibold text-deep shadow-sm hover:bg-white">Get started</a>
         <a href="https://github.com/sagaciouszu/destiny-agent-grimoire" class="inline-flex items-center rounded-xl border border-white/10 px-5 py-3 text-sm font-semibold text-slate-200 hover:bg-white/5">View on GitHub</a>
       </div>
     </div>
@@ -22,24 +22,24 @@ layout: default
 
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
   <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-    <a href="{{ '/grimoire/' | relative_url }}" class="group rounded-2xl border border-white/10 bg-panel p-6 hover:border-gold-500/40 transition">
+    <a href="{{ '/grimoire/' | url }}" class="group rounded-2xl border border-white/10 bg-panel p-6 hover:border-arc/40 transition">
       <div class="flex items-center justify-between gap-3">
-        <h3 class="font-display font-semibold text-white group-hover:text-gold-400">Grimoire</h3>
-        <img src="{{ '/assets/icons/collections.svg' | relative_url }}" alt="" class="h-12 w-12 flex-none" />
+        <h3 class="font-display font-semibold text-white group-hover:text-arc">Grimoire</h3>
+        <img src="{{ '/assets/icons/collections.svg' | url }}" alt="" class="h-[48px] w-[48px] flex-none" />
       </div>
       <p class="mt-2 text-sm text-slate-400">SQLite + FTS5 lore archive with provenance and verification gates.</p>
     </a>
-    <a href="{{ '/agents/' | relative_url }}" class="group rounded-2xl border border-white/10 bg-panel p-6 hover:border-gold-500/40 transition">
+    <a href="{{ '/agents/' | url }}" class="group rounded-2xl border border-white/10 bg-panel p-6 hover:border-arc/40 transition">
       <div class="flex items-center justify-between gap-3">
-        <h3 class="font-display font-semibold text-white group-hover:text-gold-400">Agents</h3>
-        <img src="{{ '/assets/icons/ghost.svg' | relative_url }}" alt="" class="h-12 w-12 flex-none" />
+        <h3 class="font-display font-semibold text-white group-hover:text-arc">Agents</h3>
+        <img src="{{ '/assets/icons/ghost.svg' | url }}" alt="" class="h-[48px] w-[48px] flex-none" />
       </div>
       <p class="mt-2 text-sm text-slate-400">Drifter and Eris Morn, backed by the same canonical lore.</p>
     </a>
-    <a href="{{ '/grimoire/#compendium' | relative_url }}" class="group rounded-2xl border border-white/10 bg-panel p-6 hover:border-gold-500/40 transition">
+    <a href="{{ '/grimoire/#compendium' | url }}" class="group rounded-2xl border border-white/10 bg-panel p-6 hover:border-arc/40 transition">
       <div class="flex items-center justify-between gap-3">
-        <h3 class="font-display font-semibold text-white group-hover:text-gold-400">Compendium</h3>
-        <img src="{{ '/assets/icons/meditations.svg' | relative_url }}" alt="" class="h-12 w-12 flex-none" />
+        <h3 class="font-display font-semibold text-white group-hover:text-arc">Compendium</h3>
+        <img src="{{ '/assets/icons/meditations.svg' | url }}" alt="" class="h-[48px] w-[48px] flex-none" />
       </div>
       <p class="mt-2 text-sm text-slate-400">Character dialogue index extracted from transcripts.</p>
     </a>
@@ -48,6 +48,6 @@ layout: default
 
 <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
   <article class="prose prose-invert max-w-none">
-    {{ content }}
+    {{ content | safe }}
   </article>
 </section>

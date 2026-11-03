@@ -1,17 +1,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
-<meta name="description" content="{{ page.description | default: site.description }}">
-<link rel="icon" href="{{ '/assets/icons/destiny.svg' | relative_url }}">
+<title>{% if title and title != site.title %}{{ title }} | {% endif %}{{ site.title }}</title>
+<meta name="description" content="{{ description or site.description }}">
+<link rel="icon" href="{{ '/assets/favicon.svg' | url }}">
 <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
 <script>
   tailwind.config = {
     theme: {
       extend: {
         colors: {
-          gold: { 300:'#f5d98a', 400:'#f0c040', 500:'#d4af37', 600:'#b8922e', 700:'#8a6a1f' },
-          panel: '#151a26',
-          deep: '#0b0f19'
+          deep: '#12171d',
+          panel: '#181e25',
+          gold: { 300:'#f2e2a0', 400:'#e3cf74', 500:'#ceae33', 600:'#a98c26', 700:'#7d671c' },
+          arc: '#7aecf3',
+          solar: '#f0631e',
+          strand: '#35e366',
+          ink: '#b6bbb7',
+          muted: '#8d938c',
+          slate: { 100:'#e8ebe5', 200:'#d7dad4', 300:'#c1c6be', 400:'#9aa096', 500:'#7d837a' }
         },
         fontFamily: {
           sans: ['Neue Haas Grotesk Display Pro','Helvetica Neue','Helvetica','Arial','sans-serif'],
@@ -26,12 +32,26 @@
 <style>
   /* Destiny 2 UI body text is larger than a default 16px web base. */
   html { font-size: 18px; }
-  body { font-weight: 400; }
-  h1, h2, h3, h4, h5, h6 { font-weight: 700; letter-spacing: 0.04em; }
+  body { font-weight: 400; color: #b6bbb7; }
+  h1, h2, h3, h4, h5, h6 { font-weight: 700; letter-spacing: 0.04em; color: #fff; }
   .font-display { font-weight: 800; }
   strong { font-weight: 600; }
   code, pre, kbd, samp { font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace; }
   code { font-weight: 400; }
+
+  /* Destiny palette: muted body copy, white headings, arc-cyan links. */
+  .prose {
+    --tw-prose-body: #b6bbb7;
+    --tw-prose-headings: #ffffff;
+    --tw-prose-links: #7aecf3;
+    --tw-prose-bold: #ffffff;
+    --tw-prose-counters: #7aecf3;
+    --tw-prose-bullets: #7aecf3;
+    --tw-prose-quotes: #d7dad4;
+    --tw-prose-code: #e8ebe5;
+    --tw-prose-pre-bg: #0d1217;
+    --tw-prose-hr: rgba(255,255,255,0.12);
+  }
 
   /* Icons render from external SVG files, so color them at the image level. */
   img[src*="/assets/icons/"] { filter: brightness(0) invert(1); }
@@ -39,12 +59,13 @@
   /* Keep section headings compact and put their icon on the right. */
   .prose h1, .prose h2, .prose h3, .prose h4 { margin-top: 1.15rem; margin-bottom: 0.45rem; }
   .prose h2:has(> img) { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
-  .prose h2:has(> img) > img { order: 2; margin: 0; flex: none; width: 3rem; height: 3rem; }
+  .prose h2:has(> img) > img { order: 2; margin: 0; flex: none; width: 48px; height: 48px; }
   .prose p, .prose ul, .prose ol, .prose table, .prose pre { margin-top: 0.55rem; margin-bottom: 0.85rem; }
   .prose li { margin-top: 0.2rem; margin-bottom: 0.2rem; }
-  #markdown-toc { margin-top: 0.6rem; }
-  #markdown-toc li { margin: 0.15rem 0; }
-  #markdown-toc img { display: none; }
+
+  .table-of-contents { margin-top: 0.6rem; }
+  .table-of-contents li { margin: 0.15rem 0; }
+  .table-of-contents img { display: none; }
 </style>
 
 <link href="https://fonts.cdnfonts.com/css/neue-haas-grotesk-display-pro" rel="stylesheet">

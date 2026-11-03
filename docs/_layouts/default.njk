@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  {% include head.html %}
+  {% include "head.njk" %}
 </head>
 <body class="bg-deep text-slate-100 antialiased font-sans">
-  {% include header.html %}
+  {% include "header.njk" %}
   <main>
-    {{ content }}
+    {{ content | safe }}
   </main>
-  {% include footer.html %}
+  {% include "footer.njk" %}
 </body>
 </html>

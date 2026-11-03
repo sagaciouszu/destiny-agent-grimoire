@@ -27,3 +27,4 @@ docs/_site/
 docs/vendor/
 docs/.bundle/
 docs/.jekyll-cache/
+docs/node_modules/
