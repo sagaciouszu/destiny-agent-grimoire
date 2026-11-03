@@ -27,7 +27,11 @@ for arg in "$@"; do
     esac
 done
 
-[ -d "$DEST" ] || { echo "FATAL: $DEST missing"; exit 1; }
+if [ "$TARGET" = "opencode" ]; then
+    [ -d "$DEST" ] || { echo "FATAL: $DEST missing"; exit 1; }
+else
+    $DRY mkdir -p "$OC_ROOT"
+fi
 [ -f "$MANIFEST" ] || { echo "FATAL: $MANIFEST missing"; exit 1; }
 
 manifest() {
