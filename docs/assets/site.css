@@ -580,6 +580,53 @@ pre:hover .copy-button,
   .category { grid-template-columns: 1fr; gap: 0.4rem; }
 }
 
+
+/* On-page navigation */
+
+.toc {
+  margin: 1.6rem 0 2.2rem;
+  padding: 1rem 0 1rem 1.15rem;
+  border-left: 1px solid var(--line-strong);
+}
+
+.toc-title {
+  margin: 0 0 0.5rem;
+  color: var(--gold);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.toc ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  columns: 2;
+  column-gap: 2rem;
+}
+
+.toc li {
+  margin: 0 0 0.3rem;
+  break-inside: avoid;
+}
+
+.toc a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.toc a:hover,
+.toc a:focus-visible {
+  color: var(--gold-bright);
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .toc ul { columns: 1; }
+}
+
 /* Footer */
 
 .site-footer {

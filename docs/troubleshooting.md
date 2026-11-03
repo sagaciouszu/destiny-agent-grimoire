@@ -5,6 +5,20 @@ category: Diagnostics
 lede: Start from the symptom. Each entry names the cause, the check and the fix, and links back to the relevant install page.
 ---
 
+<nav class="toc" aria-labelledby="toc-title">
+<p class="toc-title" id="toc-title">On this page</p>
+<ul>
+  <li><a href="#database-missing">The database is missing</a></li>
+  <li><a href="#checksum">The checksum does not match</a></li>
+  <li><a href="#lore-link">The lore link is dangling</a></li>
+  <li><a href="#mcp-tools">MCP tools do not appear</a></li>
+  <li><a href="#agent-missing">An agent is not listed</a></li>
+  <li><a href="#consult">A peer cannot be consulted</a></li>
+  <li><a href="#verify">A quote does not verify</a></li>
+  <li><a href="#tests">Tests fail after cloning</a></li>
+</ul>
+</nav>
+
 <details class="section" open>
 <summary><span class="section-title" role="heading" aria-level="2" id="database-missing">The Grimoire database is missing <a class="heading-anchor" href="#database-missing" aria-label="Permalink to The Grimoire database is missing">#</a></span></summary>
 
