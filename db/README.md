@@ -67,6 +67,8 @@ sqlite3 db/grimoire.db "SELECT slug, title, item_type FROM items WHERE item_type
 
 ## Extras
 
+- `api.py` - importable query layer shared by the CLI and the MCP server
+- `../mcp-server/` - optional stdio MCP adapter (official SDK, read-only)
 - `capabilities.json` - machine-readable interface manifest (tables, views, commands, contracts)
 - `v_speakers` view - canonical speakers with line counts
 - `speaker_aliases` table - alias -> canonical mapping applied at migration
