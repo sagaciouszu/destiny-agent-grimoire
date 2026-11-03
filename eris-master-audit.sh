@@ -5,6 +5,13 @@ echo "============================================================"
 echo "  DESTINY GRIMOIRE - MASTER AUDIT (ALL CHECKS)"
 echo "============================================================"
 echo ""
+# Bootstrap guard: a clear message beats nine confusing suite failures
+if [ ! -f "$ARCHIVE/db/grimoire.db" ]; then
+    echo "FATAL: database not built at $ARCHIVE/db/grimoire.db"
+    echo "       bootstrap: python3 db/migrate.py (build) or ./setup.sh (prebuilt asset)"
+    echo "       see README Quick start"
+    exit 1
+fi
 PASS=0; FAIL=0; SKIP=0
 run() {
     if bash "$1" >/dev/null 2>&1; then echo "  ✓ [$2] PASS"; PASS=$((PASS+1));
