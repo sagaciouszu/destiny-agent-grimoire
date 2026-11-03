@@ -3,14 +3,17 @@ layout: page
 title: Grimoire
 ---
 
+* Table of contents
+{:toc}
+
+## <img src="/destiny-agent-grimoire/assets/icons/collections.svg" class="inline h-5 w-5 text-white align-text-bottom" alt=""> What the Grimoire offers {#what-the-grimoire-offers}
+
 Canonical, agent-first Destiny lore archive. A single SQLite database with FTS5
 search, built from committed sources, with a documented quote policy and
 verification gates. No external services at runtime.
 
-## What the Grimoire offers
-
 - **110 books** and **1,158 book entries** of Destiny lore
-- **1229 transcripts** with **71,221 dialogue lines**
+- **1,229 transcripts** with **71,221 dialogue lines**
 - **2,889 Destiny 1 grimoire cards**
 - **2,699 interactions** (short dialogue beats)
 - **58,764 items** (weapons, armor, gear lore)
@@ -21,7 +24,7 @@ verification gates. No external services at runtime.
 Every content row carries provenance. Speaker aliases are canonicalized during
 migration. The full contract lives in `STANDARDS.md`.
 
-## Tables
+## <img src="/destiny-agent-grimoire/assets/icons/vault.svg" class="inline h-5 w-5 text-white align-text-bottom" alt=""> Tables {#tables}
 
 | Table | Purpose |
 |---|---|
@@ -34,7 +37,7 @@ migration. The full contract lives in `STANDARDS.md`.
 | `characters` / `character_lines` | Curated character index |
 | `fts` | FTS5 index over all content |
 
-## Query interfaces
+## <img src="/destiny-agent-grimoire/assets/icons/pursuits.svg" class="inline h-5 w-5 text-white align-text-bottom" alt=""> Query interfaces {#query-interfaces}
 
 ### CLI
 
@@ -77,9 +80,19 @@ Client config snippet is printed by the installer; details in
 
 Drop-in skill at `skills/destiny-grimoire/SKILL.md`.
 
-## Machine-readable interface
+## <img src="/destiny-agent-grimoire/assets/icons/traveller.svg" class="inline h-5 w-5 text-white align-text-bottom" alt=""> Machine-readable interface {#machine-readable-interface}
 
 `db/capabilities.json` is a manifest of tables, views, commands and contracts.
+
+## <img src="/destiny-agent-grimoire/assets/icons/meditations.svg" class="inline h-5 w-5 text-white align-text-bottom" alt=""> Compendium {#compendium}
+
+Agent-optimized index of character dialogue extracted from transcripts.
+
+Major characters include Drifter, Eris Morn, Emissary (Orin), Ghost, Saint-14,
+Zavala, Blue (Drifter's Ghost), Shaxx, Lord Saladin, Sloane, Spider, Aunor,
+Cayde-6, Osiris, Nokris, Eido, Bael and The Nine.
+
+Full index: [compendium/index.md](https://github.com/sagaciouszu/destiny-agent-grimoire/blob/master/compendium/index.md)
 
 ## Links
 
