@@ -24,6 +24,42 @@ def db_path():
     return os.environ.get('GRIMOIRE_DB') or DEFAULT_DB
 
 
+_CONTROL = re.compile(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]')
+
+
+def clean_input(value, limit):
+    """Reject non-text, strip control characters and collapse whitespace."""
+    if not isinstance(value, str):
+        raise ValueError('input must be text')
+    value = _CONTROL.sub(' ', value)
+    value = re.sub(r'\s+', ' ', value).strip()
+    if not value:
+        raise ValueError('input must not be empty')
+    if len(value) > limit:
+        raise ValueError(f'input must be 1-{limit} characters')
+    return value
+
+
+def literal_fts(term):
+    """Turn arbitrary user text into a safe FTS5 query of quoted terms."""
+    tokens = [t for t in term.split() if re.search(r'[0-9A-Za-z\u00a1-\uffff]', t)]
+    if not tokens:
+        raise ValueError('query must contain at least one searchable word')
+    return ' AND '.join('"' + t.replace('"', '""') + '"' for t in tokens)
+
+
+def fts_query(conn, term):
+    """Use the term as FTS syntax when valid, otherwise treat it literally."""
+    try:
+        conn.execute('SELECT 1 FROM fts WHERE fts MATCH ? LIMIT 1', (term,)).fetchone()
+        return term
+    except sqlite3.OperationalError:
+        pass
+    safe = literal_fts(term)
+    conn.execute('SELECT 1 FROM fts WHERE fts MATCH ? LIMIT 1', (safe,)).fetchone()
+    return safe
+
+
 def norm(s):
     s = s.lower().replace('\u2026', '...').replace('\u2019', "'").replace('\u2014', '-').replace('\u2013', '-')
     s = re.sub(r'[^a-z0-9 ]+', ' ', s)
@@ -110,13 +146,17 @@ def _limit(value, default):
 
 @_guard
 def search(term, type=None, limit=10, full=False, offset=0, rank=True):
-    """Full-text search. Returns rows with a snippet unless full=True."""
-    if not term or len(term) > 500:
-        raise ValueError('query must be 1-500 characters')
+    """Full-text search. Returns rows with a snippet unless full=True.
+
+    The term is used as FTS5 syntax when valid; otherwise every word is quoted
+    and ANDed, so punctuation (`"`, `(`, `+`, `%`, `:`, `-`) never breaks a query.
+    """
+    term = clean_input(term, 500)
     if type is not None and type not in TYPE_TO_SOURCE:
         raise ValueError(f'type must be one of: {", ".join(TYPE_TO_SOURCE)}')
     conn = connect()
     try:
+        term = fts_query(conn, term)
         where = 'fts MATCH ?'
         params = [term]
         if type:
@@ -246,6 +286,7 @@ def verify(quote, speaker=None, exact=False):
     """
     if not quote or len(quote) > 2000:
         raise ValueError('quote must be 1-2000 characters')
+    quote = clean_input(quote, 2000)
     nq = norm(quote)
     if not nq:
         return {'quote': quote, 'verified': False, 'speaker': speaker,
@@ -277,15 +318,14 @@ def verify(quote, speaker=None, exact=False):
 
 
 @_guard
-@_guard
 def search_total(term, type=None):
     """Total FTS matches for a query (for paging)."""
-    if not term or len(term) > 500:
-        raise ValueError('query must be 1-500 characters')
+    term = clean_input(term, 500)
     if type is not None and type not in TYPE_TO_SOURCE:
         raise ValueError(f'type must be one of: {", ".join(TYPE_TO_SOURCE)}')
     conn = connect()
     try:
+        term = fts_query(conn, term)
         where = 'fts MATCH ?'
         params = [term]
         if type:
