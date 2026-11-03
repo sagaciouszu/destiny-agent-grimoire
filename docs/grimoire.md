@@ -4,10 +4,24 @@ title: Grimoire
 ---
 
 Canonical, agent-first Destiny lore archive. A single SQLite database with FTS5
-search, built from committed sources, with documented quote policy and verification
-gates.
+search, built from committed sources, with a documented quote policy and
+verification gates. No external services at runtime.
 
-## Contents
+## What the Grimoire offers
+
+- **110 books** and **1,158 book entries** of Destiny lore
+- **1229 transcripts** with **71,221 dialogue lines**
+- **2,889 Destiny 1 grimoire cards**
+- **2,699 interactions** (short dialogue beats)
+- **58,764 items** (weapons, armor, gear lore)
+- **71 triumphs and seals**
+- **20 curated characters** with **1,229 quote-ready lines**
+- **120,731-row FTS5 index** over all content
+
+Every content row carries provenance. Speaker aliases are canonicalized during
+migration. The full contract lives in `STANDARDS.md`.
+
+## Tables
 
 | Table | Purpose |
 |---|---|
@@ -20,14 +34,57 @@ gates.
 | `characters` / `character_lines` | Curated character index |
 | `fts` | FTS5 index over all content |
 
-## Interfaces
+## Query interfaces
 
-- CLI: `python3 db/query.py search|character|item|verify|book|transcript|find-item|record|list|stats`
-- MCP: `mcp-server/run.sh` (stdio, read-only)
-- Skill: `skills/destiny-grimoire/SKILL.md`
+### CLI
+
+```bash
+python3 db/query.py stats
+python3 db/query.py search "Crota" --limit 5
+python3 db/query.py character "eris" --limit 20
+python3 db/query.py verify "I am Eris Morn."
+python3 db/query.py item "Ace of Spades"
+python3 db/query.py book "Books of Sorrow"
+python3 db/query.py transcript "Crota's End"
+python3 db/query.py record "Flawless"
+```
+
+Every command accepts `--json` and `--limit`/`--offset`. `verify` is the
+quote-safety primitive (exit 1 when absent).
+
+### MCP adapter
+
+Install the typed tool adapter once:
+
+```bash
+bash mcp-server/install.sh
+```
+
+It serves read-only tools over local stdio for non-shell agents:
+
+- `search` — FTS5 search across all content
+- `character` — lines for a character
+- `item` / `find-item` — item lore lookup
+- `verify` — quote verification
+- `book` / `transcript` — full text retrieval
+- `record` — triumphs and seals
+- `list` / `stats` — schema and counts
+
+Client config snippet is printed by the installer; details in
+`mcp-server/README.md`.
+
+### Agent skill
+
+Drop-in skill at `skills/destiny-grimoire/SKILL.md`.
+
+## Machine-readable interface
+
+`db/capabilities.json` is a manifest of tables, views, commands and contracts.
 
 ## Links
 
 - [Repository](https://github.com/sagaciouszu/destiny-agent-grimoire)
 - [Releases](https://github.com/sagaciouszu/destiny-agent-grimoire/releases)
 - [STANDARDS.md](https://github.com/sagaciouszu/destiny-agent-grimoire/blob/master/STANDARDS.md)
+- [README](https://github.com/sagaciouszu/destiny-agent-grimoire/blob/master/README.md)
+- [MCP server](https://github.com/sagaciouszu/destiny-agent-grimoire/tree/master/mcp-server)

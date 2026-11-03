@@ -2,20 +2,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
 <meta name="description" content="{{ page.description | default: site.description }}">
-<link rel="icon" href="{{ '/assets/favicon.svg' | relative_url }}">
+<link rel="icon" href="{{ '/assets/icons/destiny.svg' | relative_url }}">
 <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
 <script>
   tailwind.config = {
     theme: {
       extend: {
         colors: {
-          brand: { 50:'#eef2ff',100:'#e0e7ff',200:'#c7d2fe',300:'#a5b4fc',400:'#818cf8',500:'#6366f1',600:'#4f46e5',700:'#4338ca',800:'#3730a3',900:'#312e81' }
+          gold: { 300:'#f5d98a', 400:'#f0c040', 500:'#d4af37', 600:'#b8922e', 700:'#8a6a1f' },
+          panel: '#151a26',
+          deep: '#0b0f19'
         },
-        fontFamily: { sans: ['Inter','ui-sans-serif','system-ui','sans-serif'] }
+        fontFamily: {
+          sans: ['Roboto','ui-sans-serif','system-ui','sans-serif'],
+          display: ['Jost','ui-sans-serif','system-ui','sans-serif']
+        }
       }
     }
   }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
