@@ -1,6 +1,13 @@
 # Changelog
 
-## Unreleased
+## v1.9.0 - Compendium and coverage (2026-11-03)
+
+- compendium adds Ikora Rey and Mara Sov (20 characters, 1,229 quotes)
+- 1,003 item types backfilled; remaining blanks are source-optional
+- golden voice snapshots, documentation command audit, item audit
+- CI workflow active; OpenCode and OpenClaw bindings documented
+
+
 
 - item types backfilled from duplicate titles (1,003 rows; 3,634 remain source-blank)
 - compendium expanded with Ikora Rey and Mara Sov (20 characters, 1,229 quotes)
