@@ -1,10 +1,14 @@
 # Changelog
 
-## Unreleased
+## v1.4.0 - MCP adapter and attribution-aware verification (2026-11-03)
 
+- verify gains `--speaker` (attribution) and `--exact` (full line); MCP exposes both
+- CLI limits decoupled from MCP: API up to 10,000, MCP clamps to 1-100
+- Database ships in `journal_mode=delete`; no WAL/SHM sidecars (36 checks)
+- Onboarding: `--mcp` flag and interactive prompt; one install serves both agents
 - MCP adapter: `mcp-server/` uses the official SDK (stdio, read-only) to expose
   `search`, `character`, `item`, `verify`, `list_records`, `stats` as typed tools;
-  install with `bash mcp-server/install.sh` or `WITH_MCP=1 ./setup.sh`
+  install with `bash mcp-server/install.sh` or `./setup.sh --mcp`
 - `db/api.py`: shared importable query layer behind both the CLI and the MCP
   server; CLI output unchanged (23/23 interface checks)
 - `tests/mcp-test.py`: tool contract, read-only guard, limit clamping and a real
