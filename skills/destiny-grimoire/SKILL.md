@@ -14,9 +14,9 @@ Use this when you need canonical Destiny lore for storytelling, lore check, agen
 
 ## Location
 
-- Repo root: `~/Work/destiny-agent-grimoire/` (or wherever cloned)
+- Repo root: wherever you cloned `destiny-agent-grimoire`
 - **Primary:** `db/grimoire.db` (SQLite + FTS5; if missing, bootstrap: `curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db -o db/grimoire.db` for the prebuilt asset, or `python3 db/migrate.py` to build from checkout)
-- **Symlinked in Drifter agent:** `lore/` -> `~/Work/destiny-agent-grimoire/`
+- **Consumed by:** the Drifter and Eris agents via `lore/` (symlink or clone)
 
 ## Data covering
 
@@ -92,9 +92,10 @@ sqlite3 db/grimoire.db "SELECT slug, title, item_type, text FROM items WHERE ite
 2. **SQLite-first.** Do not read raw markdown from `source/` at query time; it is only the ingestion source.
 3. **Keep queries scoped.** Small `--limit N` values preserve token budget.
 4. **Do not edit this data directly.** The migration reads `source/` markdown + `archive/data/*.jsonl` and rebuilds the DB.
-5. **Eris Morn and The Drifter agents** both reference this database via a `lore/` symlink.
+5. **Eris Morn and The Drifter agents** both consume this database via `lore/` (a symlink to or a clone of this repo).
 
 ## Sources
 
-All content sourced from https://www.ishtar-collective.net (Ishtar Collective).
+Text content sourced from https://www.ishtar-collective.net (Ishtar Collective).
+Cutscene transcripts come from YouTube captions (auto-generated; corroboration-verified).
 Bungie Inc owns all Destiny property. Fan-built, not affiliated.

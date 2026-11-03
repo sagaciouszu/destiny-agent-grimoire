@@ -4,7 +4,8 @@ import glob, os, re, sys
 
 def get_files(ws):
     files = []
-    for root, _, fs in os.walk(ws):
+    for root, dirs, fs in os.walk(ws):
+        dirs[:] = [d for d in dirs if d not in ('.git', 'lore')]
         for f in fs:
             if f.endswith('.md'):
                 files.append(os.path.join(root, f))

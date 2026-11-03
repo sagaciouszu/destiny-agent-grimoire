@@ -11,7 +11,8 @@ a change that is not done.
 
 - `destiny-agent-grimoire` is agent-agnostic: no persona, no agent-specific rules.
 - Consumer agents (`how-to-drift-for-agents`, `eris-morn`) reference the database
-  through a `lore/` symlink. They own their personas; this repo owns canon.
+  through `lore/`, either a symlink or a clone. They own their personas; this repo
+  owns canon.
 - `source/` is the ingestion corpus (verbatim lore, formatting-normalized).
   `archive/` holds raw scrape output. `db/` holds the migration and interface.
 - The database (`db/grimoire.db`) is a build artifact: never committed, rebuilt
@@ -24,7 +25,7 @@ a change that is not done.
 | agent `README`/`INDEX`/`AGENTS`/`TOOLS`/agent def | lore database | `lore/db/grimoire.db`, `python3 lore/db/query.py` |
 | agent `setup.sh` | this repo | clones or symlinks `lore/`; bootstraps the DB (release asset or build) |
 | agent `.gitignore` | runtime memory | `USER.md`, `core/*memory*`, `core/journal.md` never leave the machine |
-| `tests/drifter-*`, `tests/eris-*` | agent workspace | `tests/resolve-workspace.sh` (layout-independent) |
+| `tests/drifter-*`, `tests/eris-*` | agent workspace | `tests/resolve-workspace.sh` (layout-independent; `lore/` may be symlink or clone) |
 | `db/migrate.py` | sources | `source/{books,transcripts,cards,records}` + `archive/data/*.jsonl` |
 | `db/query.py` | database | CLI wrapper over `search` / `character` / `item` / `stats` |
 | `tests/sync-doc-counts.py` | all three repos | rewrites documented counts from the DB |
@@ -93,7 +94,8 @@ match a recomputation of their source text.
 | `tests/speaker-audit.py` | reclassified parse noise must not reappear |
 | `tests/sync-doc-counts.py --check` | docs counts match the database |
 | `drifter-master-audit.sh` / `eris-master-audit.sh` | agent-side suites (voice, quotes, modules, dependency coverage) |
-| `tests/ci-checks.py` | headers, em-dashes, personal paths |
+| `tests/conformance.py` | per-file headers, token accuracy, refs, persona-agnosticism; runs `ci-checks` per agent repo |
+| `tests/ci-checks.py` (via conformance) | stale names, circular/self dependencies, headers, em-dashes, personal paths, gitignored refs in instructions |
 
 Live probes (on demand, network): `tests/live-sample-verify.py` samples every
 content type against Ishtar; `tests/drifter-voice-consistency.sh` /

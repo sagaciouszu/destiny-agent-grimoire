@@ -1,5 +1,9 @@
 # Destiny Agent Grimoire
 
+<p align="center">
+  <img src='header.png' alt='Destiny Agent Grimoire' width='100%'/>
+</p>
+
 An agent-first lore archive for the Destiny universe. All content is served via a single SQLite database with FTS5 full-text search. No external services needed.
 
 **Version:** 1.3.0

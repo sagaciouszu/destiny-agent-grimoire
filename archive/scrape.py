@@ -99,6 +99,10 @@ def scrape(kind, parser, out_path, start_page, end_page, workers=8):
     print(f'{kind}: done, total lines = {sum(1 for _ in open(out_path,encoding="utf-8"))}', flush=True)
 
 if __name__ == '__main__':
+    if len(sys.argv) < 4 or sys.argv[1] not in ('interactions', 'items'):
+        print('usage: python3 archive/scrape.py <interactions|items> <start-page> <end-page>')
+        print('  example: python3 archive/scrape.py items 1 20')
+        sys.exit(2)
     os.makedirs('archive/data', exist_ok=True)
     kind = sys.argv[1]
     s, e = int(sys.argv[2]), int(sys.argv[3])

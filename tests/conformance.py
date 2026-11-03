@@ -7,12 +7,15 @@ Checks every tracked text file in all three repositories:
   - first-line purpose presence
   - file references resolve (workspace-aware)
   - grimoire persona-agnosticism (persona words only in explicitly named tests)
+  - ci-checks per agent repo (stale names, circular/self deps, dashes, personal
+    paths, gitignored refs in instructions, headers)
 
 Usage: python3 tests/conformance.py [--fix-tokens]
 Exit 1 when violations remain.
 """
 import os
 import re
+import subprocess
 import sys
 import glob
 
@@ -100,6 +103,19 @@ for path in files_of(GR):
     text = open(path, encoding='utf-8', errors='ignore').read()
     if PERSONA_RULE.search(text):
         issues.append(('grimoire', rel, 'persona instruction in agent-agnostic file'))
+
+CI_CHECKS = os.path.join(HERE, 'ci-checks.py')
+if os.path.exists(CI_CHECKS):
+    for name, root in REPOS.items():
+        if name == 'grimoire':
+            continue  # ci-checks targets agent module layout
+        for chk in ('stale', 'circular', 'selfdeps', 'emdashes', 'personal',
+                    'gitignored', 'headers'):
+            r = subprocess.run([sys.executable, CI_CHECKS, chk, root],
+                               capture_output=True, text=True)
+            if r.returncode != 0:
+                out = (r.stdout or r.stderr).strip().splitlines()
+                issues.append((name, 'ci-checks', f'{chk}: {out[-1] if out else "failed"}'))
 
 print(f'files scanned: {sum(len(files_of(r)) for r in REPOS.values())}')
 if globals().get('_missing_refs'):
