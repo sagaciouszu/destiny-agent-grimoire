@@ -47,6 +47,15 @@ python3 db/query.py stats
 python3 db/query.py search "Crota" --limit 5
 ```
 
+**Optional: MCP clients.** Install the typed tool adapter once:
+
+```bash
+bash mcp-server/install.sh
+```
+
+It prints a client config snippet pointing at `mcp-server/run.sh`. Details and
+the tool list: `mcp-server/README.md`.
+
 More commands are in the sections below.
 
 ## Requirements
@@ -56,6 +65,7 @@ More commands are in the sections below.
 | `python3` 3.8+ | migration, query CLI, tests | standard library only |
 | `sqlite3` | optional raw SQL | the CLI uses Python's built-in driver |
 | `curl` | optional prebuilt database | otherwise build locally |
+| MCP SDK (optional) | typed tools for agents without a shell | Python 3.10+; `bash mcp-server/install.sh` |
 | `git` | cloning and version history | |
 | ~200 MB disk | sources plus built database | database is ~128 MB |
 
@@ -85,8 +95,10 @@ migration. The full contract is `STANDARDS.md`.
 ## For agents
 
 - **Skill:** `skills/destiny-grimoire/SKILL.md` is the drop-in agent skill.
-- **MCP:** `mcp-server/run.sh` exposes the same tools over stdio for runtimes
-  without shell access; read-only, official SDK, optional install.
+- **MCP (optional):** `mcp-server/run.sh` serves six typed tools over stdio:
+  `search`, `character`, `item`, `verify`, `list_records`, `stats`. Read-only,
+  official SDK, no arbitrary SQL, limits clamped to 1-100. Install with
+  `bash mcp-server/install.sh`; details in `mcp-server/README.md`.
 - **Interface:** `python3 db/query.py search|character|item|verify|list|stats`.
   `verify` is the quote-safety primitive (exit 1 when absent); every command
   accepts `--json`; search returns snippets unless `--full`.
@@ -104,6 +116,7 @@ Connection matrix:
 |---|---|---|
 | agent repos | this archive | `lore/` symlink or clone, then `lore/db/query.py` |
 | agent `setup.sh` | this archive | clone or symlink, download or build the database |
+| MCP client | this archive | `mcp-server/run.sh` (stdio, read-only) |
 | release workflow | consumers | `grimoire.db` attached to each release, checksum verified |
 
 ## Repository layout
@@ -157,6 +170,7 @@ repository minus the database lives outside the tree.
 | Database integrity | `bash tests/test-db.sh` | 35 checks |
 | Query interface | `bash tests/query-interface-test.sh` | 23 checks |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 |
+| MCP contract | `mcp-server/.venv/bin/python tests/mcp-test.py` | 6/6 |
 | File conformance | `python3 tests/conformance.py` | PASS |
 
 Agent audits need their workspaces present; the archive audit skips

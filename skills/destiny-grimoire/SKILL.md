@@ -72,6 +72,20 @@ python3 db/query.py verify "I am Eris Morn."
 - `character --about <term>` filters, `character --all` uses raw transcript lines
 - `verify` exits 1 when the quote is not in canon
 
+## MCP server (optional)
+
+For clients that cannot run shell commands, the same tools are available over
+the Model Context Protocol:
+
+```bash
+bash mcp-server/install.sh     # once: venv + official SDK
+# register mcp-server/run.sh in the client (install.sh prints the snippet)
+```
+
+Tools: `search`, `character`, `item`, `verify`, `list_records`, `stats`. The
+server is read-only, exposes no arbitrary SQL, clamps limits to 1-100 and trims
+full text to 4000 characters. Full details: `mcp-server/README.md`.
+
 ## Extras
 
 - `db/capabilities.json` - interface manifest (tables, commands, contracts)
