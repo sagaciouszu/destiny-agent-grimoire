@@ -5,7 +5,7 @@
 # Exit code: 0 if all pass, 1 if any fail.
 
 ARCHIVE="${ARCHIVE:-$(cd "$(dirname "$0")/.." && pwd)}"
-WORKSPACE="${WORKSPACE:-$(cd "$(dirname "$0")/../../how-to-drift-for-agents" && pwd)}"
+WORKSPACE="${WORKSPACE:-$(bash "$(dirname "$0")/resolve-workspace.sh" "$0")}"
 
 PASS=0; FAIL=0; TOTAL=0
 FAILURES=""

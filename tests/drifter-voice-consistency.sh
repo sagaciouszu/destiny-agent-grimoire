@@ -3,7 +3,7 @@
 # Scans all Drifter-attributed quotes for non-Drifter speech patterns.
 # Usage: ./drifter-voice-consistency.sh
 
-WORKSPACE="${WORKSPACE:-$(cd "$(dirname "$0")/../../how-to-drift-for-agents" && pwd)}"
+WORKSPACE="${WORKSPACE:-$(bash "$(dirname "$0")/resolve-workspace.sh" "$0")}"
 echo "=== DRIFTER VOICE CONSISTENCY CHECK ==="
 echo ""
 

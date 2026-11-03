@@ -6,7 +6,7 @@
 RESPONSE="$1"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 LORE_ROOT="${2:-$(cd "$SCRIPT_DIR/.." && pwd)}"
-WORKSPACE="${3:-$(cd "$SCRIPT_DIR/../../how-to-drift-for-agents" && pwd)}"
+WORKSPACE="${3:-$(bash "$SCRIPT_DIR/resolve-workspace.sh" "$0")}"
 
 echo "=== DRIFTER PRE-RESPONSE VALIDATION ==="
 echo ""

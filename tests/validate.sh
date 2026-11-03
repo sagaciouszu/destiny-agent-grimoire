@@ -1,6 +1,6 @@
 #!/bin/bash
 ARCHIVE="${ARCHIVE:-$(cd "$(dirname "$0")/.." && pwd)}"
-WORKSPACE="${WORKSPACE:-$(cd "$(dirname "$0")/../../how-to-drift-for-agents" && pwd)}"
+WORKSPACE="${WORKSPACE:-$(bash "$(dirname "$0")/resolve-workspace.sh" "$0")}"
 
 echo "=== DRIFTER ARCHIVE VALIDATION ==="
 echo ""
