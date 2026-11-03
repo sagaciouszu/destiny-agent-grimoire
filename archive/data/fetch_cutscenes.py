@@ -48,11 +48,12 @@ VIDEOS = [
     ('t_ECtup2WAY', 'Destiny 2: Episode 3 Heresy Movie - All Cutscenes & Dialogue (Season 26)'),
     ('O6N7h1F92Qs', 'Destiny 1: The Movie (2014-2017) All Cutscenes + DLC'),
     ('8gMDQ4tOyFg', 'Destiny 1 - The Movie (All Cutscenes)'),
+    # Rich same-season mirrors (alternates when archive entries are throttled)
+    ('0DMzSwZmBcQ', 'Destiny 2: Black Armory All Cutscenes (Season 5) (AKA Season of the Forge)'),
+    ('YRYH6WzbMLs', 'DESTINY 2: SEASON OF THE CHOSEN All Cutscenes (Game Movie)'),
+    ('DqjABAIn95Y', 'Destiny 2: Season of the Splicer - All Saint 14 Cutscenes & Quest Dialogue'),
+    ('T83W6y08Z7M', 'Destiny 2 - Season of the Lost (All Cutscenes & Dialogue)'),
     # Alternate uploads used when the archive-series entry is throttled
-    ('UfH_EwwmrkE', 'Destiny 2 Black Armory All Cutscenes Cinematic Movie'),
-    ('8OSUVBTGyD4', 'Destiny 2 Cutscene Archive - Season of the Chosen (Season 13)'),
-    ('PLFO7wuQu04', 'Destiny 2 Cutscene Archive - Season of the Splicer (Season 14)'),
-    ('PwR3i2lZMNI', 'Destiny 2 Cutscene Archive - Season of the Lost (Season 15)'),
 ]
 
 STAGE = re.compile(r'^\[(music|musical|song|singing|humming|applause|laughter|chuckles|gasps?|crowd|static|interference|whirring|thrumming|beeping|alarm|rain|wind|thunder|explosion|gunfire|footsteps|door|roar|growl|screech|whispering|voices|echo)[^\]]*\]$', re.I)

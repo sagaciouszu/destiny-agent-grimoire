@@ -1,6 +1,8 @@
 #!/bin/bash
 # Cutscene Caption Verification
-# Validates YouTube cutscene captions against canonical Ishtar transcripts
+# Validates YouTube cutscene captions against canonical Ishtar transcripts.
+# NOTE: every source video carries only auto-generated captions (no manual
+# tracks exist for these compilations), so these gates are the quality bar.
 # and interactions using word 8-gram shingles (segmentation-independent).
 # Checks: scale, encoding sanity, cross-source corroboration, per-video
 # overlap, cross-video consistency (D1 pair), speaker attribution.
