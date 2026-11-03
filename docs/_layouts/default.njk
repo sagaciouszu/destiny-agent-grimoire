@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   {% include "head.njk" %}
 </head>
-<body class="bg-deep text-slate-100 antialiased font-sans">
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
   {% include "header.njk" %}
-  <main>
+  <main id="main">
     {{ content | safe }}
   </main>
   {% include "footer.njk" %}
+  <script src="{{ '/assets/site.js' | url }}" defer></script>
 </body>
 </html>

@@ -1,17 +1,18 @@
 const markdownIt = require("markdown-it");
-const markdownItAttrs = require("markdown-it-attrs");
-const markdownItToc = require("markdown-it-toc-done-right");
+const markdownItAnchor = require("markdown-it-anchor");
 
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("assets");
 
-  const md = markdownIt({ html: true, linkify: true })
-    .use(markdownItAttrs)
-    .use(markdownItToc, {
-      containerClass: "table-of-contents",
-      listType: "ul",
-      level: [2, 3],
-    });
+  const md = markdownIt({ html: true, linkify: true }).use(markdownItAnchor, {
+    permalink: markdownItAnchor.permalink.linkInsideHeader({
+      symbol: "#",
+      placement: "after",
+      class: "heading-anchor",
+      ariaHidden: false,
+      renderAttrs: () => ({ "aria-label": "Permalink to this section" }),
+    }),
+  });
   eleventyConfig.setLibrary("md", md);
 
   return {
