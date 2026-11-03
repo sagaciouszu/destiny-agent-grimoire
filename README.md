@@ -133,6 +133,7 @@ compendium/  # character quote index that feeds the characters tables
 archive/     # raw scraper output (JSONL) and fetchers
 scripts/     # ingestion helpers
 tests/       # archive gates, agent suites, shared runner, conformance
+docs/        # Eleventy site for GitHub Pages
 skills/      # agent-facing SKILL.md
 series/      # registry of grimoire-born agents (ids, source repos, peers)
 mcp-server/  # optional MCP adapter (stdio, read-only)

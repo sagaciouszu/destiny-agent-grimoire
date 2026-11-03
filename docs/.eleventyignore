@@ -2,5 +2,3 @@ node_modules
 _site
 package.json
 package-lock.json
-vendor
-.bundle

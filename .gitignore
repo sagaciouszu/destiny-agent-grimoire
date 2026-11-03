@@ -22,9 +22,6 @@ db/grimoire.db-*
 # MCP server virtualenv (optional dependency)
 mcp-server/.venv/
 
-# Jekyll site build
+# Static site build
 docs/_site/
-docs/vendor/
-docs/.bundle/
-docs/.jekyll-cache/
 docs/node_modules/
