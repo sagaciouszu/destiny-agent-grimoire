@@ -105,7 +105,7 @@ match a recomputation of their source text.
 | `tests/source-overlap-verify.py` | curated markdown vs live Ishtar; filename/source-slug integrity |
 | `tests/speaker-audit.py` | reclassified parse noise must not reappear |
 | `tests/sync-doc-counts.py --check` | docs counts match the database |
-| `drifter-master-audit.sh` / `eris-master-audit.sh` | agent-side suites (voice, quotes, modules, dependency coverage) |
+| `drifter-master-audit.sh` / `eris-master-audit.sh` (shared `tests/agent-audit.sh`) | agent-side suites (voice, quotes, modules, dependency coverage, index completeness, hygiene) |
 | `tests/conformance.py` | per-file headers, token accuracy, refs, persona-agnosticism; runs `ci-checks` per agent repo |
 | `tests/ci-checks.py` (via conformance) | stale names, circular/self dependencies, headers, em-dashes, personal paths, gitignored refs in instructions |
 

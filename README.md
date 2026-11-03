@@ -138,7 +138,7 @@ python3 tests/sync-doc-counts.py
 
 # verify
 bash tests/test-db.sh
-bash eris-master-audit.sh
+bash grimoire-master-audit.sh
 bash drifter-master-audit.sh
 ```
 
