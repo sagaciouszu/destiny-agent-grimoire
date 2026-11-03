@@ -116,6 +116,17 @@ CREATE INDEX IF NOT EXISTS idx_cl_character ON character_lines(character_id);
 CREATE INDEX IF NOT EXISTS idx_cl_source ON character_lines(source_type, source_slug);
 CREATE INDEX IF NOT EXISTS idx_cl_norm ON character_lines(norm_text);
 
+CREATE TABLE IF NOT EXISTS speaker_aliases (
+    alias TEXT PRIMARY KEY,
+    canonical TEXT NOT NULL
+);
+
+CREATE VIEW IF NOT EXISTS v_speakers AS
+    SELECT speaker, COUNT(*) AS lines
+    FROM transcript_lines
+    WHERE speaker NOT IN ('Narration', 'Cutscene')
+    GROUP BY speaker;
+
 CREATE TABLE IF NOT EXISTS meta (
     key TEXT PRIMARY KEY,
     value TEXT

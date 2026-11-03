@@ -256,6 +256,7 @@ def migrate():
     for alias, canon in SPEAKER_ALIASES.items():
         conn.execute('UPDATE transcript_lines SET speaker=? WHERE speaker=?', (canon, alias))
         conn.execute('UPDATE interactions SET speaker=? WHERE speaker=?', (canon, alias))
+        conn.execute('INSERT OR REPLACE INTO speaker_aliases (alias, canonical) VALUES (?,?)', (alias, canon))
 
     # Grimoire cards
     cards = glob.glob(os.path.join(ROOT, 'source', 'cards', '*.md'))

@@ -1,0 +1,52 @@
+{
+  "name": "destiny-agent-grimoire",
+  "kind": "lore-database",
+  "database": {
+    "path": "db/grimoire.db",
+    "engine": "sqlite",
+    "fts": "fts5 (porter unicode61)",
+    "build": "python3 db/migrate.py",
+    "release_asset": "https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db",
+    "note": "build artifact; not in git"
+  },
+  "tables": {
+    "books": "lore book metadata (slug matches live categories/book-<slug>)",
+    "book_entries": "entries within books (provenance via parent book)",
+    "transcripts": "transcript headers (curated markdown, Ishtar web, cutscene captions)",
+    "transcript_lines": "canonical dialogue lines by speaker (seq ordered, stage directions flagged)",
+    "grimoire_cards": "Destiny 1 grimoire cards with source_url",
+    "interactions": "short character dialogue beats",
+    "items": "weapons/armor/gear lore and flavor text (text may be empty for stat-only items)",
+    "records": "triumphs and seals",
+    "characters": "curated character index (compendium)",
+    "character_lines": "verified character quotes with resolvable source_slug",
+    "speaker_aliases": "alias -> canonical speaker mapping",
+    "fts": "FTS5 index over all content, with a source column for exact type filtering"
+  },
+  "views": {
+    "v_speakers": "speaker, lines (canonical speakers with line counts)"
+  },
+  "commands": {
+    "search": {
+      "usage": "query.py search \"<term>\" [--type books|transcripts|grimoire|interactions|items|records] [--limit N] [--json] [--full]",
+      "returns": "snippet context by default; --full for complete text"
+    },
+    "character": {
+      "usage": "query.py character \"<name>\" [--about <term>] [--all] [--limit N] [--json]",
+      "returns": "curated quotes by default; --all for raw transcript lines"
+    },
+    "item": {"usage": "query.py item \"<slug>\" [--json]"},
+    "verify": {
+      "usage": "query.py verify \"<quote>\" [--json]",
+      "returns": "source + speaker/slug when found; exit 1 when absent (quote safety)"
+    },
+    "list": {"usage": "query.py list books|characters|speakers|records [--limit N] [--json]"},
+    "stats": {"usage": "query.py stats [--json]", "returns": "table row counts"}
+  },
+  "contracts": {
+    "standards": "STANDARDS.md",
+    "quote_policy": "quote must trace to speaker-attributed canon; verify before quoting",
+    "json_output": "every command supports --json (compact, parse-friendly)",
+    "counts": "authoritative counts come from the database; docs are synced by tests/sync-doc-counts.py"
+  }
+}

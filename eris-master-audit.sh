@@ -5,7 +5,7 @@ echo "============================================================"
 echo "  DESTINY GRIMOIRE - MASTER AUDIT (ALL CHECKS)"
 echo "============================================================"
 echo ""
-PASS=0; FAIL=0
+PASS=0; FAIL=0; SKIP=0
 run() {
     if bash "$1" >/dev/null 2>&1; then echo "  ✓ [$2] PASS"; PASS=$((PASS+1));
     else echo "  ✗ [$2] FAIL"; FAIL=$((FAIL+1)); fi
@@ -15,12 +15,18 @@ run "$ARCHIVE/tests/compendium-check.sh" "Compendium Files"
 run "$ARCHIVE/tests/lore-integrity.sh" "Lore Archive Integrity"
 run "$ARCHIVE/tests/conversation-test.sh" "Drifter Conversation (SQLite)"
 run "$ARCHIVE/tests/eris-conversation-test.sh" "Eris Conversation (SQLite)"
-run "$ARCHIVE/tests/validate.sh" "Archive & Quote Validation"
+if bash "$ARCHIVE/tests/resolve-workspace.sh" "$ARCHIVE/drifter-master-audit.sh" >/dev/null 2>&1; then
+    run "$ARCHIVE/tests/validate.sh" "Archive & Quote Validation"
+else
+    echo "  - [Archive & Quote Validation] SKIP (drifter workspace not present)"; SKIP=$((SKIP+1))
+fi
 run "$ARCHIVE/tests/cutscene-verify.sh" "Cutscene Caption Verification"
 run "$ARCHIVE/tests/query-interface-test.sh" "Query Interface (23 checks)"
 if python3 "$ARCHIVE/tests/conformance.py" >/dev/null 2>&1; then echo "  ✓ [File Conformance (all 3 repos)] PASS"; PASS=$((PASS+1)); else echo "  ✗ [File Conformance (all 3 repos)] FAIL"; FAIL=$((FAIL+1)); fi
+if python3 "$ARCHIVE/tests/source-overlap-verify.py" >/dev/null 2>&1; then echo "  ✓ [Source Overlap vs Live] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Source Overlap vs Live] FAIL"; FAIL=$((FAIL+1)); fi
+if python3 "$ARCHIVE/tests/speaker-audit.py" >/dev/null 2>&1; then echo "  ✓ [Speaker Noise Gate] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Speaker Noise Gate] FAIL"; FAIL=$((FAIL+1)); fi
 echo ""
 echo "============================================================"
-echo "  SCORECARD: $PASS / $((PASS+FAIL)) SUITES PASSED ($FAIL failed)"
+echo "  SCORECARD: $PASS / $((PASS+FAIL)) SUITES PASSED ($FAIL failed, $SKIP skipped)"
 echo "============================================================"
 [ "$FAIL" -eq 0 ]

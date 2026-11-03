@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.3.0 - Standards + agent interface v2 (2026-11-02)
+
+- STANDARDS.md: schema contract, naming/canonical speakers, provenance, quote policy, verification gates, connection matrix
+- Database to standards: speaker alias canonicalization at migration (0 variants), grimoire_cards.source_url (2889/2889), speaker_aliases table, v_speakers view, capabilities.json manifest
+- Agent interface v2: snippet-first search (with FTS source column fixing the --type bug), --json everywhere, verify (quote safety), list discovery, character --about/--all
+- Data integrity: entity leakage eliminated (deep unescape), compendium multi-quote parser (15 broken provenance -> 0, +135 quotes), book slug/URL alignment (108 dead links fixed), visit-8 rebuild, filename/source gates
+- Verification: conformance.py (all 3 repos), source-overlap + speaker-audit gated into the master audit, query-interface-test (23 checks); test-db 35 checks
+- Cutscene corpus: 31 videos, 47,576 lines (auto-generated captions, quality-gated)
+- Counts: 1229 transcripts, 71,221 lines, FTS 136,802, 1,189 character quotes
+
 ## v1.2.0 - Web transcripts + cutscenes + quote-verify hardening (2026-11-02)
 
 ### Packaging

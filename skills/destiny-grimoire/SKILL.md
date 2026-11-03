@@ -72,6 +72,12 @@ python3 db/query.py verify "I am Eris Morn."
 - `character --about <term>` filters, `character --all` uses raw transcript lines
 - `verify` exits 1 when the quote is not in canon
 
+## Extras
+
+- `db/capabilities.json` - interface manifest (tables, commands, contracts)
+- `SELECT * FROM v_speakers;` - canonical speakers with line counts
+- `SELECT * FROM speaker_aliases;` - alias -> canonical mapping
+
 ## Direct SQL (advanced)
 
 ```bash
