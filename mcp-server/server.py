@@ -23,8 +23,15 @@ from mcp.types import ToolAnnotations  # noqa: E402
 
 MAX_TEXT = 4000
 MCP_MAX_LIMIT = 100
+MAX_TOPIC = 300
 READ_ONLY = ToolAnnotations(read_only_hint=True, idempotent_hint=True,
                             open_world_hint=False, destructive_hint=False)
+
+
+def _topic(value):
+    """Clean a free-text prompt topic: no control chars, quotes or blanks."""
+    value = api.clean_input(value, MAX_TOPIC)
+    return value.replace('"', "'")
 
 
 def _limit(value, default):
@@ -312,6 +319,7 @@ def record_resource(slug: str) -> str:
 
 @server.prompt(name='quote_safe_lookup', description='Look up lore and return only verified quotes')
 def quote_safe_lookup(topic: str) -> str:
+    topic = _topic(topic)
     return (f'Find canonical Destiny lore about "{topic}". Search the grimoire, then '
             'call verify with the speaker and exact=true for every line before quoting it. '
             'If verify fails, do not quote the line.')

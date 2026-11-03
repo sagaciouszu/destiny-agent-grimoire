@@ -38,9 +38,10 @@ def emit(rows, as_json, human_fn):
 
 
 def cmd_search(args):
-    out = api.search(args.query, type=args.type, limit=args.limit, full=args.full,
+    query = ' '.join(args.query)
+    out = api.search(query, type=args.type, limit=args.limit, full=args.full,
                      offset=args.offset, rank=args.rank)
-    total = api.search_total(args.query, type=args.type)
+    total = api.search_total(query, type=args.type)
     if args.full:
         emit(out, args.json, lambda rs: [print(f"[{r['source']}] {r['title']}: {r['text'][:200]}") for r in rs])
     else:
@@ -111,18 +112,19 @@ def cmd_character_info(args):
 
 
 def cmd_verify(args):
-    res = api.verify(args.quote, speaker=args.speaker, exact=args.exact)
+    quote = ' '.join(args.quote)
+    res = api.verify(quote, speaker=args.speaker, exact=args.exact)
     if args.json:
         print(json.dumps(res, ensure_ascii=False, separators=(',', ':')))
     elif res['verified']:
         label = ' (exact)' if res['exact'] else ''
-        print(f'VERIFIED{label}: "{args.quote}"')
+        print(f'VERIFIED{label}: "{quote}"')
         for h in res['matches']:
             sp = f" | speaker: {h['speaker']}" if h['speaker'] else ''
             ex = ' | exact' if h['exact'] else ''
             print(f"  [{h['source']}] {h['slug']}{sp}{ex}")
     else:
-        print(f'NOT FOUND: "{args.quote}"')
+        print(f'NOT FOUND: "{quote}"')
     return 0 if res['verified'] else 1
 
 
@@ -223,7 +225,7 @@ def main(argv=None):
     sub = parser.add_subparsers(dest='cmd')
 
     s = sub.add_parser('search', help='Full-text search (snippet by default)')
-    s.add_argument('query')
+    s.add_argument('query', nargs='+', help='search words (quoting optional)')
     s.add_argument('--type', choices=list(TYPE_TO_SOURCE.keys()))
     s.add_argument('--limit', type=int, default=10)
     s.add_argument('--offset', type=int, default=0)
@@ -250,7 +252,7 @@ def main(argv=None):
     i.set_defaults(func=cmd_item)
 
     v = sub.add_parser('verify', help='Check a quote against canon (exit 1 if not found)')
-    v.add_argument('quote')
+    v.add_argument('quote', nargs='+', help='quote text (quoting optional)')
     v.add_argument('--speaker', help='require this speaker attribution')
     v.add_argument('--exact', action='store_true', help='require a full canonical line, not a fragment')
     v.add_argument('--json', action='store_true')
