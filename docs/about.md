@@ -3,8 +3,7 @@ layout: page
 title: About
 ---
 
-* Table of contents
-{:toc}
+${toc}
 
 ## <img src="/destiny-agent-grimoire/assets/icons/destiny.svg" class="inline h-5 w-5 text-white align-text-bottom" alt=""> Project {#project}
 

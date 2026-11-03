@@ -1,0 +1,15 @@
+{
+  "name": "destiny-agent-grimoire-site",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "eleventy",
+    "serve": "eleventy --serve"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.8",
+    "markdown-it": "^15.0.3",
+    "markdown-it-attrs": "^5.0.1",
+    "markdown-it-toc-done-right": "^4.2.0"
+  }
+}

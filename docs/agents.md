@@ -3,8 +3,7 @@ layout: page
 title: Agents
 ---
 
-* Table of contents
-{:toc}
+${toc}
 
 ## <img src="/destiny-agent-grimoire/assets/icons/ghost.svg" class="inline h-5 w-5 text-white align-text-bottom" alt=""> The Drifter {#the-drifter}
 
