@@ -15,6 +15,10 @@ This directory contains validation scripts for the archive.
 - `conversation-test.sh` / `eris-conversation-test.sh` - agent queries hit SQLite
 - `ci-checks.py` - stale refs, em-dashes (agent files), personal paths, headers, circular/self deps
 - `sync-doc-counts.py` - rewrite doc count claims from the database (`--check` for CI-style staleness gate)
+- `conformance.py` - per-file conformance across all three repos (headers, refs, token-estimate accuracy, persona-agnostic grimoire)
+- `source-overlap-verify.py` - curated markdown vs live Ishtar overlap + filename/source-slug integrity
+- `speaker-audit.py` - parse-noise regression gate for speaker names
+- `live-sample-verify.py` - on-demand live coverage probe per content type (network)
 
 ### Utilities
 - `yt-transcript.sh` / `yt-batch.sh` - YouTube caption extraction (subtitle-only, no video) to `source/transcripts/`

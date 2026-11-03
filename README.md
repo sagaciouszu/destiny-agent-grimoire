@@ -70,6 +70,7 @@ scripts/  - ingestion scripts
 tests/  - audit + CI scripts (DB-backed)
 skills/  - agent-facing SKILL.md
 index.md  - brief overview pointing to the database
+STANDARDS.md  - the contract: schema, naming, provenance, gates, connection matrix
 destiny-1-legacy-card-index.md  - archived pre-database D1 card index (historical)
 ```
 

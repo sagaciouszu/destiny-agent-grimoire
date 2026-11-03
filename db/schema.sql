@@ -51,7 +51,8 @@ CREATE TABLE IF NOT EXISTS grimoire_cards (
     title TEXT,
     body TEXT,
     norm_body TEXT,
-    game TEXT DEFAULT 'Destiny 1'
+    game TEXT DEFAULT 'Destiny 1',
+    source_url TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_gc_slug ON grimoire_cards(slug);
 CREATE INDEX IF NOT EXISTS idx_gc_norm ON grimoire_cards(norm_body);
