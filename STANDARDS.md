@@ -177,6 +177,9 @@ The Drifter and Eris repositories mirror each other so one method serves both.
   outside agents/. OpenCode registers every Markdown file under agents/
   recursively, symlinks included. Adding a series agent means a repo, an entry
   file and one registry row; no script change.
+- Readiness: a registry agent with `persona.json` and `ready: false` is skipped
+  by sync, marked as not deployed in peer lists, and never loaded into a
+  workspace. Sync requires at least one ready agent.
 - Series collaboration: sync installs the registry at the runtime path and adds a
   managed block to each entry listing peers and the `subagent` protocol. Agents
   run as `mode: primary`; sync derives a read-only `-consult` subagent per agent, so

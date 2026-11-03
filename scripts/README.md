@@ -17,7 +17,7 @@ Both are resumable (existing slugs are skipped) and format output as
 |--------|---------|
 | `release-stage.sh <version> [--dry-run]` | copy the database, write `SHA256SUMS`, print publish commands |
 | `backup.sh [zip]` | rolling archive backup without the database, plus checksum |
-| `sync-live-agents.sh [--openclaw] [--dry-run]` | deploy every agent in `series/agents.json` into OpenCode (agents/) or OpenClaw (workspace-<id>), preserving runtime memory and series blocks |
+| `sync-live-agents.sh [--openclaw] [--dry-run]` | deploy every agent in `series/agents.json` into OpenCode (agents/) or OpenClaw (workspace-<id>), preserving runtime memory and series blocks; skips agents with persona.json ready=false |
 | `../db/build-slim.py [out]` | 95 MB core database: books, transcripts, interactions, records (no items/cards) |
 
 Bulk content (items, interactions, web transcripts, cutscene captions) uses
