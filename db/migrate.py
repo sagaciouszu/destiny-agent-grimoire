@@ -26,6 +26,18 @@ def parse_md_sections(path):
         sections.append((cur_title, '\n'.join(cur_body).strip()))
     return title, sections, lines
 
+def deep_unescape(s):
+    """Unescape repeatedly: some Ishtar pages are double-escaped (&amp;amp;)."""
+    import html as _html
+    if not s:
+        return s
+    for _ in range(4):
+        u = _html.unescape(s)
+        if u == s:
+            break
+        s = u
+    return s
+
 def parse_speaker_line(ln):
     m = re.match(r'^\*(?:The )?(.+?):\*\s*(.*)$', ln.strip())
     if m:
@@ -50,11 +62,15 @@ def migrate():
     books = glob.glob(os.path.join(ROOT, 'source', 'books', '*.md'))
     book_count = 0
     entry_count = 0
+    # Live Ishtar book URLs use categories/book-<slug>, except two books that
+    # live at their plain slug (verified against the live /books listing).
+    BOOK_PREFIX_EXEMPT = {'books-of-sorrow', 'the-maraid'}
     for path in books:
         slug = os.path.basename(path)[:-3]
+        live_slug = slug if slug in BOOK_PREFIX_EXEMPT else f'book-{slug}'
         title, sections, _ = parse_md_sections(path)
         cur = conn.execute('INSERT INTO books (slug,title,source_url,entry_count) VALUES (?,?,?,?)',
-            (slug, title, f'https://www.ishtar-collective.net/categories/{slug}', len(sections)))
+            (live_slug, title, f'https://www.ishtar-collective.net/categories/{live_slug}', len(sections)))
         bid = cur.lastrowid
         book_count += 1
         for i, (st, sb) in enumerate(sections):
@@ -123,7 +139,7 @@ def migrate():
     web_jsonl = os.path.join(ROOT, 'archive', 'data', 'transcripts_web.jsonl')
     if os.path.exists(web_jsonl):
         import html as html_mod
-        JUNK_SPEAKERS = {'Category', 'Quest', 'Ghost Scan', 'Sources', 'Note'}
+        JUNK_SPEAKERS = {'Category', 'Quest', 'Ghost Scan', 'Sources', 'Note', 'Dialogue Option for the Field Assignment'}
         covered = set()
         for r in conn.execute('SELECT slug FROM transcripts').fetchall():
             covered.add(r[0])
@@ -146,7 +162,11 @@ def migrate():
             seq = 0
             for line in d.get('lines', []):
                 sp = line.get('speaker', '')
-                txt = html_mod.unescape(line.get('text', '')).strip()
+                txt = deep_unescape(line.get('text', '')).strip()
+                # YouTube chapter markers parse as speaker lines:
+                # "Cutscene begins at 01:49 and ends at 4:59"
+                if re.match(r'^Cutscene (begins|starts) at', sp):
+                    continue
                 if sp in JUNK_SPEAKERS or not txt:
                     continue
                 key = (sp, txt)
@@ -259,8 +279,9 @@ def migrate():
                 slug = d.get('slug','')
                 if slug in seen: continue
                 seen.add(slug)
+                itext = deep_unescape(d.get('text',''))
                 conn.execute('INSERT OR IGNORE INTO items (slug,title,text,norm_text,release,item_type,source_url) VALUES (?,?,?,?,?,?,?)',
-                    (slug, d.get('title',''), d.get('text',''), norm_text(d.get('text','')), d.get('release',''), d.get('type',''), d.get('url','')))
+                    (slug, deep_unescape(d.get('title','')), itext, norm_text(itext), deep_unescape(d.get('release','')), deep_unescape(d.get('type','')), d.get('url','')))
                 it_count += 1
             except: pass
     print(f'items: {it_count}')
@@ -324,12 +345,20 @@ def migrate():
             cid = cur.lastrowid
             if cid:
                 c_count += 1
-            for m in re.finditer(r'^- "(.+?)"\s*-\s*(\S+)', text, re.M):
-                text_line = m.group(1)
-                src = m.group(2)
-                conn.execute('INSERT INTO character_lines (character_id,text,norm_text,source_type,source_slug) VALUES (?,?,?,?,?)',
-                    (cid, text_line, norm_text(text_line), 'transcript', src))
-                cl_count += 1
+            # Compendium lines are "- \"quote\" - source_slug". Some older entries
+            # pack several quotes into one bullet (""A" - "B" ...") - split them.
+            for line in text.split('\n'):
+                m = re.match(r'^-\s+(.+?)\s+-\s+(\S+)\s*$', line)
+                if not m:
+                    continue
+                body, src = m.group(1), m.group(2)
+                for q in re.findall(r'"([^"]+)"', body):
+                    q = q.strip()
+                    if not q:
+                        continue
+                    conn.execute('INSERT INTO character_lines (character_id,text,norm_text,source_type,source_slug) VALUES (?,?,?,?,?)',
+                        (cid, q, norm_text(q), 'transcript', src))
+                    cl_count += 1
     print(f'characters: {c_count}, lines: {cl_count}')
 
     # Build FTS index (global rowid sequence)

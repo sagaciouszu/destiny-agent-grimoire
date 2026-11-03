@@ -22,6 +22,12 @@ for t in books book_entries transcripts transcript_lines grimoire_cards interact
 done
 
 # Check FTS works
+# HTML entity leakage (double-escaped Ishtar pages are a known risk)
+ENT=$(sqlite3 "$DB" "SELECT (SELECT COUNT(*) FROM transcript_lines WHERE line LIKE '%&#%' OR line LIKE '%&amp;%') + (SELECT COUNT(*) FROM items WHERE item_type LIKE '%&#%' OR item_type LIKE '%&amp;%' OR text LIKE '%&#%' OR text LIKE '%&amp;%') + (SELECT COUNT(*) FROM interactions WHERE text LIKE '%&#%' OR text LIKE '%&amp;%') + (SELECT COUNT(*) FROM book_entries WHERE body LIKE '%&#%' OR body LIKE '%&amp;%') + (SELECT COUNT(*) FROM grimoire_cards WHERE body LIKE '%&#%' OR body LIKE '%&amp;%') + (SELECT COUNT(*) FROM records WHERE body LIKE '%&#%' OR body LIKE '%&amp;%')")
+check "[ $ENT -eq 0 ]" "no HTML entity leakage ($ENT rows)"
+CHARPROV=$(sqlite3 "$DB" "SELECT COUNT(*) FROM character_lines WHERE source_slug != '' AND source_slug NOT IN (SELECT slug FROM transcripts)")
+check "[ $CHARPROV -eq 0 ]" "character quotes trace to real transcripts ($CHARPROV broken)"
+
 FTS_COUNT=$(sqlite3 "$DB" "SELECT COUNT(*) FROM fts")
 check "[ $FTS_COUNT -gt 1000 ]" "FTS index populated ($FTS_COUNT entries)"
 
