@@ -7,7 +7,6 @@ Read-only: every query goes through db/api.py, which opens SQLite in mode=ro.
 Run:  ./mcp-server/run.sh            (uses mcp-server/.venv)
       python3 mcp-server/server.py   (when the SDK is installed)
 """
-import importlib.util
 import os
 import sys
 
@@ -15,11 +14,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, os.path.join(ROOT, 'db'))
 
-_spec = importlib.util.spec_from_file_location('grimoire_api', os.path.join(ROOT, 'db', 'api.py'))
-api = importlib.util.module_from_spec(_spec)
-_spec.loader.exec_module(api)
-
+import api  # noqa: E402
 from mcp.server.mcpserver import MCPServer  # noqa: E402
+from mcp.server.mcpserver.exceptions import ToolError  # noqa: E402
 
 MAX_TEXT = 4000
 MCP_MAX_LIMIT = 100
@@ -41,6 +38,13 @@ server = MCPServer(
 )
 
 
+def _api(fn, *args, **kwargs):
+    try:
+        return fn(*args, **kwargs)
+    except (ValueError, FileNotFoundError) as e:
+        raise ToolError(str(e)) from e
+
+
 def _trim(text, limit=MAX_TEXT):
     if text and len(text) > limit:
         return text[:limit].rsplit(' ', 1)[0] + '...'
@@ -57,7 +61,7 @@ def search(query: str, type: str | None = None, limit: int = 10, full: bool = Fa
         limit: Maximum rows (1-100).
         full: Return full text instead of bounded snippets.
     """
-    rows = api.search(query, type=type, limit=_limit(limit, 10), full=full)
+    rows = _api(api.search, query, type=type, limit=_limit(limit, 10), full=full)
     if full:
         for r in rows:
             r['text'] = _trim(r.get('text', ''))
@@ -75,18 +79,20 @@ def character(name: str, about: str | None = None, all_lines: bool = False,
         all_lines: Use every transcript line instead of curated quotes.
         limit: Maximum rows (1-100).
     """
-    res = api.character(name, about=about, all_lines=all_lines, limit=_limit(limit, 20))
+    res = _api(api.character, name, about=about, all_lines=all_lines, limit=_limit(limit, 20))
     if res is None:
         return {'found': False, 'header': '', 'rows': []}
+    for row in res['rows']:
+        row['text'] = _trim(row.get('text', ''))
     return {'found': True, **res}
 
 
 @server.tool()
 def item(slug: str) -> dict:
     """Item details by slug, including lore and flavor text when present."""
-    row = api.item(slug)
+    row = _api(api.item, slug)
     if row is None:
-        raise ValueError(f'item not found: {slug}')
+        raise ToolError(f'item not found: {slug}')
     row['text'] = _trim(row.get('text', ''))
     return row
 
@@ -103,7 +109,7 @@ def verify(quote: str, speaker: str | None = None, exact: bool = False) -> dict:
     Returns verified=true only when the text traces to canonical content, with
     source, speaker and exact-match flags.
     """
-    return api.verify(quote, speaker=speaker, exact=exact)
+    return _api(api.verify, quote, speaker=speaker, exact=exact)
 
 
 @server.tool()
@@ -114,14 +120,14 @@ def list_records(kind: str, limit: int = 50) -> dict:
         kind: books, characters, speakers, or records.
         limit: Maximum rows (1-100).
     """
-    rows = api.listing(kind, limit=_limit(limit, 50))
+    rows = _api(api.listing, kind, limit=_limit(limit, 50))
     return {'count': len(rows), 'rows': rows}
 
 
 @server.tool()
 def stats() -> dict:
     """Row counts plus top item types and speakers."""
-    return api.stats()
+    return _api(api.stats)
 
 
 def main():

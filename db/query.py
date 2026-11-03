@@ -21,7 +21,6 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import api  # noqa: E402
 
-norm = api.norm
 TYPE_TO_SOURCE = api.TYPE_TO_SOURCE
 
 

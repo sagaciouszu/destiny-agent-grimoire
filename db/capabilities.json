@@ -39,8 +39,8 @@
       "usage": "query.py item \"<slug>\" [--json]"
     },
     "verify": {
-      "usage": "query.py verify \"<quote>\" [--json]",
-      "returns": "source + speaker/slug when found; exit 1 when absent (quote safety)"
+      "usage": "query.py verify \"<quote>\" [--speaker NAME] [--exact] [--json]",
+      "returns": "source/slug/speaker matches with exact flags; exit 1 when absent"
     },
     "list": {
       "usage": "query.py list books|characters|speakers|records [--limit N] [--json]"

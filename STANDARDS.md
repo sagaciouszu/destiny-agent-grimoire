@@ -173,8 +173,9 @@ The Drifter and Eris repositories mirror each other so one method serves both.
 
 ## 11. Packaging
 
-- Database: build artifact, attached to releases (`gh release upload <tag> db/grimoire.db --clobber`),
-  digest verified against local sha256.
+- Database: build artifact, attached to releases with `SHA256SUMS`
+  (`gh release upload <tag> db/grimoire.db SHA256SUMS --clobber`). The installer
+  verifies the download against that checksum and falls back to a local build on mismatch.
 - Backup: rolling zip of the repo minus the database.
 - Consumers get `setup.sh`: seeds memory templates, bootstraps the database
   (prebuilt asset or local build), never blocks.

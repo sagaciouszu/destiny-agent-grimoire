@@ -34,6 +34,8 @@ Download the prebuilt release asset (seconds):
 curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db -o db/grimoire.db
 ```
 
+The agent installers verify the download against the release `SHA256SUMS`.
+
 Or build from this checkout (about two minutes, matches this commit):
 
 ```bash
