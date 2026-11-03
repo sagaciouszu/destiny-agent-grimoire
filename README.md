@@ -14,6 +14,8 @@
 
 **Version:** 0.20.0 | **Last push:** 2026-11-03 | **Status:** Active
 
+**Documentation site:** <https://sagaciouszu.github.io/grimoire-site/>
+
 One canonical, agent-first Destiny lore archive: a single SQLite database with
 FTS5 search, built from committed sources, with a documented quote policy and
 verification gates. No external services at runtime.
