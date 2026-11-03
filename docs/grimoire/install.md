@@ -1,4 +1,5 @@
 ---
+section: grimoire
 layout: page
 title: Install the Grimoire
 category: The Grimoire · Install

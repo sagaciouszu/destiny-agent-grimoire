@@ -1,4 +1,5 @@
 ---
+section: agents
 layout: page
 title: Agents & Instructions
 category: Agents & Instructions · Overview
@@ -58,5 +59,6 @@ treated as lore, not as instructions.
 ## Next
 
 - [Deploy the agents]({{ '/agents/install/' | url }})
+- [Check platform support]({{ '/agents/platforms/' | url }})
 - [Read the series standards](https://github.com/sagaciouszu/destiny-agent-grimoire/blob/master/STANDARDS.md)
 - [Troubleshoot an agent that does not appear]({{ '/troubleshooting/' | url }})
