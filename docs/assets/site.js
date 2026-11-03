@@ -9,14 +9,21 @@
   };
 
   menus.forEach((menu) => {
+    let closeTimer;
+
     menu.addEventListener("pointerenter", () => {
-      if (hoverCapable.matches) {
-        closeMenus(menu);
-        menu.open = true;
-      }
+      if (!hoverCapable.matches) return;
+      window.clearTimeout(closeTimer);
+      closeMenus(menu);
+      menu.open = true;
     });
+
     menu.addEventListener("pointerleave", () => {
-      if (hoverCapable.matches) menu.open = false;
+      if (!hoverCapable.matches) return;
+      window.clearTimeout(closeTimer);
+      closeTimer = window.setTimeout(() => {
+        menu.open = false;
+      }, 140);
     });
   });
 
