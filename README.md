@@ -120,6 +120,9 @@ python3 archive/scrape.py items <start> <end>
 # re-run the database migration
 python3 db/migrate.py
 
+# sync documentation count claims to the database
+python3 tests/sync-doc-counts.py
+
 # verify
 bash tests/test-db.sh
 bash eris-master-audit.sh

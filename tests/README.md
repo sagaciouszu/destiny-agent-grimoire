@@ -14,6 +14,7 @@ This directory contains validation scripts for the archive.
 - `cutscene-verify.sh` - cutscene captions vs canonical transcripts (8-gram shingles: corroboration, encoding, attribution)
 - `conversation-test.sh` / `eris-conversation-test.sh` - agent queries hit SQLite
 - `ci-checks.py` - stale refs, em-dashes (agent files), personal paths, headers, circular/self deps
+- `sync-doc-counts.py` - rewrite doc count claims from the database (`--check` for CI-style staleness gate)
 
 ### Utilities
 - `yt-transcript.sh` / `yt-batch.sh` - YouTube caption extraction (subtitle-only, no video) to `source/transcripts/`

@@ -5,6 +5,8 @@ WORKSPACE="${WORKSPACE:-$(bash "$(dirname "$0")/resolve-workspace.sh" "$0")}"
 echo "=== DRIFTER ARCHIVE VALIDATION ==="
 echo ""
 
+[ -n "$WORKSPACE" ] && [ -d "$WORKSPACE" ] || { echo "FATAL: workspace unresolved (WORKSPACE=$WORKSPACE) - set WORKSPACE or run from the agent repo"; exit 1; }
+
 BOOKS=$(ls "$ARCHIVE/source/books"/*.md 2>/dev/null | wc -l)
 TRANSCRIPTS=$(ls "$ARCHIVE/source/transcripts"/*.md 2>/dev/null | grep -v 'index.md' | wc -l)
 echo "Books: $BOOKS"
@@ -23,7 +25,7 @@ done
 echo ""
 
 echo "--- Module Directories ---"
-for d in core world gameplay voice; do
+for d in core world voice; do
     if [ -d "$WORKSPACE/$d" ]; then
         echo "$d/: EXISTS ($(ls "$WORKSPACE/$d" | wc -l) files)"
     else
@@ -88,7 +90,7 @@ for f in files:
     txt=re.sub(r'\A---\n.*?\n---\n','',txt,count=1,flags=re.S)
     for line in txt.splitlines():
         st=line.strip()
-        if st.startswith('\`\`\`') or st.startswith('~~~'):
+        if st.startswith(chr(96)*3) or st.startswith('~~~'):
             in_fence=not in_fence
             continue
         if in_fence: continue
