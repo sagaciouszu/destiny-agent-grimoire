@@ -91,7 +91,22 @@ async def matrix(s):
     for kind in ('books', 'characters', 'speakers', 'records'):
         res = await call(s, 'list_records', {'kind': kind, 'limit': 5})
         assert res['count'] == len(res['rows']) <= 5
+        page = await call(s, 'list_records', {'kind': kind, 'limit': 2, 'offset': 2})
+        assert page['count'] <= 2
     assert (await call(s, 'stats', {}))['counts']['books'] == 110
+
+    # read tools + pagination
+    assert (await call(s, 'book', {'ref': 'a-man-with-no-name', 'limit': 2}))['book']['slug'] == 'book-a-man-with-no-name'
+    assert (await call(s, 'book', {'ref': 'a-man-with-no-name', 'limit': 1, 'offset': 1}))['offset'] == 1
+    assert len((await call(s, 'book', {'ref': 'a-man-with-no-name', 'limit': 1, 'full': True}))['entries'][0]['body']) <= 4003
+    assert (await call(s, 'transcript', {'ref': 'savathuns-spire', 'limit': 2}))['transcript']['slug'] == 'savathuns-spire'
+    sp = await call(s, 'transcript', {'ref': 'savathuns-spire', 'speaker': 'Eris Morn', 'limit': 2})
+    assert all('Eris' in line['speaker'] for line in sp['lines'])
+    assert (await call(s, 'transcript', {'ref': 'savathuns-spire', 'limit': 1, 'offset': 1}))['offset'] == 1
+    items = await call(s, 'find_item', {'query': 'nightmask', 'limit': 3})
+    assert items['count'] == len(items['rows']) and items['total'] >= items['count']
+    assert (await call(s, 'find_item', {'query': 'nightmask', 'limit': 1, 'offset': 1}))['offset'] == 1
+    assert (await call(s, 'record', {'ref': 'am-i-to-cast-a-shadow'}))['title']
 
 
 async def parity(s):
@@ -114,7 +129,11 @@ async def errors(s):
     for name, args in (('item', {'slug': 'does-not-exist'}),
                        ('search', {'query': 'x', 'type': 'bogus'}),
                        ('search', {'query': ''}),
-                       ('list_records', {'kind': 'bogus'})):
+                       ('list_records', {'kind': 'bogus'}),
+                       ('book', {'ref': 'no-such-book'}),
+                       ('transcript', {'ref': 'no-such-transcript'}),
+                       ('find_item', {'query': ''}),
+                       ('record', {'ref': 'no-such-record'})):
         res = await s.call_tool(name, args)
         text = res.content[0].text if res.content else ''
         assert res.is_error and 'Traceback' not in text, (name, text)
@@ -151,7 +170,8 @@ async def main():
         async with ClientSession(r, w) as s:
             await s.initialize()
             tools = {t.name for t in (await s.list_tools()).tools}
-            report('six tools listed', tools == {'search', 'character', 'item', 'verify', 'list_records', 'stats'}, str(tools))
+            report('ten tools listed', tools == {'search', 'character', 'item', 'verify', 'list_records',
+                                                 'stats', 'book', 'transcript', 'find_item', 'record'}, str(tools))
             for name, fn in (('tool matrix (80+ calls)', matrix), ('MCP matches API', parity),
                              ('malformed calls fail cleanly', errors)):
                 try:
@@ -159,6 +179,15 @@ async def main():
                     report(name, True)
                 except Exception as e:
                     report(name, False, f'{type(e).__name__}: {e}')
+            try:
+                resources = await s.list_resources()
+                uris = {str(r.uri) for r in resources.resources}
+                assert {'grimoire://books', 'grimoire://characters', 'grimoire://records', 'grimoire://stats'} <= uris, uris
+                body = await s.read_resource('grimoire://books')
+                assert 'Book' in body.contents[0].text
+                report('four resources listed and readable', True)
+            except Exception as e:
+                report('four resources listed', False, f'{type(e).__name__}: {e}')
     try:
         await concurrent()
         report('3 concurrent clients (45 calls)', True)

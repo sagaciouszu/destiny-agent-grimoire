@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.6.0 - MCP reading tools and pagination (2026-11-03)
+
+- MCP: book, transcript, find_item and record tools; ten tools total
+- Pagination (`offset`) across tools and CLI; book/transcript totals
+- Resources: grimoire://books, characters, records, stats
+- Read-only/idempotent tool annotations; CLI parity for all reading commands
+- Interface 27 checks; MCP matrix 138 calls across ten tools and four resources
+
 ## v1.5.0 - Faster verification and hardened delivery (2026-11-03)
 
 - verify_fts index: quote checks ~58 ms -> ~1.4 ms; database 164 MB, reproducible

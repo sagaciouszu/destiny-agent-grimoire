@@ -228,7 +228,7 @@ if 'grimoire' in REPOS:
     try:
         manifest = set(json.load(open(cap_path, encoding='utf-8'))['mcp']['tools'])
         srv = open(srv_path, encoding='utf-8').read()
-        implemented = set(re.findall(r'@server\.tool\(\)\ndef (\w+)\(', srv))
+        implemented = set(re.findall(r'@server\.tool\([^)]*\)\s*\ndef (\w+)\(', srv))
         docs = set(re.findall(r'^\| `(\w+)` \|', open(readme_path, encoding='utf-8').read(), re.M))
         if not (manifest == implemented == docs):
             issues.append(('grimoire', 'mcp', f'tool drift: manifest={sorted(manifest)} '

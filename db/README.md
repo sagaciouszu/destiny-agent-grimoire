@@ -24,8 +24,14 @@ python3 db/query.py item "0a0x-nightmask"
 # Quote verification (exit 1 when not found)
 python3 db/query.py verify "I am Eris Morn." --speaker "Eris Morn" --exact
 
-# Discovery listings
-python3 db/query.py list books|characters|speakers|records [--limit N]
+# Read a book, transcript, seal, or find items by title
+python3 db/query.py book "a-man-with-no-name" --limit 5
+python3 db/query.py transcript "savathuns-spire" --limit 20 --speaker "Eris Morn"
+python3 db/query.py find-item "nightmask" --limit 10
+python3 db/query.py record "am-i-to-cast-a-shadow"
+
+# Discovery listings (all read commands accept --offset)
+python3 db/query.py list books|characters|speakers|records [--limit N] [--offset N]
 
 # Any command: --json for compact machine-readable output
 ```

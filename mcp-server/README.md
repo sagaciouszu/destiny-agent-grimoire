@@ -73,6 +73,10 @@ path is `<agent>/lore/mcp-server/run.sh`. Use an absolute path in client config.
 | `verify` | `quote`, `speaker?`, `exact=false` | `{quote, verified, matches}` with `exact` flags |
 | `list_records` | `kind`, `limit=50` | `{count, rows}` for books, characters, speakers, records |
 | `stats` | none | row counts, top item types, top speakers |
+| `book` | `ref`, `limit=20`, `offset=0`, `full=false` | book metadata and entries |
+| `transcript` | `ref`, `speaker?`, `limit=50`, `offset=0`, `full=false`, `include_stage=false` | transcript metadata and lines |
+| `find_item` | `query`, `limit=10`, `offset=0` | items matching a title or slug fragment |
+| `record` | `ref` | triumph or seal details |
 
 MCP limits clamp to 1-100 to protect the agent's context; the CLI is not clamped
 to 100 (the shared API allows up to 10,000). Full text is trimmed to 4000
@@ -84,10 +88,19 @@ mid-word fragments.
 excluded); `exact` requires the normalized quote to equal a full canonical row
 instead of matching a fragment.
 
+## Resources
+
+Read-only JSON resources for discovery without tool calls:
+
+- `grimoire://books` - all lore books
+- `grimoire://characters` - curated characters
+- `grimoire://records` - triumphs and seals
+- `grimoire://stats` - row counts
+
 ## Safety
 
 - SQLite is opened with URI `mode=ro`; writes fail at the driver level.
-- No arbitrary SQL tool is exposed. The six query shapes are the whole surface.
+- No arbitrary SQL tool is exposed. The ten query shapes are the whole surface.
 - No network access. The database path is resolved from `GRIMOIRE_DB` or
   `db/grimoire.db`.
 - Inputs are bounded: queries 1-500 chars, quotes 1-2000, limits 1-100.

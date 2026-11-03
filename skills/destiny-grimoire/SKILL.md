@@ -85,7 +85,9 @@ bash mcp-server/install.sh     # once: venv + official SDK
 
 It ships with this archive, so one install serves every agent that mounts it.
 
-Tools: `search`, `character`, `item`, `verify`, `list_records`, `stats`. The
+Tools: `search`, `character`, `item`, `verify`, `list_records`, `stats`,
+`book`, `transcript`, `find_item`, `record`. Resources: `grimoire://books`,
+`grimoire://characters`, `grimoire://records`, `grimoire://stats`. The
 server is read-only, exposes no arbitrary SQL, clamps limits to 1-100 and trims
 full text to 4000 characters. Full details: `mcp-server/README.md`.
 

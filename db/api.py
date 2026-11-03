@@ -45,6 +45,31 @@ def connect():
     return conn
 
 
+def _offset(value):
+    try:
+        value = int(value)
+    except (TypeError, ValueError):
+        return 0
+    return max(0, min(value, MAX_LIMIT))
+
+
+def _snippet(text, limit=400):
+    text = " ".join((text or "").split())
+    if len(text) <= limit:
+        return text
+    return text[:limit].rsplit(" ", 1)[0].rstrip(",;:-") + "..."
+
+
+def _resolve(conn, table, ref, cols):
+    row = conn.execute(
+        f"SELECT {cols} FROM {table} WHERE slug = ? LIMIT 1", (ref,)).fetchone()
+    if row:
+        return row
+    return conn.execute(
+        f"SELECT {cols} FROM {table} WHERE title LIKE ? ORDER BY title LIMIT 1",
+        (f"%{ref.replace('-', ' ')}%",)).fetchone()
+
+
 def _guard(fn):
     """Translate SQLite failures into clean ValueErrors for CLI and MCP."""
     def wrapper(*args, **kwargs):
@@ -66,7 +91,7 @@ def _limit(value, default):
 
 
 @_guard
-def search(term, type=None, limit=10, full=False):
+def search(term, type=None, limit=10, full=False, offset=0):
     """Full-text search. Returns rows with a snippet unless full=True."""
     if not term or len(term) > 500:
         raise ValueError('query must be 1-500 characters')
@@ -80,14 +105,15 @@ def search(term, type=None, limit=10, full=False):
             where += ' AND source = ?'
             params.append(TYPE_TO_SOURCE[type])
         params.append(_limit(limit, 10))
+        params.append(_offset(offset))
         try:
             if full:
                 rows = conn.execute(
-                    f'SELECT title, speaker, text, source FROM fts WHERE {where} LIMIT ?', params).fetchall()
+                    f'SELECT title, speaker, text, source FROM fts WHERE {where} LIMIT ? OFFSET ?', params).fetchall()
             else:
                 rows = conn.execute(
                     f"SELECT title, speaker, source, snippet(fts, 1, '[', ']', '…', 10) AS snip "
-                    f'FROM fts WHERE {where} LIMIT ?', params).fetchall()
+                    f'FROM fts WHERE {where} LIMIT ? OFFSET ?', params).fetchall()
         except sqlite3.OperationalError as e:
             raise ValueError(f'invalid search query: {e}') from e
         return [dict(r) for r in rows]
@@ -96,7 +122,7 @@ def search(term, type=None, limit=10, full=False):
 
 
 @_guard
-def character(name, about=None, all_lines=False, limit=20):
+def character(name, about=None, all_lines=False, limit=20, offset=0):
     """Curated character quotes, or every transcript line with all_lines=True.
 
     Returns {'header': str, 'rows': [...]} or None when a curated character is absent.
@@ -111,8 +137,9 @@ def character(name, about=None, all_lines=False, limit=20):
             if pattern:
                 sql += ' AND LOWER(line) LIKE ?'
                 params.append(pattern)
-            sql += ' LIMIT ?'
+            sql += ' LIMIT ? OFFSET ?'
             params.append(_limit(limit, 20))
+            params.append(_offset(offset))
             rows = conn.execute(sql, params).fetchall()
             return {'header': f'=== {name} (transcript lines) ===', 'rows': [dict(r) for r in rows]}
 
@@ -126,8 +153,9 @@ def character(name, about=None, all_lines=False, limit=20):
         if pattern:
             sql += ' AND LOWER(text) LIKE ?'
             params.append(pattern)
-        sql += ' LIMIT ?'
+        sql += ' LIMIT ? OFFSET ?'
         params.append(_limit(limit, 20))
+        params.append(_offset(offset))
         rows = conn.execute(sql, params).fetchall()
         return {'header': f"=== {ch['name']} ({ch['slug']}) ===", 'rows': [dict(r) for r in rows]}
     finally:
@@ -231,22 +259,111 @@ def verify(quote, speaker=None, exact=False):
 
 
 @_guard
-def listing(kind, limit=50):
+@_guard
+def book(ref, limit=20, offset=0, full=False):
+    """Book metadata and entries. ref accepts a slug or a title fragment."""
+    conn = connect()
+    try:
+        b = _resolve(conn, 'books', ref, 'id, slug, title, source_url, entry_count')
+        if not b:
+            b = _resolve(conn, 'books', f'book-{ref}', 'id, slug, title, source_url, entry_count')
+        if not b:
+            return None
+        total = conn.execute('SELECT COUNT(*) FROM book_entries WHERE book_id=?', (b['id'],)).fetchone()[0]
+        rows = conn.execute(
+            'SELECT title, body, seq FROM book_entries WHERE book_id=? ORDER BY seq LIMIT ? OFFSET ?',
+            (b['id'], _limit(limit, 20), _offset(offset))).fetchall()
+        entries = [{'title': r['title'] or b['title'], 'seq': r['seq'],
+                    'body': (r['body'] or '') if full else _snippet(r['body'])}
+                   for r in rows]
+        return {'book': dict(b), 'total': total, 'limit': _limit(limit, 20),
+                'offset': _offset(offset), 'entries': entries}
+    finally:
+        conn.close()
+
+
+@_guard
+def transcript(ref, speaker=None, limit=50, offset=0, full=False, include_stage=False):
+    """Transcript metadata and dialogue lines. ref accepts a slug or title fragment."""
+    conn = connect()
+    try:
+        t = _resolve(conn, 'transcripts', ref, 'id, slug, title, release, characters, arc, source_url')
+        if not t:
+            return None
+        where = ['transcript_id = ?']
+        params = [t['id']]
+        if not include_stage:
+            where.append('is_stage_dir = 0')
+        if speaker:
+            where.append('speaker LIKE ?')
+            params.append(f'%{speaker}%')
+        clause = ' AND '.join(where)
+        total = conn.execute(f'SELECT COUNT(*) FROM transcript_lines WHERE {clause}', params).fetchone()[0]
+        rows = conn.execute(
+            f'SELECT seq, speaker, line FROM transcript_lines WHERE {clause} '
+            f'ORDER BY seq LIMIT ? OFFSET ?',
+            params + [_limit(limit, 50), _offset(offset)]).fetchall()
+        lines = [{'seq': r['seq'], 'speaker': r['speaker'],
+                  'text': (r['line'] or '') if full else _snippet(r['line'])}
+                 for r in rows]
+        return {'transcript': dict(t), 'total': total, 'limit': _limit(limit, 50),
+                'offset': _offset(offset), 'lines': lines}
+    finally:
+        conn.close()
+
+
+@_guard
+def find_item(query, limit=10, offset=0):
+    """Find items by title or slug fragment."""
+    if not query or len(query) > 200:
+        raise ValueError('query must be 1-200 characters')
+    conn = connect()
+    try:
+        where = 'slug = ? OR title LIKE ?'
+        params = [query, f'%{query}%']
+        total = conn.execute(f'SELECT COUNT(*) FROM items WHERE {where}', params).fetchone()[0]
+        rows = conn.execute(
+            f'SELECT slug, title, item_type, release FROM items WHERE {where} '
+            f'ORDER BY CASE WHEN slug = ? THEN 0 ELSE 1 END, title LIMIT ? OFFSET ?',
+            params + [query, _limit(limit, 10), _offset(offset)]).fetchall()
+        return {'count': len(rows), 'total': total, 'limit': _limit(limit, 10),
+                'offset': _offset(offset), 'rows': [dict(r) for r in rows]}
+    finally:
+        conn.close()
+
+
+@_guard
+def record(ref):
+    """Record or seal details by slug or title fragment."""
+    conn = connect()
+    try:
+        r = _resolve(conn, 'records', ref, 'slug, title, body, release, source_url')
+        if not r:
+            return None
+        out = dict(r)
+        out['body'] = _snippet(out['body'], 4000)
+        return out
+    finally:
+        conn.close()
+
+
+def listing(kind, limit=50, offset=0):
     if kind not in ('books', 'characters', 'speakers', 'records'):
         raise ValueError('kind must be one of: books, characters, speakers, records')
     conn = connect()
     try:
         n = _limit(limit, 50)
+        o = _offset(offset)
         if kind == 'books':
-            rows = conn.execute('SELECT slug, title, entry_count FROM books ORDER BY title LIMIT ?', (n,))
+            rows = conn.execute('SELECT slug, title, entry_count FROM books ORDER BY title LIMIT ? OFFSET ?', (n, o))
         elif kind == 'characters':
-            rows = conn.execute('SELECT slug, name FROM characters ORDER BY name LIMIT ?', (n,))
+            rows = conn.execute('SELECT slug, name FROM characters ORDER BY name LIMIT ? OFFSET ?', (n, o))
         elif kind == 'speakers':
             rows = conn.execute(
                 "SELECT speaker, COUNT(*) AS lines FROM transcript_lines "
-                "WHERE speaker NOT IN ('Narration','Cutscene') GROUP BY speaker ORDER BY 2 DESC LIMIT ?", (n,))
+                "WHERE speaker NOT IN ('Narration','Cutscene') GROUP BY speaker ORDER BY 2 DESC LIMIT ? OFFSET ?", (n, o))
         else:
-            rows = conn.execute('SELECT slug, title FROM records ORDER BY title LIMIT ?', (n,))
+            rows = conn.execute('SELECT slug, title FROM records ORDER BY title LIMIT ? OFFSET ?', (n, o))
         return [dict(r) for r in rows]
     finally:
         conn.close()
