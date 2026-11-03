@@ -95,10 +95,12 @@ migration. The full contract is `STANDARDS.md`.
 ## For agents
 
 - **Skill:** `skills/destiny-grimoire/SKILL.md` is the drop-in agent skill.
-- **MCP (optional):** `mcp-server/run.sh` serves six typed tools over stdio:
-  `search`, `character`, `item`, `verify`, `list_records`, `stats`. Read-only,
-  official SDK, no arbitrary SQL, limits clamped to 1-100. Install with
-  `bash mcp-server/install.sh`; details in `mcp-server/README.md`.
+- **MCP (optional):** one adapter serves every agent that mounts this archive.
+  `mcp-server/run.sh` exposes `search`, `character`, `item`, `verify`,
+  `list_records`, `stats` as typed tools, so clients need no shell, path glue or
+  SQL. The server enforces read-only access, no arbitrary SQL, 1-100 limits and
+  quote verification. Install with `bash mcp-server/install.sh`; details in
+  `mcp-server/README.md`.
 - **Interface:** `python3 db/query.py search|character|item|verify|list|stats`.
   `verify` is the quote-safety primitive (exit 1 when absent); every command
   accepts `--json`; search returns snippets unless `--full`.
