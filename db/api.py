@@ -37,7 +37,24 @@ def connect():
             f'database not found at {path} - bootstrap: ./setup.sh, or python3 db/migrate.py')
     conn = sqlite3.connect(f'{Path(path).as_uri()}?mode=ro', uri=True)
     conn.row_factory = sqlite3.Row
+    try:
+        conn.execute('SELECT COUNT(*) FROM sqlite_master').fetchone()
+    except sqlite3.DatabaseError as e:
+        conn.close()
+        raise ValueError(f'database unreadable at {path}: {e}') from e
     return conn
+
+
+def _guard(fn):
+    """Translate SQLite failures into clean ValueErrors for CLI and MCP."""
+    def wrapper(*args, **kwargs):
+        try:
+            return fn(*args, **kwargs)
+        except sqlite3.DatabaseError as e:
+            raise ValueError(f'database error: {e}') from e
+    wrapper.__name__ = fn.__name__
+    wrapper.__doc__ = fn.__doc__
+    return wrapper
 
 
 def _limit(value, default):
@@ -48,6 +65,7 @@ def _limit(value, default):
     return max(1, min(value, MAX_LIMIT))
 
 
+@_guard
 def search(term, type=None, limit=10, full=False):
     """Full-text search. Returns rows with a snippet unless full=True."""
     if not term or len(term) > 500:
@@ -77,6 +95,7 @@ def search(term, type=None, limit=10, full=False):
         conn.close()
 
 
+@_guard
 def character(name, about=None, all_lines=False, limit=20):
     """Curated character quotes, or every transcript line with all_lines=True.
 
@@ -115,6 +134,7 @@ def character(name, about=None, all_lines=False, limit=20):
         conn.close()
 
 
+@_guard
 def item(slug):
     conn = connect()
     try:
@@ -164,6 +184,7 @@ def _verify_index(conn, nq):
             for r in rows if nq in (r[0] or '')]
 
 
+@_guard
 def verify(quote, speaker=None, exact=False):
     """Check a quoted string against canon.
 
@@ -209,6 +230,7 @@ def verify(quote, speaker=None, exact=False):
             'exact': exact, 'matches': uniq}
 
 
+@_guard
 def listing(kind, limit=50):
     if kind not in ('books', 'characters', 'speakers', 'records'):
         raise ValueError('kind must be one of: books, characters, speakers, records')
@@ -230,6 +252,7 @@ def listing(kind, limit=50):
         conn.close()
 
 
+@_guard
 def stats():
     conn = connect()
     try:
