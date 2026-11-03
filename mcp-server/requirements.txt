@@ -1,0 +1,2 @@
+# Official MCP Python SDK. Pin the major series: v2 renamed FastMCP to MCPServer.
+mcp==2.3.0

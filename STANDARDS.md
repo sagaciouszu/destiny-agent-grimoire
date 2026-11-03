@@ -107,6 +107,7 @@ match a recomputation of their source text.
 | `tests/sync-doc-counts.py --check` | docs counts match the database |
 | `drifter-master-audit.sh` / `eris-master-audit.sh` (shared `tests/agent-audit.sh`) | agent-side suites (voice, quotes, modules, dependency coverage, index completeness, hygiene) |
 | `tests/agent-audit.sh` | single runner: per-agent suites plus shared structure checks |
+| `tests/mcp-test.py` (on demand, needs `mcp-server/.venv`) | MCP tools, read-only guard, stdio handshake |
 | `tests/check-agent-structure.py` | dependency resolution, token headers, dashes, INDEX completeness, personal paths (both agents) |
 | `tests/conformance.py` | per-file headers, token accuracy, refs, persona-agnosticism; runs `ci-checks` per agent repo |
 | `tests/ci-checks.py` (via conformance) | stale names, circular/self dependencies, headers, em-dashes, personal paths, gitignored refs in instructions |
@@ -119,6 +120,12 @@ content type against Ishtar; `tests/drifter-voice-consistency.sh` /
 
 - Interface: `python3 db/query.py search|character|item|verify|list|stats`;
   `sqlite3` is the escape hatch. No markdown parsing at runtime.
+- Shared query layer: `db/api.py` returns data; the CLI formats it and the MCP
+  server exposes the same functions as typed tools. One implementation.
+- MCP: `mcp-server/` is an optional stdio adapter using the official SDK. It is
+  read-only, has no SQL tool, clamps limits to 1-100 and trims text to 4000 chars.
+  Install with `bash mcp-server/install.sh`, or `WITH_MCP=1 ./setup.sh` in an agent
+  workspace; the venv is gitignored and the CLI stays dependency-free.
 - Every command supports `--json`; search returns snippets unless `--full`;
   `verify` exits 1 when a quote is absent (quote-safety primitive).
 - FTS is the search surface: `fts` holds exactly the indexable rows, `MATCH`

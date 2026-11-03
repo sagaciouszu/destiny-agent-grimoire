@@ -35,18 +35,42 @@
       "usage": "query.py character \"<name>\" [--about <term>] [--all] [--limit N] [--json]",
       "returns": "curated quotes by default; --all for raw transcript lines"
     },
-    "item": {"usage": "query.py item \"<slug>\" [--json]"},
+    "item": {
+      "usage": "query.py item \"<slug>\" [--json]"
+    },
     "verify": {
       "usage": "query.py verify \"<quote>\" [--json]",
       "returns": "source + speaker/slug when found; exit 1 when absent (quote safety)"
     },
-    "list": {"usage": "query.py list books|characters|speakers|records [--limit N] [--json]"},
-    "stats": {"usage": "query.py stats [--json]", "returns": "table row counts"}
+    "list": {
+      "usage": "query.py list books|characters|speakers|records [--limit N] [--json]"
+    },
+    "stats": {
+      "usage": "query.py stats [--json]",
+      "returns": "table row counts"
+    }
   },
   "contracts": {
     "standards": "STANDARDS.md",
     "quote_policy": "quote must trace to speaker-attributed canon; verify before quoting",
     "json_output": "every command supports --json (compact, parse-friendly)",
     "counts": "authoritative counts come from the database; docs are synced by tests/sync-doc-counts.py"
+  },
+  "api": "db/api.py (importable query layer used by the CLI and MCP server)",
+  "mcp": {
+    "transport": "stdio",
+    "entry": "mcp-server/server.py",
+    "launcher": "mcp-server/run.sh",
+    "sdk": "mcp==2.3.0 (optional, isolated in mcp-server/.venv)",
+    "read_only": true,
+    "tools": [
+      "search",
+      "character",
+      "item",
+      "verify",
+      "list_records",
+      "stats"
+    ],
+    "notes": "limits clamp to 1-100; full text trimmed to 4000 chars; no arbitrary SQL"
   }
 }
