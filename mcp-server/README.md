@@ -5,10 +5,16 @@ Uses the official MCP Python SDK (`mcp==2.3.0`). Read-only.
 
 ## Why
 
-The CLI (`db/query.py`) needs a shell and Python on the agent host. MCP clients
-can call the same database as tools from any runtime: OpenCode, Claude Desktop,
-Cursor, or a hosted agent. Quote policy and output limits are enforced here, not
-in prose.
+- **One adapter, every agent.** The server lives in the archive, so Drifter, Eris
+  and any future agent share one install and one database.
+- **No shell required.** The CLI needs a shell and Python on the host; MCP clients
+  (OpenCode, Claude Desktop, Cursor, hosted agents) call the same tools directly.
+- **Typed, not typed-by-hand.** Structured arguments and JSON results replace
+  shell quoting and path handling, so tool calls fail less and cost fewer tokens.
+- **Guardrails in one place.** Read-only connections, no SQL tool, clamped limits
+  and quote verification are enforced by the server for every client.
+- **Portable later.** The same server can run locally over stdio or be hosted for
+  a team without changing the tools.
 
 ## Install
 
