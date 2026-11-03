@@ -35,6 +35,14 @@ rsync -a --delete $DRY \
 # OpenCode discovers every .md under agents/ as an agent, including symlinked
 # directories. Keep the shared lore link outside agents/ and mark every
 # non-entry file inert so only the two entry agents are selectable.
+if [ "$TARGET" = "opencode" ]; then
+    # OpenCode derives the ID from the path: eris/eris.md becomes "eris/eris".
+    # Promote the entry to eris.md so the installed agent is simply "eris".
+    if [ -f "$DEST/eris/eris.md" ]; then
+        $DRY mv -f "$DEST/eris/eris.md" "$DEST/eris.md"
+    fi
+fi
+
 if [ -z "$DRY" ] && [ "$TARGET" = "opencode" ]; then
     for link in "$DEST/lore" "$DEST/eris/lore"; do
         if [ -d "$link" ] && [ ! -L "$link" ]; then
@@ -46,7 +54,7 @@ if [ -z "$DRY" ] && [ "$TARGET" = "opencode" ]; then
     python3 - "$DEST" <<'PY'
 import os, sys
 dest = sys.argv[1]
-keep = {'drifter.md', 'eris/eris.md'}
+keep = {'drifter.md', 'eris.md'}
 for root, dirs, files in os.walk(dest):
     dirs[:] = [d for d in dirs if d != '.git']
     for name in files:
