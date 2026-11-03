@@ -167,7 +167,7 @@ repository minus the database lives outside the tree.
 | Archive audit | `bash grimoire-master-audit.sh` | 11/11 |
 | Drifter agent audit | `bash drifter-master-audit.sh` | 18/18 |
 | Eris agent audit | `bash eris-master-audit.sh` | 13/13 |
-| Database integrity | `bash tests/test-db.sh` | 35 checks |
+| Database integrity | `bash tests/test-db.sh` | 36 checks |
 | Query interface | `bash tests/query-interface-test.sh` | 23 checks |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 |
 | MCP contract | `mcp-server/.venv/bin/python tests/mcp-test.py` | 6/6 |

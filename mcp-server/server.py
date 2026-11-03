@@ -39,7 +39,7 @@ def _trim(text, limit=MAX_TEXT):
 
 
 @server.tool()
-def search(query: str, type: str | None = None, limit: int = 10, full: bool = False) -> list[dict]:
+def search(query: str, type: str | None = None, limit: int = 10, full: bool = False) -> dict:
     """Full-text search over books, transcripts, cards, items and records.
 
     Args:
@@ -52,7 +52,7 @@ def search(query: str, type: str | None = None, limit: int = 10, full: bool = Fa
     if full:
         for r in rows:
             r['text'] = _trim(r.get('text', ''))
-    return rows
+    return {'count': len(rows), 'rows': rows}
 
 
 @server.tool()
@@ -93,14 +93,15 @@ def verify(quote: str) -> dict:
 
 
 @server.tool()
-def list_records(kind: str, limit: int = 50) -> list[dict]:
+def list_records(kind: str, limit: int = 50) -> dict:
     """Cheap discovery listings.
 
     Args:
         kind: books, characters, speakers, or records.
         limit: Maximum rows (1-100).
     """
-    return api.listing(kind, limit=limit)
+    rows = api.listing(kind, limit=limit)
+    return {'count': len(rows), 'rows': rows}
 
 
 @server.tool()

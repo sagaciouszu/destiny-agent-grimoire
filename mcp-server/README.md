@@ -58,11 +58,11 @@ path is `<agent>/lore/mcp-server/run.sh`. Use an absolute path in client config.
 
 | Tool | Arguments | Returns |
 |---|---|---|
-| `search` | `query`, `type?`, `limit=10`, `full=false` | rows with snippet or full text |
+| `search` | `query`, `type?`, `limit=10`, `full=false` | `{count, rows}` with snippet or full text |
 | `character` | `name`, `about?`, `all_lines=false`, `limit=20` | `{found, header, rows}` |
 | `item` | `slug` | item row, `text` trimmed |
 | `verify` | `quote` | `{quote, verified, matches}` |
-| `list_records` | `kind`, `limit=50` | books, characters, speakers, records |
+| `list_records` | `kind`, `limit=50` | `{count, rows}` for books, characters, speakers, records |
 | `stats` | none | row counts, top item types, top speakers |
 
 All limits clamp to 1-100. Full text is trimmed to 4000 characters per row.
