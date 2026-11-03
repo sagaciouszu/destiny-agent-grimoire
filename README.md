@@ -11,7 +11,7 @@
   <img src='https://img.shields.io/badge/tests-11%2F11%20passing-brightgreen' alt='Tests'/>
 </p>
 
-**Version:** 1.5.0 | **Last push:** 2026-11-03 | **Status:** Active
+**Version:** 1.6.0 | **Last push:** 2026-11-03 | **Status:** Active
 
 One canonical, agent-first Destiny lore archive: a single SQLite database with
 FTS5 search, built from committed sources, with a documented quote policy and
@@ -102,7 +102,7 @@ migration. The full contract is `STANDARDS.md`.
   over local stdio; one adapter covers every agent that mounts this archive.
   Install with `bash mcp-server/install.sh`; tools, limits, client config and
   security: `mcp-server/README.md`.
-- **Interface:** `python3 db/query.py search|character|item|verify|list|stats`.
+- **Interface:** `python3 db/query.py search|character|item|verify|book|transcript|find-item|record|list|stats`; read commands accept `--offset`.
   `verify` is the quote-safety primitive (exit 1 when absent); every command
   accepts `--json`; search returns snippets unless `--full`.
 - **Discovery:** `db/capabilities.json` is a machine-readable manifest of tables,
@@ -171,7 +171,7 @@ repository minus the database lives outside the tree.
 | Drifter agent audit | `bash drifter-master-audit.sh` | 18/18 |
 | Eris agent audit | `bash eris-master-audit.sh` | 13/13 |
 | Database integrity | `bash tests/test-db.sh` | 37 checks |
-| Query interface | `bash tests/query-interface-test.sh` | 23 checks |
+| Query interface | `bash tests/query-interface-test.sh` | 27 checks |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 |
 | MCP contract | `mcp-server/.venv/bin/python tests/mcp-test.py` | 6/6 |
 | File conformance | `python3 tests/conformance.py` | PASS |

@@ -21,7 +21,7 @@ echo "  EXTENDED VERIFICATION"
 echo "============================================================"
 run "Robustness (inputs, corrupt DB, concurrency)" "python3 '$ARCHIVE/tests/robustness-test.py'"
 run "MCP contract" "'$ARCHIVE/mcp-server/.venv/bin/python' '$ARCHIVE/tests/mcp-test.py'"
-run "MCP matrix (125 calls, 3 clients)" "'$ARCHIVE/mcp-server/.venv/bin/python' '$ARCHIVE/tests/mcp-matrix-test.py'"
+run "MCP matrix (138 calls, 3 clients)" "'$ARCHIVE/mcp-server/.venv/bin/python' '$ARCHIVE/tests/mcp-matrix-test.py'"
 run "Checksum acceptance and rejection" "bash '$ARCHIVE/tests/checksum-test.sh'"
 run "DB vs source cross-check" "python3 '$ARCHIVE/tests/db-source-crosscheck.py'"
 

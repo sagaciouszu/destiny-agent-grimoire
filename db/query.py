@@ -10,7 +10,11 @@ Usage:
   query.py character "<name>" [--about <term>] [--limit N] [--all] [--json]
   query.py item "<slug>" [--json]
   query.py verify "<quote>" [--json]
-  query.py list books|characters|speakers|records [--limit N] [--json]
+  query.py list books|characters|speakers|records [--limit N] [--offset N] [--json]
+  query.py book "<slug or title>" [--limit N] [--offset N] [--full] [--json]
+  query.py transcript "<slug or title>" [--speaker NAME] [--limit N] [--offset N] [--full] [--json]
+  query.py find-item "<title>" [--limit N] [--offset N] [--json]
+  query.py record "<slug or title>" [--json]
   query.py stats [--json]
 """
 import argparse
@@ -32,7 +36,8 @@ def emit(rows, as_json, human_fn):
 
 
 def cmd_search(args):
-    out = api.search(args.query, type=args.type, limit=args.limit, full=args.full)
+    out = api.search(args.query, type=args.type, limit=args.limit, full=args.full,
+                     offset=args.offset)
     if args.full:
         emit(out, args.json, lambda rs: [print(f"[{r['source']}] {r['title']}: {r['text'][:200]}") for r in rs])
     else:
@@ -43,7 +48,8 @@ def cmd_search(args):
 
 
 def cmd_character(args):
-    res = api.character(args.name, about=args.about, all_lines=args.all, limit=args.limit)
+    res = api.character(args.name, about=args.about, all_lines=args.all, limit=args.limit,
+                        offset=args.offset)
     if res is None:
         print(f'Character not found: {args.name}', file=sys.stderr)
         return 1
@@ -92,7 +98,7 @@ def cmd_verify(args):
 
 
 def cmd_list(args):
-    out = api.listing(args.kind, limit=args.limit)
+    out = api.listing(args.kind, limit=args.limit, offset=args.offset)
     if args.json:
         print(json.dumps(out, ensure_ascii=False, separators=(',', ':')))
     else:
@@ -103,6 +109,66 @@ def cmd_list(args):
                 print(' | '.join(str(r[c]) for c in cols))
         print(f'\n{len(out)} rows')
     return 0 if out else 1
+
+
+def cmd_book(args):
+    res = api.book(args.ref, limit=args.limit, offset=args.offset, full=args.full)
+    if res is None:
+        print(f'Book not found: {args.ref}', file=sys.stderr)
+        return 1
+    if args.json:
+        print(json.dumps(res, ensure_ascii=False, separators=(',', ':')))
+    else:
+        b = res['book']
+        print(f"=== {b['title']} ===")
+        print(f"Slug: {b['slug']} | entries: {res['total']}")
+        for e in res['entries']:
+            print(f"\n## {e['title']}")
+            print(e['body'])
+        print(f"\nShowing {len(res['entries'])} of {res['total']} (offset {res['offset']})")
+    return 0 if res['entries'] else 1
+
+
+def cmd_transcript(args):
+    res = api.transcript(args.ref, speaker=args.speaker, limit=args.limit,
+                         offset=args.offset, full=args.full, include_stage=args.include_stage)
+    if res is None:
+        print(f'Transcript not found: {args.ref}', file=sys.stderr)
+        return 1
+    if args.json:
+        print(json.dumps(res, ensure_ascii=False, separators=(',', ':')))
+    else:
+        t = res['transcript']
+        print(f"=== {t['title']} ===")
+        for line in res['lines']:
+            print(f"[{line['speaker']}] {line['text']}")
+        print(f"\nShowing {len(res['lines'])} of {res['total']} (offset {res['offset']})")
+    return 0 if res['lines'] else 1
+
+
+def cmd_find_item(args):
+    res = api.find_item(args.query, limit=args.limit, offset=args.offset)
+    if args.json:
+        print(json.dumps(res, ensure_ascii=False, separators=(',', ':')))
+    else:
+        for r in res['rows']:
+            print(f"{r['slug']} | {r['title']} | {r['item_type']}")
+        print(f"\n{len(res['rows'])} rows of {res['total']} (offset {res['offset']})")
+    return 0 if res['rows'] else 1
+
+
+def cmd_record(args):
+    row = api.record(args.ref)
+    if row is None:
+        print(f'Record not found: {args.ref}', file=sys.stderr)
+        return 1
+    if args.json:
+        print(json.dumps(row, ensure_ascii=False, separators=(',', ':')))
+    else:
+        print(f"=== {row['title']} ===")
+        print(f"Slug: {row['slug']} | release: {row['release']}")
+        print(f"\n{row['body']}")
+    return 0
 
 
 def cmd_stats(args):
@@ -131,6 +197,7 @@ def main(argv=None):
     s.add_argument('query')
     s.add_argument('--type', choices=list(TYPE_TO_SOURCE.keys()))
     s.add_argument('--limit', type=int, default=10)
+    s.add_argument('--offset', type=int, default=0)
     s.add_argument('--json', action='store_true')
     s.add_argument('--full', action='store_true', help='full text instead of snippets')
     s.set_defaults(func=cmd_search)
@@ -140,6 +207,7 @@ def main(argv=None):
     c.add_argument('--about', help='only lines mentioning this term')
     c.add_argument('--all', action='store_true', help='all transcript lines, not just curated quotes')
     c.add_argument('--limit', type=int, default=20)
+    c.add_argument('--offset', type=int, default=0)
     c.add_argument('--json', action='store_true')
     c.set_defaults(func=cmd_character)
 
@@ -158,8 +226,39 @@ def main(argv=None):
     l = sub.add_parser('list', help='Cheap discovery listings')
     l.add_argument('kind', choices=['books', 'characters', 'speakers', 'records'])
     l.add_argument('--limit', type=int, default=50)
+    l.add_argument('--offset', type=int, default=0)
     l.add_argument('--json', action='store_true')
     l.set_defaults(func=cmd_list)
+
+    bk = sub.add_parser('book', help='Read a book and its entries')
+    bk.add_argument('ref')
+    bk.add_argument('--limit', type=int, default=20)
+    bk.add_argument('--offset', type=int, default=0)
+    bk.add_argument('--full', action='store_true')
+    bk.add_argument('--json', action='store_true')
+    bk.set_defaults(func=cmd_book)
+
+    tr = sub.add_parser('transcript', help='Read a transcript and its lines')
+    tr.add_argument('ref')
+    tr.add_argument('--speaker')
+    tr.add_argument('--limit', type=int, default=50)
+    tr.add_argument('--offset', type=int, default=0)
+    tr.add_argument('--full', action='store_true')
+    tr.add_argument('--include-stage', action='store_true')
+    tr.add_argument('--json', action='store_true')
+    tr.set_defaults(func=cmd_transcript)
+
+    fi = sub.add_parser('find-item', help='Find items by title or slug')
+    fi.add_argument('query')
+    fi.add_argument('--limit', type=int, default=10)
+    fi.add_argument('--offset', type=int, default=0)
+    fi.add_argument('--json', action='store_true')
+    fi.set_defaults(func=cmd_find_item)
+
+    rc = sub.add_parser('record', help='Read a triumph or seal')
+    rc.add_argument('ref')
+    rc.add_argument('--json', action='store_true')
+    rc.set_defaults(func=cmd_record)
 
     st = sub.add_parser('stats', help='Database statistics')
     st.add_argument('--json', action='store_true')
