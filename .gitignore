@@ -17,6 +17,7 @@ Thumbs.db
 
 # Built database (regenerate with python3 db/migrate.py; released as an asset)
 db/grimoire.db
+db/grimoire.db-*
 
 # MCP server virtualenv (optional dependency)
 mcp-server/.venv/
