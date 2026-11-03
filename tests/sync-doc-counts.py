@@ -50,13 +50,11 @@ SHARED = [
     (r'searches all \d{3,5}', 'searches all {transcripts}'),
 ]
 ERIS_PATS = [
-    (r'quotes-\d+%20verified', 'quotes-{eris}%20verified'),
     (r'\b\d{3,4} canonical Eris', '{eris} canonical Eris'),
     (r'\(\d{3,4} Eris Morn lines\)', '({eris} Eris Morn lines)'),
     (r'\(\d{3,4} canonical Eris transcript lines\)', '({eris} canonical Eris transcript lines)'),
 ]
 DRIFTER_PATS = [
-    (r'quotes-\d+%20verified', 'quotes-{drifter}%20verified'),
     (r'All \d+ Drifter quotes', 'All {drifter} Drifter quotes'),
     (r'canonical transcripts \(\d+ Drifter lines\)', 'canonical transcripts ({drifter} Drifter lines)'),
     (r'\b\d{3,4} Drifter transcript lines in the database', '{drifter_exact} Drifter transcript lines in the database'),
