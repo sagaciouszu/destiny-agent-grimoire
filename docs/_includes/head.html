@@ -15,7 +15,8 @@
         },
         fontFamily: {
           sans: ['Neue Haas Grotesk Display Pro','Helvetica Neue','Helvetica','Arial','sans-serif'],
-          display: ['Neue Haas Grotesk Display Pro','Helvetica Neue','Helvetica','Arial','sans-serif']
+          display: ['Neue Haas Grotesk Display Pro','Helvetica Neue','Helvetica','Arial','sans-serif'],
+          mono: ['IBM Plex Mono','ui-monospace','SFMono-Regular','Menlo','monospace']
         }
       }
     }
@@ -27,6 +28,8 @@
   h1, h2, h3, h4, h5, h6 { font-weight: 700; letter-spacing: 0.04em; }
   .font-display { font-weight: 800; }
   strong { font-weight: 600; }
+  code, pre, kbd, samp { font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace; }
+  code { font-weight: 400; }
 
   /* Icons render from external SVG files, so color them at the image level. */
   img[src*="/assets/icons/"] { filter: brightness(0) invert(1); }
@@ -43,3 +46,4 @@
 </style>
 
 <link href="https://fonts.cdnfonts.com/css/neue-haas-grotesk-display-pro" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
