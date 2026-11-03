@@ -183,11 +183,16 @@ workspace-only suites when they are absent.
 MIT licensed. Fan-made. Not affiliated with or endorsed by Bungie.
 
 - **Destiny 1 and Destiny 2** content and related intellectual property belong to Bungie.
-- **Ishtar Collective** (https://www.ishtar-collective.net): the primary text archive, a titanic labor of love.
-- **Destiny Lore Vault** (https://www.youtube.com/@DestinyLoreVault): the recording archive, a titanic labor of love.
+- **Ishtar Collective** (https://www.ishtar-collective.net): the primary text
+  archive; their transcription work is the foundation this project rests on.
+- **Destiny Lore Vault** (https://www.youtube.com/@DestinyLoreVault): the recording
+  archive; their videos keep the performances behind the words alive.
 - **Destinypedia** (https://www.destinypedia.com): bootstrap source for specific dialogue.
 - **Destiny community**: transcription, analysis and preservation, with
   **special thanks to every Guardian making their own fate in 2026 and beyond**.
+
+Both are monumental labors of love. Neither this archive nor the community around
+it would exist without them.
 
 Cutscene transcripts come from YouTube captions (auto-generated, corroboration
 verified). Content and provenance are documented in `STANDARDS.md`.
