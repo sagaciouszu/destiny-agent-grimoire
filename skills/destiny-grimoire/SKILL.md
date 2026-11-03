@@ -54,7 +54,23 @@ python3 db/query.py item "0a0x-nightmask"
 
 # Database stats
 python3 db/query.py stats
+
+# Discovery (cheap)
+python3 db/query.py list books --limit 50
+python3 db/query.py list characters
+python3 db/query.py list speakers --limit 20
+
+# Quote safety: verify before quoting
+python3 db/query.py verify "I am Eris Morn."
 ```
+
+## Interface flags
+
+- `--json` on every command (compact, parse-friendly)
+- `search` returns snippets by default; `--full` for complete text
+- `search --type books|transcripts|grimoire|interactions|items|records`
+- `character --about <term>` filters, `character --all` uses raw transcript lines
+- `verify` exits 1 when the quote is not in canon
 
 ## Direct SQL (advanced)
 

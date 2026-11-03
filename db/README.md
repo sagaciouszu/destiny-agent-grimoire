@@ -20,6 +20,14 @@ python3 db/query.py character "drifter" --limit 20
 
 # Item details
 python3 db/query.py item "0a0x-nightmask"
+
+# Quote verification (exit 1 when not found)
+python3 db/query.py verify "I am Eris Morn."
+
+# Discovery listings
+python3 db/query.py list books|characters|speakers|records [--limit N]
+
+# Any command: --json for compact machine-readable output
 ```
 
 Or raw SQL:

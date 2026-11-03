@@ -1,0 +1,42 @@
+#!/bin/bash
+# Query Interface Test - verifies the agent-facing query.py contract.
+# Checks exit codes, output shape, JSON validity, snippet mode and type filters.
+# Usage: ./tests/query-interface-test.sh
+
+ARCHIVE="${ARCHIVE:-$(cd "$(dirname "$0")/.." && pwd)}"
+Q="python3 $ARCHIVE/db/query.py"
+PASS=0; FAIL=0
+check() {
+    if eval "$1" >/dev/null 2>&1; then echo "  ✓ $2"; PASS=$((PASS+1));
+    else echo "  ✗ $2"; FAIL=$((FAIL+1)); fi
+}
+
+echo "=== QUERY INTERFACE TEST ==="
+
+check "$Q stats | grep -q 'transcript_lines'" "stats reports counts"
+check "$Q stats --json | python3 -c 'import json,sys; d=json.load(sys.stdin); assert d[\"fts\"]>100000'" "stats --json parses"
+check "$Q search crota --limit 3 | grep -q 'results'" "search returns results"
+check "$Q search crota --type grimoire --limit 2 | grep -q 'grimoire_card'" "type filter returns only that source"
+check "$Q search crota --type items --limit 2 | grep -q 'item'" "type filter works for items"
+check "! $Q search crota --type grimoire --limit 2 | grep -q 'transcript_line'" "type filter excludes other sources"
+check "$Q search crota --limit 2 --json | python3 -c 'import json,sys; json.load(sys.stdin)'" "search --json parses"
+check "$Q search crota --limit 1 | grep -q '\['" "snippet mode marks matches"
+check "$Q search crota --limit 1 --full | wc -l | grep -qE '^[2-9]'" "search --full shows text"
+check "$Q character eris --limit 2 | grep -q 'Eris Morn'" "character curated quotes"
+check "$Q character eris --about hive --all --limit 3 | grep -qi 'hive'" "character --about filter"
+check "$Q character eris --limit 2 --json | python3 -c 'import json,sys; json.load(sys.stdin)'" "character --json parses"
+check "$Q item 0a0x-nightmask | grep -q 'Nightmask'" "item lookup"
+check "$Q item does-not-exist-xyz; [ \$? -eq 1 ]" "missing item exits 1"
+check "$Q verify 'I am Eris Morn.' | grep -q VERIFIED" "verify finds canon quote"
+check "$Q verify 'completely fabricated sentence xyzzy' | grep -q 'NOT FOUND'" "verify rejects unknown quote"
+check "$Q verify 'completely fabricated sentence xyzzy'; [ \$? -eq 1 ]" "verify unknown exits 1"
+check "$Q verify 'Bank those Motes' --json | python3 -c 'import json,sys; d=json.load(sys.stdin); assert d[\"verified\"]'" "verify --json parses"
+check "$Q list books --limit 3 | grep -q 'entry_count'" "list books"
+check "$Q list speakers --limit 3 | grep -q 'Ghost'" "list speakers"
+check "$Q list records --limit 2 --json | python3 -c 'import json,sys; json.load(sys.stdin)'" "list --json parses"
+check "$Q list characters --limit 18 | grep -q 'eris-morn'" "list characters"
+check "python3 -c 'import ast; ast.parse(open(\"$ARCHIVE/db/query.py\").read())'" "query.py parses"
+
+echo ""
+echo "Passed: $PASS | Failed: $FAIL"
+[ "$FAIL" -eq 0 ]

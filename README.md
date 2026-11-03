@@ -32,7 +32,15 @@ python3 db/query.py character "drifter" --limit 20
 
 # Item details
 python3 db/query.py item "0a0x-nightmask"
+
+# Quote safety: verify a quote against canon (exit 1 if absent)
+python3 db/query.py verify "I am Eris Morn."
+
+# Cheap discovery
+python3 db/query.py list speakers --limit 20
 ```
+
+Add `--json` to any command for compact machine-readable output.
 
 Or with raw SQL:
 

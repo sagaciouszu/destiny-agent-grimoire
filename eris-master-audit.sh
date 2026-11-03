@@ -17,6 +17,7 @@ run "$ARCHIVE/tests/conversation-test.sh" "Drifter Conversation (SQLite)"
 run "$ARCHIVE/tests/eris-conversation-test.sh" "Eris Conversation (SQLite)"
 run "$ARCHIVE/tests/validate.sh" "Archive & Quote Validation"
 run "$ARCHIVE/tests/cutscene-verify.sh" "Cutscene Caption Verification"
+run "$ARCHIVE/tests/query-interface-test.sh" "Query Interface (23 checks)"
 if python3 "$ARCHIVE/tests/conformance.py" >/dev/null 2>&1; then echo "  ✓ [File Conformance (all 3 repos)] PASS"; PASS=$((PASS+1)); else echo "  ✗ [File Conformance (all 3 repos)] FAIL"; FAIL=$((FAIL+1)); fi
 echo ""
 echo "============================================================"

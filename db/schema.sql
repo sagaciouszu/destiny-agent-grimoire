@@ -122,6 +122,6 @@ CREATE TABLE IF NOT EXISTS meta (
 );
 
 CREATE VIRTUAL TABLE IF NOT EXISTS fts USING fts5(
-    title, text, speaker, body,
+    title, text, speaker, body, source,
     tokenize='porter unicode61'
 );
