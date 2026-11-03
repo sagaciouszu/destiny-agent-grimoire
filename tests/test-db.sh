@@ -58,6 +58,11 @@ check "[ $ORPHAN_ENTRIES -eq 0 ]" "no orphan book_entries"
 ORPHAN_LINES=$(sqlite3 "$DB" "SELECT COUNT(*) FROM transcript_lines WHERE transcript_id NOT IN (SELECT id FROM transcripts)")
 check "[ $ORPHAN_LINES -eq 0 ]" "no orphan transcript_lines"
 
+# Shipped artifact: no WAL mode, no -wal/-shm sidecars
+JOURNAL=$(sqlite3 "$DB" "PRAGMA journal_mode")
+SIDECARS=$(ls "$(dirname "$DB")"/grimoire.db-wal "$(dirname "$DB")"/grimoire.db-shm 2>/dev/null | wc -l)
+check "[ \"$JOURNAL\" = \"delete\" ] && [ $SIDECARS -eq 0 ]" "no WAL sidecars (journal_mode=$JOURNAL)"
+
 # Check meta table
 META_VERSION=$(sqlite3 "$DB" "SELECT value FROM meta WHERE key='version'")
 check "[ -n \"$META_VERSION\" ]" "meta version set ($META_VERSION)"

@@ -47,9 +47,9 @@ def tools_listed():
 
 
 def search_works():
-    rows = server.search('Crota', limit=3)
-    assert rows, 'no rows'
-    assert all('source' in r and 'title' in r for r in rows)
+    res = server.search('Crota', limit=3)
+    assert res['count'] == len(res['rows']) > 0, 'no rows'
+    assert all('source' in r and 'title' in r for r in res['rows'])
 
 
 def verify_works():
@@ -58,8 +58,9 @@ def verify_works():
 
 
 def limits_clamped():
-    rows = server.search('hive', limit=10_000)
-    assert len(rows) <= 100, f'{len(rows)} rows returned'
+    res = server.search('hive', limit=10_000)
+    assert res['count'] <= 100, f"{res['count']} rows returned"
+    assert server.list_records('speakers', limit=10_000)['count'] <= 100
 
 
 def read_only():

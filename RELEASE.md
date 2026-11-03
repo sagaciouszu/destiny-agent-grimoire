@@ -13,8 +13,11 @@
 
 ## Verification
 
-11/11 archive, 18/18 Drifter, 13/13 Eris, 35/35 database, 23/23 interface, conformance PASS, onboarding 24/24.
+11/11 archive, 18/18 Drifter, 13/13 Eris, 36/36 database, 23/23 interface, conformance PASS, onboarding 24/24.
 
 ## Asset
 
-`grimoire.db` is unchanged since v1.3.0 (sha256 `8ed73a8682e7405c09f01663d499d1c652c7b367185a7440e06f11d01bb4c4fb`). No rebuild needed; `python3 db/migrate.py` reproduces it.
+`grimoire.db` content is unchanged since v1.3.0; the asset was refreshed to ship
+in `journal_mode=delete` (no WAL/SHM sidecars). sha256
+`0cd21db4c2ef80e001d81b865979aea2370348b61b5d329ca232c3c849f046e8`.
+Rebuild with `python3 db/migrate.py`.

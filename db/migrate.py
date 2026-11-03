@@ -431,6 +431,8 @@ def migrate():
         conn.execute('INSERT OR REPLACE INTO meta (key,value) VALUES (?,?)', (k, v))
 
     conn.commit()
+    # Ship a single-file artifact: checkpoint and leave WAL mode behind
+    conn.execute('PRAGMA journal_mode=DELETE')
     conn.execute('VACUUM')
     conn.close()
     print(f'database written: {DB_PATH}')
