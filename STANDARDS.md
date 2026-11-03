@@ -246,6 +246,9 @@ Rules:
 ```
 
 - The archive adds `## Asset` with the file, size and rebuild command.
+- Every repository publishes a release for its tag. Agent releases carry notes
+  only; the archive also attaches the database. A tag without a release is an
+  incomplete release.
 - Keep the body under 40 lines. It is a release summary, not the changelog; the
   full history stays in `CHANGELOG.md`.
 - Do not restate what the repository is or who it is for.
