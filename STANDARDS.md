@@ -58,6 +58,7 @@ a change that is not done.
 | `characters` | name, slug | | curated set (compendium) |
 | `character_lines` | character_id, text, source_type, source_slug | norm_text | source_slug must resolve in `transcripts` |
 | `fts` | | | exactly one row per indexed content row (1:1) |
+| `verify_fts` | | | normalized text + provenance; mirrors indexable rows for fast quote checks |
 
 Global rules:
 - No duplicate slugs per table; no empty required fields; every row's text is
@@ -126,6 +127,8 @@ content type against Ishtar; `tests/drifter-voice-consistency.sh` /
   server exposes the same functions as typed tools. One implementation.
 - MCP: `mcp-server/` is an optional stdio adapter using the official SDK. It is
   read-only, has no SQL tool, clamps limits to 1-100 and trims text to 4000 chars.
+  It is stdio-only by design: no listener and no auth surface; hosting requires an
+  authenticated wrapper.
   Install with `bash mcp-server/install.sh`, or `./setup.sh --mcp` in an agent
   workspace (the interactive prompt also offers it). The adapter belongs to the
   archive, so one install serves both agents; the venv is gitignored and the CLI

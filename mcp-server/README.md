@@ -78,6 +78,8 @@ MCP limits clamp to 1-100 to protect the agent's context; the CLI is not clamped
 to 100 (the shared API allows up to 10,000). Full text is trimmed to 4000
 characters per row.
 `verify` is the quote-safety primitive: `verified` is true only for canonical text.
+It uses the verification index for speed and falls back to a full scan for
+mid-word fragments.
 `speaker` requires attribution (books and items, which have no speaker, are then
 excluded); `exact` requires the normalized quote to equal a full canonical row
 instead of matching a fragment.
@@ -88,6 +90,18 @@ instead of matching a fragment.
 - No arbitrary SQL tool is exposed. The six query shapes are the whole surface.
 - No network access. The database path is resolved from `GRIMOIRE_DB` or
   `db/grimoire.db`.
+- Inputs are bounded: queries 1-500 chars, quotes 1-2000, limits 1-100.
+
+## Transport security
+
+- **stdio only.** The server has no TCP listener, no port and no authentication
+  surface; the client starts it and talks over its own pipes.
+- Access is therefore the client's local user context. Run it as the user who
+  should be able to read the archive.
+- Shared or hosted use needs an authenticated wrapper or proxy in front of it;
+  that is deliberately not built in.
+- The SDK is installed from a hash-locked requirements file into a gitignored
+  virtualenv (`--require-hashes`).
 
 ## Test
 

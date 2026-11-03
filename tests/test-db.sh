@@ -58,6 +58,11 @@ check "[ $ORPHAN_ENTRIES -eq 0 ]" "no orphan book_entries"
 ORPHAN_LINES=$(sqlite3 "$DB" "SELECT COUNT(*) FROM transcript_lines WHERE transcript_id NOT IN (SELECT id FROM transcripts)")
 check "[ $ORPHAN_LINES -eq 0 ]" "no orphan transcript_lines"
 
+# Verification index mirrors indexable rows
+V_EXPECTED=$(sqlite3 "$DB" "SELECT (SELECT COUNT(*) FROM transcript_lines)+(SELECT COUNT(*) FROM book_entries)+(SELECT COUNT(*) FROM grimoire_cards)+(SELECT COUNT(*) FROM interactions)+(SELECT COUNT(*) FROM items WHERE text!='')+(SELECT COUNT(*) FROM records)")
+V_ACTUAL=$(sqlite3 "$DB" "SELECT COUNT(*) FROM verify_fts")
+check "[ $V_ACTUAL -eq $V_EXPECTED ]" "verification index complete ($V_ACTUAL rows)"
+
 # Shipped artifact: no WAL mode, no -wal/-shm sidecars
 JOURNAL=$(sqlite3 "$DB" "PRAGMA journal_mode")
 SIDECARS=$(ls "$(dirname "$DB")"/grimoire.db-wal "$(dirname "$DB")"/grimoire.db-shm 2>/dev/null | wc -l)

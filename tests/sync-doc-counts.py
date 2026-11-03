@@ -41,6 +41,7 @@ C = {
     'characters': q('SELECT COUNT(*) FROM characters'),
     'speakers': q('SELECT COUNT(*) FROM v_speakers'),
     'aliases': q('SELECT COUNT(*) FROM speaker_aliases'),
+    'verify': q('SELECT COUNT(*) FROM verify_fts'),
 }
 conn.close()
 
@@ -68,6 +69,7 @@ SHARED = [
     (r'\| `transcript_lines` \| \d+', '| `transcript_lines` | {lines}'),
     (r'\| `v_speakers` \(view\) \| \d+', '| `v_speakers` (view) | {speakers}'),
     (r'\| `speaker_aliases` \| \d+', '| `speaker_aliases` | {aliases}'),
+    (r'\| `verify_fts` \(index\) \| \d+', '| `verify_fts` (index) | {verify}'),
     (r'18 characters \(\d+ canon lines\)', '18 characters ({character_lines} canon lines)'),
     (r'18 characters \(\d+ lines\)', '18 characters ({character_lines} lines)'),
     (r'\d{3,5} transcript headers', '{transcripts} transcript headers'),

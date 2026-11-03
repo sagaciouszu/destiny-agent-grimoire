@@ -55,6 +55,7 @@ sqlite3 db/grimoire.db "SELECT slug, title, item_type FROM items WHERE item_type
 | `characters` | 18 named characters |
 | `character_lines` | Canon character quotes ready for agent use |
 | `fts` | FTS5 search over all tables |
+| `verify_fts` | normalized text + provenance for fast quote verification |
 | `meta` | DB version |
 
 ### Indexed columns

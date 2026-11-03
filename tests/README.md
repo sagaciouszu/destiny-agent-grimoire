@@ -15,7 +15,7 @@ agent-agnostic except the explicitly named Drifter/Eris integration suites.
 
 ## Archive integrity
 
-- `test-db.sh` - database integrity (36 checks: tables, FTS, orphans, counts,
+- `test-db.sh` - database integrity (37 checks: tables, FTS, orphans, counts,
   entity leakage, speaker canon, provenance, `v_speakers`, `speaker_aliases`)
 - `lore-integrity.sh` - archive structure (books, transcripts, cards, records)
 - `lore-format.sh` - source markdown transcript format (68/68)

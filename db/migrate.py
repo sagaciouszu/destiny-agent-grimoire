@@ -413,6 +413,28 @@ def migrate():
         add_fts(title, body, source='record')
     print(f'fts entries: {fts_id}')
 
+    # Verification index: normalized text with provenance (documents only)
+    print('building verification index...')
+    for sql in (
+        "INSERT INTO verify_fts(norm, source, slug, speaker) "
+        "SELECT tl.norm_line, 'transcript', t.slug, tl.speaker "
+        "FROM transcript_lines tl JOIN transcripts t ON t.id=tl.transcript_id",
+        "INSERT INTO verify_fts(norm, source, slug, speaker) "
+        "SELECT e.norm_text, 'book', b.slug, '' "
+        "FROM book_entries e JOIN books b ON b.id=e.book_id",
+        "INSERT INTO verify_fts(norm, source, slug, speaker) "
+        "SELECT norm_body, 'grimoire_card', slug, '' FROM grimoire_cards",
+        "INSERT INTO verify_fts(norm, source, slug, speaker) "
+        "SELECT norm_text, 'interaction', slug, speaker FROM interactions",
+        "INSERT INTO verify_fts(norm, source, slug, speaker) "
+        "SELECT norm_text, 'item', slug, '' FROM items WHERE text != ''",
+        "INSERT INTO verify_fts(norm, source, slug, speaker) "
+        "SELECT norm_body, 'record', slug, '' FROM records",
+    ):
+        conn.execute(sql)
+    v_count = conn.execute('SELECT COUNT(*) FROM verify_fts').fetchone()[0]
+    print(f'verification entries: {v_count}')
+
     # Meta
     for k, v in [
         ('version','1.0.0'),
