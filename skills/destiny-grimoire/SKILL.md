@@ -63,7 +63,7 @@ python3 db/query.py list characters
 python3 db/query.py list speakers --limit 20
 
 # Quote safety: verify before quoting
-python3 db/query.py verify "I am Eris Morn." --speaker "Eris Morn" --exact
+python3 db/query.py verify "Absolutely not." --speaker "Eris Morn" --exact
 ```
 
 ## Interface flags

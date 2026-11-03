@@ -26,6 +26,7 @@ run "Checksum acceptance and rejection" "bash '$ARCHIVE/tests/checksum-test.sh'"
 run "DB vs source cross-check" "python3 '$ARCHIVE/tests/db-source-crosscheck.py'"
 run "Retrieval evaluation" "python3 '$ARCHIVE/tests/retrieval-eval.py'"
 run "Item provenance audit" "python3 '$ARCHIVE/tests/item-audit.py'"
+run "Documentation commands" "python3 '$ARCHIVE/tests/docs-audit.py'"
 
 echo ""
 echo "============================================================"

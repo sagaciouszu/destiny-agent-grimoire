@@ -60,6 +60,7 @@ agent-agnostic except the explicitly named Drifter/Eris integration suites.
   provenance URLs, index completeness
 - `retrieval-eval.py` - 15-query retrieval baseline; compares default and ranked order
 - `item-audit.py` - item slugs, titles, URLs, text and optional-field coverage
+- `docs-audit.py` - every documented command resolves; query subcommands and flags are valid
 
 ## Onboarding and links (on demand)
 
