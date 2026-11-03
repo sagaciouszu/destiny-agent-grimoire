@@ -13,7 +13,8 @@
 ### Coverage
 
 - Scraped all 1130 additional Ishtar transcript pages (68 -> 1198 transcripts), incl. quest-step dialogue for every expansion
-- Added 23 cutscene compilation transcripts (D1 + D2, captions only, no video download) with unique-match speaker attribution (406 lines)
+- Added 31 cutscene compilation transcripts (D1 + D2, captions only, no video download) with unique-match speaker attribution (455 lines)
+- Captions are YouTube auto-generated (no manual tracks exist); cutscene-verify gates corroboration, encoding, cross-video consistency and attribution
 - Database: 1222 transcripts, 64,034 transcript lines, 129,615 FTS entries
 
 ### Tests

@@ -13,14 +13,14 @@ SQLite-backed Destiny lore archive for agent consumption. Single file (`db/grimo
 | books | 110 | All 110 Ishtar lore books (complete) |
 | book_entries | 1158 | 1-51 entries per book |
 | transcripts | 1229 | Quest + cutscene + web transcripts (complete) |
-| transcript_lines | 69499 | Every dialogue line, including narration |
+| transcript_lines | 71221 | Every dialogue line, including narration |
 | grimoire_cards | 2889 | All 2889 Destiny 1 grimoire cards (complete) |
 | interactions | 2699 | All 135 Ishtar interaction pages |
 | items | 58764 | All Ishtar items; 42693 with flavor text |
 | records | 71 | All 71 triumphs/seals |
 | characters | 18 | Named characters extracted from dialogue |
 | character_lines | 1189 | Verified canon dialogue for queries |
-| fts | 135080 | FTS5 full-text search over all tables |
+| fts | 136802 | FTS5 full-text search over all tables |
 
 Coverage verified by diffing scraped slugs against Ishtar's live pages: no missing slugs.
 
