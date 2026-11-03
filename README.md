@@ -103,7 +103,7 @@ migration. The full contract is `STANDARDS.md`.
   over local stdio; one adapter covers every agent that mounts this archive.
   Install with `bash mcp-server/install.sh`; tools, limits, client config and
   security: `mcp-server/README.md`.
-- **Interface:** `python3 db/query.py search|character|item|verify|book|transcript|find-item|record|list|stats`; read commands accept `--offset`.
+- **Interface:** one of `python3 db/query.py search|character|item|verify|book|transcript|find-item|record|list|stats`; read commands accept `--offset`.
   `verify` is the quote-safety primitive (exit 1 when absent); every command
   accepts `--json`; search returns snippets unless `--full`.
 - **Discovery:** `db/capabilities.json` is a machine-readable manifest of tables,
