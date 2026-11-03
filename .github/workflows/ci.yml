@@ -44,9 +44,6 @@ jobs:
       - name: Item audit
         run: python3 tests/item-audit.py
 
-      - name: Golden voice snapshots
-        run: bash tests/golden-voice-test.sh
-
       - name: MCP dependencies
         run: |
           python3 -m venv mcp-server/.venv

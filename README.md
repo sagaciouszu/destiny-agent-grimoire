@@ -134,6 +134,7 @@ archive/     # raw scraper output (JSONL) and fetchers
 scripts/     # ingestion helpers
 tests/       # archive gates, agent suites, shared runner, conformance
 skills/      # agent-facing SKILL.md
+series/      # registry of grimoire-born agents (ids, source repos, peers)
 mcp-server/  # optional MCP adapter (stdio, read-only)
 index.md     # short pointer to the database
 STANDARDS.md # the contract: schema, naming, provenance, gates, README rules
@@ -155,8 +156,7 @@ python3 tests/sync-readme-meta.py
 
 # verify everything
 bash grimoire-master-audit.sh
-bash drifter-master-audit.sh
-bash eris-master-audit.sh
+# per-agent audits live in each agent repo: bash tests/master-audit.sh
 
 # stage a release (copy, checksums, publish commands), backup, sync agents
 bash scripts/release-stage.sh <version>
@@ -174,18 +174,18 @@ repository minus the database lives outside the tree.
 
 | Suite | Command | Expected |
 |---|---|---|
-| Archive audit | `bash grimoire-master-audit.sh` | 12/12 |
-| Drifter agent audit | `bash drifter-master-audit.sh` | 18/18 |
-| Eris agent audit | `bash eris-master-audit.sh` | 13/13 |
+| Archive audit | `bash grimoire-master-audit.sh` | 9/9 |
+| Drifter agent audit | run tests/master-audit.sh in how-to-drift-for-agents | 20/20 |
+| Eris agent audit | run tests/master-audit.sh in eris-morn | 15/15 |
 | Database integrity | `bash tests/test-db.sh` | 38 checks |
 | Query interface | `bash tests/query-interface-test.sh` | 41 checks |
-| Agent layout | `bash tests/agent-layout-test.sh` | 5 checks |
+| Agent layout | `bash tests/agent-layout-test.sh` | 10 checks |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 checks |
 | MCP contract | `mcp-server/.venv/bin/python tests/mcp-test.py` | 7/7 checks |
 | File conformance | `python3 tests/conformance.py` | PASS |
 
-Agent audits need their workspaces present; the archive audit skips
-workspace-only suites when they are absent.
+Agent audits run from their own repos and call shared gates through
+`lore/tests/`; the archive audit is shared-only.
 
 ## License and attribution
 

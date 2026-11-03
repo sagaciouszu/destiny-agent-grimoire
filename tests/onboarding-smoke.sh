@@ -48,10 +48,10 @@ smoke() {
     check "working tree stays clean" "[ -z \"\$(git -C '$dir' status --porcelain)\" ]"
 }
 
-smoke how-to-drift-for-agents lore/drifter-master-audit.sh 18 symlink
-smoke how-to-drift-for-agents lore/drifter-master-audit.sh 18 clone
-smoke eris-morn lore/eris-master-audit.sh 13 symlink
-smoke eris-morn lore/eris-master-audit.sh 13 clone
+smoke how-to-drift-for-agents tests/master-audit.sh 20 symlink
+smoke how-to-drift-for-agents tests/master-audit.sh 20 clone
+smoke eris-morn tests/master-audit.sh 15 symlink
+smoke eris-morn tests/master-audit.sh 15 clone
 
 echo ""
 echo "ONBOARDING SMOKE: $PASS passed, $FAIL failed"

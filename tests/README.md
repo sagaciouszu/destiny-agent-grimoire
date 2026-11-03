@@ -1,17 +1,16 @@
 # Tests
 
-Validation for the archive and for the two agent workspaces. Every suite here is
-agent-agnostic except the explicitly named Drifter/Eris integration suites.
+Shared validation for the archive and the agent interface. Persona-specific
+suites live in each agent repo under `tests/`; everything here is archive-wide
+or shared by every agent in the series.
 
-## Shared agent runner
+## Entry points
 
-- `agent-audit.sh <drifter|eris>` - one runner for both agents: per-agent voice,
-  quote, module and scenario suites plus common checks (dependency headers, token
-  estimates, dashes, INDEX completeness, personal paths)
+- Grimoire: `bash grimoire-master-audit.sh` (9 suites, archive-wide)
+- Drifter: run tests/master-audit.sh in how-to-drift-for-agents (20 suites)
+- Eris: run tests/master-audit.sh in eris-morn (15 suites)
 - `resolve-workspace.sh <caller> [drifter|eris]` - layout-independent workspace
-  resolution (`lore/` may be a symlink or a clone)
-- Root wrappers: `drifter-master-audit.sh` (18 suites), `eris-master-audit.sh`
-  (13 suites), `grimoire-master-audit.sh` (12 suites, archive-wide)
+  resolution for agent suites (`lore/` may be a symlink or a clone)
 
 ## Archive integrity
 
@@ -21,15 +20,14 @@ agent-agnostic except the explicitly named Drifter/Eris integration suites.
 - `lore-format.sh` - source markdown transcript format (68/68)
 - `lore-quote-count.sh` - per-character transcript line counts vs the database
 - `compendium-check.sh` - compendium files present and non-empty
-- `validate.sh` - Drifter workspace consistency (links, quotes)
-- `drifter-xref-validate.sh` - Drifter cross-reference resolver
 - `ci-checks.py` - stale names, circular/self dependencies, dashes, personal
   paths, gitignored refs, headers (also invoked by `conformance.py`)
 - `conformance.py` - per-file conformance across all three repos (headers, refs,
   token accuracy, persona-agnostic grimoire, tracked symlinks, README contract,
   command targets, agent document parity)
-- `agent-layout-test.sh` - deployment shape: no `lore` symlink inside `agents/`,
-  only the two entry agents active, every companion file marked `disabled`
+- `agent-layout-test.sh` - deployment shape: manifest-driven per-agent dirs, no
+  `lore` symlink inside `agents/`, only entry agents active, companions and peer
+  blocks installed from `series/agents.json`
 - `sync-readme-meta.py` - stamp or check version and last-push metadata in the
   three READMEs (`--check` for CI)
 - `source-overlap-verify.py` - curated markdown vs live Ishtar, filename/slug
@@ -38,23 +36,33 @@ agent-agnostic except the explicitly named Drifter/Eris integration suites.
   (`--check` for the CI-style staleness gate)
 - `live-sample-verify.py` - on-demand live coverage probe (network)
 
-## Agent integration
+## Agent-side suites (in each agent repo)
 
-- `drifter-*.sh`, `drifter-voice-scorer.py` - Drifter voice, scenarios, quotes,
-  modules, freshness, conflicts, gambit and tape simulation
-- `drifter-conflict-check.sh`, `drifter-freshness-check.sh`, `drifter-gambit-sim.sh`,
-  `drifter-multiturn-test.sh`, `drifter-tape-generator.sh` - individual Drifter suites
-- `eris-scenario-simulator.sh`, `eris-validate-response.sh` - individual Eris suites
-- `eris-*.sh`, `eris-voice-scorer.py` - Eris voice, scenarios, quotes, modules,
+These moved out of the grimoire so each agent is independently deployable and
+auditable. Shared gates are still imported from lore/tests/.
+
+Drifter (how-to-drift-for-agents/tests/):
+
+- drifter-*.sh and drifter-voice-scorer.py - voice, scenarios, quotes, modules,
+  freshness, conflicts, gambit and tape simulation
+- validate.sh - workspace link and quote validation
+- conversation-test.sh - SQLite conversation test
+- build-quote-index.py - rebuild reference/quote-inverted-index.json
+- golden-voice.json and golden-voice-test.sh - fixed pass/fail snapshots
+- master-audit.sh - all 20 suites
+
+Eris (eris-morn/tests/):
+
+- eris-*.sh and eris-voice-scorer.py - voice, scenarios, quotes, modules,
   multi-turn arc and contamination scan
-- `drifter-quote-verify.sh` / `eris-quote-verify.sh` - every quoted string in the
-  agent files traces to the database
-- `drifter-quote-lookup.sh` - fast lookup over the Drifter `reference/quote-inverted-index.json`
-  (regenerate with `tests/build-quote-index.py`, freshness gated by the module test)
+- conversation-test.sh - SQLite conversation test
+- golden-voice.json and golden-voice-test.sh - fixed pass/fail snapshots
+- master-audit.sh - all 15 suites
 
 ## Extended (on demand)
 
-- `extended-suite.sh` - runs the four suites below plus the MCP contract
+- `extended-suite.sh` - fault injection, MCP, checksum, source, retrieval,
+  item, docs and robustness gates
 - `robustness-test.py` - corrupt/truncated/missing databases, edge inputs,
   read-only enforcement, 160 concurrent queries, injection attempts
 - `mcp-matrix-test.py` - MCP calls across all twelve tools (140-200 per run), 3 concurrent clients,
@@ -66,22 +74,17 @@ agent-agnostic except the explicitly named Drifter/Eris integration suites.
 - `retrieval-eval.py` - 15-query retrieval baseline; compares default and ranked order
 - `item-audit.py` - item slugs, titles, URLs, text and optional-field coverage
 - `docs-audit.py` - every documented command resolves; query subcommands and flags are valid
-- `golden-voice-test.sh` - fixed pass/fail voice snapshots for both agents
 
 ## Onboarding and links (on demand)
 
 - `onboarding-smoke.sh` - both agents, symlink and clone modes, fully offline:
-  clone, setup, audit, clean working tree (24 checks)
+  clone, setup, master audit, clean working tree (24 checks)
 - `link-check.py` - external URL health for the READMEs (`--all` includes badges)
 - `mcp-test.py` - MCP tool contract, read-only guard and stdio handshake
   (`mcp-server/.venv/bin/python tests/mcp-test.py`; skips without the venv)
 
-## Standalone utilities
+## Archive utilities
 
-- `drifter-coin.sh` - in-character coin flip for decisions
-- `drifter-load.sh` - print a tiered load profile (minimal/standard/deep)
-- `drifter-pre-response.sh` - pre-response validation pipeline
-- `drifter-story-generator.sh` - story scaffold from a topic
 - `yt-transcript.sh` / `yt-batch.sh` - caption extraction (subtitle-only)
 
 ## Scrapers (`archive/data/`)

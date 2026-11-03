@@ -20,13 +20,6 @@ run() {
 run "$ARCHIVE/tests/test-db.sh" "Database Integrity (38 checks)"
 run "$ARCHIVE/tests/compendium-check.sh" "Compendium Files"
 run "$ARCHIVE/tests/lore-integrity.sh" "Lore Archive Integrity"
-run "$ARCHIVE/tests/conversation-test.sh" "Drifter Conversation (SQLite)"
-run "$ARCHIVE/tests/eris-conversation-test.sh" "Eris Conversation (SQLite)"
-if bash "$ARCHIVE/tests/resolve-workspace.sh" "$ARCHIVE/drifter-master-audit.sh" >/dev/null 2>&1; then
-    run "$ARCHIVE/tests/validate.sh" "Archive & Quote Validation"
-else
-    echo "  - [Archive & Quote Validation] SKIP (drifter workspace not present)"; SKIP=$((SKIP+1))
-fi
 run "$ARCHIVE/tests/cutscene-verify.sh" "Cutscene Caption Verification"
 run "$ARCHIVE/tests/query-interface-test.sh" "Query Interface (41 checks)"
 run "$ARCHIVE/tests/agent-layout-test.sh" "Agent Layout (OpenCode/OpenClaw)"
