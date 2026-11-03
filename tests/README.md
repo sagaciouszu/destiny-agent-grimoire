@@ -26,7 +26,10 @@ agent-agnostic except the explicitly named Drifter/Eris integration suites.
 - `ci-checks.py` - stale names, circular/self dependencies, dashes, personal
   paths, gitignored refs, headers (also invoked by `conformance.py`)
 - `conformance.py` - per-file conformance across all three repos (headers, refs,
-  token accuracy, persona-agnostic grimoire, tracked symlinks)
+  token accuracy, persona-agnostic grimoire, tracked symlinks, README contract,
+  command targets, agent document parity)
+- `sync-readme-meta.py` - stamp or check version and last-push metadata in the
+  three READMEs (`--check` for CI)
 - `source-overlap-verify.py` - curated markdown vs live Ishtar, filename/slug
 - `speaker-audit.py` - parse-noise regression gate for speaker names
 - `sync-doc-counts.py` - rewrite documented counts from the database
@@ -43,6 +46,12 @@ agent-agnostic except the explicitly named Drifter/Eris integration suites.
   agent files traces to the database
 - `drifter-quote-lookup.sh` - fast lookup over the Drifter `reference/quote-inverted-index.json`
   (regenerate with `tests/build-quote-index.py`, freshness gated by the module test)
+
+## Onboarding and links (on demand)
+
+- `onboarding-smoke.sh` - both agents, symlink and clone modes, fully offline:
+  clone, setup, audit, clean working tree (24 checks)
+- `link-check.py` - external URL health for the READMEs (`--all` includes badges)
 
 ## Standalone utilities
 

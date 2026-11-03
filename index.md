@@ -1,26 +1,27 @@
-# Destiny Agent Grimoire
+# Destiny Agent Grimoire - Index
 
-This repository is a canonical Destiny lore archive, indexed via SQLite. Canonical data lives in `db/grimoire.db`.
+Short orientation. Counts and the full guide live in `README.md`; the contract is
+`STANDARDS.md`.
 
-## Database tables
+## Where to start
 
-| Table | Rows | Purpose |
-|-------|------|---------|
-| books | 110 | Book metadata |
-| book_entries | 1158 | Lore entries within books |
-| transcripts | 1229 | Quest transcript headers |
-| transcript_lines | 71221 | Canonical character dialogue |
-| grimoire_cards | 2889 | Destiny 1 grimoire cards |
-| interactions | 2699 | Character dialogue beats |
-| items | 58764 | Gear/weapon/armor lore |
-| records | 71 | Triumphs & seals |
-| characters | 18 | Named characters by dialogue |
-| character_lines | 1189 | Character quotes for agent use |
-| fts | 136802 | FTS5 search index |
+| Need | File |
+|---|---|
+| Human setup, counts, maintenance | `README.md` |
+| Agent skill | `skills/destiny-grimoire/SKILL.md` |
+| Schema and table contract | `db/README.md`, `db/schema.sql` |
+| Naming, provenance, quote policy, gates | `STANDARDS.md` |
+| Machine-readable interface | `db/capabilities.json` |
 
-## How agents should use this
+## Quick commands
 
-- Query via `python3 db/query.py [search|character|item|stats]` for everything.
-- Markdown files under `source/` exist only as the ingestion source and are not canonical post-ingestion.
-- The database is a build artifact, not committed: after cloning run `python3 db/migrate.py` (~2 minutes). Prebuilt copies are attached to releases.
-- If the database is missing or wrong, fix it by re-running `python3 db/migrate.py`.
+```bash
+python3 db/query.py stats
+python3 db/query.py search "Crota" --limit 5
+python3 db/query.py character "eris" --limit 20
+python3 db/query.py verify "I am Eris Morn."     # exit 1 when not canon
+```
+
+The database is a build artifact: `python3 db/migrate.py`, or download the asset
+from the latest release. `source/` is ingestion input only; never treat it as
+canon at runtime.
