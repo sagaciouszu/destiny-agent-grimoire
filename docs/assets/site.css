@@ -191,7 +191,8 @@ a:hover {
   .nav-submenu {
     position: absolute;
     right: 0;
-    top: calc(100% + 0.35rem);
+    top: 100%;
+    margin-top: 0;
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
   }
 }
