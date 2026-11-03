@@ -54,6 +54,10 @@ def search_works():
 
 def verify_works():
     assert server.verify('I am Eris Morn.')['verified'] is True
+    assert server.verify('I am Eris Morn.', speaker='Eris Morn')['verified'] is True
+    assert server.verify('I am Eris Morn.', speaker='Zavala')['verified'] is False
+    assert server.verify('Absolutely not.', exact=True)['verified'] is True
+    assert server.verify('Eris Morn', exact=True)['verified'] is False
     assert server.verify('not a canon line at all zzz')['verified'] is False
 
 

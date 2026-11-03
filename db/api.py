@@ -17,7 +17,7 @@ TYPE_TO_SOURCE = {
     'books': 'book_entry', 'transcripts': 'transcript_line', 'grimoire': 'grimoire_card',
     'interactions': 'interaction', 'items': 'item', 'records': 'record',
 }
-MAX_LIMIT = 100
+MAX_LIMIT = 10000  # safety bound for the shared API; MCP clamps tighter
 
 
 def db_path():
@@ -119,46 +119,63 @@ def item(slug):
         conn.close()
 
 
-def verify(quote):
-    """Check a quoted string against canon. Returns {'quote','verified','matches'}."""
+def verify(quote, speaker=None, exact=False):
+    """Check a quoted string against canon.
+
+    speaker: only accept matches attributed to this speaker (drops sources with
+             no speaker, such as books and items).
+    exact:   require the normalized quote to equal a full canonical row, not a
+             substring of one.
+
+    Returns {'quote', 'verified', 'speaker', 'exact', 'matches'}.
+    """
     nq = norm(quote)
     hits = []
     if not nq:
-        return {'quote': quote, 'verified': False, 'matches': []}
+        return {'quote': quote, 'verified': False, 'speaker': speaker,
+                'exact': exact, 'matches': []}
     conn = connect()
     try:
         rows = conn.execute(
-            'SELECT t.slug, tl.speaker FROM transcript_lines tl JOIN transcripts t ON t.id=tl.transcript_id '
-            'WHERE tl.norm_line LIKE ? LIMIT 3', (f'%{nq}%',)).fetchall()
-        hits += [{'source': 'transcript', 'slug': r[0], 'speaker': r[1]} for r in rows]
+            'SELECT t.slug, tl.speaker, tl.norm_line AS norm FROM transcript_lines tl '
+            'JOIN transcripts t ON t.id=tl.transcript_id WHERE tl.norm_line LIKE ? LIMIT 3',
+            (f'%{nq}%',)).fetchall()
+        hits += [{'source': 'transcript', 'slug': r[0], 'speaker': r[1], 'norm': r[2]} for r in rows]
         rows = conn.execute(
-            'SELECT b.slug FROM book_entries e JOIN books b ON b.id = e.book_id '
+            'SELECT b.slug, e.norm_text AS norm FROM book_entries e JOIN books b ON b.id=e.book_id '
             'WHERE e.norm_text LIKE ? LIMIT 3', (f'%{nq}%',)).fetchall()
-        hits += [{'source': 'book', 'slug': r[0], 'speaker': ''} for r in rows]
+        hits += [{'source': 'book', 'slug': r[0], 'speaker': '', 'norm': r[1]} for r in rows]
         plain = [
-            ('grimoire_cards', 'norm_body', 'grimoire_card'),
-            ('interactions', 'norm_text', 'interaction'),
-            ('items', 'norm_text', 'item'),
-            ('records', 'norm_body', 'record'),
+            ('grimoire_cards', 'norm_body', 'grimoire_card', False),
+            ('interactions', 'norm_text', 'interaction', True),
+            ('items', 'norm_text', 'item', False),
+            ('records', 'norm_body', 'record', False),
         ]
-        for tbl, nrm, source in plain:
-            if tbl == 'interactions':
-                rows = conn.execute(
-                    f'SELECT slug, speaker FROM {tbl} WHERE {nrm} LIKE ? LIMIT 3', (f'%{nq}%',)).fetchall()
-                hits += [{'source': source, 'slug': r[0], 'speaker': r[1]} for r in rows]
-            else:
-                rows = conn.execute(
-                    f'SELECT slug FROM {tbl} WHERE {nrm} LIKE ? LIMIT 3', (f'%{nq}%',)).fetchall()
-                hits += [{'source': source, 'slug': r[0], 'speaker': ''} for r in rows]
+        for tbl, nrm, source, has_speaker in plain:
+            cols = (f'slug, speaker, {nrm} AS norm' if has_speaker
+                    else f"slug, {nrm} AS norm, '' AS speaker")
+            rows = conn.execute(
+                f'SELECT {cols} FROM {tbl} WHERE {nrm} LIKE ? LIMIT 3', (f'%{nq}%',)).fetchall()
+            hits += [{'source': source, 'slug': r[0], 'speaker': r[1], 'norm': r[2]} for r in rows]
     finally:
         conn.close()
+
+    if exact:
+        hits = [h for h in hits if h['norm'] == nq]
+    if speaker:
+        want = speaker.casefold()
+        hits = [h for h in hits if h['speaker'] and want in h['speaker'].casefold()]
+
     seen, uniq = set(), []
     for h in hits:
         key = (h['source'], h['slug'], h['speaker'])
-        if key not in seen:
-            seen.add(key)
-            uniq.append(h)
-    return {'quote': quote, 'verified': bool(uniq), 'matches': uniq}
+        if key in seen:
+            continue
+        seen.add(key)
+        uniq.append({'source': h['source'], 'slug': h['slug'], 'speaker': h['speaker'],
+                     'exact': h['norm'] == nq})
+    return {'quote': quote, 'verified': bool(uniq), 'speaker': speaker,
+            'exact': exact, 'matches': uniq}
 
 
 def listing(kind, limit=50):

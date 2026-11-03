@@ -22,7 +22,7 @@ python3 db/query.py character "drifter" --limit 20
 python3 db/query.py item "0a0x-nightmask"
 
 # Quote verification (exit 1 when not found)
-python3 db/query.py verify "I am Eris Morn."
+python3 db/query.py verify "I am Eris Morn." --speaker "Eris Morn" --exact
 
 # Discovery listings
 python3 db/query.py list books|characters|speakers|records [--limit N]

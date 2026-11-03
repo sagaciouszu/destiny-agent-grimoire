@@ -70,12 +70,17 @@ path is `<agent>/lore/mcp-server/run.sh`. Use an absolute path in client config.
 | `search` | `query`, `type?`, `limit=10`, `full=false` | `{count, rows}` with snippet or full text |
 | `character` | `name`, `about?`, `all_lines=false`, `limit=20` | `{found, header, rows}` |
 | `item` | `slug` | item row, `text` trimmed |
-| `verify` | `quote` | `{quote, verified, matches}` |
+| `verify` | `quote`, `speaker?`, `exact=false` | `{quote, verified, matches}` with `exact` flags |
 | `list_records` | `kind`, `limit=50` | `{count, rows}` for books, characters, speakers, records |
 | `stats` | none | row counts, top item types, top speakers |
 
-All limits clamp to 1-100. Full text is trimmed to 4000 characters per row.
+MCP limits clamp to 1-100 to protect the agent's context; the CLI is not clamped
+to 100 (the shared API allows up to 10,000). Full text is trimmed to 4000
+characters per row.
 `verify` is the quote-safety primitive: `verified` is true only for canonical text.
+`speaker` requires attribution (books and items, which have no speaker, are then
+excluded); `exact` requires the normalized quote to equal a full canonical row
+instead of matching a fragment.
 
 ## Safety
 
