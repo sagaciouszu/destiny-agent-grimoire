@@ -1,15 +1,12 @@
-# v1.8.0 - Leaner index and operations tooling
+# v1.8.1 - Character lookup and ranking fixes
 
 **2026-11-03**
 
 ## What's Changed
 
-- **Search index:** stat-only items are no longer indexed; FTS drops from 136,802 to 120,731 rows with no loss of searchable lore
-- **Schema version:** `db/SCHEMA_VERSION` plus a database gate; migration writes 1.0.1
-- **Quality:** item provenance audit, retrieval evaluation, and DB/source cross-check
-- **Slim profile:** `db/build-slim.py` produces a 95 MB core database without items or cards
-- **Ops scripts:** release staging, rolling backup, and live-agent sync
-- **CI:** workflow builds the database and runs conformance, database, interface, retrieval and MCP checks
+- **Fixed:** character lookup resolves exact names first; `drifter` no longer returns Blue's Ghost
+- **Search ranking:** relevance order boosts titles but penalizes item-title matches, keeping transcripts and books visible
+- **Docs:** search rank/offset and CLI `--no-rank` documented
 
 ## Verification
 
@@ -17,4 +14,4 @@
 
 ## Asset
 
-`grimoire.db` (169 MB) with `verify_fts` and `item_title_fts`. sha256 `a3957e1e5f82c38be40baa54038e35734c492d442a8621f727dee55bb89cc226`. `SHA256SUMS` is attached.
+`grimoire.db` is unchanged (169 MB, sha256 `a3957e1e5f82c38be40baa54038e35734c492d442a8621f727dee55bb89cc226`). `SHA256SUMS` is attached.

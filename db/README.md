@@ -11,7 +11,8 @@ File: `grimoire.db` (SQLite, FTS5 full-text search enabled). Built from `source/
 python3 db/query.py stats
 
 # Full-text search
-python3 db/query.py search "Crota" --limit 5
+python3 db/query.py search "Crota" --limit 5     # relevance order (default)
+python3 db/query.py search "Crota" --limit 5 --no-rank
 python3 db/query.py search "Eris" --type transcripts --limit 10
 
 # Character dialogue  

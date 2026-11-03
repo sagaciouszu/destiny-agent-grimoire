@@ -70,6 +70,24 @@ def _resolve(conn, table, ref, cols):
         (f"%{ref.replace('-', ' ')}%",)).fetchone()
 
 
+def _resolve_character(conn, name):
+    q = (name or '').strip()
+    slug = q.lower().replace(' ', '-')
+    row = conn.execute(
+        'SELECT id, name, slug FROM characters WHERE LOWER(name)=LOWER(?) OR LOWER(slug)=LOWER(?)',
+        (q, slug)).fetchone()
+    if row:
+        return row
+    row = conn.execute(
+        'SELECT id, name, slug FROM characters WHERE LOWER(name) LIKE LOWER(?) OR LOWER(slug) LIKE LOWER(?) '
+        'ORDER BY LENGTH(name) LIMIT 1', (f'{q}%', f'{slug}%')).fetchone()
+    if row:
+        return row
+    return conn.execute(
+        'SELECT id, name, slug FROM characters WHERE LOWER(name) LIKE LOWER(?) OR LOWER(slug) LIKE LOWER(?) '
+        'ORDER BY LENGTH(name) LIMIT 1', (f'%{q}%', f'%{slug}%')).fetchone()
+
+
 def _guard(fn):
     """Translate SQLite failures into clean ValueErrors for CLI and MCP."""
     def wrapper(*args, **kwargs):
@@ -106,7 +124,8 @@ def search(term, type=None, limit=10, full=False, offset=0, rank=True):
             params.append(TYPE_TO_SOURCE[type])
         params.append(_limit(limit, 10))
         params.append(_offset(offset))
-        order = ' ORDER BY rank' if rank else ''
+        order = (" ORDER BY bm25(fts, 3.0, 1.0, 1.0, 1.0, 0.0)"
+                 " + CASE WHEN source='item' THEN 1.0 ELSE 0 END") if rank else ''
         try:
             if full:
                 rows = conn.execute(
@@ -144,9 +163,7 @@ def character(name, about=None, all_lines=False, limit=20, offset=0):
             rows = conn.execute(sql, params).fetchall()
             return {'header': f'=== {name} (transcript lines) ===', 'rows': [dict(r) for r in rows]}
 
-        ch = conn.execute(
-            "SELECT id, name, slug FROM characters WHERE name LIKE ? OR slug LIKE ?",
-            (f'%{name}%', f'%{name.lower().replace(" ", "-")}%')).fetchone()
+        ch = _resolve_character(conn, name)
         if not ch:
             return None
         params = [ch['id']]
@@ -296,9 +313,7 @@ def character_info(name):
     """Character metadata, aliases and line counts."""
     conn = connect()
     try:
-        ch = conn.execute(
-            "SELECT id, name, slug FROM characters WHERE name LIKE ? OR slug LIKE ?",
-            (f'%{name}%', f'%{name.lower().replace(" ", "-")}%')).fetchone()
+        ch = _resolve_character(conn, name)
         if not ch:
             return None
         quotes = conn.execute('SELECT COUNT(*) FROM character_lines WHERE character_id=?', (ch['id'],)).fetchone()[0]
