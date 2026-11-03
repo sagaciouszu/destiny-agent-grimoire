@@ -11,7 +11,7 @@
   <img src='https://img.shields.io/badge/tests-11%2F11%20passing-brightgreen' alt='Tests'/>
 </p>
 
-**Version:** 1.7.0 | **Last push:** 2026-11-03 | **Status:** Active
+**Version:** 1.7.1 | **Last push:** 2026-11-03 | **Status:** Active
 
 One canonical, agent-first Destiny lore archive: a single SQLite database with
 FTS5 search, built from committed sources, with a documented quote policy and

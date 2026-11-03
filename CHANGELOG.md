@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.7.1 - Clone-mode quote scan fix (2026-11-03)
+
+- drifter-quote-verify excludes the cloned lore archive (fresh-clone audit 18/18)
+- removed an unrelated session note accidentally committed in v1.7.0
+
 ## v1.7.0 - Retrieval quality and deeper MCP (2026-11-03)
 
 - retrieval eval harness (15 queries); relevance ordering now default
