@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+
+      - uses: actions/checkout@v7
+        with:
+          repository: sagaciouszu/destiny-agent-grimoire
+          path: lore
+
+      - name: Database
+        run: |
+          mkdir -p lore/db
+          curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db -o lore/db/grimoire.db
+          curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/SHA256SUMS -o /tmp/SHA256SUMS
+          cd lore/db && sha256sum -c /tmp/SHA256SUMS
+
+      - name: Onboarding
+        run: ./setup.sh "$PWD/lore"
+
+      - name: Agent audit
+        env:
+          WORKSPACE: ${{ github.workspace }}
+        run: bash tests/master-audit.sh

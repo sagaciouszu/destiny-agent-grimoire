@@ -37,7 +37,7 @@ if len(REPOS) < 3:
     print(f'note: {3 - len(REPOS)} agent repo(s) not present; validating {len(REPOS)} repo(s)')
 FIX = '--fix-tokens' in sys.argv
 
-SKIP_DIRS = {'.git', 'lore', '__pycache__', '.venv', 'node_modules', 'source', 'archive', 'docs'}
+SKIP_DIRS = {'.git', 'lore', '__pycache__', '.venv', 'node_modules', 'source', 'archive', 'docs', '_template'}
 SKIP_FILES = {'CHANGELOG.md'}
 
 def token_estimate(text):
@@ -273,8 +273,10 @@ for name, root in REPOS.items():
         continue
     for line in listed.splitlines():
         if line.startswith('120000 '):
-            issues.append((name, line.split('\t')[-1],
-                           'tracked symlink (runtime-only; gitignore it)'))
+            rel = line.split('\t')[-1]
+            if rel.startswith('docs/'):
+                continue  # site vendor/runtime links are not agent content
+            issues.append((name, rel, 'tracked symlink (runtime-only; gitignore it)'))
 
 # grimoire persona-agnosticism: no *instructional* persona content. Naming a
 # character (compendium, provenance, connection matrix) is legitimate data.

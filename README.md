@@ -9,7 +9,7 @@
   <a href='https://github.com/sagaciouszu/destiny-agent-grimoire/actions/workflows/ci.yml'><img src='https://github.com/sagaciouszu/destiny-agent-grimoire/actions/workflows/ci.yml/badge.svg' alt='CI'/></a>
   <img src='https://img.shields.io/github/last-commit/sagaciouszu/destiny-agent-grimoire?label=last%20push&color=blue' alt='Last push'/>
   <img src='https://img.shields.io/badge/license-MIT-green' alt='License'/>
-  <img src='https://img.shields.io/badge/tests-9%2F9%20passing-brightgreen' alt='Tests'/>
+  <img src='https://img.shields.io/badge/tests-10%2F10%20passing-brightgreen' alt='Tests'/>
 </p>
 
 **Version:** 0.20.0 | **Last push:** 2026-11-03 | **Status:** Active
@@ -135,7 +135,7 @@ compendium/  # character quote index that feeds the characters tables
 archive/     # raw scraper output (JSONL) and fetchers
 scripts/     # ingestion helpers
 tests/       # archive gates, agent suites, shared runner, conformance
-docs/        # Eleventy site for GitHub Pages
+docs/        # redirect to the standalone site repository
 skills/      # agent-facing SKILL.md
 series/      # registry of grimoire-born agents (ids, source repos, peers)
 mcp-server/  # optional MCP adapter (stdio, read-only)
@@ -177,12 +177,13 @@ repository minus the database lives outside the tree.
 
 | Suite | Command | Expected |
 |---|---|---|
-| Archive audit | `bash grimoire-master-audit.sh` | 9/9 |
+| Archive audit | `bash grimoire-master-audit.sh` | 10/10 |
 | Drifter agent audit | run tests/master-audit.sh in how-to-drift-for-agents | 20/20 |
 | Eris agent audit | run tests/master-audit.sh in eris-morn | 15/15 |
 | Database integrity | `bash tests/test-db.sh` | 38 checks |
 | Query interface | `bash tests/query-interface-test.sh` | 41 checks |
 | Agent layout | `bash tests/agent-layout-test.sh` | 14 checks |
+| Agent template | `python3 tests/agent-template-test.py` | PASS |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 checks |
 | MCP contract | `mcp-server/.venv/bin/python tests/mcp-test.py` | 7/7 checks |
 | File conformance | `python3 tests/conformance.py` | PASS |
