@@ -77,14 +77,16 @@ def cmd_item(args):
 
 
 def cmd_verify(args):
-    res = api.verify(args.quote)
+    res = api.verify(args.quote, speaker=args.speaker, exact=args.exact)
     if args.json:
         print(json.dumps(res, ensure_ascii=False, separators=(',', ':')))
     elif res['verified']:
-        print(f'VERIFIED: "{args.quote}"')
+        label = ' (exact)' if res['exact'] else ''
+        print(f'VERIFIED{label}: "{args.quote}"')
         for h in res['matches']:
             sp = f" | speaker: {h['speaker']}" if h['speaker'] else ''
-            print(f"  [{h['source']}] {h['slug']}{sp}")
+            ex = ' | exact' if h['exact'] else ''
+            print(f"  [{h['source']}] {h['slug']}{sp}{ex}")
     else:
         print(f'NOT FOUND: "{args.quote}"')
     return 0 if res['verified'] else 1
@@ -149,6 +151,8 @@ def main(argv=None):
 
     v = sub.add_parser('verify', help='Check a quote against canon (exit 1 if not found)')
     v.add_argument('quote')
+    v.add_argument('--speaker', help='require this speaker attribution')
+    v.add_argument('--exact', action='store_true', help='require a full canonical line, not a fragment')
     v.add_argument('--json', action='store_true')
     v.set_defaults(func=cmd_verify)
 

@@ -22,6 +22,15 @@ _spec.loader.exec_module(api)
 from mcp.server.mcpserver import MCPServer  # noqa: E402
 
 MAX_TEXT = 4000
+MCP_MAX_LIMIT = 100
+
+
+def _limit(value, default):
+    try:
+        value = int(value)
+    except (TypeError, ValueError):
+        return default
+    return max(1, min(value, MCP_MAX_LIMIT))
 
 server = MCPServer(
     'destiny-grimoire',
@@ -48,7 +57,7 @@ def search(query: str, type: str | None = None, limit: int = 10, full: bool = Fa
         limit: Maximum rows (1-100).
         full: Return full text instead of bounded snippets.
     """
-    rows = api.search(query, type=type, limit=limit, full=full)
+    rows = api.search(query, type=type, limit=_limit(limit, 10), full=full)
     if full:
         for r in rows:
             r['text'] = _trim(r.get('text', ''))
@@ -66,7 +75,7 @@ def character(name: str, about: str | None = None, all_lines: bool = False,
         all_lines: Use every transcript line instead of curated quotes.
         limit: Maximum rows (1-100).
     """
-    res = api.character(name, about=about, all_lines=all_lines, limit=limit)
+    res = api.character(name, about=about, all_lines=all_lines, limit=_limit(limit, 20))
     if res is None:
         return {'found': False, 'header': '', 'rows': []}
     return {'found': True, **res}
@@ -83,13 +92,18 @@ def item(slug: str) -> dict:
 
 
 @server.tool()
-def verify(quote: str) -> dict:
+def verify(quote: str, speaker: str | None = None, exact: bool = False) -> dict:
     """Check a quote against canon. Use before quoting anything.
 
+    Args:
+        quote: The text to check.
+        speaker: Require this attribution; sources with no speaker are excluded.
+        exact: Require a full canonical row, not a substring.
+
     Returns verified=true only when the text traces to canonical content, with
-    source and speaker matches.
+    source, speaker and exact-match flags.
     """
-    return api.verify(quote)
+    return api.verify(quote, speaker=speaker, exact=exact)
 
 
 @server.tool()
@@ -100,7 +114,7 @@ def list_records(kind: str, limit: int = 50) -> dict:
         kind: books, characters, speakers, or records.
         limit: Maximum rows (1-100).
     """
-    rows = api.listing(kind, limit=limit)
+    rows = api.listing(kind, limit=_limit(limit, 50))
     return {'count': len(rows), 'rows': rows}
 
 

@@ -89,6 +89,8 @@ match a recomputation of their source text.
 ## 6. Quoting policy (agents)
 
 - A quote must trace to a speaker-attributed canon line or verbatim lore text.
+  `verify` accepts `--speaker` (attribution) and `--exact` (full row, not fragment);
+  agents should use both when quoting dialogue.
 - Do not present another character's line as the persona's voice. Exchange
   context, reported speech, and impressions must be explicitly attributed.
 - When a quote cannot be traced: unquote it, do not delete it.
