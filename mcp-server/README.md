@@ -17,11 +17,14 @@ bash mcp-server/install.sh
 ```
 
 That creates `mcp-server/.venv`, installs the pinned SDK and prints a client
-config snippet. Agent workspaces can do it during onboarding:
+config snippet. Agent workspaces do it during onboarding:
 
 ```bash
-WITH_MCP=1 ./setup.sh
+./setup.sh --mcp        # or answer yes at the MCP prompt
 ```
+
+The adapter lives in this archive, so **one install serves every agent** that
+mounts it (Drifter, Eris, or any other runtime).
 
 The virtualenv is gitignored. The CLI stays dependency-free; only this adapter
 needs the SDK.

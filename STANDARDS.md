@@ -124,8 +124,10 @@ content type against Ishtar; `tests/drifter-voice-consistency.sh` /
   server exposes the same functions as typed tools. One implementation.
 - MCP: `mcp-server/` is an optional stdio adapter using the official SDK. It is
   read-only, has no SQL tool, clamps limits to 1-100 and trims text to 4000 chars.
-  Install with `bash mcp-server/install.sh`, or `WITH_MCP=1 ./setup.sh` in an agent
-  workspace; the venv is gitignored and the CLI stays dependency-free.
+  Install with `bash mcp-server/install.sh`, or `./setup.sh --mcp` in an agent
+  workspace (the interactive prompt also offers it). The adapter belongs to the
+  archive, so one install serves both agents; the venv is gitignored and the CLI
+  stays dependency-free.
 - Every command supports `--json`; search returns snippets unless `--full`;
   `verify` exits 1 when a quote is absent (quote-safety primitive).
 - FTS is the search surface: `fts` holds exactly the indexable rows, `MATCH`
