@@ -40,6 +40,9 @@ agent-agnostic except the explicitly named Drifter/Eris integration suites.
 
 - `drifter-*.sh`, `drifter-voice-scorer.py` - Drifter voice, scenarios, quotes,
   modules, freshness, conflicts, gambit and tape simulation
+- `drifter-conflict-check.sh`, `drifter-freshness-check.sh`, `drifter-gambit-sim.sh`,
+  `drifter-multiturn-test.sh`, `drifter-tape-generator.sh` - individual Drifter suites
+- `eris-scenario-simulator.sh`, `eris-validate-response.sh` - individual Eris suites
 - `eris-*.sh`, `eris-voice-scorer.py` - Eris voice, scenarios, quotes, modules,
   multi-turn arc and contamination scan
 - `drifter-quote-verify.sh` / `eris-quote-verify.sh` - every quoted string in the

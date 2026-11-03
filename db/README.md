@@ -27,7 +27,7 @@ python3 db/query.py verify "Absolutely not." --speaker "Eris Morn" --exact
 
 # Read a book, transcript, seal, or find items by title
 python3 db/query.py book "a-man-with-no-name" --limit 5
-python3 db/query.py transcript "savathuns-spire" --limit 20 --speaker "Eris Morn"
+python3 db/query.py transcript "savathuns-spire" --limit 20 --speaker "Eris Morn" --include-stage
 python3 db/query.py find-item "nightmask" --limit 10
 python3 db/query.py record "am-i-to-cast-a-shadow"
 
