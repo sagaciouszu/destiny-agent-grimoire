@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.8.1 - Character lookup and ranking fixes (2026-11-03)
+
+- exact character resolution (drifter no longer resolves to Blue's Ghost)
+- title-boosted relevance with item penalty; --no-rank available
+- docs for ranking and offsets
+
 ## v1.8.0 - Leaner index and operations tooling (2026-11-03)
 
 - stat-only items excluded from FTS (136,802 -> 120,731 rows)

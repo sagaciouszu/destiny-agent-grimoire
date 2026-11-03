@@ -29,7 +29,7 @@
   },
   "commands": {
     "search": {
-      "usage": "query.py search \"<term>\" [--type books|transcripts|grimoire|interactions|items|records] [--limit N] [--offset N] [--json] [--full]",
+      "usage": "query.py search \"<term>\" [--type T] [--limit N] [--offset N] [--rank|--no-rank] [--json] [--full]",
       "returns": "snippet context by default; --full for complete text"
     },
     "character": {

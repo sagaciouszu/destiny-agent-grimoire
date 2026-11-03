@@ -67,7 +67,7 @@ path is `<agent>/lore/mcp-server/run.sh`. Use an absolute path in client config.
 
 | Tool | Arguments | Returns |
 |---|---|---|
-| `search` | `query`, `type?`, `limit=10`, `full=false` | `{count, rows}` with snippet or full text |
+| `search` | `query`, `type?`, `limit=10`, `full=false`, `offset=0`, `rank=true` | `{count, total, next_offset, rows}` |
 | `character` | `name`, `about?`, `all_lines=false`, `limit=20` | `{found, header, rows}` |
 | `item` | `slug` | item row, `text` trimmed |
 | `verify` | `quote`, `speaker?`, `exact=false` | `{quote, verified, matches}` with `exact` flags |
