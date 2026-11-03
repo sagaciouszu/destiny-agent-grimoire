@@ -4,7 +4,7 @@
 # Usage: scripts/sync-live-agents.sh [--openclaw] [--dry-run]
 set -e
 HERE="$(cd "$(dirname "$0")/.." && pwd)"
-WORK="$(dirname "$HERE")"
+WORK="${AGENT_REPOS_DIR:-$(dirname "$HERE")}"
 DRY=""
 TARGET="opencode"
 DEST="${OPENCODE_AGENTS:-$HOME/.config/opencode/agents}"

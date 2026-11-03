@@ -7,22 +7,29 @@ set -u
 
 ARCHIVE="${ARCHIVE:-$(cd "$(dirname "$0")/.." && pwd)}"
 WORK="$(dirname "$ARCHIVE")"
-DRIFTER="$WORK/how-to-drift-for-agents"
-ERIS="$WORK/eris-morn"
-
-if [ ! -d "$DRIFTER" ] || [ ! -d "$ERIS" ]; then
-    echo "SKIP: agent repos not present (single-repo checkout)"
-    exit 0
-fi
-
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
+
+if [ -d "$WORK/how-to-drift-for-agents" ] && [ -d "$WORK/eris-morn" ]; then
+    SRC="$WORK"
+else
+    SRC="$TMP/src"
+    mkdir -p "$SRC/how-to-drift-for-agents/core" "$SRC/eris-morn/core"
+    printf -- '---\nmode: primary\n---\n\nEntry.\n' > "$SRC/how-to-drift-for-agents/drifter.md"
+    printf '# Companion\n' > "$SRC/how-to-drift-for-agents/core/guardrails.md"
+    printf '# Readme\n' > "$SRC/how-to-drift-for-agents/README.md"
+    printf -- '---\nmode: primary\n---\n\nEntry.\n' > "$SRC/eris-morn/eris.md"
+    printf '# Companion\n' > "$SRC/eris-morn/core/guardrails.md"
+    printf '# Readme\n' > "$SRC/eris-morn/README.md"
+fi
+
 DEST="$TMP/agents"
 mkdir -p "$DEST"
 # Simulate the historical failure: a lore symlink inside the agents root.
 ln -s "$ARCHIVE" "$DEST/lore"
 
-NO_RELOAD=1 OPENCODE_AGENTS="$DEST" bash "$ARCHIVE/scripts/sync-live-agents.sh" >/dev/null 2>&1 || {
+NO_RELOAD=1 AGENT_REPOS_DIR="$SRC" OPENCODE_AGENTS="$DEST" \
+    bash "$ARCHIVE/scripts/sync-live-agents.sh" >/dev/null 2>&1 || {
     echo "FAIL: sync-live-agents.sh exited non-zero"
     exit 1
 }
