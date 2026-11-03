@@ -163,10 +163,10 @@ The Drifter and Eris repositories mirror each other so one method serves both.
   or workspace; it belongs to the grimoire when it validates the archive or the
   shared interface. No agent-specific suite may live in the grimoire, and no
   shared gate may be duplicated into an agent repo.
-- Blank template: `series/_template` plus `series/new-agent.py` generate a new
-  agent with the shared layout only. The scaffold carries placeholders and
-  neutral operating rules; it inherits no voice, history, relationships or
-  phrasing from existing agents.
+- Blank template: the scaffold lives in its own local repository,
+  destiny-agent-template, with its own history and no remote. It carries
+  placeholders and neutral rules only; persona material is sourced from the
+  grimoire, not inherited from existing agents.
 - `tests/check-agent-structure.py` enforces, for both agents: every declared
   dependency resolves (runtime memory falls back to its template), token headers
   exist, no em/en dashes, INDEX lists every module and every reference resolves,
