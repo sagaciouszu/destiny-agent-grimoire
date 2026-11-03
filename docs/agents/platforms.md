@@ -2,7 +2,7 @@
 section: agents
 layout: page
 title: Platform Support
-category: Agents & Platforms · Platforms
+category: Agents & Instructions · Platforms
 lede: OpenCode and OpenClaw are script-managed. Everything else uses the generic agent contract, which is just files and an optional MCP connection.
 ---
 
