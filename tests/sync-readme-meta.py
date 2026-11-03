@@ -41,6 +41,8 @@ def main():
     check = '--check' in sys.argv
     bad = []
     for name, repo in REPOS.items():
+        if not os.path.isdir(repo):
+            continue  # single-repo checkout or CI
         path = os.path.join(repo, 'README.md')
         if not os.path.exists(path):
             bad.append((name, 'README.md missing'))
