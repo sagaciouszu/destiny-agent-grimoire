@@ -27,6 +27,13 @@
     });
   });
 
+  document.addEventListener("pointermove", (event) => {
+    if (!hoverCapable.matches) return;
+    menus.forEach((menu) => {
+      if (menu.open && !menu.contains(event.target)) menu.open = false;
+    });
+  });
+
   document.addEventListener("click", (event) => {
     if (!event.target.closest(".nav-menu")) closeMenus();
   });
