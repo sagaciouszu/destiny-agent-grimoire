@@ -148,7 +148,7 @@ ACTIVITIES = [
      ['sundered doctrine']),
 
     ('forge-ignitions', 'Forge Ignitions', 'seasonal', 'forsaken', 'season-of-the-forge', None, 1,
-     ['forge ignition', 'black armory forge']),
+     ['forge ignition', 'black armory forge', 'gofannon forge']),
     ('the-reckoning', 'The Reckoning', 'seasonal', 'forsaken', 'season-of-the-drifter', None, 1,
      ['the reckoning', 'reckoning']),
     ('menagerie', 'The Menagerie', 'seasonal', 'forsaken', 'season-of-opulence', None, 1,
@@ -162,7 +162,7 @@ ACTIVITIES = [
     ('contact', 'Contact', 'public_event', 'shadowkeep', 'season-of-arrivals', None, 1,
      ['contact public event']),
     ('wrathborn-hunts', 'Wrathborn Hunts', 'seasonal', 'beyond-light', 'season-of-the-hunt', None, 1,
-     ['wrathborn hunt']),
+     ['wrathborn hunt', 'hunt for the wrathborn', 'wrathborn']),
     ('battlegrounds-chosen', 'Battlegrounds', 'seasonal', 'beyond-light', 'season-of-the-chosen', None, 1,
      ['battlegrounds']),
     ('override', 'Override', 'seasonal', 'beyond-light', 'season-of-the-splicer', None, 1,
