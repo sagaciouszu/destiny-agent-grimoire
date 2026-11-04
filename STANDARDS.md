@@ -60,6 +60,25 @@ a change that is not done.
 | `fts` | | | exactly one row per indexed content row (1:1) |
 | `verify_fts` | | | normalized text + provenance; mirrors indexable rows for fast quote checks |
 | `item_title_fts` | | | item titles for fast name lookup |
+| `expansions` | slug, name | game, year, release_date, vaulted | catalogue, seeded from `db/taxonomy.py` |
+| `seasons` | slug, season_number, name, season_type | act, destiny_year, expansion_slug, start_date, end_date, vaulted | official numeric slot, unique |
+| `activities` | slug, name, activity_type | expansion_slug, season_slug, event_slug, vaulted | catalogue |
+| `events` | slug, name | event_type, first_year, last_year, recurring, vaulted, notes | rotating events |
+| `event_occurrences` | event_slug, year | season_slug, start_date, end_date, vaulted | one row per event-year |
+| `transcript_classification` | transcript_id, confidence | activity_slug, activity_type, season_slug, act, event_slug, expansion_slug, evidence | additive; never rewrites canon |
+| `item_classification` | item_id, confidence | season_slug, event_slug, expansion_slug, evidence | additive |
+| `document_classification` | source, source_id, confidence | season_slug, event_slug, expansion_slug, evidence | books and records |
+
+Taxonomy rules:
+- Four independent axes: expansion, season/episode, activity, event. Do not
+  overload `release` or `arc`; they remain fallback text only.
+- `seasons.season_number` is Bungie's official number. Episodes use
+  `season_type='episode'` with their numeric slot; never renumber.
+- Events repeat across seasons, so occurrence rows carry the year and season.
+- `confidence` is `explicit`, `derived`, `manual` or `unknown`. `unknown` is a
+  valid terminal state; never guess to make coverage look better.
+- `vaulted=1` marks removed content; vaulted rows stay searchable.
+- Full model and query examples: `docs/TAXONOMY.md`.
 
 Global rules:
 - No duplicate slugs per table; no empty required fields; every row's text is

@@ -22,3 +22,6 @@ db/grimoire.db-*
 # MCP server virtualenv (optional dependency)
 mcp-server/.venv/
 
+
+# Local database backups (never shipped)
+backups/

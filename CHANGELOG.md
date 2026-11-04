@@ -1,3 +1,19 @@
+## v0.21.0 - Activity, season and event taxonomy (2026-11-04)
+
+- Additive taxonomy: `expansions` (18), `seasons` (26), `events` (9),
+  `event_occurrences` (72), `activities` (65).
+- Classification for every transcript, item, book and record with
+  `explicit` / `derived` / `manual` / `unknown` confidence and evidence.
+- Official season numbers; episodes 24-26 modelled with `season_type='episode'`
+  and act support.
+- Rotating events modelled with yearly occurrences: Festival of the Lost,
+  The Dawning, Solstice, Guardian Games, Crimson Days, The Revelry,
+  Moments of Triumph, Bungie Day, Iron Banner.
+- Vaulted flag across seasons, activities and events.
+- New discovery: `--activity`, `--season`, `--event`, `--expansion` facets on
+  search; `activity`, `event`, `coverage` CLI commands; six new MCP tools.
+- Coverage views and `docs/TAXONOMY.md`.
+
 ## v0.20.0 - Series, isolation and test ownership (2026-11-03)
 
 - `series/agents.json` drives deployment; agents install as `<id>.md` + `<id>/`.

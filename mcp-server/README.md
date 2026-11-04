@@ -67,11 +67,11 @@ path is `<agent>/lore/mcp-server/run.sh`. Use an absolute path in client config.
 
 | Tool | Arguments | Returns |
 |---|---|---|
-| `search` | `query`, `type?`, `limit=10`, `full=false`, `offset=0`, `rank=true` | `{count, total, next_offset, rows}` |
+| `search` | `query`, `type?`, `limit=10`, `full=false`, `offset=0`, `rank=true`, `activity?`, `season?`, `event?`, `expansion?` | `{count, total, next_offset, rows}` |
 | `character` | `name`, `about?`, `all_lines=false`, `limit=20` | `{found, header, rows}` |
 | `item` | `slug` | item row, `text` trimmed |
 | `verify` | `quote`, `speaker?`, `exact=false` | `{quote, verified, matches}` with `exact` flags |
-| `list_records` | `kind`, `limit=50` | `{count, rows}` for books, characters, speakers, records |
+| `list_records` | `kind`, `limit=50` | `{count, rows}` for books, characters, speakers, records, activities, seasons, events |
 | `stats` | none | row counts, top item types, top speakers |
 | `book` | `ref`, `limit=20`, `offset=0`, `full=false` | book metadata and entries |
 | `transcript` | `ref`, `speaker?`, `limit=50`, `offset=0`, `full=false`, `include_stage=false` | transcript metadata and lines |
@@ -79,6 +79,12 @@ path is `<agent>/lore/mcp-server/run.sh`. Use an absolute path in client config.
 | `record` | `ref` | triumph or seal details |
 | `verify_many` | `quotes`, `speaker?`, `exact=false` | up to 20 quote checks at once |
 | `character_info` | `name` | aliases, quote count, spoken lines |
+| `activities` | `activity_type?`, `season?`, `event?`, `limit=100`, `offset=0` | raids, dungeons and seasonal activities with coverage |
+| `activity` | `ref`, `limit=50`, `offset=0` | activity details, coverage, speakers, transcripts |
+| `seasons` | none | all 26 seasons/episodes with official numbers and coverage |
+| `events` | none | rotating events with coverage and occurrence counts |
+| `event` | `ref` | event details, yearly occurrences and transcripts |
+| `coverage` | none | coverage matrix plus activities/seasons/events without transcripts |
 
 MCP limits clamp to 1-100 to protect the agent's context; the CLI is not clamped
 to 100 (the shared API allows up to 10,000). Full text is trimmed to 4000
@@ -109,7 +115,7 @@ Read-only JSON resources for discovery without tool calls:
 ## Safety
 
 - SQLite is opened with URI `mode=ro`; writes fail at the driver level.
-- No arbitrary SQL tool is exposed. The twelve query shapes are the whole surface.
+- No arbitrary SQL tool is exposed. The eighteen query shapes are the whole surface.
 - No network access. The database path is resolved from `GRIMOIRE_DB` or
   `db/grimoire.db`.
 - Inputs are bounded: queries 1-500 chars, quotes 1-2000, limits 1-100.
