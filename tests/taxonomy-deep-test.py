@@ -71,9 +71,14 @@ def coverage_notes():
         assert unexplained == 0, f'{kind} gaps without a note: {unexplained}'
     partial_without = one(
         "SELECT COUNT(*) FROM coverage_notes n LEFT JOIN v_activity_coverage a "
-        "ON a.slug=n.slug WHERE n.status='partial_transcript' "
+        "ON a.slug=n.slug WHERE n.status='partial_transcript' AND n.entity_type='activity' "
         'AND (a.slug IS NULL OR a.transcripts=0 OR a.lines=0)')
     assert partial_without == 0, f'partial notes without transcript: {partial_without}'
+    season_partial_without = one(
+        "SELECT COUNT(*) FROM coverage_notes n JOIN v_season_coverage s ON s.slug=n.slug "
+        "WHERE n.entity_type='season' AND n.status='partial_transcript' "
+        'AND (s.transcripts=0 OR s.lines=0)')
+    assert season_partial_without == 0, 'season partial without transcript'
 
 
 def refs():
@@ -165,7 +170,7 @@ def api_coverage():
     assert acts['ketchcrash']['coverage_status'] == 'partial_transcript'
     assert api.activity('ketchcrash')['coverage']['status'] == 'partial_transcript'
     seasons_ = {s['slug']: s for s in api.seasons()}
-    assert seasons_['monument-of-triumph']['coverage_status'] == 'dialogue_source_missing'
+    assert seasons_['monument-of-triumph']['coverage_status'] == 'partial_transcript'
 
 
 print('=== TAXONOMY DEEP TEST ===')
