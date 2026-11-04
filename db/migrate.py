@@ -228,9 +228,22 @@ def migrate():
             w_count += 1
             seen_page = set()
             seq = 0
-            for line in d.get('lines', []):
+            page_lines = list(d.get('lines', []))
+            # Ishtar pages open with a "by <contributor>" credit and close with
+            # a related-content browser. Neither is transcript text.
+            while page_lines:
+                head = deep_unescape(page_lines[0].get('text', '')).strip()
+                if re.fullmatch(r'by [A-Za-z0-9 ._&\'-]{1,40}', head):
+                    page_lines.pop(0)
+                    continue
+                break
+            for line in page_lines:
                 sp = line.get('speaker', '')
                 txt = deep_unescape(line.get('text', '')).strip()
+                if txt.startswith('Discuss this Transcript') or txt == 'TheIshtarCollective':
+                    break
+                if re.fullmatch(r'\[\s*(Music|Applause|Laughter|Cheering)\s*\]', txt, re.I):
+                    continue
                 # YouTube chapter markers parse as speaker lines:
                 # "Cutscene begins at 01:49 and ends at 4:59"
                 if re.match(r'^Cutscene (begins|starts) at', sp):

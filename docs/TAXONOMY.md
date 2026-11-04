@@ -57,7 +57,7 @@ Every Ishtar web transcript now carries the page's authoritative `Added In`
 release (1,130/1,130), captured by
 `archive/data/fetch_transcript_releases.py`. That is why transcript coverage is
 near-complete and why Destiny 1 content is now visible: 120 transcripts and
-1,456 dialogue lines across `destiny-1`, `the-dark-below`, `house-of-wolves`,
+1,418 dialogue lines across `destiny-1`, `the-dark-below`, `house-of-wolves`,
 `the-taken-king` and `rise-of-iron`.
 
 Manifest item sets provide an optional classification gain: 19 curated sets
