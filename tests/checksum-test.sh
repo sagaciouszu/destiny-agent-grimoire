@@ -5,6 +5,10 @@ set -u
 
 ARCHIVE="${ARCHIVE:-$(cd "$(dirname "$0")/.." && pwd)}"
 WORK="$(dirname "$ARCHIVE")"
+if [ ! -d "$WORK/how-to-drift-for-agents" ]; then
+    echo "SKIP: how-to-drift-for-agents not present"
+    exit 0
+fi
 TMP="$(mktemp -d /tmp/opencode/checksum-test.XXXXXX)"
 trap 'rm -rf "$TMP"' EXIT
 PASS=0; FAIL=0

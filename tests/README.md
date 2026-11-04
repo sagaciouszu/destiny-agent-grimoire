@@ -68,7 +68,8 @@ Eris (eris-morn/tests/):
 - `mcp-matrix-test.py` - MCP calls across all eighteen tools (140-200 per run), 3 concurrent clients,
   strict parity with the API, clean malformed-call errors, output caps
 - `checksum-test.sh` - verified download, missing checksum warning, mismatch
-  rejection with no partial or installed database
+  rejection with no partial or installed database; skips when the agent fixture
+  repo is absent
 - `db-source-crosscheck.py` - DB slugs vs source files, compendium coverage,
   provenance URLs, index completeness
 - `retrieval-eval.py` - 15-query retrieval baseline; compares default and ranked order
@@ -84,7 +85,7 @@ Eris (eris-morn/tests/):
 
 ## Onboarding and links (on demand)
 
-- `onboarding-smoke.sh` - every local agent, symlink and clone modes, fully offline:
+- `onboarding-smoke.sh` - every local agent that is present, symlink and clone modes, fully offline (absent agents are skipped):
   clone, setup, master audit, clean working tree (24 checks)
 - `link-check.py` - external URL health for the READMEs (`--all` includes badges)
 - `mcp-test.py` - MCP tool contract, read-only guard and stdio handshake

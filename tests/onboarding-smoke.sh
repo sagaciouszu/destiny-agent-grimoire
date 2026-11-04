@@ -31,6 +31,10 @@ smoke() {
     local dir="$SANDBOX/$repo-$mode"
     local src="$WORK/$repo"
 
+    if [ ! -d "$src" ]; then
+        echo "  - $repo not present, skipped"
+        return
+    fi
     echo "=== $repo ($mode mode)"
     check "clone succeeds" "git clone -q '$src' '$dir'"
 
