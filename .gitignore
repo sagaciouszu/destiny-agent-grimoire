@@ -25,3 +25,10 @@ mcp-server/.venv/
 
 # Local database backups (never shipped)
 backups/
+
+# Extracted game data and manifest dumps: local only, never committed
+archive/data/manifest/
+archive/data/game/
+archive/data/extracted/
+archive/data/subtitles/
+*.pkg
