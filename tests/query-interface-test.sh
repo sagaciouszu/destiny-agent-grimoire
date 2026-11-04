@@ -40,6 +40,7 @@ else
 fi
 check "$Q character eris --limit 2 | grep -q 'Eris Morn'" "character curated quotes"
 check "$Q character calus --limit 2 | grep -q 'transcript lines'" "character falls back to transcripts"
+check "$Q character 'The Drifter' --limit 1 | grep -q '(drifter)'" "character resolves curated aliases"
 check "$Q character-info calus | grep -qE 'spoken lines: [1-9]'" "character-info falls back to transcripts"
 check "$Q character eris --about hive --all --limit 3 | grep -qi 'hive'" "character --about filter"
 check "$Q character eris --limit 2 --json | python3 -c 'import json,sys; json.load(sys.stdin)'" "character --json parses"
