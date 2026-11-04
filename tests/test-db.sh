@@ -78,6 +78,8 @@ UNCLASSIFIED=$(sqlite3 "$DB" "SELECT COUNT(*) FROM transcripts t LEFT JOIN trans
 check "[ $UNCLASSIFIED -eq 0 ]" "every transcript has a classification row ($UNCLASSIFIED missing)"
 SEASON_NUMBERS=$(sqlite3 "$DB" "SELECT COUNT(DISTINCT season_number) FROM seasons WHERE season_number IS NOT NULL")
 check "[ $SEASON_NUMBERS -eq 28 ]" "official season numbers are unique ($SEASON_NUMBERS seasons)"
+UNTIERED=$(sqlite3 "$DB" "SELECT COUNT(*) FROM transcripts WHERE source_tier IS NULL OR source_tier=''")
+check "[ $UNTIERED -eq 0 ]" "every transcript has a source tier ($UNTIERED missing)"
 UNKNOWN_SHARE=$(sqlite3 "$DB" "SELECT CAST(100 * SUM(confidence='unknown') / COUNT(*) AS INT) FROM transcript_classification")
 check "[ $UNKNOWN_SHARE -lt 50 ]" "unknown classification below 50% ($UNKNOWN_SHARE%)"
 
