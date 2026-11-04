@@ -100,7 +100,7 @@ python3 db/query.py verify "Absolutely not." --speaker "Eris Morn" --exact
 
 - `--json` on every command (compact, parse-friendly)
 - `search` returns snippets by default; `--full` for complete text
-- `search --type books|transcripts|grimoire|interactions|items|records`
+- `search --type books|transcripts|grimoire|interactions|items|records|lore`
 - `search --activity`, `--season`, `--event`, `--expansion` filter by taxonomy
 - `--season` accepts a number (`7`), a slug (`season-of-opulence`) or a name
   fragment (`opulence`); episodes work the same way (`24`, `echoes`)

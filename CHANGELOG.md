@@ -1,3 +1,13 @@
+## v0.22.0 - Manifest lore, Commons transcripts and source tiers (2026-11-04)
+
+- 2,962 Bungie manifest lore entries (1,962 new after dedupe) with item links.
+- Full manifest activity catalogue: 3,744 activities, seasons 27-28, 314 links.
+- Crawled 862 Ishtar Commons topics; 37 net-new transcripts after dedupe.
+- `source_tier` records Ishtar > Destinypedia > captions precedence.
+- `section` and `is_optional` preserve locations, alternatives and class callouts.
+- `--canon-only`, `--section`, `list lore`, `lore` command and `--type lore`.
+- Schema 1.2.0; manifest version pinned in `meta`.
+
 ## v0.21.0 - Activity, season and event taxonomy (2026-11-04)
 
 - Additive taxonomy: `expansions` (18), `seasons` (26), `events` (9),

@@ -96,7 +96,7 @@ No API keys, accounts or network access are required at runtime.
 | `events` | 9 | Rotating events including removed ones |
 | `event_occurrences` | 72 | Event year, dates and season |
 | `activities` | 67 | Raids, dungeons, seasonal activities and missions |
-| `transcript_classification` | 1229 | Activity/season/event per transcript |
+| `transcript_classification` | 1294 | Activity/season/event per transcript |
 | `item_classification` | 58764 | Season/event per item |
 | `document_classification` | 181 | Season/event per book and record |
 | `lore_entries` | 2962 | Bungie manifest lore entries (local enrichment) |
@@ -104,9 +104,9 @@ No API keys, accounts or network access are required at runtime.
 | `manifest_activities` | 3744 | Full manifest activity catalogue |
 | `manifest_links` | 314 | Curated activity/season to manifest hash |
 | `v_speakers` (view) | 319 | Canonical speakers with line counts |
-| `v_transcript_taxonomy` (view) | 1229 | Transcripts joined to classification |
+| `v_transcript_taxonomy` (view) | 1294 | Transcripts joined to classification |
 | `v_activity_coverage` (view) | 67 | Transcripts and lines per activity |
-| `v_season_coverage` (view) | 26 | Transcripts and lines per season |
+| `v_season_coverage` (view) | 28 | Transcripts and lines per season |
 | `v_event_coverage` (view) | 9 | Transcripts, lines and occurrences per event |
 | `speaker_aliases` | 13 | Alias to canonical speaker mapping |
 | `verify_fts` (index) | 124494 | Fast quote verification |
@@ -122,7 +122,7 @@ migration. The full contract is `STANDARDS.md`.
   over local stdio; one adapter covers every agent that mounts this archive.
   Install with `bash mcp-server/install.sh`; tools, limits, client config and
   security: `mcp-server/README.md`.
-- **Interface:** one of `python3 db/query.py search|character|item|verify|book|transcript|find-item|record|list|activity|event|coverage|stats`; read commands accept `--offset`.
+- **Interface:** one of `python3 db/query.py search|character|item|verify|book|transcript|find-item|record|list|activity|event|lore|coverage|stats`; read commands accept `--offset`.
   `verify` is the quote-safety primitive (exit 1 when absent); every command
   accepts `--json`; search returns snippets unless `--full`.
 - **Discovery:** `db/capabilities.json` is a machine-readable manifest of tables,
@@ -131,6 +131,8 @@ migration. The full contract is `STANDARDS.md`.
   optional `--activity`, `--season`, `--event` and `--expansion` facets.
 - **Taxonomy:** `docs/TAXONOMY.md` defines the expansion/season/activity/event
   model, confidence levels and query examples.
+- **Lore:** `python3 db/query.py list lore` and `lore <hash|title>` expose the
+  Bungie manifest lore corpus.
 - **Discovery design:** `docs/DISCOVERY.md` explains why the layer is additive,
   how filters compile, and measured query times.
 - **Policy:** `STANDARDS.md` defines schema, naming, provenance, quote policy and
