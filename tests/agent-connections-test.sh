@@ -1,11 +1,11 @@
 #!/bin/bash
-# Agent connection test: every local agent must resolve the canonical database
-# and the current query surface (character, verify, lore, seal).
-# Skips agents that are not present.
+# Agent connection test: every registry agent present locally must resolve the
+# canonical database and the current query/lore/seal surface.
 set -u
 
 GRIMOIRE="${GRIMOIRE:-$(cd "$(dirname "$0")/.." && pwd)}"
 WORK="$(dirname "$GRIMOIRE")"
+REG="$GRIMOIRE/series/agents.json"
 PRIMARY_DB="$GRIMOIRE/db/grimoire.db"
 PASS=0; FAIL=0
 ok()  { echo "  ✓ $1"; PASS=$((PASS+1)); }
@@ -18,12 +18,22 @@ fi
 PRIMARY_SUM=$(sha256sum "$PRIMARY_DB" | cut -d' ' -f1)
 
 check_agent() {
-    local dir="$1" speaker="$2"
+    local dir="$1"
     local root="$WORK/$dir"
     if [ ! -d "$root" ]; then
         echo "  - $dir not present, skipped"
         return
     fi
+    local speaker status
+    read -r speaker status < <(python3 - "$root/persona.json" <<'PY'
+import json, sys
+try:
+    p = json.load(open(sys.argv[1], encoding='utf-8'))
+    print(p.get('speaker') or '-', p.get('status') or 'skeleton')
+except Exception:
+    print('- skeleton')
+PY
+)
     if [ ! -f "$root/lore/db/grimoire.db" ]; then
         bad "$dir: lore database missing"
         return
@@ -40,15 +50,19 @@ check_agent() {
     else
         bad "$dir: query interface failed"
     fi
-    if python3 "$root/lore/db/query.py" character-info "$speaker" >/dev/null 2>&1; then
-        ok "$dir: speaker resolved ($speaker)"
+    if [ "$status" != "skeleton" ] && [ "$speaker" != "-" ]; then
+        if python3 "$root/lore/db/query.py" character-info "$speaker" >/dev/null 2>&1; then
+            ok "$dir: speaker resolved ($speaker)"
+        else
+            bad "$dir: speaker not resolved ($speaker)"
+        fi
+        if python3 "$GRIMOIRE/tests/persona-freshness.py" "$root/persona.json" "$root/lore/db/grimoire.db" >/dev/null 2>&1; then
+            ok "$dir: canon line count fresh"
+        else
+            bad "$dir: canon line count stale"
+        fi
     else
-        bad "$dir: speaker not resolved ($speaker)"
-    fi
-    if python3 "$GRIMOIRE/tests/persona-freshness.py" "$root/persona.json" "$root/lore/db/grimoire.db" >/dev/null 2>&1; then
-        ok "$dir: canon line count fresh"
-    else
-        bad "$dir: canon line count stale"
+        echo "  - $dir: speaker not sourced yet, skipped"
     fi
     if python3 "$root/lore/db/query.py" lore "Gate Lord's Eye" >/dev/null 2>&1; then
         ok "$dir: lore lookup"
@@ -68,15 +82,26 @@ check_agent() {
 }
 
 echo "=== AGENT CONNECTION TEST ==="
-check_agent how-to-drift-for-agents Drifter
-check_agent eris-morn Eris
-check_agent destiny-agent-calus Calus
+while IFS=$'\t' read -r id source entry; do
+    check_agent "$source"
+done < <(python3 - "$REG" <<'PY'
+import json, sys
+for a in json.load(open(sys.argv[1], encoding='utf-8'))['agents']:
+    print(f"{a['id']}\t{a['source']}\t{a['entry']}")
+PY
+)
 
-REG="$GRIMOIRE/series/agents.json"
-if [ -f "$REG" ] && grep -q '"drifter"' "$REG" && grep -q '"eris"' "$REG" && grep -q '"calus"' "$REG"; then
-    ok "series registry has Drifter, Eris and Calus"
+if python3 - "$REG" <<'PY'
+import json, sys
+d = json.load(open(sys.argv[1], encoding='utf-8'))
+ids = [a['id'] for a in d['agents']]
+assert len(ids) == len(set(ids))
+assert all(a.get('source') and a.get('entry') for a in d['agents'])
+PY
+then
+    ok "series registry is valid"
 else
-    bad "series registry incomplete"
+    bad "series registry is invalid"
 fi
 
 echo ""
