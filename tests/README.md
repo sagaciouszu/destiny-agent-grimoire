@@ -75,8 +75,11 @@ Eris (eris-morn/tests/):
 - `item-audit.py` - item slugs, titles, URLs, text and optional-field coverage
 - `taxonomy-deep-test.py` - tiers, classification refs, seasons, events, lore, seals,
   manifest links and API parity for the additive layers.
-- `agent-connections-test.sh` - every local agent resolves the canonical DB and the
-  current character/lore/seal surface; skips agents that are absent.
+- `agent-connections-test.sh` - every local agent resolves the canonical DB, the
+  current character/lore/seal surface and a fresh canon line count; skips agents
+  that are absent.
+- `persona-freshness.py` - fails when `persona.json` canon_lines no longer matches
+  the live database for that speaker.
 - `docs-audit.py` - every documented command resolves; query subcommands and flags are valid
 
 ## Onboarding and links (on demand)

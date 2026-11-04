@@ -45,6 +45,11 @@ check_agent() {
     else
         bad "$dir: speaker not resolved ($speaker)"
     fi
+    if python3 "$GRIMOIRE/tests/persona-freshness.py" "$root/persona.json" "$root/lore/db/grimoire.db" >/dev/null 2>&1; then
+        ok "$dir: canon line count fresh"
+    else
+        bad "$dir: canon line count stale"
+    fi
     if python3 "$root/lore/db/query.py" lore "Gate Lord's Eye" >/dev/null 2>&1; then
         ok "$dir: lore lookup"
     else
