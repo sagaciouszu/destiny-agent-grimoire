@@ -68,6 +68,19 @@ V_EXPECTED=$(sqlite3 "$DB" "SELECT (SELECT COUNT(*) FROM transcript_lines)+(SELE
 V_ACTUAL=$(sqlite3 "$DB" "SELECT COUNT(*) FROM verify_fts")
 check "[ $V_ACTUAL -eq $V_EXPECTED ]" "verification index complete ($V_ACTUAL rows)"
 
+# Taxonomy integrity (additive layer, see docs/TAXONOMY.md)
+for t in expansions seasons events event_occurrences activities transcript_classification item_classification document_classification; do
+    check "[ -n \"\$(sqlite3 \"$DB\" \"SELECT name FROM sqlite_master WHERE type='table' AND name='$t'\")\" ]" "table $t exists"
+done
+ORPHANS=$(sqlite3 "$DB" "SELECT (SELECT COUNT(*) FROM activities a LEFT JOIN seasons s ON s.slug=a.season_slug WHERE a.season_slug IS NOT NULL AND s.slug IS NULL) + (SELECT COUNT(*) FROM activities a LEFT JOIN expansions x ON x.slug=a.expansion_slug WHERE a.expansion_slug IS NOT NULL AND x.slug IS NULL) + (SELECT COUNT(*) FROM activities a LEFT JOIN events e ON e.slug=a.event_slug WHERE a.event_slug IS NOT NULL AND e.slug IS NULL) + (SELECT COUNT(*) FROM transcript_classification c LEFT JOIN seasons s ON s.slug=c.season_slug WHERE c.season_slug IS NOT NULL AND s.slug IS NULL) + (SELECT COUNT(*) FROM transcript_classification c LEFT JOIN activities a ON a.slug=c.activity_slug WHERE c.activity_slug IS NOT NULL AND a.slug IS NULL) + (SELECT COUNT(*) FROM item_classification c LEFT JOIN seasons s ON s.slug=c.season_slug WHERE c.season_slug IS NOT NULL AND s.slug IS NULL)")
+check "[ $ORPHANS -eq 0 ]" "taxonomy references resolve ($ORPHANS orphans)"
+UNCLASSIFIED=$(sqlite3 "$DB" "SELECT COUNT(*) FROM transcripts t LEFT JOIN transcript_classification c ON c.transcript_id=t.id WHERE c.transcript_id IS NULL")
+check "[ $UNCLASSIFIED -eq 0 ]" "every transcript has a classification row ($UNCLASSIFIED missing)"
+SEASON_NUMBERS=$(sqlite3 "$DB" "SELECT COUNT(DISTINCT season_number) FROM seasons WHERE season_number IS NOT NULL")
+check "[ $SEASON_NUMBERS -eq 26 ]" "official season numbers are unique ($SEASON_NUMBERS seasons)"
+UNKNOWN_SHARE=$(sqlite3 "$DB" "SELECT CAST(100 * SUM(confidence='unknown') / COUNT(*) AS INT) FROM transcript_classification")
+check "[ $UNKNOWN_SHARE -lt 50 ]" "unknown classification below 50% ($UNKNOWN_SHARE%)"
+
 # Shipped artifact: no WAL mode, no -wal/-shm sidecars
 JOURNAL=$(sqlite3 "$DB" "PRAGMA journal_mode")
 SIDECARS=$(ls "$(dirname "$DB")"/grimoire.db-wal "$(dirname "$DB")"/grimoire.db-shm 2>/dev/null | wc -l)

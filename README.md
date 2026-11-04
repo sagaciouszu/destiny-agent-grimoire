@@ -82,15 +82,15 @@ No API keys, accounts or network access are required at runtime.
 |---|---|---|
 | `books` | 110 | Book-level metadata |
 | `book_entries` | 1158 | Lore entries within books |
-| `transcripts` | 1230 | Transcript headers |
-| `transcript_lines` | 71466 | Canon dialogue (speaker, line) |
+| `transcripts` | 1237 | Transcript headers |
+| `transcript_lines` | 71699 | Canon dialogue (speaker, line) |
 | `grimoire_cards` | 2889 | Destiny 1 grimoire cards |
 | `interactions` | 2699 | Short dialogue beats |
 | `items` | 58764 | Weapons, armor and gear lore |
 | `records` | 71 | Triumphs and seals |
 | `characters` | 20 | Curated character index |
 | `character_lines` | 1229 | Quote-ready character lines |
-| `fts` | 120976 | FTS5 index over all content |
+| `fts` | 121209 | FTS5 index over all content |
 | `expansions` | 18 | Major releases from Destiny 1 through Renegades |
 | `seasons` | 26 | Official numeric seasons; 24-26 are episodes |
 | `events` | 9 | Rotating events including removed ones |
@@ -99,13 +99,13 @@ No API keys, accounts or network access are required at runtime.
 | `transcript_classification` | 1229 | Activity/season/event per transcript |
 | `item_classification` | 58764 | Season/event per item |
 | `document_classification` | 181 | Season/event per book and record |
-| `v_speakers` (view) | 359 | Canonical speakers with line counts |
+| `v_speakers` (view) | 363 | Canonical speakers with line counts |
 | `v_transcript_taxonomy` (view) | 1229 | Transcripts joined to classification |
 | `v_activity_coverage` (view) | 65 | Transcripts and lines per activity |
 | `v_season_coverage` (view) | 26 | Transcripts and lines per season |
 | `v_event_coverage` (view) | 9 | Transcripts, lines and occurrences per event |
-| `speaker_aliases` | 6 | Alias to canonical speaker mapping |
-| `verify_fts` (index) | 120976 | Fast quote verification |
+| `speaker_aliases` | 7 | Alias to canonical speaker mapping |
+| `verify_fts` (index) | 121209 | Fast quote verification |
 | `item_title_fts` (index) | 58764 | Item title lookup |
 
 Every content row carries provenance. Speaker aliases are canonicalized during
@@ -195,8 +195,8 @@ repository minus the database lives outside the tree.
 | Archive audit | `bash grimoire-master-audit.sh` | 9/9 |
 | Drifter agent audit | run tests/master-audit.sh in how-to-drift-for-agents | 20/20 |
 | Eris agent audit | run tests/master-audit.sh in eris-morn | 15/15 |
-| Database integrity | `bash tests/test-db.sh` | 38 checks |
-| Query interface | `bash tests/query-interface-test.sh` | 62 checks |
+| Database integrity | `bash tests/test-db.sh` | 50 checks |
+| Query interface | `bash tests/query-interface-test.sh` | 66 checks |
 | Agent layout | `bash tests/agent-layout-test.sh` | 14 checks |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 checks |
 | MCP contract | `mcp-server/.venv/bin/python tests/mcp-test.py` | 8/8 checks |
