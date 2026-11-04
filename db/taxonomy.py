@@ -77,6 +77,9 @@ SEASONS = [
     (28, 'monument-of-triumph', 'Monument of Triumph', 'season', None, 8, 'renegades', '2025-12-02', '2099-01-01', 0),
 ]
 
+# season slug -> parent expansion slug, used when only the season is explicit.
+SEASON_EXPANSION = {row[1]: row[6] for row in SEASONS}
+
 # Episode acts (additive detail; seasons stay the numeric axis)
 EPISODE_ACTS = [
     ('episode-echoes', 1, '2024-06-04', '2024-07-09'),
@@ -373,6 +376,9 @@ EXPANSION_PHRASES = [
     ('the edge of fate', 'the-edge-of-fate'),
     ('edge of fate', 'the-edge-of-fate'),
     ('renegades', 'renegades'),
+    # Base-game phrases last: specific releases must win first.
+    ('destiny 2', 'destiny-2'),
+    ('destiny 1', 'destiny-1'),
 ]
 
 EVENT_PHRASES = [
@@ -476,9 +482,13 @@ def classify(slug='', title='', release='', arc='', characters='', kind='transcr
     best = None
     for row in ACTIVITIES:
         for kw in row[7]:
-            if kw in text:
-                if best is None or len(kw) > best[0]:
-                    best = (len(kw), row, kw)
+            # Keywords are authored in display form ("Crota's End"), but `text`
+            # is normalized (apostrophes become spaces). Normalize the keyword
+            # too so possessive activity names match.
+            nkw = norm(kw)
+            if nkw and nkw in text:
+                if best is None or len(nkw) > best[0]:
+                    best = (len(nkw), row, kw)
     if best:
         _, row, kw = best
         activity = row[0]
@@ -539,6 +549,16 @@ def classify(slug='', title='', release='', arc='', characters='', kind='transcr
         if confidence == 'unknown':
             confidence = 'derived'
         evidence.append('activity_catalog')
+
+    # 5b. A known season implies its parent expansion (e.g. Season of the
+    # Haunted -> The Witch Queen). This fills expansion for season-only
+    # releases without guessing from the date.
+    if season and not expansion:
+        expansion = SEASON_EXPANSION.get(season)
+        if expansion:
+            if confidence == 'unknown':
+                confidence = 'derived'
+            evidence.append('season_catalog')
 
     # 6. Type fallbacks for content with no catalogue entry.
     atype = None

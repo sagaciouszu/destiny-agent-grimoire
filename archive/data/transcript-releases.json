@@ -1,0 +1,4522 @@
+{
+  "1au": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "a-deadly-trial": {
+    "release_slug": "curse-of-osiris",
+    "release": "Curse of Osiris"
+  },
+  "a-garden-world": {
+    "release_slug": "curse-of-osiris",
+    "release": "Curse of Osiris"
+  },
+  "a-guardian-rises": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "a-heros-welcome": {
+    "release_slug": "season-of-dawn",
+    "release": "Season of Dawn"
+  },
+  "a-hum-of-starlight": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "a-kell-rising": {
+    "release_slug": "house-of-wolves",
+    "release": "House of Wolves"
+  },
+  "a-key-awaits": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "a-mysterious-disturbance": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "a-new-den": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "a-new-frontier": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "a-rising-tide": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "a-rising-tide-eliksni-quarter-community-event": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "a-shadow-overhead": {
+    "release_slug": "season-of-arrivals",
+    "release": "Season of Arrivals"
+  },
+  "a-spooky-good-time": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "a-strangers-call": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "act-i-prologue-eidos-gift": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "act-i-prologue-mithrax-variks": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "act-i-prologue-na-veskirisk": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "act-i-prologue-onslaught-salvation": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "act-i-prologue-speak-to-eido": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "act-i-prologue-speak-with-mithrax": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "adieu": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "adventure-a-frame-job": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "adventure-arecibo": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "adventure-bad-neighbors": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "adventure-calling-them-home": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "adventure-cliffhanger": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "adventure-dark-alliance": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "adventure-deathless": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "adventure-deathly-tremors": {
+    "release_slug": "warmind",
+    "release": "Warmind"
+  },
+  "adventure-deep-conversation": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "adventure-getting-your-hands-dirty": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "adventure-hack-the-planet": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "adventure-hephaestus": {
+    "release_slug": "warmind",
+    "release": "Warmind"
+  },
+  "adventure-incursion": {
+    "release_slug": "warmind",
+    "release": "Warmind"
+  },
+  "adventure-invitation-from-the-emperor": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "adventure-no-safe-distance": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "adventure-poor-reception": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "adventure-postmodern-prometheus": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "adventure-psionic-potential": {
+    "release_slug": "warmind",
+    "release": "Warmind"
+  },
+  "adventure-red-legion-black-oil": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "adventure-reversing-the-polarity": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "adventure-road-rage": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "adventure-siren-song": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "adventure-supply-and-demand": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "adventure-target-the-hangman": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "adventure-target-the-mad-bomber": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "adventure-target-the-mindbender": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "adventure-target-the-rider": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "adventure-target-the-rifleman": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "adventure-target-the-trickster": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "adventure-the-runner": {
+    "release_slug": "curse-of-osiris",
+    "release": "Curse of Osiris"
+  },
+  "adventure-the-up-and-up": {
+    "release_slug": "curse-of-osiris",
+    "release": "Curse of Osiris"
+  },
+  "adventure-thief-of-thieves": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "adventure-unbreakable": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "adventure-unsafe-at-any-speed": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ahamkara-tales-osiris-crow-week-1": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "ahamkara-tales-petra-osiris-week-3": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "ahamkara-tales-shaxx-mara-week-2": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "ahoy-and-aweigh-speak-with-spider": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "ahoy-and-aweigh-visit-the-ether-tank": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "an-important-message": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "another-step-closer": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "anti-anti-air": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "antiquarian-i-return-the-first-relic": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "antiquarian-ii-return-the-second-relic": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "antiquarian-iii-return-the-third-relic": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "antiquarian-iv-return-the-fourth-relic": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "antiquarian-v-return-the-fifth-relic": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "antiquarian-vi-return-the-sixth-relic": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "antiquarian-vii-return-the-eighth-relic": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "antiquarian-vii-return-the-seventh-relic": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "arm-yourself-with-knowledge-asterion-abyss": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "arm-yourself-with-knowledge-cadmus-ridge": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "arm-yourself-with-knowledge-eventide-ruins": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "as-a-friend": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "as-prophesied-broadcast-from-lakshmi-2": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "awaken-queensguard-briefing-from-devrim-kay": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "awaken-queensguard-infiltrate-the-pyramid-outpost-in-the-edz": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "awaken-queensguard-meet-with-mara-sov": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "awaken-queensguard-message-from-mara-sov": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "awakening": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "bad-blood": {
+    "release_slug": "rise-of-iron",
+    "release": "Rise of Iron"
+  },
+  "behold-derelict-leviathan": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "behold-pleasure-gardens-derelict-leviathan": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "behold-royal-baths-derelict-leviathan": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "beneath-the-waves-distress-signal-on-titan": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "beneath-the-waves-reconvene-at-the-helm": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "beneath-the-waves-reunite-with-sloane": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "beyond": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "beyond-infinity": {
+    "release_slug": "curse-of-osiris",
+    "release": "Curse of Osiris"
+  },
+  "beyond-light-campaign-introduction": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "beyond-light-prologue": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "beyond-the-watchtower": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "black-armory-opening-cinematic": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "blighted-coven": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "born-in-darkness-part-2-speak-to-the-exo-stranger": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "born-in-darkness-part-3-key-to-the-truth": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "born-in-darkness-part-3-speak-to-the-exo-stranger": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "born-in-darkness-part-4-key-to-the-truth": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "born-in-darkness-part-4-regroup-with-the-exo-stranger": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "born-in-darkness-part-4-speak-to-the-exo-stranger": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "born-in-darkness-speak-to-the-exo-stranger": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "bound-in-sorrow-sever-catharsis-debrief-with-eris": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "bound-in-sorrow-sever-catharsis-return-to-eris": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "bound-in-sorrow-sever-forgiveness-debrief-with-eris": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "bound-in-sorrow-sever-forgiveness-return-to-eris": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "bound-in-sorrow-sever-forgiveness-transmission-from-zavala": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "bound-in-sorrow-sever-grief-check-in-with-zavala": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "bound-in-sorrow-sever-grief-debrief-with-eris": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "bound-in-sorrow-sever-grief-return-to-eris": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "bound-in-sorrow-sever-grief-the-nightmare-of-safiyah": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "bound-in-sorrow-sever-rage-debrief-with-eris": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "bound-in-sorrow-sever-rage-lunar-investigation": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "bound-in-sorrow-sever-rage-return-to-eris": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "bound-in-sorrow-sever-rage-transmission-from-caiatl": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "bound-in-sorrow-sever-reconciliation-debrief-with-eris": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "bound-in-sorrow-sever-reconciliation-return-to-eris": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "bound-in-sorrow-sever-reconciliation-speak-to-crow": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "bound-in-sorrow-sever-resolve-debrief-with-eris": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "bound-in-sorrow-sever-resolve-return-to-eris": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "bound-in-sorrow-sever-resolve-transmission-from-caiatl": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "bound-in-sorrow-sever-shame-check-in-with-crow": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "bound-in-sorrow-sever-shame-debrief-with-eris": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "breakneck": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "breakneck-conversation-between-osiris-and-nimbus": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "breakneck-interlude-with-caiatl": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "breakneck-meet-with-nimbus": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "breakneck-meet-with-osiris": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "broken-courier-loop-1": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "broken-courier-loop-2": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "broken-courier-loop-3": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "calus-afraid": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "caydes-stash": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "cerberus-vae-iii": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "challengers-proving-ii-impasse": {
+    "release_slug": "season-of-the-chosen",
+    "release": "Season of the Chosen"
+  },
+  "challengers-proving-ii-mission-briefing": {
+    "release_slug": "season-of-the-chosen",
+    "release": "Season of the Chosen"
+  },
+  "challengers-proving-iii-mission-briefing": {
+    "release_slug": "season-of-the-chosen",
+    "release": "Season of the Chosen"
+  },
+  "challengers-proving-iv-mission-briefing": {
+    "release_slug": "season-of-the-chosen",
+    "release": "Season of the Chosen"
+  },
+  "challengers-proving-iv-predicted-missing": {
+    "release_slug": "season-of-the-chosen",
+    "release": "Season of the Chosen"
+  },
+  "challengers-proving-iv-to-fell-the-mighty": {
+    "release_slug": "season-of-the-chosen",
+    "release": "Season of the Chosen"
+  },
+  "challengers-proving-v-debriefing": {
+    "release_slug": "season-of-the-chosen",
+    "release": "Season of the Chosen"
+  },
+  "challengers-proving-v-mission-briefing": {
+    "release_slug": "season-of-the-chosen",
+    "release": "Season of the Chosen"
+  },
+  "challengers-proving-vi-mission-briefing": {
+    "release_slug": "season-of-the-chosen",
+    "release": "Season of the Chosen"
+  },
+  "challengers-proving-vii-chosen-of-the-vanguard": {
+    "release_slug": "season-of-the-chosen",
+    "release": "Season of the Chosen"
+  },
+  "challengers-proving-vii-debriefing": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "challengers-proving-vii-mission-briefing": {
+    "release_slug": "season-of-the-chosen",
+    "release": "Season of the Chosen"
+  },
+  "challengers-proving-vii-parting-ways-for-now": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "chamber-of-night": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "chosen": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "cocoon": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "combustion": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "constellation-lock-2": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "constellation-pair": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "constellation-tower": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "contact-titan": {
+    "release_slug": "season-of-arrivals",
+    "release": "Season of Arrivals"
+  },
+  "country-radio-i-amanda-and-crow": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "country-radio-ii-devrim-and-mithrax": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "country-radio-iii-eramis-and-mithrax": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "country-radio-iv-mithrax-mara-and-caiatl": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "country-radio-season-of-defiance": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "country-radio-v-mara-and-crow": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "country-radio-vi-zavala": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "court-of-blades-enter": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "crown-of-sorrow-raid-complete": {
+    "release_slug": "season-of-opulence",
+    "release": "Season of Opulence"
+  },
+  "crows-best-night": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "dark-monastery-loop-1": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "dark-monastery-loop-2": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "dark-monastery-loop-3": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "dark-monastery-loop-4": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "dark-monastery-loop-5": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "dark-monastery-loop-6": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "darknesss-doorstep": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "deep-storage": {
+    "release_slug": "curse-of-osiris",
+    "release": "Curse of Osiris"
+  },
+  "depth-reception-i-zavala-and-drifter": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "depth-reception-ii-saladin-and-saint-14": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "depth-reception-iv-zavala-and-saladin": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "depth-reception-v-zavala-and-drifter": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "depth-reception-vi-sloane-and-zavala": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "desperate-measures": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "desperate-measures-debriefing-with-ikora": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "desperate-measures-debriefing-with-nimbus": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "desperate-measures-debriefing-with-zavala": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "desperate-measures-interlude-with-caiatl": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "desperate-measures-interlude-with-osiris": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "desperate-measures-neomuna-civil-news-caiatl-interview": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "desperate-measures-neomuna-civil-news-nimbus-interview": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "downfall": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "downfall-interlude-with-osiris": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "downfall-interlude-with-rohan": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "downfall-meet-with-nimbus": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "download-complete": {
+    "release_slug": "rise-of-iron",
+    "release": "Rise of Iron"
+  },
+  "dread-patrol": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "dredging-up-secrets-the-mausoleum": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "dredging-up-secrets-trenchway": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "duality": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "echo-chamber": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "echoed-warnings-blight-from-beyond": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "echoed-warnings-discuss-the-echo-with-sloane": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "echoed-warnings-eris-morns-final-message": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "echoed-warnings-hive-hacking": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "echoed-warnings-kludge": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "echoed-warnings-peer-into-the-shaping-slab": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "echoed-warnings-skyburners-deep-scan-data": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "echoed-warnings-sloanes-message-to-drifter": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "echoed-warnings-the-eversion-anchors": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "echoed-warnings-tome-of-want": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "echoed-warnings-trial-of-will-resolve": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "eliksni-evacuation": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "eliksni-rescue-broadcast-from-fikrul": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "eliksni-rescue-fieldwork-edz": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "eliksni-rescue-fieldwork-europa": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "eliksni-rescue-fieldwork-neptune": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "eliksni-rescue-fieldwork-nessus": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "eliksni-rescue-fieldwork-the-moon": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "eliksni-rescue-message-from-eido": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "eliksni-rescue-message-from-eramis": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "eliksni-rescue-return-to-eido": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "eliksni-rescue-something-left-to-say": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "eliksni-rescue-speak-with-mithrax": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "eliksni-rescue-tonic-brewing-guide": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "eliksni-rescue-variks-at-the-holoprojector": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "empire-hunt-dark-priestess": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "empire-hunt-the-technocrat": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "empire-hunt-the-warrior": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "enemy-of-my-enemy": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "entropys-pinnacle": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "exclusion-zone": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "exodus-siege": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "exorcism-severing-savathuns-worm": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "expunge-delphi": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "extraction-protocol-introduction": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "extraction-protocol-speak-to-clovis": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "eye-of-a-gate-lord": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "fears-embrace": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "festival-of-the-lost-sector": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "field-assignment-active-duty-anchor-of-light-near-ketch": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "final-wish-conjure-riven": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "final-wish-speak-with-mara": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "first-contact": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "first-contact-intro": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "fist-of-crota": {
+    "release_slug": "the-dark-below",
+    "release": "The Dark Below"
+  },
+  "fury": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "garden-of-salvation-introduction": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "ghost-fragment-eriana-3s-ghost": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "ghost-fragment-eris-morns-ghost": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "ghost-fragment-gimble-4s-ghost": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "ghost-fragment-gunnvors-ghost": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "ghost-fragment-lonesome-ghost": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "ghost-fragment-sai-motas-ghost": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "ghost-fragment-tolands-ghost": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "ghost-fragment-vell-tarlowes-ghost": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "ghost-fragment-vyhars-ghost": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "ghost-in-the-machine-i-amanda-and-crow": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "ghost-in-the-machine-ii-caiatl": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "ghost-in-the-machine-iii-amanda-and-zavala": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "ghost-in-the-machine-iv-caiatl-and-zavala": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "ghost-in-the-machine-v-caiatl-and-eris": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "ghost-in-the-machine-vi-caiatl-and-zavala": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "ghost-in-the-machine-vii-eris-morn": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "ghost-scan-a-dreadnaught": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-alton-dynamo-mars": {
+    "release_slug": "warmind",
+    "release": "Warmind"
+  },
+  "ghost-scan-alton-dynamo-mars-2": {
+    "release_slug": "warmind",
+    "release": "Warmind"
+  },
+  "ghost-scan-arboretum-titan": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-arboretum-titan-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-arboretum-titan-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-artifacts-edge-nessus": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-asylum": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-aurora-reach-mars": {
+    "release_slug": "warmind",
+    "release": "Warmind"
+  },
+  "ghost-scan-bazaar-tower": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-bazaar-tower-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-bazaar-tower-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-bazaar-tower-4": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-bazaar-tower-5": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-bazaar-tower-6": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-bazaar-tower-7": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-bones": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-braytech-futurescape-mars": {
+    "release_slug": "warmind",
+    "release": "Warmind"
+  },
+  "ghost-scan-bunker-door": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-cabal-detonated-this-ship": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-cabal-losses": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-cabal-vent": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-chamber-of-sky-nessus": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-chamber-of-stone-nessus": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-chamber-of-water-nessus": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-core-terminus-mars": {
+    "release_slug": "warmind",
+    "release": "Warmind"
+  },
+  "ghost-scan-core-terminus-mars-2": {
+    "release_slug": "warmind",
+    "release": "Warmind"
+  },
+  "ghost-scan-cosmodrome-old-russia-earth": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "ghost-scan-cosmodrome-old-russia-earth-2": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "ghost-scan-cosmodrome-old-russia-earth-3": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "ghost-scan-cosmodrome-old-russia-earth-4": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "ghost-scan-cosmodrome-old-russia-earth-5": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "ghost-scan-court-of-oryx": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-courtyard-tower": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-courtyard-tower-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-courtyard-tower-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-courtyard-tower-4": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-courtyard-tower-5": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-courtyard-tower-6": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-courtyard-tower-7": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-courtyard-tower-8": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-crota": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-dantalion-engine": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-devils-bones": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-dimensional-lock": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-echion-hold-european-dead-zone": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-ex-077-command-nessus": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-excavation-site-ii-io": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-excavation-site-ii-io-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-excavation-site-ii-io-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-exodus-black-nessus": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-exodus-black-nessus-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-exodus-black-nessus-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-exodus-black-nessus-4": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-exodus-black-nessus-5": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-faction-rally-european-dead-zone": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-faction-rally-io": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-faction-rally-nessus": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-faction-rally-titan": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-festering-halls-titan": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-festering-halls-titan-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-festering-halls-titan-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-firebase-hades-european-dead-zone": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-firebase-hades-european-dead-zone-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-firebase-hades-european-dead-zone-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-firebase-hades-european-dead-zone-4": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-giants-scar-io": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-giants-scar-io-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-giants-scar-io-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-giants-scar-io-4": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-giants-scar-io-5": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-glade-of-echoes-nessus": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-glade-of-echoes-nessus-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-glade-of-echoes-nessus-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-glade-of-echoes-nessus-4": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-glade-of-echoes-nessus-5": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-hallows-nessus": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-hallows-nessus-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-hallows-nessus-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-hangar-tower": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-hangar-tower-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-hangar-tower-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-hangar-tower-4": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-hangar-tower-5": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-hangar-tower-6": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-hangar-tower-7": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-hangar-tower-8": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-hard-worker": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-high-plains-tangled-shore": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "ghost-scan-high-plains-tangled-shore-2": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "ghost-scan-high-plains-tangled-shore-3": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "ghost-scan-high-plains-tangled-shore-4": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "ghost-scan-high-plains-tangled-shore-5": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "ghost-scan-high-plains-tangled-shore-6": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "ghost-scan-hive-stone": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-jack-of-spades": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-legions-anchor-european-dead-zone": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-lost-oasis-io": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-lost-oasis-io-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-lost-oasis-io-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-lost-oasis-io-4": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-lost-oasis-io-5": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-maadim-subterrane-mars": {
+    "release_slug": "warmind",
+    "release": "Warmind"
+  },
+  "ghost-scan-maevic-square-european-dead-zone": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-maevic-square-european-dead-zone-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-maevic-square-european-dead-zone-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-mindlab-rasputin-mars": {
+    "release_slug": "warmind",
+    "release": "Warmind"
+  },
+  "ghost-scan-monitoring-station": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-nokris": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-none-reported-back": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-olympus-descent-mars": {
+    "release_slug": "warmind",
+    "release": "Warmind"
+  },
+  "ghost-scan-oryx": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-outskirts-european-dead-zone": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-outskirts-european-dead-zone-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-outskirts-european-dead-zone-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-outskirts-european-dead-zone-4": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-outskirts-european-dead-zone-5": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-pod-10201": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-pools-of-luminance-nessus": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-pools-of-luminance-nessus-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-primus-taaun": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-prodromus-down-nessus": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-prodromus-down-nessus-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-pyramidion-io": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-pyramidion-io-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-pyramidion-io-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-rasputin-access": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-rasputin-threat": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-requires-a-living-host": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-rupture": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-sacrificial-stone": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-salt-mines-european-dead-zone": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-salt-mines-european-dead-zone-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-salt-mines-european-dead-zone-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-seeder": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-sepiks-prime": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-sinking-docks-titan": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-sinking-docks-titan-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-sinking-docks-titan-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-sirens-watch-titan": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-sirens-watch-titan-1": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-sirens-watch-titan-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-sirens-watch-titan-4": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-skyburners-regiment": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-sojourners-camp-european-dead-zone": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-sojourners-camp-european-dead-zone-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-sojourners-camp-european-dead-zone-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-solarium-titan": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-spine-burrows-io": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-spine-burrows-io-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-sunken-cavern-nessus": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-sunken-cavern-nessus-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-sunken-isles-european-dead-zone": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-sunken-isles-european-dead-zone-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-sunken-isles-european-dead-zone-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-symbol-of-crota": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-taniks-door": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-terrabase-charon-io": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-terrabase-charon-io-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-terrabase-charon-io-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-terrabase-charon-io-4": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-terrabase-charon-io-5": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-cistern-nessus": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-cistern-nessus-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-cistern-nessus-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-cistern-nessus-4": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-cistern-nessus-5": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-endless-gate-io": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-farm": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-farm-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-farm-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-farm-4": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-gulch-european-dead-zone": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-gulch-european-dead-zone-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-gulch-european-dead-zone-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-mists-nessus": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-mists-nessus-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-mists-nessus-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-rig-titan": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-rig-titan-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-rig-titan-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-rig-titan-4": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-rig-titan-5": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-rupture-io": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-rupture-io-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-rupture-io-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-rupture-io-4": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-rupture-io-5": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-sludge-european-dead-zone": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-sludge-european-dead-zone-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-sludge-european-dead-zone-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-tangle-nessus": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-tangle-nessus-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-tangle-nessus-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-tangle-nessus-4": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-tangle-nessus-6": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-tunnels-european-dead-zone": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-tunnels-european-dead-zone-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-watchtower-tangled-shore": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "ghost-scan-the-watchtower-tangled-shore-2": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "ghost-scan-the-watchtower-tangled-shore-3": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "ghost-scan-the-watchtower-tangled-shore-4": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "ghost-scan-the-wraith-mines-io": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-wraith-mines-io-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-the-wraith-mines-io-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-thrall": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-tidal-anchor-titan-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-trans-jovian-threat": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-trostland-edz": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-trostland-european-dead-zone": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-trostland-european-dead-zone-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-trostland-european-dead-zone-4": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-trostland-european-dead-zone-5": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-wake-himself": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scan-warmind-vault-jys-2-io": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-warmind-vault-jys-2-io-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-warmind-vault-jys-2-io-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-watchers-grave-nessus": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-watchers-grave-nessus-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-watchers-grave-nessus-3": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-winding-cove-european-dead-zone": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-winding-cove-european-dead-zone-2": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghost-scan-worm": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "ghost-scans-eliksni-quarter": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "ghost-scans-eliksni-quarter-post-sabotage": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "ghost-scantidal-anchor-titan": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "ghosts-of-the-deep": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "grave-robber-call-from-crow": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "grave-robber-captive-memories": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "grave-robber-contest-of-elders": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "grave-robber-eido-at-the-holoprojector": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "grave-robber-eidos-plan": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "grave-robber-eramis-breakout": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "grave-robber-mithrax-on-the-holoprojector": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "grave-robber-mithraxs-condition": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "grave-robber-speak-to-the-spider": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "grave-robber-speak-with-mithrax": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "grave-robber-tomb-of-elders": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "headlong": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "headlong-meet-with-nimbus": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "heist-battleground-europa-final-weeks": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "heist-battleground-europa-week-1": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "heist-battleground-europa-week-4": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "heist-battleground-mars-final-weeks": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "heist-battleground-mars-week-2": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "heist-battleground-mars-week-4": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "heist-battleground-moon-final-weeks": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "heist-battleground-moon-week-1": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "heist-battleground-moon-week-4": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "helm-security-lockdown-investigate-the-distress-call": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "high-plains-blues": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "hijacked": {
+    "release_slug": "curse-of-osiris",
+    "release": "Curse of Osiris"
+  },
+  "homecoming": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "homecoming-beta": {
+    "release_slug": "destiny-2-beta",
+    "release": "Destiny 2"
+  },
+  "hope": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "hypernet-current-briefing-from-nimbus": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "hypernet-current-interlude-with-caiatl": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "hypernet-current-interlude-with-osiris": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "hypernet-current-neomuna-civil-news": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "ice-and-shadow": {
+    "release_slug": "warmind",
+    "release": "Warmind"
+  },
+  "idle-dialogue-nimbus-neomuna": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "idle-dialogue-tyra-karn-felwinters-peak": {
+    "release_slug": "rise-of-iron",
+    "release": "Rise of Iron"
+  },
+  "in-search-of-answers": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "in-the-deep": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "into-the-depths-i-bring-the-coral-to-sloane": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "into-the-depths-i-speak-with-sloane": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "into-the-depths-ii-bring-the-coral-to-sloane": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "into-the-depths-ii-mayday-mayday": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "into-the-depths-ii-return-to-the-helm": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "into-the-depths-ii-speak-with-sloane": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "into-the-depths-ii-speak-with-zavala": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "into-the-depths-iii-bring-the-coral-to-sloane": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "into-the-depths-iii-operation-fulgurite": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "into-the-depths-iii-speak-with-saladin": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "into-the-depths-iii-speak-with-sloane": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "into-the-depths-iv-bring-the-coral-to-sloane": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "into-the-depths-iv-return-to-the-helm": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "into-the-depths-iv-speak-with-sloane": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "into-the-depths-v-origin-of-the-witness": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "into-the-depths-v-speak-with-saint-14": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "into-the-depths-v-speak-with-sloane": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "into-the-depths-vi-barotrauma": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "into-the-depths-vi-return-to-the-helm": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "into-the-depths-vi-speak-with-saladin": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "into-the-depths-vi-speak-with-sloane": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "invitation-of-the-nine-mystery-and-potential-visit-2": {
+    "release_slug": "season-of-the-drifter",
+    "release": "Season of the Drifter"
+  },
+  "invitation-of-the-nine-mystery-and-potential-visit-3": {
+    "release_slug": "season-of-the-drifter",
+    "release": "Season of the Drifter"
+  },
+  "invitation-of-the-nine-mystery-and-potential-visit-5": {
+    "release_slug": "season-of-the-drifter",
+    "release": "Season of the Drifter"
+  },
+  "iron-banner-opening-cinematic": {
+    "release_slug": "rise-of-iron",
+    "release": "Rise of Iron"
+  },
+  "ishtar-collective": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "kell-of-darkness-dismantling-an-empire": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "key-fieldwork-widows-court": {
+    "release_slug": "revenant",
+    "release": "Episode: Revenant"
+  },
+  "king-of-the-mountain": {
+    "release_slug": "rise-of-iron",
+    "release": "Rise of Iron"
+  },
+  "kings-of-decay": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "larceny": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "last-call": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "last-rites": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "last-wish-cinematic": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "last-wish-introduction": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "lightall-calus-and-the-witness": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "lightfall-intro-cinematic": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "lingering-torment": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "looped": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "loose-ends-tied": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "lost-crew": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "lost-lament-locate-dead-exos": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "lost-lament-locate-the-giant-exo": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "lost-lament-reforging-the-past": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "lost-to-light": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "memories-derelict-leviathan": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "memories-of-loss-resurrection-of-the-witch-queen": {
+    "release_slug": "the-witch-queen",
+    "release": "The Witch Queen"
+  },
+  "memories-of-the-hive-gods": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "memory-of-eriana-3": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "memory-of-omar-agah": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "memory-of-sai-mota": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "memory-of-toland-the-shattered": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "memory-of-vell-tarlowe": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "more-than-a-weapon-i-speak-to-ana-bray": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "more-than-a-weapon-i-speak-to-clovis": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "more-than-a-weapon-i-speak-to-mara-sov": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "more-than-a-weapon-ii-return-to-clovis": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "more-than-a-weapon-ii-speak-to-ana-bray": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "more-than-a-weapon-ii-speak-to-clovis": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "more-than-a-weapon-iii-debrief-with-clovis": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "more-than-a-weapon-iii-speak-to-clovis": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "more-than-a-weapon-iii-speak-to-elsie-bray": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "more-than-a-weapon-iv-check-in-with-ana-bray": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "more-than-a-weapon-iv-confront-clovis": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "more-than-a-weapon-iv-speak-to-ana-bray": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "more-than-a-weapon-iv-speak-to-clovis": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "more-than-a-weapon-iv-speak-to-rasputin": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "more-than-a-weapon-v-debrief-with-rasputin": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "more-than-a-weapon-v-speak-to-elsie-bray": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "more-than-a-weapon-v-speak-to-osiris": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "more-than-a-weapon-v-speak-to-rasputin": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "more-than-a-weapon-vi-consult-with-rasputin": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "more-than-a-weapon-vi-speak-to-rasputin": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "neomuna-civil-news": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "nightmare-containment-derelict-leviathan": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "nightmare-hunt-fear": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "nightmare-hunt-isolation": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "nightmare-hunt-pride": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "nightmare-hunt-rage": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "nightmare-hunt-servitude": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "no-one-dreamed-it-a-trespass": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "no-time-left": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "nothing-left-to-say": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "of-queens-and-worms-meet-with-mara-sov": {
+    "release_slug": "the-witch-queen",
+    "release": "The Witch Queen"
+  },
+  "of-queens-and-worms-parasitic-pilgrimage": {
+    "release_slug": "the-witch-queen",
+    "release": "The Witch Queen"
+  },
+  "off-world-recovery": {
+    "release_slug": "warmind",
+    "release": "Warmind"
+  },
+  "omega": {
+    "release_slug": "curse-of-osiris",
+    "release": "Curse of Osiris"
+  },
+  "on-the-verge": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "on-the-verge-broadcast-from-calus": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "on-the-verge-interlude-with-osiris": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "on-the-verge-interlude-with-rohan": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "on-the-verge-meet-with-nimbus": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "on-the-verge-neomuna-civil-news": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "oracle-engine-loop-1": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "oracle-offering-loop-1-week-2": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "oracle-offering-loop-2-week-1": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "oracle-offering-loop-2-week-2": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "oracle-offering-loop-4-week-2": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "oracle-offering-loop-5-week-1": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "oracle-offering-loop-5-week-2": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "oracle-offering-loop-6-week-1": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "oracle-offering-loop-6-week-2": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "oracle-offering-loop-7-week-1": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "oracle-offering-loop-7-week-2": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "oracle-offering-loop-8-week-1": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "osiris-confronts-the-warmind": {
+    "release_slug": "season-of-dawn",
+    "release": "Season of Dawn"
+  },
+  "osiris-pondering": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "outbound-signal": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "paradox-daily": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "parting-the-veil-research-log-1": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "parting-the-veil-research-log-10": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "parting-the-veil-research-log-11": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "parting-the-veil-research-log-12": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "parting-the-veil-research-log-13": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "parting-the-veil-research-log-14": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "parting-the-veil-research-log-15": {
+    "release_slug": "season-of-the-witch",
+    "release": "Season of the Witch"
+  },
+  "parting-the-veil-research-log-16": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "parting-the-veil-research-log-2": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "parting-the-veil-research-log-3": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "parting-the-veil-research-log-4": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "parting-the-veil-research-log-5": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "parting-the-veil-research-log-6": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "parting-the-veil-research-log-7": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "parting-the-veil-research-log-8": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "parting-the-veil-research-log-9": {
+    "release_slug": "season-of-the-deep",
+    "release": "Season of the Deep"
+  },
+  "path-of-the-splicer-i-broadcast-from-lakshmi-2": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "path-of-the-splicer-i-communication-from-the-crow": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "path-of-the-splicer-i-mission-briefing": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "path-of-the-splicer-i-speak-with-ikora-rey": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "path-of-the-splicer-i-speak-with-mithrax": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "path-of-the-splicer-i-transmission-from-lakshmi-2": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "path-of-the-splicer-ii-broadcast-from-ikora-rey": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "path-of-the-splicer-ii-meet-with-mithrax": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "path-of-the-splicer-ii-mission-briefing": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "path-of-the-splicer-ii-speak-with-mithrax": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "path-of-the-splicer-iii-broadcast-from-lakshmi-2": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "path-of-the-splicer-iii-mission-briefing": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "path-of-the-splicer-iii-speak-with-mithrax": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "path-of-the-splicer-iv-broadcast-from-lakshmi-2": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "path-of-the-splicer-iv-mission-briefing": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "path-of-the-splicer-iv-sabotage-at-the-eliksni-camp": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "path-of-the-splicer-iv-speak-with-ikora-rey": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "path-of-the-splicer-iv-speak-with-mithrax": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "path-of-the-splicer-iv-transmission-from-lakshmi-2": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "path-of-the-splicer-v-broadcast-from-mithrax-and-ikora-rey": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "path-of-the-splicer-v-mission-briefing": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "path-of-the-splicer-v-speak-with-mithrax": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "path-of-the-splicer-v-speak-with-saint-14": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "patrols-derelict-leviathan": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "payback": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "pilgrimage": {
+    "release_slug": "warmind",
+    "release": "Warmind"
+  },
+  "pilgrimage-garden-of-esila-dead-tree": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-garden-of-esila-garden-bench": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-garden-of-esila-queensfoil": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-garden-of-esila-techeun-statues": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-garden-of-esila-tree": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-garden-of-esila-view": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-gardens-of-esila-bridge": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-harbingers-seclude-alis-li": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-harbingers-seclude-cliffs": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-harbingers-seclude-devna-tel": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-harbingers-seclude-eaos-nest": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-harbingers-seclude-elevator": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-harbingers-seclude-flowers": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-harbingers-seclude-kelda-wadj": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-harbingers-seclude-meeting-pillar": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-harbingers-seclude-osana-sov": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-harbingers-seclude-shiny-geode": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-harbingers-seclude-shrine": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-harbingers-seclude-spiral-tree": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-spine-of-keres-ansible-lens": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-spine-of-keres-cave": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-spine-of-keres-crystal": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-spine-of-keres-flowers": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-spine-of-keres-globe": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-spine-of-keres-meditation-circle": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-spine-of-keres-oracle-engine": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-spine-of-keres-star-map": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-spine-of-keres-summoning-pillar": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "pilgrimage-spine-of-keres-wall": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "presage-final-smuggling-compartment": {
+    "release_slug": "season-of-the-chosen",
+    "release": "Season of the Chosen"
+  },
+  "presage-first-visit": {
+    "release_slug": "season-of-the-chosen",
+    "release": "Season of the Chosen"
+  },
+  "preservation": {
+    "release_slug": "the-witch-queen",
+    "release": "The Witch Queen"
+  },
+  "pretender-to-the-throne": {
+    "release_slug": "the-taken-king-april-update",
+    "release": "The Taken King"
+  },
+  "primes-path": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "proving-ground": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "pyramid-near-jupiter-cinematic": {
+    "release_slug": "season-of-the-worthy",
+    "release": "Season of the Worthy"
+  },
+  "pyramid-preservation": {
+    "release_slug": "the-witch-queen",
+    "release": "The Witch Queen"
+  },
+  "queens-court-loop-1": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "queens-court-loop-2": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "queens-court-loop-3": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "queens-court-loop-4": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "queens-court-loop-5": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "queens-court-loop-6": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "queens-court-loop-7": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "queens-ransom": {
+    "release_slug": "house-of-wolves",
+    "release": "House of Wolves"
+  },
+  "quest-a-cry-from-beyond-let-loose-thy-talons": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "quest-a-disturbance-on-mercury-a-matter-of-time": {
+    "release_slug": "season-of-dawn",
+    "release": "Season of Dawn"
+  },
+  "quest-a-march-of-fire-the-sunbreakers-challenge": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "quest-a-mysterious-decryption-device-lock-and-key": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "quest-a-new-tradition-the-guardian-games": {
+    "release_slug": "season-of-the-worthy",
+    "release": "Season of the Worthy"
+  },
+  "quest-a-ranger-found-the-nightstalkers-trail": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "quest-a-ranger-lost-the-nightstalkers-trail": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "quest-a-second-opinion-enhance": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "quest-a-spark-in-shadow-the-stormcallers-path": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "quest-a-visit-to-command-enemy-of-my-enemy": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "quest-a-warminds-secrets-the-lie": {
+    "release_slug": "season-of-the-worthy",
+    "release": "Season of the Worthy"
+  },
+  "quest-ace-in-the-hole": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "quest-an-imperial-summons-the-invitation": {
+    "release_slug": "season-of-opulence",
+    "release": "Season of Opulence"
+  },
+  "quest-an-old-friend-the-dawning-evas-return": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "quest-ashers-theory-dynasty": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "quest-at-full-power-enemy-of-my-enemy": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "quest-black-armory-badge-the-black-armory": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "quest-black-armory-curator-the-black-armory": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "quest-black-armory-machine-gun-frame-the-black-armory": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "quest-blood-in-the-garden-not-forged-in-light": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "quest-boot-sector-raising-our-defenses": {
+    "release_slug": "season-of-the-worthy",
+    "release": "Season of the Worthy"
+  },
+  "quest-bottle-the-arc-the-stormcallers-path": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "quest-bound-by-fire-the-sunbreakers-challenge": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "quest-broken-awoken-talisman-key-of-light-and-darkness": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "quest-calculated-action-dynasty": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "quest-chalice-of-opulence-the-invitation": {
+    "release_slug": "season-of-opulence",
+    "release": "Season of Opulence"
+  },
+  "quest-chances-and-choices-enemy-of-my-enemy": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "quest-choir-of-the-damned-symphony-of-death": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "quest-corridors-of-time-part-1-an-impossible-task": {
+    "release_slug": "season-of-dawn",
+    "release": "Season of Dawn"
+  },
+  "quest-corridors-of-time-part-2-completing-an-impossible-task": {
+    "release_slug": "season-of-dawn",
+    "release": "Season of Dawn"
+  },
+  "quest-crown-of-sorrow-the-invitation": {
+    "release_slug": "season-of-opulence",
+    "release": "Season of Opulence"
+  },
+  "quest-data-requisition-enemy-of-my-enemy": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "quest-defender-of-light-dark-priestess": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "quest-depleted-weapon-core-darkness-in-the-light": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "quest-differential-diagnosis-enhance": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "quest-evacuation-beyond-light": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "quest-expand-and-collapse-raising-our-defenses": {
+    "release_slug": "season-of-the-worthy",
+    "release": "Season of the Worthy"
+  },
+  "quest-experimental-treatment-enhance": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "quest-eyes-on-the-moon-vex-invasion": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "quest-faculties-of-the-skull-symphony-of-death": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "quest-fallen-transponder-and-zero-hour-outbreak-perfected": {
+    "release_slug": "season-of-the-drifter",
+    "release": "Season of the Drifter"
+  },
+  "quest-follow-up-appointment-enhance": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "quest-further-interference-let-loose-thy-talons": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "quest-gratitude-dynasty": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "quest-holliday-family-history-tex-mechanica-tournament": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "quest-initial-consultation-enhance": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "quest-interference-means-to-an-end-final-week": {
+    "release_slug": "season-of-arrivals",
+    "release": "Season of Arrivals"
+  },
+  "quest-interference-means-to-an-end-week-1": {
+    "release_slug": "season-of-arrivals",
+    "release": "Season of Arrivals"
+  },
+  "quest-interference-means-to-an-end-week-10": {
+    "release_slug": "season-of-arrivals",
+    "release": "Season of Arrivals"
+  },
+  "quest-interference-means-to-an-end-week-11": {
+    "release_slug": "season-of-arrivals",
+    "release": "Season of Arrivals"
+  },
+  "quest-interference-means-to-an-end-week-12": {
+    "release_slug": "season-of-arrivals",
+    "release": "Season of Arrivals"
+  },
+  "quest-interference-means-to-an-end-week-13": {
+    "release_slug": "season-of-arrivals",
+    "release": "Season of Arrivals"
+  },
+  "quest-interference-means-to-an-end-week-2": {
+    "release_slug": "season-of-arrivals",
+    "release": "Season of Arrivals"
+  },
+  "quest-interference-means-to-an-end-week-3": {
+    "release_slug": "season-of-arrivals",
+    "release": "Season of Arrivals"
+  },
+  "quest-interference-means-to-an-end-week-4": {
+    "release_slug": "season-of-arrivals",
+    "release": "Season of Arrivals"
+  },
+  "quest-interference-means-to-an-end-week-6": {
+    "release_slug": "season-of-arrivals",
+    "release": "Season of Arrivals"
+  },
+  "quest-interference-means-to-an-end-week-7": {
+    "release_slug": "season-of-arrivals",
+    "release": "Season of Arrivals"
+  },
+  "quest-interference-means-to-an-end-week-8": {
+    "release_slug": "season-of-arrivals",
+    "release": "Season of Arrivals"
+  },
+  "quest-interference-means-to-an-end-week-9": {
+    "release_slug": "season-of-arrivals",
+    "release": "Season of Arrivals"
+  },
+  "quest-into-the-mindlab-raising-our-defenses": {
+    "release_slug": "season-of-the-worthy",
+    "release": "Season of the Worthy"
+  },
+  "quest-invitation-from-the-emperor": {
+    "release_slug": "season-of-opulence",
+    "release": "Season of Opulence"
+  },
+  "quest-journeys-end-completing-an-impossible-task": {
+    "release_slug": "season-of-dawn",
+    "release": "Season of Dawn"
+  },
+  "quest-knight-of-two-realms-truth": {
+    "release_slug": "season-of-opulence",
+    "release": "Season of Opulence"
+  },
+  "quest-legacy-code-data-recovery": {
+    "release_slug": "warmind",
+    "release": "Warmind"
+  },
+  "quest-lighting-the-dark-enemy-of-my-enemy": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "quest-lunar-connection-raising-our-defenses": {
+    "release_slug": "season-of-the-worthy",
+    "release": "Season of the Worthy"
+  },
+  "quest-my-captain-exodus-black": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "quest-not-a-weapon-lock-and-key": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "quest-not-even-the-darkness-legends-lost": {
+    "release_slug": "curse-of-osiris",
+    "release": "Curse of Osiris"
+  },
+  "quest-o-captain-exodus-black": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "quest-open-the-gate-completing-an-impossible-task": {
+    "release_slug": "season-of-dawn",
+    "release": "Season of Dawn"
+  },
+  "quest-paracausal-refit-let-loose-thy-talons": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "quest-pardon-our-dust-vex-invasion": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "quest-patternbreaking-vex-invasion": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "quest-piece-of-the-past-data-recovery": {
+    "release_slug": "warmind",
+    "release": "Warmind"
+  },
+  "quest-premeditation-dynasty": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "quest-recovery-operation-a-matter-of-time": {
+    "release_slug": "season-of-dawn",
+    "release": "Season of Dawn"
+  },
+  "quest-report-to-sloane-enemy-of-my-enemy": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "quest-report-to-zavala-exodus-evacuation": {
+    "release_slug": "season-of-arrivals",
+    "release": "Season of Arrivals"
+  },
+  "quest-return-to-banshee-44-caydes-will": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "quest-return-to-cayde-6-patrols": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "quest-return-to-osiris-an-impossible-task": {
+    "release_slug": "season-of-dawn",
+    "release": "Season of Dawn"
+  },
+  "quest-riskreward-pain-and-gain": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "quest-signal-light-legends-lost": {
+    "release_slug": "curse-of-osiris",
+    "release": "Curse of Osiris"
+  },
+  "quest-simulation-of-grief-exodus-black": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "quest-speak-to-commander-zavala-the-exodus-begins": {
+    "release_slug": "season-of-arrivals",
+    "release": "Season of Arrivals"
+  },
+  "quest-speak-to-saint-14-the-trials-of-osiris": {
+    "release_slug": "season-of-the-worthy",
+    "release": "Season of the Worthy"
+  },
+  "quest-speak-to-zavala-a-looming-threat": {
+    "release_slug": "season-of-the-worthy",
+    "release": "Season of the Worthy"
+  },
+  "quest-speak-with-ana-raising-our-defenses": {
+    "release_slug": "season-of-the-worthy",
+    "release": "Season of the Worthy"
+  },
+  "quest-speak-with-the-exo-stranger-a-hard-rain-falls": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "quest-speak-with-variks-reclaiming-europa": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "quest-tainted-black-armory-gear-the-spiders-competition": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "quest-talk-to-banshee-44-caydes-will": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "quest-talk-to-saint-14-memento": {
+    "release_slug": "season-of-dawn",
+    "release": "Season of Dawn"
+  },
+  "quest-the-corrupted-darkness-in-the-light": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "quest-the-crow-and-the-hawk-let-loose-thy-talons": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "quest-the-cryptolith-lure-hunt-for-the-wrathborn": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "quest-the-dance-of-my-people": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "quest-the-end-exploring-the-corridors-of-time": {
+    "release_slug": "season-of-dawn",
+    "release": "Season of Dawn"
+  },
+  "quest-the-first-blacksmith-the-black-armory": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "quest-the-first-of-many-vex-invasion": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "quest-the-importance-of-networking-patrols": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "quest-the-long-play-dynasty": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "quest-the-lost-cryptarch": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "quest-the-lost-gofannon-forge-the-spiders-competition": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "quest-the-new-syndicates-identity-the-spiders-competition": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "quest-the-obsidian-accelerator": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "quest-the-other-side-spellbound": {
+    "release_slug": "season-of-opulence",
+    "release": "Season of Opulence"
+  },
+  "quest-the-tyrant-the-lie": {
+    "release_slug": "season-of-the-worthy",
+    "release": "Season of the Worthy"
+  },
+  "quest-the-whisper": {
+    "release_slug": "warmind",
+    "release": "Warmind"
+  },
+  "quest-thinking-about-death-exodus-black": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "quest-to-grandmothers-house-we-go-the-dawning-evas-return": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "quest-trail-of-the-hunted-hunter-and-the-hunted": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "quest-unsavory-allies-hunter-and-the-hunted": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "quest-vex-invasion-the-vex-offensive": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "quest-voice-of-light-let-loose-thy-talons": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "quest-welcome-to-the-dawning": {
+    "release_slug": "curse-of-osiris",
+    "release": "Curse of Osiris"
+  },
+  "quest-wish-ender": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "quest-worthy": {
+    "release_slug": "season-of-dawn",
+    "release": "Season of Dawn"
+  },
+  "raid-deep-stone-crypt": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "reforged-in-the-light": {
+    "release_slug": "season-of-arrivals",
+    "release": "Season of Arrivals"
+  },
+  "regicide": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "release": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "remembrance-of-sagira": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "report-pyramid-inspect-preservation": {
+    "release_slug": "the-witch-queen",
+    "release": "The Witch Queen"
+  },
+  "report-reverse-lure-briefing": {
+    "release_slug": "the-witch-queen",
+    "release": "The Witch Queen"
+  },
+  "report-reverse-lure-final-report": {
+    "release_slug": "the-witch-queen",
+    "release": "The Witch Queen"
+  },
+  "restoration": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "retribution": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "retribution-briefing-from-crow": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "retribution-debriefing-from-crow": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "riptide": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "rising-resistance": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "rites-of-the-deep-captis": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "rites-of-the-deep-court-of-blades": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "rites-of-the-deep-court-of-blades-xivu-oryx": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "rites-of-the-deep-echo-discussion": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "rites-of-the-deep-eris-sloane": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "rites-of-the-deep-flesh-of-akka": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "rites-of-the-deep-intel-on-savathun": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "rites-of-the-deep-report-to-eris-morn": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "rites-of-the-deep-rifts-in-the-nether": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "rites-of-the-deep-shattered-will-vorok-sentinel-eternal": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "rites-of-the-deep-sloane-at-the-shaping-slab": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "rites-of-the-deep-sloane-in-eris-throne-world": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "rites-of-the-deep-trial-of-will-ambition": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "rites-of-the-deep-willbreaker-shard-champions": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "rites-of-the-deep-willbreaker-shard-dreadnaught": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "rites-of-the-deep-willbreaker-shard-prophecy": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "rites-of-the-deep-willbreaker-shard-realms": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "rites-of-the-deep-writ-path-of-ambition": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "rivens-lair": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "rohans-funeral": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "root-of-nightmares": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "root-of-nightmares-completed": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "sabotaging-salvation": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "sacrilege": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "sails-of-the-shipstealer-i-visit-the-holoprojector": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "sails-of-the-shipstealer-i-visit-the-star-chart": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "sails-of-the-shipstealer-ii-visit-the-holoprojector": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "sails-of-the-shipstealer-ii-visit-the-star-chart": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "sails-of-the-shipstealer-iii-visit-the-star-chart": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "sails-of-the-shipstealer-iv-visit-the-holoprojector": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "sails-of-the-shipstealer-iv-visit-the-star-chart": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "sails-of-the-shipstealer-v-visit-the-holoprojector": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "sails-of-the-shipstealer-v-visit-the-star-chart": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "sails-of-the-shipstealer-vi-visit-the-holoprojector": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "sails-of-the-shipstealer-vi-visit-the-star-chart": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "sails-of-the-shipstealer-viii-visit-the-holoprojector": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "sails-of-the-shipstealer-viii-visit-the-star-chart": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "saint-14s-return-speak-to-ikora-rey": {
+    "release_slug": "season-of-dawn",
+    "release": "Season of Dawn"
+  },
+  "saint-14s-return-speak-to-zavala": {
+    "release_slug": "season-of-dawn",
+    "release": "Season of Dawn"
+  },
+  "salvation-beckoned-bray-exoscience": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "salvation-beckoned-first-attunement": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "salvation-beckoned-nexus": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "salvation-beckoned-riis-reborn-approach": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "savathuns-spire": {
+    "release_slug": "season-of-the-witch",
+    "release": "Season of the Witch"
+  },
+  "scavenging-the-drome": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "scorned": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "scourge-of-the-past-introduction": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "scourge-of-winter": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "season-of-arrivals-closing-event": {
+    "release_slug": "season-of-arrivals",
+    "release": "Season of Arrivals"
+  },
+  "season-of-arrivals-opening-cinematic": {
+    "release_slug": "season-of-arrivals",
+    "release": "Season of Arrivals"
+  },
+  "season-of-plunder-closing-cinematic": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "season-of-plunder-opening-cinematic": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "season-of-the-chosen-opening-cinematic": {
+    "release_slug": "season-of-the-chosen",
+    "release": "Season of the Chosen"
+  },
+  "season-of-the-haunted-opening-cinematic": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "season-of-the-hunt-opening-cinematic": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "season-of-the-lost-opening-cinematic": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "season-of-the-seraph-opening-cinematic": {
+    "release_slug": "season-of-the-seraph",
+    "release": "Season of the Seraph"
+  },
+  "season-of-the-splicer-opening-cinematic": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "season-of-the-worthy-opening-cinematic": {
+    "release_slug": "season-of-the-worthy",
+    "release": "Season of the Worthy"
+  },
+  "semaphore-signals-i-message-from-eramis": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "semaphore-signals-ii-eido-and-spider": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "semaphore-signals-iv-saint-14-and-mithrax": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "semaphore-signals-v-eido-and-mithrax": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "semaphore-signals-vi-eido": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "semaphore-signals-vii-eido-and-mithrax": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "semaphore-signals-viii-eido": {
+    "release_slug": "season-of-plunder",
+    "release": "Season of Plunder"
+  },
+  "seraph-wings": {
+    "release_slug": "season-of-the-worthy",
+    "release": "Season of the Worthy"
+  },
+  "sever-forgiveness-caluss-automaton": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "sever-grief-caluss-automaton": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "sever-rage-caluss-automaton": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "sever-reconciliation-caluss-automaton": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "sever-resolve-caluss-automaton": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "sever-shame-caluss-automaton": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "shard-of-the-traveler-gunslinger": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "shard-of-the-traveler-nightstalker": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "shard-of-the-traveler-stormcaller": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "shard-of-the-traveler-striker": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "shard-of-the-traveler-sunbreaker": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "shard-of-the-traveler-voidwalker": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "shrine-of-oryx": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "siege-of-the-warmind": {
+    "release_slug": "the-dark-below",
+    "release": "The Dark Below"
+  },
+  "simulation-agility": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "simulation-safeguard": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "simulation-survival": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "six": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "skolas-revenge": {
+    "release_slug": "house-of-wolves",
+    "release": "House of Wolves"
+  },
+  "solstice-of-heroes-reflect-on-the-past": {
+    "release_slug": "warmind",
+    "release": "Warmind"
+  },
+  "spark": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "speak-to-eris-morn": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "splintered": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "stop-and-go": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "strange-terrain": {
+    "release_slug": "warmind",
+    "release": "Warmind"
+  },
+  "stranger-in-a-strange-land-speak-to-commander-zavala": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "stranger-in-a-strange-land-visit-1": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "stranger-in-a-strange-land-visit-2": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "stranger-in-a-strange-land-visit-3": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "stranger-in-a-strange-land-visit-4": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "summoners-circle": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "talk-to-osiris-pharos-link": {
+    "release_slug": "season-of-dawn",
+    "release": "Season of Dawn"
+  },
+  "tenebrous-tunnels": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "the-aftermath": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "the-archive": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "the-awoken": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "the-black-armory-papers": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "the-black-garden": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "the-buried-city": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "the-coming-war": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "the-coming-war-closing-cinematic": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "the-coming-war-opening-cinematic": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "the-dark-beyond": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "the-dark-within": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "the-deep-stone-crypt-raid-completion-cinematic": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "the-devils-lair": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "the-dreadnaught": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "the-drowning-labyrinth-enter-the-pyramid": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "the-drowning-labyrinth-first-completion": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "the-drowning-labyrinth-first-tier-initiate-rhulks-experimental-worms": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "the-drowning-labyrinth-open-the-vault": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "the-drowning-labyrinth-return-to-ikora": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "the-drowning-labyrinth-second-tier-initiate-rhulks-experimental-worms": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "the-drowning-labyrinth-speak-to-ikora-rey": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "the-drowning-labyrinth-third-tier-initiate-rhulks-experimental-hive-worms": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "the-drowning-labyrinth-vault-savathun-enter-pyramid": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "the-dust-palace": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "the-farm-cinematic": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "the-festering-core": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "the-gardens-spire": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "the-gateway": {
+    "release_slug": "curse-of-osiris",
+    "release": "Curse of Osiris"
+  },
+  "the-glassway": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "the-guardian-games-closing-ceremony-season-of-the-chosen": {
+    "release_slug": "season-of-the-chosen",
+    "release": "Season of the Chosen"
+  },
+  "the-guardian-games-speak-to-commander-zavala-season-of-the-chosen": {
+    "release_slug": "season-of-the-chosen",
+    "release": "Season of the Chosen"
+  },
+  "the-guardian-games-speak-to-eva-levante-season-of-the-chosen": {
+    "release_slug": "season-of-the-chosen",
+    "release": "Season of the Chosen"
+  },
+  "the-holiday-begins": {
+    "release_slug": "season-of-arrivals",
+    "release": "Season of Arrivals"
+  },
+  "the-insight-terminus": {
+    "release_slug": "warmind",
+    "release": "Warmind"
+  },
+  "the-inverted-spire": {
+    "release_slug": "destiny-2-beta",
+    "release": "Destiny 2"
+  },
+  "the-iron-tomb": {
+    "release_slug": "rise-of-iron",
+    "release": "Rise of Iron"
+  },
+  "the-kell-of-darkness": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "the-lament-last-stop": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "the-last-array": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "the-leviathan-returns-commune-with-the-crown-of-sorrow": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "the-leviathan-returns-operation-midas": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "the-leviathan-returns-the-binding-ritual": {
+    "release_slug": "season-of-the-haunted",
+    "release": "Season of the Haunted"
+  },
+  "the-lost-splicer": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "the-lost-splicer-eliksni-quarter": {
+    "release_slug": "season-of-the-splicer",
+    "release": "Season of the Splicer"
+  },
+  "the-machinist": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "the-nether-heresy": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "the-new-kell": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "the-nexus": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "the-plaguelands": {
+    "release_slug": "rise-of-iron",
+    "release": "Rise of Iron"
+  },
+  "the-promethean-code": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "the-revelry-begins": {
+    "release_slug": "season-of-the-drifter",
+    "release": "Season of the Drifter"
+  },
+  "the-ritual": {
+    "release_slug": "the-witch-queen",
+    "release": "The Witch Queen"
+  },
+  "the-ritual-death-of-the-witch-queen": {
+    "release_slug": "the-witch-queen",
+    "release": "The Witch Queen"
+  },
+  "the-ruling-house": {
+    "release_slug": "house-of-wolves",
+    "release": "House of Wolves"
+  },
+  "the-shadow-thief": {
+    "release_slug": "house-of-wolves",
+    "release": "House of Wolves"
+  },
+  "the-silent-fang": {
+    "release_slug": "house-of-wolves",
+    "release": "House of Wolves"
+  },
+  "the-speaker": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "the-summoning-pits": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "the-sundial": {
+    "release_slug": "season-of-dawn",
+    "release": "Season of Dawn"
+  },
+  "the-sunless-cell": {
+    "release_slug": "the-taken-king",
+    "release": "The Taken King"
+  },
+  "the-sword-of-crota": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "the-taken-path-a-hammers-path": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "the-taken-path-a-needles-path": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "the-taken-path-derealize": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "the-taken-path-dyadic-ascension": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "the-taken-path-taken-osseus-fragments": {
+    "release_slug": "heresy",
+    "release": "Episode: Heresy"
+  },
+  "the-technocrat-dismantling-an-empire": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "the-technocrat-scientific-method": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "the-undying-mind": {
+    "release_slug": "the-dark-below",
+    "release": "The Dark Below"
+  },
+  "the-wakening": {
+    "release_slug": "the-dark-below",
+    "release": "The Dark Below"
+  },
+  "the-walls-come-down": {
+    "release_slug": "rise-of-iron",
+    "release": "Rise of Iron"
+  },
+  "the-warmind": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "the-warrior-prove-yourself-to-phylaks": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "the-worlds-grave": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "the-wretched-eye": {
+    "release_slug": "rise-of-iron",
+    "release": "Rise of Iron"
+  },
+  "to-destroy-a-mind": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "towards-the-future": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "tracing-the-stars-i-a-hollow-coronation": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "tracing-the-stars-i-queen-mara-sov-summons-you": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "tracing-the-stars-ii-a-hollow-coronation": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "tracing-the-stars-iii-a-hollow-coronation": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "tracing-the-stars-iv-a-hollow-coronation": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "tracing-the-stars-iv-claim-agers-scepter": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "tracing-the-stars-iv-return-to-mara-sov": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "tracing-the-stars-iv-the-finale-of-rega-and-agers-story": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "tree-of-probabilites": {
+    "release_slug": "curse-of-osiris",
+    "release": "Curse of Osiris"
+  },
+  "trials-of-osiris-the-lighthouse-flawless-passage": {
+    "release_slug": "season-of-the-worthy",
+    "release": "Season of the Worthy"
+  },
+  "uldrens-death": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "unbroken": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "under-siege": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "under-siege-meet-with-nimbus": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "under-siege-meet-with-osiris": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "under-siege-meet-with-rohan": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "under-siege-neomuna-civil-news": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "unexpected-guests": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "unfinished-business-acquire-a-vex-compass": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "unfinished-business-check-on-nimbus": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "unfinished-business-conversation-between-caiatl-and-osiris": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "unfinished-business-interlude-with-osiris": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "unfinished-business-regroup-with-nimbus-and-osiris": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "unfinished-business-return-to-nimbus": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "unfinished-business-track-down-rohans-notes": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "utopia": {
+    "release_slug": "destiny-2",
+    "release": "Destiny 2"
+  },
+  "vanguard-communications-season-of-the-hunt": {
+    "release_slug": "beyond-light",
+    "release": "Beyond Light"
+  },
+  "vex-offensive-final-assault": {
+    "release_slug": "shadowkeep",
+    "release": "Shadowkeep"
+  },
+  "visions-of-light": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "vow-of-the-disciple-raid-completion-cinematic": {
+    "release_slug": "the-witch-queen",
+    "release": "The Witch Queen"
+  },
+  "warden-of-nothing": {
+    "release_slug": "forsaken",
+    "release": "Forsaken"
+  },
+  "wayfinders-voyage-i-embodied": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "wayfinders-voyage-i-interrogation": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "wayfinders-voyage-i-speak-with-ikora-rey": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "wayfinders-voyage-i-speak-with-mara-sov": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "wayfinders-voyage-i-the-plan": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "wayfinders-voyage-ii-interrogation": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "wayfinders-voyage-ii-summoned-by-mara-sov": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "wayfinders-voyage-iii-in-the-shadow-of-the-past": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "wayfinders-voyage-iii-interrogation": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "wayfinders-voyage-iii-petras-grievances": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "wayfinders-voyage-iii-summoned-by-mara-sov": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "wayfinders-voyage-iii-unauthorized-access": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "wayfinders-voyage-iv-interrogation": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "wayfinders-voyage-iv-summoned-by-mara-sov": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "wayfinders-voyage-v-interrogation": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "wayfinders-voyage-v-summoned-by-mara-sov": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "wayfinders-voyage-vi-interrogation": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "wayfinders-voyage-vi-summoned-by-mara-sov": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "wayfinders-voyage-vi-the-past-comes-knocking": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "wayfinders-voyage-vi-truth-and-lies": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "wayfinders-voyage-vii-awaiting-alignment": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "wayfinders-voyage-vii-interrogation": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "wayfinders-voyage-vii-summoned-by-mara-sov": {
+    "release_slug": "season-of-the-lost",
+    "release": "Season of the Lost"
+  },
+  "we-stand-unbroken-i-briefing-from-mara-sov": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "we-stand-unbroken-i-debriefing-from-mara-sov": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "we-stand-unbroken-ii-briefing-from-amanda-holliday": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "we-stand-unbroken-ii-debriefing-from-devrim-kay": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "we-stand-unbroken-iii-briefing-from-mara-sov": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "we-stand-unbroken-iii-debriefing-from-amanda-holliday": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "we-stand-unbroken-iii-speak-with-amanda-and-mithrax": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "we-stand-unbroken-iv-briefing-from-amanda-holliday": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "we-stand-unbroken-iv-jailbreak": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "we-stand-unbroken-iv-message-from-devrim-kay": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "we-stand-unbroken-iv-report-to-the-farm": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "we-stand-unbroken-iv-speak-with-mara-sov": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "we-stand-unbroken-v-briefing-from-devrim-kay": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "we-stand-unbroken-v-speak-with-mara-sov": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "we-stand-unbroken-v-speak-with-zavala": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "welcome-to-crimson-days": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "what-remains": {
+    "release_slug": "lightfall",
+    "release": "Lightfall"
+  },
+  "will-of-crota": {
+    "release_slug": "the-dark-below",
+    "release": "The Dark Below"
+  },
+  "will-of-crota-heroic": {
+    "release_slug": "rise-of-iron",
+    "release": "Rise of Iron"
+  },
+  "will-of-the-thousands": {
+    "release_slug": "warmind",
+    "release": "Warmind"
+  },
+  "winters-run": {
+    "release_slug": "destiny",
+    "release": "Destiny 1"
+  },
+  "winters-run-taken": {
+    "release_slug": "the-taken-king-april-update",
+    "release": "The Taken King"
+  },
+  "wishing-all-the-best-crow-mara-week-3": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "wishing-all-the-best-crow-petra-week-2": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "wishing-all-the-best-enthymeme-week-3": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "wishing-all-the-best-mara-osiris-week-1": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "wishing-all-the-best-oracle-engine-week-3": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "wishing-all-the-best-polysemy-week-1": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "wishing-all-the-best-return-to-riven-week-1": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "wishing-all-the-best-return-to-riven-week-2": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "wishing-all-the-best-return-to-riven-week-3": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "wishing-all-the-best-rivens-lair-week-1": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "wishing-all-the-best-speak-to-petra-week-1": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "wishing-all-the-best-speak-to-petra-week-2": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "wishing-all-the-best-speak-to-petra-week-3": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "wishing-all-the-best-speak-to-riven-week-1": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "wishing-all-the-best-speak-to-riven-week-2": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "wishing-all-the-best-speak-to-riven-week-3": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "wishing-all-the-best-speak-with-osiris-week-2": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "wishing-all-the-best-speak-with-osiris-week-3": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "wishing-all-the-best-tautology-week-2": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "wishing-all-the-best-the-chamber-of-starlight-week-2": {
+    "release_slug": "season-of-the-wish",
+    "release": "Season of the Wish"
+  },
+  "wolves-gambit": {
+    "release_slug": "house-of-wolves",
+    "release": "House of Wolves"
+  },
+  "your-reputation-grows": {
+    "release_slug": "season-of-the-forge",
+    "release": "Season of the Forge"
+  },
+  "zavala-and-osiris-meet-with-empress-caiatl": {
+    "release_slug": "season-of-the-chosen",
+    "release": "Season of the Chosen"
+  }
+}

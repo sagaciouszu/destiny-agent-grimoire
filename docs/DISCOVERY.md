@@ -17,6 +17,12 @@ this word" but not:
 Items and records carried their own inconsistent release strings. Nothing
 joined them.
 
+The fix was to stop guessing from recording dates. Every Ishtar transcript page
+names its release in the sidebar (`Added In`). `fetch_transcript_releases.py`
+captures that link for all 1,130 pages, and `migrate.py` stores it as
+`transcripts.release`. Classification then becomes explicit instead of
+date-derived, including for Destiny 1, which has no seasons.
+
 ## The model
 
 Four independent axes, additive to the canon tables:
@@ -56,9 +62,9 @@ Episodes are not ordinary seasons, so they carry `season_type='episode'` and an
 | `manual` | curated override |
 | `unknown` | nothing matched |
 
-Current transcript split: 104 explicit, 801 derived, 389 unknown (30%). The
-unknown set is mostly story beats whose titles carry no release metadata. They
-remain searchable by text; they are simply not attributed.
+Current transcript split: 1,234 explicit, 59 derived, 1 unknown. The remaining
+derived rows are generated cutscene compilations and Commons topics without a
+release page. They remain searchable by text; they are simply not attributed.
 
 ## Query behaviour
 

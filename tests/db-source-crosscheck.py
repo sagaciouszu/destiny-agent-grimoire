@@ -105,6 +105,14 @@ def indexes():
 
 check('search and verification indexes are complete', indexes)
 
+def web_release_metadata():
+    missing = conn.execute(
+        "SELECT slug FROM transcripts WHERE source_tier='ishtar_web' "
+        "AND (release IS NULL OR release='') ORDER BY slug").fetchall()
+    assert not missing, f'{len(missing)} web transcripts without release: {[m[0] for m in missing[:5]]}'
+
+check('every Ishtar web transcript has release metadata', web_release_metadata)
+
 conn.close()
 print(f'\nPassed: {PASS} | Failed: {FAIL}')
 sys.exit(1 if FAIL else 0)
