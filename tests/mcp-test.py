@@ -141,6 +141,9 @@ def taxonomy_tools():
     assert any(a['slug'] == 'menagerie' for a in acts['rows']), 'menagerie missing'
     act = server.activity('nightmare-containment')
     assert act['coverage']['transcripts'] > 0 and act['speakers'], 'activity coverage empty'
+    men = server.activity('menagerie')
+    assert men['coverage']['lines'] >= 200, 'menagerie lines missing'
+    assert men['speakers'][0]['speaker'] == 'Calus'
     seasons = server.seasons()
     assert len(seasons['rows']) == 26, 'season count'
     assert seasons['rows'][6]['season_number'] == 7

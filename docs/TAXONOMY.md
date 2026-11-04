@@ -50,13 +50,17 @@ Current state (2026-11-04):
 
 | Content | explicit | derived | unknown |
 |---|---:|---:|---:|
-| Transcripts (1,229) | 61 | 725 | 443 |
+| Transcripts (1,230) | 62 | 725 | 443 |
 | Items (58,764) | 46,304 | 390 | 12,070 |
 | Books + records (181) | 64 | 4 | 113 |
 
 Most `unknown` transcripts are story beats whose titles carry no release
 metadata. They remain fully searchable by text; they are simply not attributable
 to a season or activity yet.
+
+The Menagerie is ingested from Destinypedia's verbatim transcript: 232 Calus
+lines across every encounter, including the Hunter, Titan and Warlock callouts.
+All class variants are separate rows; none are deduplicated.
 
 ## Vaulted content
 
