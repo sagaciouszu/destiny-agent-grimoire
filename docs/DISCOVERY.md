@@ -71,7 +71,7 @@ release page. They remain searchable by text; they are simply not attributed.
 Filters compile to `fts.source_slug IN (subquery)` so FTS still drives the scan
 and the taxonomy tables answer the membership question.
 
-Measured on 122,259 FTS rows, 10 results:
+Measured on 118,944 FTS rows, 10 results:
 
 | Query | Time |
 |---|---|

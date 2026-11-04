@@ -24,6 +24,12 @@ def fetch(slug):
     if m:
         title = re.sub(r'\s*&mdash;.*$', '', m.group(1)).strip()
         title = title.replace('&amp;', '&').replace('&#39;', "'")
+    # Related-content browser and the forum link follow the transcript body.
+    # Cut them before parsing so they never become "narration".
+    for marker in ('<p class="discuss"', '<div class="document-browser"'):
+        idx = html.find(marker)
+        if idx != -1:
+            html = html[:idx]
     cm = re.search(r'<div class="entry-content">(.*?)</div>', html, re.S)
     body = cm.group(1) if cm else html
     lines = []
@@ -40,10 +46,15 @@ def fetch(slug):
     return {'slug': slug, 'title': title, 'source_url': url, 'lines': lines}
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--refresh', action='store_true',
+                        help='re-fetch every page and rewrite the JSONL')
+    args = parser.parse_args()
     slugs = [s.strip() for s in open(os.path.join(HERE, 'transcript-missing.txt')) if s.strip()]
     out = os.path.join(HERE, 'transcripts_web.jsonl')
     done = set()
-    if os.path.exists(out):
+    if os.path.exists(out) and not args.refresh:
         for ln in open(out):
             try:
                 done.add(json.loads(ln)['slug'])
@@ -52,7 +63,7 @@ def main():
     todo = [s for s in slugs if s not in done]
     print(f'{len(slugs)} slugs, {len(done)} done, {len(todo)} to fetch')
     errs = 0
-    with open(out, 'a') as f, ThreadPoolExecutor(max_workers=10) as ex:
+    with open(out, 'w' if args.refresh else 'a') as f, ThreadPoolExecutor(max_workers=10) as ex:
         futs = {ex.submit(fetch, s): s for s in todo}
         for i, fut in enumerate(as_completed(futs), 1):
             s = futs[fut]
