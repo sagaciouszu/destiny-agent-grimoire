@@ -29,6 +29,9 @@
 
 [Menagerie: The Lamplighting - Hunter-exclusive]
 
+<!-- optional -->
+<!-- class: hunter -->
+
 *Calus:* Your people pride themselves on their cunning, Hunter. Are you worthy of your tribe?
 
 *Calus:* Lost treasure awaits you, Hunter. [laughs]
@@ -37,7 +40,13 @@
 
 *Calus:* Light the way, Hunter.
 
+<!-- /class -->
+<!-- /optional -->
+
 [Menagerie: The Lamplighting - Titan-exclusive]
+
+<!-- optional -->
+<!-- class: titan -->
 
 *Calus:* Your people pride themselves on their bravery, Titan. Are you worthy of your tribe?
 
@@ -47,7 +56,13 @@
 
 *Calus:* Light the way, Titan.
 
+<!-- /class -->
+<!-- /optional -->
+
 [Menagerie: The Lamplighting - Warlock-exclusive]
+
+<!-- optional -->
+<!-- class: warlock -->
 
 *Calus:* Your people pride themselves on their wisdom, Warlock. Are you worthy of your tribe?
 
@@ -56,6 +71,9 @@
 *Calus:* We shall see whether you wits win the day, Warlock.
 
 *Calus:* Light the way, Warlock.
+
+<!-- /class -->
+<!-- /optional -->
 
 [Menagerie: The Lamplighting - Generic]
 

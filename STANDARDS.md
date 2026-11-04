@@ -50,7 +50,7 @@ a change that is not done.
 | `books` | slug, title | source_url, entry_count | slugs match live `categories/book-<slug>` (2 documented exemptions) |
 | `book_entries` | book_id, body | title (fallback to book title), seq | provenance via parent book |
 | `transcripts` | slug, title | release, characters, arc, source_url, source_tier | release empty when the source lacks it; `source_tier` records provenance precedence |
-| `transcript_lines` | transcript_id, seq, speaker, line, norm_line | is_stage_dir | seq contiguous from 0 |
+| `transcript_lines` | transcript_id, seq, speaker, line, norm_line | is_stage_dir, section, is_optional, class_tag | seq contiguous from 0; class_tag is hunter, titan or warlock |
 | `grimoire_cards` | slug, title, body, source_url | game | D1 cards only |
 | `interactions` | slug, title, text | speaker, release, source_url | speaker may be empty (narrated scenes) |
 | `items` | slug, title | text, release, item_type, source_url | 16k stat-only items have no lore text by design |
@@ -109,8 +109,12 @@ ledger, never silently overwritten.
 
 Ishtar's transcript guide defines `// OPTIONAL` blocks for alternatives, class
 callouts and variants. These are stored with `is_optional=1`; section/location
-headers from `++` are stored in `section`. Agents quote non-optional lines by
-default and use optional lines only when variants are requested.
+headers from `++` are stored in `section`; class-exclusive lines carry
+`class_tag = hunter|titan|warlock`. Agents quote non-optional lines by default,
+and `--class` adds the chosen class variants.
+
+User preferences, including the player's class, belong to the agent runtime
+(`memory.py`), never to the shared canon database.
 
 ### Extracted game data
 

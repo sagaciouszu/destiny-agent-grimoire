@@ -152,6 +152,7 @@ def migrate():
         seq = 0
         section = ''
         optional = 0
+        class_tag = ''
         # Audio-quoted line format: '- "quote text"' (no *Speaker:* wrapper)
         is_quoted_file = slug.startswith(('ingame-quotes-', 'youtube-', 'weblore-'))
         if slug.startswith('weblore'):
@@ -167,25 +168,31 @@ def migrate():
             if st == '<!-- /optional -->':
                 optional = 0
                 continue
+            if st.startswith('<!-- class:'):
+                class_tag = st.split(':', 1)[1].replace('-->', '').strip().lower()
+                continue
+            if st == '<!-- /class -->':
+                class_tag = ''
+                continue
             if is_quoted_file:
                 m = re.match(r'^-?\s*"(.+?)"\s*(?:(?:-|\u2014)\s*\w.*\s*)?$', ln.strip())
                 if m:
                     line = m.group(1).strip()
-                    conn.execute('INSERT INTO transcript_lines (transcript_id,seq,speaker,line,norm_line,is_stage_dir,section,is_optional) VALUES (?,?,?,?,?,0,?,?)',
-                        (tid, seq, 'Drifter', line, norm_text(line), section, optional))
+                    conn.execute('INSERT INTO transcript_lines (transcript_id,seq,speaker,line,norm_line,is_stage_dir,section,is_optional,class_tag) VALUES (?,?,?,?,?,0,?,?,?)',
+                        (tid, seq, 'Drifter', line, norm_text(line), section, optional, class_tag))
                     seq += 1
                     tl_count += 1
                 continue
             sp, line = parse_speaker_line(ln)
             if sp and line and not is_junk_speaker(sp):
-                conn.execute('INSERT INTO transcript_lines (transcript_id,seq,speaker,line,norm_line,is_stage_dir,section,is_optional) VALUES (?,?,?,?,?,0,?,?)',
-                    (tid, seq, sp, line, norm_text(line), section, optional))
+                conn.execute('INSERT INTO transcript_lines (transcript_id,seq,speaker,line,norm_line,is_stage_dir,section,is_optional,class_tag) VALUES (?,?,?,?,?,0,?,?,?)',
+                    (tid, seq, sp, line, norm_text(line), section, optional, class_tag))
                 seq += 1
                 tl_count += 1
             elif not is_quoted_file and len(ln.strip()) > 20 and not ln.startswith('#') and not ln.startswith('-'):
                 # Stage direction / narration line
-                conn.execute('INSERT INTO transcript_lines (transcript_id,seq,speaker,line,norm_line,is_stage_dir,section,is_optional) VALUES (?,?,?,?,?,1,?,?)',
-                    (tid, seq, 'Narration', ln.strip(), norm_text(ln.strip()), section, optional))
+                conn.execute('INSERT INTO transcript_lines (transcript_id,seq,speaker,line,norm_line,is_stage_dir,section,is_optional,class_tag) VALUES (?,?,?,?,?,1,?,?,?)',
+                    (tid, seq, 'Narration', ln.strip(), norm_text(ln.strip()), section, optional, class_tag))
                 seq += 1
                 tl_count += 1
     print(f'transcripts: {t_count}, lines: {tl_count}')
@@ -444,17 +451,18 @@ def migrate():
     # Build FTS index (global rowid sequence)
     print('building FTS index...')
     fts_id = 0
-    def add_fts(title, text, speaker='', body='', source='', source_slug=''):
+    def add_fts(title, text, speaker='', body='', source='', source_slug='', class_tag=''):
         nonlocal fts_id
         fts_id += 1
-        conn.execute('INSERT INTO fts (rowid,title,text,speaker,body,source,source_slug) VALUES (?,?,?,?,?,?,?)',
-            (fts_id, title, text or '', speaker, body or '', source, source_slug))
+        conn.execute('INSERT INTO fts (rowid,title,text,speaker,body,source,source_slug,class_tag) VALUES (?,?,?,?,?,?,?,?)',
+            (fts_id, title, text or '', speaker, body or '', source, source_slug, class_tag))
     for bid, slug, title in conn.execute('SELECT id,slug,title FROM books').fetchall():
         for eid, etitle, ebody in conn.execute('SELECT id,title,body FROM book_entries WHERE book_id=?', (bid,)).fetchall():
             add_fts(f'{title}: {etitle}', ebody, source='book_entry', source_slug=slug)
     for tid, slug, title in conn.execute('SELECT id,slug,title FROM transcripts').fetchall():
-        for tlid, sp, line in conn.execute('SELECT id,speaker,line FROM transcript_lines WHERE transcript_id=?', (tid,)).fetchall():
-            add_fts(title, line, sp, source='transcript_line', source_slug=slug)
+        for tlid, sp, line, ctag in conn.execute(
+                'SELECT id,speaker,line,class_tag FROM transcript_lines WHERE transcript_id=?', (tid,)).fetchall():
+            add_fts(title, line, sp, source='transcript_line', source_slug=slug, class_tag=ctag or '')
     for gid, slug, title, body in conn.execute('SELECT id,slug,title,body FROM grimoire_cards').fetchall():
         add_fts(title, body, source='grimoire_card', source_slug=slug)
     for iid, slug, title, speaker, text in conn.execute('SELECT id,slug,title,speaker,text FROM interactions').fetchall():

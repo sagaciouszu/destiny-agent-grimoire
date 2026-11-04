@@ -81,6 +81,7 @@ Eris (eris-morn/tests/):
   that are absent.
 - `persona-freshness.py` - fails when `persona.json` canon_lines no longer matches
   the live database for that speaker.
+- `class-filter-test.py` - hunter/titan/warlock variant filtering through the API.
 - `docs-audit.py` - every documented command resolves; query subcommands and flags are valid
 
 ## Onboarding and links (on demand)

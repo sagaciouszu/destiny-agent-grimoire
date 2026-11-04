@@ -75,7 +75,7 @@ def _trim(text, limit=MAX_TEXT):
 def search(query: str, type: str | None = None, limit: int = 10, full: bool = False,
            offset: int = 0, rank: bool = True, activity: str | None = None,
            season: str | None = None, event: str | None = None,
-           expansion: str | None = None) -> dict:
+           expansion: str | None = None, class_tag: str | None = None) -> dict:
     """Full-text search over books, transcripts, cards, items and records.
 
     Args:
@@ -89,12 +89,13 @@ def search(query: str, type: str | None = None, limit: int = 10, full: bool = Fa
         season: Season number, slug or name, for example 17 or "haunted".
         event: Rotating event slug or name, for example "the-dawning".
         expansion: Expansion slug or name.
+        class_tag: Filter to base lines plus hunter, titan or warlock variants.
     """
     rows = _api(api.search, query, type=type, limit=_limit(limit, 10), full=full,
                 offset=_offset(offset), rank=rank, activity=activity, season=season,
-                event=event, expansion=expansion)
+                event=event, expansion=expansion, class_tag=class_tag)
     total = _api(api.search_total, query, type=type, activity=activity, season=season,
-                 event=event, expansion=expansion)
+                 event=event, expansion=expansion, class_tag=class_tag)
     if full:
         for r in rows:
             r['text'] = _trim(r.get('text', ''))
@@ -105,7 +106,8 @@ def search(query: str, type: str | None = None, limit: int = 10, full: bool = Fa
 
 @server.tool(annotations=READ_ONLY)
 def character(name: str, about: str | None = None, all_lines: bool = False,
-              limit: int = 20, offset: int = 0, canon_only: bool = False) -> dict:
+              limit: int = 20, offset: int = 0, canon_only: bool = False,
+              class_tag: str | None = None) -> dict:
     """Character lines from canon.
 
     Args:
@@ -115,9 +117,11 @@ def character(name: str, about: str | None = None, all_lines: bool = False,
         limit: Maximum rows (1-100).
         offset: Rows to skip (0-10000).
         canon_only: Exclude optional/variant lines.
+        class_tag: Base lines plus hunter, titan or warlock variants.
     """
     res = _api(api.character, name, about=about, all_lines=all_lines,
-                limit=_limit(limit, 20), offset=_offset(offset), canon_only=canon_only)
+                limit=_limit(limit, 20), offset=_offset(offset), canon_only=canon_only,
+                class_tag=class_tag)
     if res is None:
         return {'found': False, 'header': '', 'rows': []}
     for row in res['rows']:
@@ -224,7 +228,8 @@ def book(ref: str, limit: int = 20, offset: int = 0, full: bool = False) -> dict
 @server.tool(annotations=READ_ONLY)
 def transcript(ref: str, speaker: str | None = None, limit: int = 50, offset: int = 0,
                full: bool = False, include_stage: bool = False,
-               canon_only: bool = False, section: str | None = None) -> dict:
+               canon_only: bool = False, section: str | None = None,
+               class_tag: str | None = None) -> dict:
     """Read a transcript and its dialogue lines.
 
     Args:
@@ -236,10 +241,11 @@ def transcript(ref: str, speaker: str | None = None, limit: int = 50, offset: in
         include_stage: Include stage directions.
         canon_only: Exclude optional/variant lines.
         section: Only lines from this section or location.
+        class_tag: Base lines plus hunter, titan or warlock variants.
     """
     res = _api(api.transcript, ref, speaker=speaker, limit=_limit(limit, 50),
                offset=_offset(offset), full=full, include_stage=include_stage,
-               canon_only=canon_only, section=section)
+               canon_only=canon_only, section=section, class_tag=class_tag)
     if res is None:
         raise ToolError(f'transcript not found: {ref}')
     if full:

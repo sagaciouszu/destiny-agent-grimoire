@@ -130,7 +130,7 @@ migration. The full contract is `STANDARDS.md`.
 - **Discovery:** `db/capabilities.json` is a machine-readable manifest of tables,
   views, commands and contracts.
 - **Search surface:** FTS5 with a `source` column for exact type filters and
-  optional `--activity`, `--season`, `--event` and `--expansion` facets.
+  optional `--activity`, `--season`, `--event`, `--expansion` and `--class` facets.
 - **Taxonomy:** `docs/TAXONOMY.md` defines the expansion/season/activity/event
   model, confidence levels and query examples.
 - **Lore:** `python3 db/query.py list lore` and `lore <hash|title>` expose the
@@ -214,7 +214,7 @@ repository minus the database lives outside the tree.
 | Drifter agent audit | run tests/master-audit.sh in how-to-drift-for-agents | 20/20 |
 | Eris agent audit | run tests/master-audit.sh in eris-morn | 15/15 |
 | Database integrity | `bash tests/test-db.sh` | 51 checks |
-| Query interface | `bash tests/query-interface-test.sh` | 85 checks |
+| Query interface | `bash tests/query-interface-test.sh` | 89 checks |
 | Agent layout | `bash tests/agent-layout-test.sh` | 39 checks |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 checks |
 | MCP contract | `mcp-server/.venv/bin/python tests/mcp-test.py` | 8/8 checks |

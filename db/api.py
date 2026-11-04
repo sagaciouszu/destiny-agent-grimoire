@@ -169,7 +169,7 @@ def _limit(value, default):
 
 @_guard
 def search(term, type=None, limit=10, full=False, offset=0, rank=True,
-           activity=None, season=None, event=None, expansion=None):
+           activity=None, season=None, event=None, expansion=None, class_tag=None):
     """Full-text search. Returns rows with a snippet unless full=True.
 
     The term is used as FTS5 syntax when valid; otherwise every word is quoted
@@ -190,6 +190,9 @@ def search(term, type=None, limit=10, full=False, offset=0, rank=True,
         if facet:
             where += ' AND ' + facet
             params.extend(facet_params)
+        cfilter, cparams = _class_filter(class_tag)
+        where += cfilter
+        params.extend(cparams)
         params.append(_limit(limit, 10))
         params.append(_offset(offset))
         order = (" ORDER BY bm25(fts, 3.0, 1.0, 1.0, 1.0, 0.0)"
@@ -217,13 +220,16 @@ def _speaker_variants(name):
     return [v for v in variants if v]
 
 
-def _transcript_lines(conn, name, pattern, limit, offset, canon_only=False):
+def _transcript_lines(conn, name, pattern, limit, offset, canon_only=False, class_tag=None):
     for variant in _speaker_variants(name):
         params = [f'%{_like(variant)}%']
         sql = ("SELECT line AS text, speaker, '' AS source_slug FROM transcript_lines "
                "WHERE speaker LIKE ? ESCAPE '\\' AND is_stage_dir=0")
         if canon_only:
             sql += ' AND is_optional=0'
+        if class_tag:
+            sql += " AND (class_tag IS NULL OR class_tag='' OR class_tag=?)"
+            params.append(str(class_tag).lower())
         if pattern:
             sql += " AND LOWER(line) LIKE ? ESCAPE '\\'"
             params.append(pattern)
@@ -237,7 +243,8 @@ def _transcript_lines(conn, name, pattern, limit, offset, canon_only=False):
 
 
 @_guard
-def character(name, about=None, all_lines=False, limit=20, offset=0, canon_only=False):
+def character(name, about=None, all_lines=False, limit=20, offset=0, canon_only=False,
+              class_tag=None):
     """Curated character quotes, or transcript lines for any canon speaker.
 
     Curated characters use the compendium. Speakers who exist only in
@@ -250,6 +257,11 @@ def character(name, about=None, all_lines=False, limit=20, offset=0, canon_only=
             params = [f'%{_like(name)}%']
             sql = ("SELECT line AS text, speaker, '' AS source_slug FROM transcript_lines "
                    "WHERE speaker LIKE ? ESCAPE '\\' AND is_stage_dir=0")
+            if canon_only:
+                sql += ' AND is_optional=0'
+            if class_tag:
+                sql += " AND (class_tag IS NULL OR class_tag='' OR class_tag=?)"
+                params.append(str(class_tag).lower())
             if pattern:
                 sql += " AND LOWER(line) LIKE ? ESCAPE '\\'"
                 params.append(pattern)
@@ -261,7 +273,8 @@ def character(name, about=None, all_lines=False, limit=20, offset=0, canon_only=
 
         ch = _resolve_character(conn, name)
         if not ch:
-            rows = _transcript_lines(conn, name, pattern, limit, offset, canon_only=canon_only)
+            rows = _transcript_lines(conn, name, pattern, limit, offset, canon_only=canon_only,
+                                     class_tag=class_tag)
             if not rows:
                 return None
             return {'header': f'=== {name} (transcript lines) ===', 'rows': rows}
@@ -376,7 +389,7 @@ def verify(quote, speaker=None, exact=False):
 
 
 @_guard
-def search_total(term, type=None, activity=None, season=None, event=None, expansion=None):
+def search_total(term, type=None, activity=None, season=None, event=None, expansion=None, class_tag=None):
     """Total FTS matches for a query (for paging)."""
     term = clean_input(term, 500)
     if type is not None and type not in TYPE_TO_SOURCE:
@@ -393,6 +406,9 @@ def search_total(term, type=None, activity=None, season=None, event=None, expans
         if facet:
             where += ' AND ' + facet
             params.extend(facet_params)
+        cfilter, cparams = _class_filter(class_tag)
+        where += cfilter
+        params.extend(cparams)
         return conn.execute(f'SELECT COUNT(*) FROM fts WHERE {where}', params).fetchone()[0]
     finally:
         conn.close()
@@ -474,7 +490,7 @@ def book(ref, limit=20, offset=0, full=False):
 
 @_guard
 def transcript(ref, speaker=None, limit=50, offset=0, full=False, include_stage=False,
-               canon_only=False, section=None):
+               canon_only=False, section=None, class_tag=None):
     """Transcript metadata and dialogue lines. ref accepts a slug or title fragment."""
     conn = connect()
     try:
@@ -493,15 +509,19 @@ def transcript(ref, speaker=None, limit=50, offset=0, full=False, include_stage=
         if section:
             where.append("section LIKE ? ESCAPE '\\'")
             params.append(f'%{_like(section)}%')
+        if class_tag:
+            where.append("(class_tag IS NULL OR class_tag='' OR class_tag=?)")
+            params.append(str(class_tag).lower())
         clause = ' AND '.join(where)
         total = conn.execute(f'SELECT COUNT(*) FROM transcript_lines WHERE {clause}', params).fetchone()[0]
         rows = conn.execute(
-            f'SELECT seq, speaker, line, section, is_optional FROM transcript_lines WHERE {clause} '
+            f'SELECT seq, speaker, line, section, is_optional, class_tag FROM transcript_lines WHERE {clause} '
             f'ORDER BY seq LIMIT ? OFFSET ?',
             params + [_limit(limit, 50), _offset(offset)]).fetchall()
         lines = [{'seq': r['seq'], 'speaker': r['speaker'],
                   'text': (r['line'] or '') if full else _snippet(r['line']),
-                  'section': r['section'], 'optional': bool(r['is_optional'])}
+                  'section': r['section'], 'optional': bool(r['is_optional']),
+                  'class_tag': r['class_tag'] or None}
                  for r in rows]
         tax = conn.execute(
             'SELECT activity_slug, activity_type, season_slug, act, event_slug, '
@@ -626,6 +646,15 @@ def _resolve_expansion(conn, ref):
         "SELECT slug FROM expansions WHERE LOWER(name) LIKE LOWER(?) ESCAPE '\\' "
         'ORDER BY LENGTH(name) LIMIT 1', (f'%{_like(ref)}%',)).fetchone()
     return row[0] if row else None
+
+
+def _class_filter(value):
+    if not value:
+        return '', []
+    value = str(value).lower()
+    if value not in ('hunter', 'titan', 'warlock'):
+        return '0', []
+    return " AND (class_tag IS NULL OR class_tag='' OR class_tag=?)", [value]
 
 
 def _taxonomy_filter(conn, activity=None, season=None, event=None, expansion=None):

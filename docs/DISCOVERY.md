@@ -97,6 +97,16 @@ dialogue. They are indexed for discovery (`source=lore_entry`), while seal and
 triumph descriptions stay out of `verify_fts`. `lore`, `seal` and `seals`
 provide direct lookups.
 
+## Class variants and user preferences
+
+Class-specific dialogue is tagged on `transcript_lines.class_tag`. The query
+layer accepts `--class hunter|titan|warlock`, returning base lines plus that
+class's variants; `--canon-only` excludes optional and class variants.
+
+The preference lives with the agent, not the canon: generated agents store the
+user's class in `memory.py` (`prefs-set --class`), and read it before
+class-sensitive queries. The shared grimoire never stores user data.
+
 ## Source tiers
 
 `transcripts.source_tier` records precedence: Ishtar main and tagged Commons

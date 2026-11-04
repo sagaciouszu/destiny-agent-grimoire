@@ -47,11 +47,11 @@
   },
   "commands": {
     "search": {
-      "usage": "query.py search \"<term>\" [--type T] [--activity A] [--season S] [--event E] [--expansion X] [--limit N] [--offset N] [--rank|--no-rank] [--json] [--full]",
+      "usage": "query.py search \"<term>\" [--type T] [--activity A] [--season S] [--event E] [--expansion X] [--class hunter|titan|warlock] [--limit N] [--offset N] [--rank|--no-rank] [--json] [--full]",
       "returns": "snippet context by default; --full for complete text"
     },
     "character": {
-      "usage": "query.py character \"<name>\" [--about <term>] [--all] [--canon-only] [--limit N] [--offset N] [--json]",
+      "usage": "query.py character \"<name>\" [--about <term>] [--all] [--canon-only] [--class hunter|titan|warlock] [--limit N] [--offset N] [--json]",
       "returns": "curated quotes by default; --all for raw transcript lines"
     },
     "item": {
@@ -72,7 +72,7 @@
       "usage": "query.py book \"<slug or title>\" [--limit N] [--offset N] [--full] [--json]"
     },
     "transcript": {
-      "usage": "query.py transcript \"<slug or title>\" [--speaker NAME] [--section NAME] [--canon-only] [--limit N] [--offset N] [--full] [--json]"
+      "usage": "query.py transcript \"<slug or title>\" [--speaker NAME] [--section NAME] [--canon-only] [--class hunter|titan|warlock] [--limit N] [--offset N] [--full] [--json]"
     },
     "find_item": {
       "usage": "query.py find-item \"<title>\" [--limit N] [--offset N] [--json]"

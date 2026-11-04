@@ -102,6 +102,10 @@ check "$Q search 'iris unfurls' --type lore --limit 1 | grep -q 'lore_entry'" "s
 check "$Q seals | grep -q 'Conqueror'" "seal list"
 check "$Q seal Conqueror | grep -q 'Grandmaster'" "seal records"
 check "$Q list seals --limit 3 | grep -q 'records'" "list seals"
+check "$Q character Calus --class hunter --about Hunter | grep -q 'cunning'" "class hunter variants"
+check "$Q character Calus --class titan --about Titan | grep -q 'bravery'" "class titan variants"
+check "$Q search 'pride themselves' --class warlock --limit 1 | grep -q 'wisdom'" "class warlock search"
+check "python3 $ARCHIVE/tests/class-filter-test.py" "class transcript filter"
 
 echo ""
 echo "Passed: $PASS | Failed: $FAIL"

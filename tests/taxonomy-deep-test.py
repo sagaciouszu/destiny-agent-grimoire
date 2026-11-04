@@ -97,6 +97,14 @@ def metadata():
     assert one('SELECT COUNT(*) FROM transcript_lines WHERE is_optional=1') > 0
 
 
+def class_tags():
+    tags = {r[0] for r in conn.execute("SELECT DISTINCT class_tag FROM transcript_lines WHERE class_tag!=''")}
+    assert tags <= {'hunter', 'titan', 'warlock'}, tags
+    assert tags == {'hunter', 'titan', 'warlock'}, tags
+    optional = one("SELECT COUNT(*) FROM transcript_lines WHERE class_tag!='' AND is_optional=1")
+    assert optional >= 3, optional
+
+
 def api_lore():
     res = api.lore("Gate Lord's Eye")
     assert res and res['body'] and res['items']
@@ -133,6 +141,7 @@ for name, fn in [
     ('seal records resolve', seals),
     ('manifest catalogue and links resolve', manifest),
     ('section/optional metadata', metadata),
+    ('class variant tags', class_tags),
     ('API lore lookup', api_lore),
     ('API seal lookup', api_seal),
     ('API canon-only and section', api_canon),

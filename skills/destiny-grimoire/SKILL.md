@@ -105,6 +105,8 @@ python3 db/query.py verify "Absolutely not." --speaker "Eris Morn" --exact
 - `search --type books|transcripts|grimoire|interactions|items|records|lore`
 - `seals` / `seal "<name>"` for seal and triumph records
 - `search --activity`, `--season`, `--event`, `--expansion` filter by taxonomy
+- `--class hunter|titan|warlock` adds class variants to base lines; `--canon-only`
+  excludes optional and class variants
 - `--season` accepts a number (`7`), a slug (`season-of-opulence`) or a name
   fragment (`opulence`); episodes work the same way (`24`, `echoes`)
 - `character --about <term>` filters, `character --all` uses raw transcript lines
