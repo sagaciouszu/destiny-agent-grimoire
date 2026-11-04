@@ -73,6 +73,10 @@ Eris (eris-morn/tests/):
   provenance URLs, index completeness
 - `retrieval-eval.py` - 15-query retrieval baseline; compares default and ranked order
 - `item-audit.py` - item slugs, titles, URLs, text and optional-field coverage
+- `taxonomy-deep-test.py` - tiers, classification refs, seasons, events, lore, seals,
+  manifest links and API parity for the additive layers.
+- `agent-connections-test.sh` - every local agent resolves the canonical DB and the
+  current character/lore/seal surface; skips agents that are absent.
 - `docs-audit.py` - every documented command resolves; query subcommands and flags are valid
 
 ## Onboarding and links (on demand)

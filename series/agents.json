@@ -18,6 +18,14 @@
       "entry": "eris.md",
       "summary": "Hive expert, survivor of the Hellmouth, the Witch.",
       "consult": "Hive, the Moon, Savathun, the Witness, occult and ritual lore."
+    },
+    {
+      "id": "calus",
+      "name": "Emperor Calus",
+      "source": "destiny-agent-calus",
+      "entry": "calus.md",
+      "summary": "Emperor of the Cabal, herald of the Witness, host of the Menagerie.",
+      "consult": "Calus, the Cabal, the Leviathan, the Menagerie, Opulence, the Witness and the end."
     }
   ]
 }
