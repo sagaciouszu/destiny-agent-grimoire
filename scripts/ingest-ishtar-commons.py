@@ -56,6 +56,7 @@ def main():
     parser.add_argument('--title', required=True)
     parser.add_argument('--release', default='')
     parser.add_argument('--arc', default='')
+    parser.add_argument('--tier', default='ishtar_commons')
     parser.add_argument('--dry-run', action='store_true')
     args = parser.parse_args()
 
@@ -73,6 +74,7 @@ def main():
             f'- Release: {args.release}\n'
             f'- Characters: {", ".join(speakers)}\n'
             f'- Arc: {args.arc}\n'
+            f'- Tier: {args.tier}\n'
             f'- Source: https://commons.ishtar-collective.net/t/{args.topic[0]}\n\n'
             + '\n\n'.join(f'*{speaker}:* {line}' for speaker, line in rows) + '\n')
     if args.dry_run:

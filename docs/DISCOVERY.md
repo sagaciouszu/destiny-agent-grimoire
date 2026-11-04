@@ -62,7 +62,7 @@ Episodes are not ordinary seasons, so they carry `season_type='episode'` and an
 | `manual` | curated override |
 | `unknown` | nothing matched |
 
-Current transcript split: 1,234 explicit, 59 derived, 1 unknown. The remaining
+Current transcript split: 1,248 explicit, 59 derived, 1 unknown. The remaining
 derived rows are generated cutscene compilations and Commons topics without a
 release page. They remain searchable by text; they are simply not attributed.
 
@@ -123,7 +123,7 @@ flagged with `is_optional`; `--canon-only` excludes them.
 
 - Source scarcity, not schema, is the remaining constraint. Several vaulted
   raids have no surviving transcript source.
-- Item classification relies on release strings and title keywords; 12,070
+- Item classification relies on release strings and title keywords; 9,513
   items remain `unknown`.
 - Authoritative Bungie manifest ingestion needs an API key. The curated
   catalogue is the fallback and is documented as such.

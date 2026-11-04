@@ -30,7 +30,7 @@ API = 'https://www.destinypedia.com/api.php'
 
 def fetch(page):
     url = (f'{API}?action=parse&page={urllib.parse.quote(page)}'
-           '&prop=wikitext&format=json&formatversion=2')
+           '&prop=wikitext&format=json&formatversion=2&redirects=1')
     raw = subprocess.run(
         ['curl', '-sL', '--max-time', '60', '-A', 'Mozilla/5.0', url],
         capture_output=True, text=True).stdout
@@ -41,7 +41,9 @@ def fetch(page):
 
 
 def clean(text):
-    text = re.sub(r'\[\[([^\]|]+)\|([^\]]+)\]\]', r'\2', text)
+    # Labels may contain literal brackets (e.g. [[Scythe|[laughs]]]), so allow
+    # the label to span brackets and stop at the final closing pair.
+    text = re.sub(r'\[\[([^\]|]+)\|(.+?)\]\]', r'\2', text)
     text = re.sub(r'\[\[([^\]]+)\]\]', r'\1', text)
     text = re.sub(r'\[https?://[^\]]+\s+([^\]]+)\]', r'\1', text)
     text = re.sub(r'<[^>]+>', '', text)
@@ -60,23 +62,57 @@ def transcript_section(wikitext):
     return rest[:stop.start()] if stop else rest
 
 
+# Destinypedia uses several shorthand speaker labels, especially in Vex
+# Network transcripts. Normalize them to the grimoire's canonical names.
+SPEAKER_MAP = {
+    'AI-FS': 'Failsafe',
+    'IKO': 'Ikora',
+    'Ikora Rey': 'Ikora',
+    'OSI': 'Osiris',
+    'S14': 'Saint-14',
+    'EID': 'Eido',
+    'COND': 'Conductor',
+    'CORRUPTED': 'Corrupted Vex',
+    'C Rr pTeee': 'Corrupted Vex',
+    'Mara': 'Mara Sov',
+}
+
+
 def extract(wikitext):
     rows, seen = [], set()
     for raw in transcript_section(wikitext).splitlines():
-        m = re.match(r"^\*\s*'''(?P<sp>.+?)'''\s*:?\s*(?P<line>.+)$", raw.strip())
-        if not m:
+        line = raw.strip()
+        if not line or line.startswith(('|', '{{', '}}', '[[')):
             continue
-        speaker = clean(m.group('sp')).rstrip(':').lstrip(':').strip()
-        line = clean(m.group('line')).lstrip(':').strip()
-        if not speaker or not line:
+        # Bold speaker, with or without a leading list marker:
+        #   *'''Calus''': ...
+        #   '''The Crow''': ...
+        #   *'''Mara Sov:''' ...
+        m = re.match(r"^[\*:]*\s*'''(?P<sp>.+?)'''\s*:?\s*(?P<line>.+)$", line)
+        if m:
+            speaker, text = m.group('sp'), m.group('line')
+        else:
+            # Terminal-style speakers used in Vex Network transcripts:
+            #   //[[Failsafe|AI-FS]]: ...
+            m = re.match(
+                r"^//\s*(?:\[\[([^\]|]+)\|([^\]]+)\]\]|\[\[([^\]]+)\]\]|([^:]+))\s*:\s*(.*)$",
+                line)
+            if not m:
+                continue
+            speaker = m.group(2) or m.group(3) or m.group(4)
+            text = m.group(5)
+        speaker = clean(speaker).rstrip(':').lstrip(':').strip()
+        speaker = SPEAKER_MAP.get(speaker, speaker)
+        text = re.sub(r'^:\s+', '', clean(text)).strip()
+        if not speaker or not text:
             continue
-        if line.lower().startswith(('according to', 'see also')):
+        if text.lower().startswith(('according to', 'see also')):
             continue
-        key = (speaker, line)
+        key = (speaker, text)
         if key in seen:
             continue
         seen.add(key)
-        rows.append((speaker, line))
+        rows.append((speaker, text))
     return rows
 
 
@@ -87,6 +123,7 @@ def main():
     parser.add_argument('--title', required=True)
     parser.add_argument('--release', default='')
     parser.add_argument('--arc', default='')
+    parser.add_argument('--tier', default='destinypedia')
     parser.add_argument('--dry-run', action='store_true')
     args = parser.parse_args()
 
@@ -98,7 +135,8 @@ def main():
             f'- Release: {args.release}\n'
             f'- Characters: {", ".join(speakers)}\n'
             f'- Arc: {args.arc}\n'
-            f'- Source: https://www.destinypedia.com/{args.page}\n\n'
+            f'- Tier: {args.tier}\n'
+            f'- Source: https://www.destinypedia.com/{urllib.parse.quote(args.page.replace(" ", "_"), safe=",:")}\n\n'
             + '\n\n'.join(f'*{speaker}:* {line}' for speaker, line in rows) + '\n')
     path = os.path.join(OUT_DIR, f'{args.slug}.md')
     if args.dry_run:

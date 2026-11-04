@@ -132,6 +132,12 @@ def main():
     parser.add_argument('--min-lines', type=int, default=2)
     parser.add_argument('--topic', type=int, action='append', default=None,
                         help='only ingest this topic id; repeat as needed')
+    parser.add_argument('--release', default=None,
+                        help='override the recorded-date release for selected topics')
+    parser.add_argument('--arc', default=None,
+                        help='override the derived activity slug for selected topics')
+    parser.add_argument('--allow-narration', action='store_true',
+                        help='write encounter transcripts that have no speaker lines')
     parser.add_argument('--dry-run', action='store_true')
     args = parser.parse_args()
 
@@ -198,13 +204,13 @@ def main():
         unique = sum(len(k) for _, _, k in rows)
         unique_dialogue = sum(1 for _, _, k in rows for s, _ in k if s != 'Narration')
         report['duplicate_lines'] += dups
-        if unique_dialogue == 0 or unique < args.min_lines:
+        if (unique_dialogue == 0 and not args.allow_narration) or unique < args.min_lines:
             report['skipped'] += 1
             continue
         speakers = sorted({s for _, _, k in rows for s, _ in k if s != 'Narration'})
-        release = meta.get('recorded') or (raw.get('created_at') or '')[:10]
+        release = args.release or meta.get('recorded') or (raw.get('created_at') or '')[:10]
         classified = taxonomy.classify(slug='', title=title, release=release, arc='')
-        arc = classified.get('activity_slug') or classified.get('season_slug') or ''
+        arc = args.arc or classified.get('activity_slug') or classified.get('season_slug') or ''
         tier = next((t for t in ('validated', 'published', 'proofed') if t in tags),
                     'ishtar_commons')
         body = [f'# {title}', '',
