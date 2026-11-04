@@ -79,6 +79,10 @@ check "$Q character calus --about Titan | grep -q 'bravery'" "menagerie Titan ca
 check "$Q character calus --about Warlock | grep -q 'wisdom'" "menagerie Warlock callout"
 check "$Q verify 'Light the way, Hunter.' --speaker Calus --exact | grep -q VERIFIED" "menagerie variant verifies"
 check "$Q search 'Light the way, Warlock' --activity menagerie --limit 1 | grep -q 'results'" "menagerie search by activity"
+check "$Q activity last-wish | grep -q 'Coverage:'" "last wish coverage"
+check "$Q activity vow-of-the-disciple | grep -q 'Rhulk'" "vow transcript has Rhulk"
+check "$Q activity vespers-host | grep -q '71 lines'" "vespers host dialogue"
+check "$Q character rhulk --limit 3 | grep -q 'transcript lines'" "rhulk speaker depth"
 
 echo ""
 echo "Passed: $PASS | Failed: $FAIL"
