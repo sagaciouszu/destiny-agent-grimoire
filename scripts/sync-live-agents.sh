@@ -13,7 +13,7 @@ set -e
 HERE="$(cd "$(dirname "$0")/.." && pwd)"
 WORK="${AGENT_REPOS_DIR:-$(dirname "$HERE")}"
 MANIFEST="${SERIES_MANIFEST:-$HERE/series/agents.json}"
-DRY=""
+DRY=""; RSYNC_DRY=""
 TARGET="opencode"
 DEST="${OPENCODE_AGENTS:-$HOME/.config/opencode/agents}"
 
@@ -22,7 +22,7 @@ for arg in "$@"; do
         --openclaw)
             TARGET="openclaw"
             OC_ROOT="${OPENCLAW_ROOT:-$HOME/.openclaw}" ;;
-        --dry-run) DRY="--dry-run" ;;
+        --dry-run) DRY="echo"; RSYNC_DRY="-n" ;;
         *) echo "usage: $0 [--openclaw] [--dry-run]" >&2; exit 2 ;;
     esac
 done
@@ -122,7 +122,7 @@ if [ "$TARGET" = "opencode" ]; then
         DEPLOYED=$((DEPLOYED+1))
         DEPLOYED_IDS+=("$id")
         $DRY mkdir -p "$DEST/$id"
-        rsync -a --delete $DRY "${EXCLUDES[@]}" "$src/" "$DEST/$id/"
+        rsync -a --delete $RSYNC_DRY "${EXCLUDES[@]}" "$src/" "$DEST/$id/"
         if [ -f "$DEST/$id/$entry" ]; then
             $DRY mv -f "$DEST/$id/$entry" "$DEST/$entry"
         fi
@@ -314,7 +314,7 @@ else
         DEPLOYED=$((DEPLOYED+1))
         target="$OC_ROOT/workspace-$id"
         $DRY mkdir -p "$target"
-        rsync -a --delete $DRY "${EXCLUDES[@]}" "$src/" "$target/"
+        rsync -a --delete $RSYNC_DRY "${EXCLUDES[@]}" "$src/" "$target/"
         if [ -z "$DRY" ] && [ ! -f "$target/$entry" ]; then
             echo "FATAL: entry missing after sync: $target/$entry" >&2
             exit 1
