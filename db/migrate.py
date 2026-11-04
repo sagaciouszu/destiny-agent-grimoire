@@ -135,6 +135,7 @@ def migrate():
         characters = ''
         arc = ''
         tier = 'ishtar_main'
+        source_url = f'https://www.ishtar-collective.net/transcripts/{slug}'
         for ln in lines[:20]:
             if ln.startswith('- Release:'):
                 release = ln.replace('- Release:','').strip()
@@ -144,9 +145,15 @@ def migrate():
                 arc = ln.replace('- Arc:','').strip()
             elif ln.startswith('- Tier:'):
                 tier = ln.replace('- Tier:','').strip()
+            elif ln.startswith('- Source:'):
+                raw_source = ln.replace('- Source:','').strip()
+                # Older hand-written files describe the source in prose
+                # ("Destinypedia — https://..."). Keep the URL when present.
+                m = re.search(r'https?://\S+', raw_source)
+                source_url = m.group(0) if m else ''
         cur = conn.execute(
             'INSERT INTO transcripts (slug,title,release,characters,arc,source_url,source_tier) VALUES (?,?,?,?,?,?,?)',
-            (slug, title, release, characters, arc, f'https://www.ishtar-collective.net/transcripts/{slug}', tier))
+            (slug, title, release, characters, arc, source_url, tier))
         tid = cur.lastrowid
         t_count += 1
         seq = 0

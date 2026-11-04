@@ -53,7 +53,7 @@ sqlite3 db/grimoire.db "SELECT slug, title, item_type FROM items WHERE item_type
 |-------|---------|
 | `books` | 110 lore books (slug, title, source_url, entry_count) |
 | `book_entries` | 1158 entries within books (FK to books) |
-| `transcripts` | 1294 transcript headers (quest + cutscene + web) |
+| `transcripts` | 1308 transcript headers (quest + cutscene + web) |
 | `transcript_lines` | Canonical dialogue by speaker |
 | `grimoire_cards` | 2889 Destiny 1 grimoire cards |
 | `interactions` | 2699 short character dialogue beats |

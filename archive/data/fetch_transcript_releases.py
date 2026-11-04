@@ -34,6 +34,12 @@ DISPLAY = {
     'revenant': 'Episode: Revenant',
     'echoes': 'Episode: Echoes',
 }
+# Ishtar's sidebar is authoritative for almost every page, but this one is a
+# Season of the Splicer event filed under the base game by mistake.
+SLUG_OVERRIDES = {
+    'a-rising-tide': {'release_slug': 'season-of-the-splicer',
+                      'release': 'Season of the Splicer'},
+}
 RELEASE_RE = re.compile(
     r'<div class="section-title">Added In</div>.*?'
     r'href="/releases/([^"]+)"[^>]*>([^<]+)</a>', re.S)
@@ -89,7 +95,7 @@ def main():
                 print(f'ERR {slug}: {exc}', file=sys.stderr)
                 continue
             if value:
-                existing[key] = value
+                existing[key] = SLUG_OVERRIDES.get(key, value)
             if i % 100 == 0:
                 print(f'...{i}/{len(todo)}')
     with open(OUT, 'w', encoding='utf-8') as fh:

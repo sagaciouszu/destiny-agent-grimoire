@@ -42,6 +42,13 @@ EXPANSIONS = [
     ('renegades', 'Renegades', 'Destiny 2', 2025, '2025-12-02', 0),
 ]
 
+# Destiny 1 has no numbered seasons. A D1 expansion must never inherit a D2
+# season from an activity that was later reprised (Vault of Glass, King's Fall).
+D1_EXPANSIONS = {
+    'destiny-1', 'the-dark-below', 'house-of-wolves', 'the-taken-king',
+    'rise-of-iron', 'age-of-triumph',
+}
+
 # --------------------------------------------------------------------------
 # Seasons / episodes. Bungie's official numeric season slot.
 # --------------------------------------------------------------------------
@@ -134,7 +141,7 @@ ACTIVITIES = [
     ('the-shattered-throne', 'The Shattered Throne', 'dungeon', 'forsaken', 'season-4', None, 0,
      ['shattered throne']),
     ('pit-of-heresy', 'Pit of Heresy', 'dungeon', 'shadowkeep', 'season-of-the-undying', None, 0,
-     ['pit of heresy']),
+     ['pit of heresy', 'lingering torment']),
     ('prophecy', 'Prophecy', 'dungeon', 'shadowkeep', 'season-of-arrivals', None, 0,
      ['prophecy dungeon', 'the prophecy']),
     ('grasp-of-avarice', 'Grasp of Avarice', 'dungeon', '30th-anniversary', 'season-of-the-lost', None, 0,
@@ -544,7 +551,8 @@ def classify(slug='', title='', release='', arc='', characters='', kind='transcr
     # 5. Fill from the activity catalogue.
     if activity:
         arow = next(r for r in ACTIVITIES if r[0] == activity)
-        season = season or arow[4]
+        if expansion not in D1_EXPANSIONS:
+            season = season or arow[4]
         expansion = expansion or arow[3]
         if confidence == 'unknown':
             confidence = 'derived'

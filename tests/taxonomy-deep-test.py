@@ -34,8 +34,8 @@ one = lambda q: conn.execute(q).fetchone()[0]
 
 def tiers():
     assert one("SELECT COUNT(*) FROM transcripts WHERE source_tier IS NULL OR source_tier=''") == 0
-    allowed = {'ishtar_main', 'ishtar_web', 'ishtar_commons', 'validated',
-               'published', 'proofed', 'cutscene'}
+    allowed = {'ishtar_main', 'ishtar_web', 'ishtar_commons', 'destinypedia',
+               'validated', 'published', 'proofed', 'cutscene'}
     bad = {r[0] for r in conn.execute('SELECT DISTINCT source_tier FROM transcripts')} - allowed
     assert not bad, f'unknown tiers: {bad}'
 

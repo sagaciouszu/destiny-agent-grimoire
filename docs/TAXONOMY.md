@@ -49,16 +49,24 @@ Current state (2026-11-04):
 
 | Content | explicit | derived | unknown |
 |---|---:|---:|---:|
-| Transcripts (1,294) | 1,234 | 59 | 1 |
+| Transcripts (1,308) | 1,248 | 59 | 1 |
 | Items (58,764) | 48,380 | 871 | 9,513 |
 | Books + records (181) | 64 | 4 | 113 |
 
 Every Ishtar web transcript now carries the page's authoritative `Added In`
 release (1,130/1,130), captured by
 `archive/data/fetch_transcript_releases.py`. That is why transcript coverage is
-near-complete and why Destiny 1 content is now visible: 120 transcripts and
-1,418 dialogue lines across `destiny-1`, `the-dark-below`, `house-of-wolves`,
+near-complete and why Destiny 1 content is now visible: 123 transcripts and
+1,412 dialogue lines across `destiny-1`, `the-dark-below`, `house-of-wolves`,
 `the-taken-king` and `rise-of-iron`.
+
+Ten Destinypedia verbatim transcripts close the remaining activity gaps where
+that wiki has a `Transcript` section: Salvation's Edge, Spire of Stars, Eater of
+Worlds, The Shattered Realm, Seraph's Shield, Starcrossed, Enigma Protocol,
+Kell's Fall, Deep Dives and Altars of Summoning. Four Destiny 1 raid encounter
+transcripts are narration-only and are labelled that way in `docs/GAPS.md`.
+A Destiny 1 expansion never inherits a Destiny 2 season from a reprised
+activity, so Vault of Glass and King's Fall stay seasonless.
 
 Manifest item sets provide an optional classification gain: 19 curated sets
 resolve 555 items that are still `unknown` (10,068 -> 9,513). The mapping lives
