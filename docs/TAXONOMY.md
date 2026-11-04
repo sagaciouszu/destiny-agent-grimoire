@@ -50,7 +50,7 @@ Current state (2026-11-04):
 
 | Content | explicit | derived | unknown |
 |---|---:|---:|---:|
-| Transcripts (1237) | 69 | 725 | 443 |
+| Transcripts (1,249) | 81 | 725 | 443 |
 | Items (58,764) | 46,304 | 390 | 12,070 |
 | Books + records (181) | 64 | 4 | 113 |
 
