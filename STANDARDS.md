@@ -87,6 +87,18 @@ Global rules:
   and URLs follow `https://www.ishtar-collective.net/<type>/<slug>`.
 - Empty optional fields are a statement about the source, never a placeholder.
 
+### Extracted game data
+
+Raw game packages, audio, string tables, subtitle exports and Bungie manifest
+dumps are **local-only**. They must never be committed, attached to a release or
+copied into an agent workspace. `.gitignore` covers `archive/data/manifest/`,
+`archive/data/game/`, `archive/data/extracted/`, `archive/data/subtitles/` and
+`*.pkg`.
+
+Only curated transcript markdown may be committed, with provenance naming the
+local build, for example `- Source: local game files (<build>)`. Extracted text
+is evidence for curation, not a redistributable asset.
+
 ## 4. Naming
 
 - Slugs: lowercase, hyphenated, taken from the live page slug wherever one exists.
