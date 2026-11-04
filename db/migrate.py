@@ -78,6 +78,8 @@ def is_junk_speaker(sp):
     sp = (sp or '').strip()
     if not sp:
         return False
+    if sp.upper() in ('NOTE', 'NOTES'):
+        return True
     return bool(ROMAN_SUFFIX.search(sp) or ACT_ONLY.match(sp))
 
 
@@ -131,6 +133,7 @@ def migrate():
         release = ''
         characters = ''
         arc = ''
+        tier = 'ishtar_main'
         for ln in lines[:20]:
             if ln.startswith('- Release:'):
                 release = ln.replace('- Release:','').strip()
@@ -138,36 +141,50 @@ def migrate():
                 characters = ln.replace('- Characters:','').strip()
             elif ln.startswith('- Arc:'):
                 arc = ln.replace('- Arc:','').strip()
+            elif ln.startswith('- Tier:'):
+                tier = ln.replace('- Tier:','').strip()
         cur = conn.execute(
-            'INSERT INTO transcripts (slug,title,release,characters,arc,source_url) VALUES (?,?,?,?,?,?)',
-            (slug, title, release, characters, arc, f'https://www.ishtar-collective.net/transcripts/{slug}'))
+            'INSERT INTO transcripts (slug,title,release,characters,arc,source_url,source_tier) VALUES (?,?,?,?,?,?,?)',
+            (slug, title, release, characters, arc, f'https://www.ishtar-collective.net/transcripts/{slug}', tier))
         tid = cur.lastrowid
         t_count += 1
         seq = 0
+        section = ''
+        optional = 0
         # Audio-quoted line format: '- "quote text"' (no *Speaker:* wrapper)
         is_quoted_file = slug.startswith(('ingame-quotes-', 'youtube-', 'weblore-'))
         if slug.startswith('weblore'):
             print(f'  DEBUG: {slug} is_quoted={is_quoted_file}, line_count={len(lines)}')
         for ln in lines:
+            st = ln.strip()
+            if st.startswith('## '):
+                section = st[3:].strip()
+                continue
+            if st == '<!-- optional -->':
+                optional = 1
+                continue
+            if st == '<!-- /optional -->':
+                optional = 0
+                continue
             if is_quoted_file:
                 m = re.match(r'^-?\s*"(.+?)"\s*(?:(?:-|\u2014)\s*\w.*\s*)?$', ln.strip())
                 if m:
                     line = m.group(1).strip()
-                    conn.execute('INSERT INTO transcript_lines (transcript_id,seq,speaker,line,norm_line,is_stage_dir) VALUES (?,?,?,?,?,0)',
-                        (tid, seq, 'Drifter', line, norm_text(line)))
+                    conn.execute('INSERT INTO transcript_lines (transcript_id,seq,speaker,line,norm_line,is_stage_dir,section,is_optional) VALUES (?,?,?,?,?,0,?,?)',
+                        (tid, seq, 'Drifter', line, norm_text(line), section, optional))
                     seq += 1
                     tl_count += 1
                 continue
             sp, line = parse_speaker_line(ln)
-            if sp and line:
-                conn.execute('INSERT INTO transcript_lines (transcript_id,seq,speaker,line,norm_line,is_stage_dir) VALUES (?,?,?,?,?,0)',
-                    (tid, seq, sp, line, norm_text(line)))
+            if sp and line and not is_junk_speaker(sp):
+                conn.execute('INSERT INTO transcript_lines (transcript_id,seq,speaker,line,norm_line,is_stage_dir,section,is_optional) VALUES (?,?,?,?,?,0,?,?)',
+                    (tid, seq, sp, line, norm_text(line), section, optional))
                 seq += 1
                 tl_count += 1
             elif not is_quoted_file and len(ln.strip()) > 20 and not ln.startswith('#') and not ln.startswith('-'):
                 # Stage direction / narration line
-                conn.execute('INSERT INTO transcript_lines (transcript_id,seq,speaker,line,norm_line,is_stage_dir) VALUES (?,?,?,?,?,1)',
-                    (tid, seq, 'Narration', ln.strip(), norm_text(ln.strip())))
+                conn.execute('INSERT INTO transcript_lines (transcript_id,seq,speaker,line,norm_line,is_stage_dir,section,is_optional) VALUES (?,?,?,?,?,1,?,?)',
+                    (tid, seq, 'Narration', ln.strip(), norm_text(ln.strip()), section, optional))
                 seq += 1
                 tl_count += 1
     print(f'transcripts: {t_count}, lines: {tl_count}')
@@ -192,8 +209,8 @@ def migrate():
             if not slug or slug in covered:
                 continue
             covered.add(slug)
-            cur = conn.execute('INSERT INTO transcripts (slug,title,release,characters,arc,source_url) VALUES (?,?,?,?,?,?)',
-                (slug, d.get('title', ''), '', '', '', d.get('source_url', '')))
+            cur = conn.execute('INSERT INTO transcripts (slug,title,release,characters,arc,source_url,source_tier) VALUES (?,?,?,?,?,?,?)',
+                (slug, d.get('title', ''), '', '', '', d.get('source_url', ''), 'ishtar_web'))
             tid = cur.lastrowid
             w_count += 1
             seen_page = set()
@@ -239,8 +256,8 @@ def migrate():
             if not slug or slug in covered:
                 continue
             covered.add(slug)
-            cur = conn.execute('INSERT INTO transcripts (slug,title,release,characters,arc,source_url) VALUES (?,?,?,?,?,?)',
-                (slug, d.get('title', ''), 'Cutscene', '', '', d.get('source_url', '')))
+            cur = conn.execute('INSERT INTO transcripts (slug,title,release,characters,arc,source_url,source_tier) VALUES (?,?,?,?,?,?,?)',
+                (slug, d.get('title', ''), 'Cutscene', '', '', d.get('source_url', ''), 'cutscene'))
             tid = cur.lastrowid
             c_count += 1
             seq = 0

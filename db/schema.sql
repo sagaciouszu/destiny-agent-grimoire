@@ -28,7 +28,8 @@ CREATE TABLE IF NOT EXISTS transcripts (
     release TEXT,
     characters TEXT,
     arc TEXT,
-    source_url TEXT
+    source_url TEXT,
+    source_tier TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_transcripts_slug ON transcripts(slug);
 
@@ -39,7 +40,9 @@ CREATE TABLE IF NOT EXISTS transcript_lines (
     speaker TEXT,
     line TEXT,
     norm_line TEXT,
-    is_stage_dir INTEGER DEFAULT 0
+    is_stage_dir INTEGER DEFAULT 0,
+    section TEXT,
+    is_optional INTEGER DEFAULT 0
 );
 CREATE INDEX IF NOT EXISTS idx_tl_transcript ON transcript_lines(transcript_id);
 CREATE INDEX IF NOT EXISTS idx_tl_speaker ON transcript_lines(speaker);
@@ -149,6 +152,27 @@ CREATE VIRTUAL TABLE IF NOT EXISTS verify_fts USING fts5(
 );
 
 -- Item title lookup for find_item (titles only; lore text stays in fts)
+CREATE TABLE IF NOT EXISTS lore_entries (
+    id INTEGER PRIMARY KEY,
+    hash INTEGER UNIQUE NOT NULL,
+    title TEXT,
+    subtitle TEXT,
+    body TEXT,
+    norm_body TEXT,
+    source TEXT DEFAULT 'bungie_manifest',
+    source_url TEXT,
+    is_duplicate INTEGER DEFAULT 0,
+    duplicate_of TEXT
+);
+CREATE INDEX IF NOT EXISTS idx_lore_norm ON lore_entries(norm_body);
+
+CREATE TABLE IF NOT EXISTS lore_entry_items (
+    lore_hash INTEGER NOT NULL,
+    item_title TEXT NOT NULL,
+    PRIMARY KEY (lore_hash, item_title)
+);
+CREATE INDEX IF NOT EXISTS idx_lore_items_title ON lore_entry_items(item_title);
+
 CREATE VIRTUAL TABLE IF NOT EXISTS item_title_fts USING fts5(
     title, slug UNINDEXED, item_type UNINDEXED, release UNINDEXED,
     tokenize='unicode61'

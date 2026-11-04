@@ -49,7 +49,7 @@ a change that is not done.
 |-------|----------|--------------------------|-------|
 | `books` | slug, title | source_url, entry_count | slugs match live `categories/book-<slug>` (2 documented exemptions) |
 | `book_entries` | book_id, body | title (fallback to book title), seq | provenance via parent book |
-| `transcripts` | slug, title | release, characters, arc, source_url | release empty when the source lacks it |
+| `transcripts` | slug, title | release, characters, arc, source_url, source_tier | release empty when the source lacks it; `source_tier` records provenance precedence |
 | `transcript_lines` | transcript_id, seq, speaker, line, norm_line | is_stage_dir | seq contiguous from 0 |
 | `grimoire_cards` | slug, title, body, source_url | game | D1 cards only |
 | `interactions` | slug, title, text | speaker, release, source_url | speaker may be empty (narrated scenes) |
@@ -86,6 +86,31 @@ Global rules:
 - Every content row carries provenance (`source_url` or parent-book provenance),
   and URLs follow `https://www.ishtar-collective.net/<type>/<slug>`.
 - Empty optional fields are a statement about the source, never a placeholder.
+
+### Source hierarchy
+
+Ishtar Collective is the archival primary; Destinypedia is corroboration.
+
+| Tier | Source |
+|---|---|
+| 0 | Ishtar Collective main-site transcripts |
+| 1 | Ishtar Commons `validated` |
+| 2 | Ishtar Commons `published` |
+| 3 | Ishtar Commons `proofed` |
+| 4 | Ishtar Commons untagged |
+| 5 | Destinypedia verbatim transcripts |
+| 6 | YouTube captions and community sheets |
+
+Where sources overlap, the higher tier wins the text. Lower-tier unique lines
+are kept with their own provenance. Conflicts are logged in a reconciliation
+ledger, never silently overwritten.
+
+### Optional and variant lines
+
+Ishtar's transcript guide defines `// OPTIONAL` blocks for alternatives, class
+callouts and variants. These are stored with `is_optional=1`; section/location
+headers from `++` are stored in `section`. Agents quote non-optional lines by
+default and use optional lines only when variants are requested.
 
 ### Extracted game data
 

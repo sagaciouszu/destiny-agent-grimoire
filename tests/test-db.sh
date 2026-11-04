@@ -64,7 +64,7 @@ T_ACTUAL=$(sqlite3 "$DB" "SELECT COUNT(*) FROM item_title_fts")
 check "[ $T_ACTUAL -eq $T_EXPECTED ]" "item title index complete ($T_ACTUAL rows)"
 
 # Verification index mirrors indexable rows
-V_EXPECTED=$(sqlite3 "$DB" "SELECT (SELECT COUNT(*) FROM transcript_lines)+(SELECT COUNT(*) FROM book_entries)+(SELECT COUNT(*) FROM grimoire_cards)+(SELECT COUNT(*) FROM interactions)+(SELECT COUNT(*) FROM items WHERE text!='')+(SELECT COUNT(*) FROM records)")
+V_EXPECTED=$(sqlite3 "$DB" "SELECT (SELECT COUNT(*) FROM transcript_lines)+(SELECT COUNT(*) FROM book_entries)+(SELECT COUNT(*) FROM grimoire_cards)+(SELECT COUNT(*) FROM interactions)+(SELECT COUNT(*) FROM items WHERE text!='')+(SELECT COUNT(*) FROM records) + COALESCE((SELECT COUNT(*) FROM lore_entries WHERE is_duplicate=0),0)")
 V_ACTUAL=$(sqlite3 "$DB" "SELECT COUNT(*) FROM verify_fts")
 check "[ $V_ACTUAL -eq $V_EXPECTED ]" "verification index complete ($V_ACTUAL rows)"
 
@@ -77,7 +77,7 @@ check "[ $ORPHANS -eq 0 ]" "taxonomy references resolve ($ORPHANS orphans)"
 UNCLASSIFIED=$(sqlite3 "$DB" "SELECT COUNT(*) FROM transcripts t LEFT JOIN transcript_classification c ON c.transcript_id=t.id WHERE c.transcript_id IS NULL")
 check "[ $UNCLASSIFIED -eq 0 ]" "every transcript has a classification row ($UNCLASSIFIED missing)"
 SEASON_NUMBERS=$(sqlite3 "$DB" "SELECT COUNT(DISTINCT season_number) FROM seasons WHERE season_number IS NOT NULL")
-check "[ $SEASON_NUMBERS -eq 26 ]" "official season numbers are unique ($SEASON_NUMBERS seasons)"
+check "[ $SEASON_NUMBERS -eq 28 ]" "official season numbers are unique ($SEASON_NUMBERS seasons)"
 UNKNOWN_SHARE=$(sqlite3 "$DB" "SELECT CAST(100 * SUM(confidence='unknown') / COUNT(*) AS INT) FROM transcript_classification")
 check "[ $UNKNOWN_SHARE -lt 50 ]" "unknown classification below 50% ($UNKNOWN_SHARE%)"
 

@@ -7,7 +7,7 @@ are never rewritten by the taxonomy, and every existing query still works.
 | Axis | Table | Example |
 |---|---|---|
 | Expansion | `expansions` | `forsaken`, `the-final-shape`, `renegades` |
-| Season / Episode | `seasons` | season 17 = `season-of-the-haunted`; season 24 = `episode-echoes` |
+| Season / Episode | `seasons` | season 17 = `season-of-the-haunted`; season 24 = `episode-echoes`; season 27 = `season-reclamation` |
 | Activity | `activities` | `last-wish` (raid), `duality` (dungeon), `menagerie` (seasonal) |
 | Event | `events` + `event_occurrences` | `festival-of-the-lost`, `the-dawning`, `crimson-days` |
 
@@ -18,9 +18,8 @@ are never rewritten by the taxonomy, and every existing query still works.
 - Seasons 1–23 are ordinary seasons (`season_type = 'season'`).
 - Seasons 24–26 are episodes (`season_type = 'episode'`) and also carry an
   `act` on classified content when the title names Act I, II or III.
-- `27+` is intentionally absent until Bungie's official numbering exists for it.
-  The Edge of Fate and Renegades are modelled as expansions, not invented
-  season numbers.
+- Seasons 27 (`Season: Reclamation`) and 28 (`Monument of Triumph`) come from
+  the official manifest, aligned to The Edge of Fate and Renegades.
 
 Aliases resolve to one record:
 
@@ -50,7 +49,7 @@ Current state (2026-11-04):
 
 | Content | explicit | derived | unknown |
 |---|---:|---:|---:|
-| Transcripts (1,257) | 89 | 780 | 388 |
+| Transcripts (1,294) | 104 | 801 | 389 |
 | Items (58,764) | 46,304 | 390 | 12,070 |
 | Books + records (181) | 64 | 4 | 113 |
 

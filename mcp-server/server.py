@@ -105,7 +105,7 @@ def search(query: str, type: str | None = None, limit: int = 10, full: bool = Fa
 
 @server.tool(annotations=READ_ONLY)
 def character(name: str, about: str | None = None, all_lines: bool = False,
-              limit: int = 20, offset: int = 0) -> dict:
+              limit: int = 20, offset: int = 0, canon_only: bool = False) -> dict:
     """Character lines from canon.
 
     Args:
@@ -114,9 +114,10 @@ def character(name: str, about: str | None = None, all_lines: bool = False,
         all_lines: Use every transcript line instead of curated quotes.
         limit: Maximum rows (1-100).
         offset: Rows to skip (0-10000).
+        canon_only: Exclude optional/variant lines.
     """
     res = _api(api.character, name, about=about, all_lines=all_lines,
-                limit=_limit(limit, 20), offset=_offset(offset))
+                limit=_limit(limit, 20), offset=_offset(offset), canon_only=canon_only)
     if res is None:
         return {'found': False, 'header': '', 'rows': []}
     for row in res['rows']:
@@ -162,7 +163,7 @@ def list_records(kind: str, limit: int = 50, offset: int = 0) -> dict:
     """Cheap discovery listings.
 
     Args:
-        kind: books, characters, speakers, records, activities, seasons, or events.
+        kind: books, characters, speakers, records, activities, seasons, events, or lore.
         limit: Maximum rows (1-100).
         offset: Rows to skip (0-10000).
     """
@@ -222,7 +223,8 @@ def book(ref: str, limit: int = 20, offset: int = 0, full: bool = False) -> dict
 
 @server.tool(annotations=READ_ONLY)
 def transcript(ref: str, speaker: str | None = None, limit: int = 50, offset: int = 0,
-               full: bool = False, include_stage: bool = False) -> dict:
+               full: bool = False, include_stage: bool = False,
+               canon_only: bool = False, section: str | None = None) -> dict:
     """Read a transcript and its dialogue lines.
 
     Args:
@@ -232,9 +234,12 @@ def transcript(ref: str, speaker: str | None = None, limit: int = 50, offset: in
         offset: Lines to skip (0-10000).
         full: Return full lines instead of snippets.
         include_stage: Include stage directions.
+        canon_only: Exclude optional/variant lines.
+        section: Only lines from this section or location.
     """
     res = _api(api.transcript, ref, speaker=speaker, limit=_limit(limit, 50),
-               offset=_offset(offset), full=full, include_stage=include_stage)
+               offset=_offset(offset), full=full, include_stage=include_stage,
+               canon_only=canon_only, section=section)
     if res is None:
         raise ToolError(f'transcript not found: {ref}')
     if full:

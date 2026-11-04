@@ -15,7 +15,7 @@ REPOS = {'grimoire': os.path.join(WORK, 'destiny-agent-grimoire'),
          'eris': os.path.join(WORK, 'eris-morn')}
 SUBS = {'search', 'character', 'character-info', 'item', 'book', 'transcript',
         'find-item', 'record', 'verify', 'verify-many', 'list', 'activity',
-        'event', 'coverage', 'stats'}
+        'event', 'coverage', 'lore', 'stats'}
 FLAGS = {'--limit', '--offset', '--json', '--full', '--type', '--about', '--all',
          '--speaker', '--exact', '--rank', '--no-rank', '--include-stage',
          '--activity', '--season', '--event', '--expansion'}
