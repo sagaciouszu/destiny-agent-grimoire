@@ -93,6 +93,10 @@ check "$Q event the-dawning --json | python3 -c 'import json,sys; d=json.load(sy
 check "$Q activity presage | grep -q 'Caiatl'" "presage dialogue"
 check "$Q activity vox-obscura | grep -q 'Zavala'" "vox obscura dialogue"
 check "$Q activity encore | grep -q 'Maya Sundaresh'" "encore dialogue"
+check "$Q activity override | grep -q '252 lines'" "override dialogue"
+check "$Q activity salvage | grep -q 'Sloane'" "salvage dialogue"
+check "$Q activity seraph-towers | grep -q 'Ana Bray'" "seraph towers dialogue"
+check "$Q activity astral-alignment | grep -q 'Petra Venj'" "astral alignment dialogue"
 
 echo ""
 echo "Passed: $PASS | Failed: $FAIL"

@@ -45,6 +45,7 @@ SPEAKER_ALIASES = {
     'OSIRIS': 'Osiris',
     'HOLLIDAY': 'Holliday',
     'AMANDA': 'Amanda Holliday',
+    'The Drifter': 'Drifter',
 }
 
 def canon_speaker(sp):
