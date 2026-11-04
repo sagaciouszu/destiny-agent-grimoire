@@ -125,24 +125,26 @@ def _like(value):
 
 
 def _resolve_character(conn, name):
-    q = (name or '').strip()
-    slug = q.lower().replace(' ', '-')
-    row = conn.execute(
-        'SELECT id, name, slug FROM characters WHERE LOWER(name)=LOWER(?) OR LOWER(slug)=LOWER(?)',
-        (q, slug)).fetchone()
-    if row:
-        return row
-    row = conn.execute(
-        "SELECT id, name, slug FROM characters WHERE LOWER(name) LIKE LOWER(?) ESCAPE '\\' "
-        "OR LOWER(slug) LIKE LOWER(?) ESCAPE '\\' "
-        'ORDER BY LENGTH(name) LIMIT 1', (f'{_like(q)}%', f'{_like(slug)}%')).fetchone()
-    if row:
-        return row
-    return conn.execute(
-        "SELECT id, name, slug FROM characters WHERE LOWER(name) LIKE LOWER(?) ESCAPE '\\' "
-        "OR LOWER(slug) LIKE LOWER(?) ESCAPE '\\' "
-        'ORDER BY LENGTH(name) LIMIT 1', (f'%{_like(q)}%', f'%{_like(slug)}%')).fetchone()
-
+    for candidate in _speaker_variants(name):
+        slug = candidate.lower().replace(' ', '-')
+        row = conn.execute(
+            'SELECT id, name, slug FROM characters WHERE LOWER(name)=LOWER(?) OR LOWER(slug)=LOWER(?)',
+            (candidate, slug)).fetchone()
+        if row:
+            return row
+        row = conn.execute(
+            "SELECT id, name, slug FROM characters WHERE LOWER(name) LIKE LOWER(?) ESCAPE '\\' "
+            "OR LOWER(slug) LIKE LOWER(?) ESCAPE '\\' "
+            'ORDER BY LENGTH(name) LIMIT 1', (f'{_like(candidate)}%', f'{_like(slug)}%')).fetchone()
+        if row:
+            return row
+        row = conn.execute(
+            "SELECT id, name, slug FROM characters WHERE LOWER(name) LIKE LOWER(?) ESCAPE '\\' "
+            "OR LOWER(slug) LIKE LOWER(?) ESCAPE '\\' "
+            'ORDER BY LENGTH(name) LIMIT 1', (f'%{_like(candidate)}%', f'%{_like(slug)}%')).fetchone()
+        if row:
+            return row
+    return None
 
 def _guard(fn):
     """Translate SQLite failures into clean ValueErrors for CLI and MCP."""
