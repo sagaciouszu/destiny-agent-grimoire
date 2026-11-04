@@ -65,7 +65,7 @@ Eris (eris-morn/tests/):
   item, docs and robustness gates
 - `robustness-test.py` - corrupt/truncated/missing databases, edge inputs,
   read-only enforcement, 160 concurrent queries, injection attempts
-- `mcp-matrix-test.py` - MCP calls across all twelve tools (140-200 per run), 3 concurrent clients,
+- `mcp-matrix-test.py` - MCP calls across all eighteen tools (140-200 per run), 3 concurrent clients,
   strict parity with the API, clean malformed-call errors, output caps
 - `checksum-test.sh` - verified download, missing checksum warning, mismatch
   rejection with no partial or installed database
