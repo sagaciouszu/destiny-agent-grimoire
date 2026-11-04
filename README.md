@@ -178,6 +178,7 @@ python3 archive/scrape.py interactions <start> <end>
 python3 archive/scrape.py items <start> <end>
 python3 archive/data/fetch_transcripts_web.py
 python3 archive/data/fetch_cutscenes.py
+python3 archive/data/fetch_transcript_releases.py   # authoritative Added In releases
 
 # optional: authoritative Bungie manifest (needs BUNGIE_API_KEY)
 python3 archive/data/fetch_manifest.py --check

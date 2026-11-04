@@ -6,7 +6,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import taxonomy  # noqa: E402
 SCHEMA_VERSION = taxonomy.SCHEMA_VERSION
-DB_PATH = os.path.join(ROOT, 'db', 'grimoire.db')
+DB_PATH = os.environ.get('GRIMOIRE_DB') or os.path.join(ROOT, 'db', 'grimoire.db')
 SCHEMA = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'schema.sql')
 
 def parse_md_sections(path):
@@ -203,6 +203,10 @@ def migrate():
     if os.path.exists(web_jsonl):
         import html as html_mod
         JUNK_SPEAKERS = {'Category', 'Quest', 'Ghost Scan', 'Sources', 'Note', 'Dialogue Option for the Field Assignment'}
+        releases_path = os.path.join(ROOT, 'archive', 'data', 'transcript-releases.json')
+        releases = {}
+        if os.path.exists(releases_path):
+            releases = json.load(open(releases_path, encoding='utf-8'))
         covered = set()
         for r in conn.execute('SELECT slug FROM transcripts').fetchall():
             covered.add(r[0])
@@ -217,8 +221,9 @@ def migrate():
             if not slug or slug in covered:
                 continue
             covered.add(slug)
+            release = (releases.get(slug) or {}).get('release', '')
             cur = conn.execute('INSERT INTO transcripts (slug,title,release,characters,arc,source_url,source_tier) VALUES (?,?,?,?,?,?,?)',
-                (slug, d.get('title', ''), '', '', '', d.get('source_url', ''), 'ishtar_web'))
+                (slug, d.get('title', ''), release, '', '', d.get('source_url', ''), 'ishtar_web'))
             tid = cur.lastrowid
             w_count += 1
             seen_page = set()

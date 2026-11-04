@@ -130,6 +130,8 @@ def parse_topic(topic):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--min-lines', type=int, default=2)
+    parser.add_argument('--topic', type=int, action='append', default=None,
+                        help='only ingest this topic id; repeat as needed')
     parser.add_argument('--dry-run', action='store_true')
     args = parser.parse_args()
 
@@ -144,6 +146,9 @@ def main():
             topics.append(json.loads(line))
         except Exception:
             pass
+    if args.topic:
+        wanted = set(args.topic)
+        topics = [t for t in topics if t['id'] in wanted]
     topics.sort(key=lambda t: min([TIER.get(x, 5) for x in (t.get('tags') or [])] or [5]))
 
     report = {'topics': len(topics), 'written': 0, 'skipped': 0,

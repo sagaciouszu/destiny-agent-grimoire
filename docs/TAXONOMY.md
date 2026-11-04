@@ -49,17 +49,24 @@ Current state (2026-11-04):
 
 | Content | explicit | derived | unknown |
 |---|---:|---:|---:|
-| Transcripts (1,294) | 104 | 801 | 389 |
-| Items (58,764) | 46,304 | 390 | 12,070 |
+| Transcripts (1,294) | 1,234 | 59 | 1 |
+| Items (58,764) | 48,380 | 316 | 10,068 |
 | Books + records (181) | 64 | 4 | 113 |
 
-Manifest item sets provide an optional classification gain: 19 curated sets
-resolve 585 items that were previously `unknown` (12,070 -> 11,485). The mapping
-lives in `db/enrich_itemsets.py` and only fills rows that are still unclassified.
+Every Ishtar web transcript now carries the page's authoritative `Added In`
+release (1,130/1,130), captured by
+`archive/data/fetch_transcript_releases.py`. That is why transcript coverage is
+near-complete and why Destiny 1 content is now visible: 120 transcripts and
+1,456 dialogue lines across `destiny-1`, `the-dark-below`, `house-of-wolves`,
+`the-taken-king` and `rise-of-iron`.
 
-Most `unknown` transcripts are story beats whose titles carry no release
-metadata. They remain fully searchable by text; they are simply not attributable
-to a season or activity yet.
+Manifest item sets provide an optional classification gain: 19 curated sets
+resolve 555 items that are still `unknown` (10,068 -> 9,513). The mapping lives
+in `db/enrich_itemsets.py` and only fills rows that are still unclassified.
+
+The one remaining unknown transcript is a beta entry with no release page. It
+remains fully searchable by text; it is simply not attributable to a season or
+activity yet.
 
 The Menagerie is ingested from Destinypedia's verbatim transcript: 232 Calus
 lines across every encounter, including the Hunter, Titan and Warlock callouts.
