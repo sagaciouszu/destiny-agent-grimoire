@@ -12,7 +12,7 @@
   <img src='https://img.shields.io/badge/tests-9%2F9%20passing-brightgreen' alt='Tests'/>
 </p>
 
-**Version:** 0.21.0 | **Last push:** 2026-11-03 | **Status:** Active
+**Version:** 0.22.0 | **Last push:** 2026-11-04 | **Status:** Active
 
 **Documentation site:** <https://sagaciouszu.github.io/grimoire-site/>
 
@@ -103,7 +103,7 @@ No API keys, accounts or network access are required at runtime.
 | `lore_entry_items` | 2068 | Lore entry to item-title links |
 | `manifest_activities` | 3744 | Full manifest activity catalogue |
 | `manifest_links` | 314 | Curated activity/season to manifest hash |
-| `v_speakers` (view) | 319 | Canonical speakers with line counts |
+| `v_speakers` (view) | 316 | Canonical speakers with line counts |
 | `v_transcript_taxonomy` (view) | 1294 | Transcripts joined to classification |
 | `v_activity_coverage` (view) | 67 | Transcripts and lines per activity |
 | `v_season_coverage` (view) | 28 | Transcripts and lines per season |
@@ -209,7 +209,7 @@ repository minus the database lives outside the tree.
 | Drifter agent audit | run tests/master-audit.sh in how-to-drift-for-agents | 20/20 |
 | Eris agent audit | run tests/master-audit.sh in eris-morn | 15/15 |
 | Database integrity | `bash tests/test-db.sh` | 50 checks |
-| Query interface | `bash tests/query-interface-test.sh` | 80 checks |
+| Query interface | `bash tests/query-interface-test.sh` | 82 checks |
 | Agent layout | `bash tests/agent-layout-test.sh` | 14 checks |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 checks |
 | MCP contract | `mcp-server/.venv/bin/python tests/mcp-test.py` | 8/8 checks |

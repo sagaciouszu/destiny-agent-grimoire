@@ -21,7 +21,7 @@ run "$ARCHIVE/tests/test-db.sh" "Database Integrity (50 checks)"
 run "$ARCHIVE/tests/compendium-check.sh" "Compendium Files"
 run "$ARCHIVE/tests/lore-integrity.sh" "Lore Archive Integrity"
 run "$ARCHIVE/tests/cutscene-verify.sh" "Cutscene Caption Verification"
-run "$ARCHIVE/tests/query-interface-test.sh" "Query Interface (80 checks)"
+run "$ARCHIVE/tests/query-interface-test.sh" "Query Interface (82 checks)"
 run "$ARCHIVE/tests/agent-layout-test.sh" "Agent Layout (OpenCode/OpenClaw)"
 if python3 "$ARCHIVE/tests/conformance.py" >/dev/null 2>&1; then echo "  ✓ [File Conformance (all 3 repos)] PASS"; PASS=$((PASS+1)); else echo "  ✗ [File Conformance (all 3 repos)] FAIL"; FAIL=$((FAIL+1)); fi
 if python3 "$ARCHIVE/tests/source-overlap-verify.py" >/dev/null 2>&1; then echo "  ✓ [Source Overlap vs Live] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Source Overlap vs Live] FAIL"; FAIL=$((FAIL+1)); fi
