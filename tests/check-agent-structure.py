@@ -9,7 +9,7 @@ import os
 import re
 import sys
 
-RUNTIME = ('user-memory.md', 'journal.md', 'session-state.md',
+RUNTIME = ('USER.md', 'user-memory.md', 'journal.md', 'session-state.md',
            'cross-session-memory.md', 'DREAMS.md')
 SKIP_MODULES = ('README.md', 'RELEASE.md', 'CHANGELOG.md') + RUNTIME
 

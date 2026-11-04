@@ -1,7 +1,8 @@
 #!/bin/bash
 # Agent Layout Test - guards the OpenCode/OpenClaw deployment shape.
-# Asserts that only the two entry agents are active, that no lore symlink is
-# left inside the agents directory, and that every companion file is inert.
+# Registry-driven: every ready agent gets one primary entry and one read-only
+# consult copy; every other markdown file must be inert. No lore symlink may
+# live inside the agents directory.
 # Usage: ./tests/agent-layout-test.sh
 set -u
 
@@ -10,25 +11,38 @@ WORK="$(dirname "$ARCHIVE")"
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 
-if [ -d "$WORK/how-to-drift-for-agents" ] && [ -d "$WORK/eris-morn" ]; then
+REGISTRY="$ARCHIVE/series/agents.json"
+if [ -d "$WORK/how-to-drift-for-agents" ] && [ -d "$WORK/eris-morn" ] && [ -d "$WORK/destiny-agent-calus" ]; then
     SRC="$WORK"
 else
     SRC="$TMP/src"
-    mkdir -p "$SRC/how-to-drift-for-agents/core" "$SRC/eris-morn/core"
-    printf -- '---\nmode: primary\n---\n\n> **Depends On:** drifter-core.md, INDEX.md\n\nEntry.\n' > "$SRC/how-to-drift-for-agents/drifter.md"
-    printf '# Companion\n' > "$SRC/how-to-drift-for-agents/core/guardrails.md"
-    printf '# Readme\n' > "$SRC/how-to-drift-for-agents/README.md"
-    printf -- '---\nmode: primary\n---\n\n> **Depends On:** eris-core.md, INDEX.md\n\nEntry.\n' > "$SRC/eris-morn/eris.md"
-    printf '# Companion\n' > "$SRC/eris-morn/core/guardrails.md"
-    printf '# Readme\n' > "$SRC/eris-morn/README.md"
+    for id in drifter eris; do
+        mkdir -p "$SRC/$id/core"
+        printf -- '---\nmode: primary\n---\n\n> **Depends On:** %s-core.md, INDEX.md\n\nEntry.\n' "$id" > "$SRC/$id/$id.md"
+        printf '# Companion\n' > "$SRC/$id/core/guardrails.md"
+        printf '# Readme\n' > "$SRC/$id/README.md"
+    done
+    REGISTRY="$TMP/agents.json"
+    cat > "$REGISTRY" <<'EOF'
+{"series":"x","agents":[
+ {"id":"drifter","name":"The Drifter","source":"drifter","entry":"drifter.md","summary":"Gambit handler","consult":"Gambit"},
+ {"id":"eris","name":"Eris Morn","source":"eris","entry":"eris.md","summary":"Hive expert","consult":"Hive"}
+]}
+EOF
 fi
 
+AGENTS=$(python3 - "$REGISTRY" <<'PY'
+import json, sys
+for a in json.load(open(sys.argv[1]))['agents']:
+    print(a['id'])
+PY
+)
+N=$(printf '%s\n' "$AGENTS" | sed '/^$/d' | wc -l)
 DEST="$TMP/agents"
 mkdir -p "$DEST"
-# Simulate the historical failure: a lore symlink inside the agents root.
 ln -s "$ARCHIVE" "$DEST/lore"
 
-NO_RELOAD=1 AGENT_REPOS_DIR="$SRC" OPENCODE_AGENTS="$DEST" \
+NO_RELOAD=1 AGENT_REPOS_DIR="$SRC" OPENCODE_AGENTS="$DEST" SERIES_MANIFEST="$REGISTRY" \
     bash "$ARCHIVE/scripts/sync-live-agents.sh" >/dev/null 2>&1 || {
     echo "FAIL: sync-live-agents.sh exited non-zero"
     exit 1
@@ -39,20 +53,30 @@ check() { if eval "$2" >/dev/null 2>&1; then echo "  ✓ $1"; PASS=$((PASS+1)); 
 
 check "lore symlink removed from agents root" '[ -z "$(find "$DEST" -type l -name lore -print -quit)" ]'
 check "no lore directory left behind" '[ ! -e "$DEST/lore" ]'
-check "entry and consult agents stay active" \
-    '! grep -q "^disabled: true$" "$DEST/drifter.md" && ! grep -q "^disabled: true$" "$DEST/eris.md" && ! grep -q "^disabled: true$" "$DEST/drifter-consult.md" && ! grep -q "^disabled: true$" "$DEST/eris-consult.md"'
-check "primaries are primary-only" 'grep -q "^mode: primary$" "$DEST/drifter.md" && grep -q "^mode: primary$" "$DEST/eris.md"'
-check "consult copies are read-only subagents" 'grep -q "^mode: subagent$" "$DEST/drifter-consult.md" && grep -q "action: edit" "$DEST/drifter-consult.md" && grep -q "action: shell" "$DEST/drifter-consult.md" && grep -q "action: subagent" "$DEST/drifter-consult.md"'
 check "series registry is installed" '[ -f "$(dirname "$DEST")/series/agents.json" ]'
-check "both entries carry the series block" 'grep -q "series:begin" "$DEST/drifter.md" && grep -q "series:begin" "$DEST/eris.md"'
-check "entries point at consult peers" 'grep -q "Hive expert" "$DEST/drifter.md" && grep -q "Gambit handler" "$DEST/eris.md"'
-check "peer directories are read-denied" 'grep -qF "agents/eris/**" "$DEST/drifter.md" && grep -qF "agents/drifter/**" "$DEST/eris.md"'
-check "eris entry references its own directory" 'grep -q "eris/INDEX.md" "$DEST/eris.md"'
-check "drifter entry references its own directory" 'grep -q "drifter/INDEX.md" "$DEST/drifter.md"'
-check "only four markdown files lack the disabled marker" \
-    '[ "$(grep -rL --include="*.md" "^disabled: true$" "$DEST" | wc -l)" -eq 4 ]'
+
+for id in $AGENTS; do
+    check "$id entry is active" '! grep -q "^disabled: true$" "'"$DEST/$id.md"'"'
+    check "$id consult is active" '! grep -q "^disabled: true$" "'"$DEST/$id-consult.md"'"'
+    check "$id primary is primary-only" 'grep -q "^mode: primary$" "'"$DEST/$id.md"'"'
+    check "$id consult is a subagent" 'grep -q "^mode: subagent$" "'"$DEST/$id-consult.md"'"'
+    check "$id consult denies edit, shell and delegation" \
+        'grep -q "action: edit" "'"$DEST/$id-consult.md"'" && grep -q "action: shell" "'"$DEST/$id-consult.md"'" && grep -q "action: subagent" "'"$DEST/$id-consult.md"'"'
+    check "$id entry references its own directory" 'grep -q "'"$id"'/INDEX.md" "'"$DEST/$id.md"'"'
+    check "$id entry carries the series block" 'grep -q "series:begin" "'"$DEST/$id.md"'"'
+    for peer in $AGENTS; do
+        [ "$peer" = "$id" ] && continue
+        check "$id entry denies $peer directory" 'grep -qF "agents/'"$peer"'/**" "'"$DEST/$id.md"'"'
+        check "$id entry lists $peer consult" 'grep -q "'"$peer"'-consult" "'"$DEST/$id.md"'"'
+    done
+done
+
+ACTIVE=$((N * 2))
+check "exactly $ACTIVE active markdown files" \
+    '[ "$(grep -rL --include="*.md" "^disabled: true$" "$DEST" | wc -l)" -eq '"$ACTIVE"' ]'
+TOTAL=$(find "$DEST" -name "*.md" | wc -l)
 check "every companion file is disabled" \
-    '[ "$(grep -rl --include="*.md" "^disabled: true$" "$DEST" | wc -l)" -eq "$(( $(find "$DEST" -name "*.md" | wc -l) - 4 ))" ]'
+    '[ "$(grep -rl --include="*.md" "^disabled: true$" "$DEST" | wc -l)" -eq "$((TOTAL - ACTIVE))" ]'
 
 BAD="$TMP/bad-registry.json"
 printf '%s' '{"series":"x","agents":[{"id":"evil","name":"Evil","source":"how-to-drift-for-agents","entry":"../../evil.md"}]}' > "$BAD"

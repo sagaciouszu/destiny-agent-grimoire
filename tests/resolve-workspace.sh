@@ -1,6 +1,6 @@
 #!/bin/bash
 # Resolves an agent workspace root from the calling script's location.
-# Usage: resolve-workspace.sh <calling-script-path> [drifter|eris]
+# Usage: resolve-workspace.sh <calling-script-path> [drifter|eris|calus|<id>]
 # Works in the Work tree, from a fresh clone via lore/ (symlink or clone), or
 # anywhere the agent repo and grimoire sit in the expected relative layouts.
 # Candidates are cd-canonicalized before testing because `path/../file` resolves
@@ -10,7 +10,8 @@ AGENT="${2:-drifter}"
 case "$AGENT" in
     drifter) MARKER=drifter.md; DIR=how-to-drift-for-agents ;;
     eris)    MARKER=eris.md;    DIR=eris-morn ;;
-    *) echo "resolve-workspace: unknown agent '$AGENT' (drifter|eris)" >&2; exit 1 ;;
+    calus)   MARKER=calus.md;   DIR=destiny-agent-calus ;;
+    *)       MARKER="$AGENT.md"; DIR="$AGENT" ;;
 esac
 D="$(cd "$(dirname "$CALLER")" 2>/dev/null && pwd)"
 [ -n "$D" ] || { echo "resolve-workspace: cannot resolve caller dir for $CALLER" >&2; exit 1; }
