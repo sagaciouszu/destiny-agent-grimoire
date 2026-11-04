@@ -286,7 +286,7 @@ def activities(activity_type: str | None = None, season: str | None = None,
 
 @server.tool(annotations=READ_ONLY)
 def activity(ref: str, limit: int = 50, offset: int = 0) -> dict:
-    """Activity details, coverage, speakers and classified transcripts.
+    """Activity details, coverage status, speakers and classified transcripts.
 
     Args:
         ref: Activity slug or name fragment (raid, dungeon, seasonal activity).
@@ -328,7 +328,13 @@ def event(ref: str) -> dict:
 
 @server.tool(annotations=READ_ONLY)
 def coverage() -> dict:
-    """Coverage summary for activities, seasons and events, including gaps."""
+    """Coverage summary for activities, seasons and events.
+
+    Each row carries `coverage_status`: covered, partial_transcript,
+    narration_only, dialogue_source_missing, no_dialogue or missing. The
+    `notes` list explains every non-covered entity, and `gaps.unexplained`
+    is empty when every zero-coverage entity has a status.
+    """
     return _api(api.coverage)
 
 

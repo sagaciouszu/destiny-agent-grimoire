@@ -56,8 +56,8 @@ occurrences are still mapped.
 
 | Number | Season | Transcripts | Lines | Status |
 |---|---|---|---|---|
-| 27 | Season: Reclamation | 0 | 0 | unverified |
-| 28 | Monument of Triumph | 0 | 0 | unverified |
+| 27 | Season: Reclamation | 0 | 0 | dialogue_source_missing |
+| 28 | Monument of Triumph | 0 | 0 | dialogue_source_missing |
 
 Seasons 1-26 have at least one transcript. Seasons 27-28 are catalogued but
 source-limited.
@@ -109,8 +109,8 @@ exists but has no speaker lines.
 | activity | wrath-of-the-machine | narration_only | Encounter transcript is narration-only; the source has no spoken lines. | https://commons.ishtar-collective.net/t/3549 |
 | event | bungie-day | no_dialogue | Real-world community celebration; no in-game spoken content. |  |
 | event | moments-of-triumph | no_dialogue | Annual triumph and seal retrospective; no spoken content. |  |
-| season | monument-of-triumph | unverified | Catalogued from the manifest; no transcript source checked yet. |  |
-| season | season-reclamation | unverified | Catalogued from the manifest; no transcript source checked yet. |  |
+| season | monument-of-triumph | dialogue_source_missing | A captioned character-dialogue video exists; no full reviewed transcript yet. | https://www.youtube.com/watch?v=WD2wRN0It0E |
+| season | season-reclamation | dialogue_source_missing | Voiced story dialogue exists in solo ops and lore; no full transcript source found. | https://www.youtube.com/watch?v=0PCf4CPuYQE |
 
 ## Source queue
 

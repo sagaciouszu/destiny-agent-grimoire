@@ -278,10 +278,12 @@ COVERAGE_NOTES = [
      'Real-world community celebration; no in-game spoken content.', ''),
     ('event', 'moments-of-triumph', 'no_dialogue',
      'Annual triumph and seal retrospective; no spoken content.', ''),
-    ('season', 'season-reclamation', 'unverified',
-     'Catalogued from the manifest; no transcript source checked yet.', ''),
-    ('season', 'monument-of-triumph', 'unverified',
-     'Catalogued from the manifest; no transcript source checked yet.', ''),
+    ('season', 'season-reclamation', 'dialogue_source_missing',
+     'Voiced story dialogue exists in solo ops and lore; no full transcript source found.',
+     'https://www.youtube.com/watch?v=0PCf4CPuYQE'),
+    ('season', 'monument-of-triumph', 'dialogue_source_missing',
+     'A captioned character-dialogue video exists; no full reviewed transcript yet.',
+     'https://www.youtube.com/watch?v=WD2wRN0It0E'),
 ]
 
 # --------------------------------------------------------------------------

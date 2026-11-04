@@ -735,7 +735,11 @@ def activities(activity_type=None, season=None, event=None, limit=100, offset=0)
             where.append('event_slug = ?')
             params.append(slug)
         sql = ('SELECT slug,name,activity_type,season_slug,expansion_slug,event_slug,'
-               'vaulted,transcripts,lines FROM v_activity_coverage')
+               'vaulted,transcripts,lines, '
+               "COALESCE((SELECT status FROM coverage_notes n "
+               "WHERE n.entity_type='activity' AND n.slug=v_activity_coverage.slug), "
+               "CASE WHEN transcripts>0 THEN 'covered' ELSE 'missing' END) AS coverage_status "
+               'FROM v_activity_coverage')
         if where:
             sql += ' WHERE ' + ' AND '.join(where)
         sql += ' ORDER BY lines DESC, name LIMIT ? OFFSET ?'
@@ -751,7 +755,10 @@ def seasons():
     conn = connect()
     try:
         return [dict(r) for r in conn.execute(
-            'SELECT season_number,slug,name,season_type,vaulted,transcripts,lines '
+            'SELECT season_number,slug,name,season_type,vaulted,transcripts,lines, '
+            "COALESCE((SELECT status FROM coverage_notes n "
+            "WHERE n.entity_type='season' AND n.slug=v_season_coverage.slug), "
+            "CASE WHEN transcripts>0 THEN 'covered' ELSE 'missing' END) AS coverage_status "
             'FROM v_season_coverage ORDER BY season_number').fetchall()]
     finally:
         conn.close()
@@ -763,7 +770,10 @@ def events():
     conn = connect()
     try:
         return [dict(r) for r in conn.execute(
-            'SELECT slug,name,event_type,vaulted,transcripts,lines,occurrences '
+            'SELECT slug,name,event_type,vaulted,transcripts,lines,occurrences, '
+            "COALESCE((SELECT status FROM coverage_notes n "
+            "WHERE n.entity_type='event' AND n.slug=v_event_coverage.slug), "
+            "CASE WHEN transcripts>0 THEN 'covered' ELSE 'missing' END) AS coverage_status "
             'FROM v_event_coverage ORDER BY name').fetchall()]
     finally:
         conn.close()
@@ -804,6 +814,14 @@ def activity(ref, limit=50, offset=0):
         cov = conn.execute('SELECT transcripts,lines FROM v_activity_coverage WHERE slug=?',
                            (slug,)).fetchone()
         out['coverage'] = dict(cov) if cov else {'transcripts': 0, 'lines': 0}
+        note = conn.execute(
+            "SELECT status,evidence,source_url FROM coverage_notes "
+            "WHERE entity_type='activity' AND slug=?", (slug,)).fetchone()
+        out['coverage']['status'] = (dict(note)['status'] if note else
+                                     ('covered' if out['coverage']['transcripts'] else 'missing'))
+        if note:
+            out['coverage']['evidence'] = note['evidence']
+            out['coverage']['source_url'] = note['source_url']
         out['transcripts'] = [dict(r) for r in conn.execute(
             'SELECT t.slug,t.title,c.season_slug,c.confidence FROM transcript_classification c '
             'JOIN transcripts t ON t.id=c.transcript_id WHERE c.activity_slug=? '

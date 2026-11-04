@@ -287,17 +287,22 @@ def cmd_coverage(args):
     print('=== Activities ===')
     for a in res['activities']:
         print(f"  {a['slug']:<28} {a['activity_type']:<14} "
-              f"{a['transcripts']:>3} transcripts {a['lines']:>6} lines")
+              f"{a['transcripts']:>3} transcripts {a['lines']:>6} lines  {a['coverage_status']}")
     print('\n=== Seasons ===')
     for s in res['seasons']:
-        print(f"  {s['season_number']:>2} {s['slug']:<26} {s['transcripts']:>3} transcripts {s['lines']:>6} lines")
+        print(f"  {s['season_number']:>2} {s['slug']:<26} {s['transcripts']:>3} transcripts "
+              f"{s['lines']:>6} lines  {s['coverage_status']}")
     print('\n=== Events ===')
     for e in res['events']:
         print(f"  {e['slug']:<24} {e['transcripts']:>3} transcripts {e['lines']:>6} lines "
-              f"{e['occurrences']:>2} occurrences")
+              f"{e['occurrences']:>2} occurrences  {e['coverage_status']}")
     print('\n=== Gaps ===')
     for k, v in res['gaps'].items():
         print(f'  {k}: {len(v)}')
+    if res.get('notes'):
+        print('\n=== Coverage notes ===')
+        for n in res['notes']:
+            print(f"  {n['entity_type']}:{n['slug']:<24} {n['status']:<24} {n['evidence']}")
     return 0
 
 

@@ -161,6 +161,11 @@ def api_coverage():
     assert len(cov['gaps']['activities_without_transcripts']) == zero
     assert cov['notes'], 'coverage notes missing'
     assert cov['gaps']['unexplained'] == [], cov['gaps']['unexplained']
+    acts = {a['slug']: a for a in api.activities()}
+    assert acts['ketchcrash']['coverage_status'] == 'partial_transcript'
+    assert api.activity('ketchcrash')['coverage']['status'] == 'partial_transcript'
+    seasons_ = {s['slug']: s for s in api.seasons()}
+    assert seasons_['monument-of-triumph']['coverage_status'] == 'dialogue_source_missing'
 
 
 print('=== TAXONOMY DEEP TEST ===')
