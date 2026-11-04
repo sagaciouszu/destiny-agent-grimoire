@@ -96,6 +96,9 @@ Global rules:
 - Speakers use canonical names. Alias map (applied at migration):
   `Commander Zavala -> Zavala`, `Cayde -> Cayde-6`, `Eris -> Eris Morn`,
   `Eris morn -> Eris Morn`, `Ikora Rey -> Ikora`, `Chiomi Esi -> Chioma Esi`.
+- Quest/step titles are not speakers. Web scrapers sometimes parse titles such
+  as `Path of the Splicer II`, `Into the Depths VI` or `Act I` as speakers;
+  migration drops rows whose speaker ends in a Roman numeral or is a bare act.
 - Contextual qualifiers are allowed and kept: `Drifter (Tape 1)`,
   `Eris Morn (communion)`, `Blue (about Drifter's Ghost)`. LIKE queries match the
   base name, so consumers never need the qualifier.

@@ -68,6 +68,18 @@ def parse_speaker_line(ln):
         return m.group(1).strip(), m.group(2).strip()
     return None, None
 
+ROMAN_SUFFIX = re.compile(r'\b(?:I|II|III|IV|V|VI|VII|VIII|IX|X)$')
+ACT_ONLY = re.compile(r'^Act (?:I|II|III)$')
+
+
+def is_junk_speaker(sp):
+    """Quest/step titles parsed as speakers by web scrapers, not characters."""
+    sp = (sp or '').strip()
+    if not sp:
+        return False
+    return bool(ROMAN_SUFFIX.search(sp) or ACT_ONLY.match(sp))
+
+
 def norm_text(s):
     """Normalize text for fast substring matching."""
     s = s.lower()
@@ -192,7 +204,7 @@ def migrate():
                 # "Cutscene begins at 01:49 and ends at 4:59"
                 if re.match(r'^Cutscene (begins|starts) at', sp):
                     continue
-                if sp in JUNK_SPEAKERS or not txt:
+                if sp in JUNK_SPEAKERS or not txt or is_junk_speaker(sp):
                     continue
                 key = (sp, txt)
                 if key in seen_page:
