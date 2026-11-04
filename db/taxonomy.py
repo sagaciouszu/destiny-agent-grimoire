@@ -186,7 +186,7 @@ ACTIVITIES = [
     ('shattered-realm', 'Shattered Realm', 'seasonal', 'beyond-light', 'season-of-the-lost', None, 1,
      ['shattered realm']),
     ('psiops-battlegrounds', 'PsiOps Battlegrounds', 'seasonal', 'the-witch-queen', 'season-of-the-risen', None, 1,
-     ['psiops']),
+     ['psiops battlegrounds', 'psiops']),
     ('nightmare-hunts', 'Nightmare Hunts', 'seasonal', 'shadowkeep', 'season-of-the-undying', None, 1,
      ['nightmare hunt']),
     ('empire-hunts', 'Empire Hunts', 'seasonal', 'beyond-light', 'season-of-the-hunt', None, 1,
@@ -252,6 +252,7 @@ ACTIVITIES = [
 #   no_dialogue              confirmed to have no spoken content
 #   narration_only           transcript exists, but it has no speaker lines
 #   dialogue_source_missing  dialogue exists, but no full transcript source
+#   partial_transcript       verified dialogue exists, but coverage is incomplete
 #   unverified               catalogued, no source checked yet
 # --------------------------------------------------------------------------
 COVERAGE_NOTES = [
@@ -261,18 +262,18 @@ COVERAGE_NOTES = [
     ('activity', 'wrath-of-the-machine', 'narration_only',
      'Encounter transcript is narration-only; the source has no spoken lines.',
      'https://commons.ishtar-collective.net/t/3549'),
-    ('activity', 'ketchcrash', 'dialogue_source_missing',
-     'Eido and Drifter dialogue verified from captions; only a short excerpt exists.',
+    ('activity', 'ketchcrash', 'partial_transcript',
+     'Verified intro dialogue only; combat barks and other runs are not covered.',
      'https://www.youtube.com/watch?v=2A4-CoDnrLs'),
-    ('activity', 'psiops-battlegrounds', 'dialogue_source_missing',
-     'Caiatl and Saladin dialogue verified from captions; no full transcript source.',
+    ('activity', 'psiops-battlegrounds', 'partial_transcript',
+     'Verified EDZ dialogue only; Moon and Cosmodrome variants are not covered.',
      'https://www.youtube.com/watch?v=6cVt1oKZYTE'),
-    ('activity', 'defiant-battlegrounds', 'dialogue_source_missing',
-     'Mara Sov, Devrim Kay and Mithrax speak during the activity; no full transcript source.',
-     'https://www.youtube.com/watch?v=M1egDG0iwYY'),
-    ('activity', 'expedition', 'dialogue_source_missing',
-     'Voiced seasonal framing exists; gameplay videos carry no captions and no transcript source was found.',
-     'https://www.youtube.com/watch?v=3dTotSnrxGU'),
+    ('activity', 'defiant-battlegrounds', 'partial_transcript',
+     'Three verified dialogue variants; not every run is covered.',
+     'https://www.youtube.com/watch?v=yVA1_QDIO4E'),
+    ('activity', 'expedition', 'partial_transcript',
+     'Verified Cosmodrome and Nessus dialogue; other runs are not covered.',
+     'https://www.youtube.com/watch?v=ayBfs8RVtSA'),
     ('event', 'bungie-day', 'no_dialogue',
      'Real-world community celebration; no in-game spoken content.', ''),
     ('event', 'moments-of-triumph', 'no_dialogue',

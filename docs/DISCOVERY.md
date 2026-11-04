@@ -62,7 +62,7 @@ Episodes are not ordinary seasons, so they carry `season_type='episode'` and an
 | `manual` | curated override |
 | `unknown` | nothing matched |
 
-Current transcript split: 1,248 explicit, 59 derived, 1 unknown. The remaining
+Current transcript split: 1,252 explicit, 59 derived, 1 unknown. The remaining
 derived rows are generated cutscene compilations and Commons topics without a
 release page. They remain searchable by text; they are simply not attributed.
 

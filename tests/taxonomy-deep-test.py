@@ -35,7 +35,7 @@ one = lambda q: conn.execute(q).fetchone()[0]
 def tiers():
     assert one("SELECT COUNT(*) FROM transcripts WHERE source_tier IS NULL OR source_tier=''") == 0
     allowed = {'ishtar_main', 'ishtar_web', 'ishtar_commons', 'destinypedia',
-               'validated', 'published', 'proofed', 'cutscene'}
+               'youtube_captions', 'validated', 'published', 'proofed', 'cutscene'}
     bad = {r[0] for r in conn.execute('SELECT DISTINCT source_tier FROM transcripts')} - allowed
     assert not bad, f'unknown tiers: {bad}'
 
@@ -52,7 +52,8 @@ def speaker_identity():
 
 
 def coverage_notes():
-    allowed = {'no_dialogue', 'narration_only', 'dialogue_source_missing', 'unverified'}
+    allowed = {'no_dialogue', 'narration_only', 'dialogue_source_missing',
+               'partial_transcript', 'unverified'}
     bad = {r[0] for r in conn.execute('SELECT DISTINCT status FROM coverage_notes')} - allowed
     assert not bad, f'unknown coverage statuses: {bad}'
     for kind, table in (('activity', 'activities'), ('season', 'seasons'), ('event', 'events')):
@@ -68,6 +69,11 @@ def coverage_notes():
             f"ON n.entity_type='{kind}' AND n.slug=v.slug "
             'WHERE v.transcripts=0 AND n.slug IS NULL')
         assert unexplained == 0, f'{kind} gaps without a note: {unexplained}'
+    partial_without = one(
+        "SELECT COUNT(*) FROM coverage_notes n LEFT JOIN v_activity_coverage a "
+        "ON a.slug=n.slug WHERE n.status='partial_transcript' "
+        'AND (a.slug IS NULL OR a.transcripts=0 OR a.lines=0)')
+    assert partial_without == 0, f'partial notes without transcript: {partial_without}'
 
 
 def refs():

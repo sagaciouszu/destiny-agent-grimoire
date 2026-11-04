@@ -49,7 +49,7 @@ Current state (2026-11-04):
 
 | Content | explicit | derived | unknown |
 |---|---:|---:|---:|
-| Transcripts (1,308) | 1,248 | 59 | 1 |
+| Transcripts (1,312) | 1,252 | 59 | 1 |
 | Items (58,764) | 48,380 | 871 | 9,513 |
 | Books + records (181) | 64 | 4 | 113 |
 
@@ -67,6 +67,10 @@ Kell's Fall, Deep Dives and Altars of Summoning. Four Destiny 1 raid encounter
 transcripts are narration-only and are labelled that way in `docs/GAPS.md`.
 A Destiny 1 expansion never inherits a Destiny 2 season from a reprised
 activity, so Vault of Glass and King's Fall stay seasonless.
+
+Four YouTube-caption transcripts add verified excerpts for Ketchcrash, PsiOps
+Battlegrounds, Defiant Battlegrounds and Expedition. They are marked
+`partial_transcript` in `coverage_notes`, not counted as complete coverage.
 
 Manifest item sets provide an optional classification gain: 19 curated sets
 resolve 555 items that are still `unknown` (10,068 -> 9,513). The mapping lives
@@ -91,6 +95,7 @@ season:
 | `no_dialogue` | confirmed to have no spoken content |
 | `narration_only` | transcript exists, but it has no speaker lines |
 | `dialogue_source_missing` | dialogue exists, but no full transcript source was found |
+| `partial_transcript` | verified dialogue exists, but coverage is incomplete |
 | `unverified` | catalogued, no source checked yet |
 
 `coverage()` returns these notes and an `unexplained` gap list. The list is
