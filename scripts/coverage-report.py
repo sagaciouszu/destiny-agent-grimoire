@@ -45,6 +45,7 @@ def main():
     dungeons = pick([r for r in acts if r[2] == 'dungeon'])
     seasonal = pick([r for r in acts if r[2] in ('seasonal', 'public_event')])
     gaps = [r[0] for r in acts if r[4] == 0]
+    event_gaps = [r[0] for r in evs if r[2] == 0]
 
     print(f'''# Canon Coverage: Activities, Seasons and Events
 
@@ -83,6 +84,8 @@ activity and event. Confidence is `explicit`, `derived`, `manual` or `unknown`.
 {table(evs, ['Slug', 'Event', 'Transcripts', 'Lines', 'Occurrences', 'Vaulted'])}
 
 Events repeat across seasons; `event_occurrences` stores one row per year.
+Events with no spoken-dialogue source in the archive:
+{', '.join('`' + e + '`' for e in event_gaps) if event_gaps else 'none'}.
 
 ## Speaker depth
 
