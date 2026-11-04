@@ -894,14 +894,35 @@ def coverage():
         events_ = [dict(r) for r in conn.execute(
             'SELECT slug,name,event_type,vaulted,transcripts,lines,occurrences '
             'FROM v_event_coverage ORDER BY name').fetchall()]
+        notes = [dict(r) for r in conn.execute(
+            'SELECT entity_type,slug,status,evidence,source_url '
+            'FROM coverage_notes ORDER BY entity_type,slug').fetchall()]
+        note_map = {(n['entity_type'], n['slug']): n['status'] for n in notes}
+
+        def status(kind, slug, transcripts):
+            return note_map.get((kind, slug), 'covered' if transcripts else 'missing')
+
+        for a in acts:
+            a['coverage_status'] = status('activity', a['slug'], a['transcripts'])
+        for s in seasons_:
+            s['coverage_status'] = status('season', s['slug'], s['transcripts'])
+        for e in events_:
+            e['coverage_status'] = status('event', e['slug'], e['transcripts'])
         return {
             'activities': acts,
             'seasons': seasons_,
             'events': events_,
+            'notes': notes,
             'gaps': {
                 'activities_without_transcripts': [a['slug'] for a in acts if a['transcripts'] == 0],
                 'seasons_without_transcripts': [s['slug'] for s in seasons_ if s['transcripts'] == 0],
                 'events_without_transcripts': [e['slug'] for e in events_ if e['transcripts'] == 0],
+                'unexplained': [
+                    f"{kind}:{item['slug']}"
+                    for kind, items in (('activity', acts), ('event', events_), ('season', seasons_))
+                    for item in items
+                    if item['coverage_status'] == 'missing'
+                ],
             },
         }
     finally:

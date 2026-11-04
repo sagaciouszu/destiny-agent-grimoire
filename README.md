@@ -96,21 +96,22 @@ No API keys, accounts or network access are required at runtime.
 | `events` | 9 | Rotating events including removed ones |
 | `event_occurrences` | 72 | Event year, dates and season |
 | `activities` | 67 | Raids, dungeons, seasonal activities and missions |
-| `transcript_classification` | 1294 | Activity/season/event per transcript |
+| `transcript_classification` | 1308 | Activity/season/event per transcript |
 | `item_classification` | 58764 | Season/event per item |
 | `document_classification` | 181 | Season/event per book and record |
+| `coverage_notes` | 9 | Explicit status for zero-coverage gaps |
 | `lore_entries` | 2962 | Bungie manifest lore entries (local enrichment) |
 | `lore_entry_items` | 2068 | Lore entry to item-title links |
 | `manifest_activities` | 3744 | Full manifest activity catalogue |
 | `manifest_links` | 314 | Curated activity/season to manifest hash |
 | `seals` | 70 | Manifest seal nodes |
 | `seal_records` | 1004 | Triumph records per seal |
-| `v_speakers` (view) | 266 | Canonical speakers with line counts |
+| `v_speakers` (view) | 265 | Canonical speakers with line counts |
 | `v_transcript_taxonomy` (view) | 1294 | Transcripts joined to classification |
 | `v_activity_coverage` (view) | 67 | Transcripts and lines per activity |
 | `v_season_coverage` (view) | 28 | Transcripts and lines per season |
 | `v_event_coverage` (view) | 9 | Transcripts, lines and occurrences per event |
-| `speaker_aliases` | 13 | Alias to canonical speaker mapping |
+| `speaker_aliases` | 14 | Alias to canonical speaker mapping |
 | `verify_fts` (index) | 120051 | Fast quote verification |
 | `item_title_fts` (index) | 58764 | Item title lookup |
 
