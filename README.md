@@ -188,7 +188,7 @@ python3 db/enrich_manifest.py
 python3 db/enrich_seals.py
 python3 tests/sync-doc-counts.py
 python3 tests/sync-readme-meta.py
-python3 scripts/coverage-report.py > ../destiny-agent-template/COVERAGE.md
+python3 scripts/coverage-report.py
 
 # verify everything
 bash grimoire-master-audit.sh
