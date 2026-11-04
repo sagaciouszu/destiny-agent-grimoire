@@ -85,6 +85,7 @@ PY
 # Validate the registry up front: process substitution hides exit codes.
 manifest ids >/dev/null || { echo "FATAL: invalid series registry: $MANIFEST" >&2; exit 1; }
 DEPLOYED=0
+DEPLOYED_IDS=()
 
 if [ "$TARGET" = "opencode" ]; then
     # One-time migration from the old flat Drifter layout to agents/drifter/.
@@ -119,10 +120,15 @@ if [ "$TARGET" = "opencode" ]; then
             continue
         fi
         DEPLOYED=$((DEPLOYED+1))
+        DEPLOYED_IDS+=("$id")
         $DRY mkdir -p "$DEST/$id"
         rsync -a --delete $DRY "${EXCLUDES[@]}" "$src/" "$DEST/$id/"
         if [ -f "$DEST/$id/$entry" ]; then
             $DRY mv -f "$DEST/$id/$entry" "$DEST/$entry"
+        fi
+        if [ -z "$DRY" ] && [ ! -f "$DEST/$entry" ]; then
+            echo "FATAL: entry missing after sync: $DEST/$entry" >&2
+            exit 1
         fi
         if [ -z "$DRY" ] && [ -f "$DEST/$entry" ]; then
             python3 - "$DEST/$entry" "$id" <<'PY'
@@ -192,14 +198,17 @@ def clean(value):
     value = re.sub(r'[\r\n<>]+', ' ', value or '')
     return re.sub(r'\s+', ' ', value).strip()[:200]
 
-def permissions(peer_dirs, readonly):
+def permissions(peer_dirs, readonly, protected=()):
     rules = []
     if readonly:
         for action in ('edit', 'shell', 'subagent'):
             rules.append(f'  - action: {action}\n    resource: "*"\n    effect: deny')
+    paths = [f'{path}/**' for path in peer_dirs]
+    if readonly:
+        paths += list(protected)
     for action in ('read', 'glob', 'grep'):
-        for path in peer_dirs:
-            rules.append(f'  - action: {action}\n    resource: "{path}/**"\n    effect: deny')
+        for path in paths:
+            rules.append(f'  - action: {action}\n    resource: "{path}"\n    effect: deny')
     if not rules:
         return ''
     return ('# series:permissions:begin\npermissions:\n'
@@ -228,6 +237,11 @@ for agent in agents:
     ident = agent.get('id', '')
     peers = [p for p in agents if p.get('id') != ident]
     peer_dirs = [os.path.abspath(os.path.join(dest, p.get('id', ''))) for p in peers]
+    local = os.path.abspath(os.path.join(dest, ident))
+    protected = [os.path.join(local, 'memory', '**')] + [
+        os.path.join(local, name) for name in
+        ('USER.md', 'DREAMS.md', 'core/user-memory.md', 'core/journal.md',
+         'core/session-state.md', 'core/cross-session-memory.md')]
 
     lines = [
         f"You are one agent in the **{series}** series. Independent agents share "
@@ -268,7 +282,7 @@ for agent in agents:
     consult = re.sub(r'(?m)^mode:.*$', 'mode: subagent', text, count=1)
     consult = re.sub(r'(?m)^description:\s*(.*)$',
                      r'description: Read-only consult: \1', consult, count=1)
-    consult = set_permissions(consult, permissions(peer_dirs, True))
+    consult = set_permissions(consult, permissions(peer_dirs, True, protected))
     consult_lines = [
         f"You are the **read-only consult copy** of {clean(agent.get('name'))} in "
         f'the {series} series.',
@@ -301,6 +315,10 @@ else
         target="$OC_ROOT/workspace-$id"
         $DRY mkdir -p "$target"
         rsync -a --delete $DRY "${EXCLUDES[@]}" "$src/" "$target/"
+        if [ -z "$DRY" ] && [ ! -f "$target/$entry" ]; then
+            echo "FATAL: entry missing after sync: $target/$entry" >&2
+            exit 1
+        fi
         if [ -z "$DRY" ] && [ -f "$target/AGENTS.md" ]; then
             python3 - "$target" "$MANIFEST" "$id" <<'PY'
 import json, os, re, shutil, sys
@@ -355,6 +373,20 @@ PY
         fi
     done < <(manifest rows)
     echo "synced $(manifest ids | paste -sd ', ' -) -> $OC_ROOT/workspace-*"
+fi
+
+if [ -z "$DRY" ] && [ "$TARGET" = "opencode" ]; then
+    STATE="$DEST/.series-managed"
+    if [ -f "$STATE" ]; then
+        while IFS= read -r old; do
+            [ -n "$old" ] || continue
+            if ! printf '%s\n' "${DEPLOYED_IDS[@]}" | grep -qx "$old"; then
+                rm -f "$DEST/$old.md" "$DEST/$old-consult.md"
+                echo "pruned stale agent: $old"
+            fi
+        done < "$STATE"
+    fi
+    printf '%s\n' "${DEPLOYED_IDS[@]}" > "$STATE"
 fi
 
 if [ -z "$DRY" ] && [ "$DEPLOYED" -eq 0 ]; then
