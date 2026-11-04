@@ -279,10 +279,10 @@ COVERAGE_NOTES = [
     ('event', 'moments-of-triumph', 'no_dialogue',
      'Annual triumph and seal retrospective; no spoken content.', ''),
     ('season', 'season-reclamation', 'dialogue_source_missing',
-     'Voiced story dialogue exists in solo ops and lore; no full transcript source found.',
-     'https://www.youtube.com/watch?v=0PCf4CPuYQE'),
-    ('season', 'monument-of-triumph', 'dialogue_source_missing',
-     'A captioned character-dialogue video exists; no full reviewed transcript yet.',
+     'Solo Ops and Heliostat dialogue exists; no complete transcript source found.',
+     'https://www.youtube.com/watch?v=B9vuLz3weH0'),
+    ('season', 'monument-of-triumph', 'partial_transcript',
+     '202 auto-captioned lines across 10 chapters; speaker labels from chapters, not verbatim-reviewed.',
      'https://www.youtube.com/watch?v=WD2wRN0It0E'),
 ]
 
@@ -403,6 +403,8 @@ SEASON_PHRASES = [
     ('episode revenant', 'episode-revenant'),
     ('episode: heresy', 'episode-heresy'),
     ('episode heresy', 'episode-heresy'),
+    ('monument of triumph', 'monument-of-triumph'),
+    ('season reclamation', 'season-reclamation'),
 ]
 
 EXPANSION_PHRASES = [

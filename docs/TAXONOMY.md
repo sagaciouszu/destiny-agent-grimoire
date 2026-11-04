@@ -49,7 +49,7 @@ Current state (2026-11-04):
 
 | Content | explicit | derived | unknown |
 |---|---:|---:|---:|
-| Transcripts (1,312) | 1,252 | 59 | 1 |
+| Transcripts (1,313) | 1,253 | 59 | 1 |
 | Items (58,764) | 48,380 | 871 | 9,513 |
 | Books + records (181) | 64 | 4 | 113 |
 
@@ -72,6 +72,8 @@ Four YouTube-caption transcripts add 197 verified lines for Ketchcrash (38),
 PsiOps Battlegrounds (51), Defiant Battlegrounds (73) and Expedition (35).
 They are compiled from 63 activity dialogue videos and marked
 `partial_transcript` in `coverage_notes` because exhaustiveness is not provable.
+Season 28 also has a 202-line auto-captioned character-dialogue transcript,
+marked `partial_transcript`; Season 27 remains `dialogue_source_missing`.
 
 Manifest item sets provide an optional classification gain: 19 curated sets
 resolve 555 items that are still `unknown` (10,068 -> 9,513). The mapping lives
