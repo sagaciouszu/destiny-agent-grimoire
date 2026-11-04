@@ -10,6 +10,10 @@
   The Dawning, Solstice, Guardian Games, Crimson Days, The Revelry,
   Moments of Triumph, Bungie Day, Iron Banner.
 - Vaulted flag across seasons, activities and events.
+- Verbatim activity transcripts from Destinypedia: Menagerie (232 Calus lines,
+  class callouts kept separate), raids, dungeons, exotic missions and seasonal
+  activities. Calus 431 lines, Rhulk 36, Nezarec 28.
+- Quest-step titles parsed as speakers are filtered out (504 noise rows).
 - New discovery: `--activity`, `--season`, `--event`, `--expansion` facets on
   search; `activity`, `event`, `coverage` CLI commands; six new MCP tools.
 - Coverage views and `docs/TAXONOMY.md`.
