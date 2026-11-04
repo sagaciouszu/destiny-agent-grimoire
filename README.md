@@ -169,6 +169,10 @@ python3 archive/scrape.py items <start> <end>
 python3 archive/data/fetch_transcripts_web.py
 python3 archive/data/fetch_cutscenes.py
 
+# optional: authoritative Bungie manifest (needs BUNGIE_API_KEY)
+python3 archive/data/fetch_manifest.py --check
+python3 archive/data/fetch_manifest.py --fetch --extract
+
 # rebuild and sync documented counts
 python3 db/migrate.py
 python3 tests/sync-doc-counts.py
