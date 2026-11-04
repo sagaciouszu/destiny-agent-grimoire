@@ -40,8 +40,8 @@ narration. They are searchable for structure and context; they add no quotes.
 
 | Type | Slug | Name | Transcripts | Status |
 |---|---|---|---|---|
-| raid | crotas-end | Crota's End | 1 | narration_only |
-| raid | wrath-of-the-machine | Wrath of the Machine | 1 | narration_only |
+| raid | crotas-end | Crota's End | 1 | no_dialogue |
+| raid | wrath-of-the-machine | Wrath of the Machine | 1 | no_dialogue |
 
 ## Events
 
@@ -108,12 +108,12 @@ exists but has no speaker lines.
 
 | Entity | Slug | Status | Evidence | Source |
 |---|---|---|---|---|
-| activity | crotas-end | narration_only | Encounter transcript is narration-only; the source has no spoken lines. | https://commons.ishtar-collective.net/t/3557 |
+| activity | crotas-end | no_dialogue | Encounter transcript has no speaker lines; no spoken-dialogue source found. | https://commons.ishtar-collective.net/t/3557 |
 | activity | defiant-battlegrounds | partial_transcript | 73 verified lines from 24 videos across three battlegrounds; not guaranteed exhaustive. | https://www.youtube.com/watch?v=yVA1_QDIO4E |
 | activity | expedition | partial_transcript | 35 verified lines from 12 videos across four destinations; not guaranteed exhaustive. | https://www.youtube.com/watch?v=ayBfs8RVtSA |
 | activity | ketchcrash | partial_transcript | 38 verified lines from 12 activity dialogue videos; reviewed, not guaranteed exhaustive. | https://www.youtube.com/watch?v=2A4-CoDnrLs |
 | activity | psiops-battlegrounds | partial_transcript | 51 verified lines from 15 videos across Moon, EDZ and Cosmodrome; not guaranteed exhaustive. | https://www.youtube.com/watch?v=6cVt1oKZYTE |
-| activity | wrath-of-the-machine | narration_only | Encounter transcript is narration-only; the source has no spoken lines. | https://commons.ishtar-collective.net/t/3549 |
+| activity | wrath-of-the-machine | no_dialogue | Encounter transcript has no speaker lines; no spoken-dialogue source found. | https://commons.ishtar-collective.net/t/3549 |
 | event | bungie-day | no_dialogue | Real-world community celebration; no in-game spoken content. |  |
 | event | moments-of-triumph | no_dialogue | Annual triumph and seal retrospective; no spoken content. |  |
 | season | monument-of-triumph | partial_transcript | 202 auto-captioned lines across 10 chapters; speaker labels from chapters, not verbatim-reviewed. | https://www.youtube.com/watch?v=WD2wRN0It0E |

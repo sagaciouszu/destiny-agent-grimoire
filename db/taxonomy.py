@@ -256,11 +256,11 @@ ACTIVITIES = [
 #   unverified               catalogued, no source checked yet
 # --------------------------------------------------------------------------
 COVERAGE_NOTES = [
-    ('activity', 'crotas-end', 'narration_only',
-     'Encounter transcript is narration-only; the source has no spoken lines.',
+    ('activity', 'crotas-end', 'no_dialogue',
+     'Encounter transcript has no speaker lines; no spoken-dialogue source found.',
      'https://commons.ishtar-collective.net/t/3557'),
-    ('activity', 'wrath-of-the-machine', 'narration_only',
-     'Encounter transcript is narration-only; the source has no spoken lines.',
+    ('activity', 'wrath-of-the-machine', 'no_dialogue',
+     'Encounter transcript has no speaker lines; no spoken-dialogue source found.',
      'https://commons.ishtar-collective.net/t/3549'),
     ('activity', 'ketchcrash', 'partial_transcript',
      '38 verified lines from 12 activity dialogue videos; reviewed, not guaranteed exhaustive.',
