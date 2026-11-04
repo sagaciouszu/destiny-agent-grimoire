@@ -158,6 +158,9 @@ def taxonomy_tools():
     assert server.search('calus', season=99, limit=3)['count'] == 0
     assert server.search('failsafe', season=24, limit=3)['total'] == \
         server.search('failsafe', season='echoes', limit=3)['total']
+    assert server.character('Calus', about='Hunter', class_tag='hunter', limit=3)['rows']
+    tr = server.transcript('menagerie', class_tag='hunter', limit=10)
+    assert all(line['class_tag'] in (None, 'hunter') for line in tr['lines'])
 
 
 check('taxonomy tools and filters', taxonomy_tools)

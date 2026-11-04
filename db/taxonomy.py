@@ -15,7 +15,7 @@ Four independent axes:
 import re
 import sqlite3
 
-SCHEMA_VERSION = '1.2.0'
+SCHEMA_VERSION = '1.3.0'
 
 # --------------------------------------------------------------------------
 # Expansions

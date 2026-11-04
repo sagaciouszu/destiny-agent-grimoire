@@ -48,10 +48,11 @@ def cmd_search(args):
     query = ' '.join(args.query)
     out = api.search(query, type=args.type, limit=args.limit, full=args.full,
                      offset=args.offset, rank=args.rank, activity=args.activity,
-                     season=args.season, event=args.event, expansion=args.expansion)
+                     season=args.season, event=args.event, expansion=args.expansion,
+                     class_tag=args.class_tag)
     total = api.search_total(query, type=args.type, activity=args.activity,
                              season=args.season, event=args.event,
-                             expansion=args.expansion)
+                             expansion=args.expansion, class_tag=args.class_tag)
     if args.full:
         emit(out, args.json, lambda rs: [print(f"[{r['source']}] {r['title']}: {r['text'][:200]}") for r in rs])
     else:
@@ -63,7 +64,8 @@ def cmd_search(args):
 
 def cmd_character(args):
     res = api.character(args.name, about=args.about, all_lines=args.all, limit=args.limit,
-                        offset=args.offset, canon_only=args.canon_only)
+                        offset=args.offset, canon_only=args.canon_only,
+                        class_tag=args.class_tag)
     if res is None:
         print(f'Character not found: {args.name}', file=sys.stderr)
         return 1
@@ -173,7 +175,8 @@ def cmd_book(args):
 def cmd_transcript(args):
     res = api.transcript(args.ref, speaker=args.speaker, limit=args.limit,
                          offset=args.offset, full=args.full, include_stage=args.include_stage,
-                         canon_only=args.canon_only, section=args.section)
+                         canon_only=args.canon_only, section=args.section,
+                         class_tag=args.class_tag)
     if res is None:
         print(f'Transcript not found: {args.ref}', file=sys.stderr)
         return 1
@@ -356,6 +359,7 @@ def main(argv=None):
     s.add_argument('--season', help='season number, slug or name')
     s.add_argument('--event', help='rotating event slug or name')
     s.add_argument('--expansion', help='expansion slug or name')
+    s.add_argument('--class', dest='class_tag', choices=['hunter','titan','warlock'])
     s.add_argument('--limit', type=int, default=10)
     s.add_argument('--offset', type=int, default=0)
     s.add_argument('--json', action='store_true')
@@ -371,6 +375,7 @@ def main(argv=None):
     c.add_argument('--about', help='only lines mentioning this term')
     c.add_argument('--all', action='store_true', help='all transcript lines, not just curated quotes')
     c.add_argument('--canon-only', action='store_true', help='exclude optional/variant lines')
+    c.add_argument('--class', dest='class_tag', choices=['hunter','titan','warlock'])
     c.add_argument('--limit', type=int, default=20)
     c.add_argument('--offset', type=int, default=0)
     c.add_argument('--json', action='store_true')
@@ -413,6 +418,7 @@ def main(argv=None):
     tr.add_argument('--include-stage', action='store_true')
     tr.add_argument('--canon-only', action='store_true', help='exclude optional/variant lines')
     tr.add_argument('--section', help='only lines from this section/location')
+    tr.add_argument('--class', dest='class_tag', choices=['hunter','titan','warlock'])
     tr.add_argument('--json', action='store_true')
     tr.set_defaults(func=cmd_transcript)
 

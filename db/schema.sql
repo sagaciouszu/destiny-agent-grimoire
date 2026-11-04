@@ -42,7 +42,8 @@ CREATE TABLE IF NOT EXISTS transcript_lines (
     norm_line TEXT,
     is_stage_dir INTEGER DEFAULT 0,
     section TEXT,
-    is_optional INTEGER DEFAULT 0
+    is_optional INTEGER DEFAULT 0,
+    class_tag TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_tl_transcript ON transcript_lines(transcript_id);
 CREATE INDEX IF NOT EXISTS idx_tl_speaker ON transcript_lines(speaker);
@@ -138,6 +139,7 @@ CREATE TABLE IF NOT EXISTS meta (
 CREATE VIRTUAL TABLE IF NOT EXISTS fts USING fts5(
     title, text, speaker, body, source,
     source_slug UNINDEXED,
+    class_tag UNINDEXED,
     tokenize='porter unicode61'
 );
 
