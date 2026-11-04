@@ -95,13 +95,13 @@ No API keys, accounts or network access are required at runtime.
 | `seasons` | 26 | Official numeric seasons; 24-26 are episodes |
 | `events` | 9 | Rotating events including removed ones |
 | `event_occurrences` | 72 | Event year, dates and season |
-| `activities` | 65 | Raids, dungeons, seasonal activities and missions |
+| `activities` | 67 | Raids, dungeons, seasonal activities and missions |
 | `transcript_classification` | 1229 | Activity/season/event per transcript |
 | `item_classification` | 58764 | Season/event per item |
 | `document_classification` | 181 | Season/event per book and record |
 | `v_speakers` (view) | 288 | Canonical speakers with line counts |
 | `v_transcript_taxonomy` (view) | 1229 | Transcripts joined to classification |
-| `v_activity_coverage` (view) | 65 | Transcripts and lines per activity |
+| `v_activity_coverage` (view) | 67 | Transcripts and lines per activity |
 | `v_season_coverage` (view) | 26 | Transcripts and lines per season |
 | `v_event_coverage` (view) | 9 | Transcripts, lines and occurrences per event |
 | `speaker_aliases` | 12 | Alias to canonical speaker mapping |

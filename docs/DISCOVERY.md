@@ -25,7 +25,7 @@ Four independent axes, additive to the canon tables:
 |---|---|---|
 | Expansion | `expansions` | 18 |
 | Season / episode | `seasons` | 26 (official numbers) |
-| Activity | `activities` | 65 |
+| Activity | `activities` | 67 |
 | Event | `events` + `event_occurrences` | 9 events, 72 occurrences |
 
 Classification lives in `transcript_classification`, `item_classification` and
