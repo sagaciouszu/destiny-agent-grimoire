@@ -90,11 +90,12 @@ source-limited.
 
 | Gap | Source that would close it |
 |---|---|
-| Vaulted raids with no transcript | local archive game files / subtitle export |
+| Defiant Battlegrounds, Expedition, Ketchcrash, PsiOps Battlegrounds | Destinypedia pages are stubs; no transcript source found yet |
+| Destiny 1 raid dialogue | current encounter transcripts are narration-only; in-raid dialogue is not available |
 | Removed seasonal activities (Seasons 12-26) | captioned gameplay compilations, reviewed |
-| Destiny 1 raids and patrol dialogue | local D1 archive / community transcript with clip validation |
 | Sparse raid figures | full encounter transcripts, not intros/cinematics |
 | Festival, Dawning, Solstice dialogue | event-specific transcript sources; items already mapped |
+| Bungie Day, Moments of Triumph | no spoken transcript source; items and years are mapped |
 
 Never invent dialogue. A gap is reported until a source exists.
 
