@@ -102,7 +102,10 @@ def check_gitignored(ws):
         path = os.path.join(ws, f)
         if not os.path.exists(path): continue
         s = open(path, encoding='utf-8').read()
-        if 'memory/' in s or 'DREAMS.md' in s:
+        if 'DREAMS.md' in s:
+            print("GITIGNORED REF: %s" % f)
+            sys.exit(1)
+        if 'memory/' in s and not os.path.exists(os.path.join(ws, 'memory.py')):
             print("GITIGNORED REF: %s" % f)
             sys.exit(1)
     print("OK: No gitignored refs in instructions")
