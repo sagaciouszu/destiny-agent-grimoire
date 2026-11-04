@@ -86,6 +86,10 @@ check "$Q character rhulk --limit 3 | grep -q 'transcript lines'" "rhulk speaker
 check "$Q activity breach-executable | grep -q '272 lines'" "breach executable dialogue"
 check "$Q activity the-nether | grep -q 'Sloane'" "nether speakers"
 check "$Q activity the-coil | grep -q 'Riven'" "coil dialogue"
+check "[ \"$($Q search failsafe --season 24 --limit 1 | tail -1)\" = \"$($Q search failsafe --season echoes --limit 1 | tail -1)\" ]" "episode number and name agree"
+check "[ \"$($Q search sloane --season 26 --limit 1 | tail -1)\" = \"$($Q search sloane --season heresy --limit 1 | tail -1)\" ]" "heresy number and name agree"
+check "$Q list activities --limit 3 --json | python3 -c 'import json,sys; d=json.load(sys.stdin); assert isinstance(d,list) and len(d)==3'" "list activities --json"
+check "$Q event the-dawning --json | python3 -c 'import json,sys; d=json.load(sys.stdin); assert len(d)>5'" "event occurrences json"
 
 echo ""
 echo "Passed: $PASS | Failed: $FAIL"
