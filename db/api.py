@@ -201,11 +201,37 @@ def search(term, type=None, limit=10, full=False, offset=0, rank=True):
         conn.close()
 
 
+def _speaker_variants(name):
+    value = (name or '').strip()
+    variants = [value]
+    if value.lower().startswith('the '):
+        variants.append(value[4:])
+    return [v for v in variants if v]
+
+
+def _transcript_lines(conn, name, pattern, limit, offset):
+    for variant in _speaker_variants(name):
+        params = [f'%{_like(variant)}%']
+        sql = ("SELECT line AS text, speaker, '' AS source_slug FROM transcript_lines "
+               "WHERE speaker LIKE ? ESCAPE '\\' AND is_stage_dir=0")
+        if pattern:
+            sql += " AND LOWER(line) LIKE ? ESCAPE '\\'"
+            params.append(pattern)
+        sql += ' LIMIT ? OFFSET ?'
+        params.append(_limit(limit, 20))
+        params.append(_offset(offset))
+        rows = conn.execute(sql, params).fetchall()
+        if rows:
+            return [dict(r) for r in rows]
+    return []
+
+
 @_guard
 def character(name, about=None, all_lines=False, limit=20, offset=0):
-    """Curated character quotes, or every transcript line with all_lines=True.
+    """Curated character quotes, or transcript lines for any canon speaker.
 
-    Returns {'header': str, 'rows': [...]} or None when a curated character is absent.
+    Curated characters use the compendium. Speakers who exist only in
+    transcripts fall back to their canonical lines.
     """
     conn = connect()
     try:
@@ -225,7 +251,10 @@ def character(name, about=None, all_lines=False, limit=20, offset=0):
 
         ch = _resolve_character(conn, name)
         if not ch:
-            return None
+            rows = _transcript_lines(conn, name, pattern, limit, offset)
+            if not rows:
+                return None
+            return {'header': f'=== {name} (transcript lines) ===', 'rows': rows}
         params = [ch['id']]
         sql = "SELECT text, '' AS speaker, source_slug FROM character_lines WHERE character_id = ?"
         if pattern:
@@ -374,7 +403,23 @@ def character_info(name):
     try:
         ch = _resolve_character(conn, name)
         if not ch:
-            return None
+            row = None
+            for variant in _speaker_variants(name):
+                row = conn.execute(
+                    "SELECT speaker, COUNT(*) FROM transcript_lines "
+                    "WHERE speaker LIKE ? ESCAPE '\\' AND is_stage_dir=0 "
+                    "GROUP BY speaker ORDER BY 2 DESC LIMIT 1",
+                    (f'%{_like(variant)}%',)).fetchone()
+                if row:
+                    break
+            if not row:
+                return None
+            spoken = conn.execute(
+                "SELECT COUNT(*) FROM transcript_lines WHERE speaker=? AND is_stage_dir=0",
+                (row[0],)).fetchone()[0]
+            return {'name': row[0], 'slug': row[0].lower().replace(' ', '-'),
+                    'quotes': 0, 'spoken_lines': spoken,
+                    'sources': {'transcript': spoken}, 'aliases': []}
         quotes = conn.execute('SELECT COUNT(*) FROM character_lines WHERE character_id=?', (ch['id'],)).fetchone()[0]
         sources = {r[0]: r[1] for r in conn.execute(
             'SELECT source_type, COUNT(*) FROM character_lines WHERE character_id=? GROUP BY source_type',
