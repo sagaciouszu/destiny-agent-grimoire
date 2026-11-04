@@ -1,25 +1,23 @@
-# v0.22.0 - Manifest lore, Commons transcripts and source tiers
+# v0.23.0 - Class-tagged canon and user preferences
 
 **2026-11-04**
 
 ## What's Changed
 
-- **Manifest lore:** 2,962 `DestinyLoreDefinition` entries ingested; 1,962 are
-  new after dedupe against books, items and cards. Item links included.
-- **Manifest catalogue:** 3,744 activities and seasons 27-28 added to the
-  reconciliation layer, with 314 curated-to-manifest links.
-- **Ishtar Commons:** 862 topics crawled; 37 net-new transcripts after
-  line-level dedupe, including strikes and patrol dialogue.
-- **Source precedence:** `source_tier` records Ishtar > Destinypedia > captions.
-- **Variants:** `section` and `is_optional` preserve locations, optional blocks
-  and class callouts; `--canon-only` and `--section` expose them.
-- **Seals:** 70 seals and 1,004 triumph records, exposed as `seal`/`seals`.
-- **Discovery:** `list lore`, `lore <hash|title>`, `seal`, `seals` and `--type lore`.
+- **Class tags:** Hunter, Titan and Warlock variants are tagged on transcript
+  lines; `--class` returns base lines plus the chosen class.
+- **Menagerie precision:** class callouts are optional; Calus has 419 base lines
+  and 12 class variants.
+- **User preferences:** per-user `memory.py prefs-set --class` stores the player's
+  class locally; the shared canon never holds user data.
+- **Onboarding:** agents ask for the class once, persist it, and pass it to
+  `character`, `transcript` and `search`.
+- **Schema 1.3.0**, query interface 89 checks.
 
 ## Verification
 
-9/9 archive, 82/82 interface, 14/14 layout, 8/8 MCP, 141-call matrix, 8/8 extended, conformance PASS. Drifter 20/20 and Eris 15/15 in their repos.
+9/9 archive, 89/89 interface, 51/51 database, 15/15 generated Agent, 20/20 Drifter, 15/15 Eris, 15/15 Calus, 8/8 MCP, 141-call matrix, 10/10 extended, conformance PASS.
 
 ## Asset
 
-`grimoire.db` with lore, taxonomy and verification indexes. `SHA256SUMS` is attached.
+`grimoire.db` with class tags, lore, taxonomy and verification indexes.
