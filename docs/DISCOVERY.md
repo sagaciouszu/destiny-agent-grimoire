@@ -56,7 +56,7 @@ Episodes are not ordinary seasons, so they carry `season_type='episode'` and an
 | `manual` | curated override |
 | `unknown` | nothing matched |
 
-Current transcript split: 89 explicit, 780 derived, 388 unknown (31%). The
+Current transcript split: 104 explicit, 801 derived, 389 unknown (30%). The
 unknown set is mostly story beats whose titles carry no release metadata. They
 remain searchable by text; they are simply not attributed.
 

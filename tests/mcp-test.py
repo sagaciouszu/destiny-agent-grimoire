@@ -145,7 +145,7 @@ def taxonomy_tools():
     assert men['coverage']['lines'] >= 200, 'menagerie lines missing'
     assert men['speakers'][0]['speaker'] == 'Calus'
     seasons = server.seasons()
-    assert len(seasons['rows']) == 26, 'season count'
+    assert len(seasons['rows']) == 28, 'season count'
     assert seasons['rows'][6]['season_number'] == 7
     events = server.events()
     assert {e['slug'] for e in events['rows']} >= {'the-dawning', 'festival-of-the-lost',

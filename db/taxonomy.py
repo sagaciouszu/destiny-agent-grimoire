@@ -15,7 +15,7 @@ Four independent axes:
 import re
 import sqlite3
 
-SCHEMA_VERSION = '1.1.0'
+SCHEMA_VERSION = '1.2.0'
 
 # --------------------------------------------------------------------------
 # Expansions
@@ -73,6 +73,8 @@ SEASONS = [
     (24, 'episode-echoes', 'Episode: Echoes', 'episode', None, 7, 'the-final-shape', '2024-06-04', '2024-10-07', 1),
     (25, 'episode-revenant', 'Episode: Revenant', 'episode', None, 7, 'the-final-shape', '2024-10-08', '2025-02-03', 1),
     (26, 'episode-heresy', 'Episode: Heresy', 'episode', None, 7, 'the-final-shape', '2025-02-04', '2025-07-14', 1),
+    (27, 'season-reclamation', 'Season: Reclamation', 'season', None, 8, 'the-edge-of-fate', '2025-07-15', '2025-12-02', 0),
+    (28, 'monument-of-triumph', 'Monument of Triumph', 'season', None, 8, 'renegades', '2025-12-02', '2099-01-01', 0),
 ]
 
 # Episode acts (additive detail; seasons stay the numeric axis)

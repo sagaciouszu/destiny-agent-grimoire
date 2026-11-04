@@ -16,6 +16,7 @@ DEFAULT_DB = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'grimoire.
 TYPE_TO_SOURCE = {
     'books': 'book_entry', 'transcripts': 'transcript_line', 'grimoire': 'grimoire_card',
     'interactions': 'interaction', 'items': 'item', 'records': 'record',
+    'lore': 'lore_entry',
 }
 MAX_LIMIT = 10000  # safety bound for the shared API; MCP clamps tighter
 
@@ -216,11 +217,13 @@ def _speaker_variants(name):
     return [v for v in variants if v]
 
 
-def _transcript_lines(conn, name, pattern, limit, offset):
+def _transcript_lines(conn, name, pattern, limit, offset, canon_only=False):
     for variant in _speaker_variants(name):
         params = [f'%{_like(variant)}%']
         sql = ("SELECT line AS text, speaker, '' AS source_slug FROM transcript_lines "
                "WHERE speaker LIKE ? ESCAPE '\\' AND is_stage_dir=0")
+        if canon_only:
+            sql += ' AND is_optional=0'
         if pattern:
             sql += " AND LOWER(line) LIKE ? ESCAPE '\\'"
             params.append(pattern)
@@ -234,7 +237,7 @@ def _transcript_lines(conn, name, pattern, limit, offset):
 
 
 @_guard
-def character(name, about=None, all_lines=False, limit=20, offset=0):
+def character(name, about=None, all_lines=False, limit=20, offset=0, canon_only=False):
     """Curated character quotes, or transcript lines for any canon speaker.
 
     Curated characters use the compendium. Speakers who exist only in
@@ -258,7 +261,7 @@ def character(name, about=None, all_lines=False, limit=20, offset=0):
 
         ch = _resolve_character(conn, name)
         if not ch:
-            rows = _transcript_lines(conn, name, pattern, limit, offset)
+            rows = _transcript_lines(conn, name, pattern, limit, offset, canon_only=canon_only)
             if not rows:
                 return None
             return {'header': f'=== {name} (transcript lines) ===', 'rows': rows}
@@ -470,11 +473,12 @@ def book(ref, limit=20, offset=0, full=False):
 
 
 @_guard
-def transcript(ref, speaker=None, limit=50, offset=0, full=False, include_stage=False):
+def transcript(ref, speaker=None, limit=50, offset=0, full=False, include_stage=False,
+               canon_only=False, section=None):
     """Transcript metadata and dialogue lines. ref accepts a slug or title fragment."""
     conn = connect()
     try:
-        t = _resolve(conn, 'transcripts', ref, 'id, slug, title, release, characters, arc, source_url')
+        t = _resolve(conn, 'transcripts', ref, 'id, slug, title, release, characters, arc, source_url, source_tier')
         if not t:
             return None
         where = ['transcript_id = ?']
@@ -484,14 +488,20 @@ def transcript(ref, speaker=None, limit=50, offset=0, full=False, include_stage=
         if speaker:
             where.append("speaker LIKE ? ESCAPE '\\'")
             params.append(f'%{_like(speaker)}%')
+        if canon_only:
+            where.append('is_optional = 0')
+        if section:
+            where.append("section LIKE ? ESCAPE '\\'")
+            params.append(f'%{_like(section)}%')
         clause = ' AND '.join(where)
         total = conn.execute(f'SELECT COUNT(*) FROM transcript_lines WHERE {clause}', params).fetchone()[0]
         rows = conn.execute(
-            f'SELECT seq, speaker, line FROM transcript_lines WHERE {clause} '
+            f'SELECT seq, speaker, line, section, is_optional FROM transcript_lines WHERE {clause} '
             f'ORDER BY seq LIMIT ? OFFSET ?',
             params + [_limit(limit, 50), _offset(offset)]).fetchall()
         lines = [{'seq': r['seq'], 'speaker': r['speaker'],
-                  'text': (r['line'] or '') if full else _snippet(r['line'])}
+                  'text': (r['line'] or '') if full else _snippet(r['line']),
+                  'section': r['section'], 'optional': bool(r['is_optional'])}
                  for r in rows]
         tax = conn.execute(
             'SELECT activity_slug, activity_type, season_slug, act, event_slug, '
@@ -781,6 +791,30 @@ def activity(ref, limit=50, offset=0):
 
 
 @_guard
+def lore(ref):
+    """Read a lore entry by hash or title fragment, with linked item names."""
+    conn = connect()
+    try:
+        row = conn.execute(
+            'SELECT hash,title,subtitle,body,is_duplicate,duplicate_of FROM lore_entries '
+            'WHERE CAST(hash AS TEXT)=? LIMIT 1', (str(ref),)).fetchone()
+        if not row:
+            row = conn.execute(
+                "SELECT hash,title,subtitle,body,is_duplicate,duplicate_of FROM lore_entries "
+                "WHERE LOWER(title) LIKE LOWER(?) ESCAPE '\\' ORDER BY LENGTH(title) LIMIT 1",
+                (f'%{_like(str(ref))}%',)).fetchone()
+        if not row:
+            return None
+        out = dict(row)
+        out['items'] = [r[0] for r in conn.execute(
+            'SELECT item_title FROM lore_entry_items WHERE lore_hash=? ORDER BY item_title',
+            (out['hash'],)).fetchall()]
+        return out
+    finally:
+        conn.close()
+
+
+@_guard
 def coverage():
     """Coverage summary across activities, seasons and events plus gap lists."""
     conn = connect()
@@ -810,9 +844,9 @@ def coverage():
 
 def listing(kind, limit=50, offset=0):
     if kind not in ('books', 'characters', 'speakers', 'records',
-                    'activities', 'seasons', 'events'):
+                    'activities', 'seasons', 'events', 'lore'):
         raise ValueError('kind must be one of: books, characters, speakers, records, '
-                         'activities, seasons, events')
+                         'activities, seasons, events, lore')
     conn = connect()
     try:
         n = _limit(limit, 50)
@@ -837,6 +871,10 @@ def listing(kind, limit=50, offset=0):
             rows = conn.execute(
                 'SELECT slug, name, event_type, transcripts, lines, occurrences '
                 'FROM v_event_coverage ORDER BY name LIMIT ? OFFSET ?', (n, o))
+        elif kind == 'lore':
+            rows = conn.execute(
+                'SELECT hash, title, subtitle, is_duplicate FROM lore_entries '
+                'ORDER BY title LIMIT ? OFFSET ?', (n, o))
         else:
             rows = conn.execute('SELECT slug, title FROM records ORDER BY title LIMIT ? OFFSET ?', (n, o))
         return [dict(r) for r in rows]
@@ -853,7 +891,7 @@ def stats():
                   'interactions', 'items', 'records', 'characters', 'character_lines', 'fts',
                   'expansions', 'seasons', 'events', 'event_occurrences', 'activities',
                   'transcript_classification', 'item_classification',
-                  'document_classification']:
+                  'document_classification', 'lore_entries', 'lore_entry_items']:
             counts[t] = conn.execute(f'SELECT COUNT(*) FROM {t}').fetchone()[0]
         top_items = [{'item_type': r[0], 'count': r[1]} for r in conn.execute(
             "SELECT item_type, COUNT(*) FROM items WHERE item_type != '' "

@@ -95,6 +95,11 @@ def indexes():
         "SELECT (SELECT COUNT(*) FROM transcript_lines)+(SELECT COUNT(*) FROM book_entries)"
         "+(SELECT COUNT(*) FROM grimoire_cards)+(SELECT COUNT(*) FROM interactions)"
         "+(SELECT COUNT(*) FROM items WHERE text!='')+(SELECT COUNT(*) FROM records)").fetchone()[0]
+    has_lore = conn.execute(
+        "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='lore_entries'").fetchone()[0]
+    if has_lore:
+        expected += conn.execute(
+            'SELECT COUNT(*) FROM lore_entries WHERE is_duplicate=0').fetchone()[0]
     assert conn.execute('SELECT COUNT(*) FROM verify_fts').fetchone()[0] == expected
     assert conn.execute('SELECT COUNT(*) FROM fts').fetchone()[0] == expected
 

@@ -25,15 +25,15 @@ storytelling, lore checks, agent personas, or fact-checking.
 |-------|------|---------|
 | books | 110 | Book metadata |
 | book_entries | 1158 | Lore entries within books |
-| transcripts | 1257 | Quest transcript headers |
-| transcript_lines | 72749 | Canon character dialogue |
+| transcripts | 1294 | Quest transcript headers |
+| transcript_lines | 73022 | Canon character dialogue |
 | grimoire_cards | 2889 | Destiny 1 grimoire cards |
 | interactions | 2699 | Short character dialogue beats |
 | items | 58764 | Weapons / armor / gear lore + flavor |
 | records | 71 | Triumphs / seals |
 | characters | 20 | Named characters |
 | character_lines | 1229 | Canon character quotes for agents |
-| fts | 122259 | FTS5 search index |
+| fts | 124494 | FTS5 search index |
 | verify_fts | 121947 | Fast quote verification index |
 | item_title_fts | 58764 | Item title lookup index |
 
@@ -42,13 +42,15 @@ Taxonomy tables (additive; canon tables are never rewritten):
 | Table | Rows | Content |
 |-------|------|---------|
 | expansions | 18 | Destiny 1 through Renegades |
-| seasons | 26 | Official numeric seasons; 24-26 are episodes |
+| seasons | 28 | Official numeric seasons; 24-26 are episodes |
 | activities | 65 | Raids, dungeons, seasonal activities, missions |
 | events | 9 | Festival, Dawning, Solstice, Guardian Games, Crimson Days, Revelry, Moments of Triumph, Bungie Day, Iron Banner |
 | event_occurrences | 72 | Event year, dates and season |
 | transcript_classification | 1229 | Activity/season/event per transcript with confidence |
 | item_classification | 58764 | Season/event per item |
 | document_classification | 181 | Season/event per book or record |
+| lore_entries | 2962 | Bungie manifest lore entries |
+| manifest_activities | 3744 | Full manifest activity catalogue |
 
 ## How to query
 

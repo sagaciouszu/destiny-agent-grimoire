@@ -20,6 +20,7 @@ Usage:
   query.py record "<slug or title>" [--json]
   query.py activity "<slug or name>" [--limit N] [--json]
   query.py event "<slug or name>" [--json]
+  query.py lore "<hash or title>" [--json]
   query.py coverage [--json]
   query.py stats [--json]
 """
@@ -60,7 +61,7 @@ def cmd_search(args):
 
 def cmd_character(args):
     res = api.character(args.name, about=args.about, all_lines=args.all, limit=args.limit,
-                        offset=args.offset)
+                        offset=args.offset, canon_only=args.canon_only)
     if res is None:
         print(f'Character not found: {args.name}', file=sys.stderr)
         return 1
@@ -169,7 +170,8 @@ def cmd_book(args):
 
 def cmd_transcript(args):
     res = api.transcript(args.ref, speaker=args.speaker, limit=args.limit,
-                         offset=args.offset, full=args.full, include_stage=args.include_stage)
+                         offset=args.offset, full=args.full, include_stage=args.include_stage,
+                         canon_only=args.canon_only, section=args.section)
     if res is None:
         print(f'Transcript not found: {args.ref}', file=sys.stderr)
         return 1
@@ -184,6 +186,8 @@ def cmd_transcript(args):
                     tax.get('season_slug'), tax.get('event_slug'),
                     tax.get('expansion_slug'), tax.get('confidence')]
             print('Taxonomy: ' + ' | '.join(str(b) for b in bits if b))
+        if t.get('source_tier'):
+            print('Source tier: ' + t['source_tier'])
         for line in res['lines']:
             print(f"[{line['speaker']}] {line['text']}")
         print(f"\nShowing {len(res['lines'])} of {res['total']} (offset {res['offset']})")
@@ -292,6 +296,26 @@ def cmd_coverage(args):
     return 0
 
 
+def cmd_lore(args):
+    res = api.lore(args.ref)
+    if res is None:
+        print(f'Lore entry not found: {args.ref}', file=sys.stderr)
+        return 1
+    if args.json:
+        print(json.dumps(res, ensure_ascii=False, separators=(',', ':')))
+        return 0
+    print(f"=== {res['title']} ({res['hash']}) ===")
+    if res['subtitle']:
+        print(res['subtitle'])
+    if res['items']:
+        print('Items: ' + ', '.join(res['items'][:10]))
+    if res['is_duplicate']:
+        print('Duplicate of: ' + (res['duplicate_of'] or 'existing canon'))
+    print()
+    print(res['body'])
+    return 0
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description='Query the Destiny Grimoire database')
     sub = parser.add_subparsers(dest='cmd')
@@ -317,6 +341,7 @@ def main(argv=None):
     c.add_argument('name')
     c.add_argument('--about', help='only lines mentioning this term')
     c.add_argument('--all', action='store_true', help='all transcript lines, not just curated quotes')
+    c.add_argument('--canon-only', action='store_true', help='exclude optional/variant lines')
     c.add_argument('--limit', type=int, default=20)
     c.add_argument('--offset', type=int, default=0)
     c.add_argument('--json', action='store_true')
@@ -336,7 +361,7 @@ def main(argv=None):
 
     l = sub.add_parser('list', help='Cheap discovery listings')
     l.add_argument('kind', choices=['books', 'characters', 'speakers', 'records',
-                                   'activities', 'seasons', 'events'])
+                                   'activities', 'seasons', 'events', 'lore'])
     l.add_argument('--limit', type=int, default=50)
     l.add_argument('--offset', type=int, default=0)
     l.add_argument('--json', action='store_true')
@@ -357,6 +382,8 @@ def main(argv=None):
     tr.add_argument('--offset', type=int, default=0)
     tr.add_argument('--full', action='store_true')
     tr.add_argument('--include-stage', action='store_true')
+    tr.add_argument('--canon-only', action='store_true', help='exclude optional/variant lines')
+    tr.add_argument('--section', help='only lines from this section/location')
     tr.add_argument('--json', action='store_true')
     tr.set_defaults(func=cmd_transcript)
 
@@ -395,6 +422,11 @@ def main(argv=None):
     ev.add_argument('ref')
     ev.add_argument('--json', action='store_true')
     ev.set_defaults(func=cmd_event)
+
+    lo = sub.add_parser('lore', help='Read a manifest lore entry')
+    lo.add_argument('ref')
+    lo.add_argument('--json', action='store_true')
+    lo.set_defaults(func=cmd_lore)
 
     cv = sub.add_parser('coverage', help='Activity/season/event coverage summary')
     cv.add_argument('--json', action='store_true')
