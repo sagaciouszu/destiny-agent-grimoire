@@ -170,7 +170,7 @@ match a recomputation of their source text.
 | `tests/sync-doc-counts.py --check` | docs counts match the database |
 | each agent repo tests/master-audit.sh | agent-side suites (voice, quotes, modules, conversation, golden snapshots) plus shared structure checks |
 | `tests/mcp-test.py` (on demand, needs `mcp-server/.venv`) | MCP tools, read-only guard, stdio handshake |
-| `tests/check-agent-structure.py` | dependency resolution, token headers, dashes, INDEX completeness, personal paths (both agents) |
+| `tests/check-agent-structure.py` | dependency resolution, token headers, dashes, INDEX completeness, personal paths (every agent) |
 | `tests/conformance.py` | per-file headers, token accuracy, refs, persona-agnosticism; runs `ci-checks` per agent repo |
 | `tests/ci-checks.py` (via conformance) | stale names, circular/self dependencies, headers, em-dashes, personal paths, gitignored refs in instructions |
 
@@ -190,7 +190,7 @@ cross-character attribution checks.
   authenticated wrapper.
   Install with `bash mcp-server/install.sh`, or `./setup.sh --mcp` in an agent
   workspace (the interactive prompt also offers it). The adapter belongs to the
-  archive, so one install serves both agents; the venv is gitignored and the CLI
+  archive, so one install serves every agent; the venv is gitignored and the CLI
   stays dependency-free.
 - Every command supports `--json`; search returns snippets unless `--full`;
   `verify` exits 1 when a quote is absent (quote-safety primitive).
@@ -226,7 +226,7 @@ The Drifter and Eris repositories mirror each other so one method serves both.
   destiny-agent-template, with its own history and no remote. It carries
   placeholders and neutral rules only; persona material is sourced from the
   grimoire, not inherited from existing agents.
-- `tests/check-agent-structure.py` enforces, for both agents: every declared
+- `tests/check-agent-structure.py` enforces, for every agent: every declared
   dependency resolves (runtime memory falls back to its template), token headers
   exist, no em/en dashes, INDEX lists every module and every reference resolves,
   and no personal paths appear.
@@ -323,8 +323,8 @@ persona facts, counts and links differ.
 
 Rules:
 
-- The heading sequence is identical across the two agents for every file above;
-  `tests/conformance.py` fails on drift.
+- The heading sequence is identical across the agents that share the document
+  contract; `tests/conformance.py` fails on Drifter/Eris drift.
 - `SOUL.md` is persona; `AGENTS.md` is contract; `INDEX.md` is the map;
   `TOOLS.md` is commands and conventions. Do not duplicate one into another.
 - `USER.template.md` is runtime state, seeded by `setup.sh`, and gitignored once
