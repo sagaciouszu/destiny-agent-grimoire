@@ -114,7 +114,7 @@ headers from `++` are stored in `section`; class-exclusive lines carry
 and `--class` adds the chosen class variants.
 
 User preferences, including the player's class, belong to the agent runtime
-(`memory.py`), never to the shared canon database.
+(the agent memory helper), never to the shared canon database.
 
 ### Extracted game data
 
