@@ -126,6 +126,10 @@ if [ "$TARGET" = "opencode" ]; then
         if [ -f "$DEST/$id/$entry" ]; then
             $DRY mv -f "$DEST/$id/$entry" "$DEST/$entry"
         fi
+        if [ -z "$DRY" ] && [ -f "$DEST/$id/USER.template.md" ] && [ ! -f "$DEST/$id/USER.md" ]; then
+            cp "$DEST/$id/USER.template.md" "$DEST/$id/USER.md"
+            echo "seeded $id/USER.md"
+        fi
         if [ -z "$DRY" ] && [ ! -f "$DEST/$entry" ]; then
             echo "FATAL: entry missing after sync: $DEST/$entry" >&2
             exit 1
