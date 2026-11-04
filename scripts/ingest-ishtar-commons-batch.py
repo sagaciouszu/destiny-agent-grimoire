@@ -26,7 +26,9 @@ from migrate import norm_text  # noqa: E402
 RAW = os.path.join(ROOT, 'archive', 'data', 'commons')
 OUT = os.path.join(ROOT, 'source', 'transcripts')
 DB = os.path.join(ROOT, 'db', 'grimoire.db')
-META = {'Name', 'URL', 'Video URL', 'Playlist URL', 'Recorded', 'Transcript', 'Source'}
+META = {'Name', 'URL', 'Video URL', 'Playlist URL', 'Recorded', 'Transcript', 'Source',
+        'Area', 'Remember', 'Status', 'Warning', 'Caution', 'Location', 'Objective',
+        'Reward', 'Rewards', 'Note', 'Notes'}
 TIER = {'validated': 1, 'published': 2, 'proofed': 3}
 SKIP_TITLE = re.compile(
     r'transcript guide|transcript guidelines|about the ghost scan|'

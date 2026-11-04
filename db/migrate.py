@@ -78,7 +78,8 @@ def is_junk_speaker(sp):
     sp = (sp or '').strip()
     if not sp:
         return False
-    if sp.upper() in ('NOTE', 'NOTES'):
+    if sp.upper() in ('NOTE', 'NOTES', 'AREA', 'REMEMBER', 'STATUS', 'WARNING',
+                      'CAUTION', 'LOCATION', 'OBJECTIVE', 'REWARD', 'REWARDS'):
         return True
     return bool(ROMAN_SUFFIX.search(sp) or ACT_ONLY.match(sp))
 
