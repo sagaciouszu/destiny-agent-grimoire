@@ -40,6 +40,11 @@ SPEAKER_ALIASES = {
     'Ikora Rey': 'Ikora',
     'Chiomi Esi': 'Chioma Esi',
     'Queen Mara Sov': 'Mara Sov',
+    'CAIATL': 'Caiatl',
+    'ZAVALA': 'Zavala',
+    'OSIRIS': 'Osiris',
+    'HOLLIDAY': 'Holliday',
+    'AMANDA': 'Amanda Holliday',
 }
 
 def canon_speaker(sp):

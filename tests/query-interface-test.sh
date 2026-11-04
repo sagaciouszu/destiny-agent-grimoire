@@ -90,6 +90,9 @@ check "[ \"$($Q search failsafe --season 24 --limit 1 | tail -1)\" = \"$($Q sear
 check "[ \"$($Q search sloane --season 26 --limit 1 | tail -1)\" = \"$($Q search sloane --season heresy --limit 1 | tail -1)\" ]" "heresy number and name agree"
 check "$Q list activities --limit 3 --json | python3 -c 'import json,sys; d=json.load(sys.stdin); assert isinstance(d,list) and len(d)==3'" "list activities --json"
 check "$Q event the-dawning --json | python3 -c 'import json,sys; d=json.load(sys.stdin); assert len(d)>5'" "event occurrences json"
+check "$Q activity presage | grep -q 'Caiatl'" "presage dialogue"
+check "$Q activity vox-obscura | grep -q 'Zavala'" "vox obscura dialogue"
+check "$Q activity encore | grep -q 'Maya Sundaresh'" "encore dialogue"
 
 echo ""
 echo "Passed: $PASS | Failed: $FAIL"
