@@ -81,7 +81,7 @@ Eris (eris-morn/tests/):
 
 ## Onboarding and links (on demand)
 
-- `onboarding-smoke.sh` - both agents, symlink and clone modes, fully offline:
+- `onboarding-smoke.sh` - every local agent, symlink and clone modes, fully offline:
   clone, setup, master audit, clean working tree (24 checks)
 - `link-check.py` - external URL health for the READMEs (`--all` includes badges)
 - `mcp-test.py` - MCP tool contract, read-only guard and stdio handshake

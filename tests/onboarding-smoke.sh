@@ -1,5 +1,5 @@
 #!/bin/bash
-# Onboarding smoke test: both agents, symlink and clone modes, fully offline.
+# Onboarding smoke test: every local agent, symlink and clone modes, fully offline.
 # Uses the local checkout and its built database; no network, no releases.
 # Usage: bash tests/onboarding-smoke.sh
 set -u
@@ -52,6 +52,8 @@ smoke how-to-drift-for-agents tests/master-audit.sh 20 symlink
 smoke how-to-drift-for-agents tests/master-audit.sh 20 clone
 smoke eris-morn tests/master-audit.sh 15 symlink
 smoke eris-morn tests/master-audit.sh 15 clone
+smoke destiny-agent-calus tests/master-audit.sh 15 symlink
+smoke destiny-agent-calus tests/master-audit.sh 15 clone
 
 echo ""
 echo "ONBOARDING SMOKE: $PASS passed, $FAIL failed"

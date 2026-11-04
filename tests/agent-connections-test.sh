@@ -68,8 +68,8 @@ check_agent eris-morn Eris
 check_agent destiny-agent-calus Calus
 
 REG="$GRIMOIRE/series/agents.json"
-if [ -f "$REG" ] && grep -q '"drifter"' "$REG" && grep -q '"eris"' "$REG"; then
-    ok "series registry has Drifter and Eris"
+if [ -f "$REG" ] && grep -q '"drifter"' "$REG" && grep -q '"eris"' "$REG" && grep -q '"calus"' "$REG"; then
+    ok "series registry has Drifter, Eris and Calus"
 else
     bad "series registry incomplete"
 fi
