@@ -14,9 +14,11 @@ REPOS = {'grimoire': os.path.join(WORK, 'destiny-agent-grimoire'),
          'drifter': os.path.join(WORK, 'how-to-drift-for-agents'),
          'eris': os.path.join(WORK, 'eris-morn')}
 SUBS = {'search', 'character', 'character-info', 'item', 'book', 'transcript',
-        'find-item', 'record', 'verify', 'verify-many', 'list', 'stats'}
+        'find-item', 'record', 'verify', 'verify-many', 'list', 'activity',
+        'event', 'coverage', 'stats'}
 FLAGS = {'--limit', '--offset', '--json', '--full', '--type', '--about', '--all',
-         '--speaker', '--exact', '--rank', '--no-rank', '--include-stage'}
+         '--speaker', '--exact', '--rank', '--no-rank', '--include-stage',
+         '--activity', '--season', '--event', '--expansion'}
 SKIP_FILES = {'CHANGELOG.md', 'RELEASE.md'}
 issues = []
 checked = 0

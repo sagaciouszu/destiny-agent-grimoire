@@ -127,6 +127,8 @@ migration. The full contract is `STANDARDS.md`.
   optional `--activity`, `--season`, `--event` and `--expansion` facets.
 - **Taxonomy:** `docs/TAXONOMY.md` defines the expansion/season/activity/event
   model, confidence levels and query examples.
+- **Discovery design:** `docs/DISCOVERY.md` explains why the layer is additive,
+  how filters compile, and measured query times.
 - **Policy:** `STANDARDS.md` defines schema, naming, provenance, quote policy and
   verification gates.
 - **Never** parse `source/` markdown at runtime. Query the database.

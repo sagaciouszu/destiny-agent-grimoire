@@ -34,7 +34,7 @@ storytelling, lore checks, agent personas, or fact-checking.
 | characters | 20 | Named characters |
 | character_lines | 1229 | Canon character quotes for agents |
 | fts | 121947 | FTS5 search index |
-| verify_fts | 120731 | Fast quote verification index |
+| verify_fts | 121947 | Fast quote verification index |
 | item_title_fts | 58764 | Item title lookup index |
 
 Taxonomy tables (additive; canon tables are never rewritten):
