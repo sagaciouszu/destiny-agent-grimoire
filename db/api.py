@@ -791,6 +791,43 @@ def activity(ref, limit=50, offset=0):
 
 
 @_guard
+def seals():
+    """List manifest seals with triumph record counts."""
+    conn = connect()
+    try:
+        return [dict(r) for r in conn.execute(
+            'SELECT s.hash, s.name, s.description, COUNT(r.record_hash) AS records '
+            'FROM seals s LEFT JOIN seal_records r ON r.seal_hash=s.hash '
+            'GROUP BY s.hash ORDER BY s.name').fetchall()]
+    finally:
+        conn.close()
+
+
+@_guard
+def seal(ref):
+    """Seal details and its triumph records."""
+    conn = connect()
+    try:
+        row = conn.execute(
+            'SELECT hash,name,description,completion_record_hash FROM seals '
+            'WHERE CAST(hash AS TEXT)=? LIMIT 1', (str(ref),)).fetchone()
+        if not row:
+            row = conn.execute(
+                "SELECT hash,name,description,completion_record_hash FROM seals "
+                "WHERE LOWER(name) LIKE LOWER(?) ESCAPE '\\' ORDER BY LENGTH(name) LIMIT 1",
+                (f'%{_like(str(ref))}%',)).fetchone()
+        if not row:
+            return None
+        out = dict(row)
+        out['records'] = [dict(r) for r in conn.execute(
+            'SELECT record_hash,name,description,lore_hash FROM seal_records '
+            'WHERE seal_hash=? ORDER BY name', (row['hash'],)).fetchall()]
+        return out
+    finally:
+        conn.close()
+
+
+@_guard
 def lore(ref):
     """Read a lore entry by hash or title fragment, with linked item names."""
     conn = connect()
@@ -844,9 +881,9 @@ def coverage():
 
 def listing(kind, limit=50, offset=0):
     if kind not in ('books', 'characters', 'speakers', 'records',
-                    'activities', 'seasons', 'events', 'lore'):
+                    'activities', 'seasons', 'events', 'lore', 'seals'):
         raise ValueError('kind must be one of: books, characters, speakers, records, '
-                         'activities, seasons, events, lore')
+                         'activities, seasons, events, lore, seals')
     conn = connect()
     try:
         n = _limit(limit, 50)
@@ -875,6 +912,11 @@ def listing(kind, limit=50, offset=0):
             rows = conn.execute(
                 'SELECT hash, title, subtitle, is_duplicate FROM lore_entries '
                 'ORDER BY title LIMIT ? OFFSET ?', (n, o))
+        elif kind == 'seals':
+            rows = conn.execute(
+                'SELECT s.hash, s.name, COUNT(r.record_hash) AS records FROM seals s '
+                'LEFT JOIN seal_records r ON r.seal_hash=s.hash '
+                'GROUP BY s.hash ORDER BY s.name LIMIT ? OFFSET ?', (n, o))
         else:
             rows = conn.execute('SELECT slug, title FROM records ORDER BY title LIMIT ? OFFSET ?', (n, o))
         return [dict(r) for r in rows]
