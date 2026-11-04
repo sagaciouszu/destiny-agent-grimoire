@@ -3,7 +3,7 @@
 - Release: Season of the Lost (2021.08.24)
 - Characters: Petra Venj, Queen Mara Sov, The Crow
 - Arc: Season of the Lost / Astral Alignment
-- Source: https://commons.ishtar-collective.net/c/transcripts/7
+- Source: https://commons.ishtar-collective.net/t/quest-wayfinders-voyage-i-astral-alignment/4010
 
 *Petra Venj:* Welcome back to the Blind Well, Guardian. It enables transit between this reality and the Ascendant Plane, using paracausal Ley Lines.
 

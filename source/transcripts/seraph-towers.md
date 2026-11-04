@@ -3,7 +3,7 @@
 - Release: Season of the Worthy (2020.03.10)
 - Characters: Ana Bray
 - Arc: Season of the Worthy / Seraph Towers
-- Source: https://commons.ishtar-collective.net/c/transcripts/7
+- Source: https://commons.ishtar-collective.net/t/seraph-towers-public-event-sotw/3577
 
 *Ana Bray:* Requesting Lunar assistance. Rasputin needs satellites for deep space targeting. Let’s get him pointing in the right direction.
 

@@ -73,7 +73,7 @@ def main():
             f'- Release: {args.release}\n'
             f'- Characters: {", ".join(speakers)}\n'
             f'- Arc: {args.arc}\n'
-            '- Source: https://commons.ishtar-collective.net/c/transcripts/7\n\n'
+            f'- Source: https://commons.ishtar-collective.net/t/{args.topic[0]}\n\n'
             + '\n\n'.join(f'*{speaker}:* {line}' for speaker, line in rows) + '\n')
     if args.dry_run:
         print(body)

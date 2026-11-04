@@ -3,7 +3,7 @@
 - Release: Season of the Deep (2023.05.23)
 - Characters: Drifter, Lord Saladin, Saint-14, Sloane, The Drifter, Xivu Arath
 - Arc: Season of the Deep / Salvage
-- Source: https://commons.ishtar-collective.net/c/transcripts/7
+- Source: https://commons.ishtar-collective.net/t/salvage-rig-week-1/4314
 
 *Drifter:* We got some nasties crawlin’ all over the rig! Go shoo ‘em away so we can get to work!
 
