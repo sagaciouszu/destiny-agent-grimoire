@@ -186,6 +186,7 @@ python3 db/migrate.py
 python3 db/enrich_lore.py
 python3 db/enrich_manifest.py
 python3 db/enrich_seals.py
+python3 db/enrich_itemsets.py --apply   # optional item-set mapping
 python3 tests/sync-doc-counts.py
 python3 tests/sync-readme-meta.py
 python3 scripts/coverage-report.py

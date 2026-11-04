@@ -53,6 +53,10 @@ Current state (2026-11-04):
 | Items (58,764) | 46,304 | 390 | 12,070 |
 | Books + records (181) | 64 | 4 | 113 |
 
+Manifest item sets provide an optional classification gain: 19 curated sets
+resolve 585 items that were previously `unknown` (12,070 -> 11,485). The mapping
+lives in `db/enrich_itemsets.py` and only fills rows that are still unclassified.
+
 Most `unknown` transcripts are story beats whose titles carry no release
 metadata. They remain fully searchable by text; they are simply not attributable
 to a season or activity yet.

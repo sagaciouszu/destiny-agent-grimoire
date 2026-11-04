@@ -36,7 +36,9 @@
     "manifest_activities": "full manifest activity catalogue (3,744 rows)",
     "manifest_links": "curated activity/season to manifest hash mapping",
     "seals": "manifest seal nodes with triumph counts",
-    "seal_records": "triumph records belonging to each seal"
+    "seal_records": "triumph records belonging to each seal",
+    "item_sets": "curated manifest armor sets mapped to season/event/expansion",
+    "item_set_members": "set membership and resolved item ids"
   },
   "views": {
     "v_speakers": "speaker, lines (canonical speakers with line counts)",
