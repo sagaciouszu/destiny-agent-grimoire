@@ -354,6 +354,32 @@ def stats_resource() -> str:
     return json.dumps(api.stats()['counts'], ensure_ascii=False)
 
 
+@server.resource('grimoire://activities', name='activities',
+                 description='Activities with transcript and line coverage',
+                 mime_type='application/json')
+def activities_resource() -> str:
+    return json.dumps(api.activities(limit=10000), ensure_ascii=False)
+
+
+@server.resource('grimoire://seasons', name='seasons',
+                 description='Official seasons and episodes with coverage',
+                 mime_type='application/json')
+def seasons_resource() -> str:
+    return json.dumps(api.seasons(), ensure_ascii=False)
+
+
+@server.resource('grimoire://events', name='events',
+                 description='Rotating events with coverage', mime_type='application/json')
+def events_resource() -> str:
+    return json.dumps(api.events(), ensure_ascii=False)
+
+
+@server.resource('grimoire://coverage', name='coverage',
+                 description='Coverage matrix and gap lists', mime_type='application/json')
+def coverage_resource() -> str:
+    return json.dumps(api.coverage(), ensure_ascii=False)
+
+
 @server.resource('grimoire://book/{slug}', name='book', description='A lore book with entries',
                  mime_type='application/json')
 def book_resource(slug: str) -> str:

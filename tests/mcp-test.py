@@ -156,6 +156,8 @@ def taxonomy_tools():
     filtered = server.search('calus', season=17, limit=3)
     assert filtered['count'] == len(filtered['rows'])
     assert server.search('calus', season=99, limit=3)['count'] == 0
+    assert server.search('failsafe', season=24, limit=3)['total'] == \
+        server.search('failsafe', season='echoes', limit=3)['total']
 
 
 check('taxonomy tools and filters', taxonomy_tools)

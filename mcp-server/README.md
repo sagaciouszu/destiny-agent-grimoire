@@ -104,6 +104,10 @@ Read-only JSON resources for discovery without tool calls:
 - `grimoire://characters` - curated characters
 - `grimoire://records` - triumphs and seals
 - `grimoire://stats` - row counts
+- `grimoire://activities` - activities with coverage
+- `grimoire://seasons` - official seasons and episodes
+- `grimoire://events` - rotating events
+- `grimoire://coverage` - coverage matrix and gaps
 - `grimoire://book/{slug}`, `grimoire://transcript/{slug}`,
   `grimoire://character/{slug}`, `grimoire://record/{slug}` - full documents
 
