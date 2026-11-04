@@ -90,6 +90,19 @@ No new full scans were introduced; the activity filter uses
 - Views: `v_transcript_taxonomy`, `v_activity_coverage`,
   `v_season_coverage`, `v_event_coverage`.
 
+## Lore and seals
+
+Manifest lore entries, seals and triumphs are additive enrichment, not canon
+dialogue. They are indexed for discovery (`source=lore_entry`), while seal and
+triumph descriptions stay out of `verify_fts`. `lore`, `seal` and `seals`
+provide direct lookups.
+
+## Source tiers
+
+`transcripts.source_tier` records precedence: Ishtar main and tagged Commons
+above untagged Commons, above Destinypedia, above captions. Optional lines are
+flagged with `is_optional`; `--canon-only` excludes them.
+
 ## Limits
 
 - Source scarcity, not schema, is the remaining constraint. Several vaulted
