@@ -213,7 +213,7 @@ repository minus the database lives outside the tree.
 | Archive audit | `bash grimoire-master-audit.sh` | 9/9 |
 | Drifter agent audit | run tests/master-audit.sh in how-to-drift-for-agents | 20/20 |
 | Eris agent audit | run tests/master-audit.sh in eris-morn | 15/15 |
-| Database integrity | `bash tests/test-db.sh` | 50 checks |
+| Database integrity | `bash tests/test-db.sh` | 51 checks |
 | Query interface | `bash tests/query-interface-test.sh` | 85 checks |
 | Agent layout | `bash tests/agent-layout-test.sh` | 14 checks |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 checks |
