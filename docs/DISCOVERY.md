@@ -56,7 +56,7 @@ Episodes are not ordinary seasons, so they carry `season_type='episode'` and an
 | `manual` | curated override |
 | `unknown` | nothing matched |
 
-Current transcript split: 84 explicit, 780 derived, 388 unknown (31%). The
+Current transcript split: 89 explicit, 780 derived, 388 unknown (31%). The
 unknown set is mostly story beats whose titles carry no release metadata. They
 remain searchable by text; they are simply not attributed.
 
@@ -65,7 +65,7 @@ remain searchable by text; they are simply not attributed.
 Filters compile to `fts.source_slug IN (subquery)` so FTS still drives the scan
 and the taxonomy tables answer the membership question.
 
-Measured on 121,797 FTS rows, 10 results:
+Measured on 122,259 FTS rows, 10 results:
 
 | Query | Time |
 |---|---|

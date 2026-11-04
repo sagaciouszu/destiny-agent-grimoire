@@ -8,6 +8,7 @@ Output feeds `db/migrate.py`; re-run migrate after ingesting.
 | `ingest-grimoire.py <slug>...` | `source/cards/` | yes (globs `source/cards/*.md`) |
 | `ingest-record.py <slug>...` | `source/records/` | yes (globs `source/records/*.md`) |
 | `ingest-destinypedia.py --page ... --slug ...` | `source/transcripts/` | yes (globs `source/transcripts/*.md`) |
+| `ingest-ishtar-commons.py --topic N --slug ...` | `source/transcripts/` | yes (globs `source/transcripts/*.md`) |
 
 All are resumable/idempotent and format output as `# Title` + `- Source:` +
 body, matching the migrate parsers. `ingest-destinypedia.py` keeps every

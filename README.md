@@ -82,15 +82,15 @@ No API keys, accounts or network access are required at runtime.
 |---|---|---|
 | `books` | 110 | Book-level metadata |
 | `book_entries` | 1158 | Lore entries within books |
-| `transcripts` | 1252 | Transcript headers |
-| `transcript_lines` | 72287 | Canon dialogue (speaker, line) |
+| `transcripts` | 1257 | Transcript headers |
+| `transcript_lines` | 72749 | Canon dialogue (speaker, line) |
 | `grimoire_cards` | 2889 | Destiny 1 grimoire cards |
 | `interactions` | 2699 | Short dialogue beats |
 | `items` | 58764 | Weapons, armor and gear lore |
 | `records` | 71 | Triumphs and seals |
 | `characters` | 20 | Curated character index |
 | `character_lines` | 1229 | Quote-ready character lines |
-| `fts` | 121797 | FTS5 index over all content |
+| `fts` | 122259 | FTS5 index over all content |
 | `expansions` | 18 | Major releases from Destiny 1 through Renegades |
 | `seasons` | 26 | Official numeric seasons; 24-26 are episodes |
 | `events` | 9 | Rotating events including removed ones |
@@ -104,8 +104,8 @@ No API keys, accounts or network access are required at runtime.
 | `v_activity_coverage` (view) | 67 | Transcripts and lines per activity |
 | `v_season_coverage` (view) | 26 | Transcripts and lines per season |
 | `v_event_coverage` (view) | 9 | Transcripts, lines and occurrences per event |
-| `speaker_aliases` | 12 | Alias to canonical speaker mapping |
-| `verify_fts` (index) | 121797 | Fast quote verification |
+| `speaker_aliases` | 13 | Alias to canonical speaker mapping |
+| `verify_fts` (index) | 122259 | Fast quote verification |
 | `item_title_fts` (index) | 58764 | Item title lookup |
 
 Every content row carries provenance. Speaker aliases are canonicalized during
@@ -199,7 +199,7 @@ repository minus the database lives outside the tree.
 | Drifter agent audit | run tests/master-audit.sh in how-to-drift-for-agents | 20/20 |
 | Eris agent audit | run tests/master-audit.sh in eris-morn | 15/15 |
 | Database integrity | `bash tests/test-db.sh` | 50 checks |
-| Query interface | `bash tests/query-interface-test.sh` | 76 checks |
+| Query interface | `bash tests/query-interface-test.sh` | 80 checks |
 | Agent layout | `bash tests/agent-layout-test.sh` | 14 checks |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 checks |
 | MCP contract | `mcp-server/.venv/bin/python tests/mcp-test.py` | 8/8 checks |
