@@ -247,6 +247,43 @@ ACTIVITIES = [
 ]
 
 # --------------------------------------------------------------------------
+# Coverage notes. These explain a zero-coverage gap instead of leaving it
+# ambiguous. Statuses:
+#   no_dialogue              confirmed to have no spoken content
+#   narration_only           transcript exists, but it has no speaker lines
+#   dialogue_source_missing  dialogue exists, but no full transcript source
+#   unverified               catalogued, no source checked yet
+# --------------------------------------------------------------------------
+COVERAGE_NOTES = [
+    ('activity', 'crotas-end', 'narration_only',
+     'Encounter transcript is narration-only; the source has no spoken lines.',
+     'https://commons.ishtar-collective.net/t/3557'),
+    ('activity', 'wrath-of-the-machine', 'narration_only',
+     'Encounter transcript is narration-only; the source has no spoken lines.',
+     'https://commons.ishtar-collective.net/t/3549'),
+    ('activity', 'ketchcrash', 'dialogue_source_missing',
+     'Eido and Drifter dialogue verified from captions; only a short excerpt exists.',
+     'https://www.youtube.com/watch?v=2A4-CoDnrLs'),
+    ('activity', 'psiops-battlegrounds', 'dialogue_source_missing',
+     'Caiatl and Saladin dialogue verified from captions; no full transcript source.',
+     'https://www.youtube.com/watch?v=6cVt1oKZYTE'),
+    ('activity', 'defiant-battlegrounds', 'dialogue_source_missing',
+     'Mara Sov, Devrim Kay and Mithrax speak during the activity; no full transcript source.',
+     'https://www.youtube.com/watch?v=M1egDG0iwYY'),
+    ('activity', 'expedition', 'dialogue_source_missing',
+     'Voiced seasonal framing exists; gameplay videos carry no captions and no transcript source was found.',
+     'https://www.youtube.com/watch?v=3dTotSnrxGU'),
+    ('event', 'bungie-day', 'no_dialogue',
+     'Real-world community celebration; no in-game spoken content.', ''),
+    ('event', 'moments-of-triumph', 'no_dialogue',
+     'Annual triumph and seal retrospective; no spoken content.', ''),
+    ('season', 'season-reclamation', 'unverified',
+     'Catalogued from the manifest; no transcript source checked yet.', ''),
+    ('season', 'monument-of-triumph', 'unverified',
+     'Catalogued from the manifest; no transcript source checked yet.', ''),
+]
+
+# --------------------------------------------------------------------------
 # Rotating events
 # --------------------------------------------------------------------------
 EVENTS = [
@@ -724,6 +761,16 @@ CREATE INDEX IF NOT EXISTS idx_activities_type ON activities(activity_type);
 CREATE INDEX IF NOT EXISTS idx_activities_season ON activities(season_slug);
 CREATE INDEX IF NOT EXISTS idx_activities_expansion ON activities(expansion_slug);
 
+CREATE TABLE IF NOT EXISTS coverage_notes (
+    entity_type TEXT NOT NULL,
+    slug TEXT NOT NULL,
+    status TEXT NOT NULL,
+    evidence TEXT,
+    source_url TEXT,
+    PRIMARY KEY (entity_type, slug)
+);
+CREATE INDEX IF NOT EXISTS idx_coverage_status ON coverage_notes(status);
+
 CREATE TABLE IF NOT EXISTS transcript_classification (
     transcript_id INTEGER PRIMARY KEY REFERENCES transcripts(id) ON DELETE CASCADE,
     activity_slug TEXT,
@@ -864,6 +911,12 @@ def populate(conn):
             'VALUES (?,?,?,?,?,?,?,?)',
             (slug, name, atype, exp, season, event, vaulted, 'catalog'))
 
+    conn.execute('DELETE FROM coverage_notes')
+    for entity_type, slug, status, evidence, source_url in COVERAGE_NOTES:
+        conn.execute(
+            'INSERT INTO coverage_notes (entity_type,slug,status,evidence,source_url) '
+            'VALUES (?,?,?,?,?)', (entity_type, slug, status, evidence, source_url))
+
     # Transcripts
     rows = conn.execute('SELECT id, slug, title, release, arc, characters FROM transcripts').fetchall()
     tcounts = {}
@@ -911,28 +964,52 @@ def populate(conn):
 
 def coverage(conn):
     """Compact coverage summary for reports and discovery tools."""
-    out = {'activities': [], 'seasons': [], 'events': [], 'gaps': {}}
+    out = {'activities': [], 'seasons': [], 'events': [], 'notes': [], 'gaps': {}}
+    notes = {}
+    for row in conn.execute(
+            'SELECT entity_type,slug,status,evidence,source_url FROM coverage_notes'):
+        note = dict(zip(('entity_type', 'slug', 'status', 'evidence', 'source_url'), row))
+        notes[(note['entity_type'], note['slug'])] = note
+        out['notes'].append(note)
+
+    def status(entity_type, slug, transcripts):
+        note = notes.get((entity_type, slug))
+        if note:
+            return note['status']
+        return 'covered' if transcripts else 'missing'
+
     for r in conn.execute(
             'SELECT slug,name,activity_type,season_slug,vaulted,transcripts,lines '
             'FROM v_activity_coverage ORDER BY lines DESC, name'):
-        out['activities'].append(dict(zip(
-            ('slug', 'name', 'activity_type', 'season_slug', 'vaulted', 'transcripts', 'lines'), r)))
+        item = dict(zip(
+            ('slug', 'name', 'activity_type', 'season_slug', 'vaulted', 'transcripts', 'lines'), r))
+        item['coverage_status'] = status('activity', item['slug'], item['transcripts'])
+        out['activities'].append(item)
     for r in conn.execute(
             'SELECT season_number,slug,name,season_type,vaulted,transcripts,lines '
             'FROM v_season_coverage ORDER BY season_number'):
-        out['seasons'].append(dict(zip(
-            ('season_number', 'slug', 'name', 'season_type', 'vaulted', 'transcripts', 'lines'), r)))
+        item = dict(zip(
+            ('season_number', 'slug', 'name', 'season_type', 'vaulted', 'transcripts', 'lines'), r))
+        item['coverage_status'] = status('season', item['slug'], item['transcripts'])
+        out['seasons'].append(item)
     for r in conn.execute(
             'SELECT slug,name,event_type,vaulted,transcripts,lines,occurrences '
             'FROM v_event_coverage ORDER BY name'):
-        out['events'].append(dict(zip(
-            ('slug', 'name', 'event_type', 'vaulted', 'transcripts', 'lines', 'occurrences'), r)))
+        item = dict(zip(
+            ('slug', 'name', 'event_type', 'vaulted', 'transcripts', 'lines', 'occurrences'), r))
+        item['coverage_status'] = status('event', item['slug'], item['transcripts'])
+        out['events'].append(item)
     out['gaps']['activities_without_transcripts'] = [
         a['slug'] for a in out['activities'] if a['transcripts'] == 0]
     out['gaps']['events_without_transcripts'] = [
         e['slug'] for e in out['events'] if e['transcripts'] == 0]
     out['gaps']['seasons_without_transcripts'] = [
         s['slug'] for s in out['seasons'] if s['transcripts'] == 0]
+    out['gaps']['unexplained'] = [
+        f"{kind}:{item['slug']}"
+        for kind, key in (('activity', 'activities'), ('event', 'events'), ('season', 'seasons'))
+        for item in out[key]
+        if item['coverage_status'] in ('missing',)]
     return out
 
 

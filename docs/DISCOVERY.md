@@ -121,6 +121,11 @@ flagged with `is_optional`; `--canon-only` excludes them.
 
 ## Limits
 
+Zero coverage is classified, not guessed: `coverage_notes` marks `no_dialogue`,
+`narration_only`, `dialogue_source_missing` or `unverified`, with evidence. The
+coverage API returns the notes and an `unexplained` list, so an agent can tell
+"there is no dialogue" from "we have not found the source".
+
 - Source scarcity, not schema, is the remaining constraint. Several vaulted
   raids have no surviving transcript source.
 - Item classification relies on release strings and title keywords; 9,513

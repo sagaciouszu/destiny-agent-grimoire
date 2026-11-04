@@ -31,6 +31,7 @@
     "transcript_classification": "activity/season/event per transcript with confidence",
     "item_classification": "season/event per item with confidence",
     "document_classification": "season/event per book and record with confidence",
+    "coverage_notes": "explicit status and evidence for zero-coverage activities, events and seasons",
     "lore_entries": "Bungie manifest lore entries (local enrichment)",
     "lore_entry_items": "lore entry to item-title links",
     "manifest_activities": "full manifest activity catalogue (3,744 rows)",

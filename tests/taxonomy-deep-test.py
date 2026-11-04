@@ -45,6 +45,31 @@ def classified():
                'ON c.transcript_id=t.id WHERE c.transcript_id IS NULL') == 0
 
 
+def speaker_identity():
+    assert one("SELECT COUNT(*) FROM transcript_lines WHERE speaker='The Crow'") == 0
+    assert one("SELECT COUNT(*) FROM transcript_lines WHERE speaker='Crow'") > 0
+    assert one("SELECT COUNT(*) FROM speaker_aliases WHERE alias='The Crow' AND canonical='Crow'") == 1
+
+
+def coverage_notes():
+    allowed = {'no_dialogue', 'narration_only', 'dialogue_source_missing', 'unverified'}
+    bad = {r[0] for r in conn.execute('SELECT DISTINCT status FROM coverage_notes')} - allowed
+    assert not bad, f'unknown coverage statuses: {bad}'
+    for kind, table in (('activity', 'activities'), ('season', 'seasons'), ('event', 'events')):
+        orphans = one(f'SELECT COUNT(*) FROM coverage_notes n LEFT JOIN {table} x '
+                      f"ON x.slug=n.slug WHERE n.entity_type='{kind}' AND x.slug IS NULL")
+        assert orphans == 0, f'{kind} coverage-note orphans: {orphans}'
+    # Every entity with zero transcripts must carry an explicit status.
+    for kind, view in (('activity', 'v_activity_coverage'),
+                       ('season', 'v_season_coverage'),
+                       ('event', 'v_event_coverage')):
+        unexplained = one(
+            f"SELECT COUNT(*) FROM {view} v LEFT JOIN coverage_notes n "
+            f"ON n.entity_type='{kind}' AND n.slug=v.slug "
+            'WHERE v.transcripts=0 AND n.slug IS NULL')
+        assert unexplained == 0, f'{kind} gaps without a note: {unexplained}'
+
+
 def refs():
     for kind, table in (('activity', 'activities'), ('season', 'seasons'),
                         ('event', 'events'), ('expansion', 'expansions')):
@@ -128,12 +153,16 @@ def api_coverage():
     cov = api.coverage()
     zero = one('SELECT COUNT(*) FROM v_activity_coverage WHERE transcripts=0')
     assert len(cov['gaps']['activities_without_transcripts']) == zero
+    assert cov['notes'], 'coverage notes missing'
+    assert cov['gaps']['unexplained'] == [], cov['gaps']['unexplained']
 
 
 print('=== TAXONOMY DEEP TEST ===')
 for name, fn in [
     ('source tiers present and known', tiers),
     ('every transcript classified', classified),
+    ('Crow identity is canonical', speaker_identity),
+    ('coverage gaps have explicit statuses', coverage_notes),
     ('classification references resolve', refs),
     ('seasons 1-28 unique', seasons),
     ('event occurrences unique', events),

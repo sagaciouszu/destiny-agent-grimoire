@@ -80,6 +80,22 @@ The Menagerie is ingested from Destinypedia's verbatim transcript: 232 Calus
 lines across every encounter, including the Hunter, Titan and Warlock callouts.
 All class variants are separate rows; none are deduplicated.
 
+## Coverage status
+
+A zero transcript count is not always the same kind of gap. `coverage_notes`
+records an explicit status and evidence for every uncovered activity, event and
+season:
+
+| Status | Meaning |
+|---|---|
+| `no_dialogue` | confirmed to have no spoken content |
+| `narration_only` | transcript exists, but it has no speaker lines |
+| `dialogue_source_missing` | dialogue exists, but no full transcript source was found |
+| `unverified` | catalogued, no source checked yet |
+
+`coverage()` returns these notes and an `unexplained` gap list. The list is
+empty only when every zero-coverage entity has a status.
+
 ## Vaulted content
 
 `vaulted = 1` marks content removed from the live game but retained in the
