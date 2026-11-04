@@ -9,6 +9,9 @@ Output feeds `db/migrate.py`; re-run migrate after ingesting.
 | `ingest-record.py <slug>...` | `source/records/` | yes (globs `source/records/*.md`) |
 | `ingest-destinypedia.py --page ... --slug ...` | `source/transcripts/` | yes (globs `source/transcripts/*.md`) |
 | `ingest-ishtar-commons.py --topic N --slug ...` | `source/transcripts/` | yes (globs `source/transcripts/*.md`) |
+| `crawl-ishtar-commons.py` | `archive/data/commons/` (local) | no (raw crawl) |
+| `ingest-ishtar-commons-batch.py` | `source/transcripts/commons-*.md` | yes |
+| `build-lore-staging.py` | `archive/data/manifest/lore_entries.jsonl` | no (enrichment input) |
 
 All are resumable/idempotent and format output as `# Title` + `- Source:` +
 body, matching the migrate parsers. `ingest-destinypedia.py` keeps every
@@ -23,6 +26,9 @@ body, matching the migrate parsers. `ingest-destinypedia.py` keeps every
 | `sync-live-agents.sh [--openclaw] [--dry-run]` | deploy every agent in `series/agents.json` into OpenCode (agents/) or OpenClaw (workspace-<id>), preserving runtime memory and series blocks; skips agents with persona.json ready=false |
 | `../db/build-slim.py [out]` | 95 MB core database: books, transcripts, interactions, records (no items/cards) |
 | `coverage-report.py` | Markdown coverage report from the live database |
+| `../db/enrich_lore.py` | manifest lore entries and FTS/verify |
+| `../db/enrich_manifest.py` | manifest activities, seasons and links |
+| `../db/enrich_seals.py` | seal/triumph tree |
 
 Bulk content (items, interactions, web transcripts, cutscene captions) uses
 the scrapers in `archive/` writing JSONL:
