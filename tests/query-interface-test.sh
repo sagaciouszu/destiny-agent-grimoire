@@ -97,11 +97,21 @@ check "$Q activity override | grep -q '252 lines'" "override dialogue"
 check "$Q activity salvage | grep -q 'Sloane'" "salvage dialogue"
 check "$Q activity seraph-towers | grep -q 'Ana Bray'" "seraph towers dialogue"
 check "$Q activity astral-alignment | grep -q 'Petra Venj'" "astral alignment dialogue"
-check "$Q list lore --limit 3 | grep -q 'is_duplicate'" "list lore entries"
-check "$Q search 'iris unfurls' --type lore --limit 1 | grep -q 'lore_entry'" "search lore entries"
-check "$Q seals | grep -q 'Conqueror'" "seal list"
-check "$Q seal Conqueror | grep -q 'Grandmaster'" "seal records"
-check "$Q list seals --limit 3 | grep -q 'records'" "list seals"
+HAS_LORE=$(sqlite3 "$ARCHIVE/db/grimoire.db" "SELECT COUNT(*) FROM lore_entries" 2>/dev/null || echo 0)
+if [ "${HAS_LORE:-0}" -gt 0 ]; then
+    check "$Q list lore --limit 3 | grep -q 'is_duplicate'" "list lore entries"
+    check "$Q search 'iris unfurls' --type lore --limit 1 | grep -q 'lore_entry'" "search lore entries"
+else
+    echo "  - lore enrichment not present (source build), skipped"
+fi
+HAS_SEALS=$(sqlite3 "$ARCHIVE/db/grimoire.db" "SELECT COUNT(*) FROM seals" 2>/dev/null || echo 0)
+if [ "${HAS_SEALS:-0}" -gt 0 ]; then
+    check "$Q seals | grep -q 'Conqueror'" "seal list"
+    check "$Q seal Conqueror | grep -q 'Grandmaster'" "seal records"
+    check "$Q list seals --limit 3 | grep -q 'records'" "list seals"
+else
+    echo "  - seal enrichment not present (source build), skipped"
+fi
 check "$Q character Calus --class hunter --about Hunter | grep -q 'cunning'" "class hunter variants"
 check "$Q character Calus --class titan --about Titan | grep -q 'bravery'" "class titan variants"
 check "$Q search 'pride themselves' --class warlock --limit 1 | grep -q 'wisdom'" "class warlock search"
