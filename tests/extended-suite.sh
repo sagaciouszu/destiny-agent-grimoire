@@ -29,6 +29,7 @@ run "Item provenance audit" "python3 '$ARCHIVE/tests/item-audit.py'"
 run "Documentation commands" "python3 '$ARCHIVE/tests/docs-audit.py'"
 run "Taxonomy deep model" "python3 '$ARCHIVE/tests/taxonomy-deep-test.py'"
 run "Agent connections" "bash '$ARCHIVE/tests/agent-connections-test.sh'"
+run "Agent parity" "bash '$ARCHIVE/tests/agent-parity-test.sh'"
 
 echo ""
 echo "============================================================"

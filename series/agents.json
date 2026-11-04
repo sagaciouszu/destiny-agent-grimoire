@@ -26,6 +26,22 @@
       "entry": "calus.md",
       "summary": "Emperor of the Cabal, herald of the Witness, host of the Menagerie.",
       "consult": "Calus, the Cabal, the Leviathan, the Menagerie, Opulence, the Witness and the end."
+    },
+    {
+      "id": "zavala",
+      "name": "Commander Zavala",
+      "source": "destiny-agent-zavala",
+      "entry": "zavala.md",
+      "summary": "Commander of the Vanguard, Awoken Titan, the City\u2019s wall.",
+      "consult": "Zavala, the Vanguard, the Last City, the Red War, Caiatl and the coalition."
+    },
+    {
+      "id": "ghost",
+      "name": "Ghost",
+      "source": "destiny-agent-ghost",
+      "entry": "ghost.md",
+      "summary": "The Guardian's Ghost: curious, loyal and afraid of losing them.",
+      "consult": "Ghost, the Light, resurrection, the Traveler, the City and the Guardian."
     }
   ]
 }

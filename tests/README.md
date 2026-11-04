@@ -76,6 +76,8 @@ Eris (eris-morn/tests/):
 - `item-audit.py` - item slugs, titles, URLs, text and optional-field coverage
 - `taxonomy-deep-test.py` - tiers, classification refs, seasons, events, lore, seals,
   manifest links and API parity for the additive layers.
+- `agent-parity-test.sh` - every present agent exposes the same shared capabilities
+  (memory, multi-user, class discovery, taxonomy tools, master audit).
 - `agent-connections-test.sh` - every local agent resolves the canonical DB, the
   current character/lore/seal surface and a fresh canon line count; skips agents
   that are absent.

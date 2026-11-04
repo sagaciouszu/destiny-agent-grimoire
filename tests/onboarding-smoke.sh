@@ -27,7 +27,7 @@ check() {
 }
 
 smoke() {
-    local repo="$1" audit="$2" suites="$3" mode="$4"
+    local repo="$1" audit="$2" mode="$3"
     local dir="$SANDBOX/$repo-$mode"
     local src="$WORK/$repo"
 
@@ -48,16 +48,19 @@ smoke() {
         check "lore is a real directory" "[ -d '$dir/lore' ] && [ ! -L '$dir/lore' ]"
     fi
 
-    check "audit $suites/$suites" "cd '$dir' && bash '$audit' 2>&1 | grep -q 'SCORECARD: $suites / $suites SUITES PASSED'"
+    check "master audit passes" "cd '$dir' && bash '$audit' 2>&1 | grep -q '0 failed'"
     check "working tree stays clean" "[ -z \"\$(git -C '$dir' status --porcelain)\" ]"
 }
 
-smoke how-to-drift-for-agents tests/master-audit.sh 20 symlink
-smoke how-to-drift-for-agents tests/master-audit.sh 20 clone
-smoke eris-morn tests/master-audit.sh 15 symlink
-smoke eris-morn tests/master-audit.sh 15 clone
-smoke destiny-agent-calus tests/master-audit.sh 15 symlink
-smoke destiny-agent-calus tests/master-audit.sh 15 clone
+while IFS=$'\t' read -r id source; do
+    smoke "$source" tests/master-audit.sh symlink
+    smoke "$source" tests/master-audit.sh clone
+done < <(python3 - "$ARCHIVE/series/agents.json" <<'PY'
+import json, sys
+for a in json.load(open(sys.argv[1], encoding='utf-8'))['agents']:
+    print(f"{a['id']}\t{a['source']}")
+PY
+)
 
 echo ""
 echo "ONBOARDING SMOKE: $PASS passed, $FAIL failed"
