@@ -3,7 +3,7 @@
 - Release: Season of the Chosen (2021.02.09)
 - Characters: Lord Saladin, Zavala
 - Arc: Season of the Chosen / Battlegrounds
-- Source: https://commons.ishtar-collective.net/c/transcripts/7
+- Source: https://commons.ishtar-collective.net/t/quest-war-table-challengers-proving-ii-battleground-foothold/3936
 
 *Lord Saladin:* Get ready to move. The Cabal have invaded the Cosmodrome.
 
