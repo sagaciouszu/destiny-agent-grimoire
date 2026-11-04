@@ -50,7 +50,7 @@ Current state (2026-11-04):
 | Content | explicit | derived | unknown |
 |---|---:|---:|---:|
 | Transcripts (1,294) | 1,234 | 59 | 1 |
-| Items (58,764) | 48,380 | 316 | 10,068 |
+| Items (58,764) | 48,380 | 871 | 9,513 |
 | Books + records (181) | 64 | 4 | 113 |
 
 Every Ishtar web transcript now carries the page's authoritative `Added In`
