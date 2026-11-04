@@ -1,3 +1,12 @@
+## v0.23.0 - Class-tagged canon and user preferences (2026-11-04)
+
+- `transcript_lines.class_tag` tags Hunter, Titan and Warlock variants.
+- Menagerie class callouts are optional, preserving 419 base Calus lines and 12 variants.
+- `--class hunter|titan|warlock` on `search`, `character` and `transcript`.
+- Agent `memory.py` gains per-user `prefs-get` / `prefs-set --class`.
+- `USER.template.md` and agent guidance store the class once and use it for canon.
+- Schema 1.3.0; query interface 89 checks.
+
 ## v0.22.0 - Manifest lore, Commons transcripts and source tiers (2026-11-04)
 
 - 2,962 Bungie manifest lore entries (1,962 new after dedupe) with item links.
