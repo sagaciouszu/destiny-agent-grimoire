@@ -6,6 +6,7 @@
 - `source_tier` records Ishtar > Destinypedia > captions precedence.
 - `section` and `is_optional` preserve locations, alternatives and class callouts.
 - `--canon-only`, `--section`, `list lore`, `lore` command and `--type lore`.
+- Seal tree: 70 seals and 1,004 triumph records (`seal`, `seals`, `list seals`).
 - Schema 1.2.0; manifest version pinned in `meta`.
 
 ## v0.21.0 - Activity, season and event taxonomy (2026-11-04)

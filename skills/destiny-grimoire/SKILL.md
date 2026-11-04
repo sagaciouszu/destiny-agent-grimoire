@@ -51,6 +51,8 @@ Taxonomy tables (additive; canon tables are never rewritten):
 | document_classification | 181 | Season/event per book or record |
 | lore_entries | 2962 | Bungie manifest lore entries |
 | manifest_activities | 3744 | Full manifest activity catalogue |
+| seals | 70 | Manifest seals |
+| seal_records | 1004 | Triumph records per seal |
 
 ## How to query
 
@@ -101,6 +103,7 @@ python3 db/query.py verify "Absolutely not." --speaker "Eris Morn" --exact
 - `--json` on every command (compact, parse-friendly)
 - `search` returns snippets by default; `--full` for complete text
 - `search --type books|transcripts|grimoire|interactions|items|records|lore`
+- `seals` / `seal "<name>"` for seal and triumph records
 - `search --activity`, `--season`, `--event`, `--expansion` filter by taxonomy
 - `--season` accepts a number (`7`), a slug (`season-of-opulence`) or a name
   fragment (`opulence`); episodes work the same way (`24`, `echoes`)

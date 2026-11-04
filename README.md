@@ -103,6 +103,8 @@ No API keys, accounts or network access are required at runtime.
 | `lore_entry_items` | 2068 | Lore entry to item-title links |
 | `manifest_activities` | 3744 | Full manifest activity catalogue |
 | `manifest_links` | 314 | Curated activity/season to manifest hash |
+| `seals` | 70 | Manifest seal nodes |
+| `seal_records` | 1004 | Triumph records per seal |
 | `v_speakers` (view) | 316 | Canonical speakers with line counts |
 | `v_transcript_taxonomy` (view) | 1294 | Transcripts joined to classification |
 | `v_activity_coverage` (view) | 67 | Transcripts and lines per activity |
@@ -122,7 +124,7 @@ migration. The full contract is `STANDARDS.md`.
   over local stdio; one adapter covers every agent that mounts this archive.
   Install with `bash mcp-server/install.sh`; tools, limits, client config and
   security: `mcp-server/README.md`.
-- **Interface:** one of `python3 db/query.py search|character|item|verify|book|transcript|find-item|record|list|activity|event|lore|coverage|stats`; read commands accept `--offset`.
+- **Interface:** one of `python3 db/query.py search|character|item|verify|book|transcript|find-item|record|list|activity|event|lore|seal|seals|coverage|stats`; read commands accept `--offset`.
   `verify` is the quote-safety primitive (exit 1 when absent); every command
   accepts `--json`; search returns snippets unless `--full`.
 - **Discovery:** `db/capabilities.json` is a machine-readable manifest of tables,
@@ -179,8 +181,11 @@ python3 archive/data/fetch_cutscenes.py
 python3 archive/data/fetch_manifest.py --check
 python3 archive/data/fetch_manifest.py --fetch --extract
 
-# rebuild and sync documented counts
+# rebuild, then apply local manifest enrichment
 python3 db/migrate.py
+python3 db/enrich_lore.py
+python3 db/enrich_manifest.py
+python3 db/enrich_seals.py
 python3 tests/sync-doc-counts.py
 python3 tests/sync-readme-meta.py
 python3 scripts/coverage-report.py > ../destiny-agent-template/COVERAGE.md
@@ -209,7 +214,7 @@ repository minus the database lives outside the tree.
 | Drifter agent audit | run tests/master-audit.sh in how-to-drift-for-agents | 20/20 |
 | Eris agent audit | run tests/master-audit.sh in eris-morn | 15/15 |
 | Database integrity | `bash tests/test-db.sh` | 50 checks |
-| Query interface | `bash tests/query-interface-test.sh` | 82 checks |
+| Query interface | `bash tests/query-interface-test.sh` | 85 checks |
 | Agent layout | `bash tests/agent-layout-test.sh` | 14 checks |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 checks |
 | MCP contract | `mcp-server/.venv/bin/python tests/mcp-test.py` | 8/8 checks |

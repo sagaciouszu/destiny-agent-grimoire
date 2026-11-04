@@ -21,6 +21,8 @@ Usage:
   query.py activity "<slug or name>" [--limit N] [--json]
   query.py event "<slug or name>" [--json]
   query.py lore "<hash or title>" [--json]
+  query.py seal "<name or hash>" [--json]
+  query.py seals [--json]
   query.py coverage [--json]
   query.py stats [--json]
 """
@@ -296,6 +298,33 @@ def cmd_coverage(args):
     return 0
 
 
+def cmd_seals(args):
+    rows = api.seals()
+    if args.json:
+        print(json.dumps(rows, ensure_ascii=False, separators=(',', ':')))
+        return 0
+    for r in rows:
+        print(f"{r['name']} | {r['records']} records | {r['hash']}")
+    return 0
+
+
+def cmd_seal(args):
+    res = api.seal(args.ref)
+    if res is None:
+        print(f'Seal not found: {args.ref}', file=sys.stderr)
+        return 1
+    if args.json:
+        print(json.dumps(res, ensure_ascii=False, separators=(',', ':')))
+        return 0
+    print(f"=== {res['name']} ({res['hash']}) ===")
+    if res['description']:
+        print(res['description'])
+    for r in res['records']:
+        print(f"  - {r['name']}: {r['description'][:120]}")
+    print(f"\n{len(res['records'])} records")
+    return 0
+
+
 def cmd_lore(args):
     res = api.lore(args.ref)
     if res is None:
@@ -361,7 +390,7 @@ def main(argv=None):
 
     l = sub.add_parser('list', help='Cheap discovery listings')
     l.add_argument('kind', choices=['books', 'characters', 'speakers', 'records',
-                                   'activities', 'seasons', 'events', 'lore'])
+                                   'activities', 'seasons', 'events', 'lore', 'seals'])
     l.add_argument('--limit', type=int, default=50)
     l.add_argument('--offset', type=int, default=0)
     l.add_argument('--json', action='store_true')
@@ -422,6 +451,15 @@ def main(argv=None):
     ev.add_argument('ref')
     ev.add_argument('--json', action='store_true')
     ev.set_defaults(func=cmd_event)
+
+    sl = sub.add_parser('seal', help='Read a seal and its triumph records')
+    sl.add_argument('ref')
+    sl.add_argument('--json', action='store_true')
+    sl.set_defaults(func=cmd_seal)
+
+    sls = sub.add_parser('seals', help='List seals with record counts')
+    sls.add_argument('--json', action='store_true')
+    sls.set_defaults(func=cmd_seals)
 
     lo = sub.add_parser('lore', help='Read a manifest lore entry')
     lo.add_argument('ref')

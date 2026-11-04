@@ -13,7 +13,8 @@
 - **Source precedence:** `source_tier` records Ishtar > Destinypedia > captions.
 - **Variants:** `section` and `is_optional` preserve locations, optional blocks
   and class callouts; `--canon-only` and `--section` expose them.
-- **Discovery:** `list lore`, `lore <hash|title>` and `--type lore`.
+- **Seals:** 70 seals and 1,004 triumph records, exposed as `seal`/`seals`.
+- **Discovery:** `list lore`, `lore <hash|title>`, `seal`, `seals` and `--type lore`.
 
 ## Verification
 
