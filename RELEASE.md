@@ -13,8 +13,13 @@
 - **Discovery:** activity/season/event/expansion filters on search; `activity`,
   `event` and `coverage` commands; `activities`, `activity`, `seasons`, `events`,
   `event` and `coverage` MCP tools.
-- **Docs:** `docs/TAXONOMY.md`, schema contract in `STANDARDS.md`, updated CLI,
-  MCP and README surfaces.
+- **Content:** verbatim Destinypedia transcripts for the Menagerie (232 Calus
+  lines, class callouts kept separate), raids, dungeons, exotic missions and
+  seasonal activities. Calus 431 lines, Rhulk 36, Nezarec 28.
+- **Quality:** quest-step titles parsed as speakers are filtered out; `unknown`
+  transcript classification fell from 54% to 31%.
+- **Docs:** `docs/TAXONOMY.md`, `docs/DISCOVERY.md`, schema contract in
+  `STANDARDS.md`, updated CLI, MCP and README surfaces.
 
 ## Verification
 
