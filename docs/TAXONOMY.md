@@ -68,9 +68,10 @@ transcripts are narration-only and are labelled that way in `docs/GAPS.md`.
 A Destiny 1 expansion never inherits a Destiny 2 season from a reprised
 activity, so Vault of Glass and King's Fall stay seasonless.
 
-Four YouTube-caption transcripts add verified excerpts for Ketchcrash, PsiOps
-Battlegrounds, Defiant Battlegrounds and Expedition. They are marked
-`partial_transcript` in `coverage_notes`, not counted as complete coverage.
+Four YouTube-caption transcripts add 197 verified lines for Ketchcrash (38),
+PsiOps Battlegrounds (51), Defiant Battlegrounds (73) and Expedition (35).
+They are compiled from 63 activity dialogue videos and marked
+`partial_transcript` in `coverage_notes` because exhaustiveness is not provable.
 
 Manifest item sets provide an optional classification gain: 19 curated sets
 resolve 555 items that are still `unknown` (10,068 -> 9,513). The mapping lives

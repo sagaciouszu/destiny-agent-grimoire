@@ -26,14 +26,14 @@ storytelling, lore checks, agent personas, or fact-checking.
 | books | 110 | Book metadata |
 | book_entries | 1158 | Lore entries within books |
 | transcripts | 1312 | Quest transcript headers |
-| transcript_lines | 68604 | Canon character dialogue |
+| transcript_lines | 68776 | Canon character dialogue |
 | grimoire_cards | 2889 | Destiny 1 grimoire cards |
 | interactions | 2699 | Short character dialogue beats |
 | items | 58764 | Weapons / armor / gear lore + flavor |
 | records | 71 | Triumphs / seals |
 | characters | 20 | Named characters |
 | character_lines | 1229 | Canon character quotes for agents |
-| fts | 120076 | FTS5 search index |
+| fts | 120248 | FTS5 search index |
 | verify_fts | 120076 | Fast quote verification index |
 | item_title_fts | 58764 | Item title lookup index |
 
