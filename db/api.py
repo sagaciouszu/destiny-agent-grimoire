@@ -167,7 +167,8 @@ def _limit(value, default):
 
 
 @_guard
-def search(term, type=None, limit=10, full=False, offset=0, rank=True):
+def search(term, type=None, limit=10, full=False, offset=0, rank=True,
+           activity=None, season=None, event=None, expansion=None):
     """Full-text search. Returns rows with a snippet unless full=True.
 
     The term is used as FTS5 syntax when valid; otherwise every word is quoted
@@ -184,6 +185,10 @@ def search(term, type=None, limit=10, full=False, offset=0, rank=True):
         if type:
             where += ' AND source = ?'
             params.append(TYPE_TO_SOURCE[type])
+        facet, facet_params = _taxonomy_filter(conn, activity, season, event, expansion)
+        if facet:
+            where += ' AND ' + facet
+            params.extend(facet_params)
         params.append(_limit(limit, 10))
         params.append(_offset(offset))
         order = (" ORDER BY bm25(fts, 3.0, 1.0, 1.0, 1.0, 0.0)"
@@ -191,10 +196,10 @@ def search(term, type=None, limit=10, full=False, offset=0, rank=True):
         try:
             if full:
                 rows = conn.execute(
-                    f'SELECT title, speaker, text, source FROM fts WHERE {where}{order} LIMIT ? OFFSET ?', params).fetchall()
+                    f'SELECT title, speaker, text, source, source_slug FROM fts WHERE {where}{order} LIMIT ? OFFSET ?', params).fetchall()
             else:
                 rows = conn.execute(
-                    f"SELECT title, speaker, source, snippet(fts, 1, '[', ']', '…', 10) AS snip "
+                    f"SELECT title, speaker, source, source_slug, snippet(fts, 1, '[', ']', '…', 10) AS snip "
                     f'FROM fts WHERE {where}{order} LIMIT ? OFFSET ?', params).fetchall()
         except sqlite3.OperationalError as e:
             raise ValueError(f'invalid search query: {e}') from e
@@ -368,7 +373,7 @@ def verify(quote, speaker=None, exact=False):
 
 
 @_guard
-def search_total(term, type=None):
+def search_total(term, type=None, activity=None, season=None, event=None, expansion=None):
     """Total FTS matches for a query (for paging)."""
     term = clean_input(term, 500)
     if type is not None and type not in TYPE_TO_SOURCE:
@@ -381,6 +386,10 @@ def search_total(term, type=None):
         if type:
             where += ' AND source = ?'
             params.append(TYPE_TO_SOURCE[type])
+        facet, facet_params = _taxonomy_filter(conn, activity, season, event, expansion)
+        if facet:
+            where += ' AND ' + facet
+            params.extend(facet_params)
         return conn.execute(f'SELECT COUNT(*) FROM fts WHERE {where}', params).fetchone()[0]
     finally:
         conn.close()
@@ -484,8 +493,15 @@ def transcript(ref, speaker=None, limit=50, offset=0, full=False, include_stage=
         lines = [{'seq': r['seq'], 'speaker': r['speaker'],
                   'text': (r['line'] or '') if full else _snippet(r['line'])}
                  for r in rows]
-        return {'transcript': dict(t), 'total': total, 'limit': _limit(limit, 50),
-                'offset': _offset(offset), 'lines': lines}
+        tax = conn.execute(
+            'SELECT activity_slug, activity_type, season_slug, act, event_slug, '
+            'expansion_slug, confidence, evidence FROM transcript_classification '
+            'WHERE transcript_id=?', (t['id'],)).fetchone()
+        out = {'transcript': dict(t), 'total': total, 'limit': _limit(limit, 50),
+               'offset': _offset(offset), 'lines': lines}
+        if tax:
+            out['taxonomy'] = dict(tax)
+        return out
     finally:
         conn.close()
 
@@ -541,9 +557,262 @@ def record(ref):
         conn.close()
 
 
+# ---------------------------------------------------------------------------
+# Taxonomy: activity / season / event / expansion discovery
+# ---------------------------------------------------------------------------
+def _resolve_season(conn, ref):
+    """Accept a slug, numeric season, 'season 17', or a name fragment."""
+    if ref is None:
+        return None
+    ref = str(ref).strip()
+    row = conn.execute('SELECT slug FROM seasons WHERE slug = ?', (ref,)).fetchone()
+    if row:
+        return row[0]
+    m = re.match(r'^(?:season\s+)?(\d{1,2})$', ref, re.I)
+    if m:
+        row = conn.execute('SELECT slug FROM seasons WHERE season_number = ?', (int(m.group(1)),)).fetchone()
+        if row:
+            return row[0]
+    row = conn.execute(
+        "SELECT slug FROM seasons WHERE LOWER(name) LIKE LOWER(?) ESCAPE '\\' "
+        'ORDER BY season_number LIMIT 1', (f'%{_like(ref)}%',)).fetchone()
+    return row[0] if row else None
+
+
+def _resolve_activity(conn, ref):
+    if ref is None:
+        return None
+    ref = str(ref).strip()
+    row = conn.execute('SELECT slug FROM activities WHERE slug = ?', (ref,)).fetchone()
+    if row:
+        return row[0]
+    row = conn.execute(
+        "SELECT slug FROM activities WHERE LOWER(name) LIKE LOWER(?) ESCAPE '\\' "
+        'ORDER BY LENGTH(name) LIMIT 1', (f'%{_like(ref)}%',)).fetchone()
+    return row[0] if row else None
+
+
+def _resolve_event(conn, ref):
+    if ref is None:
+        return None
+    ref = str(ref).strip()
+    row = conn.execute('SELECT slug FROM events WHERE slug = ?', (ref,)).fetchone()
+    if row:
+        return row[0]
+    row = conn.execute(
+        "SELECT slug FROM events WHERE LOWER(name) LIKE LOWER(?) ESCAPE '\\' "
+        'ORDER BY LENGTH(name) LIMIT 1', (f'%{_like(ref)}%',)).fetchone()
+    return row[0] if row else None
+
+
+def _resolve_expansion(conn, ref):
+    if ref is None:
+        return None
+    ref = str(ref).strip()
+    row = conn.execute('SELECT slug FROM expansions WHERE slug = ?', (ref,)).fetchone()
+    if row:
+        return row[0]
+    row = conn.execute(
+        "SELECT slug FROM expansions WHERE LOWER(name) LIKE LOWER(?) ESCAPE '\\' "
+        'ORDER BY LENGTH(name) LIMIT 1', (f'%{_like(ref)}%',)).fetchone()
+    return row[0] if row else None
+
+
+def _taxonomy_filter(conn, activity=None, season=None, event=None, expansion=None):
+    """Build an fts.source_slug predicate for the requested facets."""
+    clauses, params = [], []
+    if activity:
+        slug = _resolve_activity(conn, activity)
+        if not slug:
+            return '0', []
+        clauses.append(
+            'source_slug IN (SELECT t.slug FROM transcript_classification c '
+            'JOIN transcripts t ON t.id=c.transcript_id WHERE c.activity_slug=?)')
+        params.append(slug)
+    if season:
+        slug = _resolve_season(conn, season)
+        if not slug:
+            return '0', []
+        clauses.append(
+            '(source_slug IN (SELECT t.slug FROM transcript_classification c '
+            ' JOIN transcripts t ON t.id=c.transcript_id WHERE c.season_slug=?)'
+            ' OR source_slug IN (SELECT i.slug FROM item_classification c '
+            ' JOIN items i ON i.id=c.item_id WHERE c.season_slug=?)'
+            ' OR source_slug IN (SELECT b.slug FROM document_classification c '
+            " JOIN books b ON b.id=c.source_id WHERE c.source='book' AND c.season_slug=?)"
+            ' OR source_slug IN (SELECT r.slug FROM document_classification c '
+            " JOIN records r ON r.id=c.source_id WHERE c.source='record' AND c.season_slug=?))")
+        params.extend([slug, slug, slug, slug])
+    if event:
+        slug = _resolve_event(conn, event)
+        if not slug:
+            return '0', []
+        clauses.append(
+            '(source_slug IN (SELECT t.slug FROM transcript_classification c '
+            ' JOIN transcripts t ON t.id=c.transcript_id WHERE c.event_slug=?)'
+            ' OR source_slug IN (SELECT i.slug FROM item_classification c '
+            ' JOIN items i ON i.id=c.item_id WHERE c.event_slug=?)'
+            ' OR source_slug IN (SELECT b.slug FROM document_classification c '
+            " JOIN books b ON b.id=c.source_id WHERE c.source='book' AND c.event_slug=?)"
+            ' OR source_slug IN (SELECT r.slug FROM document_classification c '
+            " JOIN records r ON r.id=c.source_id WHERE c.source='record' AND c.event_slug=?))")
+        params.extend([slug, slug, slug, slug])
+    if expansion:
+        slug = _resolve_expansion(conn, expansion)
+        if not slug:
+            return '0', []
+        clauses.append(
+            '(source_slug IN (SELECT t.slug FROM transcript_classification c '
+            ' JOIN transcripts t ON t.id=c.transcript_id WHERE c.expansion_slug=?)'
+            ' OR source_slug IN (SELECT i.slug FROM item_classification c '
+            ' JOIN items i ON i.id=c.item_id WHERE c.expansion_slug=?)'
+            ' OR source_slug IN (SELECT b.slug FROM document_classification c '
+            " JOIN books b ON b.id=c.source_id WHERE c.source='book' AND c.expansion_slug=?)"
+            ' OR source_slug IN (SELECT r.slug FROM document_classification c '
+            " JOIN records r ON r.id=c.source_id WHERE c.source='record' AND c.expansion_slug=?))")
+        params.extend([slug, slug, slug, slug])
+    return (' AND '.join(clauses) if clauses else ''), params
+
+
+@_guard
+def activities(activity_type=None, season=None, event=None, limit=100, offset=0):
+    """List activities with transcript/line coverage."""
+    conn = connect()
+    try:
+        where, params = [], []
+        if activity_type:
+            where.append('activity_type = ?')
+            params.append(activity_type)
+        if season:
+            slug = _resolve_season(conn, season)
+            if not slug:
+                return []
+            where.append('season_slug = ?')
+            params.append(slug)
+        if event:
+            slug = _resolve_event(conn, event)
+            if not slug:
+                return []
+            where.append('event_slug = ?')
+            params.append(slug)
+        sql = ('SELECT slug,name,activity_type,season_slug,expansion_slug,event_slug,'
+               'vaulted,transcripts,lines FROM v_activity_coverage')
+        if where:
+            sql += ' WHERE ' + ' AND '.join(where)
+        sql += ' ORDER BY lines DESC, name LIMIT ? OFFSET ?'
+        params += [_limit(limit, 100), _offset(offset)]
+        return [dict(r) for r in conn.execute(sql, params).fetchall()]
+    finally:
+        conn.close()
+
+
+@_guard
+def seasons():
+    """List every season/episode with coverage."""
+    conn = connect()
+    try:
+        return [dict(r) for r in conn.execute(
+            'SELECT season_number,slug,name,season_type,vaulted,transcripts,lines '
+            'FROM v_season_coverage ORDER BY season_number').fetchall()]
+    finally:
+        conn.close()
+
+
+@_guard
+def events():
+    """List every rotating event with coverage and occurrence count."""
+    conn = connect()
+    try:
+        return [dict(r) for r in conn.execute(
+            'SELECT slug,name,event_type,vaulted,transcripts,lines,occurrences '
+            'FROM v_event_coverage ORDER BY name').fetchall()]
+    finally:
+        conn.close()
+
+
+@_guard
+def event(ref):
+    """Event details, occurrences and classified transcripts."""
+    conn = connect()
+    try:
+        slug = _resolve_event(conn, ref)
+        if not slug:
+            return None
+        row = conn.execute('SELECT * FROM events WHERE slug=?', (slug,)).fetchone()
+        out = dict(row)
+        out['occurrences'] = [dict(r) for r in conn.execute(
+            'SELECT year,season_slug,start_date,end_date,vaulted FROM event_occurrences '
+            'WHERE event_slug=? ORDER BY year', (slug,)).fetchall()]
+        out['transcripts'] = [dict(r) for r in conn.execute(
+            'SELECT t.slug,t.title,c.confidence FROM transcript_classification c '
+            'JOIN transcripts t ON t.id=c.transcript_id WHERE c.event_slug=? '
+            'ORDER BY t.title LIMIT 100', (slug,)).fetchall()]
+        return out
+    finally:
+        conn.close()
+
+
+@_guard
+def activity(ref, limit=50, offset=0):
+    """Activity details, coverage and classified transcripts."""
+    conn = connect()
+    try:
+        slug = _resolve_activity(conn, ref)
+        if not slug:
+            return None
+        row = conn.execute('SELECT * FROM activities WHERE slug=?', (slug,)).fetchone()
+        out = dict(row)
+        cov = conn.execute('SELECT transcripts,lines FROM v_activity_coverage WHERE slug=?',
+                           (slug,)).fetchone()
+        out['coverage'] = dict(cov) if cov else {'transcripts': 0, 'lines': 0}
+        out['transcripts'] = [dict(r) for r in conn.execute(
+            'SELECT t.slug,t.title,c.season_slug,c.confidence FROM transcript_classification c '
+            'JOIN transcripts t ON t.id=c.transcript_id WHERE c.activity_slug=? '
+            'ORDER BY t.title LIMIT ? OFFSET ?',
+            (slug, _limit(limit, 50), _offset(offset))).fetchall()]
+        out['speakers'] = [{'speaker': r[0], 'lines': r[1]} for r in conn.execute(
+            'SELECT tl.speaker, COUNT(*) FROM transcript_classification c '
+            'JOIN transcript_lines tl ON tl.transcript_id=c.transcript_id '
+            "WHERE c.activity_slug=? AND tl.is_stage_dir=0 AND tl.speaker != '' "
+            'GROUP BY tl.speaker ORDER BY 2 DESC LIMIT 15', (slug,)).fetchall()]
+        return out
+    finally:
+        conn.close()
+
+
+@_guard
+def coverage():
+    """Coverage summary across activities, seasons and events plus gap lists."""
+    conn = connect()
+    try:
+        acts = [dict(r) for r in conn.execute(
+            'SELECT slug,name,activity_type,season_slug,vaulted,transcripts,lines '
+            'FROM v_activity_coverage ORDER BY lines DESC, name').fetchall()]
+        seasons_ = [dict(r) for r in conn.execute(
+            'SELECT season_number,slug,name,season_type,vaulted,transcripts,lines '
+            'FROM v_season_coverage ORDER BY season_number').fetchall()]
+        events_ = [dict(r) for r in conn.execute(
+            'SELECT slug,name,event_type,vaulted,transcripts,lines,occurrences '
+            'FROM v_event_coverage ORDER BY name').fetchall()]
+        return {
+            'activities': acts,
+            'seasons': seasons_,
+            'events': events_,
+            'gaps': {
+                'activities_without_transcripts': [a['slug'] for a in acts if a['transcripts'] == 0],
+                'seasons_without_transcripts': [s['slug'] for s in seasons_ if s['transcripts'] == 0],
+                'events_without_transcripts': [e['slug'] for e in events_ if e['transcripts'] == 0],
+            },
+        }
+    finally:
+        conn.close()
+
+
 def listing(kind, limit=50, offset=0):
-    if kind not in ('books', 'characters', 'speakers', 'records'):
-        raise ValueError('kind must be one of: books, characters, speakers, records')
+    if kind not in ('books', 'characters', 'speakers', 'records',
+                    'activities', 'seasons', 'events'):
+        raise ValueError('kind must be one of: books, characters, speakers, records, '
+                         'activities, seasons, events')
     conn = connect()
     try:
         n = _limit(limit, 50)
@@ -556,6 +825,18 @@ def listing(kind, limit=50, offset=0):
             rows = conn.execute(
                 "SELECT speaker, COUNT(*) AS lines FROM transcript_lines "
                 "WHERE speaker NOT IN ('Narration','Cutscene') GROUP BY speaker ORDER BY 2 DESC LIMIT ? OFFSET ?", (n, o))
+        elif kind == 'activities':
+            rows = conn.execute(
+                'SELECT slug, name, activity_type, season_slug, transcripts, lines '
+                'FROM v_activity_coverage ORDER BY lines DESC, name LIMIT ? OFFSET ?', (n, o))
+        elif kind == 'seasons':
+            rows = conn.execute(
+                'SELECT season_number, slug, name, season_type, transcripts, lines '
+                'FROM v_season_coverage ORDER BY season_number LIMIT ? OFFSET ?', (n, o))
+        elif kind == 'events':
+            rows = conn.execute(
+                'SELECT slug, name, event_type, transcripts, lines, occurrences '
+                'FROM v_event_coverage ORDER BY name LIMIT ? OFFSET ?', (n, o))
         else:
             rows = conn.execute('SELECT slug, title FROM records ORDER BY title LIMIT ? OFFSET ?', (n, o))
         return [dict(r) for r in rows]
@@ -569,7 +850,10 @@ def stats():
     try:
         counts = {}
         for t in ['books', 'book_entries', 'transcripts', 'transcript_lines', 'grimoire_cards',
-                  'interactions', 'items', 'records', 'characters', 'character_lines', 'fts']:
+                  'interactions', 'items', 'records', 'characters', 'character_lines', 'fts',
+                  'expansions', 'seasons', 'events', 'event_occurrences', 'activities',
+                  'transcript_classification', 'item_classification',
+                  'document_classification']:
             counts[t] = conn.execute(f'SELECT COUNT(*) FROM {t}').fetchone()[0]
         top_items = [{'item_type': r[0], 'count': r[1]} for r in conn.execute(
             "SELECT item_type, COUNT(*) FROM items WHERE item_type != '' "

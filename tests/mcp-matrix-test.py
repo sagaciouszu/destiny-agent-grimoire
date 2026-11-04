@@ -175,9 +175,11 @@ async def main():
         async with ClientSession(r, w) as s:
             await s.initialize()
             tools = {t.name for t in (await s.list_tools()).tools}
-            report('twelve tools listed', tools == {'search', 'character', 'character_info',
-                                                    'item', 'verify', 'verify_many', 'list_records',
-                                                    'stats', 'book', 'transcript', 'find_item', 'record'}, str(tools))
+            report('eighteen tools listed', tools == {'search', 'character', 'character_info',
+                                                      'item', 'verify', 'verify_many', 'list_records',
+                                                      'stats', 'book', 'transcript', 'find_item', 'record',
+                                                      'activities', 'activity', 'seasons', 'events',
+                                                      'event', 'coverage'}, str(tools))
             for name, fn in (('tool matrix (80+ calls)', matrix), ('MCP matches API', parity),
                              ('malformed calls fail cleanly', errors)):
                 try:

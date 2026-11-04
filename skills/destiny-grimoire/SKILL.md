@@ -1,22 +1,23 @@
 ---
 name: destiny-grimoire
-description: 'Query the Destiny Agent Grimoire for verified Destiny lore, character dialogue, seal/triumph records, item flavor text, Hive/Oryx/Savathûn canon, grimoire cards and more. Use when an agent needs to pull canonical Destiny lore, look up character quotes, search factions, get item flavor text, check book transcripts, or complete conversations involving specific characters. Triggers: destiny, lore, grimoire, character lines, transcript, book, quote, faction, location, Obelisk, Hive, Crota, Oryx, Savathûn, Eris Morn, Drifter, Gambit.'
+description: 'Query the Destiny Agent Grimoire for verified Destiny lore, character dialogue, raids, dungeons, seasonal activities, seasons and rotating events, seal/triumph records, item flavor text, Hive/Oryx/Savathûn canon and grimoire cards. Use when an agent needs canonical Destiny lore, activity or season coverage, character quotes, factions, item flavor text, book transcripts, or conversations involving specific characters. Triggers: destiny, lore, grimoire, character lines, transcript, book, quote, faction, raid, dungeon, season, episode, Festival of the Lost, Dawning, Solstice, Guardian Games, Iron Banner, Menagerie, Hive, Crota, Oryx, Savathûn, Eris Morn, Drifter, Gambit.'
 license: MIT
 metadata:
-  tags: "Destiny, Lore, Grimoire, Characters, Transcripts, Books, Items, Records"
+  tags: "Destiny, Lore, Grimoire, Characters, Transcripts, Books, Items, Records, Raids, Dungeons, Seasons, Events"
   category: "reference"
 ---
 
 # Destiny Agent Grimoire
 
 Agent-optimized Destiny lore archive. Query via SQLite. Single file, no external APIs.
-Use this when you need canonical Destiny lore for storytelling, lore check, agent persona, or fact-checking.
+Use this when you need canonical Destiny lore, activity/season/event coverage,
+storytelling, lore checks, agent personas, or fact-checking.
 
 ## Location
 
 - Repo root: wherever you cloned `destiny-agent-grimoire`
 - **Primary:** `db/grimoire.db` (SQLite + FTS5; if missing, bootstrap: `curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db -o db/grimoire.db` for the prebuilt asset, or `python3 db/migrate.py` to build from checkout)
-- **Consumed by:** the Drifter and Eris agents via `lore/` (symlink or clone)
+- **Consumed by:** the Drifter, Eris Morn and Calus agents via `lore/` (symlink or clone)
 
 ## Data covering
 
@@ -36,6 +37,19 @@ Use this when you need canonical Destiny lore for storytelling, lore check, agen
 | verify_fts | 120731 | Fast quote verification index |
 | item_title_fts | 58764 | Item title lookup index |
 
+Taxonomy tables (additive; canon tables are never rewritten):
+
+| Table | Rows | Content |
+|-------|------|---------|
+| expansions | 18 | Destiny 1 through Renegades |
+| seasons | 26 | Official numeric seasons; 24-26 are episodes |
+| activities | 65 | Raids, dungeons, seasonal activities, missions |
+| events | 9 | Festival, Dawning, Solstice, Guardian Games, Crimson Days, Revelry, Moments of Triumph, Bungie Day, Iron Banner |
+| event_occurrences | 72 | Event year, dates and season |
+| transcript_classification | 1229 | Activity/season/event per transcript with confidence |
+| item_classification | 58764 | Season/event per item |
+| document_classification | 181 | Season/event per book or record |
+
 ## How to query
 
 Use `db/query.py` for everything. Interface wraps common patterns.
@@ -45,6 +59,20 @@ Use `db/query.py` for everything. Interface wraps common patterns.
 python3 db/query.py search "Crota" --limit 5
 python3 db/query.py search "Eris" --type transcripts --limit 10
 python3 db/query.py search "hive" --type books
+
+# Faceted discovery
+python3 db/query.py search "calus" --season 7 --limit 5
+python3 db/query.py search "nightmare" --activity nightmare-containment
+python3 db/query.py search "shaxx" --event "Iron Banner"
+python3 db/query.py search "witness" --expansion "The Final Shape"
+
+# Activity / season / event browsing
+python3 db/query.py coverage
+python3 db/query.py list activities --limit 30
+python3 db/query.py list seasons
+python3 db/query.py list events
+python3 db/query.py activity menagerie
+python3 db/query.py event festival-of-the-lost
 
 # Character dialogue
 python3 db/query.py character "eris" --limit 20
@@ -71,12 +99,29 @@ python3 db/query.py verify "Absolutely not." --speaker "Eris Morn" --exact
 - `--json` on every command (compact, parse-friendly)
 - `search` returns snippets by default; `--full` for complete text
 - `search --type books|transcripts|grimoire|interactions|items|records`
+- `search --activity`, `--season`, `--event`, `--expansion` filter by taxonomy
+- `--season` accepts a number (`7`), a slug (`season-of-opulence`) or a name
+  fragment (`opulence`); episodes work the same way (`24`, `echoes`)
 - `character --about <term>` filters, `character --all` uses raw transcript lines
 - `verify` exits 1 when the quote is not in canon
 - `search` accepts unquoted multi-word input; punctuation is treated literally
   when it is not valid FTS5 syntax
 - `verify --speaker` matches on name boundaries and ignores a leading "The":
   `Eris` and `Drifter` pass, `ris` and `Morn` do not
+
+## Taxonomy
+
+Four independent axes, documented in `docs/TAXONOMY.md`:
+
+- **expansion:** Forsaken, Shadowkeep, Beyond Light, The Witch Queen, Lightfall,
+  The Final Shape, The Edge of Fate, Renegades
+- **season:** Bungie's official number 1-23; episodes 24-26 with acts
+- **activity:** raid, dungeon, seasonal, story, patrol, exotic mission and more
+- **event:** rotating events with one row per year
+
+Classification carries `explicit`, `derived`, `manual` or `unknown`. `unknown`
+means the source did not say; it is never guessed. Vaulted content is tagged and
+stays searchable.
 
 ## MCP server (optional)
 
@@ -91,7 +136,9 @@ bash mcp-server/install.sh     # once: venv + official SDK
 It ships with this archive, so one install serves every agent that mounts it.
 
 Tools: `search`, `character`, `item`, `verify`, `list_records`, `stats`,
-`book`, `transcript`, `find_item`, `record`, `verify_many`, `character_info`.
+`book`, `transcript`, `find_item`, `record`, `verify_many`, `character_info`,
+`activities`, `activity`, `seasons`, `events`, `event`, `coverage`.
+`search` also takes `activity`, `season`, `event` and `expansion`.
 Resources: `grimoire://books`,
 `grimoire://characters`, `grimoire://records`, `grimoire://stats`, plus
 `grimoire://book/{slug}` templates. The
@@ -102,6 +149,10 @@ full text to 4000 characters. Full details: `mcp-server/README.md`.
 
 - `db/capabilities.json` - interface manifest (tables, commands, contracts)
 - `SELECT * FROM v_speakers;` - canonical speakers with line counts
+- `SELECT * FROM v_activity_coverage;` - activity coverage and gaps
+- `SELECT * FROM v_season_coverage;` - season coverage
+- `SELECT * FROM v_event_coverage;` - event coverage
+- `SELECT * FROM v_transcript_taxonomy;` - transcript classification
 - `SELECT * FROM speaker_aliases;` - alias -> canonical mapping
 
 ## Direct SQL (advanced)
@@ -110,6 +161,7 @@ full text to 4000 characters. Full details: `mcp-server/README.md`.
 sqlite3 db/grimoire.db "SELECT title, text FROM fts WHERE fts MATCH 'hive' LIMIT 5"
 sqlite3 db/grimoire.db "SELECT speaker, line FROM transcript_lines WHERE speaker LIKE '%Eris%' LIMIT 10"
 sqlite3 db/grimoire.db "SELECT slug, title, item_type, text FROM items WHERE item_type LIKE '%Exotic%' AND text != '' LIMIT 20"
+sqlite3 db/grimoire.db "SELECT * FROM v_activity_coverage ORDER BY lines DESC LIMIT 20"
 ```
 
 ## Rules
@@ -118,7 +170,8 @@ sqlite3 db/grimoire.db "SELECT slug, title, item_type, text FROM items WHERE ite
 2. **SQLite-first.** Do not read raw markdown from `source/` at query time; it is only the ingestion source.
 3. **Keep queries scoped.** Small `--limit N` values preserve token budget.
 4. **Do not edit this data directly.** The migration reads `source/` markdown + `archive/data/*.jsonl` and rebuilds the DB.
-5. **Eris Morn and The Drifter agents** both consume this database via `lore/` (a symlink to or a clone of this repo).
+5. **Eris Morn, The Drifter and Calus** consume this database via `lore/` (a symlink to or a clone of this repo).
+6. **Respect confidence.** Treat `unknown` classification as unknown; do not present a guessed season or activity as fact.
 
 ## Sources
 

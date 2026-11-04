@@ -6,17 +6,21 @@ and quote verification. Every command exits non-zero on failure.
 
 Usage:
   query.py search "<term>" [--type books|transcripts|grimoire|interactions|items|records]
-                           [--limit N] [--json] [--full]
+                           [--activity NAME] [--season N|NAME] [--event NAME]
+                           [--expansion NAME] [--limit N] [--json] [--full]
   query.py character "<name>" [--about <term>] [--limit N] [--all] [--json]
   query.py item "<slug>" [--json]
   query.py verify "<quote>" [--speaker NAME] [--exact] [--json]
   query.py verify-many "<q1>" "<q2>" ... [--speaker NAME] [--exact] [--json]
   query.py character-info "<name>" [--json]
-  query.py list books|characters|speakers|records [--limit N] [--offset N] [--json]
+  query.py list books|characters|speakers|records|activities|seasons|events [--limit N] [--offset N] [--json]
   query.py book "<slug or title>" [--limit N] [--offset N] [--full] [--json]
   query.py transcript "<slug or title>" [--speaker NAME] [--limit N] [--offset N] [--full] [--json]
   query.py find-item "<title>" [--limit N] [--offset N] [--json]
   query.py record "<slug or title>" [--json]
+  query.py activity "<slug or name>" [--limit N] [--json]
+  query.py event "<slug or name>" [--json]
+  query.py coverage [--json]
   query.py stats [--json]
 """
 import argparse
@@ -40,8 +44,11 @@ def emit(rows, as_json, human_fn):
 def cmd_search(args):
     query = ' '.join(args.query)
     out = api.search(query, type=args.type, limit=args.limit, full=args.full,
-                     offset=args.offset, rank=args.rank)
-    total = api.search_total(query, type=args.type)
+                     offset=args.offset, rank=args.rank, activity=args.activity,
+                     season=args.season, event=args.event, expansion=args.expansion)
+    total = api.search_total(query, type=args.type, activity=args.activity,
+                             season=args.season, event=args.event,
+                             expansion=args.expansion)
     if args.full:
         emit(out, args.json, lambda rs: [print(f"[{r['source']}] {r['title']}: {r['text'][:200]}") for r in rs])
     else:
@@ -171,6 +178,12 @@ def cmd_transcript(args):
     else:
         t = res['transcript']
         print(f"=== {t['title']} ===")
+        tax = res.get('taxonomy') or {}
+        if tax:
+            bits = [tax.get('activity_name') or tax.get('activity_slug') or tax.get('activity_type'),
+                    tax.get('season_slug'), tax.get('event_slug'),
+                    tax.get('expansion_slug'), tax.get('confidence')]
+            print('Taxonomy: ' + ' | '.join(str(b) for b in bits if b))
         for line in res['lines']:
             print(f"[{line['speaker']}] {line['text']}")
         print(f"\nShowing {len(res['lines'])} of {res['total']} (offset {res['offset']})")
@@ -220,6 +233,65 @@ def cmd_stats(args):
     return 0
 
 
+def cmd_activity(args):
+    res = api.activity(args.ref, limit=args.limit, offset=args.offset)
+    if res is None:
+        print(f'Activity not found: {args.ref}', file=sys.stderr)
+        return 1
+    if args.json:
+        print(json.dumps(res, ensure_ascii=False, separators=(',', ':')))
+        return 0
+    print(f"=== {res['name']} ({res['slug']}) ===")
+    print(f"Type: {res['activity_type']} | season: {res['season_slug'] or 'unknown'} | "
+          f"expansion: {res['expansion_slug'] or 'unknown'} | vaulted: {bool(res['vaulted'])}")
+    print(f"Coverage: {res['coverage']['transcripts']} transcripts, {res['coverage']['lines']} lines")
+    if res['speakers']:
+        print('Speakers: ' + ', '.join(f"{s['speaker']} ({s['lines']})" for s in res['speakers'][:8]))
+    for t in res['transcripts']:
+        print(f"  - {t['title']} [{t['confidence']}]")
+    return 0 if res['transcripts'] else 1
+
+
+def cmd_event(args):
+    res = api.event(args.ref)
+    if res is None:
+        print(f'Event not found: {args.ref}', file=sys.stderr)
+        return 1
+    if args.json:
+        print(json.dumps(res, ensure_ascii=False, separators=(',', ':')))
+        return 0
+    print(f"=== {res['name']} ({res['slug']}) ===")
+    print(f"Type: {res['event_type']} | vaulted: {bool(res['vaulted'])} | "
+          f"years: {res['first_year']}-{res['last_year']}")
+    print('Occurrences: ' + ', '.join(str(o['year']) for o in res['occurrences']))
+    print(f"Transcripts: {len(res['transcripts'])}")
+    for t in res['transcripts']:
+        print(f"  - {t['title']} [{t['confidence']}]")
+    return 0 if res['transcripts'] else 1
+
+
+def cmd_coverage(args):
+    res = api.coverage()
+    if args.json:
+        print(json.dumps(res, ensure_ascii=False, separators=(',', ':')))
+        return 0
+    print('=== Activities ===')
+    for a in res['activities']:
+        print(f"  {a['slug']:<28} {a['activity_type']:<14} "
+              f"{a['transcripts']:>3} transcripts {a['lines']:>6} lines")
+    print('\n=== Seasons ===')
+    for s in res['seasons']:
+        print(f"  {s['season_number']:>2} {s['slug']:<26} {s['transcripts']:>3} transcripts {s['lines']:>6} lines")
+    print('\n=== Events ===')
+    for e in res['events']:
+        print(f"  {e['slug']:<24} {e['transcripts']:>3} transcripts {e['lines']:>6} lines "
+              f"{e['occurrences']:>2} occurrences")
+    print('\n=== Gaps ===')
+    for k, v in res['gaps'].items():
+        print(f'  {k}: {len(v)}')
+    return 0
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description='Query the Destiny Grimoire database')
     sub = parser.add_subparsers(dest='cmd')
@@ -227,6 +299,10 @@ def main(argv=None):
     s = sub.add_parser('search', help='Full-text search (snippet by default)')
     s.add_argument('query', nargs='+', help='search words (quoting optional)')
     s.add_argument('--type', choices=list(TYPE_TO_SOURCE.keys()))
+    s.add_argument('--activity', help='only content from this activity')
+    s.add_argument('--season', help='season number, slug or name')
+    s.add_argument('--event', help='rotating event slug or name')
+    s.add_argument('--expansion', help='expansion slug or name')
     s.add_argument('--limit', type=int, default=10)
     s.add_argument('--offset', type=int, default=0)
     s.add_argument('--json', action='store_true')
@@ -259,7 +335,8 @@ def main(argv=None):
     v.set_defaults(func=cmd_verify)
 
     l = sub.add_parser('list', help='Cheap discovery listings')
-    l.add_argument('kind', choices=['books', 'characters', 'speakers', 'records'])
+    l.add_argument('kind', choices=['books', 'characters', 'speakers', 'records',
+                                   'activities', 'seasons', 'events'])
     l.add_argument('--limit', type=int, default=50)
     l.add_argument('--offset', type=int, default=0)
     l.add_argument('--json', action='store_true')
@@ -306,6 +383,22 @@ def main(argv=None):
     ci.add_argument('name')
     ci.add_argument('--json', action='store_true')
     ci.set_defaults(func=cmd_character_info)
+
+    ac = sub.add_parser('activity', help='Activity details and coverage')
+    ac.add_argument('ref')
+    ac.add_argument('--limit', type=int, default=50)
+    ac.add_argument('--offset', type=int, default=0)
+    ac.add_argument('--json', action='store_true')
+    ac.set_defaults(func=cmd_activity)
+
+    ev = sub.add_parser('event', help='Rotating event details and occurrences')
+    ev.add_argument('ref')
+    ev.add_argument('--json', action='store_true')
+    ev.set_defaults(func=cmd_event)
+
+    cv = sub.add_parser('coverage', help='Activity/season/event coverage summary')
+    cv.add_argument('--json', action='store_true')
+    cv.set_defaults(func=cmd_coverage)
 
     st = sub.add_parser('stats', help='Database statistics')
     st.add_argument('--json', action='store_true')

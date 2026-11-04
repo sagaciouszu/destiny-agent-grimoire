@@ -51,7 +51,7 @@ def _offset(value):
 
 server = MCPServer(
     'destiny-grimoire',
-    version='1.4.0',
+    version='1.5.0',
     instructions=(
         'Canonical Destiny lore. Search for topics, pull character lines, look up '
         'items, and call verify before quoting anything. All queries are read-only.'),
@@ -73,7 +73,9 @@ def _trim(text, limit=MAX_TEXT):
 
 @server.tool(annotations=READ_ONLY)
 def search(query: str, type: str | None = None, limit: int = 10, full: bool = False,
-           offset: int = 0, rank: bool = True) -> dict:
+           offset: int = 0, rank: bool = True, activity: str | None = None,
+           season: str | None = None, event: str | None = None,
+           expansion: str | None = None) -> dict:
     """Full-text search over books, transcripts, cards, items and records.
 
     Args:
@@ -83,10 +85,16 @@ def search(query: str, type: str | None = None, limit: int = 10, full: bool = Fa
         full: Return full text instead of bounded snippets.
         offset: Rows to skip (0-10000).
         rank: Order by FTS relevance instead of insertion order.
+        activity: Only content classified under this activity (name or slug).
+        season: Season number, slug or name, for example 17 or "haunted".
+        event: Rotating event slug or name, for example "the-dawning".
+        expansion: Expansion slug or name.
     """
     rows = _api(api.search, query, type=type, limit=_limit(limit, 10), full=full,
-                offset=_offset(offset), rank=rank)
-    total = _api(api.search_total, query, type=type)
+                offset=_offset(offset), rank=rank, activity=activity, season=season,
+                event=event, expansion=expansion)
+    total = _api(api.search_total, query, type=type, activity=activity, season=season,
+                 event=event, expansion=expansion)
     if full:
         for r in rows:
             r['text'] = _trim(r.get('text', ''))
@@ -154,7 +162,7 @@ def list_records(kind: str, limit: int = 50, offset: int = 0) -> dict:
     """Cheap discovery listings.
 
     Args:
-        kind: books, characters, speakers, or records.
+        kind: books, characters, speakers, records, activities, seasons, or events.
         limit: Maximum rows (1-100).
         offset: Rows to skip (0-10000).
     """
@@ -245,6 +253,72 @@ def find_item(query: str, limit: int = 10, offset: int = 0) -> dict:
         offset: Rows to skip (0-10000).
     """
     return _api(api.find_item, query, limit=_limit(limit, 10), offset=_offset(offset))
+
+
+@server.tool(annotations=READ_ONLY)
+def activities(activity_type: str | None = None, season: str | None = None,
+               event: str | None = None, limit: int = 100, offset: int = 0) -> dict:
+    """List raids, dungeons, seasonal activities and other content with coverage.
+
+    Args:
+        activity_type: raid, dungeon, seasonal, story, patrol, exotic_mission,
+            strike, crucible, gambit, public_event, lost_sector, quest, event.
+        season: Optional season number, slug or name.
+        event: Optional rotating event slug or name.
+        limit: Maximum rows (1-100).
+        offset: Rows to skip (0-10000).
+    """
+    rows = _api(api.activities, activity_type=activity_type, season=season,
+                event=event, limit=_limit(limit, 100), offset=_offset(offset))
+    return {'count': len(rows), 'rows': rows}
+
+
+@server.tool(annotations=READ_ONLY)
+def activity(ref: str, limit: int = 50, offset: int = 0) -> dict:
+    """Activity details, coverage, speakers and classified transcripts.
+
+    Args:
+        ref: Activity slug or name fragment (raid, dungeon, seasonal activity).
+        limit: Transcripts per page (1-100).
+        offset: Transcripts to skip (0-10000).
+    """
+    res = _api(api.activity, ref, limit=_limit(limit, 50), offset=_offset(offset))
+    if res is None:
+        raise ToolError(f'activity not found: {ref}')
+    return res
+
+
+@server.tool(annotations=READ_ONLY)
+def seasons() -> dict:
+    """Every season and episode with its official number and coverage."""
+    rows = _api(api.seasons)
+    return {'count': len(rows), 'rows': rows}
+
+
+@server.tool(annotations=READ_ONLY)
+def events() -> dict:
+    """Every rotating event with coverage and occurrence count."""
+    rows = _api(api.events)
+    return {'count': len(rows), 'rows': rows}
+
+
+@server.tool(annotations=READ_ONLY)
+def event(ref: str) -> dict:
+    """Event details, yearly occurrences and classified transcripts.
+
+    Args:
+        ref: Event slug or name fragment, for example "Festival of the Lost".
+    """
+    res = _api(api.event, ref)
+    if res is None:
+        raise ToolError(f'event not found: {ref}')
+    return res
+
+
+@server.tool(annotations=READ_ONLY)
+def coverage() -> dict:
+    """Coverage summary for activities, seasons and events, including gaps."""
+    return _api(api.coverage)
 
 
 @server.tool(annotations=READ_ONLY)

@@ -22,14 +22,26 @@
     "character_lines": "verified character quotes with resolvable source_slug",
     "speaker_aliases": "alias -> canonical speaker mapping",
     "fts": "FTS5 index over all content, with a source column for exact type filtering",
-    "verify_fts": "normalized text + provenance for fast quote verification (FTS5 porter)"
+    "verify_fts": "normalized text + provenance for fast quote verification (FTS5 porter)",
+    "expansions": "major releases (Destiny 1 through Renegades)",
+    "seasons": "official numeric seasons and episodes",
+    "activities": "raids, dungeons, seasonal activities, missions",
+    "events": "rotating events, including removed ones",
+    "event_occurrences": "one row per event-year",
+    "transcript_classification": "activity/season/event per transcript with confidence",
+    "item_classification": "season/event per item with confidence",
+    "document_classification": "season/event per book and record with confidence"
   },
   "views": {
-    "v_speakers": "speaker, lines (canonical speakers with line counts)"
+    "v_speakers": "speaker, lines (canonical speakers with line counts)",
+    "v_transcript_taxonomy": "transcript header joined to classification",
+    "v_activity_coverage": "transcripts and lines per activity",
+    "v_season_coverage": "transcripts and lines per season",
+    "v_event_coverage": "transcripts, lines and occurrences per event"
   },
   "commands": {
     "search": {
-      "usage": "query.py search \"<term>\" [--type T] [--limit N] [--offset N] [--rank|--no-rank] [--json] [--full]",
+      "usage": "query.py search \"<term>\" [--type T] [--activity A] [--season S] [--event E] [--expansion X] [--limit N] [--offset N] [--rank|--no-rank] [--json] [--full]",
       "returns": "snippet context by default; --full for complete text"
     },
     "character": {
@@ -44,7 +56,7 @@
       "returns": "source/slug/speaker matches with exact flags; exit 1 when absent"
     },
     "list": {
-      "usage": "query.py list books|characters|speakers|records [--limit N] [--offset N] [--json]"
+      "usage": "query.py list books|characters|speakers|records|activities|seasons|events [--limit N] [--offset N] [--json]"
     },
     "stats": {
       "usage": "query.py stats [--json]",
@@ -67,6 +79,18 @@
     },
     "character_info": {
       "usage": "query.py character-info \"<name>\" [--json]"
+    },
+    "activity": {
+      "usage": "query.py activity \"<slug or name>\" [--limit N] [--offset N] [--json]",
+      "returns": "activity metadata, coverage, speakers and transcripts"
+    },
+    "event": {
+      "usage": "query.py event \"<slug or name>\" [--json]",
+      "returns": "event metadata, yearly occurrences and transcripts"
+    },
+    "coverage": {
+      "usage": "query.py coverage [--json]",
+      "returns": "coverage per activity, season and event plus gap lists"
     }
   },
   "contracts": {
@@ -94,7 +118,13 @@
       "book",
       "transcript",
       "find_item",
-      "record"
+      "record",
+      "activities",
+      "activity",
+      "seasons",
+      "events",
+      "event",
+      "coverage"
     ],
     "notes": "limits clamp to 1-100; full text trimmed to 4000 chars; no arbitrary SQL",
     "resources": [

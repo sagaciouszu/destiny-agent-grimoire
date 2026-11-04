@@ -44,7 +44,8 @@ def tools_listed():
     names = {t.name for t in tools}
     want = {'search', 'character', 'item', 'verify', 'list_records', 'stats',
             'book', 'transcript', 'find_item', 'record', 'verify_many',
-            'character_info'}
+            'character_info', 'activities', 'activity', 'seasons', 'events',
+            'event', 'coverage'}
     assert want <= names, f'missing tools: {want - names}'
 
 
@@ -132,7 +133,29 @@ def protocol_smoke():
 
 
 print('MCP contract test')
-check('twelve tools registered', tools_listed)
+check('eighteen tools registered', tools_listed)
+
+
+def taxonomy_tools():
+    acts = server.activities(limit=100)
+    assert any(a['slug'] == 'menagerie' for a in acts['rows']), 'menagerie missing'
+    act = server.activity('nightmare-containment')
+    assert act['coverage']['transcripts'] > 0 and act['speakers'], 'activity coverage empty'
+    seasons = server.seasons()
+    assert len(seasons['rows']) == 26, 'season count'
+    assert seasons['rows'][6]['season_number'] == 7
+    events = server.events()
+    assert {e['slug'] for e in events['rows']} >= {'the-dawning', 'festival-of-the-lost',
+                                                   'crimson-days', 'the-revelry'}
+    ev = server.event('festival-of-the-lost')
+    assert len(ev['occurrences']) >= 7
+    assert server.coverage()['gaps']['activities_without_transcripts']
+    filtered = server.search('calus', season=17, limit=3)
+    assert filtered['count'] == len(filtered['rows'])
+    assert server.search('calus', season=99, limit=3)['count'] == 0
+
+
+check('taxonomy tools and filters', taxonomy_tools)
 check('search returns rows', search_works)
 check('verify accepts and rejects', verify_works)
 check('input safety and prompt sanitizing', input_safety)

@@ -3,7 +3,9 @@
 import os, re, json, glob, sqlite3, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SCHEMA_VERSION = '1.0.1'
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import taxonomy  # noqa: E402
+SCHEMA_VERSION = taxonomy.SCHEMA_VERSION
 DB_PATH = os.path.join(ROOT, 'db', 'grimoire.db')
 SCHEMA = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'schema.sql')
 
@@ -73,6 +75,7 @@ def migrate():
         os.remove(DB_PATH)
     conn = sqlite3.connect(DB_PATH)
     conn.executescript(open(SCHEMA).read())
+    taxonomy.ensure_schema(conn)
 
     # Books
     books = glob.glob(os.path.join(ROOT, 'source', 'books', '*.md'))
@@ -397,29 +400,33 @@ def migrate():
         "WHERE item_type='' AND EXISTS (SELECT 1 FROM items b "
         "WHERE b.title=items.title AND b.item_type != '')")
 
+    # Activity / season / event taxonomy (additive; canon tables untouched)
+    tax_stats = taxonomy.populate(conn)
+    print(f'taxonomy: {tax_stats}')
+
     # Build FTS index (global rowid sequence)
     print('building FTS index...')
     fts_id = 0
-    def add_fts(title, text, speaker='', body='', source=''):
+    def add_fts(title, text, speaker='', body='', source='', source_slug=''):
         nonlocal fts_id
         fts_id += 1
-        conn.execute('INSERT INTO fts (rowid,title,text,speaker,body,source) VALUES (?,?,?,?,?,?)',
-            (fts_id, title, text or '', speaker, body or '', source))
+        conn.execute('INSERT INTO fts (rowid,title,text,speaker,body,source,source_slug) VALUES (?,?,?,?,?,?,?)',
+            (fts_id, title, text or '', speaker, body or '', source, source_slug))
     for bid, slug, title in conn.execute('SELECT id,slug,title FROM books').fetchall():
         for eid, etitle, ebody in conn.execute('SELECT id,title,body FROM book_entries WHERE book_id=?', (bid,)).fetchall():
-            add_fts(f'{title}: {etitle}', ebody, source='book_entry')
+            add_fts(f'{title}: {etitle}', ebody, source='book_entry', source_slug=slug)
     for tid, slug, title in conn.execute('SELECT id,slug,title FROM transcripts').fetchall():
         for tlid, sp, line in conn.execute('SELECT id,speaker,line FROM transcript_lines WHERE transcript_id=?', (tid,)).fetchall():
-            add_fts(title, line, sp, source='transcript_line')
+            add_fts(title, line, sp, source='transcript_line', source_slug=slug)
     for gid, slug, title, body in conn.execute('SELECT id,slug,title,body FROM grimoire_cards').fetchall():
-        add_fts(title, body, source='grimoire_card')
+        add_fts(title, body, source='grimoire_card', source_slug=slug)
     for iid, slug, title, speaker, text in conn.execute('SELECT id,slug,title,speaker,text FROM interactions').fetchall():
-        add_fts(title, text, speaker, source='interaction')
+        add_fts(title, text, speaker, source='interaction', source_slug=slug)
     for iid, slug, title, text in conn.execute('SELECT id,slug,title,text FROM items').fetchall():
         if text:  # stat-only items have no searchable text
-            add_fts(title, text, source='item')
+            add_fts(title, text, source='item', source_slug=slug)
     for rid, slug, title, body in conn.execute('SELECT id,slug,title,body FROM records').fetchall():
-        add_fts(title, body, source='record')
+        add_fts(title, body, source='record', source_slug=slug)
     print(f'fts entries: {fts_id}')
 
     # Verification index: normalized text with provenance (documents only)
@@ -453,7 +460,7 @@ def migrate():
     # Meta
     for k, v in [
         ('version',SCHEMA_VERSION),
-        ('last_updated','2026-11-02'),
+        ('last_updated','2026-11-04'),
         ('books', str(book_count)),
         ('book_entries', str(entry_count)),
         ('transcripts', str(t_count)),
@@ -464,6 +471,11 @@ def migrate():
         ('records', str(r_count)),
         ('characters', str(c_count)),
         ('character_lines', str(cl_count)),
+        ('expansions', str(conn.execute('SELECT COUNT(*) FROM expansions').fetchone()[0])),
+        ('seasons', str(conn.execute('SELECT COUNT(*) FROM seasons').fetchone()[0])),
+        ('events', str(conn.execute('SELECT COUNT(*) FROM events').fetchone()[0])),
+        ('event_occurrences', str(conn.execute('SELECT COUNT(*) FROM event_occurrences').fetchone()[0])),
+        ('activities', str(conn.execute('SELECT COUNT(*) FROM activities').fetchone()[0])),
     ]:
         conn.execute('INSERT OR REPLACE INTO meta (key,value) VALUES (?,?)', (k, v))
 
