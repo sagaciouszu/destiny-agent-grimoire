@@ -152,7 +152,10 @@ def taxonomy_tools():
                                                    'crimson-days', 'the-revelry'}
     ev = server.event('festival-of-the-lost')
     assert len(ev['occurrences']) >= 7
-    assert server.coverage()['gaps']['activities_without_transcripts']
+    cov = server.coverage()
+    assert cov['gaps']['activities_without_transcripts'] == []
+    assert cov['gaps']['unexplained'] == []
+    assert cov['notes'], 'coverage notes missing'
     filtered = server.search('calus', season=17, limit=3)
     assert filtered['count'] == len(filtered['rows'])
     assert server.search('calus', season=99, limit=3)['count'] == 0
