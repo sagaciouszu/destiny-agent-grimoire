@@ -1,7 +1,7 @@
 ## v0.21.0 - Activity, season and event taxonomy (2026-11-04)
 
 - Additive taxonomy: `expansions` (18), `seasons` (26), `events` (9),
-  `event_occurrences` (72), `activities` (65).
+  `event_occurrences` (72), `activities` (67).
 - Classification for every transcript, item, book and record with
   `explicit` / `derived` / `manual` / `unknown` confidence and evidence.
 - Official season numbers; episodes 24-26 modelled with `season_type='episode'`

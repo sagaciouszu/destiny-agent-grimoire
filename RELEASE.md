@@ -6,7 +6,7 @@
 
 - **Four-axis taxonomy:** expansion, official numeric season/episode, activity
   and rotating event, stored additively alongside canon tables.
-- **Catalogue:** 18 expansions, 26 seasons/episodes, 65 activities, 9 events and
+- **Catalogue:** 18 expansions, 26 seasons/episodes, 67 activities, 9 events and
   72 event-year occurrences, including vaulted content.
 - **Classification:** 1,249 transcripts, 58,764 items and 181 books/records
   tagged with confidence (`explicit`, `derived`, `manual`, `unknown`) and evidence.
