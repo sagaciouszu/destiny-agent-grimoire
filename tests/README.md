@@ -6,9 +6,9 @@ or shared by every agent in the series.
 
 ## Entry points
 
-- Grimoire: `bash grimoire-master-audit.sh` (11 suites, archive-wide)
-- Agents: run tests/master-audit.sh in each agent repo (Drifter 22, Eris 17,
-  Calus/Zavala/Ghost 15)
+- Grimoire: `bash grimoire-master-audit.sh` (13 suites, archive-wide)
+- Agents: run tests/master-audit.sh in each agent repo (Drifter 23, Eris 18,
+  Calus/Zavala/Ghost 18)
 - Shared runner: run the suite manifest script from any agent repo
 - Suite guard: `python3 tests/suite-manifest-test.py` (no suite loss or drift)
 - `resolve-workspace.sh <caller> [drifter|eris]` - layout-independent workspace
@@ -51,7 +51,7 @@ Drifter (how-to-drift-for-agents/tests/):
 - conversation-test.sh - SQLite conversation test
 - build-quote-index.py - rebuild reference/quote-inverted-index.json
 - golden-voice.json and golden-voice-test.sh - fixed pass/fail snapshots
-- master-audit.sh - all 22 suites
+- master-audit.sh - all 23 suites
 
 Eris (eris-morn/tests/):
 
@@ -59,14 +59,15 @@ Eris (eris-morn/tests/):
   multi-turn arc and contamination scan
 - conversation-test.sh - SQLite conversation test
 - golden-voice.json and golden-voice-test.sh - fixed pass/fail snapshots
-- master-audit.sh - all 17 suites
+- master-audit.sh - all 18 suites
 
 Calus / Zavala / Ghost (destiny-agent-{calus,zavala,ghost}/tests/):
 
-- Shared 15-suite harness: module, quote, multi-user, memory, connection,
-  conversation, multi-turn, scenarios, voice, golden voice and structure gates
+- Shared 18-suite harness: module, quote, multi-user, memory, connection,
+  persona freshness, conversation, multi-turn, scenarios, voice, voice scorer,
+  golden voice and structure gates
 - suite manifest plus runner (identical shape, different persona fixtures)
-- master-audit.sh - all 15 suites
+- master-audit.sh - all 18 suites
 
 ## Extended (on demand)
 
@@ -77,6 +78,10 @@ Calus / Zavala / Ghost (destiny-agent-{calus,zavala,ghost}/tests/):
 - `mcp-matrix-test.py` - MCP calls across all twenty-one tools (154 calls in the
   current baseline), 3 concurrent clients,
   strict parity with the API, clean malformed-call errors, output caps
+- `mcp-agent-optimization-test.py` - LLM-facing surface: every parameter named
+  in its tool description, actionable ToolErrors, 25-token snippets with stage
+  directions demoted/excludable, limit/offset clamps, 16K resource caps,
+  one-call item lookups, spoken_lines counts (25 checks)
 - `checksum-test.sh` - verified download, missing checksum warning, mismatch
   rejection with no partial or installed database; skips when the agent fixture
   repo is absent

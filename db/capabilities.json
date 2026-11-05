@@ -152,7 +152,7 @@
       "event",
       "coverage"
     ],
-    "notes": "limits clamp to 1-100; full text trimmed to 4000 chars; no arbitrary SQL",
+    "notes": "limits clamp to 1-100; full text trimmed to 4000 chars; resource reads capped near 16000 chars; no arbitrary SQL",
     "resources": [
       "grimoire://books",
       "grimoire://characters",

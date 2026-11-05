@@ -37,7 +37,7 @@ QUERIES = [
 
 
 def relevant(row, terms):
-    blob = f"{row.get('title', '')} {row.get('snip', row.get('text', ''))}".lower()
+    blob = f"{row.get('title', '')} {row.get('snippet', row.get('text', ''))}".lower()
     return any(t in blob for t in terms)
 
 

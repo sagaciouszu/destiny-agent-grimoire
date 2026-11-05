@@ -196,9 +196,9 @@ PY
         SERIES_DIR="$(dirname "$DEST")/series"
         mkdir -p "$SERIES_DIR"
         cp "$MANIFEST" "$SERIES_DIR/agents.json"
-        python3 - "$DEST" "$SERIES_DIR/agents.json" <<'PY'
+        python3 - "$DEST" "$SERIES_DIR/agents.json" "$WORK" <<'PY'
 import json, os, re, sys
-dest, manifest_path = sys.argv[1], sys.argv[2]
+dest, manifest_path, work = sys.argv[1], sys.argv[2], sys.argv[3]
 manifest = json.load(open(manifest_path, encoding='utf-8'))
 series = manifest.get('series', 'agents')
 agents = manifest.get('agents', [])
@@ -249,7 +249,14 @@ for agent in agents:
         continue
     ident = agent.get('id', '')
     peers = [p for p in agents if p.get('id') != ident]
+    # Deny both the installed peer directory and the peer's source repo under
+    # Work/: runtime state and the source-of-truth copy (USER.md, journals,
+    # memory seeds) must both be out of reach for every directed pair.
     peer_dirs = [os.path.abspath(os.path.join(dest, p.get('id', ''))) for p in peers]
+    peer_dirs += [
+        os.path.join(os.path.abspath(work), p.get('source', ''))
+        for p in peers if p.get('source')
+    ]
     local = os.path.abspath(os.path.join(dest, ident))
     protected = [os.path.join(local, 'memory', '**')] + [
         os.path.join(local, name) for name in
