@@ -27,4 +27,5 @@ Publish:
   git push origin master --follow-tags
   gh release create v$VERSION $STAGE/grimoire.db $STAGE/SHA256SUMS \\
     --title "v$VERSION" --notes-file RELEASE.md
+  gh release edit v$VERSION --latest
 EOF
