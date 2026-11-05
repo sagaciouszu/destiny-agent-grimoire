@@ -56,7 +56,7 @@ sha256sum -c SHA256SUMS
 python3 db/query.py stats
 python3 db/query.py search "Crota" --limit 5
 python3 db/query.py character "Eris Morn" --limit 10
-python3 db/query.py verify --speaker "Eris Morn" --exact "I am Eris Morn."
+python3 db/query.py verify --speaker "Eris Morn" --exact "You did well to find this point of infestation."
 ```
 
 `stats` confirms the database opened. `verify` exits non-zero when a quote is
