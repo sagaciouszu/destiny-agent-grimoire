@@ -138,7 +138,44 @@ def sync_inside_table(text, db_path):
 
 
 README = os.path.join(GRIMOIRE, 'README.md')
+SKILL = os.path.join(GRIMOIRE, 'skills', 'destiny-grimoire', 'SKILL.md')
 DB_PATH = os.path.join(GRIMOIRE, 'db', 'grimoire.db')
+
+
+def _count_live(conn, label):
+    """Live row count for a table/view label, or None when it is no object."""
+    object_name = (label.split('`')[1] if '`' in label else label).strip()
+    try:
+        return conn.execute(
+            'SELECT COUNT(*) FROM "{}"'.format(object_name)).fetchone()[0]
+    except sqlite3.Error:
+        return None
+
+
+def sync_skill_counts(text, db_path):
+    """Rewrite the SKILL.md 'Data covering' tables from the live database.
+
+    The skill ships to agents as the drop-in reference; a stale row count there
+    misleads every consumer. Both tables (canon + taxonomy) are covered, and
+    labels that are not live objects are left untouched.
+    """
+    head, sep, rest = text.partition('## Data covering\n\n')
+    if not sep:
+        return text
+    end = rest.find('\n## ')
+    section, tail = (rest, '') if end == -1 else (rest[:end], rest[end:])
+    conn = sqlite3.connect('file:{}?mode=ro'.format(db_path), uri=True)
+    out = []
+    for line in section.splitlines():
+        cells = [c.strip() for c in line.strip().strip('|').split('|')]
+        if len(cells) == 3 and cells[1].isdigit():
+            count = _count_live(conn, cells[0])
+            if count is not None:
+                line = '| {} | {} | {} |'.format(cells[0], count, cells[2])
+        out.append(line)
+    conn.close()
+    return head + sep + '\n'.join(out) + '\n' + tail
+
 
 FILES = []
 for pat in [os.path.join(GRIMOIRE, '*.md'), os.path.join(GRIMOIRE, 'db', '*.md'),
@@ -166,6 +203,8 @@ for path in sorted(set(FILES)):
         s = re.sub(rx, lambda m: tpl.format(**C), s)
     if path == README:
         s = sync_inside_table(s, DB_PATH)
+    elif path == SKILL:
+        s = sync_skill_counts(s, DB_PATH)
     if s != orig:
         changes.append(path)
         if not CHECK:
