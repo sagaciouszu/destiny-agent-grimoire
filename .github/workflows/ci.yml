@@ -35,6 +35,9 @@ jobs:
       - name: Agent layout
         run: bash tests/agent-layout-test.sh
 
+      - name: Agent suite manifests
+        run: python3 tests/suite-manifest-test.py
+
       - name: Retrieval evaluation
         run: python3 tests/retrieval-eval.py
 
