@@ -1,7 +1,7 @@
 # Standards
 
 > **Depends On:** none (standards reference)
-> **Token Estimate:** ~4.3K tokens
+> **Token Estimate:** ~6.4K tokens
 
 The contract every file, script, and database row in this repository must meet.
 Verification gates (section 7) enforce these rules; a change that breaks them is
@@ -10,9 +10,13 @@ a change that is not done.
 ## 1. Scope
 
 - `destiny-agent-grimoire` is agent-agnostic: no persona, no agent-specific rules.
-- Consumer agents (`how-to-drift-for-agents`, `eris-morn`) reference the database
-  through `lore/`, either a symlink or a clone. They own their personas; this repo
-  owns canon.
+- The five consumer agents (`how-to-drift-for-agents`, `eris-morn`,
+  `destiny-agent-calus`, `destiny-agent-zavala`, `destiny-agent-ghost`) reference
+  the database through `lore/`: a symlink on Unix, a junction or clone on
+  Windows. They own their personas; this repo owns canon.
+- Documentation lives in two tiers: `README.md` and `docs/wiki/` are written for
+  humans; `skills/` and each agent's `AGENTS.md`/`TOOLS.md` are written for
+  agents (commands first, prose second, no narrative detours).
 - `source/` is the ingestion corpus (verbatim lore, formatting-normalized).
   `archive/` holds raw scrape output. `db/` holds the migration and interface.
 - The database (`db/grimoire.db`) is a build artifact: never committed, rebuilt
@@ -27,8 +31,8 @@ a change that is not done.
 | agent `.gitignore` | runtime memory | `USER.md`, `core/*memory*`, `core/journal.md` never leave the machine |
 | agent `tests/` suites | agent workspace | `lore/tests/resolve-workspace.sh` (layout-independent; `lore/` may be symlink or clone) |
 | `db/migrate.py` | sources | `source/{books,transcripts,cards,records}` + `archive/data/*.jsonl` |
-| `db/query.py` | database | CLI wrapper over `search` / `character` / `item` / `stats` |
-| `tests/sync-doc-counts.py` | all three repos | rewrites documented counts from the DB |
+| `db/query.py` | database | CLI wrapper over `db/api.py`; every query subcommand in section 8 |
+| `tests/sync-doc-counts.py` | archive and agent repos | rewrites documented counts from the DB |
 | release workflow | consumers | `db/grimoire.db` attached as a release asset (checksum-verified) |
 
 ### Symlinks
@@ -36,7 +40,7 @@ a change that is not done.
 - `lore/` is runtime state, not repository content: `setup.sh` creates it as a
   symlink to a local checkout, or clones the repo in place. It is gitignored in
   both agent repos.
-- No tracked symlinks in any of the three repositories. A tracked absolute
+- No tracked symlinks in any repository. A tracked absolute
   symlink (for example `lore -> /home/<user>/...`) breaks every clone: it arrives
   dangling, and `setup.sh` would otherwise mistrust it as an existing archive.
 - `setup.sh` treats a dangling `lore/` symlink as absent: it removes it and then
@@ -68,6 +72,7 @@ a change that is not done.
 | `transcript_classification` | transcript_id, confidence | activity_slug, activity_type, season_slug, act, event_slug, expansion_slug, evidence | additive; never rewrites canon |
 | `item_classification` | item_id, confidence | season_slug, event_slug, expansion_slug, evidence | additive |
 | `document_classification` | source, source_id, confidence | season_slug, event_slug, expansion_slug, evidence | books and records |
+| `coverage_notes` | entity_type, slug, status | evidence, source_url | one row per zero-coverage activity, event or season; status is `no_dialogue`, `narration_only`, `dialogue_source_missing`, `partial_transcript` or `unverified` |
 
 Taxonomy rules:
 - Four independent axes: expansion, season/episode, activity, event. Do not
@@ -78,6 +83,11 @@ Taxonomy rules:
 - `confidence` is `explicit`, `derived`, `manual` or `unknown`. `unknown` is a
   valid terminal state; never guess to make coverage look better.
 - `vaulted=1` marks removed content; vaulted rows stay searchable.
+- A Destiny 1 expansion (`destiny-1` through `age-of-triumph`) never inherits a
+  Destiny 2 season from an activity that was later reprised.
+- Zero coverage is never a blank: every activity, event and season with no
+  transcript carries a `coverage_notes` row (section 3). Rows are additive;
+  removing one requires a source that actually closes the gap.
 - Full model and query examples: `docs/TAXONOMY.md`.
 
 Global rules:
@@ -91,19 +101,22 @@ Global rules:
 
 Ishtar Collective is the archival primary; Destinypedia is corroboration.
 
-| Tier | Source |
-|---|---|
-| 0 | Ishtar Collective main-site transcripts |
-| 1 | Ishtar Commons `validated` |
-| 2 | Ishtar Commons `published` |
-| 3 | Ishtar Commons `proofed` |
-| 4 | Ishtar Commons untagged |
-| 5 | Destinypedia verbatim transcripts |
-| 6 | YouTube captions and community sheets |
+These are the exact `transcripts.source_tier` values the database accepts
+(`tests/taxonomy-deep-test.py` rejects anything else), in precedence order:
 
-Where sources overlap, the higher tier wins the text. Lower-tier unique lines
-are kept with their own provenance. Conflicts are logged in a reconciliation
-ledger, never silently overwritten.
+| Precedence | `source_tier` | Source |
+|---|---|---|
+| 1 | `ishtar_main` | Ishtar Collective main-site transcripts |
+| 2 | `validated`, `published`, `proofed` | tagged Ishtar Commons topics |
+| 3 | `ishtar_commons` | untagged Ishtar Commons topics |
+| 4 | `destinypedia` | Destinypedia verbatim transcripts |
+| 5 | `youtube_captions`, `cutscene` | reviewed captions, auto-captions, caption compilations |
+
+Where sources overlap, the higher precedence wins the text. Lower-tier unique
+lines are kept with their own provenance. Conflicts are logged in a
+reconciliation ledger, never silently overwritten. A caption-tier transcript is
+never presented as verbatim: it carries `partial_transcript` in
+`coverage_notes` unless exhaustiveness is proven.
 
 ### Optional and variant lines
 
@@ -134,9 +147,14 @@ is evidence for curation, not a redistributable asset.
 - Non-Ishtar sources keep their own slug and provenance (`youtube-*`, `weblore-*`,
   `ingame-quotes-*`, `cutscene-*`).
 - Filename must match the `- Source:` slug (allowlisted, documented renames only).
-- Speakers use canonical names. Alias map (applied at migration):
-  `Commander Zavala -> Zavala`, `Cayde -> Cayde-6`, `Eris -> Eris Morn`,
-  `Eris morn -> Eris Morn`, `Ikora Rey -> Ikora`, `Chiomi Esi -> Chioma Esi`.
+- Speakers use canonical names. `SPEAKER_ALIASES` in `db/migrate.py` is the
+  single source of truth, applied at migration; new aliases go there, never
+  into a verifier. Current entries include `Commander Zavala -> Zavala`,
+  `Cayde -> Cayde-6`, `Eris -> Eris Morn`, `Ikora Rey -> Ikora`,
+  `Chiomi Esi -> Chioma Esi`, `Queen Mara Sov -> Mara Sov`,
+  `The Drifter -> Drifter` and `The Crow -> Crow`. One speaker, one name: if
+  two names identify the same character, add an alias instead of splitting the
+  corpus.
 - Quest/step titles are not speakers. Web scrapers sometimes parse titles such
   as `Path of the Splicer II`, `Into the Depths VI` or `Act I` as speakers;
   migration drops rows whose speaker ends in a Roman numeral or is a bare act.
@@ -175,6 +193,11 @@ match a recomputation of their source text.
 | each agent repo tests/master-audit.sh | agent-side suites (voice, quotes, modules, conversation, golden snapshots) plus shared structure checks |
 | `tests/mcp-test.py` (on demand, needs `mcp-server/.venv`) | MCP tools, read-only guard, stdio handshake |
 | `tests/check-agent-structure.py` | dependency resolution, token headers, dashes, INDEX completeness, personal paths (every agent) |
+| `tests/query-interface-test.sh` | CLI and API surface, 89 checks |
+| `tests/taxonomy-deep-test.py` | classification refs, seasons, events, coverage statuses, API parity |
+| `tests/docs-audit.py` | every documented command resolves to a real file and a real subcommand |
+| `tests/agent-parity-test.sh` | every present agent exposes the same shared capabilities |
+| `tests/onboarding-smoke.sh` | clone + setup + master audit for every local agent, offline |
 | `tests/suite-manifest-test.py` | per-agent suite manifests match master-audit and the no-loss baseline |
 | `tests/mirror-tree-test.py` | cross-platform tree mirror used by agent sync (replaces rsync) |
 | `tests/conformance.py` | per-file headers, token accuracy, refs, persona-agnosticism; runs `ci-checks` per agent repo |
@@ -186,8 +209,11 @@ cross-character attribution checks.
 
 ## 8. Agent interface contract
 
-- Interface: one of `python3 db/query.py search|character|character-info|item|book|transcript|find-item|record|verify|verify-many|list|stats`;
-  `sqlite3` is the escape hatch. No markdown parsing at runtime.
+- Interface: `python3 db/query.py` with one of `search`, `character`,
+  `character-info`, `item`, `book`, `transcript`, `find-item`, `record`,
+  `verify`, `verify-many`, `list`, `activity`, `event`, `lore`, `seal`,
+  `seals`, `coverage`, `stats`. `sqlite3` is the escape hatch. No markdown
+  parsing at runtime.
 - Shared query layer: `db/api.py` returns data; the CLI formats it and the MCP
   server exposes the same functions as typed tools. One implementation.
 - MCP: `mcp-server/` is an optional stdio adapter using the official SDK. It is
@@ -198,6 +224,11 @@ cross-character attribution checks.
   workspace (the interactive prompt also offers it). The adapter belongs to the
   archive, so one install serves every agent; the venv is gitignored and the CLI
   stays dependency-free.
+- Coverage answers are self-describing: `coverage` and `activity` return
+  `coverage_status` (`covered`, `partial_transcript`, `narration_only`,
+  `dialogue_source_missing`, `no_dialogue`, `missing`) plus `coverage_notes`
+  evidence. Surface the status verbatim; never imply that a partial transcript
+  is complete.
 - Every command supports `--json`; search returns snippets unless `--full`;
   `verify` exits 1 when a quote is absent (quote-safety primitive).
 - FTS is the search surface: `fts` holds exactly the indexable rows, `MATCH`
@@ -211,17 +242,27 @@ cross-character attribution checks.
 
 ## 9. Agent workspace contract
 
-The Drifter and Eris repositories mirror each other so one method serves both.
+All five agent repositories follow one workspace contract so a single method
+serves every agent.
 
 - Root: `AGENTS.md`, `INDEX.md`, `SOUL.md`, `IDENTITY.md`, `TOOLS.md`,
   `<agent>.md` (platform entry), `<agent>-core.md`, `<agent>-voice.md`,
   `README.md`, `RELEASE.md`.
 - Shared directories: `core/`, `voice/`, `world/`, `reference/`.
-- `setup.sh` is identical apart from the agent name, banner and core-file hint.
-- `.gitignore` is identical.
+- `setup.sh` ships in two lengths (full and short) but always performs the same
+  contract: seed runtime memory from templates, link `lore/` (symlink -> Windows
+  junction -> clone, in that order), bootstrap the database (release asset or
+  local build, checksum-verified) and optionally install MCP.
+- `.gitignore` covers the same runtime state everywhere (two byte-identical
+  variants exist: Drifter/Eris and Calus/Zavala/Ghost).
 - Each agent repo owns its `tests/` directory: voice, quote, module, scenario,
   conversation, golden-snapshot and utility suites, plus master-audit.sh.
-  Verification entry point: bash tests/master-audit.sh in the agent repo.
+  Verification entry point: `bash tests/master-audit.sh` in the agent repo.
+- `tests/suites.json` in each agent is the machine-readable copy of its
+  `tests/master-audit.sh` suite list (name, command, tier) and `tests/run-suites.sh`
+  executes it. `series/suite-baseline.json` in this repo is the no-loss
+  baseline: adding suites is free, removing one fails
+  `tests/suite-manifest-test.py`.
 - Shared gates stay in the grimoire and are called through `lore/tests/`:
   database, conformance, structure checks, retrieval, MCP and layout.
 - A suite belongs to an agent repo when it encodes that persona's voice, quotes
@@ -263,11 +304,15 @@ The Drifter and Eris repositories mirror each other so one method serves both.
 ## 10. Change procedure
 
 1. Ingest (`archive/` scrapers or `scripts/ingest-*`) into the documented paths.
-2. `python3 db/migrate.py` (rebuild; verify counts in stdout).
-3. `python3 tests/sync-doc-counts.py` (docs counts).
-4. Run the gates in section 7: `grimoire-master-audit.sh`, then tests/master-audit.sh
-   in each agent repo, and a fresh-clone spot check for layout changes.
+2. `python3 db/migrate.py`, then the enrichment scripts (section 3); verify the
+   counts printed on stdout.
+3. Refresh derived docs: `python3 tests/sync-doc-counts.py`,
+   `python3 tests/sync-readme-meta.py`, `python3 scripts/gap-report.py`.
+4. Run the gates in section 7: `grimoire-master-audit.sh`, then
+   `bash tests/master-audit.sh` in each agent repo, plus a fresh-clone spot
+   check for layout changes.
 5. Commit. Refresh the backup and the release asset after major milestones.
+6. A version bump, tag or release always requires explicit user approval.
 
 ## 11. Packaging
 
@@ -279,6 +324,27 @@ The Drifter and Eris repositories mirror each other so one method serves both.
   (prebuilt asset or local build), never blocks.
 - The Ghost Shell template is **local-only**: never add a remote, never push it,
   even when asked to push everything else. A pre-push hook enforces this.
+
+## 11a. Platform portability
+
+The project must run on Linux, macOS and Windows (Git Bash) with the same
+commands.
+
+- No `rsync`. Agent sync mirrors trees through `scripts/mirror-tree.py`
+  (copy, `--delete`, rsync-style `--exclude`, `--dry-run`, read-only cleanup).
+- No process substitution in scripts other platforms run; use here-strings or
+  temp files so exit codes propagate.
+- `mcp-server/run.sh` resolves `.venv/bin/python`, `.venv/bin/python3` or
+  `.venv/Scripts/python.exe`; `mcp-server/run.cmd` is the Windows launcher.
+  Both launchers plus `mcp-server/probe.sh` are required files, enforced by
+  `tests/mcp-test.py`.
+- `setup.sh` links `lore/` with `ln -s`, then `mklink /J`, then `git clone`;
+  clearing a stale copy must clear read-only bits first.
+- Documentation uses relative paths (`../destiny-agent-grimoire`,
+  `lore/mcp-server/run.sh`). Never commit absolute machine paths, usernames or
+  other personal data; `tests/ci-checks.py` fails on personal paths.
+- CI-only tests degrade gracefully when sibling repositories are absent: skip
+  what cannot be verified there, never skip what can.
 
 ## 12. README contract
 
@@ -316,7 +382,7 @@ Rules:
 
 ## 13. Agent document contract
 
-Both agents ship the same document set with the same section skeletons. Only
+Every agent ships the same document set with the same section skeletons. Only
 persona facts, counts and links differ.
 
 | File | Required sections (in order) |
@@ -332,7 +398,7 @@ persona facts, counts and links differ.
 Rules:
 
 - The heading sequence is identical across the agents that share the document
-  contract; `tests/conformance.py` fails on Drifter/Eris drift.
+  contract; `tests/conformance.py` fails on any agent's drift.
 - `SOUL.md` is persona; `AGENTS.md` is contract; `INDEX.md` is the map;
   `TOOLS.md` is commands and conventions. Do not duplicate one into another.
 - `USER.template.md` is runtime state, seeded by `setup.sh`, and gitignored once
