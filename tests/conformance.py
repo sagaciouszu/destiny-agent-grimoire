@@ -208,8 +208,10 @@ for name, root in REPOS.items():
     lines = text.splitlines()
     if not lines or not lines[0].startswith('# v'):
         issues.append((name, 'RELEASE.md', 'first line must be `# vX.Y.Z - theme`'))
-    if len(lines) > 40:
-        issues.append((name, 'RELEASE.md', f'{len(lines)} lines (limit 40)'))
+    # STANDARDS section 14: the body carries every major change since the
+    # previous release, so the bound is generous but still finite.
+    if len(lines) > 90:
+        issues.append((name, 'RELEASE.md', f'{len(lines)} lines (limit 90)'))
     required = REL_SECTIONS + (['## Asset'] if name == 'grimoire' else [])
     present = [h for h in required if h in text]
     if present != required:
