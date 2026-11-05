@@ -90,7 +90,7 @@ def check_personal(ws):
     files = get_files(ws)
     for f in files:
         s = open(f, encoding='utf-8').read()
-        if '/home/sredshaw' in s:
+        if re.search(r'/home/[a-z]+', s):
             print("PERSONAL PATH: %s" % f)
             sys.exit(1)
     print("OK: No personal paths")
