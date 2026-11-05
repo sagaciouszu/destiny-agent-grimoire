@@ -41,7 +41,7 @@ Everything since v0.27.0:
 - Wiki sync: `scripts/sync-wiki.sh [--check|--push]` publishes `docs/wiki/` to
   the GitHub wiki and refuses model-control tokens or content drift.
 - OpenClaw onboarding: `scripts/ensure-openclaw-mcp.sh` upserts an absolute
-  MCP path into `openclaw.json` (idempotent, backs up first); wired into
+  MCP path into the OpenClaw config (idempotent, backs up first); wired into
   `setup.sh` and `--openclaw` sync. Doctor lint: `ok: true, findings: []`.
 
 ## Verification
