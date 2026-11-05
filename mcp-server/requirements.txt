@@ -1,3 +1,5 @@
-# Source pin. The hash-locked set actually installed is requirements.lock.txt.
-# Regenerate the lock after changing this pin.
+# Source pin. Hash-locked sets actually installed:
+#   requirements.lock.txt          Unix (manylinux/macOS wheels)
+#   requirements.windows.lock.txt  Windows (win_amd64, includes pywin32)
+# Regenerate both after changing this pin; install.sh picks by platform.
 mcp==2.3.0
