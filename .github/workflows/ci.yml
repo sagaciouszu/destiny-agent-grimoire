@@ -57,3 +57,45 @@ jobs:
 
       - name: MCP matrix
         run: mcp-server/.venv/bin/python tests/mcp-matrix-test.py
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Build database
+        run: python db/migrate.py
+
+      - name: MCP install (Git Bash)
+        shell: bash
+        run: bash mcp-server/install.sh
+
+      - name: MCP probe (cmd launcher)
+        run: python mcp-server/probe.py --launcher cmd
+
+      - name: MCP probe (PowerShell launcher)
+        run: python mcp-server/probe.py --launcher ps1
+
+      - name: MCP contract
+        run: python tests/mcp-test.py
+
+      - name: Tree mirror (rsync replacement)
+        run: python tests/mirror-tree-test.py
+
+      - name: Checkout agent for link test
+        uses: actions/checkout@v7
+        with:
+          repository: sagaciouszu/destiny-agent-ghost
+          path: ghost
+
+      - name: Agent setup links lore (symlink -> junction -> clone)
+        shell: bash
+        run: cd ghost && bash setup.sh "$GITHUB_WORKSPACE"
+
+      - name: Query through linked lore
+        shell: bash
+        run: python ghost/lore/db/query.py stats

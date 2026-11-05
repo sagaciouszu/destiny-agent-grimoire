@@ -68,6 +68,20 @@ for repo, root in REPOS.items():
                 candidates.append(text)
             for m in re.finditer(r'`((?:python3|bash|sh) [^`]+)`', line):
                 candidates.append(m.group(1))
+            # Windows launchers: mcp-server\run.cmd, run.ps1, and
+            # `powershell.exe ... -File mcp-server\run.ps1`.
+            launcher_refs = re.findall(
+                r'(?<![\w.-])((?:[A-Za-z0-9_.-]+[\\/])+[A-Za-z0-9_.-]+\.(?:cmd|ps1)'
+                r'|run\.(?:cmd|ps1))(?=\s|$|`)\|?', text)
+            for ref in launcher_refs:
+                checked += 1
+                norm_ref = ref.replace('\\', '/')
+                # A bare `run.cmd`/`run.ps1` mention means mcp-server/<ref>.
+                options = [norm_ref]
+                if '/' not in norm_ref:
+                    options.append(os.path.join('mcp-server', norm_ref))
+                if not any(resolve(root, opt) for opt in options):
+                    issues.append((repo, rel, 'missing target', ref))
             for cmd in candidates:
                 parts = cmd.split()
                 if len(parts) < 2 or parts[0] not in ('python3', 'bash', 'sh'):

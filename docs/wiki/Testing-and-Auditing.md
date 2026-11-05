@@ -68,6 +68,10 @@ bash tests/query-interface-test.sh
 python3 tests/conformance.py
 ```
 
+CI runs the same gates on Linux and on `windows-latest`, where the Windows
+job exercises `run.cmd`, `run.ps1`, the venv-layout detection, the rsync-free
+tree mirror and an agent `setup.sh` link (symlink -> junction -> clone).
+
 ## MCP contract
 
 ```bash
