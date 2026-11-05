@@ -83,14 +83,14 @@ No API keys, accounts or network access are required at runtime.
 | `books` | 110 | Book-level metadata |
 | `book_entries` | 1158 | Lore entries within books |
 | `transcripts` | 1314 | Transcript headers |
-| `transcript_lines` | 69005 | Canon dialogue (speaker, line) |
+| `transcript_lines` | 69217 | Canon dialogue (speaker, line) |
 | `grimoire_cards` | 2889 | Destiny 1 grimoire cards |
 | `interactions` | 2699 | Short dialogue beats |
 | `items` | 58764 | Weapons, armor and gear lore |
 | `records` | 71 | Triumphs and seals |
 | `characters` | 20 | Curated character index |
 | `character_lines` | 1229 | Quote-ready character lines |
-| `fts` | 120477 | FTS5 index over all content |
+| `fts` | 120689 | FTS5 index over all content |
 | `expansions` | 18 | Major releases from Destiny 1 through Renegades |
 | `seasons` | 28 | Official numeric seasons; 24-26 are episodes |
 | `events` | 9 | Rotating events including removed ones |
@@ -112,7 +112,7 @@ No API keys, accounts or network access are required at runtime.
 | `v_season_coverage` (view) | 28 | Transcripts and lines per season |
 | `v_event_coverage` (view) | 9 | Transcripts, lines and occurrences per event |
 | `speaker_aliases` | 20 | Alias to canonical speaker mapping |
-| `verify_fts` (index) | 120477 | Fast quote verification |
+| `verify_fts` (index) | 120689 | Fast quote verification |
 | `item_title_fts` (index) | 58764 | Item title lookup |
 
 Every content row carries provenance. Speaker aliases are canonicalized during
