@@ -12,6 +12,7 @@ Output feeds `db/migrate.py`; re-run migrate after ingesting.
 | `crawl-ishtar-commons.py` | `archive/data/commons/` (local) | no (raw crawl) |
 | `ingest-ishtar-commons-batch.py` | `source/transcripts/commons-*.md` | yes |
 | `build-lore-staging.py` | `archive/data/manifest/lore_entries.jsonl` | no (enrichment input) |
+| `gap-report.py` | `docs/GAPS.md` | no (generated report) |
 
 All are resumable/idempotent and format output as `# Title` + `- Source:` +
 body, matching the migrate parsers. `ingest-destinypedia.py` keeps every
@@ -29,6 +30,8 @@ body, matching the migrate parsers. `ingest-destinypedia.py` keeps every
 | `../db/enrich_lore.py` | manifest lore entries and FTS/verify |
 | `../db/enrich_manifest.py` | manifest activities, seasons and links |
 | `../db/enrich_seals.py` | seal/triumph tree |
+| `../db/enrich_itemsets.py --apply` | curated armour-set classification |
+| `../archive/data/fetch_transcript_releases.py` | authoritative transcript release map |
 
 Bulk content (items, interactions, web transcripts, cutscene captions) uses
 the scrapers in `archive/` writing JSONL:

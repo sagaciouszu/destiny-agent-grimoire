@@ -26,6 +26,8 @@ checked = 0
 
 def resolve(root, ref):
     cands = [os.path.join(root, ref), os.path.join(REPOS['grimoire'], ref)]
+    for other in REPOS.values():
+        cands.append(os.path.join(other, ref))
     if ref.startswith('lore/'):
         cands.append(os.path.join(root, ref[5:]))
     return any(os.path.exists(c) for c in cands)

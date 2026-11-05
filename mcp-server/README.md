@@ -81,10 +81,10 @@ path is `<agent>/lore/mcp-server/run.sh`. Use an absolute path in client config.
 | `character_info` | `name` | aliases, quote count, spoken lines |
 | `activities` | `activity_type?`, `season?`, `event?`, `limit=100`, `offset=0` | raids, dungeons and seasonal activities with coverage |
 | `activity` | `ref`, `limit=50`, `offset=0` | activity details, coverage, speakers, transcripts |
-| `seasons` | none | all 26 seasons/episodes with official numbers and coverage |
+| `seasons` | none | all 28 seasons/episodes with official numbers and coverage |
 | `events` | none | rotating events with coverage and occurrence counts |
 | `event` | `ref` | event details, yearly occurrences and transcripts |
-| `coverage` | none | coverage matrix plus activities/seasons/events without transcripts |
+| `coverage` | none | coverage matrix, gap lists and `coverage_notes` statuses/evidence |
 
 MCP limits clamp to 1-100 to protect the agent's context; the CLI is not clamped
 to 100 (the shared API allows up to 10,000). Full text is trimmed to 4000
