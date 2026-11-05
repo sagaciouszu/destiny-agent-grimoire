@@ -12,7 +12,7 @@
   <img src='https://img.shields.io/badge/tests-9%2F9%20passing-brightgreen' alt='Tests'/>
 </p>
 
-**Version:** 0.26.0 | **Last push:** 2026-11-04 | **Status:** Active
+**Version:** 0.26.0 | **Last push:** 2026-11-05 | **Status:** Active
 
 **Documentation site:** <https://sagaciouszu.github.io/grimoire-site/>
 
@@ -107,7 +107,7 @@ No API keys, accounts or network access are required at runtime.
 | `seals` | 70 | Manifest seal nodes |
 | `seal_records` | 1004 | Triumph records per seal |
 | `v_speakers` (view) | 266 | Canonical speakers with line counts |
-| `v_transcript_taxonomy` (view) | 1294 | Transcripts joined to classification |
+| `v_transcript_taxonomy` (view) | 1314 | Transcripts joined to classification |
 | `v_activity_coverage` (view) | 67 | Transcripts and lines per activity |
 | `v_season_coverage` (view) | 28 | Transcripts and lines per season |
 | `v_event_coverage` (view) | 9 | Transcripts, lines and occurrences per event |

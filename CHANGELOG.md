@@ -1,3 +1,34 @@
+## Unreleased - Project audit, suite manifests and wiki (2026-11-05)
+
+- Versioned wiki added under `docs/wiki/` with copyediting and expanded setup,
+  architecture, CLI, MCP, agent, platform, testing and troubleshooting pages.
+- Per-agent `suites.json` manifests plus a shared runner; central no-loss guard
+  (`tests/suite-manifest-test.py`) added to the archive audit and CI.
+- Documentation audits fixed: suite counts, season counts, command targets and
+  stale view counts.
+- MCP coverage results expose `coverage_status` and `coverage_notes`.
+
+## v0.26.0 - Reviewed activity dialogue and coverage status (2026-11-04)
+
+- Reviewed dialogue for Ketchcrash (38), PsiOps Battlegrounds (51), Defiant
+  Battlegrounds (73) and Expedition (35), marked `partial_transcript`.
+- `coverage_notes` statuses: `no_dialogue`, `narration_only`,
+  `dialogue_source_missing`, `partial_transcript`, `unverified`.
+- Crow identity canonicalized to `Crow`; regression test added.
+- API, CLI, MCP and activity detail return coverage statuses; onboarding 60/60.
+
+## v0.25.0 - Activity transcript coverage (2026-11-04)
+
+- Ten Destinypedia transcripts plus four Destiny 1 raid encounter transcripts.
+- Activities with no transcript: 19 -> 4; dungeons and exotic missions covered.
+- Gap ledger reports activities, seasons, events and sparse speakers by status.
+
+## v0.24.0 - Authoritative releases and Destiny 1 coverage (2026-11-04)
+
+- Authoritative Ishtar `Added In` release for 1,130 transcripts.
+- Transcript explicit classification 104 -> 1,234; Destiny 1 0 -> 120.
+- Scraped footers and related-content rows removed from canon.
+
 ## v0.23.0 - Class-tagged canon and user preferences (2026-11-04)
 
 - `transcript_lines.class_tag` tags Hunter, Titan and Warlock variants.

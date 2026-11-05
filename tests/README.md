@@ -6,9 +6,11 @@ or shared by every agent in the series.
 
 ## Entry points
 
-- Grimoire: `bash grimoire-master-audit.sh` (9 suites, archive-wide)
-- Drifter: run tests/master-audit.sh in how-to-drift-for-agents (20 suites)
-- Eris: run tests/master-audit.sh in eris-morn (15 suites)
+- Grimoire: `bash grimoire-master-audit.sh` (10 suites, archive-wide)
+- Agents: run tests/master-audit.sh in each agent repo (Drifter 22, Eris 17,
+  Calus/Zavala/Ghost 15)
+- Shared runner: run the suite manifest script from any agent repo
+- Suite guard: `python3 tests/suite-manifest-test.py` (no suite loss or drift)
 - `resolve-workspace.sh <caller> [drifter|eris]` - layout-independent workspace
   resolution for agent suites (`lore/` may be a symlink or a clone)
 
@@ -17,7 +19,7 @@ or shared by every agent in the series.
 - `test-db.sh` - database integrity (51 checks: tables, FTS, orphans, counts,
   entity leakage, speaker canon, provenance, `v_speakers`, `speaker_aliases`)
 - `lore-integrity.sh` - archive structure (books, transcripts, cards, records)
-- `lore-format.sh` - source markdown transcript format (68/68)
+- `lore-format.sh` - source markdown transcript format (153/153)
 - `lore-quote-count.sh` - per-character transcript line counts vs the database
 - `compendium-check.sh` - compendium files present and non-empty
 - `ci-checks.py` - stale names, circular/self dependencies, dashes, personal
@@ -49,7 +51,7 @@ Drifter (how-to-drift-for-agents/tests/):
 - conversation-test.sh - SQLite conversation test
 - build-quote-index.py - rebuild reference/quote-inverted-index.json
 - golden-voice.json and golden-voice-test.sh - fixed pass/fail snapshots
-- master-audit.sh - all 20 suites
+- master-audit.sh - all 22 suites
 
 Eris (eris-morn/tests/):
 
@@ -57,6 +59,13 @@ Eris (eris-morn/tests/):
   multi-turn arc and contamination scan
 - conversation-test.sh - SQLite conversation test
 - golden-voice.json and golden-voice-test.sh - fixed pass/fail snapshots
+- master-audit.sh - all 17 suites
+
+Calus / Zavala / Ghost (destiny-agent-{calus,zavala,ghost}/tests/):
+
+- Shared 15-suite harness: module, quote, multi-user, memory, connection,
+  conversation, multi-turn, scenarios, voice, golden voice and structure gates
+- suite manifest plus runner (identical shape, different persona fixtures)
 - master-audit.sh - all 15 suites
 
 ## Extended (on demand)
@@ -65,7 +74,8 @@ Eris (eris-morn/tests/):
   item, docs and robustness gates
 - `robustness-test.py` - corrupt/truncated/missing databases, edge inputs,
   read-only enforcement, 160 concurrent queries, injection attempts
-- `mcp-matrix-test.py` - MCP calls across all eighteen tools (140-200 per run), 3 concurrent clients,
+- `mcp-matrix-test.py` - MCP calls across all eighteen tools (141 calls in the
+  current baseline), 3 concurrent clients,
   strict parity with the API, clean malformed-call errors, output caps
 - `checksum-test.sh` - verified download, missing checksum warning, mismatch
   rejection with no partial or installed database; skips when the agent fixture
@@ -89,14 +99,15 @@ Eris (eris-morn/tests/):
 ## Onboarding and links (on demand)
 
 - `onboarding-smoke.sh` - every local agent that is present, symlink and clone modes, fully offline (absent agents are skipped):
-  clone, setup, master audit, clean working tree (24 checks)
+  clone, setup, master audit, clean working tree (60 checks)
 - `link-check.py` - external URL health for the READMEs (`--all` includes badges)
 - `mcp-test.py` - MCP tool contract, read-only guard and stdio handshake
   (`mcp-server/.venv/bin/python tests/mcp-test.py`; skips without the venv)
 
 ## Archive utilities
 
-- `yt-transcript.sh` / `yt-batch.sh` - caption extraction (subtitle-only)
+- `yt-transcript.sh` / `yt-batch.sh` - caption extraction (subtitle-only,
+  requires `yt-dlp` and network)
 
 ## Scrapers (`archive/data/`)
 
