@@ -64,6 +64,22 @@ bash setup.sh path\to\destiny-agent-grimoire --no-mcp
 Pass a path to this archive, for example `../destiny-agent-grimoire`.
 `--no-mcp` skips the optional MCP install.
 
+## OpenClaw MCP path
+
+OpenClaw's update doctor starts MCP servers to validate their tool schema, and
+it cannot resolve a bare `run.sh`. Onboarding takes care of this itself:
+
+- `setup.sh` runs `lore/scripts/ensure-openclaw-mcp.sh` after the archive is
+  linked (idempotent; backs up `openclaw.json` first; skips when OpenClaw is
+  not installed).
+- `scripts/sync-live-agents.sh --openclaw` re-checks it on every sync.
+
+Verify with:
+
+```bash
+openclaw doctor --lint --only core/doctor/runtime-tool-schemas
+```
+
 ## Windows links
 
 `setup.sh` links the archive in three steps, so no manual work is usually

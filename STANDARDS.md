@@ -306,6 +306,9 @@ serves every agent.
   `apply_patch`, spawn/send/message and browser tools denied; primaries allow
   only the consult ids as subagents.
   `tests/agent-layout-test.sh` guards layout, registry and peer blocks.
+  `setup.sh` and sync also keep OpenClaw's MCP entry pointed at this checkout
+  with an absolute path (`scripts/ensure-openclaw-mcp.sh`), because the update
+  doctor cannot resolve a bare launcher.
 
 ## 10. Change procedure
 
