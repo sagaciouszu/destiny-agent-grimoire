@@ -313,7 +313,9 @@ serves every agent.
 2. `python3 db/migrate.py`, then the enrichment scripts (section 3); verify the
    counts printed on stdout.
 3. Refresh derived docs: `python3 tests/sync-doc-counts.py`,
-   `python3 tests/sync-readme-meta.py`, `python3 scripts/gap-report.py`.
+   `python3 tests/sync-readme-meta.py`, `python3 scripts/gap-report.py`,
+   `bash scripts/sync-wiki.sh` (add `--push` to publish the GitHub wiki;
+   the script refuses model-control tokens and content drift).
 4. Run the gates in section 7: `grimoire-master-audit.sh`, then
    `bash tests/master-audit.sh` in each agent repo, plus a fresh-clone spot
    check for layout changes.
