@@ -17,7 +17,7 @@ run() {
     if bash "$1" >/dev/null 2>&1; then echo "  ✓ [$2] PASS"; PASS=$((PASS+1));
     else echo "  ✗ [$2] FAIL"; FAIL=$((FAIL+1)); fi
 }
-run "$ARCHIVE/tests/test-db.sh" "Database Integrity (51 checks)"
+run "$ARCHIVE/tests/test-db.sh" "Database Integrity (55 checks)"
 run "$ARCHIVE/tests/compendium-check.sh" "Compendium Files"
 run "$ARCHIVE/tests/lore-integrity.sh" "Lore Archive Integrity"
 run "$ARCHIVE/tests/cutscene-verify.sh" "Cutscene Caption Verification"

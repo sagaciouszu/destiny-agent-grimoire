@@ -165,11 +165,15 @@ It ships with this archive, so one install serves every agent that mounts it.
 
 Tools: `search`, `character`, `item`, `verify`, `list_records`, `stats`,
 `book`, `transcript`, `find_item`, `record`, `verify_many`, `character_info`,
-`activities`, `activity`, `seasons`, `events`, `event`, `coverage`.
+`activities`, `activity`, `seasons`, `events`, `event`, `coverage`, `seals`,
+`seal`, `lore` — the same reads the CLI offers.
 `search` also takes `activity`, `season`, `event` and `expansion`.
 Resources: `grimoire://books`,
-`grimoire://characters`, `grimoire://records`, `grimoire://stats`, plus
-`grimoire://book/{slug}` templates. The
+`grimoire://characters`, `grimoire://records`, `grimoire://stats`,
+`grimoire://activities`, `grimoire://seasons`, `grimoire://events`,
+`grimoire://coverage`, plus `grimoire://book/{slug}`,
+`grimoire://transcript/{slug}`, `grimoire://character/{slug}` and
+`grimoire://record/{slug}` templates. The
 server is read-only, exposes no arbitrary SQL, clamps limits to 1-100 and trims
 full text to 4000 characters. Full details: `mcp-server/README.md`.
 

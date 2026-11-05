@@ -165,15 +165,18 @@ hand to separate a config-path problem from a server problem.
 | Tool | Arguments | Returns |
 |---|---|---|
 | `search` | `query`, `type?`, `limit=10`, `full=false`, `offset=0`, `rank=true`, `activity?`, `season?`, `event?`, `expansion?`, `class_tag?` | `{count, total, next_offset, rows}` |
-| `character` | `name`, `about?`, `all_lines=false`, `limit=20` | `{found, header, rows}` |
+| `character` | `name`, `about?`, `all_lines=false`, `limit=20`, `offset=0`, `canon_only=false`, `class_tag?` | `{found, header, rows}` |
 | `item` | `slug` | item row, `text` trimmed |
 | `verify` | `quote`, `speaker?`, `exact=false` | `{quote, verified, matches}` with `exact` flags |
-| `list_records` | `kind`, `limit=50` | `{count, rows}` for books, characters, speakers, records, activities, seasons, events |
+| `list_records` | `kind`, `limit=50`, `offset=0` | `{count, rows}` for books, characters, speakers, records, activities, seasons, events, lore, seals |
 | `stats` | none | row counts, top item types, top speakers |
 | `book` | `ref`, `limit=20`, `offset=0`, `full=false` | book metadata and entries |
-| `transcript` | `ref`, `speaker?`, `limit=50`, `offset=0`, `full=false`, `include_stage=false` | transcript metadata and lines |
+| `transcript` | `ref`, `speaker?`, `limit=50`, `offset=0`, `full=false`, `include_stage=false`, `canon_only=false`, `section?`, `class_tag?` | transcript metadata and lines |
 | `find_item` | `query`, `limit=10`, `offset=0` | items matching a title or slug fragment |
 | `record` | `ref` | triumph or seal details |
+| `seals` | none | `{count, rows}` for every manifest seal with record counts |
+| `seal` | `ref` | seal details and its triumph records |
+| `lore` | `ref` | manifest lore entry (body trimmed) with linked item names |
 | `verify_many` | `quotes`, `speaker?`, `exact=false` | up to 20 quote checks at once |
 | `character_info` | `name` | aliases, quote count, spoken lines |
 | `activities` | `activity_type?`, `season?`, `event?`, `limit=100`, `offset=0` | raids, dungeons and seasonal activities with coverage |

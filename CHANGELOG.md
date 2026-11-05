@@ -1,3 +1,36 @@
+## v0.27.3 - Database self-audit, meta fix and MCP CLI parity (2026-11-05)
+
+- Database self-audit found three migration bugs, all fixed: the `meta` stamp
+  reported `transcripts` as 58764 (a reused item-title counter), the build
+  date was hard-coded, and a leftover DEBUG print ran on every weblore ingest.
+- Normal forms are total: the 14 punctuation-only canon lines keep their
+  punctuation instead of normalizing to the empty string, so `verify` matches
+  them; the query-side normalizer mirrors the fallback.
+- Attribution purge, verified: an empty normal form let one Destinypedia
+  punctuation line's speaker (Failsafe) bleed onto 13 cutscene caption lines;
+  those stay `Cutscene` now, and GAPS game dialogue counts corrected
+  (D2 14,282 / D1 1,411). All other 69,204 lines byte-identical.
+- `class_tag` is NULL or hunter/titan/warlock on every line (5,750 empty
+  strings normalized).
+- MCP reaches full CLI parity: 21 tools (`seals`, `seal`, `lore` added),
+  `search` documents the `lore` type, README argument lists match the real
+  signatures, and the skill and wiki list every tool and resource.
+- `db/capabilities.json` documents `item_title_fts` and `meta`; a new gate
+  keeps it in sync with the live schema.
+- STANDARDS source hierarchy now documents the accepted `ishtar_web` tier.
+- Gates grew and every citation followed: test-db 51 -> 55 (live meta stamp,
+  class-tag invariant, normalization invariant, capabilities sync), mcp-test
+  10 -> 12 (CLI-parity tools, stats-vs-live agreement), matrix 21 tools /
+  154 calls; README, tests/README, wiki and STANDARDS counts updated.
+
+## Verification
+
+11/11 archive suites, 55/55 database, 89/89 query interface, 17/17 taxonomy,
+11/11 source crosscheck, MCP contract 12/12, matrix 8/8 (154 calls), agent
+connections 36/36, parity 60/60, onboarding 60/60, 361 documented commands,
+link check 18/18. Pre/post rebuild diff: every content table byte-identical,
+persona counts unchanged (Drifter 1,149, Eris 1,011, Zavala 638, Calus 456,
+Ghost 2,653).
 ## v0.27.2 - Dialogue expansion and contract corrections (2026-11-05)
 
 - Four partial activity transcripts expanded with **212 verified net-new

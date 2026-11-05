@@ -108,7 +108,7 @@ These are the exact `transcripts.source_tier` values the database accepts
 
 | Precedence | `source_tier` | Source |
 |---|---|---|
-| 1 | `ishtar_main` | Ishtar Collective main-site transcripts |
+| 1 | `ishtar_main`, `ishtar_web` | Ishtar Collective main-site transcripts (curated source markdown and scraped web pages) |
 | 2 | `validated`, `published`, `proofed` | tagged Ishtar Commons topics |
 | 3 | `ishtar_commons` | untagged Ishtar Commons topics |
 | 4 | `destinypedia` | Destinypedia verbatim transcripts |
@@ -191,7 +191,7 @@ match a recomputation of their source text.
 
 | Gate | Enforces |
 |------|----------|
-| `tests/test-db.sh` | schema integrity, counts, no orphans, no entity leakage, character provenance, canonical speakers, card provenance |
+| `tests/test-db.sh` | schema integrity, counts, no orphans, no entity leakage, character provenance, canonical speakers, card provenance, live meta stamp, class-tag and normalization invariants, capabilities sync |
 | `tests/lore-integrity.sh` | source archive structure, book/transcript/card/record counts |
 | `tests/lore-format.sh` | transcript markdown format |
 | `tests/cutscene-verify.sh` | caption corroboration, encoding, cross-video consistency, attribution |
@@ -199,7 +199,7 @@ match a recomputation of their source text.
 | `tests/speaker-audit.py` | reclassified parse noise must not reappear |
 | `tests/sync-doc-counts.py --check` | docs counts match the database |
 | each agent repo tests/master-audit.sh | agent-side suites (voice, quotes, modules, conversation, golden snapshots) plus shared structure checks |
-| `tests/mcp-test.py` (on demand, needs `mcp-server/.venv`) | MCP tools, both launchers, probe handshake, read-only guard, stdio (10 checks) |
+| `tests/mcp-test.py` (on demand, needs `mcp-server/.venv`) | MCP tools, both launchers, probe handshake, read-only guard, stdio, CLI-parity tools, stats/live agreement (12 checks) |
 | `tests/check-agent-structure.py` | dependency resolution, token headers, dashes, INDEX completeness, personal paths (every agent) |
 | `tests/query-interface-test.sh` | CLI and API surface, 89 checks |
 | `tests/db-source-crosscheck.py` | database slugs vs source files, provenance URLs, index completeness |

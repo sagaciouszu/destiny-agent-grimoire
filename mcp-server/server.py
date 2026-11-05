@@ -80,7 +80,8 @@ def search(query: str, type: str | None = None, limit: int = 10, full: bool = Fa
 
     Args:
         query: FTS5 query, for example "Crota" or "hive sword logic".
-        type: Optional filter: books, transcripts, grimoire, interactions, items, records.
+        type: Optional filter: books, transcripts, grimoire, interactions, items,
+            records, lore.
         limit: Maximum rows (1-100).
         full: Return full text instead of bounded snippets.
         offset: Rows to skip (0-10000).
@@ -344,6 +345,44 @@ def record(ref: str) -> dict:
     res = _api(api.record, ref)
     if res is None:
         raise ToolError(f'record not found: {ref}')
+    return res
+
+
+@server.tool(annotations=READ_ONLY)
+def seals() -> dict:
+    """Every manifest seal with its triumph record count.
+
+    Returns:
+        {count, rows}; each row carries hash, name, description and records.
+    """
+    rows = _api(api.seals)
+    return {'count': len(rows), 'rows': rows}
+
+
+@server.tool(annotations=READ_ONLY)
+def seal(ref: str) -> dict:
+    """Read a seal and its triumph records.
+
+    Args:
+        ref: Seal hash or name fragment, for example "30th Anniversary".
+    """
+    res = _api(api.seal, ref)
+    if res is None:
+        raise ToolError(f'seal not found: {ref}')
+    return res
+
+
+@server.tool(annotations=READ_ONLY)
+def lore(ref: str) -> dict:
+    """Read a manifest lore entry by hash or title fragment.
+
+    Args:
+        ref: Lore hash or title fragment.
+    """
+    res = _api(api.lore, ref)
+    if res is None:
+        raise ToolError(f'lore entry not found: {ref}')
+    res['body'] = _trim(res.get('body') or '')
     return res
 
 

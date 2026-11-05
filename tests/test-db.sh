@@ -93,6 +93,53 @@ META_VERSION=$(sqlite3 "$DB" "SELECT value FROM meta WHERE key='version'")
 FILE_VERSION=$(cat "$(dirname "$DB")/SCHEMA_VERSION" 2>/dev/null || true)
 check "[ -n \"$META_VERSION\" ] && [ \"$META_VERSION\" = \"$FILE_VERSION\" ]" "schema version matches file ($META_VERSION)"
 
+# meta is a live-count stamp: every count key must equal COUNT(*) (drift class
+# that once reported transcripts as the items count)
+META_STALE=$(python3 - "$DB" <<'PY'
+import sqlite3, sys
+conn = sqlite3.connect('file:%s?mode=ro' % sys.argv[1], uri=True)
+skip = {'version', 'last_updated', 'manifest_version', 'lore_entries_indexed'}
+live = {r[0] for r in conn.execute("SELECT name FROM sqlite_master WHERE type IN ('table','view')")}
+bad = []
+for k, v in conn.execute('SELECT key, value FROM meta'):
+    if k in skip:
+        continue
+    if k not in live:
+        bad.append(k + ':not-a-live-object')
+        continue
+    n = conn.execute('SELECT COUNT(*) FROM "%s"' % k).fetchone()[0]
+    if str(n) != v:
+        bad.append('%s:%s!=%s' % (k, v, n))
+print(','.join(bad) if bad else 'OK')
+PY
+)
+check "[ \"$META_STALE\" = \"OK\" ]" "meta counts match live tables ($META_STALE)"
+
+# class_tag is hunter, titan, warlock or NULL - nothing else
+BADCT=$(sqlite3 "$DB" "SELECT COUNT(*) FROM transcript_lines WHERE class_tag IS NOT NULL AND class_tag NOT IN ('hunter','titan','warlock')")
+check "[ \"$BADCT\" -eq 0 ]" "class_tag is hunter/titan/warlock or NULL ($BADCT junk)"
+
+# every line keeps a normal form (punctuation-only lines keep punctuation)
+EMPTYNORM=$(sqlite3 "$DB" "SELECT COUNT(*) FROM transcript_lines WHERE norm_line IS NULL OR norm_line=''")
+check "[ \"$EMPTYNORM\" -eq 0 ]" "every transcript line normalizes ($EMPTYNORM empty)"
+
+# capabilities.json documents exactly the live schema (tables + views)
+CAP_SYNC=$(python3 - "$DB" "$(dirname "$0")/../db/capabilities.json" <<'PY'
+import json, sqlite3, sys
+conn = sqlite3.connect('file:%s?mode=ro' % sys.argv[1], uri=True)
+shadow = ('_data', '_idx', '_content', '_docsize', '_config', '_segdir',
+          '_segments', '_apndata', '_stat')
+live_t = {r[0] for r in conn.execute("SELECT name FROM sqlite_master "
+               "WHERE type='table' AND name NOT LIKE 'sqlite_%'")
+          if not r[0].endswith(shadow)}
+live_v = {r[0] for r in conn.execute("SELECT name FROM sqlite_master WHERE type='view'")}
+c = json.load(open(sys.argv[2], encoding='utf-8'))
+bad = sorted((live_t ^ set(c['tables'])) | (live_v ^ set(c['views'])))
+print(','.join(bad) if bad else 'OK')
+PY
+)
+check "[ \"$CAP_SYNC\" = \"OK\" ]" "capabilities.json matches schema ($CAP_SYNC)"
+
 echo ""
 echo "Passed: $PASS | Failed: $FAIL"
 [ "$FAIL" -eq 0 ]

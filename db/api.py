@@ -76,8 +76,13 @@ def _speaker_matches(want, speaker):
 
 def norm(s):
     s = s.lower().replace('\u2026', '...').replace('\u2019', "'").replace('\u2014', '-').replace('\u2013', '-')
-    s = re.sub(r'[^a-z0-9 ]+', ' ', s)
-    return re.sub(r'\s+', ' ', s).strip()
+    n = re.sub(r'[^a-z0-9 ]+', ' ', s)
+    n = re.sub(r'\s+', ' ', n).strip()
+    if n:
+        return n
+    # Punctuation-only canon lines stay verifiable: keep the lowered text
+    # (minus LIKE wildcards) so verify(':)') can match its canonical row.
+    return re.sub(r'\s+', ' ', s.replace('%', ' ').replace('_', ' ')).strip()
 
 
 def connect():
