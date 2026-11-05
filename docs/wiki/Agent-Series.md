@@ -1,0 +1,70 @@
+# Agent Series
+
+## Registry
+
+`series/agents.json` is the only source of truth. It holds the agent id, display
+name, source repository, entry file, summary and consult scope.
+
+| Id | Agent | Source repository | Consult scope |
+|---|---|---|---|
+| `drifter` | The Drifter | `how-to-drift-for-agents` | Gambit, the Nine, the Dark Age, his own past |
+| `eris` | Eris Morn | `eris-morn` | Hive, the Moon, Savathun, the Witness, ritual lore |
+| `calus` | Emperor Calus | `destiny-agent-calus` | Calus, the Cabal, the Leviathan, Opulence |
+| `zavala` | Commander Zavala | `destiny-agent-zavala` | The Vanguard, the Last City, the coalition |
+| `ghost` | Ghost | `destiny-agent-ghost` | The Light, resurrection, the Traveler, the Guardian |
+
+## Source repositories
+
+By default the sync script expects the agent repos beside this archive:
+
+```text
+../
+  destiny-agent-grimoire/
+  how-to-drift-for-agents/
+  eris-morn/
+  destiny-agent-calus/
+  destiny-agent-zavala/
+  destiny-agent-ghost/
+```
+
+Override the parent directory with `AGENT_REPOS_DIR`.
+
+## Readiness
+
+Each agent has a `persona.json`. If `ready` is `false`, sync skips that agent
+without deleting an existing deployment.
+
+## Consult IDs
+
+- `drifter-consult`
+- `eris-consult`
+- `calus-consult`
+- `zavala-consult`
+- `ghost-consult`
+
+Consult agents are read-only. They answer questions in character and must verify
+quotes before using them.
+
+## Suite manifests
+
+Each agent owns `tests/suites.json`, the exact command list from its
+`master-audit.sh`, tagged `core`, `persona` or `experimental`. The central
+baseline in `series/suite-baseline.json` prevents accidental suite loss.
+
+Run an agent's suites from its own repo:
+
+```bash
+bash tests/run-suites.sh
+bash tests/run-suites.sh --tier core
+bash tests/run-suites.sh --list
+```
+
+## Sync
+
+```bash
+bash scripts/sync-live-agents.sh
+bash scripts/sync-live-agents.sh --dry-run
+bash scripts/sync-live-agents.sh --openclaw
+```
+
+See [Agent Setup](Agent-Setup.md) for environment variables and destinations.
