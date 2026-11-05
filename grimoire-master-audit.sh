@@ -27,6 +27,7 @@ if python3 "$ARCHIVE/tests/conformance.py" >/dev/null 2>&1; then echo "  ✓ [Fi
 if python3 "$ARCHIVE/tests/source-overlap-verify.py" >/dev/null 2>&1; then echo "  ✓ [Source Overlap vs Live] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Source Overlap vs Live] FAIL"; FAIL=$((FAIL+1)); fi
 if python3 "$ARCHIVE/tests/speaker-audit.py" >/dev/null 2>&1; then echo "  ✓ [Speaker Noise Gate] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Speaker Noise Gate] FAIL"; FAIL=$((FAIL+1)); fi
 if python3 "$ARCHIVE/tests/suite-manifest-test.py" >/dev/null 2>&1; then echo "  ✓ [Agent Suite Manifests] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Agent Suite Manifests] FAIL"; FAIL=$((FAIL+1)); fi
+if python3 "$ARCHIVE/tests/mirror-tree-test.py" >/dev/null 2>&1; then echo "  ✓ [Tree Mirror (rsync replacement)] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Tree Mirror (rsync replacement)] FAIL"; FAIL=$((FAIL+1)); fi
 echo ""
 echo "============================================================"
 echo "  SCORECARD: $PASS / $((PASS+FAIL)) SUITES PASSED ($FAIL failed, $SKIP skipped)"

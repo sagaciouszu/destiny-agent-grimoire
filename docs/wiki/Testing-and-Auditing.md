@@ -6,7 +6,7 @@
 bash grimoire-master-audit.sh
 ```
 
-Expected: **10 / 10 suites passed**.
+Expected: **11 / 11 suites passed**.
 
 | Suite | Covers |
 |---|---|
@@ -20,6 +20,7 @@ Expected: **10 / 10 suites passed**.
 | Source Overlap vs Live | source and database agreement |
 | Speaker Noise Gate | junk speakers and aliases |
 | Agent Suite Manifests | no suite loss or drift |
+| Tree Mirror | cross-platform sync replaces rsync (copy/delete/excludes) |
 
 ## Agent audits
 
@@ -73,7 +74,7 @@ python3 tests/conformance.py
 mcp-server/.venv/bin/python tests/mcp-test.py
 ```
 
-Expected: **8 / 8 passed**.
+Expected: **9 / 9 passed**.
 
 ## Before a release
 

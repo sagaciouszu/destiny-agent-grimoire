@@ -13,7 +13,7 @@ set -e
 HERE="$(cd "$(dirname "$0")/.." && pwd)"
 WORK="${AGENT_REPOS_DIR:-$(dirname "$HERE")}"
 MANIFEST="${SERIES_MANIFEST:-$HERE/series/agents.json}"
-DRY=""; RSYNC_DRY=""
+DRY=""; MIRROR_DRY=""
 TARGET="opencode"
 DEST="${OPENCODE_AGENTS:-$HOME/.config/opencode/agents}"
 
@@ -22,7 +22,7 @@ for arg in "$@"; do
         --openclaw)
             TARGET="openclaw"
             OC_ROOT="${OPENCLAW_ROOT:-$HOME/.openclaw}" ;;
-        --dry-run) DRY="echo"; RSYNC_DRY="-n" ;;
+        --dry-run) DRY="echo"; MIRROR_DRY="--dry-run" ;;
         *) echo "usage: $0 [--openclaw] [--dry-run]" >&2; exit 2 ;;
     esac
 done
@@ -122,7 +122,7 @@ if [ "$TARGET" = "opencode" ]; then
         DEPLOYED=$((DEPLOYED+1))
         DEPLOYED_IDS+=("$id")
         $DRY mkdir -p "$DEST/$id"
-        rsync -a --delete $RSYNC_DRY "${EXCLUDES[@]}" "$src/" "$DEST/$id/"
+        python3 "$HERE/scripts/mirror-tree.py" --delete $MIRROR_DRY "${EXCLUDES[@]}" "$src/" "$DEST/$id/"
         if [ -f "$DEST/$id/$entry" ]; then
             $DRY mv -f "$DEST/$id/$entry" "$DEST/$entry"
         fi
@@ -148,7 +148,7 @@ for directory in ('core/', 'voice/', 'world/', 'reference/'):
 open(path, 'w', encoding='utf-8').write(text)
 PY
         fi
-    done < <(manifest rows)
+    done <<< "$(manifest rows)"
 
     if [ -z "$DRY" ]; then
         for link in "$DEST/lore" "$DEST"/*/lore; do
@@ -306,7 +306,7 @@ for agent in agents:
 PY
     fi
 
-    echo "synced $(manifest ids | paste -sd ', ' -) -> $DEST"
+    echo "synced $(manifest ids | paste -sd, - | sed 's/,/, /g') -> $DEST"
 else
     while IFS=$'\t' read -r id source entry; do
         src="$WORK/$source"
@@ -318,7 +318,7 @@ else
         DEPLOYED=$((DEPLOYED+1))
         target="$OC_ROOT/workspace-$id"
         $DRY mkdir -p "$target"
-        rsync -a --delete $RSYNC_DRY "${EXCLUDES[@]}" "$src/" "$target/"
+        python3 "$HERE/scripts/mirror-tree.py" --delete $MIRROR_DRY "${EXCLUDES[@]}" "$src/" "$target/"
         if [ -z "$DRY" ] && [ ! -f "$target/$entry" ]; then
             echo "FATAL: entry missing after sync: $target/$entry" >&2
             exit 1
@@ -375,8 +375,8 @@ else:
 open(path, 'w', encoding='utf-8').write(text)
 PY
         fi
-    done < <(manifest rows)
-    echo "synced $(manifest ids | paste -sd ', ' -) -> $OC_ROOT/workspace-*"
+    done <<< "$(manifest rows)"
+    echo "synced $(manifest ids | paste -sd, - | sed 's/,/, /g') -> $OC_ROOT/workspace-*"
 fi
 
 if [ -z "$DRY" ] && [ "$TARGET" = "opencode" ]; then

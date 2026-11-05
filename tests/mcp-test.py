@@ -14,11 +14,23 @@ HERE = os.path.dirname(os.path.realpath(__file__))
 ROOT = os.path.dirname(HERE)
 SERVER = os.path.join(ROOT, 'mcp-server', 'server.py')
 RUN = os.path.join(ROOT, 'mcp-server', 'run.sh')
-VENV_PY = os.path.join(ROOT, 'mcp-server', '.venv', 'bin', 'python')
+VENV_PY = next((p for p in (
+    os.path.join(ROOT, 'mcp-server', '.venv', 'bin', 'python'),
+    os.path.join(ROOT, 'mcp-server', '.venv', 'Scripts', 'python.exe'),
+) if os.path.exists(p)), None)
 
-if not os.path.exists(VENV_PY):
+if not VENV_PY:
     print('SKIP: mcp-server/.venv not installed')
     sys.exit(0)
+
+RUN_CMD = os.path.join(ROOT, 'mcp-server', 'run.cmd')
+
+
+def launchers_present():
+    assert os.path.exists(RUN), 'mcp-server/run.sh missing'
+    assert os.path.exists(RUN_CMD), 'mcp-server/run.cmd missing (Windows launcher)'
+
+
 
 PASS = FAIL = 0
 
@@ -134,6 +146,7 @@ def protocol_smoke():
 
 print('MCP contract test')
 check('eighteen tools registered', tools_listed)
+check('Unix and Windows launchers present', launchers_present)
 
 
 def taxonomy_tools():

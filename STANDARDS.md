@@ -175,6 +175,8 @@ match a recomputation of their source text.
 | each agent repo tests/master-audit.sh | agent-side suites (voice, quotes, modules, conversation, golden snapshots) plus shared structure checks |
 | `tests/mcp-test.py` (on demand, needs `mcp-server/.venv`) | MCP tools, read-only guard, stdio handshake |
 | `tests/check-agent-structure.py` | dependency resolution, token headers, dashes, INDEX completeness, personal paths (every agent) |
+| `tests/suite-manifest-test.py` | per-agent suite manifests match master-audit and the no-loss baseline |
+| `tests/mirror-tree-test.py` | cross-platform tree mirror used by agent sync (replaces rsync) |
 | `tests/conformance.py` | per-file headers, token accuracy, refs, persona-agnosticism; runs `ci-checks` per agent repo |
 | `tests/ci-checks.py` (via conformance) | stale names, circular/self dependencies, headers, em-dashes, personal paths, gitignored refs in instructions |
 

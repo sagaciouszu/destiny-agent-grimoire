@@ -61,17 +61,31 @@ cd eris-morn
 bash setup.sh path\to\destiny-agent-grimoire --no-mcp
 ```
 
-Use an absolute path. `--no-mcp` skips the optional MCP install.
+Pass a path to this archive, for example `../destiny-agent-grimoire`.
+`--no-mcp` skips the optional MCP install.
 
 ## Windows links
 
-If `ln -s` is unavailable, create a directory junction:
+`setup.sh` links the archive in three steps, so no manual work is usually
+needed:
+
+1. `ln -s` (works on Unix and on Git Bash with native symlinks)
+2. `mklink /J` directory junction when `ln -s` is unavailable
+3. `git clone` of the archive as a last resort
+
+To link it yourself:
 
 ```bat
-mklink /J lore path\to\destiny-agent-grimoire
+mklink /J lore ..\destiny-agent-grimoire
 ```
 
-The agent expects `lore/` to resolve to this archive.
+The agent expects `lore/` to resolve to this archive. If a stale copy blocks
+the link, clear it first:
+
+```bat
+attrib -r -s -h lore /s /d
+rmdir /s /q lore
+```
 
 ## Verify the deployment
 
