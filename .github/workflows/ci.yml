@@ -81,7 +81,7 @@ jobs:
         run: python mcp-server/probe.py --launcher ps1
 
       - name: MCP contract
-        run: python tests/mcp-test.py
+        run: mcp-server\.venv\Scripts\python.exe tests/mcp-test.py
 
       - name: Tree mirror (rsync replacement)
         run: python tests/mirror-tree-test.py
