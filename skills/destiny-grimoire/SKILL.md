@@ -9,15 +9,16 @@ metadata:
 
 # Destiny Agent Grimoire
 
-Agent-optimized Destiny lore archive. Query via SQLite. Single file, no external APIs.
-Use this when you need canonical Destiny lore, activity/season/event coverage,
-storytelling, lore checks, agent personas, or fact-checking.
+Agent-optimized Destiny lore archive. Query via SQLite; no network calls at
+query time. Use this when you need canonical Destiny lore,
+activity/season/event coverage, storytelling, lore checks, agent personas, or
+fact-checking.
 
 ## Location
 
 - Repo root: wherever you cloned `destiny-agent-grimoire`
 - **Primary:** `db/grimoire.db` (SQLite + FTS5; if missing, bootstrap: `curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db -o db/grimoire.db` for the prebuilt asset, or `python3 db/migrate.py` to build from checkout)
-- **Consumed by:** the Drifter, Eris Morn and Calus agents via `lore/` (symlink or clone)
+- **Consumed by:** all five agents (Drifter, Eris Morn, Calus, Zavala, Ghost) via `lore/` (symlink, Windows junction or clone)
 
 ## Data covering
 
@@ -34,7 +35,7 @@ storytelling, lore checks, agent personas, or fact-checking.
 | characters | 20 | Named characters |
 | character_lines | 1229 | Canon character quotes for agents |
 | fts | 120689 | FTS5 search index |
-| verify_fts | 120076 | Fast quote verification index |
+| verify_fts | 120689 | Fast quote verification index |
 | item_title_fts | 58764 | Item title lookup index |
 
 Taxonomy tables (additive; canon tables are never rewritten):
@@ -43,10 +44,10 @@ Taxonomy tables (additive; canon tables are never rewritten):
 |-------|------|---------|
 | expansions | 18 | Destiny 1 through Renegades |
 | seasons | 28 | Official numeric seasons; 24-26 are episodes |
-| activities | 65 | Raids, dungeons, seasonal activities, missions |
+| activities | 67 | Raids, dungeons, seasonal activities, missions |
 | events | 9 | Festival, Dawning, Solstice, Guardian Games, Crimson Days, Revelry, Moments of Triumph, Bungie Day, Iron Banner |
 | event_occurrences | 72 | Event year, dates and season |
-| transcript_classification | 1229 | Activity/season/event per transcript with confidence |
+| transcript_classification | 1314 | Activity/season/event per transcript with confidence |
 | item_classification | 58764 | Season/event per item |
 | document_classification | 181 | Season/event per book or record |
 | lore_entries | 2962 | Bungie manifest lore entries |
@@ -67,7 +68,7 @@ python3 db/query.py search "hive" --type books
 # Faceted discovery
 python3 db/query.py search "calus" --season 7 --limit 5
 python3 db/query.py search "nightmare" --activity nightmare-containment
-python3 db/query.py search "shaxx" --event "Iron Banner"
+python3 db/query.py search "crucible" --event "Iron Banner"
 python3 db/query.py search "witness" --expansion "The Final Shape"
 
 # Activity / season / event browsing
@@ -85,6 +86,15 @@ python3 db/query.py character "saint-14" --limit 20
 
 # Item details
 python3 db/query.py item "0a0x-nightmask"
+python3 db/query.py find-item "Riskrunner"          # search items by name
+python3 db/query.py character-info "Eris Morn"      # curated vs spoken line counts
+
+# Books, transcripts, records and seals
+python3 db/query.py book book-a-drifters-gambit --limit 5
+python3 db/query.py transcript contact-io --speaker "Eris Morn" --limit 20
+python3 db/query.py record am-i-to-cast-a-shadow
+python3 db/query.py seals
+python3 db/query.py seal 2185719388
 
 # Database stats
 python3 db/query.py stats
@@ -103,13 +113,18 @@ python3 db/query.py verify "Absolutely not." --speaker "Eris Morn" --exact
 - `--json` on every command (compact, parse-friendly)
 - `search` returns snippets by default; `--full` for complete text
 - `search --type books|transcripts|grimoire|interactions|items|records|lore`
-- `seals` / `seal "<name>"` for seal and triumph records
+- `seals` / `seal <hash-or-name>` / `record <slug>` for seals, triumphs and records
 - `search --activity`, `--season`, `--event`, `--expansion` filter by taxonomy
-- `--class hunter|titan|warlock` adds class variants to base lines; `--canon-only`
-  excludes optional and class variants
+- `--class hunter|titan|warlock` adds class variants to base lines (`search`,
+  `character`, `transcript`); `--canon-only` excludes optional and class
+  variants (`character`, `transcript` only)
+- `--offset` pages paged reads (`search`, `list`, `character`, `transcript`,
+  `book`, `find-item`, `activity`); `verify-many` checks several quotes in one
+  call
 - `--season` accepts a number (`7`), a slug (`season-of-opulence`) or a name
   fragment (`opulence`); episodes work the same way (`24`, `echoes`)
 - `character --about <term>` filters, `character --all` uses raw transcript lines
+- `transcript <slug>` adds `--section`, `--include-stage`, `--full`
 - `verify` exits 1 when the quote is not in canon
 - `search` accepts unquoted multi-word input; punctuation is treated literally
   when it is not valid FTS5 syntax
@@ -122,13 +137,19 @@ Four independent axes, documented in `docs/TAXONOMY.md`:
 
 - **expansion:** Forsaken, Shadowkeep, Beyond Light, The Witch Queen, Lightfall,
   The Final Shape, The Edge of Fate, Renegades
-- **season:** Bungie's official number 1-23; episodes 24-26 with acts
+- **season:** Bungie's official number 1-28; episodes 24-26 keep their numeric
+  slot with acts, and seasons resume at 27
 - **activity:** raid, dungeon, seasonal, story, patrol, exotic mission and more
 - **event:** rotating events with one row per year
 
 Classification carries `explicit`, `derived`, `manual` or `unknown`. `unknown`
 means the source did not say; it is never guessed. Vaulted content is tagged and
 stays searchable.
+
+Coverage gaps carry a `coverage_notes` row instead of silence: `no_dialogue`,
+`narration_only`, `dialogue_source_missing`, `partial_transcript` or
+`unverified`. `partial_transcript` means the lines are real but the transcript
+is not exhaustive — do not present it as complete.
 
 ## MCP server (optional)
 
@@ -177,11 +198,20 @@ sqlite3 db/grimoire.db "SELECT * FROM v_activity_coverage ORDER BY lines DESC LI
 2. **SQLite-first.** Do not read raw markdown from `source/` at query time; it is only the ingestion source.
 3. **Keep queries scoped.** Small `--limit N` values preserve token budget.
 4. **Do not edit this data directly.** The migration reads `source/` markdown + `archive/data/*.jsonl` and rebuilds the DB.
-5. **Eris Morn, The Drifter and Calus** consume this database via `lore/` (a symlink to or a clone of this repo).
+5. **All five agents** (`how-to-drift-for-agents`, `eris-morn`, `destiny-agent-calus`, `destiny-agent-zavala`, `destiny-agent-ghost`) consume this database via `lore/` (a symlink, Windows junction or clone of this repo).
 6. **Respect confidence.** Treat `unknown` classification as unknown; do not present a guessed season or activity as fact.
+7. **Mind coverage status.** `coverage_notes` says what the archive lacks: `partial_transcript` lines are real but incomplete, `no_dialogue` activities have none. Never fill a gap with an invented line.
 
 ## Sources
 
-Text content sourced from https://www.ishtar-collective.net (Ishtar Collective).
-Cutscene transcripts come from YouTube captions (auto-generated; corroboration-verified).
+- **Ishtar Collective** (https://www.ishtar-collective.net): the archival
+  primary — main-site transcripts plus tagged and untagged Commons topics.
+- **Destinypedia** (https://www.destinypedia.com): verbatim transcripts used as
+  corroboration and for specific activity dialogue.
+- **Captions**: reviewed captions, auto-captions and cutscene compilations from
+  YouTube (corroboration-verified; video credits in `README.md`).
+
+`transcripts.source_tier` records precedence; lower tiers stay searchable and
+are not promoted without a better source, and a caption-tier transcript is
+never presented as verbatim. Full provenance rules: `STANDARDS.md`.
 Bungie Inc owns all Destiny property. Fan-built, not affiliated.
