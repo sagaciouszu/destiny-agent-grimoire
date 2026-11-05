@@ -24,13 +24,26 @@ issues = []
 checked = 0
 
 
+SIBLINGS_PRESENT = any(os.path.isdir(path) for key, path in REPOS.items()
+                       if key != 'grimoire')
+# Paths that live in an agent workspace rather than this repository. When the
+# sibling agent repos are not checked out (grimoire-only CI), these cannot be
+# verified here; they are still verified locally where every repo is present.
+AGENT_PATHS = ('setup.sh', 'tests/', 'memory.py', 'persona.json',
+               'core/', 'voice/', 'world/', 'reference/')
+
+
 def resolve(root, ref):
     cands = [os.path.join(root, ref), os.path.join(REPOS['grimoire'], ref)]
     for other in REPOS.values():
         cands.append(os.path.join(other, ref))
     if ref.startswith('lore/'):
         cands.append(os.path.join(root, ref[5:]))
-    return any(os.path.exists(c) for c in cands)
+    if any(os.path.exists(c) for c in cands):
+        return True
+    if not SIBLINGS_PRESENT and ref.startswith(AGENT_PATHS):
+        return True  # deferred: agent repo not present in this checkout
+    return False
 
 
 for repo, root in REPOS.items():
