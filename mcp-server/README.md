@@ -37,15 +37,30 @@ needs the SDK.
 
 ## Run
 
+Linux/macOS:
+
 ```bash
 ./mcp-server/run.sh
 ```
 
-It speaks MCP on stdio and exits when the client disconnects.
+Windows (Git Bash or cmd):
+
+```bat
+mcp-server\run.cmd
+```
+
+Both launchers detect the virtualenv layout (`.venv/bin` or `.venv/Scripts`).
+
+It speaks MCP on stdio and exits when the client disconnects. The process is
+**stdio-bound**: OpenCode starts it and keeps it running for the session, then
+stops it. If you launch it by hand, keep that window open while any client is
+using it; closing it drops the connection. Do not run it as a long-lived
+background service.
 
 ## Client configuration
 
-OpenCode (`~/.config/opencode/opencode.json`):
+OpenCode (`~/.config/opencode/opencode.json`), from an agent workspace where the
+archive is mounted at `lore/`:
 
 ```json
 {
@@ -53,15 +68,31 @@ OpenCode (`~/.config/opencode/opencode.json`):
     "servers": {
       "grimoire": {
         "type": "local",
-        "command": ["/absolute/path/to/destiny-agent-grimoire/mcp-server/run.sh"]
+        "command": ["lore/mcp-server/run.sh"]
       }
     }
   }
 }
 ```
 
-From an agent workspace, the archive is usually mounted at `lore/`, so the same
-path is `<agent>/lore/mcp-server/run.sh`. Use an absolute path in client config.
+On Windows point at the launcher instead:
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "grimoire": {
+        "type": "local",
+        "command": ["lore\\mcp-server\\run.cmd"]
+      }
+    }
+  }
+}
+```
+
+Some clients resolve commands relative to their working directory and some
+require an absolute path. Use whichever your client documents; do not commit
+machine-specific paths to this repository.
 
 ## Tools
 

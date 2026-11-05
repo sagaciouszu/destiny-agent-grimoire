@@ -42,8 +42,11 @@ Windows:
 mcp-server\run.cmd
 ```
 
-The server speaks MCP on stdio and exits when the client disconnects. Do not run
-it as a background daemon.
+The server speaks MCP on stdio and exits when the client disconnects. It must
+stay running for as long as a client is using it: OpenCode starts and stops it
+automatically, and a manually launched window must stay open. Do not run it as
+a background daemon. Both launchers locate the virtualenv whether it uses
+`.venv/bin` (Unix) or `.venv/Scripts` (Windows).
 
 ## OpenCode configuration
 

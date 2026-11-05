@@ -6,7 +6,7 @@ or shared by every agent in the series.
 
 ## Entry points
 
-- Grimoire: `bash grimoire-master-audit.sh` (10 suites, archive-wide)
+- Grimoire: `bash grimoire-master-audit.sh` (11 suites, archive-wide)
 - Agents: run tests/master-audit.sh in each agent repo (Drifter 22, Eris 17,
   Calus/Zavala/Ghost 15)
 - Shared runner: run the suite manifest script from any agent repo
@@ -95,13 +95,14 @@ Calus / Zavala / Ghost (destiny-agent-{calus,zavala,ghost}/tests/):
   the live database for that speaker.
 - `class-filter-test.py` - hunter/titan/warlock variant filtering through the API.
 - `docs-audit.py` - every documented command resolves; query subcommands and flags are valid
+- `mirror-tree-test.py` - cross-platform tree mirror (sync's rsync replacement): copy, delete, excludes, dry-run
 
 ## Onboarding and links (on demand)
 
 - `onboarding-smoke.sh` - every local agent that is present, symlink and clone modes, fully offline (absent agents are skipped):
   clone, setup, master audit, clean working tree (60 checks)
 - `link-check.py` - external URL health for the READMEs (`--all` includes badges)
-- `mcp-test.py` - MCP tool contract, read-only guard and stdio handshake
+- `mcp-test.py` - MCP tool contract, launchers, read-only guard and stdio handshake (9 checks)
   (`mcp-server/.venv/bin/python tests/mcp-test.py`; skips without the venv)
 
 ## Archive utilities

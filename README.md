@@ -217,7 +217,7 @@ repository minus the database lives outside the tree.
 
 | Suite | Command | Expected |
 |---|---|---|
-| Archive audit | `bash grimoire-master-audit.sh` | 10/10 |
+| Archive audit | `bash grimoire-master-audit.sh` | 11/11 |
 | Drifter agent audit | run tests/master-audit.sh in how-to-drift-for-agents | 22/22 |
 | Eris agent audit | run tests/master-audit.sh in eris-morn | 17/17 |
 | Calus / Zavala / Ghost | run tests/master-audit.sh in each repo | 15/15 |
@@ -226,7 +226,7 @@ repository minus the database lives outside the tree.
 | Query interface | `bash tests/query-interface-test.sh` | 89 checks |
 | Agent layout | `bash tests/agent-layout-test.sh` | 39 checks |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 checks |
-| MCP contract | `mcp-server/.venv/bin/python tests/mcp-test.py` | 8/8 checks |
+| MCP contract | `mcp-server/.venv/bin/python tests/mcp-test.py` | 9/9 checks |
 | File conformance | `python3 tests/conformance.py` | PASS |
 
 Agent audits run from their own repos and call shared gates through
