@@ -13,6 +13,11 @@ MIRROR = os.path.join(ROOT, 'scripts', 'mirror-tree.py')
 EXCLUDES = ['--exclude', '.git', '--exclude', 'USER.md', '--exclude',
             'memory/', '--exclude', 'core/journal.md']
 
+# Windows consoles default to cp1252; force UTF-8 so pass/fail glyphs print.
+for _stream in (sys.stdout, sys.stderr):
+    if hasattr(_stream, 'reconfigure'):
+        _stream.reconfigure(encoding='utf-8', errors='replace')
+
 PASS = FAIL = 0
 
 

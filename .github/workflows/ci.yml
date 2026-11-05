@@ -60,6 +60,8 @@ jobs:
 
   windows:
     runs-on: windows-latest
+    env:
+      PYTHONUTF8: "1"
     steps:
       - uses: actions/checkout@v7
 
