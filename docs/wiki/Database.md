@@ -71,7 +71,7 @@ python3 scripts/coverage-report.py
 
 `transcripts.source_tier` records precedence:
 
-1. Ishtar main and tagged Commons
+1. Ishtar main-site (`ishtar_main`, `ishtar_web`) and tagged Commons
 2. untagged Commons
 3. Destinypedia
 4. reviewed captions

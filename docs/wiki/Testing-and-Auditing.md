@@ -78,7 +78,7 @@ tree mirror and an agent `setup.sh` link (symlink -> junction -> clone).
 mcp-server/.venv/bin/python tests/mcp-test.py
 ```
 
-Expected: **10 / 10 passed**.
+Expected: **12 / 12 passed**.
 
 ## Before a release
 

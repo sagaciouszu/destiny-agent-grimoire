@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Migrate markdown + JSONL sources into SQLite database."""
-import os, re, json, glob, sqlite3, sys
+import os, re, json, glob, sqlite3, sys, time
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -107,9 +107,13 @@ def norm_text(s):
     """Normalize text for fast substring matching."""
     s = s.lower()
     s = s.replace('…','...').replace('’',"'").replace('—','-').replace('–','-')
-    s = re.sub(r'[^a-z0-9 ]+',' ',s)
-    s = re.sub(r'\s+',' ',s)
-    return s.strip()
+    n = re.sub(r'[^a-z0-9 ]+',' ',s)
+    n = re.sub(r'\s+',' ',n).strip()
+    if n:
+        return n
+    # Punctuation-only canon lines (":)", "?", "...") must stay verifiable:
+    # fall back to the lowered text with LIKE wildcards removed.
+    return re.sub(r'\s+', ' ', s.replace('%', ' ').replace('_', ' ')).strip()
 
 def migrate():
     if os.path.exists(DB_PATH):
@@ -181,8 +185,6 @@ def migrate():
         class_tag = ''
         # Audio-quoted line format: '- "quote text"' (no *Speaker:* wrapper)
         is_quoted_file = slug.startswith(('ingame-quotes-', 'youtube-', 'weblore-'))
-        if slug.startswith('weblore'):
-            print(f'  DEBUG: {slug} is_quoted={is_quoted_file}, line_count={len(lines)}')
         for ln in lines:
             st = ln.strip()
             if st.startswith('## '):
@@ -205,20 +207,20 @@ def migrate():
                 if m:
                     line = m.group(1).strip()
                     conn.execute('INSERT INTO transcript_lines (transcript_id,seq,speaker,line,norm_line,is_stage_dir,section,is_optional,class_tag) VALUES (?,?,?,?,?,0,?,?,?)',
-                        (tid, seq, 'Drifter', line, norm_text(line), section, optional, class_tag))
+                        (tid, seq, 'Drifter', line, norm_text(line), section, optional, class_tag or None))
                     seq += 1
                     tl_count += 1
                 continue
             sp, line = parse_speaker_line(ln)
             if sp and line and not is_junk_speaker(sp):
                 conn.execute('INSERT INTO transcript_lines (transcript_id,seq,speaker,line,norm_line,is_stage_dir,section,is_optional,class_tag) VALUES (?,?,?,?,?,0,?,?,?)',
-                    (tid, seq, sp, line, norm_text(line), section, optional, class_tag))
+                    (tid, seq, sp, line, norm_text(line), section, optional, class_tag or None))
                 seq += 1
                 tl_count += 1
             elif not is_quoted_file and len(ln.strip()) > 20 and not ln.startswith('#') and not ln.startswith('-'):
                 # Stage direction / narration line
                 conn.execute('INSERT INTO transcript_lines (transcript_id,seq,speaker,line,norm_line,is_stage_dir,section,is_optional,class_tag) VALUES (?,?,?,?,?,1,?,?,?)',
-                    (tid, seq, 'Narration', ln.strip(), norm_text(ln.strip()), section, optional, class_tag))
+                    (tid, seq, 'Narration', ln.strip(), norm_text(ln.strip()), section, optional, class_tag or None))
                 seq += 1
                 tl_count += 1
     print(f'transcripts: {t_count}, lines: {tl_count}')
@@ -543,13 +545,14 @@ def migrate():
     conn.execute(
         "INSERT INTO item_title_fts(title, slug, item_type, release) "
         "SELECT title, slug, item_type, release FROM items WHERE title != ''")
-    t_count = conn.execute('SELECT COUNT(*) FROM item_title_fts').fetchone()[0]
-    print(f'item title entries: {t_count}')
+    itf_count = conn.execute('SELECT COUNT(*) FROM item_title_fts').fetchone()[0]
+    print(f'item title entries: {itf_count}')
 
-    # Meta
+    # Meta: a self-describing stamp for the shipped artifact. Every count key
+    # must equal a live COUNT(*) (tests/test-db.sh enforces it).
     for k, v in [
         ('version',SCHEMA_VERSION),
-        ('last_updated','2026-11-04'),
+        ('last_updated', time.strftime('%Y-%m-%d')),
         ('books', str(book_count)),
         ('book_entries', str(entry_count)),
         ('transcripts', str(t_count)),
@@ -565,6 +568,11 @@ def migrate():
         ('events', str(conn.execute('SELECT COUNT(*) FROM events').fetchone()[0])),
         ('event_occurrences', str(conn.execute('SELECT COUNT(*) FROM event_occurrences').fetchone()[0])),
         ('activities', str(conn.execute('SELECT COUNT(*) FROM activities').fetchone()[0])),
+        ('transcript_classification', str(conn.execute('SELECT COUNT(*) FROM transcript_classification').fetchone()[0])),
+        ('item_classification', str(conn.execute('SELECT COUNT(*) FROM item_classification').fetchone()[0])),
+        ('document_classification', str(conn.execute('SELECT COUNT(*) FROM document_classification').fetchone()[0])),
+        ('coverage_notes', str(conn.execute('SELECT COUNT(*) FROM coverage_notes').fetchone()[0])),
+        ('speaker_aliases', str(conn.execute('SELECT COUNT(*) FROM speaker_aliases').fetchone()[0])),
     ]:
         conn.execute('INSERT OR REPLACE INTO meta (key,value) VALUES (?,?)', (k, v))
 

@@ -16,7 +16,7 @@ or shared by every agent in the series.
 
 ## Archive integrity
 
-- `test-db.sh` - database integrity (51 checks: tables, FTS, orphans, counts,
+- `test-db.sh` - database integrity (55 checks: tables, FTS, orphans, counts,
   entity leakage, speaker canon, provenance, `v_speakers`, `speaker_aliases`)
 - `lore-integrity.sh` - archive structure (books, transcripts, cards, records)
 - `lore-format.sh` - source markdown transcript format (153/153)
@@ -74,7 +74,7 @@ Calus / Zavala / Ghost (destiny-agent-{calus,zavala,ghost}/tests/):
   item, docs and robustness gates
 - `robustness-test.py` - corrupt/truncated/missing databases, edge inputs,
   read-only enforcement, 160 concurrent queries, injection attempts
-- `mcp-matrix-test.py` - MCP calls across all eighteen tools (141 calls in the
+- `mcp-matrix-test.py` - MCP calls across all twenty-one tools (154 calls in the
   current baseline), 3 concurrent clients,
   strict parity with the API, clean malformed-call errors, output caps
 - `checksum-test.sh` - verified download, missing checksum warning, mismatch
@@ -102,7 +102,7 @@ Calus / Zavala / Ghost (destiny-agent-{calus,zavala,ghost}/tests/):
 - `onboarding-smoke.sh` - every local agent that is present, symlink and clone modes, fully offline (absent agents are skipped):
   clone, setup, master audit, clean working tree (60 checks)
 - `link-check.py` - external URL health for the READMEs (`--all` includes badges)
-- `mcp-test.py` - MCP tool contract, launchers, read-only guard and stdio handshake (10 checks)
+- `mcp-test.py` - MCP tool contract, launchers, read-only guard, CLI-parity tools and stdio handshake (12 checks)
   (`mcp-server/.venv/bin/python tests/mcp-test.py`; skips without the venv)
 
 ## Archive utilities

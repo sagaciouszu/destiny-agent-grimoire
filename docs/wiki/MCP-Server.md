@@ -61,7 +61,7 @@ bash mcp-server/probe.sh
 ```
 
 The probe performs a real `initialize` -> `tools/list` handshake and prints the
-18 exposed tools. On Windows run `python mcp-server\probe.py`.
+21 exposed tools. On Windows run `python mcp-server\probe.py`.
 
 ### OpenClaw
 
@@ -130,6 +130,9 @@ or `run.ps1` (the latter via `powershell.exe -NoProfile -ExecutionPolicy Bypass 
 | `event` | one event with yearly occurrences |
 | `coverage` | coverage matrix, statuses and gap notes |
 | `record` | triumph or seal record details |
+| `seals` | every manifest seal with record counts |
+| `seal` | one seal with its triumph records |
+| `lore` | manifest lore entry with linked item names |
 | `stats` | row counts and top values |
 
 All 28 seasons and 9 events are exposed. Activity and coverage results include

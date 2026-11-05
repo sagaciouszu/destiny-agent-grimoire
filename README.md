@@ -12,7 +12,7 @@
   <img src='https://img.shields.io/badge/tests-9%2F9%20passing-brightgreen' alt='Tests'/>
 </p>
 
-**Version:** 0.27.2 | **Last push:** 2026-11-05 | **Status:** Active
+**Version:** 0.27.3 | **Last push:** 2026-11-05 | **Status:** Active
 
 **Documentation site:** <https://sagaciouszu.github.io/grimoire-site/>
 
@@ -223,11 +223,11 @@ repository minus the database lives outside the tree.
 | Eris agent audit | run tests/master-audit.sh in eris-morn | 17/17 |
 | Calus / Zavala / Ghost | run tests/master-audit.sh in each repo | 15/15 |
 | Agent suite manifests | `python3 tests/suite-manifest-test.py` | PASS |
-| Database integrity | `bash tests/test-db.sh` | 51 checks |
+| Database integrity | `bash tests/test-db.sh` | 55 checks |
 | Query interface | `bash tests/query-interface-test.sh` | 89 checks |
 | Agent layout | `bash tests/agent-layout-test.sh` | 39 checks |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 checks |
-| MCP contract | `mcp-server/.venv/bin/python tests/mcp-test.py` | 10/10 checks |
+| MCP contract | `mcp-server/.venv/bin/python tests/mcp-test.py` | 12/12 checks |
 | File conformance | `python3 tests/conformance.py` | PASS |
 
 Agent audits run from their own repos and call shared gates through

@@ -55,7 +55,8 @@ async def call(session, name, args):
 
 async def matrix(s):
     for q in ('crota', 'hive', 'sword logic', 'savathûn', 'gambit'):
-        for typ in (None, 'books', 'transcripts', 'grimoire', 'interactions', 'items', 'records'):
+        for typ in (None, 'books', 'transcripts', 'grimoire', 'interactions', 'items',
+                    'records', 'lore'):
             args = {'query': q, 'limit': 3}
             if typ:
                 args['type'] = typ
@@ -88,7 +89,7 @@ async def matrix(s):
                 res = await call(s, 'verify', args)
                 assert isinstance(res['verified'], bool)
 
-    for kind in ('books', 'characters', 'speakers', 'records'):
+    for kind in ('books', 'characters', 'speakers', 'records', 'lore', 'seals'):
         res = await call(s, 'list_records', {'kind': kind, 'limit': 5})
         assert res['count'] == len(res['rows']) <= 5
         page = await call(s, 'list_records', {'kind': kind, 'limit': 2, 'offset': 2})
@@ -107,6 +108,11 @@ async def matrix(s):
     assert items['count'] == len(items['rows']) and items['total'] >= items['count']
     assert (await call(s, 'find_item', {'query': 'nightmask', 'limit': 1, 'offset': 1}))['offset'] == 1
     assert (await call(s, 'record', {'ref': 'am-i-to-cast-a-shadow'}))['title']
+    assert (await call(s, 'seals', {}))['count'] == 70
+    assert len((await call(s, 'seal', {'ref': '30th Anniversary'}))['records']) == 10
+    lore_hash = next(r['hash'] for r in api.listing('lore', limit=20)
+                     if not r.get('is_duplicate'))
+    assert (await call(s, 'lore', {'ref': str(lore_hash)}))['hash'] == lore_hash
     vm = await call(s, 'verify_many', {'quotes': ['I am Eris Morn.', 'not canon zzz']})
     assert vm['total'] == 2 and vm['verified'] == 1
     ci = await call(s, 'character_info', {'name': 'eris'})
@@ -127,6 +133,7 @@ async def parity(s):
     assert mcp_v['verified'] == api_v['verified']
     assert mcp_v['matches'][0]['slug'] == api_v['matches'][0]['slug']
     assert (await call(s, 'list_records', {'kind': 'speakers', 'limit': 3}))['rows'] == api.listing('speakers', limit=3)
+    assert (await call(s, 'seals', {}))['rows'] == api.seals()
     assert (await call(s, 'stats', {}))['counts'] == api.stats()['counts']
 
 
@@ -138,7 +145,9 @@ async def errors(s):
                        ('book', {'ref': 'no-such-book'}),
                        ('transcript', {'ref': 'no-such-transcript'}),
                        ('find_item', {'query': ''}),
-                       ('record', {'ref': 'no-such-record'})):
+                       ('record', {'ref': 'no-such-record'}),
+                       ('seal', {'ref': 'no-such-seal-zzz'}),
+                       ('lore', {'ref': '999999999'})):
         res = await s.call_tool(name, args)
         text = res.content[0].text if res.content else ''
         assert res.is_error and 'Traceback' not in text, (name, text)
@@ -175,11 +184,12 @@ async def main():
         async with ClientSession(r, w) as s:
             await s.initialize()
             tools = {t.name for t in (await s.list_tools()).tools}
-            report('eighteen tools listed', tools == {'search', 'character', 'character_info',
-                                                      'item', 'verify', 'verify_many', 'list_records',
-                                                      'stats', 'book', 'transcript', 'find_item', 'record',
-                                                      'activities', 'activity', 'seasons', 'events',
-                                                      'event', 'coverage'}, str(tools))
+            report('twenty-one tools listed', tools == {'search', 'character', 'character_info',
+                                                       'item', 'verify', 'verify_many', 'list_records',
+                                                       'stats', 'book', 'transcript', 'find_item', 'record',
+                                                       'seals', 'seal', 'lore',
+                                                       'activities', 'activity', 'seasons', 'events',
+                                                       'event', 'coverage'}, str(tools))
             for name, fn in (('tool matrix (80+ calls)', matrix), ('MCP matches API', parity),
                              ('malformed calls fail cleanly', errors)):
                 try:

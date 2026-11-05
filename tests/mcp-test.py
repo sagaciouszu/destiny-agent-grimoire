@@ -70,7 +70,7 @@ def tools_listed():
     want = {'search', 'character', 'item', 'verify', 'list_records', 'stats',
             'book', 'transcript', 'find_item', 'record', 'verify_many',
             'character_info', 'activities', 'activity', 'seasons', 'events',
-            'event', 'coverage'}
+            'event', 'coverage', 'seals', 'seal', 'lore'}
     assert want <= names, f'missing tools: {want - names}'
 
 
@@ -158,7 +158,7 @@ def protocol_smoke():
 
 
 print('MCP contract test')
-check('eighteen tools registered', tools_listed)
+check('twenty-one tools registered', tools_listed)
 check('Unix and Windows launchers present', launchers_present)
 
 
@@ -201,13 +201,54 @@ check('connection is read-only', read_only)
 check('stdio protocol smoke', protocol_smoke)
 
 
+def seals_and_lore():
+    seals = server.seals()
+    assert seals['count'] == 70 and seals['rows'], seals['count']
+    one = server.seal('30th Anniversary')
+    assert one['name'] == '30th Anniversary' and one['records'], one
+    sys.path.insert(0, os.path.join(ROOT, 'db'))
+    import api
+    target = next(r['hash'] for r in api.listing('lore', limit=20)
+                  if not r.get('is_duplicate'))
+    entry = server.lore(str(target))
+    assert entry['hash'] == target and isinstance(entry['items'], list), entry
+    for fn, ref in ((server.seal, 'no-such-seal-zzz'), (server.lore, '999999999')):
+        try:
+            fn(ref)
+            raise AssertionError(f'{ref} should not resolve')
+        except Exception as e:
+            assert 'not found' in str(e) and 'Traceback' not in str(e), e
+    assert server.list_records('seals', limit=5)['count'] <= 5
+    assert server.list_records('lore', limit=5)['count'] <= 5
+
+
+def stats_match_live():
+    """stats must mirror live COUNT(*): the meta/stats class of bugs."""
+    counts = server.stats()['counts']
+    conn = sqlite3.connect(f'file:{os.path.join(ROOT, "db", "grimoire.db")}?mode=ro',
+                           uri=True)
+    try:
+        for table, count in counts.items():
+            live = conn.execute(f'SELECT COUNT(*) FROM "{table}"').fetchone()[0]
+            assert live == count, f'{table}: stats={count} live={live}'
+        meta = dict(conn.execute('SELECT key, value FROM meta'))
+        assert meta['transcripts'] == str(counts['transcripts']), \
+            f"meta transcripts={meta['transcripts']} live={counts['transcripts']}"
+    finally:
+        conn.close()
+
+
+check('seals and lore tools (CLI parity)', seals_and_lore)
+check('stats matches live row counts', stats_match_live)
+
+
 def probe_works():
     probe = subprocess.run([sys.executable, os.path.join(ROOT, 'mcp-server', 'probe.py')],
                            capture_output=True, text=True, timeout=60)
     assert probe.returncode == 0, probe.stdout + probe.stderr
-    assert '18 tools' in probe.stdout, probe.stdout
+    assert '21 tools' in probe.stdout, probe.stdout
 
-check('probe handshake (18 tools)', probe_works)
+check('probe handshake (21 tools)', probe_works)
 
 print(f'\nPassed: {PASS} | Failed: {FAIL}')
 sys.exit(1 if FAIL else 0)
