@@ -4,6 +4,7 @@
 Checks fenced commands and inline query CLI examples against the real filesystem
 and CLI surface. Run: python3 tests/docs-audit.py
 """
+import glob
 import os
 import re
 import subprocess
@@ -103,7 +104,43 @@ for repo, root in REPOS.items():
                         if token.startswith('--') and token.split('=')[0] not in FLAGS:
                             issues.append((repo, rel, 'unknown flag', token))
 
+# Agent Skills spec (https://agentskills.io/specification): every SKILL.md
+# needs valid frontmatter (name <=64 lowercase/hyphens, description <=1024).
+skills_checked = 0
+for repo in REPOS.values():
+    for path in glob.glob(os.path.join(repo, 'skills', '**', 'SKILL.md'),
+                          recursive=True):
+        skills_checked += 1
+        rel = os.path.relpath(path, repo)
+        text = open(path, encoding='utf-8').read()
+        m = re.match(r'^---\n(.*?)\n---\n', text, re.S)
+        if not m:
+            issues.append((os.path.basename(repo), rel, 'missing frontmatter', 'SKILL.md'))
+            continue
+        fm = m.group(1)
+        nm = re.search(r'^name:\s*(\S+)', fm, re.M)
+        if not nm:
+            issues.append((os.path.basename(repo), rel, 'missing field', 'name'))
+        else:
+            name = nm.group(1)
+            if len(name) > 64 or not re.fullmatch(r'[a-z0-9]+(-[a-z0-9]+)*', name):
+                issues.append((os.path.basename(repo), rel, 'invalid skill name', name))
+        dm = re.search(r'^description:\s*(.*)$', fm, re.M)
+        if not dm:
+            issues.append((os.path.basename(repo), rel, 'missing field', 'description'))
+        else:
+            # description may span lines until the next frontmatter key
+            start = dm.end()
+            tail = fm[start:]
+            nxt = re.search(r'^[a-z][a-z0-9-]*:', tail, re.M)
+            desc = (dm.group(1) + (' ' + tail[:nxt.start()] if nxt else '')).strip().strip("'\"")
+            if not desc:
+                issues.append((os.path.basename(repo), rel, 'empty description', 'description'))
+            elif len(desc) > 1024:
+                issues.append((os.path.basename(repo), rel, 'description too long', str(len(desc))))
+
 print(f'docs-command audit: {checked} commands checked')
+print(f'skills spec audit: {skills_checked} SKILL.md checked')
 if issues:
     print(f'ISSUES: {len(issues)}')
     for repo, rel, why, value in issues[:20]:
