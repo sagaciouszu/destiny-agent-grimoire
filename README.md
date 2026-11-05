@@ -12,7 +12,7 @@
   <img src='https://img.shields.io/badge/tests-9%2F9%20passing-brightgreen' alt='Tests'/>
 </p>
 
-**Version:** 0.26.0 | **Last push:** 2026-11-05 | **Status:** Active
+**Version:** 0.27.0 | **Last push:** 2026-11-05 | **Status:** Active
 
 **Documentation site:** <https://sagaciouszu.github.io/grimoire-site/>
 
@@ -226,7 +226,7 @@ repository minus the database lives outside the tree.
 | Query interface | `bash tests/query-interface-test.sh` | 89 checks |
 | Agent layout | `bash tests/agent-layout-test.sh` | 39 checks |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 checks |
-| MCP contract | `mcp-server/.venv/bin/python tests/mcp-test.py` | 9/9 checks |
+| MCP contract | `mcp-server/.venv/bin/python tests/mcp-test.py` | 10/10 checks |
 | File conformance | `python3 tests/conformance.py` | PASS |
 
 Agent audits run from their own repos and call shared gates through

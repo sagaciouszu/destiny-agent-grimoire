@@ -94,6 +94,45 @@ Some clients resolve commands relative to their working directory and some
 require an absolute path. Use whichever your client documents; do not commit
 machine-specific paths to this repository.
 
+### Verify the install
+
+One command performs a real `initialize` -> `tools/list` handshake and prints
+the exposed tools:
+
+```bash
+bash mcp-server/probe.sh        # Unix
+python mcp-server\probe.py      # Windows
+```
+
+### OpenClaw
+
+OpenClaw's update doctor probes MCP servers the same way, so its config must
+use an **absolute path** to the launcher; a bare `run.sh` cannot be resolved
+from the doctor's working directory and is reported as "not started for update
+validation":
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "grimoire": {
+        "command": ["/absolute/path/to/destiny-agent-grimoire/mcp-server/run.sh"]
+      }
+    }
+  }
+}
+```
+
+Replace the prefix with your checkout (or the workspace-mounted
+`lore/mcp-server/run.sh`). After an OpenClaw update, confirm the tool schema:
+
+```bash
+openclaw doctor --lint --only core/doctor/runtime-tool-schemas
+```
+
+If the doctor still reports the server as not started, run the probe above by
+hand to separate a config-path problem from a server problem.
+
 ## Tools
 
 | Tool | Arguments | Returns |

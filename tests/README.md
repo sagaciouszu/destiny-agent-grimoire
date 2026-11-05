@@ -102,7 +102,7 @@ Calus / Zavala / Ghost (destiny-agent-{calus,zavala,ghost}/tests/):
 - `onboarding-smoke.sh` - every local agent that is present, symlink and clone modes, fully offline (absent agents are skipped):
   clone, setup, master audit, clean working tree (60 checks)
 - `link-check.py` - external URL health for the READMEs (`--all` includes badges)
-- `mcp-test.py` - MCP tool contract, launchers, read-only guard and stdio handshake (9 checks)
+- `mcp-test.py` - MCP tool contract, launchers, read-only guard and stdio handshake (10 checks)
   (`mcp-server/.venv/bin/python tests/mcp-test.py`; skips without the venv)
 
 ## Archive utilities

@@ -48,6 +48,25 @@ automatically, and a manually launched window must stay open. Do not run it as
 a background daemon. Both launchers locate the virtualenv whether it uses
 `.venv/bin` (Unix) or `.venv/Scripts` (Windows).
 
+### Verify the install
+
+```bash
+bash mcp-server/probe.sh
+```
+
+The probe performs a real `initialize` -> `tools/list` handshake and prints the
+18 exposed tools. On Windows run `python mcp-server\probe.py`.
+
+### OpenClaw
+
+OpenClaw's update doctor starts the server to validate its tool schema. Its
+config must use an **absolute** launcher path; a bare `run.sh` is reported as
+"not started for update validation". After an update:
+
+```bash
+openclaw doctor --lint --only core/doctor/runtime-tool-schemas
+```
+
 ## OpenCode configuration
 
 From this checkout:
