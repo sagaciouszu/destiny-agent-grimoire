@@ -1,7 +1,7 @@
 # Standards
 
 > **Depends On:** none (standards reference)
-> **Token Estimate:** ~7.1K tokens
+> **Token Estimate:** ~7.6K tokens
 
 The contract every file, script, and database row in this repository must meet.
 Verification gates (section 7) enforce these rules; a change that breaks them is
@@ -27,7 +27,7 @@ a change that is not done.
 | From | To | Mechanism |
 |------|----|-----------|
 | agent `README`/`INDEX`/`AGENTS`/`TOOLS`/agent def | lore database | `lore/db/grimoire.db`, `python3 lore/db/query.py` |
-| agent `setup.sh` | this repo | clones or symlinks `lore/`; bootstraps the DB (release asset or build) |
+| agent `setup.sh` | this repo | links `lore/` (symlink -> Windows junction -> clone); bootstraps the DB (release asset or build); points OpenClaw's MCP entry at the checkout |
 | agent `.gitignore` | runtime memory | `USER.md`, `core/*memory*`, `core/journal.md` never leave the machine |
 | agent `tests/` suites | agent workspace | `lore/tests/resolve-workspace.sh` (layout-independent; `lore/` may be symlink or clone) |
 | `db/migrate.py` | sources | `source/{books,transcripts,cards,records}` + `archive/data/*.jsonl` |
@@ -93,8 +93,10 @@ Taxonomy rules:
 Global rules:
 - No duplicate slugs per table; no empty required fields; every row's text is
   HTML-unescaped (double-escaped Ishtar pages are unescaped until stable).
-- Every content row carries provenance (`source_url` or parent-book provenance),
-  and URLs follow `https://www.ishtar-collective.net/<type>/<slug>`.
+- Every content row carries provenance (`source_url` or parent-book
+  provenance). Ishtar rows use `https://www.ishtar-collective.net/<type>/<slug>`;
+  rows from other tiers keep that tier's real URL (Destinypedia, Commons,
+  YouTube). Never point a row at a source it did not come from.
 - Empty optional fields are a statement about the source, never a placeholder.
 
 ### Source hierarchy
@@ -197,9 +199,11 @@ match a recomputation of their source text.
 | `tests/speaker-audit.py` | reclassified parse noise must not reappear |
 | `tests/sync-doc-counts.py --check` | docs counts match the database |
 | each agent repo tests/master-audit.sh | agent-side suites (voice, quotes, modules, conversation, golden snapshots) plus shared structure checks |
-| `tests/mcp-test.py` (on demand, needs `mcp-server/.venv`) | MCP tools, read-only guard, stdio handshake |
+| `tests/mcp-test.py` (on demand, needs `mcp-server/.venv`) | MCP tools, both launchers, probe handshake, read-only guard, stdio (10 checks) |
 | `tests/check-agent-structure.py` | dependency resolution, token headers, dashes, INDEX completeness, personal paths (every agent) |
 | `tests/query-interface-test.sh` | CLI and API surface, 89 checks |
+| `tests/db-source-crosscheck.py` | database slugs vs source files, provenance URLs, index completeness |
+| `tests/link-check.py` | external URLs in the READMEs resolve |
 | `tests/taxonomy-deep-test.py` | classification refs, seasons, events, coverage statuses, API parity |
 | `tests/docs-audit.py` | every documented command resolves to a real file and a real subcommand |
 | `tests/agent-parity-test.sh` | every present agent exposes the same shared capabilities |
@@ -323,7 +327,8 @@ serves every agent.
    `bash tests/master-audit.sh` in each agent repo, plus a fresh-clone spot
    check for layout changes.
 5. Commit. Refresh the backup and the release asset after major milestones.
-6. A version bump, tag or release always requires explicit user approval.
+6. A version bump, tag or release requires explicit user approval, unless the
+   user has granted standing approval for that repository's bumps.
 
 ## 11. Packaging
 
@@ -370,7 +375,11 @@ the agent contract comes after it.
 1. `# Title`
 2. Banner image (`header.png`, centered, full width)
 3. Badge row: version, last push, license, tests (agent repos add flavor badges)
-4. Metadata line: `**Version:** x.y.z | **Last push:** YYYY-MM-DD | **Status:** Active`
+4. Metadata line: `**Version:** x.y.z | **Last push:** YYYY-MM-DD | **Status:** Active`.
+   The archive and Drifter/Eris use `Last push`/`Active`; Calus, Zavala and
+   Ghost use a blockquoted `> **Version:** ... | **Last updated:** ... |
+   **Status:** Ready`. `tests/sync-readme-meta.py` stamps and checks the first
+   form; the others are stamped when a release is cut.
 5. One-paragraph purpose
 6. `## Quick start for Guardians` with copy-paste steps
 7. `## Requirements` table (tools, disk, no runtime network)
@@ -409,7 +418,7 @@ persona facts, counts and links differ.
 | `TOOLS.md` | Runtime tools, Data access, Verification, Conventions |
 | `IDENTITY.md` | Name, Vibe, Emoji, Role, Status, Color, Mode |
 | `USER.template.md` | The User, Relationship, Continuity |
-| `RELEASE.md` | Highlights, Verification |
+| `RELEASE.md` | What's Changed, Verification |
 
 Rules:
 
@@ -432,7 +441,7 @@ Rules:
 
 ## What's Changed
 
-- 5 to 7 user-visible bullets
+- every major change since the previous release (see below)
 
 ## Verification
 
@@ -448,7 +457,7 @@ Rules:
   into `RELEASE.md`. Minor refactors may be folded, but nothing user-visible
   may be dropped. `CHANGELOG.md` remains the full history.
 - Do not restate what the repository is or who it is for.
-- The heading sequence is identical across both agent repos; `tests/conformance.py` enforces the sections, order and length.
+- The heading sequence is identical across every agent repo; `tests/conformance.py` enforces the sections, order and length (<= 90 lines).
 
 ## 15. Licensing
 
