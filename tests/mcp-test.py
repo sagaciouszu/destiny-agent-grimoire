@@ -24,6 +24,8 @@ if not VENV_PY:
     sys.exit(0)
 
 RUN_CMD = os.path.join(ROOT, 'mcp-server', 'run.cmd')
+# Windows cannot exec a .sh directly; the cmd launcher is equivalent.
+RUN_LAUNCH = ['cmd', '/c', RUN_CMD] if os.name == 'nt' else [RUN]
 
 
 RUN_PS1 = os.path.join(ROOT, 'mcp-server', 'run.ps1')
@@ -112,7 +114,7 @@ def read_only():
 
 
 def protocol_smoke():
-    proc = subprocess.Popen([RUN], stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+    proc = subprocess.Popen(RUN_LAUNCH, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                             stderr=subprocess.DEVNULL, text=True, bufsize=1)
     def send(obj):
         proc.stdin.write(json.dumps(obj) + '\n')

@@ -3,7 +3,7 @@
   "description": "No-loss baseline for per-agent master-audit suites. Additions are allowed; removals require an explicit baseline change.",
   "agents": {
     "how-to-drift-for-agents": {
-      "count": 22,
+      "count": 23,
       "required": [
         "Archive & Link Validation",
         "Cross-Reference Validator",
@@ -19,6 +19,7 @@
         "Voice Consistency",
         "Quote Cross-Check (0 unverified)",
         "Conversation (SQLite)",
+        "Sample Conversation",
         "Golden Voice Snapshots",
         "Connection",
         "Memory Isolation",
@@ -30,7 +31,7 @@
       ]
     },
     "eris-morn": {
-      "count": 17,
+      "count": 18,
       "required": [
         "Module Completeness (16 checks)",
         "Quote Verification (0 unverified)",
@@ -41,6 +42,7 @@
         "Voice Scorer Negative",
         "Scenario Simulator",
         "Conversation (SQLite)",
+        "Sample Conversation",
         "Golden Voice Snapshots",
         "Connection",
         "Memory Isolation",
@@ -52,7 +54,7 @@
       ]
     },
     "destiny-agent-calus": {
-      "count": 15,
+      "count": 16,
       "required": [
         "Module Completeness",
         "Quote Verification",
@@ -60,6 +62,7 @@
         "Memory Isolation",
         "Connection",
         "Conversation",
+        "Sample Conversation",
         "Multi-Turn",
         "Scenarios",
         "Voice Consistency",
@@ -72,7 +75,7 @@
       ]
     },
     "destiny-agent-zavala": {
-      "count": 15,
+      "count": 16,
       "required": [
         "Module Completeness",
         "Quote Verification",
@@ -80,6 +83,7 @@
         "Memory Isolation",
         "Connection",
         "Conversation",
+        "Sample Conversation",
         "Multi-Turn",
         "Scenarios",
         "Voice Consistency",
@@ -92,7 +96,7 @@
       ]
     },
     "destiny-agent-ghost": {
-      "count": 15,
+      "count": 16,
       "required": [
         "Module Completeness",
         "Quote Verification",
@@ -100,6 +104,7 @@
         "Memory Isolation",
         "Connection",
         "Conversation",
+        "Sample Conversation",
         "Multi-Turn",
         "Scenarios",
         "Voice Consistency",
