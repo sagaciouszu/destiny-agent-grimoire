@@ -157,7 +157,13 @@ is evidence for curation, not a redistributable asset.
   corpus.
 - Quest/step titles are not speakers. Web scrapers sometimes parse titles such
   as `Path of the Splicer II`, `Into the Depths VI` or `Act I` as speakers;
-  migration drops rows whose speaker ends in a Roman numeral or is a bare act.
+  migration drops those rows. The Roman-numeral rule never drops a mapped
+  character: a speaker that resolves through `SPEAKER_ALIASES` is kept, and
+  every `Saint-*` speaker is kept outright. The Saint-14 family is one
+  character under many names (`Saint-14`, `Saint-XIV`, `Saint XIV`,
+  `Saint IV`, `The Saint`, `Saint`, `Kellbreaker` -> `Saint-14`). Add the
+  alias before introducing a character whose name ends in a numeral; a dropped
+  row is unrecoverable, a kept row can always be aliased later.
 - Contextual qualifiers are allowed and kept: `Drifter (Tape 1)`,
   `Eris Morn (communion)`, `Blue (about Drifter's Ghost)`. LIKE queries match the
   base name, so consumers never need the qualifier.
