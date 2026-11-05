@@ -335,8 +335,9 @@ commands.
 - No process substitution in scripts other platforms run; use here-strings or
   temp files so exit codes propagate.
 - `mcp-server/run.sh` resolves `.venv/bin/python`, `.venv/bin/python3` or
-  `.venv/Scripts/python.exe`; `mcp-server/run.cmd` is the Windows launcher.
-  Both launchers plus `mcp-server/probe.sh` are required files, enforced by
+  `.venv/Scripts/python.exe`; `mcp-server/run.cmd` (cmd) and
+  `mcp-server/run.ps1` (PowerShell) are the Windows launchers. All three
+  launchers plus `mcp-server/probe.sh` are required files, enforced by
   `tests/mcp-test.py`.
 - `setup.sh` links `lore/` with `ln -s`, then `mklink /J`, then `git clone`;
   clearing a stale copy must clear read-only bits first.

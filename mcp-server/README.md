@@ -43,13 +43,21 @@ Linux/macOS:
 ./mcp-server/run.sh
 ```
 
-Windows (Git Bash or cmd):
+Windows (cmd or Git Bash):
 
 ```bat
 mcp-server\run.cmd
 ```
 
-Both launchers detect the virtualenv layout (`.venv/bin` or `.venv/Scripts`).
+Windows (PowerShell):
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File mcp-server\run.ps1
+```
+
+All three launchers detect the virtualenv layout (`.venv/bin` or
+`.venv/Scripts`). If your ExecutionPolicy blocks scripts, keep using `run.cmd`
+or invoke PowerShell with `-ExecutionPolicy Bypass` as shown above.
 
 It speaks MCP on stdio and exits when the client disconnects. The process is
 **stdio-bound**: OpenCode starts it and keeps it running for the session, then
@@ -75,7 +83,7 @@ archive is mounted at `lore/`:
 }
 ```
 
-On Windows point at the launcher instead:
+On Windows point at either launcher:
 
 ```json
 {
@@ -84,6 +92,22 @@ On Windows point at the launcher instead:
       "grimoire": {
         "type": "local",
         "command": ["lore\\mcp-server\\run.cmd"]
+      }
+    }
+  }
+}
+```
+
+PowerShell variant (add the policy flags so a locked-down host still runs it):
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "grimoire": {
+        "type": "local",
+        "command": ["powershell.exe", "-NoProfile", "-ExecutionPolicy", "Bypass",
+                    "-File", "lore\\mcp-server\\run.ps1"]
       }
     }
   }

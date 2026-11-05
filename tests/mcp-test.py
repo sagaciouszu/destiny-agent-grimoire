@@ -26,9 +26,15 @@ if not VENV_PY:
 RUN_CMD = os.path.join(ROOT, 'mcp-server', 'run.cmd')
 
 
+RUN_PS1 = os.path.join(ROOT, 'mcp-server', 'run.ps1')
+
+
 def launchers_present():
     assert os.path.exists(RUN), 'mcp-server/run.sh missing'
-    assert os.path.exists(RUN_CMD), 'mcp-server/run.cmd missing (Windows launcher)'
+    assert os.path.exists(RUN_CMD), 'mcp-server/run.cmd missing (Windows cmd launcher)'
+    assert os.path.exists(RUN_PS1), 'mcp-server/run.ps1 missing (Windows PowerShell launcher)'
+    ps1 = open(RUN_PS1, encoding='utf-8').read()
+    assert 'server.py' in ps1 and '.venv' in ps1, 'run.ps1 does not launch the venv server'
 
 
 
