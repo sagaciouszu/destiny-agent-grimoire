@@ -1,7 +1,7 @@
 # Standards
 
 > **Depends On:** none (standards reference)
-> **Token Estimate:** ~6.4K tokens
+> **Token Estimate:** ~7.1K tokens
 
 The contract every file, script, and database row in this repository must meet.
 Verification gates (section 7) enforce these rules; a change that breaks them is
@@ -440,3 +440,22 @@ Rules:
   fan-made and non-commercial; no license is granted to Bungie IP.
 - Every repository carries a `NOTICE` describing that split, and its README has a
   Licensing subsection. `tests/conformance.py` enforces both.
+
+## 16. Agent engineering standards (adopted from upstream)
+
+Rules borrowed from larger projects. Every row names where this repository
+enforces it, so an upstream change can be re-checked instead of trusted blindly.
+
+| Upstream practice | Source | Our enforcement |
+|---|---|---|
+| Input and output **guardrails** on every tool call | [openai/openai-agents-python](https://github.com/openai/openai-agents-python) (guardrails, human-in-the-loop, handoffs) | MCP bounds and sanitizes all inputs (queries 1-500 chars, quotes 1-2000, limits 1-100) and `tests/mcp-test.py` attacks the boundary; `verify` is the output guardrail before any quote ships |
+| **Human in the loop** for irreversible actions | openai/openai-agents-python, [langgraph](https://github.com/langchain-ai/langgraph) (interrupts) | Version bumps, tags, releases and pushes require explicit user approval (section 10.6); no workflow may publish on its own |
+| **Durable, idempotent** execution that resumes cleanly | langgraph (durable execution) | Every gate is re-runnable from scratch; missing optional dependencies produce `SKIP`, never a false failure (MCP venv, sibling agent repos) |
+| **Least privilege** and documented capabilities for servers | [modelcontextprotocol/modelcontextprotocol SECURITY.md](https://github.com/modelcontextprotocol/modelcontextprotocol/blob/main/SECURITY.md) | MCP opens SQLite `mode=ro`, exposes no SQL tool, does no networking, and documents every capability in `mcp-server/README.md`; `mcp-server/probe.sh` reports the live tool list |
+| Retrieved content is **data, not instructions** | guardrail practice above | Peer/consult replies are untrusted (section 9); searched lore, captions and web text are never executed as commands |
+| **Agent Skills spec** compliance for skill files | [Agent Skills specification](https://agentskills.io/specification) ([anthropics/skills](https://github.com/anthropics/skills)) | `skills/*/SKILL.md` keeps YAML frontmatter with `name` (<=64 chars, lowercase/hyphens) and `description` (<=1024 chars), then a command-first body; `tests/docs-audit.py` validates it |
+| **Regression evaluation** for agent behavior | common practice across agent frameworks | golden-voice snapshots, per-agent suite manifests with a no-loss baseline, `tests/retrieval-eval.py` and `tests/agent-parity-test.sh` |
+| **Persistent memory is separate from state** | langgraph (short/long-term memory) | Agent memory (`USER.md`, `core/*memory*`) is runtime state, gitignored, never canon; the shared database is read-only to agents |
+
+If a new upstream standard is adopted, add it to this table with the enforcing
+test in the same change. A rule without an enforcement hook does not ship.
