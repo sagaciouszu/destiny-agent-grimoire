@@ -5,8 +5,8 @@
 - Arc: defiant-battlegrounds
 - Tier: youtube_captions
 - Source: https://youtu.be/lDuSBEq7a-w
-- Sources: https://youtu.be/lDuSBEq7a-w, https://youtu.be/UCPYC7ZfOX0, https://youtu.be/9P_76JucDRA, https://youtu.be/2AldvOVGgcc, https://youtu.be/EZbRIwNOC4k, https://youtu.be/V3pLh0F8lH8, https://youtu.be/--mA6YPaI9I, https://youtu.be/Z7KajI8BLWw, https://youtu.be/QOLrCf22RYg, https://youtu.be/NqdO1cs5ezs, https://youtu.be/Ue9rNXpUZ58, https://youtu.be/ATpIP33tDRI, https://youtu.be/XZTlTCtcvgA, https://youtu.be/hChz81fqpHw, https://youtu.be/Z-AMUMzV9Ak, https://youtu.be/fHWwBfp7tsk, https://youtu.be/PDumqa00Vwk, https://youtu.be/VhEjPSyhE_4, https://youtu.be/Lfu6lHQRBYQ, https://youtu.be/WnNRMLy7luo, https://youtu.be/vBMKNslRmHM, https://youtu.be/D4PtkPqFCKY, https://youtu.be/lpjj52sYX0k, https://youtu.be/2E9HbiSFM8s
-- Note: Collected from 24 activity dialogue videos; speaker labels reviewed. Not guaranteed exhaustive.
+- Sources: https://youtu.be/lDuSBEq7a-w, https://youtu.be/UCPYC7ZfOX0, https://youtu.be/9P_76JucDRA, https://youtu.be/2AldvOVGgcc, https://youtu.be/EZbRIwNOC4k, https://youtu.be/V3pLh0F8lH8, https://youtu.be/--mA6YPaI9I, https://youtu.be/Z7KajI8BLWw, https://youtu.be/QOLrCf22RYg, https://youtu.be/NqdO1cs5ezs, https://youtu.be/Ue9rNXpUZ58, https://youtu.be/ATpIP33tDRI, https://youtu.be/XZTlTCtcvgA, https://youtu.be/hChz81fqpHw, https://youtu.be/Z-AMUMzV9Ak, https://youtu.be/fHWwBfp7tsk, https://youtu.be/PDumqa00Vwk, https://youtu.be/VhEjPSyhE_4, https://youtu.be/Lfu6lHQRBYQ, https://youtu.be/WnNRMLy7luo, https://youtu.be/vBMKNslRmHM, https://youtu.be/D4PtkPqFCKY, https://youtu.be/lpjj52sYX0k, https://youtu.be/2E9HbiSFM8s, https://youtu.be/54DZfpTiLOc, https://youtu.be/R_vlIkOz22k, https://youtu.be/2j2DgvaSYX8, https://youtu.be/DEpIOgP0Zr8, https://youtu.be/7JWyVYtJ6GA, https://youtu.be/FuwCyR7XsQo, https://youtu.be/0-KR8BdP6Ds, https://youtu.be/utwC8-z0HNI, https://youtu.be/k0LsJ181QE8, https://youtu.be/mdNWvXGG8Oo, https://youtu.be/mHyF_hUjepU, https://youtu.be/oxx_oF9fqk0, https://youtu.be/nEUQHRCHyuI, https://youtu.be/12hN8J5UkwE
+- Note: Collected from 38 activity dialogue videos; speaker labels reviewed. Not guaranteed exhaustive.
 
 ## Defiant Battleground: Cosmodrome | Pyramid: "We All Know What Amanda Would Say" | Season of Defiance
 
@@ -201,3 +201,125 @@
 *Crow:* We should go after them. Strike first for a change.
 
 *Devrim Kay:* We will; you can be sure of that. But this, right here, is about saving lives. Even now. Let's finish the fight we're in. After that, we'll talk about what we can do next.
+
+## Defiant Battleground: Cosmodrome | Complete: "It Belonged to Taniks" | Season of Defiance
+
+*Mithrax:* Shadow Legion taking Humans reminds me of your Dark Age. Many of our Houses placed bounties on your heads. Mercenaries bought Ether with the armor they took from captured Lightbearers.
+
+*The Crow:* I know. Spider had quite the collection. When I asked him about it, he told me it was "antique".
+
+*Mithrax:* A clever way to say it belonged to Taniks before it belonged to him.
+
+## Defiant Battleground: Cosmodrome | Engage Zatocc: "Captives Are Nearby" | Season of Defiance
+
+*Devrim Kay:* The captives are nearby. We're ready to transmat them out once the Shadow Legion are dealt with.
+
+*Mara Sov:* Use the Balefires to spread your Light, and consecrate the Essences of defeated Taken.
+
+## Defiant Battleground: EDZ | Complete: "Couldn't Tell a Pyramid From a Priory" | Season of Defiance
+
+*Devrim Kay:* You've become quite the leader, Amanda. Impressive... for a throttle jockey.
+
+*Holliday:* Aww, you infantry boys are all the same. Tough talk when it's time for drinking... But when the shootin' starts, you're crying for air support.
+
+*Devrim Kay:* You couldn't tell a Pyramid from a priory that high up. You pilots need someone brave enough to set eyes on it.
+
+*Holliday:* Brave, or foolish? That's the eternal question, ain't it?
+
+*Devrim Kay:* Haha! For the both of us, I'm sure.
+
+## Defiant Battleground: EDZ | Ascendant Plane: "A Grandeur in This Place" | Season of Defiance
+
+*Devrim Kay:* Quite drab, this place. Trostland looks a right treat compared to this shambles.
+
+*Mara Sov:* It was not always so. The existence of the Ley Lines point to a grandeur in this place, now lost to history.
+
+*Devrim Kay:* Bit like my church, that. War makes ruins of us all.
+
+## Defiant Battleground: EDZ | Enter the Pyramid: "Only the Hive Have Mastered" | Season of Defiance
+
+*The Crow:* The Witness hasn't deployed any Shadow Legion forces here. Does it think the Taken are enough to hold it?
+
+*Mithrax:* It may believe that only Hive have mastered the secrets of the Ascendant Plane.
+
+*The Crow:* Or maybe it wasn't counting on this level of Awoken involvement.
+
+*Mithrax:* When Techeuns, Splicers, and Guardians assemble, no door remains locked.
+
+## Defiant Battleground: EDZ | Complete: "Not Nuance. The Opposite. A Lack" | Season of Defiance
+
+*Devrim Kay:* I've picked up some Eliksni over the years, just by listening to comms. Some Cabal, too. The Shadow Legion... I don't know how to describe it, but there's something different about their affectation.
+
+*The Crow:* A nuance in the dialect?
+
+*Devrim Kay:* No, not nuance. The opposite. A lack. An emptiness.
+
+## Devrim Teaching Mithrax Human Slang (Defiant Battleground: EDZ | Destiny 2: Season Of Defiance)
+
+*The Crow:* A shipment of medical supplies from the City is en route to the Farm.
+
+*The Crow:* Devrim, can you handle the distribution?
+
+*Devrim:* Of course. With bells on.
+
+*Mithrax:* "Bells-on"? Hmm. This is a human expression...
+
+*Devrim:* Ah. It means, "with enthusiasm."
+
+## Defiant Battleground: EDZ | Enter the Pyramid: "I Sense a Thinning" | Season of Defiance
+
+*Mara Sov:* I sense a thinning in the barrier between worlds. Your reentry point lies just ahead. As your intuition sharpens, such opportunities will become apparent. Continue to master my power, and you will breach the Ascendant Plane at will.
+
+## Defiant Battleground: EDZ | Complete: "The List of People That Owe You" | Season of Defiance
+
+*Holliday:* That's everyone clear, en route to the City. Good work, Guardian.
+
+*Devrim Kay:* The list of people that owe you their lives gets ever longer. I'm sure they'd love the chance to thank you in person down the line.
+
+*Holliday:* Hey, who knows? Maybe one day, they'll get to return the favor.
+
+## Defiant Battleground: Orbital Prison | Complete: "With Misraaks in Eliksni" | Season of Defiance
+
+*The Crow:* Devrim, did I hear you speaking with Misraaks in Eliksni?
+
+*Devrim Kay:* I thought that was a private channel. He has graciously agreed to help me improve my understanding of the language. I practice as often as I can.
+
+*The Crow:* Well, let me know if you ever want another conversation partner.
+
+*Devrim Kay:* The more, the merrier!
+
+## Defiant Battleground: Orbital Prison | Complete: "Just Stretching My Wings" | Season of Defiance
+
+*Devrim Kay:* See you back at the Farm?
+
+*The Crow:* I want to run a few reconnaissance missions first. We need intel on the Witness and what it might be planning.
+
+*Devrim Kay:* As you like. I hope you don't feel that you need to avoid us, though.
+
+*The Crow:* Just stretching my wings, Devrim.
+
+## Defiant Battleground: Orbital Prison | Complete: "Tosh!" | Season of Defiance
+
+*Mithrax:* Cherish this victory, but remain vigilant. We will not always have the benefit of surprise.
+
+*The Crow:* Or magical shortcuts from Queen Mara.
+
+*Devrim:* Tosh! As long as our alliances hold, I like our chances against anyone, anywhere.
+
+## Defiant Battleground: Orbital Prison | Complete: "Light and Darkness in Equal" | Season of Defiance
+
+*Mithrax:* I am saddened to see such strategies from our enemies, but... not surprised. This is the way of the Darkness.
+
+*Mara Sov:* An oversimplication. Many atrocities were committed by the Lightbearers of old just as well. It is the wielder, not the tool, that determines its use. Just look to the Awoken. We use Light and Darkness in equal measure, and we have always found our way.
+
+*The Crow:* Well... not always.
+
+## Defiant Battleground: Orbital Prison | High Up: "Concentrated on Anti-Aircraft" | Season of Defiance
+
+*Devrim Kay:* You're at the proper altitude, Guardian. Time to make your way to the ship.
+
+*The Crow:* You should have the element of surprise. My Hunters report that their forces are concentrated on anti-aircraft stations.
+
+*Mithrax:* The Shadow Legion rely on the Taken for defense of Ascendant Plane.
+
+*The Crow:* Last mistake they'll ever make.
