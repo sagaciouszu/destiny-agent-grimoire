@@ -92,10 +92,14 @@ python3 -m venv .venv
 .venv\Scripts\pip.exe install --require-hashes -r requirements.lock.txt
 ```
 
-Run it with:
+Run it with either launcher:
 
 ```bat
 mcp-server\run.cmd
+```
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File mcp-server\run.ps1
 ```
 
 Notes:

@@ -36,10 +36,16 @@ The virtualenv is gitignored; the CLI remains dependency-free.
 ./mcp-server/run.sh
 ```
 
-Windows:
+Windows (cmd):
 
 ```bat
 mcp-server\run.cmd
+```
+
+Windows (PowerShell):
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File mcp-server\run.ps1
 ```
 
 The server speaks MCP on stdio and exits when the client disconnects. It must
@@ -100,7 +106,8 @@ From an agent workspace, the archive is usually mounted at `lore/`:
 ```
 
 Some clients require an absolute path. Use the path your client documents,
-without committing machine-specific paths here. On Windows, point at `run.cmd`.
+without committing machine-specific paths here. On Windows, point at `run.cmd`
+or `run.ps1` (the latter via `powershell.exe -NoProfile -ExecutionPolicy Bypass -File`).
 
 ## Tools
 
