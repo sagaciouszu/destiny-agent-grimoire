@@ -23,7 +23,10 @@ bash mcp-server/install.sh
 ```
 
 That creates `mcp-server/.venv`, installs the pinned SDK and prints a client
-config snippet. Agent workspaces do it during onboarding:
+config snippet. It picks the hash-locked requirements file for your platform:
+`requirements.lock.txt` on Unix or `requirements.windows.lock.txt` on Windows
+(win_amd64, including the Windows-only `pywin32`). Agent workspaces do it during
+onboarding:
 
 ```bash
 ./setup.sh --mcp        # or answer yes at the MCP prompt

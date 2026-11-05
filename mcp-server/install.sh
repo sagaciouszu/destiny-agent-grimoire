@@ -5,7 +5,12 @@
 set -e
 HERE="$(cd "$(dirname "$0")" && pwd)"
 VENV="$HERE/.venv"
-REQ="$HERE/requirements.lock.txt"
+# Hash-locked dependencies are platform-specific: the Windows lock carries the
+# win_amd64 wheels (including pywin32) that the Unix lock cannot express.
+case "$(uname -s 2>/dev/null || echo unknown)" in
+    MINGW*|MSYS*|CYGWIN*|Windows_NT) REQ="$HERE/requirements.windows.lock.txt" ;;
+    *) REQ="$HERE/requirements.lock.txt" ;;
+esac
 
 PYTHON=""
 for candidate in python3 python; do
