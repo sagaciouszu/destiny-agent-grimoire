@@ -38,6 +38,12 @@ Everything since v0.27.0:
   (guardrails, human-in-the-loop, least privilege, skills spec), plus platform
   portability rules and the approval requirement for version bumps.
 
+- Wiki sync: `scripts/sync-wiki.sh [--check|--push]` publishes `docs/wiki/` to
+  the GitHub wiki and refuses model-control tokens or content drift.
+- OpenClaw onboarding: `scripts/ensure-openclaw-mcp.sh` upserts an absolute
+  MCP path into `openclaw.json` (idempotent, backs up first); wired into
+  `setup.sh` and `--openclaw` sync. Doctor lint: `ok: true, findings: []`.
+
 ## Verification
 
 11/11 archive suites, 17/17 taxonomy, 89/89 query interface, 51/51 database, 353 documented commands + skills spec, MCP contract 10/10, agent connections 36/36, parity 60/60, onboarding 60/60, conformance PASS. pip-audit: no known vulnerabilities in either dependency lock. Backup refreshed (304 MB).

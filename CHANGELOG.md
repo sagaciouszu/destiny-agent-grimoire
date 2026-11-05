@@ -15,6 +15,12 @@
   `.cmd`/`.ps1` launcher targets are audited; `latest` release pinned for the
   0.x line despite historical 1.x tags.
 
+- Wiki sync: `scripts/sync-wiki.sh [--check|--push]` publishes `docs/wiki/` to
+  the GitHub wiki and refuses model-control tokens or content drift.
+- OpenClaw onboarding: `scripts/ensure-openclaw-mcp.sh` upserts an absolute
+  MCP path into `openclaw.json` (idempotent, backs up first); wired into
+  `setup.sh` and `--openclaw` sync. Doctor lint: `ok: true, findings: []`.
+
 ## v0.27.0 - Windows portability, suite manifests and wiki (2026-11-05)
 
 - Season 27 and Season 28 transcripts added (27 and 202 lines); all 28 seasons
