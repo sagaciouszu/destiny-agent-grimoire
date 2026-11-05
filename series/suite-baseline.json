@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "description": "No-loss baseline for per-agent master-audit suites. Additions are allowed; removals require an explicit baseline change.",
+  "agents": {
+    "how-to-drift-for-agents": {
+      "count": 22,
+      "required": [
+        "Archive & Link Validation",
+        "Cross-Reference Validator",
+        "Module Completeness (202 checks)",
+        "Single-Turn Voice (19 scenarios)",
+        "N-Gram Voice Scorer",
+        "10-Turn Emotional Arc",
+        "Scenario Simulator",
+        "Tape Generator",
+        "Gambit Sim (auto)",
+        "Lore Freshness",
+        "Conflict Check",
+        "Voice Consistency",
+        "Quote Cross-Check (0 unverified)",
+        "Conversation (SQLite)",
+        "Golden Voice Snapshots",
+        "Connection",
+        "Memory Isolation",
+        "Depends On Coverage",
+        "Token Estimate Coverage",
+        "No Em-Dashes",
+        "INDEX Completeness",
+        "No Personal Paths"
+      ]
+    },
+    "eris-morn": {
+      "count": 17,
+      "required": [
+        "Module Completeness (16 checks)",
+        "Quote Verification (0 unverified)",
+        "Voice Validator",
+        "Voice Consistency",
+        "10-Turn Emotional Arc",
+        "Voice Scorer",
+        "Voice Scorer Negative",
+        "Scenario Simulator",
+        "Conversation (SQLite)",
+        "Golden Voice Snapshots",
+        "Connection",
+        "Memory Isolation",
+        "Depends On Coverage",
+        "Token Estimate Coverage",
+        "No Em-Dashes",
+        "INDEX Completeness",
+        "No Personal Paths"
+      ]
+    },
+    "destiny-agent-calus": {
+      "count": 15,
+      "required": [
+        "Module Completeness",
+        "Quote Verification",
+        "Multi-User Isolation",
+        "Memory Isolation",
+        "Connection",
+        "Conversation",
+        "Multi-Turn",
+        "Scenarios",
+        "Voice Consistency",
+        "Golden Voice Snapshots",
+        "Depends On Coverage",
+        "Token Estimate Coverage",
+        "No Em-Dashes",
+        "INDEX Completeness",
+        "No Personal Paths"
+      ]
+    },
+    "destiny-agent-zavala": {
+      "count": 15,
+      "required": [
+        "Module Completeness",
+        "Quote Verification",
+        "Multi-User Isolation",
+        "Memory Isolation",
+        "Connection",
+        "Conversation",
+        "Multi-Turn",
+        "Scenarios",
+        "Voice Consistency",
+        "Golden Voice Snapshots",
+        "Depends On Coverage",
+        "Token Estimate Coverage",
+        "No Em-Dashes",
+        "INDEX Completeness",
+        "No Personal Paths"
+      ]
+    },
+    "destiny-agent-ghost": {
+      "count": 15,
+      "required": [
+        "Module Completeness",
+        "Quote Verification",
+        "Multi-User Isolation",
+        "Memory Isolation",
+        "Connection",
+        "Conversation",
+        "Multi-Turn",
+        "Scenarios",
+        "Voice Consistency",
+        "Golden Voice Snapshots",
+        "Depends On Coverage",
+        "Token Estimate Coverage",
+        "No Em-Dashes",
+        "INDEX Completeness",
+        "No Personal Paths"
+      ]
+    }
+  }
+}
