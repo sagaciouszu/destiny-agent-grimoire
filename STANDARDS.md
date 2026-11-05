@@ -316,6 +316,10 @@ serves every agent.
 
 ## 11. Packaging
 
+- After publishing, run `gh release edit <tag> --latest`. The historical v1.x
+  release line has a higher semver than the current 0.x line, so GitHub would
+  otherwise point `/releases/latest` at an asset-less release and every
+  `releases/latest/download/grimoire.db` URL would 404.
 - Database: build artifact, attached to releases with `SHA256SUMS`
   (`gh release upload <tag> db/grimoire.db SHA256SUMS --clobber`). The installer
   verifies the download against that checksum and falls back to a local build on mismatch.
