@@ -1,4 +1,4 @@
-## Unreleased - Portability, safety and speaker identity (2026-11-05)
+## v0.27.1 - Portability, safety and speaker identity (2026-11-05)
 
 - Saint-14 speaker family protected: `Saint-XIV`, `Saint XIV`, `Saint IV`,
   `The Saint`, `Saint`, `Kellbreaker` all alias to `Saint-14`, and migration

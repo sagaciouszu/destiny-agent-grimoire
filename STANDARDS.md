@@ -438,8 +438,10 @@ Rules:
 - Every repository publishes a release for its tag. Agent releases carry notes
   only; the archive also attaches the database. A tag without a release is an
   incomplete release.
-- Keep the body under 40 lines. It is a release summary, not the changelog; the
-  full history stays in `CHANGELOG.md`.
+- The body lists **every major change since the previous release**, not a
+  sample: start from that release's `CHANGELOG.md` section and carry all of it
+  into `RELEASE.md`. Minor refactors may be folded, but nothing user-visible
+  may be dropped. `CHANGELOG.md` remains the full history.
 - Do not restate what the repository is or who it is for.
 - The heading sequence is identical across both agent repos; `tests/conformance.py` enforces the sections, order and length.
 
