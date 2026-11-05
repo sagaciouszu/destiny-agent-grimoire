@@ -387,6 +387,9 @@ PY
         fi
     done <<< "$(manifest rows)"
     echo "synced $(manifest ids | paste -sd, - | sed 's/,/, /g') -> $OC_ROOT/workspace-*"
+    # Keep OpenClaw's MCP entry pointed at this checkout via an absolute path.
+    bash "$HERE/scripts/ensure-openclaw-mcp.sh" "$HERE" \
+        || echo "warning: OpenClaw MCP config was not updated" >&2
 fi
 
 if [ -z "$DRY" ] && [ "$TARGET" = "opencode" ]; then
