@@ -120,6 +120,8 @@ migration. The full contract is `STANDARDS.md`.
 
 ## For agents
 
+- **Wiki:** `docs/wiki/Home.md` covers setup, architecture, database, CLI, MCP,
+  agents, platforms, testing and troubleshooting.
 - **Skill:** `skills/destiny-grimoire/SKILL.md` is the drop-in agent skill.
 - **MCP (optional):** `mcp-server/run.sh` serves typed tools to non-shell clients
   over local stdio; one adapter covers every agent that mounts this archive.
@@ -163,7 +165,7 @@ compendium/  # character quote index that feeds the characters tables
 archive/     # raw scraper output (JSONL) and fetchers
 scripts/     # ingestion helpers
 tests/       # archive gates, agent suites, shared runner, conformance
-docs/        # redirect to the standalone site repository
+docs/        # wiki, taxonomy, discovery design and coverage ledger
 skills/      # agent-facing SKILL.md
 series/      # registry of grimoire-born agents (ids, source repos, peers)
 mcp-server/  # optional MCP adapter (stdio, read-only)
@@ -215,9 +217,11 @@ repository minus the database lives outside the tree.
 
 | Suite | Command | Expected |
 |---|---|---|
-| Archive audit | `bash grimoire-master-audit.sh` | 9/9 |
-| Drifter agent audit | run tests/master-audit.sh in how-to-drift-for-agents | 20/20 |
-| Eris agent audit | run tests/master-audit.sh in eris-morn | 15/15 |
+| Archive audit | `bash grimoire-master-audit.sh` | 10/10 |
+| Drifter agent audit | run tests/master-audit.sh in how-to-drift-for-agents | 22/22 |
+| Eris agent audit | run tests/master-audit.sh in eris-morn | 17/17 |
+| Calus / Zavala / Ghost | run tests/master-audit.sh in each repo | 15/15 |
+| Agent suite manifests | `python3 tests/suite-manifest-test.py` | PASS |
 | Database integrity | `bash tests/test-db.sh` | 51 checks |
 | Query interface | `bash tests/query-interface-test.sh` | 89 checks |
 | Agent layout | `bash tests/agent-layout-test.sh` | 39 checks |
