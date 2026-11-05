@@ -122,10 +122,10 @@ if [ "$TARGET" = "opencode" ]; then
         DEPLOYED=$((DEPLOYED+1))
         DEPLOYED_IDS+=("$id")
         $DRY mkdir -p "$DEST/$id"
-        python3 "$HERE/scripts/mirror-tree.py" --delete $MIRROR_DRY "${EXCLUDES[@]}" "$src/" "$DEST/$id/"
-        if [ -f "$DEST/$id/$entry" ]; then
-            $DRY mv -f "$DEST/$id/$entry" "$DEST/$entry"
-        fi
+        # The entry file is delivered at the workspace root, so it is excluded
+        # from the subtree mirror and copied explicitly (no copy-then-move churn).
+        python3 "$HERE/scripts/mirror-tree.py" --delete $MIRROR_DRY "${EXCLUDES[@]}" --exclude "$entry" "$src/" "$DEST/$id/"
+        $DRY cp -p "$src/$entry" "$DEST/$entry"
         if [ -z "$DRY" ] && [ -f "$DEST/$id/USER.template.md" ] && [ ! -f "$DEST/$id/USER.md" ]; then
             cp "$DEST/$id/USER.template.md" "$DEST/$id/USER.md"
             echo "seeded $id/USER.md"
@@ -161,11 +161,12 @@ PY
                 exit 1
             fi
         done
-        python3 - "$DEST" "$MANIFEST" <<'PY'
-import json, os, sys
-dest, manifest_path = sys.argv[1], sys.argv[2]
+        python3 - "$DEST" "$MANIFEST" "$WORK" <<'PY'
+import json, os, shutil, sys
+dest, manifest_path, work = sys.argv[1], sys.argv[2], sys.argv[3]
 _agents = json.load(open(manifest_path, encoding='utf-8'))['agents']
 keep = {a['entry'] for a in _agents} | {f"{a['id']}-consult.md" for a in _agents}
+src_of = {a.get('id'): a.get('source') for a in _agents}
 for root, dirs, files in os.walk(dest):
     dirs[:] = [d for d in dirs if d != '.git']
     for name in files:
@@ -182,6 +183,14 @@ for root, dirs, files in os.walk(dest):
             continue
         with open(path, 'w', encoding='utf-8') as f:
             f.write('---\ndisabled: true\n---\n\n' + text)
+        # Align mtime with the source file: the transform is intentional, but
+        # the tree mirror must not report it as drift on every sync.
+        if '/' in rel:
+            agent_id, sub = rel.split('/', 1)
+            repo = src_of.get(agent_id)
+            src = os.path.join(work, repo, sub) if repo else ''
+            if src and os.path.exists(src):
+                shutil.copystat(src, path)
 PY
 
         SERIES_DIR="$(dirname "$DEST")/series"
@@ -318,7 +327,8 @@ else
         DEPLOYED=$((DEPLOYED+1))
         target="$OC_ROOT/workspace-$id"
         $DRY mkdir -p "$target"
-        python3 "$HERE/scripts/mirror-tree.py" --delete $MIRROR_DRY "${EXCLUDES[@]}" "$src/" "$target/"
+        python3 "$HERE/scripts/mirror-tree.py" --delete $MIRROR_DRY "${EXCLUDES[@]}" --exclude "$entry" "$src/" "$target/"
+        $DRY cp -p "$src/$entry" "$target/$entry"
         if [ -z "$DRY" ] && [ ! -f "$target/$entry" ]; then
             echo "FATAL: entry missing after sync: $target/$entry" >&2
             exit 1
