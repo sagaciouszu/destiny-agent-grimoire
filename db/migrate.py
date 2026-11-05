@@ -47,6 +47,14 @@ SPEAKER_ALIASES = {
     'AMANDA': 'Amanda Holliday',
     'The Drifter': 'Drifter',
     'The Crow': 'Crow',
+    # Saint-14 is one character under many names; alias them so no source
+    # variant fragments the corpus or trips the Roman-numeral speaker filter.
+    'Saint-XIV': 'Saint-14',
+    'Saint XIV': 'Saint-14',
+    'Saint IV': 'Saint-14',
+    'The Saint': 'Saint-14',
+    'Saint': 'Saint-14',
+    'Kellbreaker': 'Saint-14',
 }
 
 def canon_speaker(sp):
@@ -75,9 +83,19 @@ ACT_ONLY = re.compile(r'^Act (?:I|II|III)$')
 
 
 def is_junk_speaker(sp):
-    """Quest/step titles parsed as speakers by web scrapers, not characters."""
+    """Quest/step titles parsed as speakers by web scrapers, not characters.
+
+    A speaker that resolves through SPEAKER_ALIASES is a mapped character and
+    is never junk: 'Saint IV' must survive even though it ends in a Roman
+    numeral, because it aliases to Saint-14."""
     sp = (sp or '').strip()
     if not sp:
+        return False
+    if sp in SPEAKER_ALIASES:
+        return False
+    # Never drop a Saint-* speaker: Destiny has exactly one Saint, and a dropped
+    # row is unrecoverable while a kept row can always be aliased later.
+    if re.match(r'^(?:the\s+)?saint\b', sp, re.I):
         return False
     if sp.upper() in ('NOTE', 'NOTES', 'AREA', 'REMEMBER', 'STATUS', 'WARNING',
                       'CAUTION', 'LOCATION', 'OBJECTIVE', 'REWARD', 'REWARDS'):

@@ -51,6 +51,25 @@ def speaker_identity():
     assert one("SELECT COUNT(*) FROM speaker_aliases WHERE alias='The Crow' AND canonical='Crow'") == 1
 
 
+def speaker_filter():
+    from migrate import is_junk_speaker, canon_speaker
+    # The Saint-14 family must never be dropped, even with a Roman numeral.
+    for name in ('Saint-14', 'Saint-XIV', 'Saint XIV', 'Saint IV',
+                 'The Saint', 'Saint', 'Kellbreaker'):
+        assert not is_junk_speaker(name), f'{name} wrongly dropped'
+        assert canon_speaker(name) == 'Saint-14', (name, canon_speaker(name))
+    # Quest/step titles are still dropped.
+    for title in ('Path of the Splicer II', 'Into the Depths VI', 'Act I'):
+        assert is_junk_speaker(title), f'{title} wrongly kept'
+    aliases = dict(conn.execute('SELECT alias, canonical FROM speaker_aliases'))
+    for alias in ('Saint-XIV', 'Saint XIV', 'Saint IV', 'The Saint', 'Saint',
+                  'Kellbreaker'):
+        assert aliases.get(alias) == 'Saint-14', (alias, aliases.get(alias))
+    variants = one("SELECT COUNT(*) FROM transcript_lines WHERE speaker IN "
+                   "('Saint-XIV','Saint XIV','Saint IV','The Saint','Kellbreaker')")
+    assert variants == 0, f'variant speakers leaked into the DB: {variants}'
+
+
 def coverage_notes():
     allowed = {'no_dialogue', 'narration_only', 'dialogue_source_missing',
                'partial_transcript', 'unverified'}
@@ -178,6 +197,7 @@ for name, fn in [
     ('source tiers present and known', tiers),
     ('every transcript classified', classified),
     ('Crow identity is canonical', speaker_identity),
+    ('speaker filter keeps the Saint-14 family', speaker_filter),
     ('coverage gaps have explicit statuses', coverage_notes),
     ('classification references resolve', refs),
     ('seasons 1-28 unique', seasons),

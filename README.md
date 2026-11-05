@@ -111,7 +111,7 @@ No API keys, accounts or network access are required at runtime.
 | `v_activity_coverage` (view) | 67 | Transcripts and lines per activity |
 | `v_season_coverage` (view) | 28 | Transcripts and lines per season |
 | `v_event_coverage` (view) | 9 | Transcripts, lines and occurrences per event |
-| `speaker_aliases` | 14 | Alias to canonical speaker mapping |
+| `speaker_aliases` | 20 | Alias to canonical speaker mapping |
 | `verify_fts` (index) | 120477 | Fast quote verification |
 | `item_title_fts` (index) | 58764 | Item title lookup |
 
