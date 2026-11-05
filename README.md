@@ -96,10 +96,10 @@ No API keys, accounts or network access are required at runtime.
 | `events` | 9 | Rotating events including removed ones |
 | `event_occurrences` | 72 | Event year, dates and season |
 | `activities` | 67 | Raids, dungeons, seasonal activities and missions |
-| `transcript_classification` | 1308 | Activity/season/event per transcript |
+| `transcript_classification` | 1314 | Activity/season/event per transcript |
 | `item_classification` | 58764 | Season/event per item |
 | `document_classification` | 181 | Season/event per book and record |
-| `coverage_notes` | 9 | Explicit status for zero-coverage gaps |
+| `coverage_notes` | 10 | Explicit status for zero-coverage gaps |
 | `lore_entries` | 2962 | Bungie manifest lore entries (local enrichment) |
 | `lore_entry_items` | 2068 | Lore entry to item-title links |
 | `manifest_activities` | 3744 | Full manifest activity catalogue |
@@ -114,6 +114,7 @@ No API keys, accounts or network access are required at runtime.
 | `speaker_aliases` | 20 | Alias to canonical speaker mapping |
 | `verify_fts` (index) | 120689 | Fast quote verification |
 | `item_title_fts` (index) | 58764 | Item title lookup |
+| **Total** | 509942 | Rows across every table, view and index above |
 
 Every content row carries provenance. Speaker aliases are canonicalized during
 migration. The full contract is `STANDARDS.md`.

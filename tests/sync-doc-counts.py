@@ -98,6 +98,48 @@ DRIFTER_PATS = [
     (r'\b\d{3,4} verified Drifter quotes', '{drifter} verified Drifter quotes'),
 ]
 
+def sync_inside_table(text, db_path):
+    """Regenerate the README 'What is inside' table, total row included.
+
+    Every Rows cell is read from the database (tables, views and indexes alike)
+    and the final **Total** row is the sum of the column, so the tally can
+    never drift from the data it counts.
+    """
+    head, sep, rest = text.partition('## What is inside\n\n')
+    if not sep:
+        return text
+    m = re.match(r'(\| Table \| Rows \| Purpose \|\n(?:\|[^\n]*\n)+)', rest)
+    if not m:
+        return text
+    rows, total = [], 0
+    conn = sqlite3.connect('file:{}?mode=ro'.format(db_path), uri=True)
+    for line in m.group(1).splitlines():
+        cells = [c.strip() for c in line.strip().strip('|').split('|')]
+        if len(cells) != 3 or not cells[1].isdigit():
+            rows.append(line)          # header, separators, unknown shapes
+            continue
+        name, purpose = cells[0], cells[2]
+        if name.startswith('**Total**'):
+            continue                   # re-appended below, always last
+        object_name = name.split('`')[1] if '`' in name else name
+        try:
+            count = conn.execute(
+                'SELECT COUNT(*) FROM "{}"'.format(object_name)).fetchone()[0]
+        except sqlite3.Error:
+            conn.close()
+            raise SystemExit('FATAL: README table row has no live object: '
+                             + object_name)
+        total += count
+        rows.append('| {} | {} | {} |'.format(name, count, purpose))
+    conn.close()
+    rows.append('| **Total** | {} | Rows across every table, view and index '
+                'above |'.format(total))
+    return head + sep + '\n'.join(rows) + '\n' + rest[m.end():]
+
+
+README = os.path.join(GRIMOIRE, 'README.md')
+DB_PATH = os.path.join(GRIMOIRE, 'db', 'grimoire.db')
+
 FILES = []
 for pat in [os.path.join(GRIMOIRE, '*.md'), os.path.join(GRIMOIRE, 'db', '*.md'),
             os.path.join(GRIMOIRE, 'skills', 'destiny-grimoire', '*.md'),
@@ -122,6 +164,8 @@ for path in sorted(set(FILES)):
     orig = s
     for rx, tpl in pats:
         s = re.sub(rx, lambda m: tpl.format(**C), s)
+    if path == README:
+        s = sync_inside_table(s, DB_PATH)
     if s != orig:
         changes.append(path)
         if not CHECK:
