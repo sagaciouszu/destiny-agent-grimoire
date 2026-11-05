@@ -35,9 +35,16 @@ def audit_suites(agent):
 def main():
     baseline = json.load(open(BASELINE, encoding='utf-8'))
     failures = []
+    present = 0
     for agent_name, spec in baseline['agents'].items():
         agent = os.path.abspath(os.path.join(ROOT, '..', agent_name))
         manifest_path = os.path.join(agent, 'tests', 'suites.json')
+        if not os.path.isdir(agent):
+            # CI checks out this repository alone; agent repos are siblings
+            # only on a full workspace. Skip absent agents, verify present ones.
+            print(f'  {agent_name}: skipped (repository not present)')
+            continue
+        present += 1
         try:
             manifest = json.load(open(manifest_path, encoding='utf-8'))
             suites = manifest['suites']
@@ -71,7 +78,10 @@ def main():
         for failure in failures:
             print(f'  - {failure}')
         return 1
-    print(f'  PASS: {len(baseline["agents"])} agent manifests match their audits and baseline')
+    if present == 0:
+        print('  SKIP: no agent repositories present to check')
+        return 0
+    print(f'  PASS: {present} agent manifests match their audits and baseline')
     return 0
 
 
