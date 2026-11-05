@@ -1,3 +1,19 @@
+## v0.27.2 - Dialogue expansion and contract corrections (2026-11-05)
+
+- Four partial activity transcripts expanded with **212 verified net-new
+  dialogue lines** from 131 activity videos: Ketchcrash 90, PsiOps Battlegrounds
+  120, Defiant Battlegrounds 120, Expedition 79 (197 -> 409 lines total).
+  Junk speakers and URLs filtered; every added line spot-verified.
+- Persona counts synced: Drifter 1,149, Eris 1,011, Zavala 638.
+- Wiki sync: `scripts/sync-wiki.sh [--check|--push]` publishes `docs/wiki/`,
+  refusing model-control tokens and content drift; the public wiki was
+  republished clean (10 corrupted pages replaced).
+- OpenClaw onboarding: `scripts/ensure-openclaw-mcp.sh` upserts an absolute MCP
+  path into the OpenClaw config (idempotent, backs up first); wired into
+  `setup.sh` and `--openclaw` sync. Doctor lint: `ok: true, findings: []`.
+- STANDARDS corrections: tier-aware provenance URLs, complete gate list,
+  release/metadata rules aligned with conformance, approval nuance.
+
 ## v0.27.1 - Portability, safety and speaker identity (2026-11-05)
 
 - Saint-14 speaker family protected: `Saint-XIV`, `Saint XIV`, `Saint IV`,
