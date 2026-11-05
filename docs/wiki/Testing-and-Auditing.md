@@ -74,7 +74,7 @@ python3 tests/conformance.py
 mcp-server/.venv/bin/python tests/mcp-test.py
 ```
 
-Expected: **9 / 9 passed**.
+Expected: **10 / 10 passed**.
 
 ## Before a release
 

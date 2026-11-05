@@ -1,12 +1,22 @@
-## Unreleased - Project audit, suite manifests and wiki (2026-11-05)
+## v0.27.0 - Windows portability, suite manifests and wiki (2026-11-05)
 
-- Versioned wiki added under `docs/wiki/` with copyediting and expanded setup,
-  architecture, CLI, MCP, agent, platform, testing and troubleshooting pages.
+- Season 27 and Season 28 transcripts added (27 and 202 lines); all 28 seasons
+  now have at least one transcript. Crota's End and Wrath of the Machine are
+  confirmed `no_dialogue`.
 - Per-agent `suites.json` manifests plus a shared runner; central no-loss guard
-  (`tests/suite-manifest-test.py`) added to the archive audit and CI.
-- Documentation audits fixed: suite counts, season counts, command targets and
-  stale view counts.
-- MCP coverage results expose `coverage_status` and `coverage_notes`.
+  (`tests/suite-manifest-test.py`) keeps every master-audit suite intact.
+- Versioned wiki added under `docs/wiki/` with copyedited setup, architecture,
+  CLI, MCP, agent, platform, testing and troubleshooting pages.
+- Windows portability: `mcp-server/run.cmd`, venv-layout detection in
+  `run.sh`/`install.sh`, rsync-free tree mirror for agent sync, and a
+  symlink -> junction -> clone fallback in every `setup.sh`.
+- MCP probe (`mcp-server/probe.sh`) performs a real handshake and reports the
+  18 tools; OpenClaw absolute-path guidance documented.
+- Documentation audits fixed: suite counts, season counts, command targets,
+  stale view counts; MCP coverage results expose `coverage_status` and
+  `coverage_notes`.
+- External link check no longer runs on a schedule; it runs after deploys, on
+  pull requests and on manual dispatch.
 
 ## v0.26.0 - Reviewed activity dialogue and coverage status (2026-11-04)
 

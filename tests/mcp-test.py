@@ -187,5 +187,14 @@ check('limit is clamped', limits_clamped)
 check('connection is read-only', read_only)
 check('stdio protocol smoke', protocol_smoke)
 
+
+def probe_works():
+    probe = subprocess.run([sys.executable, os.path.join(ROOT, 'mcp-server', 'probe.py')],
+                           capture_output=True, text=True, timeout=60)
+    assert probe.returncode == 0, probe.stdout + probe.stderr
+    assert '18 tools' in probe.stdout, probe.stdout
+
+check('probe handshake (18 tools)', probe_works)
+
 print(f'\nPassed: {PASS} | Failed: {FAIL}')
 sys.exit(1 if FAIL else 0)
