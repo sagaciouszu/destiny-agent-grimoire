@@ -11,7 +11,7 @@ Everything since v0.27.0:
   never drops an aliased or `Saint-*` speaker (the Roman-numeral filter would
   have silently eaten `Saint IV`). Regression test added; `speaker_aliases`
   now has 20 entries.
-- **Windows support completed:** `requirements.windows.lock.txt` (hash-locked
+- **Windows support completed:** `mcp-server/requirements.windows.lock.txt` (hash-locked
   win_amd64 wheels including `pywin32`), `run.ps1` PowerShell launcher beside
   `run.cmd`, and a `windows-latest` CI job that builds the database, runs both
   launcher probes, the MCP contract, the tree mirror and an agent junction
