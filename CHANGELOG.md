@@ -1,3 +1,20 @@
+## Unreleased - Portability, safety and speaker identity (2026-11-05)
+
+- Saint-14 speaker family protected: `Saint-XIV`, `Saint XIV`, `Saint IV`,
+  `The Saint`, `Saint`, `Kellbreaker` all alias to `Saint-14`, and migration
+  never drops an aliased or `Saint-*` speaker. Regression test added.
+- Windows: hash-locked dependencies (`requirements.windows.lock.txt`, includes
+  pywin32), `run.ps1` launcher, `windows-latest` CI job exercising build,
+  probes, MCP contract, tree mirror and an agent junction setup.
+- Agent sync converges to zero drift: explicit entry delivery, transformed-file
+  mtime alignment; stray `.git` directories removed from deployed workspaces.
+- Personal-path guards now detect any `/home/<user>` pattern instead of one
+  username; machine paths scrubbed from template docs.
+- Every tag in every repository now has a GitHub release (19 backfilled).
+- Docs: verify examples use real canon quotes; Agent Skills frontmatter and
+  `.cmd`/`.ps1` launcher targets are audited; `latest` release pinned for the
+  0.x line despite historical 1.x tags.
+
 ## v0.27.0 - Windows portability, suite manifests and wiki (2026-11-05)
 
 - Season 27 and Season 28 transcripts added (27 and 202 lines); all 28 seasons

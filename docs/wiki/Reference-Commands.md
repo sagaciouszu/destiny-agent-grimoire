@@ -35,8 +35,8 @@ python3 db/query.py stats
 ## Verify quotes
 
 ```bash
-python3 db/query.py verify "I am Eris Morn." --speaker "Eris Morn" --exact
-python3 db/query.py verify-many "I am Eris Morn." "Guardian." --speaker "Eris Morn"
+python3 db/query.py verify "Absolutely not." --speaker "Eris Morn" --exact
+python3 db/query.py verify-many "Absolutely not." "You did well to find this point of infestation." --speaker "Eris Morn"
 ```
 
 ## Agents
