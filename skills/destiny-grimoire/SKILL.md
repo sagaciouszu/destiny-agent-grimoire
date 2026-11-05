@@ -1,6 +1,6 @@
 ---
 name: destiny-grimoire
-description: 'Query the Destiny Agent Grimoire for verified Destiny lore, character dialogue, raids, dungeons, seasonal activities, seasons and rotating events, seal/triumph records, item flavor text, Hive/Oryx/Savathûn canon and grimoire cards. Use when an agent needs canonical Destiny lore, activity or season coverage, character quotes, factions, item flavor text, book transcripts, or conversations involving specific characters. Triggers: destiny, lore, grimoire, character lines, transcript, book, quote, faction, raid, dungeon, season, episode, Festival of the Lost, Dawning, Solstice, Guardian Games, Iron Banner, Menagerie, Hive, Crota, Oryx, Savathûn, Eris Morn, Drifter, Gambit.'
+description: 'Query verified Destiny lore: quotes, seasons, raids, seals, items; Calus, Zavala, Ghost, Eris, Drifter. Triggers: lore, grimoire, quote, hive, gambit.'
 license: MIT
 metadata:
   tags: "Destiny, Lore, Grimoire, Characters, Transcripts, Books, Items, Records, Raids, Dungeons, Seasons, Events"
@@ -13,6 +13,17 @@ Agent-optimized Destiny lore archive. Query via SQLite; no network calls at
 query time. Use this when you need canonical Destiny lore,
 activity/season/event coverage, storytelling, lore checks, agent personas, or
 fact-checking.
+
+<details>
+<summary>Extended trigger terms (keep in mind while deciding to activate)</summary>
+
+destiny, lore, grimoire, character lines, transcript, book, quote, faction,
+raid, dungeon, season, episode, Festival of the Lost, Dawning, Solstice,
+Guardian Games, Iron Banner, Menagerie, Hive, Crota, Oryx, Savathûn,
+Eris Morn, Drifter, Calus, Zavala, Ghost, Gambit, seal, triumph, item,
+flavor text, verify.
+
+</details>
 
 ## Location
 

@@ -6,7 +6,7 @@
 bash grimoire-master-audit.sh
 ```
 
-Expected: **11 / 11 suites passed**.
+Expected: **13 / 13 suites passed**.
 
 | Suite | Covers |
 |---|---|
@@ -21,6 +21,8 @@ Expected: **11 / 11 suites passed**.
 | Speaker Noise Gate | junk speakers and aliases |
 | Agent Suite Manifests | no suite loss or drift |
 | Tree Mirror | cross-platform sync replaces rsync (copy/delete/excludes) |
+| Peer Permission Leak Audit | deployed agents deny reads/greps on peer dirs and peer source repos |
+| Persona/DB/Prose Count Consistency | persona.json, live DB and derived doc counts agree |
 
 ## Agent audits
 
@@ -32,11 +34,11 @@ bash tests/master-audit.sh
 
 | Agent | Suites |
 |---|---:|
-| Drifter | 22 |
-| Eris | 17 |
-| Calus | 15 |
-| Zavala | 15 |
-| Ghost | 15 |
+| Drifter | 23 |
+| Eris | 18 |
+| Calus | 18 |
+| Zavala | 18 |
+| Ghost | 18 |
 
 The shared runner reads `tests/suites.json`:
 
@@ -76,9 +78,11 @@ tree mirror and an agent `setup.sh` link (symlink -> junction -> clone).
 
 ```bash
 mcp-server/.venv/bin/python tests/mcp-test.py
+mcp-server/.venv/bin/python tests/mcp-agent-optimization-test.py
 ```
 
-Expected: **12 / 12 passed**.
+Expected: **12 / 12 passed** and **25 / 25 passed** (agent-optimization gate:
+descriptions, actionable errors, snippets, clamps, resource caps, counts).
 
 ## Before a release
 

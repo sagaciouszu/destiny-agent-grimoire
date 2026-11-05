@@ -1,3 +1,48 @@
+## v0.27.4 - Agent-optimization pass: search, lookups, permissions (2026-11-05)
+
+Investigation follow-through (`GRIMOIRE-INVESTIGATION-REPORT.md` backlog 1-12):
+
+- Search is agent-shaped: ranked results demote stage directions (penalty 2.0)
+  and unattributed cutscene captions (1.0), a new `exclude_stage` filter drops
+  them entirely, and snippets grew from 10 to 25 FTS tokens so relevance is
+  judgeable in one call. The row key `snip` is now `snippet`.
+- One-call lookups: `find_item` rows carry flavor-text snippets and linked lore
+  titles; `item()` returns a bounded dict (no `id`/`norm_text`) plus `lore`
+  links. `character_info.spoken_lines` is anchored to the exact speaker with
+  `is_optional=0`, matching persona.json everywhere (Eris 1,011; Ghost 2,653).
+- `verify` drops the LIKE scan: index-only phrases plus an exact normalized-row
+  fallback for punctuation-only canon lines. Mid-word fragments no longer
+  verify (submit quotes as written).
+- MCP: expanded `instructions` with a tool map and verify-before-quote policy;
+  every description names every parameter; ref-format hints on
+  `item`/`record`/`lore`/`seal`/`list_records` (plus a `triumphs` alias);
+  resource reads cap at ~16,000 chars; the offset clamp (10,000) is documented.
+- Peer permission leak closed: `sync-live-agents.sh` now denies read/glob/grep
+  on peer **source repos** under Work/ as well as installed peer dirs
+  (24 denies per primary agent, 48 per consult copy); deployed files regenerated.
+- Grimoire skill description trimmed to 150 bytes (standard: 160) with the
+  full trigger list moved into the skill body.
+- Three new gates: `tests/mcp-agent-optimization-test.py` (25 checks:
+  descriptions, actionable errors, snippets, clamps, resource caps, counts),
+  `tests/permission-leak-audit.py` (240 checks, wired into the master audit),
+  `tests/count-consistency.py` (persona vs DB vs derived prose, wired into the
+  master audit). Extended suite grows to include the MCP optimization gate.
+- Two aggregate transcripts (`additional-edge-of-fate-contact-drifter`,
+  `youtube-destinypedia-additional`) intentionally keep an empty
+  `source_url`: they compile multiple upstreams (Ishtar/Destinypedia/YouTube)
+  and no single canonical URL exists; fabricating one would break provenance.
+
+## Verification
+
+Master audits: grimoire 13/13, Drifter 23/23, Eris 18/18, Calus 18/18,
+Zavala 18/18, Ghost 18/18. Local gates: test-db 55/55, query-interface 89/89,
+robustness 26/26, agent-layout 81/81, docs-audit 361 commands + skills spec,
+suite-manifest 5/5, conformance, agent-connections, MCP contract 12/12,
+MCP matrix 8/8 (154 calls, 3 concurrent clients, API parity),
+MCP agent-optimization 25/25, permission-leak-audit 240/240,
+count-consistency 17/17, retrieval ranked P@5=0.96 / MRR=1.00,
+golden-voice 5/5 in all five agent repos.
+
 ## v0.27.3 - Database self-audit, meta fix and MCP CLI parity (2026-11-05)
 
 - Database self-audit found three migration bugs, all fixed: the `meta` stamp

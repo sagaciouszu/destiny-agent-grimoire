@@ -164,15 +164,15 @@ hand to separate a config-path problem from a server problem.
 
 | Tool | Arguments | Returns |
 |---|---|---|
-| `search` | `query`, `type?`, `limit=10`, `full=false`, `offset=0`, `rank=true`, `activity?`, `season?`, `event?`, `expansion?`, `class_tag?` | `{count, total, next_offset, rows}` |
+| `search` | `query`, `type?`, `limit=10`, `full=false`, `offset=0`, `rank=true`, `activity?`, `season?`, `event?`, `expansion?`, `class_tag?`, `exclude_stage=false` | `{count, total, next_offset, rows}` with `snippet` fields; ranked results demote stage directions/cutscene captions, `exclude_stage` drops them |
 | `character` | `name`, `about?`, `all_lines=false`, `limit=20`, `offset=0`, `canon_only=false`, `class_tag?` | `{found, header, rows}` |
-| `item` | `slug` | item row, `text` trimmed |
+| `item` | `slug` | bounded item row (title, `text` trimmed, `source_url`, `lore` links; no internal fields) |
 | `verify` | `quote`, `speaker?`, `exact=false` | `{quote, verified, matches}` with `exact` flags |
-| `list_records` | `kind`, `limit=50`, `offset=0` | `{count, rows}` for books, characters, speakers, records, activities, seasons, events, lore, seals |
+| `list_records` | `kind`, `limit=50`, `offset=0` | `{count, rows}` for books, characters, speakers, records (alias: triumphs), activities, seasons, events, lore, seals |
 | `stats` | none | row counts, top item types, top speakers |
 | `book` | `ref`, `limit=20`, `offset=0`, `full=false` | book metadata and entries |
 | `transcript` | `ref`, `speaker?`, `limit=50`, `offset=0`, `full=false`, `include_stage=false`, `canon_only=false`, `section?`, `class_tag?` | transcript metadata and lines |
-| `find_item` | `query`, `limit=10`, `offset=0` | items matching a title or slug fragment |
+| `find_item` | `query`, `limit=10`, `offset=0` | item rows with flavor-text snippets and linked lore titles (no follow-up `item` call needed for most lookups) |
 | `record` | `ref` | triumph or seal details |
 | `seals` | none | `{count, rows}` for every manifest seal with record counts |
 | `seal` | `ref` | seal details and its triumph records |
@@ -187,11 +187,14 @@ hand to separate a config-path problem from a server problem.
 | `coverage` | none | coverage matrix, gap lists and `coverage_notes` statuses/evidence |
 
 MCP limits clamp to 1-100 to protect the agent's context; the CLI is not clamped
-to 100 (the shared API allows up to 10,000). Full text is trimmed to 4000
-characters per row.
+to 100 (the shared API allows up to 10,000). `offset` values above 10,000 clamp
+to 10,000 (deep paging past that bound returns no rows by design). Full text is
+trimmed to 4000 characters per row, and resource reads are capped at ~16,000
+characters with a `[truncated; page via the matching tool]` marker.
 `verify` is the quote-safety primitive: `verified` is true only for canonical text.
-It uses the verification index for speed and falls back to a full scan for
-mid-word fragments.
+It matches normalized phrases against the verification index; punctuation-only
+quotes fall back to an exact normalized-row lookup (mid-word fragments no longer
+verify - submit the quote as written in canon).
 `speaker` requires attribution (books and items, which have no speaker, are then
 excluded); `exact` requires the normalized quote to equal a full canonical row
 instead of matching a fragment.

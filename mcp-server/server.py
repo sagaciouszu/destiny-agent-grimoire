@@ -22,6 +22,7 @@ from mcp.server.mcpserver.exceptions import ToolError  # noqa: E402
 from mcp.types import ToolAnnotations  # noqa: E402
 
 MAX_TEXT = 4000
+MAX_RESOURCE = 16000
 MCP_MAX_LIMIT = 100
 MAX_TOPIC = 300
 READ_ONLY = ToolAnnotations(read_only_hint=True, idempotent_hint=True,
@@ -53,8 +54,15 @@ server = MCPServer(
     'destiny-grimoire',
     version='1.5.0',
     instructions=(
-        'Canonical Destiny lore. Search for topics, pull character lines, look up '
-        'items, and call verify before quoting anything. All queries are read-only.'),
+        'Canonical Destiny lore. Tool map: search (keyword discovery across all '
+        'content), character + character_info (quotes and metadata by name), '
+        'find_item -> item (search items, then details with lore links), book / '
+        'transcript / lore / record / seal (read one document by ref), activities '
+        '/ activity / seasons / events / event / coverage (taxonomy and coverage), '
+        'list_records (cheap listings), stats (row counts), verify / verify_many '
+        '(quote check). Call verify with the speaker and exact=true before quoting '
+        'any line, and cite the source slug. Prefer search first, then fetch the '
+        'full document by slug. All queries are read-only.'),
 )
 
 
@@ -71,11 +79,23 @@ def _trim(text, limit=MAX_TEXT):
     return text
 
 
+def _cap(text, limit=MAX_RESOURCE):
+    """Bound resource payloads so reads cannot blow an agent context window."""
+    if text and len(text) > limit:
+        return text[:limit] + '...[truncated; page via the matching tool]'
+    return text
+
+
+def _jcap(obj):
+    return _cap(json.dumps(obj, ensure_ascii=False))
+
+
 @server.tool(annotations=READ_ONLY)
 def search(query: str, type: str | None = None, limit: int = 10, full: bool = False,
            offset: int = 0, rank: bool = True, activity: str | None = None,
            season: str | None = None, event: str | None = None,
-           expansion: str | None = None, class_tag: str | None = None) -> dict:
+           expansion: str | None = None, class_tag: str | None = None,
+           exclude_stage: bool = False) -> dict:
     """Full-text search over books, transcripts, cards, items and records.
 
     Args:
@@ -84,19 +104,25 @@ def search(query: str, type: str | None = None, limit: int = 10, full: bool = Fa
             records, lore.
         limit: Maximum rows (1-100).
         full: Return full text instead of bounded snippets.
-        offset: Rows to skip (0-10000).
+        offset: Rows to skip (0-10000; higher values clamp to 10000).
         rank: Order by FTS relevance instead of insertion order.
         activity: Only content classified under this activity (name or slug).
         season: Season number, slug or name, for example 17 or "haunted".
         event: Rotating event slug or name, for example "the-dawning".
         expansion: Expansion slug or name.
         class_tag: Filter to base lines plus hunter, titan or warlock variants.
+        exclude_stage: Drop stage directions and unattributed cutscene captions
+            (ranked results already demote them).
+
+    Rows carry a `snippet` field with the match context highlighted in brackets.
     """
     rows = _api(api.search, query, type=type, limit=_limit(limit, 10), full=full,
                 offset=_offset(offset), rank=rank, activity=activity, season=season,
-                event=event, expansion=expansion, class_tag=class_tag)
+                event=event, expansion=expansion, class_tag=class_tag,
+                exclude_stage=exclude_stage)
     total = _api(api.search_total, query, type=type, activity=activity, season=season,
-                 event=event, expansion=expansion, class_tag=class_tag)
+                 event=event, expansion=expansion, class_tag=class_tag,
+                 exclude_stage=exclude_stage)
     if full:
         for r in rows:
             r['text'] = _trim(r.get('text', ''))
@@ -132,10 +158,15 @@ def character(name: str, about: str | None = None, all_lines: bool = False,
 
 @server.tool(annotations=READ_ONLY)
 def item(slug: str) -> dict:
-    """Item details by slug, including lore and flavor text when present."""
+    """Item details by slug: flavor text, provenance and linked lore.
+
+    Args:
+        slug: Lowercase-hyphen slug, for example "gjallarhorn". Discover slugs
+            with find_item first; never guess one.
+    """
     row = _api(api.item, slug)
     if row is None:
-        raise ToolError(f'item not found: {slug}')
+        raise ToolError(f'item not found: {slug}; call find_item(query) to discover slugs')
     row['text'] = _trim(row.get('text', ''))
     return row
 
@@ -168,9 +199,10 @@ def list_records(kind: str, limit: int = 50, offset: int = 0) -> dict:
     """Cheap discovery listings.
 
     Args:
-        kind: books, characters, speakers, records, activities, seasons, events, or lore.
+        kind: books, characters, speakers, records (or triumphs), activities,
+            seasons, events, or lore.
         limit: Maximum rows (1-100).
-        offset: Rows to skip (0-10000).
+        offset: Rows to skip (0-10000; higher values clamp to 10000).
     """
     rows = _api(api.listing, kind, limit=_limit(limit, 50), offset=_offset(offset))
     return {'count': len(rows), 'rows': rows}
@@ -257,12 +289,13 @@ def transcript(ref: str, speaker: str | None = None, limit: int = 50, offset: in
 
 @server.tool(annotations=READ_ONLY)
 def find_item(query: str, limit: int = 10, offset: int = 0) -> dict:
-    """Find items by title or slug fragment.
+    """Find items by title or slug fragment. Rows include flavor-text snippets
+    and linked lore titles, so a follow-up item() call is usually unnecessary.
 
     Args:
         query: Title words or slug.
         limit: Maximum rows (1-100).
-        offset: Rows to skip (0-10000).
+        offset: Rows to skip (0-10000; higher values clamp to 10000).
     """
     return _api(api.find_item, query, limit=_limit(limit, 10), offset=_offset(offset))
 
@@ -341,7 +374,12 @@ def coverage() -> dict:
 
 @server.tool(annotations=READ_ONLY)
 def record(ref: str) -> dict:
-    """Read a triumph or seal by slug or title fragment."""
+    """Read a triumph or seal record by slug or title fragment.
+
+    Args:
+        ref: Record slug (lowercase-hyphen, for example "a-friend-in-need") or
+            a title fragment; discover slugs with list_records(kind="records").
+    """
     res = _api(api.record, ref)
     if res is None:
         raise ToolError(f'record not found: {ref}')
@@ -365,6 +403,7 @@ def seal(ref: str) -> dict:
 
     Args:
         ref: Seal hash or name fragment, for example "30th Anniversary".
+            Discover names with seals().
     """
     res = _api(api.seal, ref)
     if res is None:
@@ -377,7 +416,9 @@ def lore(ref: str) -> dict:
     """Read a manifest lore entry by hash or title fragment.
 
     Args:
-        ref: Lore hash or title fragment.
+        ref: Numeric lore hash or a TITLE fragment (lore entries have no slug;
+            "the-books-of-sorrow" style slugs will not resolve — pass e.g.
+            "Books of Sorrow" or a hash).
     """
     res = _api(api.lore, ref)
     if res is None:
@@ -389,51 +430,51 @@ def lore(ref: str) -> dict:
 @server.resource('grimoire://books', name='books', description='All lore books',
                  mime_type='application/json')
 def books_resource() -> str:
-    return json.dumps(api.listing('books', limit=10000), ensure_ascii=False)
+    return _jcap(api.listing('books', limit=10000))
 
 
 @server.resource('grimoire://characters', name='characters', description='Curated characters',
                  mime_type='application/json')
 def characters_resource() -> str:
-    return json.dumps(api.listing('characters', limit=10000), ensure_ascii=False)
+    return _jcap(api.listing('characters', limit=10000))
 
 
 @server.resource('grimoire://records', name='records', description='Triumphs and seals',
                  mime_type='application/json')
 def records_resource() -> str:
-    return json.dumps(api.listing('records', limit=10000), ensure_ascii=False)
+    return _jcap(api.listing('records', limit=10000))
 
 
 @server.resource('grimoire://stats', name='stats', description='Database row counts',
                  mime_type='application/json')
 def stats_resource() -> str:
-    return json.dumps(api.stats()['counts'], ensure_ascii=False)
+    return _jcap(api.stats()['counts'])
 
 
 @server.resource('grimoire://activities', name='activities',
                  description='Activities with transcript and line coverage',
                  mime_type='application/json')
 def activities_resource() -> str:
-    return json.dumps(api.activities(limit=10000), ensure_ascii=False)
+    return _jcap(api.activities(limit=10000))
 
 
 @server.resource('grimoire://seasons', name='seasons',
                  description='Official seasons and episodes with coverage',
                  mime_type='application/json')
 def seasons_resource() -> str:
-    return json.dumps(api.seasons(), ensure_ascii=False)
+    return _jcap(api.seasons())
 
 
 @server.resource('grimoire://events', name='events',
                  description='Rotating events with coverage', mime_type='application/json')
 def events_resource() -> str:
-    return json.dumps(api.events(), ensure_ascii=False)
+    return _jcap(api.events())
 
 
 @server.resource('grimoire://coverage', name='coverage',
                  description='Coverage matrix and gap lists', mime_type='application/json')
 def coverage_resource() -> str:
-    return json.dumps(api.coverage(), ensure_ascii=False)
+    return _jcap(api.coverage())
 
 
 @server.resource('grimoire://book/{slug}', name='book', description='A lore book with entries',
@@ -442,7 +483,7 @@ def book_resource(slug: str) -> str:
     res = api.book(slug, limit=10000, full=True)
     if res is None:
         raise ValueError(f'book not found: {slug}')
-    return json.dumps(res, ensure_ascii=False)
+    return _jcap(res)
 
 
 @server.resource('grimoire://transcript/{slug}', name='transcript',
@@ -451,7 +492,7 @@ def transcript_resource(slug: str) -> str:
     res = api.transcript(slug, limit=2000, full=True)
     if res is None:
         raise ValueError(f'transcript not found: {slug}')
-    return json.dumps(res, ensure_ascii=False)
+    return _jcap(res)
 
 
 @server.resource('grimoire://character/{slug}', name='character',
@@ -461,7 +502,7 @@ def character_resource(slug: str) -> str:
     if info is None:
         raise ValueError(f'character not found: {slug}')
     lines = api.character(slug, limit=10000)
-    return json.dumps({'info': info, 'lines': lines['rows'] if lines else []}, ensure_ascii=False)
+    return _jcap({'info': info, 'lines': lines['rows'] if lines else []})
 
 
 @server.resource('grimoire://record/{slug}', name='record', description='A triumph or seal',
@@ -470,7 +511,7 @@ def record_resource(slug: str) -> str:
     res = api.record(slug)
     if res is None:
         raise ValueError(f'record not found: {slug}')
-    return json.dumps(res, ensure_ascii=False)
+    return _jcap(res)
 
 
 @server.prompt(name='quote_safe_lookup', description='Look up lore and return only verified quotes')

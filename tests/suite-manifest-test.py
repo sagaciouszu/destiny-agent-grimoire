@@ -24,6 +24,17 @@ def audit_suites(agent):
     text = open(path, encoding='utf-8').read()
     block = re.search(r'SUITES=\((.*?)\n\)', text, re.S)
     if not block:
+        # SUITES may live in a sourced helper (e.g. tests/suites-lib.sh).
+        helpers = re.findall(r'(?:source|\.)\s+"\$HERE/([^"]+)"', text)
+        for helper in helpers:
+            helper_path = os.path.join(agent, 'tests', helper)
+            if not os.path.isfile(helper_path):
+                continue
+            helper_text = open(helper_path, encoding='utf-8').read()
+            block = re.search(r'SUITES=\((.*?)\n\)', helper_text, re.S)
+            if block:
+                break
+    if not block:
         raise AssertionError('SUITES block not found')
     out = []
     for entry in re.findall(r'"([^"]+)"', block.group(1)):

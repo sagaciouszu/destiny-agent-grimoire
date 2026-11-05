@@ -56,7 +56,7 @@ def cmd_search(args):
     if args.full:
         emit(out, args.json, lambda rs: [print(f"[{r['source']}] {r['title']}: {r['text'][:200]}") for r in rs])
     else:
-        emit(out, args.json, lambda rs: [print(f"[{r['source']}] {r['title']}: {r['snip']}") for r in rs])
+        emit(out, args.json, lambda rs: [print(f"[{r['source']}] {r['title']}: {r['snippet']}") for r in rs])
     if not args.json:
         print(f'\n{len(out)} results of {total}')
     return 0 if out else 1

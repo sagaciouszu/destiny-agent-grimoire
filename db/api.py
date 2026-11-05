@@ -174,11 +174,15 @@ def _limit(value, default):
 
 @_guard
 def search(term, type=None, limit=10, full=False, offset=0, rank=True,
-           activity=None, season=None, event=None, expansion=None, class_tag=None):
+           activity=None, season=None, event=None, expansion=None, class_tag=None,
+           exclude_stage=False):
     """Full-text search. Returns rows with a snippet unless full=True.
 
     The term is used as FTS5 syntax when valid; otherwise every word is quoted
     and ANDed, so punctuation (`"`, `(`, `+`, `%`, `:`, `-`) never breaks a query.
+
+    Ranked results demote stage directions (speaker Narration) and unattributed
+    cutscene captions (speaker Cutscene); set exclude_stage=True to drop them.
     """
     term = clean_input(term, 500)
     if type is not None and type not in TYPE_TO_SOURCE:
@@ -198,17 +202,21 @@ def search(term, type=None, limit=10, full=False, offset=0, rank=True,
         cfilter, cparams = _class_filter(class_tag)
         where += cfilter
         params.extend(cparams)
+        if exclude_stage:
+            where += " AND speaker NOT IN ('Narration', 'Cutscene')"
         params.append(_limit(limit, 10))
         params.append(_offset(offset))
         order = (" ORDER BY bm25(fts, 3.0, 1.0, 1.0, 1.0, 0.0)"
-                 " + CASE WHEN source='item' THEN 1.0 ELSE 0 END") if rank else ''
+                 " + CASE WHEN source='item' THEN 1.0 ELSE 0 END"
+                 " + CASE WHEN speaker='Narration' THEN 2.0"
+                 " WHEN speaker='Cutscene' THEN 1.0 ELSE 0 END") if rank else ''
         try:
             if full:
                 rows = conn.execute(
                     f'SELECT title, speaker, text, source, source_slug FROM fts WHERE {where}{order} LIMIT ? OFFSET ?', params).fetchall()
             else:
                 rows = conn.execute(
-                    f"SELECT title, speaker, source, source_slug, snippet(fts, 1, '[', ']', '…', 10) AS snip "
+                    f"SELECT title, speaker, source, source_slug, snippet(fts, 1, '[', ']', '…', 25) AS snippet "
                     f'FROM fts WHERE {where}{order} LIMIT ? OFFSET ?', params).fetchall()
         except sqlite3.OperationalError as e:
             raise ValueError(f'invalid search query: {e}') from e
@@ -297,41 +305,67 @@ def character(name, about=None, all_lines=False, limit=20, offset=0, canon_only=
         conn.close()
 
 
+def _lore_links(conn, titles, limit=8):
+    """Linked manifest lore titles for a set of item titles (best-sorted, capped)."""
+    if not titles:
+        return {}
+    qmarks = ','.join('?' * len(titles))
+    links = {}
+    for r in conn.execute(
+            'SELECT lei.item_title, le.title FROM lore_entry_items lei '
+            'JOIN lore_entries le ON le.hash = lei.lore_hash '
+            f'WHERE lei.item_title IN ({qmarks}) ORDER BY le.title', list(titles)):
+        bucket = links.setdefault(r[0], [])
+        if len(bucket) < limit:
+            bucket.append(r[1])
+    return links
+
+
+def _enrich_item_rows(conn, rows, text_limit=200, lore_limit=8):
+    """Attach flavor-text snippets and lore links so find_item() is one call."""
+    out = [dict(r) for r in rows]
+    if not out:
+        return out
+    slugs = [r['slug'] for r in out]
+    qmarks = ','.join('?' * len(slugs))
+    texts = {r['slug']: r['text'] for r in conn.execute(
+        f'SELECT slug, text FROM items WHERE slug IN ({qmarks})', slugs)}
+    links = _lore_links(conn, sorted({r['title'] for r in out if r['title']}), lore_limit)
+    for r in out:
+        r['text'] = _snippet(texts.get(r['slug']) or '', text_limit)
+        r['lore'] = links.get(r['title'], [])
+    return out
+
+
 @_guard
 def item(slug):
+    """Item details by slug: title, flavor text, provenance and linked lore.
+
+    Returns a bounded dict without internal fields (no row id, no normalized
+    text); use find_item() to search by name first.
+    """
     conn = connect()
     try:
-        row = conn.execute('SELECT * FROM items WHERE slug = ?', (slug,)).fetchone()
-        return dict(row) if row else None
+        row = conn.execute(
+            'SELECT slug, title, text, release, item_type, source_url '
+            'FROM items WHERE slug = ?', (slug,)).fetchone()
+        if not row:
+            return None
+        out = dict(row)
+        out['text'] = _snippet(out['text'] or '', 2000)
+        out['lore'] = _lore_links(
+            conn, [out['title']] if out['title'] else []).get(out['title'] or '', [])
+        return out
     finally:
         conn.close()
 
 
-def _verify_scan(conn, nq):
-    """Substring scan across every source (fallback and mid-word fragments)."""
-    hits = []
+def _verify_exact(conn, nq):
+    """Tokenizer-edge rows (punctuation-only norms) that FTS phrases can't match."""
     rows = conn.execute(
-        'SELECT t.slug, tl.speaker, tl.norm_line AS norm FROM transcript_lines tl '
-        'JOIN transcripts t ON t.id=tl.transcript_id WHERE tl.norm_line LIKE ? LIMIT 3',
-        (f'%{nq}%',)).fetchall()
-    hits += [{'source': 'transcript', 'slug': r[0], 'speaker': r[1], 'norm': r[2]} for r in rows]
-    rows = conn.execute(
-        'SELECT b.slug, e.norm_text AS norm FROM book_entries e JOIN books b ON b.id=e.book_id '
-        'WHERE e.norm_text LIKE ? LIMIT 3', (f'%{nq}%',)).fetchall()
-    hits += [{'source': 'book', 'slug': r[0], 'speaker': '', 'norm': r[1]} for r in rows]
-    plain = [
-        ('grimoire_cards', 'norm_body', 'grimoire_card', False),
-        ('interactions', 'norm_text', 'interaction', True),
-        ('items', 'norm_text', 'item', False),
-        ('records', 'norm_body', 'record', False),
-    ]
-    for tbl, nrm, source, has_speaker in plain:
-        cols = (f'slug, speaker, {nrm} AS norm' if has_speaker
-                else f"slug, {nrm} AS norm, '' AS speaker")
-        rows = conn.execute(
-            f'SELECT {cols} FROM {tbl} WHERE {nrm} LIKE ? LIMIT 3', (f'%{nq}%',)).fetchall()
-        hits += [{'source': source, 'slug': r[0], 'speaker': r[1], 'norm': r[2]} for r in rows]
-    return hits
+        'SELECT norm, source, slug, speaker FROM verify_fts WHERE norm = ? LIMIT 50',
+        (nq,)).fetchall()
+    return [{'source': r[1], 'slug': r[2], 'speaker': r[3], 'norm': r[0]} for r in rows]
 
 
 def _verify_index(conn, nq):
@@ -351,8 +385,9 @@ def _verify_index(conn, nq):
 def verify(quote, speaker=None, exact=False):
     """Check a quoted string against canon.
 
-    Uses the verification index (normalized phrase lookup) and falls back to a
-    substring scan for mid-word fragments or index misses.
+    Uses the verification index (normalized phrase lookup). Punctuation-only
+    quotes fall back to an exact normalized-row match, which the FTS phrase
+    tokenizer cannot express.
 
     speaker: only accept matches attributed to this speaker (drops sources with
              no speaker, such as books and items).
@@ -371,8 +406,8 @@ def verify(quote, speaker=None, exact=False):
     conn = connect()
     try:
         hits = _verify_index(conn, nq)
-        if not hits:
-            hits = _verify_scan(conn, nq)
+        if not hits and not re.search(r'[a-z0-9]', nq):
+            hits = _verify_exact(conn, nq)
     finally:
         conn.close()
 
@@ -394,8 +429,9 @@ def verify(quote, speaker=None, exact=False):
 
 
 @_guard
-def search_total(term, type=None, activity=None, season=None, event=None, expansion=None, class_tag=None):
-    """Total FTS matches for a query (for paging)."""
+def search_total(term, type=None, activity=None, season=None, event=None, expansion=None,
+                 class_tag=None, exclude_stage=False):
+    """Total FTS matches for a query (for paging). Mirrors search() filters."""
     term = clean_input(term, 500)
     if type is not None and type not in TYPE_TO_SOURCE:
         raise ValueError(f'type must be one of: {", ".join(TYPE_TO_SOURCE)}')
@@ -414,6 +450,8 @@ def search_total(term, type=None, activity=None, season=None, event=None, expans
         cfilter, cparams = _class_filter(class_tag)
         where += cfilter
         params.extend(cparams)
+        if exclude_stage:
+            where += " AND speaker NOT IN ('Narration', 'Cutscene')"
         return conn.execute(f'SELECT COUNT(*) FROM fts WHERE {where}', params).fetchone()[0]
     finally:
         conn.close()
@@ -450,7 +488,8 @@ def character_info(name):
             if not row:
                 return None
             spoken = conn.execute(
-                "SELECT COUNT(*) FROM transcript_lines WHERE speaker=? AND is_stage_dir=0",
+                "SELECT COUNT(*) FROM transcript_lines "
+                "WHERE speaker=? AND is_stage_dir=0 AND is_optional=0",
                 (row[0],)).fetchone()[0]
             return {'name': row[0], 'slug': row[0].lower().replace(' ', '-'),
                     'quotes': 0, 'spoken_lines': spoken,
@@ -459,9 +498,13 @@ def character_info(name):
         sources = {r[0]: r[1] for r in conn.execute(
             'SELECT source_type, COUNT(*) FROM character_lines WHERE character_id=? GROUP BY source_type',
             (ch['id'],)).fetchall()}
+        # spoken_lines matches persona.json canon_lines: exact speaker, canonical
+        # rows only. Variant speakers ("Eris Morn (Transformed)") stay reachable
+        # through character(all_lines=True), which uses a LIKE match.
         spoken = conn.execute(
-            "SELECT COUNT(*) FROM transcript_lines WHERE speaker LIKE ? AND is_stage_dir=0",
-            (f"%{ch['name']}%",)).fetchone()[0]
+            "SELECT COUNT(*) FROM transcript_lines "
+            "WHERE speaker=? AND is_stage_dir=0 AND is_optional=0",
+            (ch['name'],)).fetchone()[0]
         aliases = [r[0] for r in conn.execute(
             'SELECT alias FROM speaker_aliases WHERE canonical=? ORDER BY alias', (ch['name'],)).fetchall()]
         return {'name': ch['name'], 'slug': ch['slug'], 'quotes': quotes,
@@ -571,8 +614,9 @@ def find_item(query, limit=10, offset=0):
                 f'SELECT slug, title, item_type, release FROM items WHERE {where} '
                 f'ORDER BY CASE WHEN slug = ? THEN 0 ELSE 1 END, title LIMIT ? OFFSET ?',
                 params + [query, _limit(limit, 10), _offset(offset)]).fetchall()
-        return {'count': len(rows), 'total': total, 'limit': _limit(limit, 10),
-                'offset': _offset(offset), 'rows': [dict(r) for r in rows]}
+        enriched = _enrich_item_rows(conn, rows)
+        return {'count': len(enriched), 'total': total, 'limit': _limit(limit, 10),
+                'offset': _offset(offset), 'rows': enriched}
     finally:
         conn.close()
 
@@ -953,10 +997,11 @@ def coverage():
 
 
 def listing(kind, limit=50, offset=0):
+    kind = {'triumphs': 'records', 'triumph': 'records'}.get(kind, kind)
     if kind not in ('books', 'characters', 'speakers', 'records',
                     'activities', 'seasons', 'events', 'lore', 'seals'):
         raise ValueError('kind must be one of: books, characters, speakers, records, '
-                         'activities, seasons, events, lore, seals')
+                         'activities, seasons, events, lore, seals, triumphs (alias of records)')
     conn = connect()
     try:
         n = _limit(limit, 50)
