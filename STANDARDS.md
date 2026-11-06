@@ -9,73 +9,86 @@ a change that is not done.
 
 ## 1. Scope
 
-- `destiny-agent-grimoire` is agent-agnostic: no persona, no agent-specific rules.
+- `destiny-agent-grimoire` is agent-agnostic: no persona, no agent-specific
+  rules.
 - The five consumer agents (`how-to-drift-for-agents`, `eris-morn`,
-  `destiny-agent-calus`, `destiny-agent-zavala`, `destiny-agent-ghost`) reference
-  the database through `lore/`: a symlink on Unix, a junction or clone on
-  Windows. They own their personas; this repo owns canon.
-- Documentation lives in two tiers: `README.md` and `docs/wiki/` are written for
-  humans; `skills/` and each agent's `AGENTS.md`/`TOOLS.md` are written for
-  agents (commands first, prose second, no narrative detours).
+  `destiny-agent-calus`, `destiny-agent-zavala`, `destiny-agent-ghost`)
+  reference the database through `lore/`: a symlink on Unix, a junction or
+  clone on Windows. They own their personas; this repo owns canon.
+- Documentation lives in two tiers: `README.md` and `docs/wiki/` are written
+  for humans; `skills/` and each agent's AGENTS.md/TOOLS.md are written
+  for agents (commands first, prose second, no narrative detours).
 - `source/` is the ingestion corpus (verbatim lore, formatting-normalized).
   `archive/` holds raw scrape output. `db/` holds the migration and interface.
-- The database (`db/grimoire.db`) is a build artifact: never committed, rebuilt
-  from `source/` + `archive/` by `python3 db/migrate.py`, published as a release asset.
+- The database (`db/grimoire.db`) is a build artifact: never committed,
+  rebuilt from `source/` + `archive/` by `python3 db/migrate.py`, published as
+  a release asset.
 
 ## 2. Repository connection matrix
 
 | From | To | Mechanism |
 |------|----|-----------|
-| agent `README`/`INDEX`/`AGENTS`/`TOOLS`/agent def | lore database | `lore/db/grimoire.db`, `python3 lore/db/query.py` |
-| agent `setup.sh` | this repo | links `lore/` (symlink -> Windows junction -> clone); bootstraps the DB (release asset or build); points OpenClaw's MCP entry at the checkout |
-| agent `.gitignore` | runtime memory | `USER.md`, `core/*memory*`, `core/journal.md` never leave the machine |
-| agent `tests/` suites | agent workspace | `lore/tests/resolve-workspace.sh` (layout-independent; `lore/` may be symlink or clone) |
+| agent `README`/`INDEX`/`AGENTS`/`TOOLS`/agent def | lore database | `lore/db/grimoire.db`, `python3 db/query.py` |
+| agent setup.sh | this repo | links `lore/` (symlink -> Windows junction -> clone); bootstraps the DB (release asset or build); points OpenClaw's MCP entry at the checkout |
+| agent `.gitignore` | runtime memory | USER.md, `core/*memory*`, core/journal.md never leave the machine |
+| agent `tests/` suites | agent workspace | lore/tests/resolve-workspace.sh (layout-independent; `lore/` may be symlink or clone) |
 | `db/migrate.py` | sources | `source/{books,transcripts,cards,records}` + `archive/data/*.jsonl` |
+| `scripts/ishtar-timeline.py` | snapshot | `source/ishtar-timeline.json` (45 eras, 800 source links; regenerate on demand with `--fetch`) |
 | `db/query.py` | database | CLI wrapper over `db/api.py`; every query subcommand in section 8 |
-| `tests/sync-doc-counts.py` | archive and agent repos | rewrites documented counts from the DB |
-| release workflow | consumers | `db/grimoire.db` attached as a release asset (checksum-verified) |
+| `tests/sync-doc-counts.py` | archive and agent repos | rewrites documented counts from the DB (`--check` mode fails on drift) |
+| `tests/sync-readme-meta.py` | all repos | stamps README `Version` / `Last push` from git tag / HEAD date (`--check` mode fails on drift) |
+| `scripts/sync-wiki.sh` | wiki clone | copies `docs/wiki/*.md`, fails on model-control tokens or missing pages (`--check`/`--push`) |
+| release workflow | consumers | `db/grimoire.db` attached as a release asset (checksum-verified); `grimoire.db.xz` and `grimoire.db.gz` published by `mcp-server/run.sh` on `release.published` |
 
 ### Symlinks
 
-- `lore/` is runtime state, not repository content: `setup.sh` creates it as a
+- `lore/` is runtime state, not repository content: setup.sh creates it as a
   symlink to a local checkout, or clones the repo in place. It is gitignored in
   both agent repos.
-- No tracked symlinks in any repository. A tracked absolute
-  symlink (for example `lore -> /home/<user>/...`) breaks every clone: it arrives
-  dangling, and `setup.sh` would otherwise mistrust it as an existing archive.
-- `setup.sh` treats a dangling `lore/` symlink as absent: it removes it and then
+- No tracked symlinks in any repository. A tracked absolute symlink (for
+  example `lore -> /home/<user>/...`) breaks every clone: it arrives dangling,
+  and setup.sh would otherwise mistrust it as an existing archive.
+- setup.sh treats a dangling `lore/` symlink as absent: it removes it and then
   symlinks or clones as requested.
 - A symlink target is never a commit-time fact; it is resolved per machine.
 
 ## 3. Database contract
 
+Every table below is part of the schema contract. `tests/test-db.sh` (61 checks)
+verifies schema presence, counts, the `timeline_chapters` vocabulary, transcript
+timeline coverage, the transcript/FTS `timeline` mirror, `character_lines`
+inheritance, and `db/capabilities.json` sync.
+
 | Table | Required | Optional (may be empty) | Notes |
 |-------|----------|--------------------------|-------|
-| `books` | slug, title | source_url, entry_count | slugs match live `categories/book-<slug>` (2 documented exemptions) |
+| `books` | slug, title | source_url, entry_count, timeline, timeline_basis | slugs match live `categories/book-<slug>` (2 documented exemptions); `timeline_basis` is `classification`, `release_name`, or `ishtar_timeline` |
 | `book_entries` | book_id, body | title (fallback to book title), seq | provenance via parent book |
 | `transcripts` | slug, title | release, characters, arc, source_url, source_tier, timeline, timeline_basis | release empty when the source lacks it; `source_tier` records provenance precedence; `timeline` is the in-universe story chapter (see `timeline_chapters`), NULL when unknown |
 | `transcript_lines` | transcript_id, seq, speaker, line, norm_line | is_stage_dir, section, is_optional, class_tag | seq contiguous from 0; class_tag is hunter, titan or warlock |
 | `grimoire_cards` | slug, title, body, source_url | game, timeline, timeline_basis | D1 cards only; timeline via `source/ishtar-timeline.json` (110 on-timeline cards), NULL otherwise |
 | `interactions` | slug, title, text | speaker, release, source_url, timeline, timeline_basis | speaker may be empty (narrated scenes) |
 | `items` | slug, title | text, release, item_type, source_url, timeline, timeline_basis | 16k stat-only items have no lore text by design; ~600 junk release strings stay NULL |
-| `records` | slug, title, body | release, source_url, timeline, timeline_basis | timeline prefers document_classification over the release string |
-| `characters` | name, slug | | curated set (compendium) |
+| `records` | slug, title, body | release, source_url, timeline, timeline_basis | timeline prefers `document_classification` over the release string |
+| `characters` | name, slug | | curated character index (compendium) |
 | `character_lines` | character_id, text, source_type, source_slug | norm_text, timeline | source_slug must resolve in `transcripts`; timeline inherited from it |
-| `timeline_chapters` | rank, slug, label | - | the Destiny timeline vocabulary (23 chapters); rank is chronological |
-| `fts` | | | exactly one row per indexed content row (1:1) |
+| `speaker_aliases` | alias, canonical | | alias -> canonical speaker mapping |
+| `fts` | | | exactly one row per indexed content row (1:1); carries `timeline` UNINDEXED |
 | `verify_fts` | | | normalized text + provenance; mirrors indexable rows for fast quote checks |
 | `item_title_fts` | | | item titles for fast name lookup |
+| `lore_entries` | id, hash, title | subtitle, body, norm_body, source, source_url, is_duplicate, duplicate_of | `hash` is unique; `source` defaults `bungie_manifest` |
+| `lore_entry_items` | lore_hash, item_title | | PRIMARY KEY (lore_hash, item_title) |
 | `expansions` | slug, name | game, year, release_date, vaulted | catalogue, seeded from `db/taxonomy.py` |
-| `seasons` | slug, season_number, name, season_type | act, destiny_year, expansion_slug, start_date, end_date, vaulted | official numeric slot, unique |
-| `activities` | slug, name, activity_type | expansion_slug, season_slug, event_slug, vaulted | catalogue |
+| `seasons` | slug, season_number, name | season_type, act, destiny_year, expansion_slug, start_date, end_date, vaulted | official numeric slot, unique; never renumber |
+| `activities` | slug, name, activity_type | season_slug, event_slug, expansion_slug, vaulted | catalogue |
 | `events` | slug, name | event_type, first_year, last_year, recurring, vaulted, notes | rotating events |
 | `event_occurrences` | event_slug, year | season_slug, start_date, end_date, vaulted | one row per event-year |
 | `transcript_classification` | transcript_id, confidence | activity_slug, activity_type, season_slug, act, event_slug, expansion_slug, evidence | additive; never rewrites canon |
 | `item_classification` | item_id, confidence | season_slug, event_slug, expansion_slug, evidence | additive |
-| `document_classification` | source, source_id, confidence | season_slug, event_slug, expansion_slug, evidence | books and records |
-| `coverage_notes` | entity_type, slug, status | evidence, source_url | one row per zero-coverage activity, event or season; status is `no_dialogue`, `narration_only`, `dialogue_source_missing`, `partial_transcript` or `unverified` |
+| `document_classification` | source, source_slug | season_slug, event_slug, expansion_slug, confidence, evidence | books and records |
+| `coverage_notes` | entity_type, slug, status | evidence, source_url | one row per zero-coverage activity, event or season; status is `covered`, `partial_transcript`, `narration_only`, `dialogue_source_missing`, `no_dialogue` or `missing` |
 
-Taxonomy rules:
+### Taxonomy rules
+
 - Four independent axes: expansion, season/episode, activity, event. Do not
   overload `release` or `arc`; they remain fallback text only.
 - `seasons.season_number` is Bungie's official number. Episodes use
@@ -87,18 +100,17 @@ Taxonomy rules:
 - A Destiny 1 expansion (`destiny-1` through `age-of-triumph`) never inherits a
   Destiny 2 season from an activity that was later reprised.
 - Zero coverage is never a blank: every activity, event and season with no
-  transcript carries a `coverage_notes` row (section 3). Rows are additive;
-  removing one requires a source that actually closes the gap.
+  transcript carries a `coverage_notes` row. Rows are additive; removing one
+  requires a source that actually closes the gap.
 - Full model and query examples: `docs/TAXONOMY.md`.
 
-Global rules:
-- No duplicate slugs per table; no empty required fields; every row's text is
-  HTML-unescaped (double-escaped Ishtar pages are unescaped until stable).
-- Every content row carries provenance (`source_url` or parent-book
-  provenance). Ishtar rows use `https://www.ishtar-collective.net/<type>/<slug>`;
-  rows from other tiers keep that tier's real URL (Destinypedia, Commons,
-  YouTube). Never point a row at a source it did not come from.
-- Empty optional fields are a statement about the source, never a placeholder.
+### Timeline chapters
+
+`timeline_chapters` holds 23 rank-ordered story chapters (rank 1 =
+Pre-History through rank 23 = Renegades). Rows carry the chapter slug in their
+`timeline` column; join this table for rank/label. NULL `timeline` means
+unknown position (honest gap, not a default). Dialogue follows the when-spoken
+rule: an explicitly past-set scene beats its release position.
 
 ### Source hierarchy
 
@@ -112,23 +124,6 @@ to time books, records, items and cards (`timeline_basis = ishtar_timeline`);
 about-time eras against the when-spoken chapters of dialogue rows for
 curated-override review.
 
-These are the exact `transcripts.source_tier` values the database accepts
-(`tests/taxonomy-deep-test.py` rejects anything else), in precedence order:
-
-| Precedence | `source_tier` | Source |
-|---|---|---|
-| 1 | `ishtar_main`, `ishtar_web` | Ishtar Collective main-site transcripts (curated source markdown and scraped web pages) |
-| 2 | `validated`, `published`, `proofed` | tagged Ishtar Commons topics |
-| 3 | `ishtar_commons` | untagged Ishtar Commons topics |
-| 4 | `destinypedia` | Destinypedia verbatim transcripts |
-| 5 | `youtube_captions`, `cutscene` | reviewed captions, auto-captions, caption compilations |
-
-Where sources overlap, the higher precedence wins the text. Lower-tier unique
-lines are kept with their own provenance. Conflicts are logged in a
-reconciliation ledger, never silently overwritten. A caption-tier transcript is
-never presented as verbatim: it carries `partial_transcript` in
-`coverage_notes` unless exhaustiveness is proven.
-
 ### Optional and variant lines
 
 Ishtar's transcript guide defines `// OPTIONAL` blocks for alternatives, class
@@ -137,15 +132,12 @@ headers from `++` are stored in `section`; class-exclusive lines carry
 `class_tag = hunter|titan|warlock`. Agents quote non-optional lines by default,
 and `--class` adds the chosen class variants.
 
-User preferences, including the player's class, belong to the agent runtime
-(the agent memory helper), never to the shared canon database.
-
 ### Extracted game data
 
 Raw game packages, audio, string tables, subtitle exports and Bungie manifest
 dumps are **local-only**. They must never be committed, attached to a release or
-copied into an agent workspace. `.gitignore` covers `archive/data/manifest/`,
-`archive/data/game/`, `archive/data/extracted/`, `archive/data/subtitles/` and
+copied into an agent workspace. `.gitignore` covers
+`archive/data/manifest/`, `archive/data/game/`, `archive/data/subtitles/` and
 `*.pkg`.
 
 Only curated transcript markdown may be committed, with provenance naming the
@@ -154,10 +146,12 @@ is evidence for curation, not a redistributable asset.
 
 ## 4. Naming
 
-- Slugs: lowercase, hyphenated, taken from the live page slug wherever one exists.
-- Non-Ishtar sources keep their own slug and provenance (`youtube-*`, `weblore-*`,
-  `ingame-quotes-*`, `cutscene-*`).
-- Filename must match the `- Source:` slug (allowlisted, documented renames only).
+- Slugs: lowercase, hyphenated, taken from the live page slug wherever one
+  exists.
+- Non-Ishtar sources keep their own slug and provenance (`youtube-*`,
+  `weblore-*`, `ingame-quotes-*`, `cutscene-*`).
+- Filename must match the `- Source:` slug (allowlisted, documented renames
+  only).
 - Speakers use canonical names. `SPEAKER_ALIASES` in `db/migrate.py` is the
   single source of truth, applied at migration; new aliases go there, never
   into a verifier. Current entries include `Commander Zavala -> Zavala`,
@@ -170,27 +164,25 @@ is evidence for curation, not a redistributable asset.
   as `Path of the Splicer II`, `Into the Depths VI` or `Act I` as speakers;
   migration drops those rows. The Roman-numeral rule never drops a mapped
   character: a speaker that resolves through `SPEAKER_ALIASES` is kept, and
-  every `Saint-*` speaker is kept outright. The Saint-14 family is one
-  character under many names (`Saint-14`, `Saint-XIV`, `Saint XIV`,
-  `Saint IV`, `The Saint`, `Saint`, `Kellbreaker` -> `Saint-14`). Add the
-  alias before introducing a character whose name ends in a numeral; a dropped
-  row is unrecoverable, a kept row can always be aliased later.
+  every `Saint-*` speaker is kept outright. Add the alias before introducing a
+  character whose name ends in a numeral; a dropped row is unrecoverable, a
+  kept row can always be aliased later.
 - Contextual qualifiers are allowed and kept: `Drifter (Tape 1)`,
-  `Eris Morn (communion)`, `Blue (about Drifter's Ghost)`. LIKE queries match the
-  base name, so consumers never need the qualifier.
+  `Eris Morn (communion)`, `Blue (about Drifter's Ghost)`. LIKE queries match
+  the base name, so consumers never need the qualifier.
 
 ## 5. Normalization
 
 One function, implemented identically in `db/migrate.py` and every verifier:
-lowercase, `... -> ...`, `'` apostrophe, dashes to `-`, non-alphanumerics to
+lowercase, `...` -> `...`, `'` apostrophe, dashes to `-`, non-alphanumerics to
 space, whitespace collapse, trim. `norm_*` columns store its output and must
 match a recomputation of their source text.
 
 ## 6. Quoting policy (agents)
 
 - A quote must trace to a speaker-attributed canon line or verbatim lore text.
-  `verify` accepts `--speaker` (attribution) and `--exact` (full row, not fragment);
-  agents should use both when quoting dialogue.
+  `verify` accepts `--speaker` (attribution) and `--exact` (full row, not
+  fragment); agents should use both when quoting dialogue.
 - Do not present another character's line as the persona's voice. Exchange
   context, reported speech, and impressions must be explicitly attributed.
 - When a quote cannot be traced: unquote it, do not delete it.
@@ -200,27 +192,28 @@ match a recomputation of their source text.
 
 | Gate | Enforces |
 |------|----------|
-| `tests/test-db.sh` | schema integrity, counts, no orphans, no entity leakage, character provenance, canonical speakers, card provenance, live meta stamp, class-tag and normalization invariants, capabilities sync |
+| `tests/test-db.sh` | schema integrity, counts, no orphans, no entity leakage, character provenance, canonical speakers, card provenance, live meta stamp, class-tag and normalization invariants, capabilities sync (61 checks) |
 | `tests/lore-integrity.sh` | source archive structure, book/transcript/card/record counts |
 | `tests/lore-format.sh` | transcript markdown format |
 | `tests/cutscene-verify.sh` | caption corroboration, encoding, cross-video consistency, attribution |
-| `tests/source-overlap-verify.py` | curated markdown vs live Ishtar; filename/source-slug integrity |
-| `tests/speaker-audit.py` | reclassified parse noise must not reappear |
-| `tests/sync-doc-counts.py --check` | docs counts match the database |
-| each agent repo tests/master-audit.sh | agent-side suites (voice, quotes, modules, conversation, golden snapshots) plus shared structure checks |
-| `tests/mcp-test.py` (on demand, needs `mcp-server/.venv`) | MCP tools, both launchers, probe handshake, read-only guard, stdio, CLI-parity tools, stats/live agreement (12 checks) |
-| `tests/check-agent-structure.py` | dependency resolution, token headers, dashes, INDEX completeness, personal paths (every agent) |
 | `tests/query-interface-test.sh` | CLI and API surface, 89 checks |
 | `tests/db-source-crosscheck.py` | database slugs vs source files, provenance URLs, index completeness |
-| `tests/link-check.py` | external URLs in the READMEs resolve |
-| `tests/taxonomy-deep-test.py` | classification refs, seasons, events, coverage statuses, API parity |
-| `tests/docs-audit.py` | every documented command resolves to a real file and a real subcommand |
+| `tests/speaker-audit.py` | reclassified parse noise must not reappear |
+| `tests/sync-doc-counts.py --check` | docs counts match the database |
+| `tests/sync-readme-meta.py --check` | README metadata matches git tag / HEAD date |
+| each agent repo tests/master-audit.sh | agent-side suites (voice, quotes, modules, conversation, golden snapshots) plus shared structure checks |
+| `tests/mcp-test.py` (on demand, needs `mcp-server/.venv`) | MCP tools, both launchers, probe handshake, read-only guard, stdio, CLI-parity tools, stats/live agreement (12 checks) |
+| `tests/mcp-agent-optimization-test.py` (on demand, needs `mcp-server/.venv`) | LLM-facing surface: descriptions name every parameter, actionable ToolErrors, 25-token snippets, limit/offset clamps, resource caps, one-call item lookups, spoken_lines counts (25 checks) |
+| `tests/mcp-matrix-test.py` (on demand, needs `mcp-server/.venv`) | MCP calls across all 21 tools (154 calls), 3 concurrent clients, strict API parity, clean malformed-call errors |
+| `tests/check-agent-structure.py <deps\|tokens\|dashes\|index\|paths> <workspace>` | per-agent: deps resolve, token accuracy, no em/en-dashes, INDEX lists every module and every reference resolves, no personal paths |
+| `tests/robustness-test.py` (on demand) | corrupt/truncated/missing databases, edge inputs, read-only enforcement, 160 concurrent queries, injection attempts |
+| `tests/agent-layout-test.sh` | OpenCode and OpenClaw layout, registry and peer blocks (39 checks) |
 | `tests/agent-parity-test.sh` | every present agent exposes the same shared capabilities |
 | `tests/onboarding-smoke.sh` | clone + setup + master audit for every local agent, offline |
 | `tests/suite-manifest-test.py` | per-agent suite manifests match master-audit and the no-loss baseline |
 | `tests/mirror-tree-test.py` | cross-platform tree mirror used by agent sync (replaces rsync) |
 | `tests/conformance.py` | per-file headers, token accuracy, refs, persona-agnosticism; runs `ci-checks` per agent repo |
-| `tests/ci-checks.py` (via conformance) | stale names, circular/self dependencies, headers, em-dashes, personal paths, gitignored refs in instructions |
+| `tests/ci-checks.py <check> <workspace>` (via conformance) | stale names, circular/self dependencies, headers, em-dashes, personal paths, gitignored refs in instructions |
 
 Live probes (on demand, network): `tests/live-sample-verify.py` samples every
 content type against Ishtar; each agent repo's voice-consistency suite runs
@@ -229,30 +222,43 @@ cross-character attribution checks.
 ## 8. Agent interface contract
 
 - Interface: `python3 db/query.py` with one of `search`, `character`,
-  `character-info`, `item`, `book`, `transcript`, `find-item`, `record`,
-  `verify`, `verify-many`, `list`, `activity`, `event`, `lore`, `seal`,
+  `character_info`, `item`, `book`, `transcript`, `find_item`, `record`,
+  `verify`, `verify_many`, `list`, `activity`, `event`, `lore`, `seal`,
   `seals`, `coverage`, `stats`. `sqlite3` is the escape hatch. No markdown
   parsing at runtime.
 - Shared query layer: `db/api.py` returns data; the CLI formats it and the MCP
   server exposes the same functions as typed tools. One implementation.
 - MCP: `mcp-server/` is an optional stdio adapter using the official SDK. It is
-  read-only, has no SQL tool, clamps limits to 1-100 and trims text to 4000 chars.
-  It is stdio-only by design: no listener and no auth surface; hosting requires an
-  authenticated wrapper.
-  Install with `bash mcp-server/install.sh`, or `./setup.sh --mcp` in an agent
-  workspace (the interactive prompt also offers it). The adapter belongs to the
-  archive, so one install serves every agent; the venv is gitignored and the CLI
-  stays dependency-free.
+  read-only, has no SQL tool, clamps limits to 1-100 and trims text to 4000
+  chars. It is stdio-only by design: no listener and no auth surface; hosting
+  requires an authenticated wrapper.
+  - Install with `bash mcp-server/install.sh`, or `./setup.sh --mcp` in an
+    agent workspace (the interactive prompt also offers it). The adapter
+    belongs to the archive, so one install serves every agent; the venv is
+    gitignored and the CLI stays dependency-free.
+  - 21 tools: `search`, `character`, `character_info`, `item`, `verify`,
+    `verify_many`, `list_records`, `stats`, `book`, `transcript`, `find_item`,
+    `activities`, `activity`, `seasons`, `events`, `event`, `coverage`,
+    `record`, `seals`, `seal`, `lore`.
+  - 8 resources: `grimoire://books`, `grimoire://characters`,
+    `grimoire://records`, `grimoire://stats`, `grimoire://activities`,
+    `grimoire://seasons`, `grimoire://events`, `grimoire://coverage`.
+  - 4 templates: `grimoire://book/{slug}`, `grimoire://transcript/{slug}`,
+    `grimoire://character/{slug}`, `grimoire://record/{slug}`.
+  - 2 prompts: `quote_safe_lookup`, `character_brief`.
+  - Limits: `MAX_TEXT=4000` (tool result text), `MCP_MAX_LIMIT=100` (rows),
+    `MAX_TOPIC=300` (prompt topic), `MAX_RESOURCE=16000` (resource payload),
+    offset clamp 10000.
 - Coverage answers are self-describing: `coverage` and `activity` return
   `coverage_status` (`covered`, `partial_transcript`, `narration_only`,
-  `dialogue_source_missing`, `no_dialogue`, `missing`) plus `coverage_notes`
+  `dialogue_source_missing`, `no_dialogue` or `missing`) plus `coverage_notes`
   evidence. Surface the status verbatim; never imply that a partial transcript
   is complete.
 - Every command supports `--json`; search returns snippets unless `--full`;
   `verify` exits 1 when a quote is absent (quote-safety primitive).
 - FTS is the search surface: `fts` holds exactly the indexable rows, `MATCH`
   syntax, porter stemming.
-- Output budget: `--limit` on every query; agents should assume 20-40 lines per
+- Output budget: `--limit` on every query; agents should assume 20-40 rows per
   call and never dump tables.
 - Memory files are runtime state, never canon: personalities live in the agent
   repos, canon lives in the database.
@@ -264,21 +270,21 @@ cross-character attribution checks.
 All five agent repositories follow one workspace contract so a single method
 serves every agent.
 
-- Root: `AGENTS.md`, `INDEX.md`, `SOUL.md`, `IDENTITY.md`, `TOOLS.md`,
+- Root: AGENTS.md, INDEX.md, SOUL.md, IDENTITY.md, TOOLS.md,
   `<agent>.md` (platform entry), `<agent>-core.md`, `<agent>-voice.md`,
   `README.md`, `RELEASE.md`.
 - Shared directories: `core/`, `voice/`, `world/`, `reference/`.
-- `setup.sh` ships in two lengths (full and short) but always performs the same
+- setup.sh ships in two lengths (full and short) but always performs the same
   contract: seed runtime memory from templates, link `lore/` (symlink -> Windows
   junction -> clone, in that order), bootstrap the database (release asset or
-  local build, checksum-verified) and optionally install MCP.
+  local build, checksum-verified), optionally install MCP.
 - `.gitignore` covers the same runtime state everywhere (two byte-identical
   variants exist: Drifter/Eris and Calus/Zavala/Ghost).
 - Each agent repo owns its `tests/` directory: voice, quote, module, scenario,
-  conversation, golden-snapshot and utility suites, plus master-audit.sh.
+  conversation, golden-snapshot and utility suites, plus `grimoire-master-audit.sh`.
   Verification entry point: `bash tests/master-audit.sh` in the agent repo.
-- `tests/suites.json` in each agent is the machine-readable copy of its
-  `tests/master-audit.sh` suite list (name, command, tier) and `tests/run-suites.sh`
+- tests/suites.json in each agent is the machine-readable copy of its
+  `grimoire-master-audit.sh` suite list (name, command, tier) and tests/run-suites.sh
   executes it. `series/suite-baseline.json` in this repo is the no-loss
   baseline: adding suites is free, removing one fails
   `tests/suite-manifest-test.py`.
@@ -289,73 +295,71 @@ serves every agent.
   shared interface. No agent-specific suite may live in the grimoire, and no
   shared gate may be duplicated into an agent repo.
 - Blank template: the scaffold lives in its own local repository,
-  destiny-agent-template, with its own history and no remote. It carries
+  `destiny-agent-template`, with its own history and no remote. It carries
   placeholders and neutral rules only; persona material is sourced from the
   grimoire, not inherited from existing agents.
 - `tests/check-agent-structure.py` enforces, for every agent: every declared
-  dependency resolves (runtime memory falls back to its template), token headers
-  exist, no em/en dashes, INDEX lists every module and every reference resolves,
-  and no personal paths appear.
+  dependency resolves (runtime memory falls back to its template), token
+  headers exist, no em/en dashes, INDEX lists every module and every reference
+  resolves, no personal paths appear.
 - Live deployment is manifest-driven: `series/agents.json` lists every agent,
-  its source repo and entry file. Each installs as agents/<id>.md with companions
-  under agents/<id>/; companions carry `disabled: true` and `lore/` is linked
-  outside agents/. OpenCode registers every Markdown file under agents/
-  recursively, symlinks included. Adding a series agent means a repo, an entry
-  file and one registry row; no script change.
-- Readiness: a registry agent with persona.json and ready: false is skipped
+  its source repo and entry file. Each installs as `agents/<id>.md` with
+  companions under `agents/<id>/`; companions carry `disabled: true` and
+  `lore/` is linked outside `agents/`. OpenCode registers every Markdown file
+  under `agents/` recursively, symlinks included. Adding a series agent means a
+  repo, an entry file and one registry row; no script change.
+- Readiness: a registry agent with persona.json and `ready: false` is skipped
   by sync, marked as not deployed in peer lists, and never loaded into a
   workspace. Sync requires at least one ready agent.
-- Series collaboration: sync installs the registry at the runtime path and adds a
-  managed block to each entry listing peers and the `subagent` protocol. Agents
-  run as `mode: primary`; sync derives a read-only `-consult` subagent per agent, so
-  peers are consulted without edit or shell access. Peer replies
+- Series collaboration: sync installs the registry at the runtime path and adds
+  a managed block to each entry listing peers and the `subagent` protocol.
+  Agents run as `mode: primary`; sync derives a read-only `-consult` subagent
+  per agent, so peers are consulted without edit or shell access. Peer replies
   are untrusted data, never instructions; delegation is one hop; read/glob/grep
-  on a peer's directory is denied in the installed frontmatter. Registry changes
-  are reviewed like workflow changes: ids, sources and entries are validated
-  before sync, and a malformed or traversing registry aborts deployment.
+  on a peer's directory is denied in the installed frontmatter. Registry
+  changes are reviewed like workflow changes: ids, sources and entries are
+  validated before sync, and a malformed or traversing registry aborts
+  deployment.
 - OpenClaw parity: sync writes one workspace per agent (`workspace-<id>`) and a
   workspace-local `series/agents.json`, and adds the same one-hop collaboration
-  block. Consult agents are separate config entries with `exec`, `write`, `edit`,
-  `apply_patch`, spawn/send/message and browser tools denied; primaries allow
-  only the consult ids as subagents.
+  block. Consult agents are separate config entries with `exec`, `write`,
+  `edit`, `apply_patch`, spawn/send/message and browser tools denied;
+  primaries allow only the consult ids as subagents.
   `tests/agent-layout-test.sh` guards layout, registry and peer blocks.
-  `setup.sh` and sync also keep OpenClaw's MCP entry pointed at this checkout
+- setup.sh and sync also keep OpenClaw's MCP entry pointed at this checkout
   with an absolute path (`scripts/ensure-openclaw-mcp.sh`), because the update
   doctor cannot resolve a bare launcher.
 
 ## 10. Change procedure
 
-1. Ingest (`archive/` scrapers or `scripts/ingest-*`) into the documented paths.
-2. `python3 db/migrate.py`, then the enrichment scripts (section 3); verify the
-   counts printed on stdout.
+1. Ingest (`archive/` scrapers or `scripts/ingest-*`) into the documented
+   paths.
+2. `python3 db/migrate.py`, then the enrichment steps
+   (`db/enrich_lore.py`, `db/enrich_manifest.py`, `db/enrich_seals.py`,
+   `db/enrich_itemsets.py --apply`); verify the counts printed on stdout.
 3. Refresh derived docs: `python3 tests/sync-doc-counts.py`,
    `python3 tests/sync-readme-meta.py`, `python3 scripts/gap-report.py`,
-   `bash scripts/sync-wiki.sh` (add `--push` to publish the GitHub wiki;
-   the script refuses model-control tokens and content drift).
+   `bash scripts/sync-wiki.sh` (add `--push` to publish the GitHub wiki; the
+   script refuses model-control tokens and content drift).
 4. Run the gates in section 7: `grimoire-master-audit.sh`, then
    `bash tests/master-audit.sh` in each agent repo, plus a fresh-clone spot
    check for layout changes.
-5. Commit. Refresh the backup and the release asset after major milestones.
-6. Push tags and cut releases whenever one is needed - standing approval,
-   no ceremony (CI tests the published database asset, so a database change
-   simply ships by tagging). Explicit user approval is only required for
+5. Commit. Push tags and cut releases whenever one is needed - standing
+   approval, no ceremony (CI tests the published database asset, so a database
+   change simply ships by tagging). Explicit user approval is only required for
    replacing or deleting an already-published artifact (including
    `grimoire.db`) and for re-pointing the historical version line.
 
 ## 11. Packaging
 
-- After publishing, run `gh release edit <tag> --latest`. The historical v1.x
-  release line has a higher semver than the current 0.x line, so GitHub would
-  otherwise point `/releases/latest` at an asset-less release and every
-  `releases/latest/download/grimoire.db` URL would 404.
 - Release sequence (push a tag whenever one is needed): build on a machine
   with the local dumps (`python3 db/migrate.py` then the four
   `db/enrich_*.py` steps) -> `gh release create <tag> --title <title>
   --notes-file RELEASE.md` -> `gh release upload <tag> db/grimoire.db
   SHA256SUMS` -> the release-assets workflow attaches `grimoire.db.xz`,
   `grimoire.db.gz` and the refreshed `SHA256SUMS` -> `gh release edit
-  <tag> --latest` (the v1.x semver rule below) -> re-run CI if its
-  database gates ran before the asset landed.
+  <tag> --latest` (the v1.x semver rule below) -> re-run CI if its database
+  gates ran before the asset landed.
 - Database: build artifact, attached to releases with `SHA256SUMS`.
   The installer verifies the download against that checksum and falls back
   to a local build on mismatch.
@@ -369,8 +373,12 @@ serves every agent.
   `releases/latest/download/grimoire.db.gz`. Android apps should consume the
   gzip asset (`GZIPInputStream`); stock Android shells ship gzip but no xz,
   Termux has both.
+- A daily sweep re-verifies that both compressed assets decompress byte-identical
+  to the published `grimoire.db` and repairs them (recompress + upload) when an
+  asset was replaced or is missing; compression is byte-reproducible (xz
+  deterministic, gzip `-n`), so consistent runs upload nothing.
 - Backup: rolling zip of the repo minus the database.
-- Consumers get `setup.sh`: seeds memory templates, bootstraps the database
+- Consumers get setup.sh: seeds memory templates, bootstraps the database
   (prebuilt asset or local build), never blocks.
 - The Ghost Shell template is **local-only**: never add a remote, never push it,
   even when asked to push everything else. A pre-push hook enforces this.
@@ -389,10 +397,10 @@ commands.
   `mcp-server/run.ps1` (PowerShell) are the Windows launchers. All three
   launchers plus `mcp-server/probe.sh` are required files, enforced by
   `tests/mcp-test.py`.
-- `setup.sh` links `lore/` with `ln -s`, then `mklink /J`, then `git clone`;
+- setup.sh links `lore/` with `ln -s`, then `mklink /J`, then `git clone`;
   clearing a stale copy must clear read-only bits first.
 - Documentation uses relative paths (`../destiny-agent-grimoire`,
-  `lore/mcp-server/run.sh`). Never commit absolute machine paths, usernames or
+  lore/mcp-server/run.sh). Never commit absolute machine paths, usernames or
   other personal data; `tests/ci-checks.py` fails on personal paths.
 - CI-only tests degrade gracefully when sibling repositories are absent: skip
   what cannot be verified there, never skip what can.
@@ -406,10 +414,8 @@ the agent contract comes after it.
 2. Banner image (`header.png`, centered, full width)
 3. Badge row: version, last push, license, tests (agent repos add flavor badges)
 4. Metadata line: `**Version:** x.y.z | **Last push:** YYYY-MM-DD | **Status:** Active`.
-   The archive and Drifter/Eris use `Last push`/`Active`; Calus, Zavala and
-   Ghost use a blockquoted `> **Version:** ... | **Last updated:** ... |
-   **Status:** Ready`. `tests/sync-readme-meta.py` stamps and checks the first
-   form; the others are stamped when a release is cut.
+   `tests/sync-readme-meta.py --check` enforces this line matches the latest
+   git tag and HEAD commit date.
 5. One-paragraph purpose
 6. `## Quick start for Guardians` with copy-paste steps
 7. `## Requirements` table (tools, disk, no runtime network)
@@ -429,7 +435,7 @@ Rules:
   build, local path) each get their own code block and an explicit "run exactly
   one" instruction, so a reader never pastes conflicting commands in sequence.
 - `Version` matches the latest git tag; `Last push` matches the HEAD commit date.
-  `tests/sync-readme-meta.py` stamps both and `--check` enforces them.
+  `tests/sync-readme-meta.py --check` enforces both.
 - No em-dashes or en-dashes. No personal paths. Every referenced path resolves.
 - The agent README must state the platform entry point, the load tiers and the
   quote-safety command; the archive README must state the database bootstrap and
@@ -442,23 +448,25 @@ persona facts, counts and links differ.
 
 | File | Required sections (in order) |
 |------|------------------------------|
-| `SOUL.md` | Who You Are, Voice, Response Protocol, History, Relationships, Boundaries, Memory, Canon and Quotes, Companion Files, Last Updated |
-| `AGENTS.md` | Role, Hard rules, Canon and quoting, Data access, Load protocol, Platform bindings, Connection matrix |
-| `INDEX.md` | Entry points, Connection matrix, Core files, Modules, Load protocol, Canon and verification, Topic map, Last Updated |
-| `TOOLS.md` | Runtime tools, Data access, Verification, Conventions |
-| `IDENTITY.md` | Name, Vibe, Emoji, Role, Status, Color, Mode |
-| `USER.template.md` | The User, Relationship, Continuity |
+| SOUL.md | Who You Are, Voice, Response Protocol, History, Relationships, Boundaries, Memory, Canon and Quotes, Companion Files, Last Updated |
+| AGENTS.md | Role, Hard rules, Canon and quoting, Data access, Load protocol, Platform bindings, Connection matrix |
+| INDEX.md | Entry points, Connection matrix, Core files, Modules, Load protocol, Canon and verification, Topic map, Last Updated |
+| TOOLS.md | Runtime tools, Data access, Verification, Conventions |
+| IDENTITY.md | Name, Vibe, Emoji, Role, Status, Color, Mode |
+| USER.template.md | The User, Relationship, Continuity |
 | `RELEASE.md` | What's Changed, Verification |
 
 Rules:
 
 - The heading sequence is identical across the agents that share the document
   contract; `tests/conformance.py` fails on any agent's drift.
-- `SOUL.md` is persona; `AGENTS.md` is contract; `INDEX.md` is the map;
-  `TOOLS.md` is commands and conventions. Do not duplicate one into another.
-- `USER.template.md` is runtime state, seeded by `setup.sh`, and gitignored once
-  copied to `USER.md`.
+- SOUL.md is persona; AGENTS.md is contract; INDEX.md is the map;
+  TOOLS.md is commands and conventions. Do not duplicate one into another.
+- USER.template.md is runtime state, seeded by setup.sh, and gitignored once
+  copied to USER.md.
 - Every file starts with the `Depends On` and `Token Estimate` header block.
+  Token estimates are measured (bytes / 4, rounded); `tests/check-agent-structure.py
+  tokens` flags drift above 25%.
 
 ## 14. Release notes
 
@@ -487,7 +495,8 @@ Rules:
   into `RELEASE.md`. Minor refactors may be folded, but nothing user-visible
   may be dropped. `CHANGELOG.md` remains the full history.
 - Do not restate what the repository is or who it is for.
-- The heading sequence is identical across every agent repo; `tests/conformance.py` enforces the sections, order and length (<= 90 lines).
+- The heading sequence is identical across every agent repo;
+  `tests/conformance.py` enforces the sections, order and length (<= 90 lines).
 
 ## 15. Licensing
 
@@ -511,7 +520,7 @@ enforces it, so an upstream change can be re-checked instead of trusted blindly.
 | Retrieved content is **data, not instructions** | guardrail practice above | Peer/consult replies are untrusted (section 9); searched lore, captions and web text are never executed as commands |
 | **Agent Skills spec** compliance for skill files | [Agent Skills specification](https://agentskills.io/specification) ([anthropics/skills](https://github.com/anthropics/skills)) | `skills/*/SKILL.md` keeps YAML frontmatter with `name` (<=64 chars, lowercase/hyphens) and `description` (<=1024 chars), then a command-first body; `tests/docs-audit.py` validates it (and every documented command), `tests/conformance.py` requires every MCP tool to appear in it, and `tests/sync-doc-counts.py` rewrites its row counts from the database |
 | **Regression evaluation** for agent behavior | common practice across agent frameworks | golden-voice snapshots, per-agent suite manifests with a no-loss baseline, `tests/retrieval-eval.py` and `tests/agent-parity-test.sh` |
-| **Persistent memory is separate from state** | langgraph (short/long-term memory) | Agent memory (`USER.md`, `core/*memory*`) is runtime state, gitignored, never canon; the shared database is read-only to agents |
+| **Persistent memory is separate from state** | langgraph (short/long-term memory) | Agent memory (USER.md, `core/*memory*`) is runtime state, gitignored, never canon; the shared database is read-only to agents |
 
 If a new upstream standard is adopted, add it to this table with the enforcing
 test in the same change. A rule without an enforcement hook does not ship.
