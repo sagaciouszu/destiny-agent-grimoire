@@ -59,7 +59,9 @@ jobs:
         run: |
           gh release download "$TAG" --pattern SHA256SUMS --clobber || true
           if [ -f SHA256SUMS ]; then
-            grep -vE ' grimoire\.db(\.(xz|gz))?$' SHA256SUMS > SHA256SUMS.new
+            # grep exits 1 when every line is filtered (single-file sums); that
+            # is the expected path under bash -e, so tolerate it.
+            grep -vE ' grimoire\.db(\.(xz|gz))?$' SHA256SUMS > SHA256SUMS.new || true
           else
             : > SHA256SUMS.new
           fi
