@@ -1,6 +1,6 @@
 # Immolant Pt. 1
 
-- Source: https://www.ishtar-collective.net/records/immolant-pt-1
+- Source: https://www.ishtar-collective.net/transcripts/immolant-pt-1
 - Release: Beyond Light
 
 Wounds

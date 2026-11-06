@@ -1,6 +1,6 @@
 # Immolant Pt. 2
 
-- Source: https://www.ishtar-collective.net/records/immolant-pt-2
+- Source: https://www.ishtar-collective.net/transcripts/immolant-pt-2
 - Release: Beyond Light
 
 Born of Wrath
