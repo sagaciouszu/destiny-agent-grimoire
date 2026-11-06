@@ -1,118 +1,44 @@
 name: Release assets
 
-# Produce compressed database assets for every release so consumers get a
-# static endpoint under /releases/latest/download/:
-#   grimoire.db.xz  - smallest (29 MiB, xz -9e); Linux/macOS/Termux/7-Zip
-#   grimoire.db.gz  - universal (56 MiB); Android apps via GZIPInputStream,
-#                     stock shells, anything with gzip
-# Also refreshes SHA256SUMS to cover all three files. The published grimoire.db
-# is the input, so the compressed files always mirror the released bytes.
+# Keep the static database endpoints truthful:
+#   grimoire.db      - the published artifact (operator upload)
+#   grimoire.db.xz   - smallest (29 MiB, xz -9e); Linux/macOS/Termux/7-Zip
+#   grimoire.db.gz   - universal (56 MiB); Android apps via GZIPInputStream
+#   SHA256SUMS       - digests for all three
+#
+# Triggers: on publish (immediate), on dispatch (backfill a tag, defaults to
+# the latest release), and a daily sweep that downloads the published bytes,
+# verifies the compressed assets decompress to them, and repairs (recompress +
+# re-upload) whenever they are missing or stale - e.g. after grimoire.db was
+# re-uploaded to an existing release. Compression is byte-reproducible
+# (xz deterministic, gzip -n), so repairs never churn digests.
 
 on:
   release:
     types: [published]
+  schedule:
+    - cron: '17 6 * * *'
   workflow_dispatch:
     inputs:
       tag:
-        description: Release tag to attach compressed database assets to
-        required: true
-  push:
-    branches: [master]
-    paths:
-      - 'source/**'
-      - 'archive/**'
-      - 'compendium/**'
-      - 'db/**'
-      - '.github/workflows/release-assets.yml'
+        description: Release tag to check (defaults to the latest release)
+        required: false
 
 permissions:
   contents: write
 
 jobs:
-  # Every database-changing push must leave the static archives truthful:
-  # rebuild the full pipeline (migrate + enrichments), compare against the
-  # published release, fail loudly when they diverge (cut a release - the
-  # compress job then republishes all three assets), and self-heal missing
-  # compressed assets when the bytes already match.
-  archives-in-sync:
-    if: github.event_name == 'push'
-    runs-on: ubuntu-26.04
-    permissions:
-      contents: write
-    env:
-      GH_TOKEN: ${{ github.token }}
-      GH_REPO: ${{ github.repository }}
-    steps:
-      - uses: actions/checkout@v7
-
-      - name: Rebuild the full release pipeline
-        run: |
-          python3 db/migrate.py
-          python3 db/enrich_lore.py
-          python3 db/enrich_manifest.py
-          python3 db/enrich_seals.py
-          python3 db/enrich_itemsets.py --apply
-
-      - name: Compare against the published release
-        id: sync
-        run: |
-          LOCAL=$(sha256sum db/grimoire.db | awk '{print $1}')
-          TAG=$(gh release view --json tagName -q .tagName)
-          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
-          if ! gh release download "$TAG" --pattern SHA256SUMS --clobber; then
-            echo "::error::no SHA256SUMS on release $TAG; publish a release"
-            exit 1
-          fi
-          PUB=$(grep -E '  grimoire\.db$' SHA256SUMS | awk '{print $1}')
-          if [ "$LOCAL" != "$PUB" ]; then
-            echo "::error::grimoire.db content changed (local $LOCAL != published $PUB). The static archives at /releases/latest/download/ are stale: cut a release from this commit and the compress job publishes grimoire.db + .xz + .gz + SHA256SUMS together."
-            exit 1
-          fi
-          echo "database matches release $TAG"
-
-      - name: Self-heal missing compressed assets
-        run: |
-          gh release download "$TAG" --pattern grimoire.db --clobber
-          NEED=""
-          gh release view "$TAG" --json assets -q '.assets[].name' > assets.txt || true
-          grep -qx 'grimoire.db.xz' assets.txt || NEED="xz"
-          grep -qx 'grimoire.db.gz' assets.txt || NEED="$NEED gz"
-          if [ -z "$NEED" ]; then
-            echo "all three assets present and in sync"
-            exit 0
-          fi
-          echo "repairing: $NEED"
-          case " $NEED " in *" xz "*) xz -9e -T0 -c grimoire.db > grimoire.db.xz;; esac
-          case " $NEED " in *" gz "*) gzip -9 -n -c grimoire.db > grimoire.db.gz;; esac
-          entry() {
-            if [ -f "$1" ]; then sha256sum "$1";
-            else grep -E "[0-9a-f]{64}  $1$" SHA256SUMS;
-            fi
-          }
-          {
-            grep -vE '  grimoire\.db(\.(xz|gz))?$' SHA256SUMS || true
-            entry grimoire.db
-            entry grimoire.db.xz
-            entry grimoire.db.gz
-          } | sort -k2 > SHA256SUMS.new
-          mv SHA256SUMS.new SHA256SUMS
-          cat SHA256SUMS
-          UPLOAD="SHA256SUMS"
-          [ -f grimoire.db.xz ] && UPLOAD="$UPLOAD grimoire.db.xz"
-          [ -f grimoire.db.gz ] && UPLOAD="$UPLOAD grimoire.db.gz"
-          gh release upload "$TAG" $UPLOAD --clobber
-        env:
-          TAG: ${{ steps.sync.outputs.tag }}
-
   compress-database:
     runs-on: ubuntu-26.04
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
-      TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.event.release.tag_name }}
+      TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.event.release.tag_name || '' }}
     steps:
-      - name: Download the published database
+      - name: Resolve tag and download the published database
         run: |
+          TAG="${TAG:-$(gh release view --json tagName -q .tagName)}"
+          echo "TAG=$TAG" >> "$GITHUB_ENV"
           for attempt in 1 2 3 4 5; do
             if gh release download "$TAG" --pattern grimoire.db --clobber; then
               break
@@ -122,12 +48,33 @@ jobs:
             sleep 6
           done
 
-      - name: Compress (xz -9e, gzip -9)
+      - name: Check existing archives against the published bytes
+        id: check
+        run: |
+          LOCAL=$(sha256sum grimoire.db | awk '{print $1}')
+          CONSISTENT=false
+          if gh release download "$TAG" --pattern SHA256SUMS --clobber \
+              && grep -qE "  grimoire\.db$" SHA256SUMS; then
+            PUBLISHED=$(grep -E '  grimoire\.db$' SHA256SUMS | awk '{print $1}')
+            if [ "$LOCAL" = "$PUBLISHED" ] \
+                && gh release download "$TAG" --pattern grimoire.db.xz --pattern grimoire.db.gz --clobber; then
+              if xz -dc grimoire.db.xz | cmp - grimoire.db \
+                  && gzip -dc grimoire.db.gz | cmp - grimoire.db; then
+                CONSISTENT=true
+              fi
+            fi
+          fi
+          echo "consistent=$CONSISTENT" >> "$GITHUB_OUTPUT"
+          echo "archives consistent: $CONSISTENT"
+
+      - name: Compress (xz -9e, gzip -9 -n)
+        if: steps.check.outputs.consistent != 'true'
         run: |
           xz -9e -T0 -c grimoire.db > grimoire.db.xz
-          gzip -9 -n -c grimoire.db > grimoire.db.gz  # -n: no name/mtime header, reproducible bytes
+          gzip -9 -n -c grimoire.db > grimoire.db.gz
 
       - name: Round-trip verify
+        if: steps.check.outputs.consistent != 'true'
         run: |
           xz -t grimoire.db.xz
           gzip -t grimoire.db.gz
@@ -139,8 +86,8 @@ jobs:
           rm -f roundtrip.db
 
       - name: Refresh SHA256SUMS
+        if: steps.check.outputs.consistent != 'true'
         run: |
-          gh release download "$TAG" --pattern SHA256SUMS --clobber || true
           if [ -f SHA256SUMS ]; then
             # grep exits 1 when every line is filtered (single-file sums); that
             # is the expected path under bash -e, so tolerate it.
@@ -154,4 +101,5 @@ jobs:
           cat SHA256SUMS
 
       - name: Upload compressed assets
+        if: steps.check.outputs.consistent != 'true'
         run: gh release upload "$TAG" grimoire.db.xz grimoire.db.gz SHA256SUMS --clobber
