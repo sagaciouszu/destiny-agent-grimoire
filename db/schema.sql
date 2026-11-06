@@ -6,7 +6,9 @@ CREATE TABLE IF NOT EXISTS books (
     slug TEXT UNIQUE NOT NULL,
     title TEXT NOT NULL,
     source_url TEXT,
-    entry_count INTEGER DEFAULT 0
+    entry_count INTEGER DEFAULT 0,
+    timeline TEXT,
+    timeline_basis TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_books_slug ON books(slug);
 
@@ -29,7 +31,9 @@ CREATE TABLE IF NOT EXISTS transcripts (
     characters TEXT,
     arc TEXT,
     source_url TEXT,
-    source_tier TEXT
+    source_tier TEXT,
+    timeline TEXT,               -- in-universe story chapter slug (timeline_chapters)
+    timeline_basis TEXT          -- classification | release_name | scene_flashback
 );
 CREATE INDEX IF NOT EXISTS idx_transcripts_slug ON transcripts(slug);
 
@@ -56,7 +60,9 @@ CREATE TABLE IF NOT EXISTS grimoire_cards (
     body TEXT,
     norm_body TEXT,
     game TEXT DEFAULT 'Destiny 1',
-    source_url TEXT
+    source_url TEXT,
+    timeline TEXT,
+    timeline_basis TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_gc_slug ON grimoire_cards(slug);
 CREATE INDEX IF NOT EXISTS idx_gc_norm ON grimoire_cards(norm_body);
@@ -69,7 +75,9 @@ CREATE TABLE IF NOT EXISTS interactions (
     text TEXT,
     norm_text TEXT,
     release TEXT,
-    source_url TEXT
+    source_url TEXT,
+    timeline TEXT,
+    timeline_basis TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_int_slug ON interactions(slug);
 CREATE INDEX IF NOT EXISTS idx_int_speaker ON interactions(speaker);
@@ -83,7 +91,9 @@ CREATE TABLE IF NOT EXISTS items (
     norm_text TEXT,
     release TEXT,
     item_type TEXT,
-    source_url TEXT
+    source_url TEXT,
+    timeline TEXT,
+    timeline_basis TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_items_slug ON items(slug);
 CREATE INDEX IF NOT EXISTS idx_items_type ON items(item_type);
@@ -96,7 +106,9 @@ CREATE TABLE IF NOT EXISTS records (
     body TEXT,
     norm_body TEXT,
     release TEXT,
-    source_url TEXT
+    source_url TEXT,
+    timeline TEXT,
+    timeline_basis TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_records_slug ON records(slug);
 CREATE INDEX IF NOT EXISTS idx_records_norm ON records(norm_body);
@@ -114,7 +126,8 @@ CREATE TABLE IF NOT EXISTS character_lines (
     text TEXT NOT NULL,
     norm_text TEXT,
     source_type TEXT,
-    source_slug TEXT
+    source_slug TEXT,
+    timeline TEXT                -- inherited from the source transcript
 );
 CREATE INDEX IF NOT EXISTS idx_cl_character ON character_lines(character_id);
 CREATE INDEX IF NOT EXISTS idx_cl_source ON character_lines(source_type, source_slug);
@@ -131,6 +144,15 @@ CREATE VIEW IF NOT EXISTS v_speakers AS
     WHERE speaker NOT IN ('Narration', 'Cutscene')
     GROUP BY speaker;
 
+-- In-universe Destiny timeline: story chapters (rank = chronological order).
+-- Rows carry the chapter slug in their `timeline` column; join this table for
+-- rank/label. NULL timeline = unknown position (honest gap, not a default).
+CREATE TABLE IF NOT EXISTS timeline_chapters (
+    rank INTEGER PRIMARY KEY,
+    slug TEXT UNIQUE NOT NULL,
+    label TEXT NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS meta (
     key TEXT PRIMARY KEY,
     value TEXT
@@ -140,6 +162,7 @@ CREATE VIRTUAL TABLE IF NOT EXISTS fts USING fts5(
     title, text, speaker, body, source,
     source_slug UNINDEXED,
     class_tag UNINDEXED,
+    timeline UNINDEXED,
     tokenize='porter unicode61'
 );
 

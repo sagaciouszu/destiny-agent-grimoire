@@ -27,6 +27,24 @@ Investigation follow-through (`GRIMOIRE-INVESTIGATION-REPORT.md` backlog 1-12):
   `tests/permission-leak-audit.py` (240 checks, wired into the master audit),
   `tests/count-consistency.py` (persona vs DB vs derived prose, wired into the
   master audit). Extended suite grows to include the MCP optimization gate.
+- In-universe timeline on rows: `transcripts`, `interactions`, `items`,
+  `records`, `books` and `character_lines` carry `timeline` (story-chapter
+  slug from the new rank-ordered `timeline_chapters` vocabulary, golden_age
+  through renegades) plus `timeline_basis` (classification | release_name |
+  scene_flashback; an explicitly past-set scene beats its release position).
+  `fts.timeline` makes chapters searchable and filterable via
+  `search(timeline=...)` (MCP/CLI/API). Coverage: transcripts 1313/1314,
+  interactions 100%, items 98.9%, character lines 100%; NULL means unknown.
+  `source-persona.py` renders a "Voice over time" table (lines and cadence
+  per chapter) so voice work starts from the Destiny timeline itself.
+  The Ishtar Collective timeline (45 eras, 800 source links) is snapshotted at
+  `source/ishtar-timeline.json` (regenerate: `scripts/ishtar-timeline.py
+  --fetch`) and supplies curated event time for books (31/110), records
+  (70/71), items (+14) and the 110 cards that appear on it, with basis
+  `ishtar_timeline`; `--report` diffs Ishtar's about-time against the
+  when-spoken chapters for transcript override review. The vocabulary is 23
+  chapters, adding Pre-History, Ancient Past and Pre-Golden Age.
+  Gates: test-db 55 -> 61 checks; migrate now clears stale WAL/SHM sidecars.
 - Releases carry compressed companions: `.github/workflows/release-assets.yml`
   attaches `grimoire.db.xz` (29 MiB, xz -9e) and `grimoire.db.gz` (56 MiB,
   gzip -9) to every published release, round-trip-verified against the
@@ -41,7 +59,7 @@ Investigation follow-through (`GRIMOIRE-INVESTIGATION-REPORT.md` backlog 1-12):
 ## Verification
 
 Master audits: grimoire 13/13, Drifter 23/23, Eris 18/18, Calus 18/18,
-Zavala 18/18, Ghost 18/18. Local gates: test-db 55/55, query-interface 89/89,
+Zavala 18/18, Ghost 18/18. Local gates: test-db 61/61, query-interface 89/89,
 robustness 26/26, agent-layout 81/81, docs-audit 361 commands + skills spec,
 suite-manifest 5/5, conformance, agent-connections, MCP contract 12/12,
 MCP matrix 8/8 (154 calls, 3 concurrent clients, API parity),

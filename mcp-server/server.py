@@ -95,7 +95,7 @@ def search(query: str, type: str | None = None, limit: int = 10, full: bool = Fa
            offset: int = 0, rank: bool = True, activity: str | None = None,
            season: str | None = None, event: str | None = None,
            expansion: str | None = None, class_tag: str | None = None,
-           exclude_stage: bool = False) -> dict:
+           exclude_stage: bool = False, timeline: str | None = None) -> dict:
     """Full-text search over books, transcripts, cards, items and records.
 
     Args:
@@ -113,16 +113,20 @@ def search(query: str, type: str | None = None, limit: int = 10, full: bool = Fa
         class_tag: Filter to base lines plus hunter, titan or warlock variants.
         exclude_stage: Drop stage directions and unattributed cutscene captions
             (ranked results already demote them).
+        timeline: Only rows from one in-universe story chapter, for example
+            the_dark_age, the_taken_war, the_red_war, the_sack_of_the_dreaming_city
+            (23 chapters, chronological; see capabilities.json).
 
-    Rows carry a `snippet` field with the match context highlighted in brackets.
+    Rows carry a `snippet` field with the match context highlighted in brackets
+    and a `timeline` field (the chapter slug, empty when unknown).
     """
     rows = _api(api.search, query, type=type, limit=_limit(limit, 10), full=full,
                 offset=_offset(offset), rank=rank, activity=activity, season=season,
                 event=event, expansion=expansion, class_tag=class_tag,
-                exclude_stage=exclude_stage)
+                exclude_stage=exclude_stage, timeline=timeline)
     total = _api(api.search_total, query, type=type, activity=activity, season=season,
                  event=event, expansion=expansion, class_tag=class_tag,
-                 exclude_stage=exclude_stage)
+                 exclude_stage=exclude_stage, timeline=timeline)
     if full:
         for r in rows:
             r['text'] = _trim(r.get('text', ''))
@@ -136,6 +140,9 @@ def character(name: str, about: str | None = None, all_lines: bool = False,
               limit: int = 20, offset: int = 0, canon_only: bool = False,
               class_tag: str | None = None) -> dict:
     """Character lines from canon.
+
+    Rows carry `timeline`, the in-universe story chapter of the source
+    transcript, so a character's voice can be read era by era.
 
     Args:
         name: Character name or slug as used in the database.
@@ -264,6 +271,9 @@ def transcript(ref: str, speaker: str | None = None, limit: int = 50, offset: in
                canon_only: bool = False, section: str | None = None,
                class_tag: str | None = None) -> dict:
     """Read a transcript and its dialogue lines.
+
+    The transcript metadata carries `timeline` (in-universe story chapter slug,
+    e.g. the_red_war) and `timeline_basis`; lines inherit it in search results.
 
     Args:
         ref: Transcript slug or a title fragment.

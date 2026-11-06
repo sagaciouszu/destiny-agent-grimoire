@@ -164,7 +164,7 @@ hand to separate a config-path problem from a server problem.
 
 | Tool | Arguments | Returns |
 |---|---|---|
-| `search` | `query`, `type?`, `limit=10`, `full=false`, `offset=0`, `rank=true`, `activity?`, `season?`, `event?`, `expansion?`, `class_tag?`, `exclude_stage=false` | `{count, total, next_offset, rows}` with `snippet` fields; ranked results demote stage directions/cutscene captions, `exclude_stage` drops them |
+| `search` | `query`, `type?`, `limit=10`, `full=false`, `offset=0`, `rank=true`, `activity?`, `season?`, `event?`, `expansion?`, `class_tag?`, `exclude_stage=false`, `timeline?` | `{count, total, next_offset, rows}` with `snippet` and `timeline` (story-chapter slug) fields; ranked results demote stage directions/cutscene captions, `exclude_stage` drops them, `timeline` filters to one in-universe chapter |
 | `character` | `name`, `about?`, `all_lines=false`, `limit=20`, `offset=0`, `canon_only=false`, `class_tag?` | `{found, header, rows}` |
 | `item` | `slug` | bounded item row (title, `text` trimmed, `source_url`, `lore` links; no internal fields) |
 | `verify` | `quote`, `speaker?`, `exact=false` | `{quote, verified, matches}` with `exact` flags |

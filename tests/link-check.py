@@ -9,6 +9,7 @@ import re
 import subprocess
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 
 HERE = os.path.dirname(os.path.realpath(__file__))
@@ -28,7 +29,8 @@ def main():
             continue
         for url in sorted(set(URL.findall(open(path, encoding='utf-8').read()))):
             url = url.rstrip('.,;')
-            if 'img.shields.io' in url and not check_badges:
+            host = urllib.parse.urlsplit(url).netloc
+            if host == 'img.shields.io' and not check_badges:
                 continue
             checked += 1
             try:
@@ -38,9 +40,10 @@ def main():
                     if r.status >= 400:
                         bad.append((os.path.basename(path), url, r.status))
             except urllib.error.HTTPError as e:
-                if e.code == 404 and 'github.com/' in url:
+                if e.code == 404 and urllib.parse.urlsplit(url).netloc == 'github.com':
                     # private repository: unauthenticated HEAD reports 404
-                    repo = [p.removesuffix('.git') for p in url.split('github.com/')[1].split('/')[:2]]
+                    parts = urllib.parse.urlsplit(url).path.strip('/').split('/')
+                    repo = [q.removesuffix('.git') for q in parts[:2]]
                     gh = subprocess.run(['gh', 'repo', 'view', '/'.join(repo),
                                          '--json', 'name'], capture_output=True, text=True)
                     if gh.returncode == 0:

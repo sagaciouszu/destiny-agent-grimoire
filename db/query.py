@@ -49,10 +49,11 @@ def cmd_search(args):
     out = api.search(query, type=args.type, limit=args.limit, full=args.full,
                      offset=args.offset, rank=args.rank, activity=args.activity,
                      season=args.season, event=args.event, expansion=args.expansion,
-                     class_tag=args.class_tag)
+                     class_tag=args.class_tag, timeline=args.timeline)
     total = api.search_total(query, type=args.type, activity=args.activity,
                              season=args.season, event=args.event,
-                             expansion=args.expansion, class_tag=args.class_tag)
+                             expansion=args.expansion, class_tag=args.class_tag,
+                             timeline=args.timeline)
     if args.full:
         emit(out, args.json, lambda rs: [print(f"[{r['source']}] {r['title']}: {r['text'][:200]}") for r in rs])
     else:
@@ -365,6 +366,7 @@ def main(argv=None):
     s.add_argument('--event', help='rotating event slug or name')
     s.add_argument('--expansion', help='expansion slug or name')
     s.add_argument('--class', dest='class_tag', choices=['hunter','titan','warlock'])
+    s.add_argument('--timeline', help='in-universe story chapter slug, e.g. the_dark_age')
     s.add_argument('--limit', type=int, default=10)
     s.add_argument('--offset', type=int, default=0)
     s.add_argument('--json', action='store_true')
