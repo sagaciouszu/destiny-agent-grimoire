@@ -73,7 +73,7 @@ check "$Q activity nightmare-containment | grep -q 'Coverage:'" "activity detail
 check "$Q event the-dawning | grep -q 'Occurrences:'" "event details and occurrences"
 check "$Q transcript 'savathuns-spire' --limit 1 | grep -q 'Taxonomy:'" "transcript reports taxonomy"
 check "$Q search calus --season 99 --limit 1 | grep -q '0 results of 0'" "unknown season returns no rows"
-check "$Q activity menagerie | grep -q '232 lines'" "menagerie dialogue ingested"
+check "$Q activity menagerie | grep -q '263 lines'" "menagerie dialogue ingested"
 check "$Q character calus --about Hunter | grep -q 'cunning'" "menagerie Hunter callout"
 check "$Q character calus --about Titan | grep -q 'bravery'" "menagerie Titan callout"
 check "$Q character calus --about Warlock | grep -q 'wisdom'" "menagerie Warlock callout"

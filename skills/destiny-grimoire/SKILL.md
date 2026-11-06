@@ -37,16 +37,17 @@ flavor text, verify.
 |-------|------|---------|
 | books | 110 | Book metadata |
 | book_entries | 1158 | Lore entries within books |
-| transcripts | 1316 | Quest transcript headers |
-| transcript_lines | 69458 | Canon character dialogue |
+| transcripts | 2422 | Transcript headers (quests, web, cutscenes, game captions) |
+| transcript_lines | 78741 | Canon dialogue and game captions by speaker |
 | grimoire_cards | 2889 | Destiny 1 grimoire cards |
 | interactions | 2699 | Short character dialogue beats |
 | items | 58764 | Weapons / armor / gear lore + flavor |
 | records | 69 | Triumphs / seals |
 | characters | 20 | Named characters |
 | character_lines | 1229 | Canon character quotes for agents |
-| fts | 120928 | FTS5 search index |
-| verify_fts | 120928 | Fast quote verification index |
+| caption_provenance | 9608 | Caption line provenance (StringReference hash, package) |
+| fts | 130211 | FTS5 search index |
+| verify_fts | 130211 | Fast quote verification index |
 | item_title_fts | 58764 | Item title lookup index |
 
 Taxonomy tables (additive; canon tables are never rewritten):
@@ -55,10 +56,10 @@ Taxonomy tables (additive; canon tables are never rewritten):
 |-------|------|---------|
 | expansions | 18 | Destiny 1 through Renegades |
 | seasons | 28 | Official numeric seasons; 24-26 are episodes |
-| activities | 67 | Raids, dungeons, seasonal activities, missions |
+| activities | 71 | Raids, dungeons, seasonal activities, missions |
 | events | 9 | Festival, Dawning, Solstice, Guardian Games, Crimson Days, Revelry, Moments of Triumph, Bungie Day, Iron Banner |
 | event_occurrences | 72 | Event year, dates and season |
-| transcript_classification | 1316 | Activity/season/event per transcript with confidence |
+| transcript_classification | 2422 | Activity/season/event per transcript with confidence |
 | item_classification | 58764 | Season/event per item |
 | document_classification | 179 | Season/event per book or record |
 | lore_entries | 2962 | Bungie manifest lore entries |
@@ -75,6 +76,7 @@ Use `db/query.py` for everything. Interface wraps common patterns.
 python3 db/query.py search "Crota" --limit 5
 python3 db/query.py search "Eris" --type transcripts --limit 10
 python3 db/query.py search "hive" --type books
+python3 db/query.py search "bank under attack" --type captions --limit 5
 
 # Faceted discovery
 python3 db/query.py search "calus" --season 7 --limit 5
@@ -123,7 +125,9 @@ python3 db/query.py verify "Absolutely not." --speaker "Eris Morn" --exact
 
 - `--json` on every command (compact, parse-friendly)
 - `search` returns snippets by default; `--full` for complete text
-- `search --type books|transcripts|grimoire|interactions|items|records|lore`
+- `search --type books|transcripts|grimoire|interactions|items|records|lore|captions`
+- `search --lang <code>` filters by document language (every row is `en` today;
+  caption languages drop in later as data)
 - `seals` / `seal <hash-or-name>` / `record <slug>` for seals, triumphs and records
 - `search --activity`, `--season`, `--event`, `--expansion` filter by taxonomy
 - `--class hunter|titan|warlock` adds class variants to base lines (`search`,

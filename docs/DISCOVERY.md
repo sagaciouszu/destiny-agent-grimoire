@@ -3,8 +3,8 @@
 ## The problem
 
 The grimoire had one discovery primitive: FTS5 over every text row, filtered by
-`source` (`transcript_line`, `book_entry`, `item`, ...). That answers "where is
-this word" but not:
+`source` (`transcript_line`, `caption`, `book_entry`, `item`, ...). That answers
+"where is this word" but not:
 
 - all raid dialogue
 - every Calus line from the Menagerie

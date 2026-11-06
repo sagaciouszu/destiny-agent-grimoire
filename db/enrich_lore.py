@@ -111,9 +111,9 @@ def main():
             continue
         fts_id += 1
         conn.execute(
-            'INSERT INTO fts (rowid,title,text,speaker,body,source,source_slug) '
-            'VALUES (?,?,?,?,?,?,?)',
-            (fts_id, title, body, '', '', 'lore_entry', f'lore-{h}'))
+            'INSERT INTO fts (rowid,title,text,speaker,body,source,source_slug,lang) '
+            'VALUES (?,?,?,?,?,?,?,?)',
+            (fts_id, title, body, '', '', 'lore_entry', f'lore-{h}', 'en'))
         conn.execute(
             'INSERT INTO verify_fts (norm,source,slug,speaker) VALUES (?,?,?,?)',
             (nb, 'lore_entry', f'lore-{h}', ''))

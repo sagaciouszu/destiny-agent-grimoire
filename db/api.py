@@ -16,7 +16,7 @@ DEFAULT_DB = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'grimoire.
 TYPE_TO_SOURCE = {
     'books': 'book_entry', 'transcripts': 'transcript_line', 'grimoire': 'grimoire_card',
     'interactions': 'interaction', 'items': 'item', 'records': 'record',
-    'lore': 'lore_entry',
+    'lore': 'lore_entry', 'captions': 'caption',
 }
 MAX_LIMIT = 10000  # safety bound for the shared API; MCP clamps tighter
 
@@ -175,7 +175,7 @@ def _limit(value, default):
 @_guard
 def search(term, type=None, limit=10, full=False, offset=0, rank=True,
            activity=None, season=None, event=None, expansion=None, class_tag=None,
-           exclude_stage=False, timeline=None):
+           exclude_stage=False, timeline=None, lang=None):
     """Full-text search. Returns rows with a snippet unless full=True.
 
     The term is used as FTS5 syntax when valid; otherwise every word is quoted
@@ -183,9 +183,15 @@ def search(term, type=None, limit=10, full=False, offset=0, rank=True,
 
     Ranked results demote stage directions (speaker Narration) and unattributed
     cutscene captions (speaker Cutscene); set exclude_stage=True to drop them.
+    Game-caption rows (source='caption') carry a -1.0 boost so extracted in-game
+    text competes with the curated corpus; stage-direction penalties still apply
+    on top, so stat/scoreboard captions stay demoted (net +1.0).
 
     timeline filters rows to one in-universe story chapter slug (see
     timeline_chapters / capabilities.json), for example 'the_dark_age'.
+    lang filters to one document language (fts.lang is UNINDEXED, so this never
+    affects bm25); the only populated value today is 'en' — future caption
+    languages arrive as data, not a schema change.
     """
     term = clean_input(term, 500)
     if type is not None and type not in TYPE_TO_SOURCE:
@@ -198,6 +204,9 @@ def search(term, type=None, limit=10, full=False, offset=0, rank=True,
         if type:
             where += ' AND source = ?'
             params.append(TYPE_TO_SOURCE[type])
+        if lang:
+            where += ' AND lang = ?'
+            params.append(str(lang))
         facet, facet_params = _taxonomy_filter(conn, activity, season, event, expansion)
         if facet:
             where += ' AND ' + facet
@@ -214,6 +223,7 @@ def search(term, type=None, limit=10, full=False, offset=0, rank=True,
         params.append(_offset(offset))
         order = (" ORDER BY bm25(fts, 3.0, 1.0, 1.0, 1.0, 0.0)"
                  " + CASE WHEN source='item' THEN 1.0 ELSE 0 END"
+                 " + CASE WHEN source='caption' THEN -1.0 ELSE 0 END"
                  " + CASE WHEN speaker='Narration' THEN 2.0"
                  " WHEN speaker='Cutscene' THEN 1.0 ELSE 0 END") if rank else ''
         try:
@@ -440,7 +450,7 @@ def verify(quote, speaker=None, exact=False):
 
 @_guard
 def search_total(term, type=None, activity=None, season=None, event=None, expansion=None,
-                 class_tag=None, exclude_stage=False, timeline=None):
+                 class_tag=None, exclude_stage=False, timeline=None, lang=None):
     """Total FTS matches for a query (for paging). Mirrors search() filters."""
     term = clean_input(term, 500)
     if type is not None and type not in TYPE_TO_SOURCE:
@@ -453,6 +463,9 @@ def search_total(term, type=None, activity=None, season=None, event=None, expans
         if type:
             where += ' AND source = ?'
             params.append(TYPE_TO_SOURCE[type])
+        if lang:
+            where += ' AND lang = ?'
+            params.append(str(lang))
         facet, facet_params = _taxonomy_filter(conn, activity, season, event, expansion)
         if facet:
             where += ' AND ' + facet
@@ -501,8 +514,10 @@ def character_info(name):
             if not row:
                 return None
             spoken = conn.execute(
-                "SELECT COUNT(*) FROM transcript_lines "
-                "WHERE speaker=? AND is_stage_dir=0 AND is_optional=0",
+                "SELECT COUNT(*) FROM transcript_lines tl "
+                "JOIN transcripts t ON t.id = tl.transcript_id "
+                "WHERE tl.speaker=? AND tl.is_stage_dir=0 AND tl.is_optional=0 "
+                "AND COALESCE(t.source_tier, '') != 'game_caption'",
                 (row[0],)).fetchone()[0]
             return {'name': row[0], 'slug': row[0].lower().replace(' ', '-'),
                     'quotes': 0, 'spoken_lines': spoken,
@@ -512,11 +527,15 @@ def character_info(name):
             'SELECT source_type, COUNT(*) FROM character_lines WHERE character_id=? GROUP BY source_type',
             (ch['id'],)).fetchall()}
         # spoken_lines matches persona.json canon_lines: exact speaker, canonical
-        # rows only. Variant speakers ("Eris Morn (Transformed)") stay reachable
-        # through character(all_lines=True), which uses a LIKE match.
+        # rows only, game captions excluded (source_tier='game_caption' is
+        # searchable canon but not part of a persona's curated voice count).
+        # Variant speakers ("Eris Morn (Transformed)") stay reachable through
+        # character(all_lines=True), which uses a LIKE match.
         spoken = conn.execute(
-            "SELECT COUNT(*) FROM transcript_lines "
-            "WHERE speaker=? AND is_stage_dir=0 AND is_optional=0",
+            "SELECT COUNT(*) FROM transcript_lines tl "
+            "JOIN transcripts t ON t.id = tl.transcript_id "
+            "WHERE tl.speaker=? AND tl.is_stage_dir=0 AND tl.is_optional=0 "
+            "AND COALESCE(t.source_tier, '') != 'game_caption'",
             (ch['name'],)).fetchone()[0]
         aliases = [r[0] for r in conn.execute(
             'SELECT alias FROM speaker_aliases WHERE canonical=? ORDER BY alias', (ch['name'],)).fetchall()]
@@ -1064,7 +1083,8 @@ def stats():
                   'interactions', 'items', 'records', 'characters', 'character_lines', 'fts',
                   'expansions', 'seasons', 'events', 'event_occurrences', 'activities',
                   'transcript_classification', 'item_classification',
-                  'document_classification', 'lore_entries', 'lore_entry_items']:
+                  'document_classification', 'lore_entries', 'lore_entry_items',
+                  'caption_provenance']:
             counts[t] = conn.execute(f'SELECT COUNT(*) FROM {t}').fetchone()[0]
         top_items = [{'item_type': r[0], 'count': r[1]} for r in conn.execute(
             "SELECT item_type, COUNT(*) FROM items WHERE item_type != '' "

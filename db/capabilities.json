@@ -6,6 +6,7 @@
     "engine": "sqlite",
     "fts": "fts5 (porter unicode61)",
     "build": "python3 db/migrate.py",
+    "caption_source": "archive/data/captions.jsonl (game captions, build sunrise-pre-bl, English only; raw subtitle exports stay local)",
     "release_asset": "https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db",
     "release_asset_xz": "https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db.xz",
     "release_asset_gz": "https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db.gz",
@@ -15,7 +16,8 @@
     "books": "lore book metadata (slug matches live categories/book-<slug>)",
     "book_entries": "entries within books (provenance via parent book)",
     "transcripts": "transcript headers (curated markdown, Ishtar web, cutscene captions)",
-    "transcript_lines": "canonical dialogue lines by speaker (seq ordered, stage directions flagged)",
+    "transcript_lines": "canonical dialogue lines by speaker (seq ordered, stage directions flagged, lang column for captions)",
+    "caption_provenance": "per-line game-file provenance for captions (StringReference hash, package/entry origin, kind)",
     "timeline_chapters": "in-universe Destiny timeline: story chapters (rank chronological, rows.timeline joins by slug)",
     "grimoire_cards": "Destiny 1 grimoire cards with source_url",
     "interactions": "short character dialogue beats",
@@ -55,7 +57,7 @@
   },
   "commands": {
     "search": {
-      "usage": "query.py search \"<term>\" [--type T] [--activity A] [--season S] [--event E] [--expansion X] [--class hunter|titan|warlock] [--limit N] [--offset N] [--rank|--no-rank] [--json] [--full]",
+      "usage": "query.py search \"<term>\" [--type T] [--activity A] [--season S] [--event E] [--expansion X] [--class hunter|titan|warlock] [--timeline SLUG] [--lang CODE] [--limit N] [--offset N] [--rank|--no-rank] [--json] [--full]",
       "returns": "snippet context by default; --full for complete text"
     },
     "character": {
@@ -124,7 +126,8 @@
     "quote_policy": "quote must trace to speaker-attributed canon; verify before quoting",
     "json_output": "every command supports --json (compact, parse-friendly)",
     "counts": "authoritative counts come from the database; docs are synced by tests/sync-doc-counts.py",
-    "timeline": "timeline = in-universe story chapter slug from timeline_chapters (rank = chronological order); basis: classification | release_name | scene_flashback | ishtar_timeline; NULL means unknown, never assume"
+    "timeline": "timeline = in-universe story chapter slug from timeline_chapters (rank = chronological order); basis: classification | release_name | scene_flashback | ishtar_timeline; NULL means unknown, never assume",
+    "lang": "transcripts.lang and fts.lang hold the document language (UNINDEXED in fts, never affects bm25); only 'en' is populated today, later caption languages arrive as data rows, not schema changes"
   },
   "api": "db/api.py (importable query layer used by the CLI and MCP server)",
   "mcp": {

@@ -47,6 +47,8 @@ SPEAKER_ALIASES = {
     'AMANDA': 'Amanda Holliday',
     'The Drifter': 'Drifter',
     'The Crow': 'Crow',
+    # The Menagerie narrator is titled in-game; the corpus speaker is Calus.
+    'Emperor Calus': 'Calus',
     # Saint-14 is one character under many names; alias them so no source
     # variant fragments the corpus or trips the Roman-numeral speaker filter.
     'Saint-XIV': 'Saint-14',
@@ -382,6 +384,143 @@ def derive_timeline(conn):
         "WHERE source_type = 'transcript'")
     stats['character_lines'] = conn.execute(
         'SELECT COUNT(*) FROM character_lines WHERE timeline IS NOT NULL').fetchone()[0]
+    return stats
+
+
+def _caption_pkg(url):
+    """Split a caption provenance URL 'pkg:<package_base>#<entry>'.
+
+    Unlinked banks carry no StringReference entry ('pkg:<base>#None'), which
+    is provenance worth keeping (source_entry stays NULL) rather than dropping.
+    """
+    m = re.match(r'^pkg:([^#]+)#(\d+)$', url or '')
+    if m:
+        return m.group(1), int(m.group(2))
+    if url and url.startswith('pkg:'):
+        return url[4:].split('#')[0] or None, None
+    return None, None
+
+
+def _caption_prov(conn, line_id, line, rec, src_pkg, src_entry):
+    """Attach one caption line's StringReference provenance.
+
+    INSERT OR IGNORE: several caption tables can carry the same canon line, and
+    caption_provenance has one row per line. Returns 1 when a row was written.
+    """
+    cur = conn.execute(
+        'INSERT OR IGNORE INTO caption_provenance '
+        '(line_id,hash,kind,source_pkg,source_entry,bank_entry) VALUES (?,?,?,?,?,?)',
+        (line_id, line.get('hash'), rec.get('kind_class'), src_pkg, src_entry,
+         rec.get('bank_entry')))
+    return cur.rowcount
+
+
+def _caption_header(conn, rec, acts, stats):
+    """Insert a caption transcript header and its taxonomy row.
+
+    The activity facet comes from the curated extraction pass and is stored
+    with confidence='derived' (season/expansion filled from the activity
+    catalogue, exactly as classify() would). Everything else is 'unknown':
+    caption text spans every era, so no season is ever inferred from it.
+    """
+    speaker = canon_speaker(rec.get('speaker') or 'Cutscene')
+    attributed = speaker not in ('Cutscene', 'Narration')
+    title = speaker if attributed else 'Game caption (%s)' % (
+        rec.get('kind_class') or 'caption')
+    cur = conn.execute(
+        'INSERT INTO transcripts (slug,title,release,characters,arc,source_url,'
+        'source_tier,lang) VALUES (?,?,?,?,?,?,?,?)',
+        (rec['slug'], title, '', speaker if attributed else '', '', '',
+         'game_caption', rec.get('lang') or 'en'))
+    tid = cur.lastrowid
+    stats['transcripts'] += 1
+    row = acts.get(taxonomy.CAPTION_ACTIVITY_SLUGS.get(rec.get('activity'), ''))
+    if rec.get('activity') and not row:
+        # A facet key with no taxonomy slug must be visible in the build log:
+        # silently dropping it hides an extraction/taxonomy vocabulary drift.
+        stats['unresolved_facets'] += 1
+    if row and rec.get('confidence') == 'derived':
+        conn.execute(
+            'INSERT OR REPLACE INTO transcript_classification '
+            '(transcript_id,activity_slug,activity_type,season_slug,act,event_slug,'
+            'expansion_slug,confidence,evidence) VALUES (?,?,?,?,?,?,?,?,?)',
+            (tid, row[0], row[1], row[2], None, None, row[3], 'derived',
+             'caption_narration_curation'))
+        stats['facets'] += 1
+    else:
+        conn.execute(
+            'INSERT OR REPLACE INTO transcript_classification '
+            '(transcript_id,confidence,evidence) VALUES (?,?,?)',
+            (tid, 'unknown', ''))
+    return tid
+
+
+def load_captions(conn):
+    """Load English game captions from archive/data/captions.jsonl.
+
+    One record is one caption table extracted from the local build: a
+    transcript header (source_tier='game_caption', lang='en'), its lines, a
+    taxonomy row, and per-line StringReference provenance in caption_provenance.
+
+    Rules:
+      * speakers canonicalise through SPEAKER_ALIASES like every other loader;
+      * a line whose normalized text already exists anywhere in canon is not
+        inserted a second time -- its provenance attaches to the existing line,
+        so search never returns the same text twice and no attribution
+        conflict is introduced;
+      * the activity facet is the curated extraction verdict; every other
+        transcript stays 'unknown'. Never guess a season from caption text.
+
+    Runs after taxonomy.populate() so keyword classification cannot overwrite
+    the curated facets, and before the FTS build so caption rows are indexed
+    with source='caption'.
+    """
+    path = os.path.join(ROOT, 'archive', 'data', 'captions.jsonl')
+    stats = {'transcripts': 0, 'lines': 0, 'already_in_canon': 0,
+             'provenance': 0, 'facets': 0, 'unresolved_facets': 0}
+    if not os.path.exists(path):
+        return stats
+
+    # norm_line -> canon line id (lowest id first: deterministic, and a caption
+    # line that already exists attaches its provenance to that row).
+    canon = {}
+    for lid, nl in conn.execute(
+            "SELECT id, norm_line FROM transcript_lines WHERE norm_line != '' ORDER BY id"):
+        canon.setdefault(nl, lid)
+
+    # Activity catalogue fill for the curated facets (type/season/expansion).
+    acts = {r[0]: r for r in conn.execute(
+        'SELECT slug, activity_type, season_slug, expansion_slug FROM activities')}
+
+    for raw in open(path, encoding='utf-8'):
+        rec = json.loads(raw)
+        src_pkg, src_entry = _caption_pkg(rec.get('source_url', ''))
+        tid, seq = None, 0
+        for line in rec.get('lines', []):
+            text = (line.get('text') or '').strip()
+            if not text:
+                continue
+            nl = norm_text(text)
+            hit = canon.get(nl)
+            if hit is not None:
+                stats['provenance'] += _caption_prov(
+                    conn, hit, line, rec, src_pkg, src_entry)
+                stats['already_in_canon'] += 1
+                continue
+            if tid is None:      # header appears only when a line is new
+                tid = _caption_header(conn, rec, acts, stats)
+            speaker = canon_speaker(
+                line.get('speaker') or rec.get('speaker') or 'Cutscene')
+            lid = conn.execute(
+                'INSERT INTO transcript_lines (transcript_id,seq,speaker,line,'
+                'norm_line,is_stage_dir) VALUES (?,?,?,?,?,?)',
+                (tid, seq, speaker, text, nl,
+                 1 if line.get('is_stage_dir') else 0)).lastrowid
+            canon.setdefault(nl, lid)
+            seq += 1
+            stats['lines'] += 1
+            stats['provenance'] += _caption_prov(
+                conn, lid, line, rec, src_pkg, src_entry)
     return stats
 
 
@@ -775,6 +914,17 @@ def migrate():
     tl_stats = derive_timeline(conn)
     print(f'timeline: {tl_stats}')
 
+    # Game captions (archive/data/captions.jsonl): English subtitle and callout
+    # text from the local build. Loaded after taxonomy so the curated activity
+    # facets survive, and before the FTS build so caption rows index as
+    # source='caption'.
+    cap_stats = load_captions(conn)
+    print('captions: %(transcripts)d transcripts, %(lines)d lines, '
+          '%(already_in_canon)d already in canon, %(provenance)d provenance rows, '
+          '%(facets)d activity facets, %(unresolved_facets)d unresolved' % cap_stats)
+    t_count += cap_stats['transcripts']
+    tl_count += cap_stats['lines']
+
     # Build FTS index (global rowid sequence)
     print('building FTS index...')
     fts_id = 0
@@ -785,19 +935,28 @@ def migrate():
     tl_records = dict(conn.execute('SELECT slug, COALESCE(timeline, "") FROM records'))
     tl_cards = dict(conn.execute('SELECT slug, COALESCE(timeline, "") FROM grimoire_cards'))
     tl_books = dict(conn.execute('SELECT slug, COALESCE(timeline, "") FROM books'))
-    def add_fts(title, text, speaker='', body='', source='', source_slug='', class_tag='', timeline=''):
+    def add_fts(title, text, speaker='', body='', source='', source_slug='',
+                class_tag='', timeline='', lang='en'):
+        # lang is the document language: every row in this build is English,
+        # later caption languages arrive as data rows (see capabilities.json).
         nonlocal fts_id
         fts_id += 1
-        conn.execute('INSERT INTO fts (rowid,title,text,speaker,body,source,source_slug,class_tag,timeline) VALUES (?,?,?,?,?,?,?,?,?)',
-            (fts_id, title, text or '', speaker, body or '', source, source_slug, class_tag, timeline or ''))
+        conn.execute('INSERT INTO fts (rowid,title,text,speaker,body,source,source_slug,class_tag,timeline,lang) VALUES (?,?,?,?,?,?,?,?,?,?)',
+            (fts_id, title, text or '', speaker, body or '', source, source_slug,
+             class_tag, timeline or '', lang))
     for bid, slug, title in conn.execute('SELECT id,slug,title FROM books').fetchall():
         for eid, etitle, ebody in conn.execute('SELECT id,title,body FROM book_entries WHERE book_id=?', (bid,)).fetchall():
             add_fts(f'{title}: {etitle}', ebody, source='book_entry', source_slug=slug,
                     timeline=tl_books.get(slug, ''))
-    for tid, slug, title in conn.execute('SELECT id,slug,title FROM transcripts').fetchall():
+    for tid, slug, title, tier in conn.execute(
+            'SELECT id, slug, title, source_tier FROM transcripts').fetchall():
         for tlid, sp, line, ctag in conn.execute(
                 'SELECT id,speaker,line,class_tag FROM transcript_lines WHERE transcript_id=?', (tid,)).fetchall():
-            add_fts(title, line, sp, source='transcript_line', source_slug=slug, class_tag=ctag or '',
+            # Game captions are their own source so search can rank and filter
+            # them (`--type captions`); every other line stays transcript_line.
+            add_fts(title, line, sp,
+                    source='caption' if tier == 'game_caption' else 'transcript_line',
+                    source_slug=slug, class_tag=ctag or '',
                     timeline=tl_by_tid.get(tid, ''))
     for gid, slug, title, body in conn.execute('SELECT id,slug,title,body FROM grimoire_cards').fetchall():
         add_fts(title, body, source='grimoire_card', source_slug=slug,
@@ -818,7 +977,9 @@ def migrate():
     print('building verification index...')
     for sql in (
         "INSERT INTO verify_fts(norm, source, slug, speaker) "
-        "SELECT tl.norm_line, 'transcript', t.slug, tl.speaker "
+        "SELECT tl.norm_line, "
+        "CASE WHEN t.source_tier='game_caption' THEN 'caption' ELSE 'transcript' END, "
+        "t.slug, tl.speaker "
         "FROM transcript_lines tl JOIN transcripts t ON t.id=tl.transcript_id",
         "INSERT INTO verify_fts(norm, source, slug, speaker) "
         "SELECT e.norm_text, 'book', b.slug, '' "
@@ -867,6 +1028,7 @@ def migrate():
         ('document_classification', str(conn.execute('SELECT COUNT(*) FROM document_classification').fetchone()[0])),
         ('coverage_notes', str(conn.execute('SELECT COUNT(*) FROM coverage_notes').fetchone()[0])),
         ('speaker_aliases', str(conn.execute('SELECT COUNT(*) FROM speaker_aliases').fetchone()[0])),
+        ('caption_provenance', str(conn.execute('SELECT COUNT(*) FROM caption_provenance').fetchone()[0])),
     ]:
         conn.execute('INSERT OR REPLACE INTO meta (key,value) VALUES (?,?)', (k, v))
 

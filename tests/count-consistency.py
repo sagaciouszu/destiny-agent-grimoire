@@ -4,7 +4,8 @@
 For every agent repo listed in series/agents.json (sibling directories, skip
 when absent):
   1. persona.json canon_lines == DB count (exact speaker, is_stage_dir=0,
-     is_optional=0) and canon_variant_lines == optional variant count.
+     is_optional=0, excluding game captions) and canon_variant_lines == optional
+     variant count.
   2. Derived prose counts in <agent>-core.md ("N lines across"),
      <agent>-voice.md ("Canonical lines | N |") and entry/AGENTS prose
      ("(N <Speaker> lines)") must equal persona.json canon_lines.
@@ -66,15 +67,23 @@ def main():
         speaker = persona.get('speaker')
         canon = persona.get('canon_lines')
         variants = persona.get('canon_variant_lines', 0)
+        # Persona canon excludes game captions (source_tier='game_caption'):
+        # captions are searchable canon but not part of a persona's curated
+        # voice count. Same predicate as persona-freshness.py and
+        # character_info.spoken_lines.
         actual = conn.execute(
-            'SELECT COUNT(*) FROM transcript_lines '
-            'WHERE speaker=? AND is_stage_dir=0 AND is_optional=0',
+            'SELECT COUNT(*) FROM transcript_lines tl '
+            'JOIN transcripts t ON t.id = tl.transcript_id '
+            'WHERE tl.speaker=? AND tl.is_stage_dir=0 AND tl.is_optional=0 '
+            "AND COALESCE(t.source_tier, '') != 'game_caption'",
             (speaker,)).fetchone()[0]
         check(f'{ident}: persona canon_lines == DB ({actual})',
               canon == actual, f'persona={canon}')
         actual_variants = conn.execute(
-            'SELECT COUNT(*) FROM transcript_lines '
-            'WHERE speaker=? AND is_stage_dir=0 AND is_optional=1',
+            'SELECT COUNT(*) FROM transcript_lines tl '
+            'JOIN transcripts t ON t.id = tl.transcript_id '
+            'WHERE tl.speaker=? AND tl.is_stage_dir=0 AND tl.is_optional=1 '
+            "AND COALESCE(t.source_tier, '') != 'game_caption'",
             (speaker,)).fetchone()[0]
         check(f'{ident}: persona canon_variant_lines == DB ({actual_variants})',
               variants == actual_variants, f'persona={variants}')

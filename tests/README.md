@@ -91,13 +91,18 @@ Calus / Zavala / Ghost (destiny-agent-{calus,zavala,ghost}/tests/):
 - `item-audit.py` - item slugs, titles, URLs, text and optional-field coverage
 - `taxonomy-deep-test.py` - tiers, classification refs, seasons, events, lore, seals,
   manifest links and API parity for the additive layers.
+- `caption-test.py` - game captions (`source_tier='game_caption'`): headers and
+  language, StringReference provenance, no duplicate canon text, curated activity
+  facets, FTS/verification parity, demoted stat lines, `--type captions` /
+  `--lang` / activity-facet search, and persona canon excluding captions.
 - `agent-parity-test.sh` - every present agent exposes the same shared capabilities
   (memory, multi-user, class discovery, taxonomy tools, master audit).
 - `agent-connections-test.sh` - every local agent resolves the canonical DB, the
   current character/lore/seal surface and a fresh canon line count; skips agents
   that are absent.
 - `persona-freshness.py` - fails when `persona.json` canon_lines no longer matches
-  the live database for that speaker.
+  the live database for that speaker (game captions are excluded from persona
+  canon; see `tests/caption-test.py`).
 - `class-filter-test.py` - hunter/titan/warlock variant filtering through the API.
 - `docs-audit.py` - every documented command resolves; query subcommands and flags are valid
 - `mirror-tree-test.py` - cross-platform tree mirror (sync's rsync replacement): copy, delete, excludes, dry-run
