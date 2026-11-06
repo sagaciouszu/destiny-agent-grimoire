@@ -1,3 +1,16 @@
+## v0.27.5 - Immolant transcript ingestion and standards reconciliation (2026-11-05)
+
+Reconciliation and sanity pass on the archive surfaced and fixed one content
+bug: Immolant Pt. 1-2 dialogue scenes were filed under the lore corpus
+(`source/records/`) instead of the transcript corpus (`source/transcripts/`),
+so the shipped database served them as lore books. They now ingest as
+transcripts (241 lines, timeline `the_rise_of_stasis`) and the database was
+rebuilt through the full pipeline.
+
+- `STANDARDS.md` refreshed and ratified with every rule tied to a verification
+  gate; Eris canon-count query corrected to exact speaker match; source and
+  capability cross-checks updated; database/doc counts re-synced after rebuild.
+
 ## v0.27.4 - Agent-optimization pass: search, lookups, permissions (2026-11-05)
 
 Investigation follow-through (`GRIMOIRE-INVESTIGATION-REPORT.md` backlog 1-12):
