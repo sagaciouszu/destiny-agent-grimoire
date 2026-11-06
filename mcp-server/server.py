@@ -52,7 +52,7 @@ def _offset(value):
 
 server = MCPServer(
     'destiny-grimoire',
-    version='1.5.0',
+    version='1.6.0',
     instructions=(
         'Canonical Destiny lore. Tool map: search (keyword discovery across all '
         'content), character + character_info (quotes and metadata by name), '
@@ -95,13 +95,14 @@ def search(query: str, type: str | None = None, limit: int = 10, full: bool = Fa
            offset: int = 0, rank: bool = True, activity: str | None = None,
            season: str | None = None, event: str | None = None,
            expansion: str | None = None, class_tag: str | None = None,
-           exclude_stage: bool = False, timeline: str | None = None) -> dict:
-    """Full-text search over books, transcripts, cards, items and records.
+           exclude_stage: bool = False, timeline: str | None = None,
+           lang: str | None = None) -> dict:
+    """Full-text search over books, transcripts, cards, items, records and captions.
 
     Args:
         query: FTS5 query, for example "Crota" or "hive sword logic".
         type: Optional filter: books, transcripts, grimoire, interactions, items,
-            records, lore.
+            records, lore, captions.
         limit: Maximum rows (1-100).
         full: Return full text instead of bounded snippets.
         offset: Rows to skip (0-10000; higher values clamp to 10000).
@@ -116,6 +117,8 @@ def search(query: str, type: str | None = None, limit: int = 10, full: bool = Fa
         timeline: Only rows from one in-universe story chapter, for example
             the_dark_age, the_taken_war, the_red_war, the_sack_of_the_dreaming_city
             (23 chapters, chronological; see capabilities.json).
+        lang: Document language code; every row is 'en' today and later caption
+            languages arrive as data rows (see capabilities.json).
 
     Rows carry a `snippet` field with the match context highlighted in brackets
     and a `timeline` field (the chapter slug, empty when unknown).
@@ -123,10 +126,10 @@ def search(query: str, type: str | None = None, limit: int = 10, full: bool = Fa
     rows = _api(api.search, query, type=type, limit=_limit(limit, 10), full=full,
                 offset=_offset(offset), rank=rank, activity=activity, season=season,
                 event=event, expansion=expansion, class_tag=class_tag,
-                exclude_stage=exclude_stage, timeline=timeline)
+                exclude_stage=exclude_stage, timeline=timeline, lang=lang)
     total = _api(api.search_total, query, type=type, activity=activity, season=season,
                  event=event, expansion=expansion, class_tag=class_tag,
-                 exclude_stage=exclude_stage, timeline=timeline)
+                 exclude_stage=exclude_stage, timeline=timeline, lang=lang)
     if full:
         for r in rows:
             r['text'] = _trim(r.get('text', ''))

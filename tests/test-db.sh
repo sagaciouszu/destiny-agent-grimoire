@@ -3,6 +3,19 @@
 DB="$(cd "$(dirname "$0")/.." && pwd)/db/grimoire.db"
 if [ ! -f "$DB" ]; then echo "FAIL: database not found at $DB - bootstrap: ./setup.sh, or python3 db/migrate.py (see README)"; exit 1; fi
 
+# Some PATH entries (Android platform-tools, for example) ship a sqlite3 built
+# without FTS5; those silently turn the FTS checks below into bogus failures.
+# Fall back to the first system sqlite3 that can create an FTS5 table.
+if ! sqlite3 :memory: 'CREATE VIRTUAL TABLE _fts_probe USING fts5(x)' 2>/dev/null; then
+    for cand in /usr/bin/sqlite3 /bin/sqlite3 /usr/local/bin/sqlite3; do
+        if [ -x "$cand" ] && "$cand" :memory: 'CREATE VIRTUAL TABLE _fts_probe USING fts5(x)' 2>/dev/null; then
+            PATH="$(dirname "$cand"):$PATH"
+            export PATH
+            break
+        fi
+    done
+fi
+
 echo "=== DATABASE INTEGRITY TEST ==="
 PASS=0; FAIL=0
 check() {

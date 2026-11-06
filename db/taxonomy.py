@@ -15,7 +15,19 @@ Four independent axes:
 import re
 import sqlite3
 
-SCHEMA_VERSION = '1.3.0'
+SCHEMA_VERSION = '1.4.0'
+
+# Activity facet keys emitted by the game-caption extraction
+# (caption_activity.py NARRATOR/ACTIVITY_PAT keys) -> taxonomy slugs.
+# Caption records carry the extraction key; transcript_classification stores
+# the taxonomy slug, so the two vocabularies meet here - never in the loader.
+CAPTION_ACTIVITY_SLUGS = {
+    'gambit': 'gambit',
+    'crucible': 'crucible',
+    'menagerie': 'menagerie',
+    'trials_osiris': 'trials-of-osiris',
+    'trials_nine': 'trials-of-the-nine',
+}
 
 # --------------------------------------------------------------------------
 # Expansions
@@ -244,6 +256,19 @@ ACTIVITIES = [
      ['encore']),
     ('kells-fall', "Kell's Fall", 'exotic_mission', 'the-final-shape', 'episode-revenant', None, 0,
      ["kell's fall", 'kells fall']),
+
+    # PvP playlists. Added so `--activity gambit` / `trials-of-osiris` resolve:
+    # the Season of Arrivals caption extraction attributes in-match callouts to
+    # these narrators (Drifter / Shaxx / Vance / Emissary). `crucible` and
+    # `gambit` are documented activity types in this file's header comment.
+    ('crucible', 'Crucible', 'crucible', 'destiny-2', None, None, 0,
+     ['crucible']),
+    ('gambit', 'Gambit', 'gambit', 'forsaken', None, None, 0,
+     ['gambit']),
+    ('trials-of-the-nine', 'Trials of the Nine', 'crucible', 'destiny-2', None, None, 1,
+     ['trials of the nine']),
+    ('trials-of-osiris', 'Trials of Osiris', 'crucible', 'shadowkeep', 'season-of-arrivals', None, 0,
+     ['trials of osiris']),
 ]
 
 # --------------------------------------------------------------------------

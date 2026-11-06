@@ -40,9 +40,16 @@ def main():
     if not speaker or not isinstance(expected, int):
         return 0
     conn = sqlite3.connect(f'file:{db_path}?mode=ro', uri=True)
+    # Persona canon excludes game captions (source_tier='game_caption'): caption
+    # rows are searchable canon, but a persona's curated voice count is the
+    # transcript corpus the persona was built from. Same predicate as
+    # count-consistency.py, character_info.spoken_lines and source-persona.py.
     actual = conn.execute(
-        'SELECT COUNT(*) FROM transcript_lines '
-        'WHERE speaker=? AND is_stage_dir=0 AND is_optional=0', (speaker,)).fetchone()[0]
+        'SELECT COUNT(*) FROM transcript_lines tl '
+        'JOIN transcripts t ON t.id = tl.transcript_id '
+        'WHERE tl.speaker=? AND tl.is_stage_dir=0 AND tl.is_optional=0 '
+        "AND COALESCE(t.source_tier, '') != 'game_caption'",
+        (speaker,)).fetchone()[0]
     conn.close()
     if actual != expected:
         print(f'{speaker}: canon_lines {expected} != database {actual}')

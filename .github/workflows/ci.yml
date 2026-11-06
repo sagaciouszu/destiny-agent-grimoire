@@ -28,6 +28,9 @@ jobs:
       - name: Migrate smoke (source builds; enrichments need local-only dumps)
         run: GRIMOIRE_DB="$RUNNER_TEMP/grimoire-smoke.db" python3 db/migrate.py
 
+      - name: Game captions (against the smoke build)
+        run: GRIMOIRE_DB="$RUNNER_TEMP/grimoire-smoke.db" python3 tests/caption-test.py
+
       - name: Conformance
         run: python3 tests/conformance.py
 

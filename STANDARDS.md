@@ -63,8 +63,9 @@ inheritance, and `db/capabilities.json` sync.
 |-------|----------|--------------------------|-------|
 | `books` | slug, title | source_url, entry_count, timeline, timeline_basis | slugs match live `categories/book-<slug>` (2 documented exemptions); `timeline_basis` is `classification`, `release_name`, or `ishtar_timeline` |
 | `book_entries` | book_id, body | title (fallback to book title), seq | provenance via parent book |
-| `transcripts` | slug, title | release, characters, arc, source_url, source_tier, timeline, timeline_basis | release empty when the source lacks it; `source_tier` records provenance precedence; `timeline` is the in-universe story chapter (see `timeline_chapters`), NULL when unknown |
+| `transcripts` | slug, title | release, characters, arc, source_url, source_tier, timeline, timeline_basis, lang | release empty when the source lacks it; `source_tier` records provenance precedence; `timeline` is the in-universe story chapter (see `timeline_chapters`), NULL when unknown; `lang` is the document language (`en` today, caption languages drop in as data) |
 | `transcript_lines` | transcript_id, seq, speaker, line, norm_line | is_stage_dir, section, is_optional, class_tag | seq contiguous from 0; class_tag is hunter, titan or warlock |
+| `caption_provenance` | line_id | hash, kind, source_pkg, source_entry, bank_entry | one row per caption line (and per canon line a caption reuses): StringReference hash, package/entry/bank origin and table kind; never guesses |
 | `grimoire_cards` | slug, title, body, source_url | game, timeline, timeline_basis | D1 cards only; timeline via `source/ishtar-timeline.json` (110 on-timeline cards), NULL otherwise |
 | `interactions` | slug, title, text | speaker, release, source_url, timeline, timeline_basis | speaker may be empty (narrated scenes) |
 | `items` | slug, title | text, release, item_type, source_url, timeline, timeline_basis | 16k stat-only items have no lore text by design; ~600 junk release strings stay NULL |
@@ -132,6 +133,17 @@ headers from `++` are stored in `section`; class-exclusive lines carry
 `class_tag = hunter|titan|warlock`. Agents quote non-optional lines by default,
 and `--class` adds the chosen class variants.
 
+### Persona canon
+
+`persona.json` `canon_lines` counts the corpus a persona was built from: exact
+speaker, `is_stage_dir=0`, `is_optional=0`, **excluding game captions**
+(`source_tier='game_caption'`). Captions are searchable, quotable canon, but
+they are not part of a persona's curated voice count - so a caption drop never
+rewrites an agent persona. The identical predicate is used by
+`tests/persona-freshness.py` (every agent repo),
+`tests/count-consistency.py`, `character_info.spoken_lines` in `db/api.py`, and
+the persona generator that ships with the agent template.
+
 ### Extracted game data
 
 Raw game packages, audio, string tables, subtitle exports and Bungie manifest
@@ -140,9 +152,15 @@ copied into an agent workspace. `.gitignore` covers
 `archive/data/manifest/`, `archive/data/game/`, `archive/data/subtitles/` and
 `*.pkg`.
 
-Only curated transcript markdown may be committed, with provenance naming the
-local build, for example `- Source: local game files (<build>)`. Extracted text
-is evidence for curation, not a redistributable asset.
+Only curated material may be committed, with provenance naming the local build,
+for example `- Source: local game files (<build>)`. That includes the scraped
+JSONL corpora under `archive/data/` and the curated caption corpus
+`archive/data/captions.jsonl` - English lines only, with speaker attribution,
+activity facets, dedup verdicts and the build id (`sunrise-pre-bl`) recorded in
+each record. The raw subtitle exports it is derived from stay in
+`archive/data/subtitles/` and remain gitignored. Extracted text is evidence for
+curation, not a redistributable asset: commit the curated rows, never the raw
+dump.
 
 ## 4. Naming
 
@@ -157,9 +175,9 @@ is evidence for curation, not a redistributable asset.
   into a verifier. Current entries include `Commander Zavala -> Zavala`,
   `Cayde -> Cayde-6`, `Eris -> Eris Morn`, `Ikora Rey -> Ikora`,
   `Chiomi Esi -> Chioma Esi`, `Queen Mara Sov -> Mara Sov`,
-  `The Drifter -> Drifter` and `The Crow -> Crow`. One speaker, one name: if
-  two names identify the same character, add an alias instead of splitting the
-  corpus.
+  `The Drifter -> Drifter`, `The Crow -> Crow` and `Emperor Calus -> Calus`.
+  One speaker, one name: if two names identify the same character, add an
+  alias instead of splitting the corpus.
 - Quest/step titles are not speakers. Web scrapers sometimes parse titles such
   as `Path of the Splicer II`, `Into the Depths VI` or `Act I` as speakers;
   migration drops those rows. The Roman-numeral rule never drops a mapped
@@ -198,6 +216,7 @@ match a recomputation of their source text.
 | `tests/cutscene-verify.sh` | caption corroboration, encoding, cross-video consistency, attribution |
 | `tests/query-interface-test.sh` | CLI and API surface, 89 checks |
 | `tests/db-source-crosscheck.py` | database slugs vs source files, provenance URLs, index completeness |
+| `tests/caption-test.py` | game captions: headers/language, StringReference provenance, no duplicate canon text, curated activity facets, FTS/verification parity, demoted stat lines, caption search, persona canon exclusion |
 | `tests/speaker-audit.py` | reclassified parse noise must not reappear |
 | `tests/sync-doc-counts.py --check` | docs counts match the database |
 | `tests/sync-readme-meta.py --check` | README metadata matches git tag / HEAD date |

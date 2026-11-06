@@ -154,12 +154,16 @@ def main():
           detail['title'] == row['title'])
 
     # 9. character_info.spoken_lines matches the canonical DB count.
+    #    Persona canon excludes game captions (source_tier='game_caption'),
+    #    matching persona.json / persona-freshness.py.
     db = os.path.join(ROOT, 'db', 'grimoire.db')
     conn = sqlite3.connect(f'file:{db}?mode=ro', uri=True)
     for speaker in ('Eris Morn', 'Drifter', 'Zavala', 'Calus', 'Ghost'):
         expected = conn.execute(
-            'SELECT COUNT(*) FROM transcript_lines '
-            'WHERE speaker=? AND is_stage_dir=0 AND is_optional=0',
+            'SELECT COUNT(*) FROM transcript_lines tl '
+            'JOIN transcripts t ON t.id = tl.transcript_id '
+            'WHERE tl.speaker=? AND tl.is_stage_dir=0 AND tl.is_optional=0 '
+            "AND COALESCE(t.source_tier, '') != 'game_caption'",
             (speaker,)).fetchone()[0]
         info = server.character_info(speaker)
         check(f'{speaker} spoken_lines matches DB ({expected})',

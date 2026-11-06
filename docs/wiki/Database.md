@@ -7,7 +7,9 @@ python3 db/migrate.py
 ```
 
 This creates `db/grimoire.db` from `source/` and `archive/`. It is a build
-artifact and is not committed to git.
+artifact and is not committed to git. The build also loads
+`archive/data/captions.jsonl` (game captions, see
+[Game captions](#game-captions)).
 
 ## Enrichment
 
@@ -77,8 +79,60 @@ python3 scripts/coverage-report.py
 4. reviewed captions
 5. auto-captions
 
+`game_caption` sits outside that ladder: English subtitle and callout text
+extracted from the local game build (see [Game captions](#game-captions)). It
+is ground-truth game text, but it carries no section curation and only the
+speaker attribution the caption pass reviewed, so it never outranks a curated
+transcript for attribution.
+
 Lower tiers are still searchable. They are not promoted to a higher tier without
 a better source.
+
+## Game captions
+
+`migrate.py` loads `archive/data/captions.jsonl` (committed, curated: English
+lines, speaker attribution, activity facets, dedup verdicts, build
+`sunrise-pre-bl`) as `source_tier='game_caption'`, `lang='en'`.
+
+- **No duplicate text.** A caption line whose normalized text already exists in
+  canon is not inserted again; its StringReference hash and package origin
+  attach to the existing line in `caption_provenance` instead. Search therefore
+  never returns the same line twice, and no second attribution is introduced.
+- **Facets are curated, never guessed.** The activity keyword verdict from the
+  extraction pass is stored as `confidence='derived'` (season/expansion filled
+  from the activity catalogue, exactly as `classify()` would). Everything else
+  stays `unknown` - caption text spans every era, so no season is inferred.
+- **Stat/scoreboard lines stay complete but demoted** (`speaker='Narration'`,
+  `is_stage_dir=1`), so they rank with other stage directions.
+- **Search surface:** `--type captions` (fts `source='caption'`), `--lang`
+  (every row is `en` today), and the activity facets (`--activity gambit`,
+  `crucible`, `trials-of-osiris`, `trials-of-the-nine`, `menagerie`).
+  Ranked search gives caption rows a -1.0 boost; stage-direction penalties still
+  apply on top.
+- **Persona canon excludes captions**: `persona.json` `canon_lines` counts the
+  corpus a persona was built from, so a caption drop never rewrites an agent
+  persona (see STANDARDS.md "Persona canon").
+- **Gate:** `tests/caption-test.py` (registered in `grimoire-master-audit.sh`).
+
+### Adding a language later
+
+Languages are a data drop, not a schema change: `transcripts.lang` and
+`fts.lang` already exist and `api.search(lang=...)` already filters.
+
+1. Extract the language with the caption pipeline into a sibling JSONL with
+   `lang` set per record (for example `captions_ja.jsonl`), same curation keys,
+   slug suffixed with the language so headers stay unique.
+2. Point `load_captions()` at the extra file(s); insertions are additive.
+3. Copy the English counterpart's `transcript_classification` row (identical
+   content - do not re-derive) and keep `caption_provenance` per line.
+4. Re-run the full build sequence, `tests/caption-test.py`, the pinned corpus
+   counts in `tests/query-interface-test.sh` (activity line counts move) and
+   `python3 tests/sync-doc-counts.py`.
+5. Re-evaluate `tests/test-db.sh`'s "unknown classification below 50%" gate
+   with explicit approval before shipping: caption rows are honestly `unknown`
+   by design, so a second language pushes the share past 50%. The fix is to
+   re-scope that gate (for example to non-caption transcripts), never to invent
+   classifications to satisfy a ratio.
 
 ## Coverage status
 

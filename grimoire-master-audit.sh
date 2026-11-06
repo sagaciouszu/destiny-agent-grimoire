@@ -18,6 +18,8 @@ run() {
     else echo "  ✗ [$2] FAIL"; FAIL=$((FAIL+1)); fi
 }
 run "$ARCHIVE/tests/test-db.sh" "Database Integrity (61 checks)"
+# run() executes a suite with bash, so Python suites are invoked explicitly.
+if python3 "$ARCHIVE/tests/caption-test.py" >/dev/null 2>&1; then echo "  ✓ [Game Caption Corpus] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Game Caption Corpus] FAIL"; FAIL=$((FAIL+1)); fi
 run "$ARCHIVE/tests/compendium-check.sh" "Compendium Files"
 run "$ARCHIVE/tests/lore-integrity.sh" "Lore Archive Integrity"
 run "$ARCHIVE/tests/cutscene-verify.sh" "Cutscene Caption Verification"

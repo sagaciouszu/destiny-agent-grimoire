@@ -1,3 +1,44 @@
+## v0.28.0 - Game caption corpus from the local build (2026-11-06)
+
+English subtitle and callout text extracted from the local build
+(`sunrise-pre-bl`) joins the canonical corpus: 1,106 caption transcripts and
+9,283 new lines, loaded from `archive/data/captions.jsonl` (11,624 curated
+lines, committed) with per-line StringReference provenance in the new
+`caption_provenance` table.
+
+- **No duplicate text.** A caption line whose normalized text already exists in
+  canon is not inserted again: its hash/package provenance attaches to the
+  existing row instead (2,341 such lines), so search never returns the same
+  line twice and no second attribution is introduced.
+- **Curated facets, never guessed.** 37 activity facets (Gambit, Crucible,
+  Trials of Osiris, Trials of the Nine, Menagerie) are stored as
+  `confidence='derived'` from the extraction verdict with season/expansion
+  filled from the activity catalogue; every other caption transcript is
+  honestly `unknown`. `taxonomy.CAPTION_ACTIVITY_SLUGS` is where the extraction
+  keys meet taxonomy slugs, and a vocabulary drift now fails the build log and
+  `tests/caption-test.py`.
+- **New search surface.** `--type captions` (fts and verification index
+  `source='caption'`), `lang` on `search()` / `search_total()` / the MCP `search`
+  tool (`transcripts.lang`, `fts.lang`, every row `en` today), and caption rows
+  reachable through `--activity`.
+- **Ranking.** Caption rows carry a -1.0 boost; stage-direction penalties still
+  apply on top, so scoreboard captions stay demoted (`speaker='Narration'`,
+  `is_stage_dir=1`). `tests/retrieval-eval.py` is unchanged at P@5=0.96 /
+  MRR=1.00.
+- **Persona canon excludes captions.** `persona.json` `canon_lines` keeps
+  counting the corpus each persona was built from, so a caption drop never
+  rewrites an agent persona. The identical predicate now runs in
+  `tests/persona-freshness.py` (every agent repo),
+  `tests/count-consistency.py`, `character_info.spoken_lines` and
+  `destiny-agent-template/source-persona.py`.
+- **Schema 1.4.0.** `transcripts.lang`, `fts.lang` (UNINDEXED),
+  `caption_provenance`, the `capabilities.json` contract, the
+  `Emperor Calus -> Calus` speaker alias and four PvP activity slugs
+  (`crucible`, `gambit`, `trials-of-osiris`, `trials-of-the-nine`).
+- **New gate:** `tests/caption-test.py` (9 checks, wired into
+  `grimoire-master-audit.sh`); `docs/wiki/Database.md` documents the corpus and
+  the deferred language-drop procedure.
+
 ## v0.27.5 - Immolant transcript ingestion and standards reconciliation (2026-11-05)
 
 Reconciliation and sanity pass on the archive surfaced and fixed one content

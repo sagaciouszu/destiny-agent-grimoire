@@ -33,7 +33,10 @@ CREATE TABLE IF NOT EXISTS transcripts (
     source_url TEXT,
     source_tier TEXT,
     timeline TEXT,               -- in-universe story chapter slug (timeline_chapters)
-    timeline_basis TEXT          -- classification | release_name | scene_flashback
+    timeline_basis TEXT,          -- classification | release_name | scene_flashback
+    lang TEXT NOT NULL DEFAULT 'en'  -- caption/subtitle language; every row defaults
+                                    -- to English so a future language drop adds
+                                    -- data rows only, never a schema change
 );
 CREATE INDEX IF NOT EXISTS idx_transcripts_slug ON transcripts(slug);
 
@@ -52,6 +55,21 @@ CREATE TABLE IF NOT EXISTS transcript_lines (
 CREATE INDEX IF NOT EXISTS idx_tl_transcript ON transcript_lines(transcript_id);
 CREATE INDEX IF NOT EXISTS idx_tl_speaker ON transcript_lines(speaker);
 CREATE INDEX IF NOT EXISTS idx_tl_norm ON transcript_lines(norm_line);
+
+-- Game-file caption provenance. Every caption line keeps its StringReference
+-- hash and package origin so a canonical line traces back to the build it
+-- came from. Lives outside the canon columns of transcript_lines.
+CREATE TABLE IF NOT EXISTS caption_provenance (
+    line_id INTEGER PRIMARY KEY REFERENCES transcript_lines(id) ON DELETE CASCADE,
+    hash INTEGER,               -- StringReference hash; NULL for unlinked banks
+    kind TEXT,                  -- table kind: cinematic | dialogue | callout | activity_narration
+    source_pkg TEXT,            -- package base, e.g. w64_globals_01cf
+    source_entry INTEGER,       -- StringReference entry index
+    bank_entry INTEGER          -- StringBank entry index
+);
+CREATE INDEX IF NOT EXISTS idx_cp_kind ON caption_provenance(kind);
+CREATE INDEX IF NOT EXISTS idx_cp_pkg ON caption_provenance(source_pkg);
+CREATE INDEX IF NOT EXISTS idx_cp_hash ON caption_provenance(hash);
 
 CREATE TABLE IF NOT EXISTS grimoire_cards (
     id INTEGER PRIMARY KEY,
@@ -163,6 +181,7 @@ CREATE VIRTUAL TABLE IF NOT EXISTS fts USING fts5(
     source_slug UNINDEXED,
     class_tag UNINDEXED,
     timeline UNINDEXED,
+    lang UNINDEXED,
     tokenize='porter unicode61'
 );
 
