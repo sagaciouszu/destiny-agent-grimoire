@@ -42,6 +42,14 @@
       "entry": "ghost.md",
       "summary": "The Guardian's Ghost: curious, loyal and afraid of losing them.",
       "consult": "Ghost, the Light, resurrection, the Traveler, the City and the Guardian."
+    },
+    {
+      "id": "mara-sov",
+      "name": "Mara Sov",
+      "source": "destiny-agent-mara-sov",
+      "entry": "mara-sov.md",
+      "summary": "Queen of the Awoken, ruler of the Dreaming City, walker of the line between Light and Dark.",
+      "consult": "Mara Sov, the Awoken, the Dreaming City, the Ascendant Plane, Riven, Savathun, Xivu Arath, the Curse and the Distributary."
     }
   ]
 }
