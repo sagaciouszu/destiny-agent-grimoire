@@ -42,7 +42,7 @@ jobs:
       - name: Compress (xz -9e, gzip -9)
         run: |
           xz -9e -T0 -c grimoire.db > grimoire.db.xz
-          gzip -9 -c grimoire.db > grimoire.db.gz
+          gzip -9 -n -c grimoire.db > grimoire.db.gz  # -n: no name/mtime header, reproducible bytes
 
       - name: Round-trip verify
         run: |
