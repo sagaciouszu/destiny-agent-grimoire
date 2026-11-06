@@ -336,13 +336,11 @@ serves every agent.
    `bash tests/master-audit.sh` in each agent repo, plus a fresh-clone spot
    check for layout changes.
 5. Commit. Refresh the backup and the release asset after major milestones.
-6. Releases follow the CI requirements and need no separate approval once
-   the section 7 gates are green: CI tests the published database asset, so
-   a database change ships by cutting the release (see the release sequence
-   in section 11). Explicit user approval is still required for replacing or
-   deleting an already-published artifact (including `grimoire.db`),
-   re-pointing the historical version line, or anything outside this
-   checklist.
+6. Push tags and cut releases whenever one is needed - standing approval,
+   no ceremony (CI tests the published database asset, so a database change
+   simply ships by tagging). Explicit user approval is only required for
+   replacing or deleting an already-published artifact (including
+   `grimoire.db`) and for re-pointing the historical version line.
 
 ## 11. Packaging
 
@@ -350,14 +348,14 @@ serves every agent.
   release line has a higher semver than the current 0.x line, so GitHub would
   otherwise point `/releases/latest` at an asset-less release and every
   `releases/latest/download/grimoire.db` URL would 404.
-- Release sequence (no separate approval once the section 7 gates are
-  green): build on a machine with the local dumps (`python3 db/migrate.py`
-  then the four `db/enrich_*.py` steps) -> `gh release create <tag> --title
-  <title> --notes-file RELEASE.md` -> `gh release upload <tag>
-  db/grimoire.db SHA256SUMS` -> the release-assets workflow attaches
-  `grimoire.db.xz`, `grimoire.db.gz` and the refreshed `SHA256SUMS` ->
-  `gh release edit <tag> --latest` (the v1.x semver rule below) -> re-run
-  the CI run, whose database gates test the new asset.
+- Release sequence (push a tag whenever one is needed): build on a machine
+  with the local dumps (`python3 db/migrate.py` then the four
+  `db/enrich_*.py` steps) -> `gh release create <tag> --title <title>
+  --notes-file RELEASE.md` -> `gh release upload <tag> db/grimoire.db
+  SHA256SUMS` -> the release-assets workflow attaches `grimoire.db.xz`,
+  `grimoire.db.gz` and the refreshed `SHA256SUMS` -> `gh release edit
+  <tag> --latest` (the v1.x semver rule below) -> re-run CI if its
+  database gates ran before the asset landed.
 - Database: build artifact, attached to releases with `SHA256SUMS`.
   The installer verifies the download against that checksum and falls back
   to a local build on mismatch.
