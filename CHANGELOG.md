@@ -27,6 +27,12 @@ Investigation follow-through (`GRIMOIRE-INVESTIGATION-REPORT.md` backlog 1-12):
   `tests/permission-leak-audit.py` (240 checks, wired into the master audit),
   `tests/count-consistency.py` (persona vs DB vs derived prose, wired into the
   master audit). Extended suite grows to include the MCP optimization gate.
+- Releases carry compressed companions: `.github/workflows/release-assets.yml`
+  attaches `grimoire.db.xz` (29 MiB, xz -9e) and `grimoire.db.gz` (56 MiB,
+  gzip -9) to every published release, round-trip-verified against the
+  published asset with a refreshed `SHA256SUMS`; static endpoints under
+  `/releases/latest/download/`, gzip being the zero-dependency pick for
+  Android apps.
 - Two aggregate transcripts (`additional-edge-of-fate-contact-drifter`,
   `youtube-destinypedia-additional`) intentionally keep an empty
   `source_url`: they compile multiple upstreams (Ishtar/Destinypedia/YouTube)

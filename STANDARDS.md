@@ -339,6 +339,16 @@ serves every agent.
 - Database: build artifact, attached to releases with `SHA256SUMS`
   (`gh release upload <tag> db/grimoire.db SHA256SUMS --clobber`). The installer
   verifies the download against that checksum and falls back to a local build on mismatch.
+- Compressed companions: `.github/workflows/release-assets.yml` runs on
+  `release.published` (plus `workflow_dispatch` with a `tag` to backfill older
+  releases), recompresses the published `grimoire.db` with `xz -9e` and
+  `gzip -9`, round-trip-verifies both (byte `cmp` + `PRAGMA integrity_check`),
+  and uploads `grimoire.db.xz` (29 MiB) and `grimoire.db.gz` (56 MiB) with a
+  refreshed `SHA256SUMS`. Static endpoints:
+  `releases/latest/download/grimoire.db.xz` and
+  `releases/latest/download/grimoire.db.gz`. Android apps should consume the
+  gzip asset (`GZIPInputStream`); stock Android shells ship gzip but no xz,
+  Termux has both.
 - Backup: rolling zip of the repo minus the database.
 - Consumers get `setup.sh`: seeds memory templates, bootstraps the database
   (prebuilt asset or local build), never blocks.

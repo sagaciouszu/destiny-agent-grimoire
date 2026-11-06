@@ -1,0 +1,71 @@
+name: Release assets
+
+# Produce compressed database assets for every release so consumers get a
+# static endpoint under /releases/latest/download/:
+#   grimoire.db.xz  - smallest (29 MiB, xz -9e); Linux/macOS/Termux/7-Zip
+#   grimoire.db.gz  - universal (56 MiB); Android apps via GZIPInputStream,
+#                     stock shells, anything with gzip
+# Also refreshes SHA256SUMS to cover all three files. The published grimoire.db
+# is the input, so the compressed files always mirror the released bytes.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to attach compressed database assets to
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  compress-database:
+    runs-on: ubuntu-26.04
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.event.release.tag_name }}
+    steps:
+      - name: Download the published database
+        run: |
+          for attempt in 1 2 3 4 5; do
+            if gh release download "$TAG" --pattern grimoire.db --clobber; then
+              break
+            fi
+            [ "$attempt" = 5 ] && { echo "grimoire.db not on release $TAG"; exit 1; }
+            echo "assets not ready (attempt $attempt); retrying in 6s"
+            sleep 6
+          done
+
+      - name: Compress (xz -9e, gzip -9)
+        run: |
+          xz -9e -T0 -c grimoire.db > grimoire.db.xz
+          gzip -9 -c grimoire.db > grimoire.db.gz
+
+      - name: Round-trip verify
+        run: |
+          xz -t grimoire.db.xz
+          gzip -t grimoire.db.gz
+          xz -dc grimoire.db.xz > roundtrip.db
+          cmp grimoire.db roundtrip.db
+          sqlite3 roundtrip.db 'PRAGMA integrity_check;' | grep -qx ok
+          gzip -dc grimoire.db.gz > roundtrip.db
+          cmp grimoire.db roundtrip.db
+          rm -f roundtrip.db
+
+      - name: Refresh SHA256SUMS
+        run: |
+          gh release download "$TAG" --pattern SHA256SUMS --clobber || true
+          if [ -f SHA256SUMS ]; then
+            grep -vE ' grimoire\.db(\.(xz|gz))?$' SHA256SUMS > SHA256SUMS.new
+          else
+            : > SHA256SUMS.new
+          fi
+          sha256sum grimoire.db grimoire.db.xz grimoire.db.gz >> SHA256SUMS.new
+          sort -k2 SHA256SUMS.new > SHA256SUMS
+          rm -f SHA256SUMS.new
+          cat SHA256SUMS
+
+      - name: Upload compressed assets
+        run: gh release upload "$TAG" grimoire.db.xz grimoire.db.gz SHA256SUMS --clobber

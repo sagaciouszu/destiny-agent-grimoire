@@ -7,6 +7,8 @@
     "fts": "fts5 (porter unicode61)",
     "build": "python3 db/migrate.py",
     "release_asset": "https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db",
+    "release_asset_xz": "https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db.xz",
+    "release_asset_gz": "https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db.gz",
     "note": "build artifact; not in git"
   },
   "tables": {
