@@ -12,7 +12,7 @@
   <img src='https://img.shields.io/badge/tests-9%2F9%20passing-brightgreen' alt='Tests'/>
 </p>
 
-**Version:** 0.27.5 | **Last push:** 2026-11-05 | **Status:** Active
+**Version:** 0.27.5 | **Last push:** 2026-11-06 | **Status:** Active
 
 **Documentation site:** <https://sagaciouszu.github.io/grimoire-site/>
 
