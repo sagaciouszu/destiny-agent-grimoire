@@ -86,7 +86,7 @@ def counts():
     entries = conn.execute('SELECT COUNT(*) FROM book_entries').fetchone()[0]
     cards = conn.execute('SELECT COUNT(*) FROM grimoire_cards').fetchone()[0]
     records = conn.execute('SELECT COUNT(*) FROM records').fetchone()[0]
-    assert books == 110 and entries == 1158 and cards == 2889 and records == 71, (books, entries, cards, records)
+    assert books == 110 and entries == 1158 and cards == 2889 and records == 69, (books, entries, cards, records)
 
 check('documented content counts hold', counts)
 

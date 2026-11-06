@@ -93,23 +93,23 @@ No API keys, accounts or network access are required at runtime.
 |---|---|---|
 | `books` | 110 | Book-level metadata |
 | `book_entries` | 1158 | Lore entries within books |
-| `transcripts` | 1314 | Transcript headers |
-| `transcript_lines` | 69217 | Canon dialogue (speaker, line) |
+| `transcripts` | 1316 | Transcript headers |
+| `transcript_lines` | 69458 | Canon dialogue (speaker, line) |
 | `grimoire_cards` | 2889 | Destiny 1 grimoire cards |
 | `interactions` | 2699 | Short dialogue beats |
 | `items` | 58764 | Weapons, armor and gear lore |
-| `records` | 71 | Triumphs and seals |
+| `records` | 69 | Triumphs and seals |
 | `characters` | 20 | Curated character index |
 | `character_lines` | 1229 | Quote-ready character lines |
-| `fts` | 120689 | FTS5 index over all content |
+| `fts` | 120928 | FTS5 index over all content |
 | `expansions` | 18 | Major releases from Destiny 1 through Renegades |
 | `seasons` | 28 | Official numeric seasons; 24-26 are episodes |
 | `events` | 9 | Rotating events including removed ones |
 | `event_occurrences` | 72 | Event year, dates and season |
 | `activities` | 67 | Raids, dungeons, seasonal activities and missions |
-| `transcript_classification` | 1314 | Activity/season/event per transcript |
+| `transcript_classification` | 1316 | Activity/season/event per transcript |
 | `item_classification` | 58764 | Season/event per item |
-| `document_classification` | 181 | Season/event per book and record |
+| `document_classification` | 179 | Season/event per book and record |
 | `coverage_notes` | 10 | Explicit status for zero-coverage gaps |
 | `lore_entries` | 2962 | Bungie manifest lore entries (local enrichment) |
 | `lore_entry_items` | 2068 | Lore entry to item-title links |
@@ -118,14 +118,14 @@ No API keys, accounts or network access are required at runtime.
 | `seals` | 70 | Manifest seal nodes |
 | `seal_records` | 1004 | Triumph records per seal |
 | `v_speakers` (view) | 266 | Canonical speakers with line counts |
-| `v_transcript_taxonomy` (view) | 1314 | Transcripts joined to classification |
+| `v_transcript_taxonomy` (view) | 1316 | Transcripts joined to classification |
 | `v_activity_coverage` (view) | 67 | Transcripts and lines per activity |
 | `v_season_coverage` (view) | 28 | Transcripts and lines per season |
 | `v_event_coverage` (view) | 9 | Transcripts, lines and occurrences per event |
 | `speaker_aliases` | 20 | Alias to canonical speaker mapping |
-| `verify_fts` (index) | 120689 | Fast quote verification |
+| `verify_fts` (index) | 120928 | Fast quote verification |
 | `item_title_fts` (index) | 58764 | Item title lookup |
-| **Total** | 509942 | Rows across every table, view and index above |
+| **Total** | 510663 | Rows across every table, view and index above |
 
 Every content row carries provenance. Speaker aliases are canonicalized during
 migration. The full contract is `STANDARDS.md`.

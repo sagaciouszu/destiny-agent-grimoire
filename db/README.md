@@ -53,12 +53,12 @@ sqlite3 db/grimoire.db "SELECT slug, title, item_type FROM items WHERE item_type
 |-------|---------|
 | `books` | 110 lore books (slug, title, source_url, entry_count) |
 | `book_entries` | 1158 entries within books (FK to books) |
-| `transcripts` | 1314 transcript headers (quest + cutscene + web) |
+| `transcripts` | 1316 transcript headers (quest + cutscene + web) |
 | `transcript_lines` | Canonical dialogue by speaker |
 | `grimoire_cards` | 2889 Destiny 1 grimoire cards |
 | `interactions` | 2699 short character dialogue beats |
 | `items` | Weapons, armor, gear lore + flavor text |
-| `records` | 71 triumphs/seals with canonical text |
+| `records` | 69 triumphs/seals with canonical text |
 | `characters` | 20 named characters |
 | `character_lines` | Canon character quotes ready for agent use |
 | `fts` | FTS5 search over all tables |
