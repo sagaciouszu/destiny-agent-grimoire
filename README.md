@@ -29,7 +29,7 @@ git clone https://github.com/sagaciouszu/destiny-agent-grimoire.git
 cd destiny-agent-grimoire
 ```
 
-**Step 2: get the database. Run exactly one of these, not both.**
+**Step 2: get the database. Run exactly one of these.**
 
 Download the prebuilt release asset (seconds):
 
@@ -38,6 +38,17 @@ curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest
 ```
 
 The agent installers verify the download against the release `SHA256SUMS`.
+
+Smaller companions of the same bytes are published by the release-assets
+workflow at the same static endpoint:
+
+```bash
+# 29 MiB, smallest: xz -d
+curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db.xz -o db/grimoire.db.xz && xz -d db/grimoire.db.xz
+
+# 56 MiB, zero dependencies: gzip -d (Android apps: GZIPInputStream)
+curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db.gz -o db/grimoire.db.gz && gzip -d db/grimoire.db.gz
+```
 
 Or build from this checkout (about two minutes, matches this commit):
 

@@ -28,7 +28,7 @@ flavor text, verify.
 ## Location
 
 - Repo root: wherever you cloned `destiny-agent-grimoire`
-- **Primary:** `db/grimoire.db` (SQLite + FTS5; if missing, bootstrap: `curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db -o db/grimoire.db` for the prebuilt asset, or `python3 db/migrate.py` to build from checkout)
+- **Primary:** `db/grimoire.db` (SQLite + FTS5; if missing, bootstrap: `curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db -o db/grimoire.db` for the prebuilt asset (smaller: same endpoint with `.xz` / `.gz`, decompress with `xz -d` / `gzip -d`), or `python3 db/migrate.py` to build from checkout)
 - **Consumed by:** all five agents (Drifter, Eris Morn, Calus, Zavala, Ghost) via `lore/` (symlink, Windows junction or clone)
 
 ## Data covering

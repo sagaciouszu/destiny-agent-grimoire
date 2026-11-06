@@ -37,6 +37,12 @@ Windows PowerShell:
 curl.exe -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db -o db/grimoire.db
 ```
 
+Smaller companions of the same bytes live at the same endpoint:
+`grimoire.db.xz` (29 MiB, `xz -d`, `tar -xJf` on Windows) and
+`grimoire.db.gz` (56 MiB, `gzip -d`, `tar -xzf` on Windows). The gzip asset
+needs nothing beyond gzip, which is what Android apps decompress with
+`GZIPInputStream`.
+
 **Or build from this checkout** (about two minutes):
 
 ```bash
