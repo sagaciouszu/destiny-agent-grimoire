@@ -140,6 +140,21 @@ PY
 )
 check "[ \"$CAP_SYNC\" = \"OK\" ]" "capabilities.json matches schema ($CAP_SYNC)"
 
+# In-universe timeline: story chapters (Destiny timeline), not release dates
+TL_CH=$(sqlite3 "$DB" "SELECT COUNT(*) FROM timeline_chapters")
+check "[ \"$TL_CH\" -eq 23 ]" "timeline_chapters seeded ($TL_CH chapters)"
+BOOKS_TL=$(sqlite3 "$DB" "SELECT COUNT(*) FROM books WHERE timeline IS NOT NULL")
+check "[ \"$BOOKS_TL\" -ge 30 ]" "book timeline coverage ($BOOKS_TL/110, Ishtar + classification)"
+TL_COV=$(sqlite3 "$DB" "SELECT COUNT(*) FROM transcripts WHERE timeline IS NOT NULL")
+check "[ \"$TL_COV\" -ge 1310 ]" "transcript timeline coverage ($TL_COV/1314)"
+TL_SPOT=$(sqlite3 "$DB" "SELECT timeline FROM transcripts WHERE slug='caydes-death'")
+check "[ \"$TL_SPOT\" = 'the_sack_of_the_dreaming_city' ]" "timeline spot check ($TL_SPOT)"
+TL_FTS=$(sqlite3 "$DB" "SELECT COUNT(*) FROM fts f JOIN transcripts t ON t.slug=f.source_slug WHERE f.source='transcript_line' AND f.timeline != COALESCE(t.timeline,'')")
+check "[ \"$TL_FTS\" -eq 0 ]" "fts timeline mirrors transcripts ($TL_FTS mismatches)"
+TL_ALL=$(sqlite3 "$DB" "SELECT COUNT(*) FROM character_lines WHERE timeline IS NOT NULL")
+TL_N=$(sqlite3 "$DB" "SELECT COUNT(*) FROM character_lines")
+check "[ \"$TL_ALL\" -eq \"$TL_N\" ]" "character_lines inherit timeline ($TL_ALL/$TL_N)"
+
 echo ""
 echo "Passed: $PASS | Failed: $FAIL"
 [ "$FAIL" -eq 0 ]

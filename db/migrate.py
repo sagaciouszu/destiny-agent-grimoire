@@ -115,9 +115,285 @@ def norm_text(s):
     # fall back to the lowered text with LIKE wildcards removed.
     return re.sub(r'\s+', ' ', s.replace('%', ' ').replace('_', ' ')).strip()
 
+# In-universe Destiny timeline: story chapters in chronological order.
+# Rows store the chapter slug in `timeline`; timeline_chapters carries rank+label.
+TIMELINE_CHAPTERS = [
+    (1, 'pre_history', 'Pre-History'),
+    (2, 'ancient_past', 'Ancient Past'),
+    (3, 'pre_golden_age', 'Pre-Golden Age'),
+    (4, 'golden_age', 'Golden Age'),
+    (5, 'the_collapse', 'The Collapse and the Exodus'),
+    (6, 'the_dark_age', 'The Dark Age'),
+    (7, 'the_city_age', 'The City Age (before the Guardian)'),
+    (8, 'the_rise_of_the_guardian', 'The Rise of the Guardian (Destiny 1)'),
+    (9, 'the_dark_below', "Crota's War on the Moon (The Dark Below)"),
+    (10, 'house_of_wolves', 'The House of Wolves'),
+    (11, 'the_taken_war', 'The Taken War (The Taken King)'),
+    (12, 'the_siva_crisis', 'The Siva Crisis (Rise of Iron, Age of Triumph)'),
+    (13, 'the_red_war', 'The Red War (Destiny 2)'),
+    (14, 'the_curse_of_osiris', 'The Curse of Osiris'),
+    (15, 'the_warmind_crisis', 'The Warmind Crisis'),
+    (16, 'the_sack_of_the_dreaming_city', "Forsaken: Cayde's Murder and the Sack of the Dreaming City"),
+    (17, 'the_nightmares_return', 'Shadowkeep: The Nightmares Return'),
+    (18, 'the_rise_of_stasis', 'Beyond Light: The Rise of Stasis'),
+    (19, 'the_witch_queen', 'The Witch Queen'),
+    (20, 'the_lightfall', 'Lightfall'),
+    (21, 'the_final_shape', 'The Final Shape'),
+    (22, 'the_edge_of_fate', 'The Edge of Fate'),
+    (23, 'renegades', 'Renegades'),
+]
+
+EXPANSION_CHAPTERS = {
+    'destiny-1': 'the_rise_of_the_guardian',
+    'the-dark-below': 'the_dark_below',
+    'house-of-wolves': 'house_of_wolves',
+    'the-taken-king': 'the_taken_war',
+    'rise-of-iron': 'the_siva_crisis',
+    'age-of-triumph': 'the_siva_crisis',
+    'destiny-2': 'the_red_war',
+    'curse-of-osiris': 'the_curse_of_osiris',
+    'warmind': 'the_warmind_crisis',
+    'forsaken': 'the_sack_of_the_dreaming_city',
+    'shadowkeep': 'the_nightmares_return',
+    'beyond-light': 'the_rise_of_stasis',
+    '30th-anniversary': 'the_rise_of_stasis',
+    'the-witch-queen': 'the_witch_queen',
+    'lightfall': 'the_lightfall',
+    'the-final-shape': 'the_final_shape',
+    'the-edge-of-fate': 'the_edge_of_fate',
+    'renegades': 'renegades',
+}
+
+
+def _tkey(value):
+    return re.sub(r'[^a-z0-9]+', '-', (value or '').lower()).strip('-')
+
+
+def _scene_flashback(*texts):
+    """When-spooken rule: a scene explicitly set in the past wins over the
+    content's release position. Strong markers only (arc/title), so modern
+    dialogue merely *about* the Dark Age stays in its own chapter."""
+    blob = ' '.join(t or '' for t in texts).lower()
+    if 'golden age' in blob:
+        return 'golden_age'
+    if 'dark age' in blob:
+        return 'the_dark_age'
+    if 'distributary' in blob:
+        return 'the_collapse'
+    return None
+
+
+ISHTAR_SNAPSHOT = os.path.join(ROOT, 'source', 'ishtar-timeline.json')
+
+
+def load_ishtar():
+    """Curated eras from the Ishtar timeline snapshot: source path -> chapter.
+    Ishtar tags when a story event happens (about-time), which is the natural
+    time for lore books, records and items; dialogue keeps the when-spoken
+    derivation below. Missing snapshot or unmapped era -> None (fallback)."""
+    if not os.path.exists(ISHTAR_SNAPSHOT):
+        return {}
+    out = {}
+    for era in json.load(open(ISHTAR_SNAPSHOT, encoding='utf-8')).get('eras', []):
+        if era.get('chapter'):
+            for path in era.get('paths', []):
+                out.setdefault(path, era['chapter'])
+    return out
+
+
+def _ishtar_path(url):
+    if not url or 'ishtar-collective.net' not in url:
+        return None
+    return '/' + '/'.join(url.split('/')[3:])
+
+
+def derive_timeline(conn):
+    """Tag rows with their in-universe story chapter (the Destiny timeline).
+
+    transcripts: scene flashback > classification > release-name, then the
+    release-driven tables, books/records via document_classification, and
+    character_lines inherit their source transcript. NULL means unknown.
+    """
+    for rank, slug, label in TIMELINE_CHAPTERS:
+        conn.execute('INSERT OR REPLACE INTO timeline_chapters (rank,slug,label) VALUES (?,?,?)',
+                     (rank, slug, label))
+
+    exp_keys = {}
+    for slug, name in conn.execute('SELECT slug, name FROM expansions').fetchall():
+        exp_keys.setdefault(_tkey(name), slug)
+        exp_keys.setdefault(_tkey(slug), slug)
+    season_to_exp = {}
+    for slug, name, exp in conn.execute(
+            'SELECT slug, name, expansion_slug FROM seasons').fetchall():
+        for key in (_tkey(slug), _tkey(name)):
+            if key:
+                season_to_exp.setdefault(key, exp)
+        tail = re.sub(r'^(season-of-the-|season-of-|season-|episode-)', '', slug)
+        if tail and len(tail) >= 4:
+            season_to_exp.setdefault(tail, exp)
+    aliases = {'ttk': 'the-taken-king'}
+
+    def resolve_release(release):
+        """release text -> expansion slug, so one chapter map covers it all."""
+        if not release:
+            return None, None
+        text = re.sub(r'\([^)]*\)', ' ', release)  # drop (Beta), (2015.05.09), (April Update)
+        parts = [p for p in re.split(r'[/]', text) if p.strip()] or [text]
+        for part in parts:
+            key = _tkey(part)
+            if not key:
+                continue
+            if key in aliases:
+                return aliases[key], 'release_name'
+            if key in season_to_exp and season_to_exp[key]:
+                return season_to_exp[key], 'release_name'
+            if key in exp_keys:
+                return exp_keys[key], 'release_name'
+            for skey, exp in season_to_exp.items():
+                if exp and len(key) >= 6 and (skey.endswith('-' + key) or key.endswith('-' + skey)):
+                    return exp, 'release_name'
+            for ekey, exp in exp_keys.items():
+                if len(key) >= 8 and ekey.endswith('-' + key):
+                    return exp, 'release_name'
+        return None, None
+
+    def chapter_for(exp_slug):
+        return EXPANSION_CHAPTERS.get(exp_slug) if exp_slug else None
+
+    stats = {}
+    ishtar = load_ishtar()
+    ishtar_hits = 0
+
+    def ishtar_chapter(url):
+        path = _ishtar_path(url)
+        return ishtar.get(path) if path else None
+
+    class_by_tid = {tid: (season, exp) for tid, season, exp in conn.execute(
+        'SELECT transcript_id, season_slug, expansion_slug FROM transcript_classification')}
+    season_exp = {slug: exp for slug, exp in conn.execute(
+        'SELECT slug, expansion_slug FROM seasons')}
+
+    n = 0
+    for tid, title, release, arc in conn.execute(
+            'SELECT id, title, release, arc FROM transcripts'):
+        chapter = basis = None
+        flash = _scene_flashback(arc, title)
+        if flash:
+            chapter, basis = flash, 'scene_flashback'
+        else:
+            season, exp = class_by_tid.get(tid, (None, None))
+            chapter = chapter_for(exp or season_exp.get(season))
+            if chapter:
+                basis = 'classification'
+            else:
+                exp_slug, basis = resolve_release(release)
+                chapter = chapter_for(exp_slug)
+                if not chapter:
+                    basis = None
+        conn.execute('UPDATE transcripts SET timeline=?, timeline_basis=? WHERE id=?',
+                     (chapter, basis, tid))
+        n += bool(chapter)
+    stats['transcripts'] = n
+
+    n = 0
+    for rid, release, url in conn.execute(
+            'SELECT id, release, source_url FROM interactions'):
+        exp_slug, basis = resolve_release(release)
+        chapter = chapter_for(exp_slug)
+        conn.execute('UPDATE interactions SET timeline=?, timeline_basis=? WHERE id=?',
+                     (chapter, basis if chapter else None, rid))
+        n += bool(chapter)
+    stats['interactions'] = n
+
+    n = 0
+    for rid, release in conn.execute('SELECT id, release FROM items'):
+        exp_slug, basis = resolve_release(release)
+        chapter = chapter_for(exp_slug)
+        conn.execute('UPDATE items SET timeline=?, timeline_basis=? WHERE id=?',
+                     (chapter, basis if chapter else None, rid))
+        n += bool(chapter)
+    # Ishtar's curated era wins where the item appears on the timeline: it
+    # records when the item's story happens, not when it shipped.
+    for rid, url in conn.execute(
+            "SELECT id, source_url FROM items WHERE source_url LIKE '%ishtar-collective.net%'"):
+        chapter = ishtar_chapter(url)
+        if chapter:
+            conn.execute('UPDATE items SET timeline=?, timeline_basis=? WHERE id=?',
+                         (chapter, 'ishtar_timeline', rid))
+            ishtar_hits += 1
+            n += 1
+    stats['items'] = n
+
+    # books and records: story position from document_classification; records
+    # fall back to their release text when unclassified.
+    n_rec = n_book = 0
+    for source, sid, season, exp in conn.execute(
+            'SELECT source, source_id, season_slug, expansion_slug FROM document_classification'):
+        exp = exp or season_exp.get(season)
+        chapter = chapter_for(exp)
+        if source == 'book':
+            conn.execute('UPDATE books SET timeline=?, timeline_basis=? WHERE id=?',
+                         (chapter, 'classification' if chapter else None, sid))
+            n_book += bool(chapter)
+        elif source == 'record':
+            conn.execute('UPDATE records SET timeline=?, timeline_basis=? WHERE id=?',
+                         (chapter, 'classification' if chapter else None, sid))
+            n_rec += bool(chapter)
+    for rid, release in conn.execute(
+            'SELECT id, release FROM records WHERE timeline IS NULL'):
+        exp_slug, basis = resolve_release(release)
+        chapter = chapter_for(exp_slug)
+        if chapter:
+            conn.execute('UPDATE records SET timeline=?, timeline_basis=? WHERE id=?',
+                         (chapter, basis, rid))
+            n_rec += 1
+    # Ishtar wins for records and books it carries: curated event time.
+    stats['books'] = n_book
+    stats['records'] = n_rec
+    for table, key in (('records', 'records'), ('books', 'books')):
+        n_extra = 0
+        for rid, url in conn.execute(
+                f"SELECT id, source_url FROM {table} "
+                "WHERE source_url LIKE '%ishtar-collective.net%'"):
+            chapter = ishtar_chapter(url)
+            if chapter:
+                conn.execute(f'UPDATE {table} SET timeline=?, timeline_basis=? WHERE id=?',
+                             (chapter, 'ishtar_timeline', rid))
+                ishtar_hits += 1
+                n_extra += 1
+        stats[key] = stats.get(key, 0) + n_extra
+    # grimoire cards: Ishtar is their only timeline (content time of the tale)
+    n_cards = 0
+    for rid, url in conn.execute(
+            "SELECT id, source_url FROM grimoire_cards "
+            "WHERE source_url LIKE '%ishtar-collective.net%'"):
+        chapter = ishtar_chapter(url)
+        if chapter:
+            conn.execute('UPDATE grimoire_cards SET timeline=?, timeline_basis=? WHERE id=?',
+                         (chapter, 'ishtar_timeline', rid))
+            ishtar_hits += 1
+            n_cards += 1
+    stats['grimoire_cards'] = n_cards
+    stats['ishtar_applied'] = ishtar_hits
+
+    conn.execute(
+        "UPDATE character_lines SET timeline = "
+        "(SELECT t.timeline FROM transcripts t WHERE t.slug = character_lines.source_slug) "
+        "WHERE source_type = 'transcript'")
+    stats['character_lines'] = conn.execute(
+        'SELECT COUNT(*) FROM character_lines WHERE timeline IS NOT NULL').fetchone()[0]
+    return stats
+
+
 def migrate():
     if os.path.exists(DB_PATH):
         os.remove(DB_PATH)
+    # A crashed build can leave WAL sidecars behind; stale ones applied to a
+    # fresh file surface as "database disk image is malformed" mid-build.
+    for suffix in ('-wal', '-shm'):
+        stale = DB_PATH + suffix
+        if os.path.exists(stale):
+            os.remove(stale)
     conn = sqlite3.connect(DB_PATH)
     conn.executescript(open(SCHEMA).read())
     taxonomy.ensure_schema(conn)
@@ -494,30 +770,48 @@ def migrate():
     tax_stats = taxonomy.populate(conn)
     print(f'taxonomy: {tax_stats}')
 
+    # In-universe Destiny timeline (story chapters) - after classification,
+    # before the FTS build so every fts row carries its chapter.
+    tl_stats = derive_timeline(conn)
+    print(f'timeline: {tl_stats}')
+
     # Build FTS index (global rowid sequence)
     print('building FTS index...')
     fts_id = 0
-    def add_fts(title, text, speaker='', body='', source='', source_slug='', class_tag=''):
+    tl_by_tid = dict(conn.execute('SELECT id, COALESCE(timeline, "") FROM transcripts'))
+    tl_by_slug = dict(conn.execute('SELECT slug, COALESCE(timeline, "") FROM transcripts'))
+    tl_interactions = dict(conn.execute('SELECT slug, COALESCE(timeline, "") FROM interactions'))
+    tl_items = dict(conn.execute('SELECT slug, COALESCE(timeline, "") FROM items'))
+    tl_records = dict(conn.execute('SELECT slug, COALESCE(timeline, "") FROM records'))
+    tl_cards = dict(conn.execute('SELECT slug, COALESCE(timeline, "") FROM grimoire_cards'))
+    tl_books = dict(conn.execute('SELECT slug, COALESCE(timeline, "") FROM books'))
+    def add_fts(title, text, speaker='', body='', source='', source_slug='', class_tag='', timeline=''):
         nonlocal fts_id
         fts_id += 1
-        conn.execute('INSERT INTO fts (rowid,title,text,speaker,body,source,source_slug,class_tag) VALUES (?,?,?,?,?,?,?,?)',
-            (fts_id, title, text or '', speaker, body or '', source, source_slug, class_tag))
+        conn.execute('INSERT INTO fts (rowid,title,text,speaker,body,source,source_slug,class_tag,timeline) VALUES (?,?,?,?,?,?,?,?,?)',
+            (fts_id, title, text or '', speaker, body or '', source, source_slug, class_tag, timeline or ''))
     for bid, slug, title in conn.execute('SELECT id,slug,title FROM books').fetchall():
         for eid, etitle, ebody in conn.execute('SELECT id,title,body FROM book_entries WHERE book_id=?', (bid,)).fetchall():
-            add_fts(f'{title}: {etitle}', ebody, source='book_entry', source_slug=slug)
+            add_fts(f'{title}: {etitle}', ebody, source='book_entry', source_slug=slug,
+                    timeline=tl_books.get(slug, ''))
     for tid, slug, title in conn.execute('SELECT id,slug,title FROM transcripts').fetchall():
         for tlid, sp, line, ctag in conn.execute(
                 'SELECT id,speaker,line,class_tag FROM transcript_lines WHERE transcript_id=?', (tid,)).fetchall():
-            add_fts(title, line, sp, source='transcript_line', source_slug=slug, class_tag=ctag or '')
+            add_fts(title, line, sp, source='transcript_line', source_slug=slug, class_tag=ctag or '',
+                    timeline=tl_by_tid.get(tid, ''))
     for gid, slug, title, body in conn.execute('SELECT id,slug,title,body FROM grimoire_cards').fetchall():
-        add_fts(title, body, source='grimoire_card', source_slug=slug)
+        add_fts(title, body, source='grimoire_card', source_slug=slug,
+                timeline=tl_cards.get(slug, ''))
     for iid, slug, title, speaker, text in conn.execute('SELECT id,slug,title,speaker,text FROM interactions').fetchall():
-        add_fts(title, text, speaker, source='interaction', source_slug=slug)
+        add_fts(title, text, speaker, source='interaction', source_slug=slug,
+                timeline=tl_interactions.get(slug, ''))
     for iid, slug, title, text in conn.execute('SELECT id,slug,title,text FROM items').fetchall():
         if text:  # stat-only items have no searchable text
-            add_fts(title, text, source='item', source_slug=slug)
+            add_fts(title, text, source='item', source_slug=slug,
+                    timeline=tl_items.get(slug, ''))
     for rid, slug, title, body in conn.execute('SELECT id,slug,title,body FROM records').fetchall():
-        add_fts(title, body, source='record', source_slug=slug)
+        add_fts(title, body, source='record', source_slug=slug,
+                timeline=tl_records.get(slug, ''))
     print(f'fts entries: {fts_id}')
 
     # Verification index: normalized text with provenance (documents only)

@@ -16,7 +16,7 @@ or shared by every agent in the series.
 
 ## Archive integrity
 
-- `test-db.sh` - database integrity (55 checks: tables, FTS, orphans, counts,
+- `test-db.sh` - database integrity (61 checks: tables, FTS, orphans, counts, timeline chapters,
   entity leakage, speaker canon, provenance, `v_speakers`, `speaker_aliases`)
 - `lore-integrity.sh` - archive structure (books, transcripts, cards, records)
 - `lore-format.sh` - source markdown transcript format (153/153)

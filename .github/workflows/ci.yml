@@ -18,7 +18,12 @@ jobs:
           python-version: '3.12'
 
       - name: Build database
-        run: python3 db/migrate.py
+        run: |
+          python3 db/migrate.py
+          python3 db/enrich_lore.py
+          python3 db/enrich_manifest.py
+          python3 db/enrich_seals.py
+          python3 db/enrich_itemsets.py --apply
 
       - name: Conformance
         run: python3 tests/conformance.py
@@ -70,7 +75,12 @@ jobs:
           python-version: "3.12"
 
       - name: Build database
-        run: python db/migrate.py
+        run: |
+          python db/migrate.py
+          python db/enrich_lore.py
+          python db/enrich_manifest.py
+          python db/enrich_seals.py
+          python db/enrich_itemsets.py --apply
 
       - name: MCP install (Git Bash)
         shell: bash

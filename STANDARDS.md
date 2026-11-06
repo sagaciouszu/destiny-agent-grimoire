@@ -53,14 +53,15 @@ a change that is not done.
 |-------|----------|--------------------------|-------|
 | `books` | slug, title | source_url, entry_count | slugs match live `categories/book-<slug>` (2 documented exemptions) |
 | `book_entries` | book_id, body | title (fallback to book title), seq | provenance via parent book |
-| `transcripts` | slug, title | release, characters, arc, source_url, source_tier | release empty when the source lacks it; `source_tier` records provenance precedence |
+| `transcripts` | slug, title | release, characters, arc, source_url, source_tier, timeline, timeline_basis | release empty when the source lacks it; `source_tier` records provenance precedence; `timeline` is the in-universe story chapter (see `timeline_chapters`), NULL when unknown |
 | `transcript_lines` | transcript_id, seq, speaker, line, norm_line | is_stage_dir, section, is_optional, class_tag | seq contiguous from 0; class_tag is hunter, titan or warlock |
-| `grimoire_cards` | slug, title, body, source_url | game | D1 cards only |
-| `interactions` | slug, title, text | speaker, release, source_url | speaker may be empty (narrated scenes) |
-| `items` | slug, title | text, release, item_type, source_url | 16k stat-only items have no lore text by design |
-| `records` | slug, title, body | release, source_url | |
+| `grimoire_cards` | slug, title, body, source_url | game, timeline, timeline_basis | D1 cards only; timeline via `source/ishtar-timeline.json` (110 on-timeline cards), NULL otherwise |
+| `interactions` | slug, title, text | speaker, release, source_url, timeline, timeline_basis | speaker may be empty (narrated scenes) |
+| `items` | slug, title | text, release, item_type, source_url, timeline, timeline_basis | 16k stat-only items have no lore text by design; ~600 junk release strings stay NULL |
+| `records` | slug, title, body | release, source_url, timeline, timeline_basis | timeline prefers document_classification over the release string |
 | `characters` | name, slug | | curated set (compendium) |
-| `character_lines` | character_id, text, source_type, source_slug | norm_text | source_slug must resolve in `transcripts` |
+| `character_lines` | character_id, text, source_type, source_slug | norm_text, timeline | source_slug must resolve in `transcripts`; timeline inherited from it |
+| `timeline_chapters` | rank, slug, label | - | the Destiny timeline vocabulary (23 chapters); rank is chronological |
 | `fts` | | | exactly one row per indexed content row (1:1) |
 | `verify_fts` | | | normalized text + provenance; mirrors indexable rows for fast quote checks |
 | `item_title_fts` | | | item titles for fast name lookup |
@@ -102,6 +103,14 @@ Global rules:
 ### Source hierarchy
 
 Ishtar Collective is the archival primary; Destinypedia is corroboration.
+
+Reference snapshot: `source/ishtar-timeline.json` is the checked-in copy of
+the Ishtar timeline (45 eras, 800 source links; regenerate on demand with
+`python3 scripts/ishtar-timeline.py --fetch`). The build consumes it offline
+to time books, records, items and cards (`timeline_basis = ishtar_timeline`);
+`python3 scripts/ishtar-timeline.py --report db/grimoire.db` diffs its
+about-time eras against the when-spoken chapters of dialogue rows for
+curated-override review.
 
 These are the exact `transcripts.source_tier` values the database accepts
 (`tests/taxonomy-deep-test.py` rejects anything else), in precedence order:

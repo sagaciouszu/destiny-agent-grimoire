@@ -175,7 +175,7 @@ def _limit(value, default):
 @_guard
 def search(term, type=None, limit=10, full=False, offset=0, rank=True,
            activity=None, season=None, event=None, expansion=None, class_tag=None,
-           exclude_stage=False):
+           exclude_stage=False, timeline=None):
     """Full-text search. Returns rows with a snippet unless full=True.
 
     The term is used as FTS5 syntax when valid; otherwise every word is quoted
@@ -183,6 +183,9 @@ def search(term, type=None, limit=10, full=False, offset=0, rank=True,
 
     Ranked results demote stage directions (speaker Narration) and unattributed
     cutscene captions (speaker Cutscene); set exclude_stage=True to drop them.
+
+    timeline filters rows to one in-universe story chapter slug (see
+    timeline_chapters / capabilities.json), for example 'the_dark_age'.
     """
     term = clean_input(term, 500)
     if type is not None and type not in TYPE_TO_SOURCE:
@@ -204,6 +207,9 @@ def search(term, type=None, limit=10, full=False, offset=0, rank=True,
         params.extend(cparams)
         if exclude_stage:
             where += " AND speaker NOT IN ('Narration', 'Cutscene')"
+        if timeline:
+            where += ' AND timeline = ?'
+            params.append(str(timeline))
         params.append(_limit(limit, 10))
         params.append(_offset(offset))
         order = (" ORDER BY bm25(fts, 3.0, 1.0, 1.0, 1.0, 0.0)"
@@ -213,10 +219,10 @@ def search(term, type=None, limit=10, full=False, offset=0, rank=True,
         try:
             if full:
                 rows = conn.execute(
-                    f'SELECT title, speaker, text, source, source_slug FROM fts WHERE {where}{order} LIMIT ? OFFSET ?', params).fetchall()
+                    f'SELECT title, speaker, text, source, source_slug, timeline FROM fts WHERE {where}{order} LIMIT ? OFFSET ?', params).fetchall()
             else:
                 rows = conn.execute(
-                    f"SELECT title, speaker, source, source_slug, snippet(fts, 1, '[', ']', '…', 25) AS snippet "
+                    f"SELECT title, speaker, source, source_slug, timeline, snippet(fts, 1, '[', ']', '…', 25) AS snippet "
                     f'FROM fts WHERE {where}{order} LIMIT ? OFFSET ?', params).fetchall()
         except sqlite3.OperationalError as e:
             raise ValueError(f'invalid search query: {e}') from e
@@ -236,7 +242,8 @@ def _speaker_variants(name):
 def _transcript_lines(conn, name, pattern, limit, offset, canon_only=False, class_tag=None):
     for variant in _speaker_variants(name):
         params = [f'%{_like(variant)}%']
-        sql = ("SELECT line AS text, speaker, '' AS source_slug FROM transcript_lines "
+        sql = ("SELECT line AS text, speaker, '' AS source_slug, t.timeline "
+               "FROM transcript_lines JOIN transcripts t ON t.id = transcript_lines.transcript_id "
                "WHERE speaker LIKE ? ESCAPE '\\' AND is_stage_dir=0")
         if canon_only:
             sql += ' AND is_optional=0'
@@ -268,7 +275,8 @@ def character(name, about=None, all_lines=False, limit=20, offset=0, canon_only=
         pattern = f'%{_like(about.lower())}%' if about else None
         if all_lines:
             params = [f'%{_like(name)}%']
-            sql = ("SELECT line AS text, speaker, '' AS source_slug FROM transcript_lines "
+            sql = ("SELECT line AS text, speaker, '' AS source_slug, t.timeline "
+                   "FROM transcript_lines JOIN transcripts t ON t.id = transcript_lines.transcript_id "
                    "WHERE speaker LIKE ? ESCAPE '\\' AND is_stage_dir=0")
             if canon_only:
                 sql += ' AND is_optional=0'
@@ -292,7 +300,7 @@ def character(name, about=None, all_lines=False, limit=20, offset=0, canon_only=
                 return None
             return {'header': f'=== {name} (transcript lines) ===', 'rows': rows}
         params = [ch['id']]
-        sql = "SELECT text, '' AS speaker, source_slug FROM character_lines WHERE character_id = ?"
+        sql = "SELECT text, '' AS speaker, source_slug, timeline FROM character_lines WHERE character_id = ?"
         if pattern:
             sql += " AND LOWER(text) LIKE ? ESCAPE '\\'"
             params.append(pattern)
@@ -328,11 +336,13 @@ def _enrich_item_rows(conn, rows, text_limit=200, lore_limit=8):
         return out
     slugs = [r['slug'] for r in out]
     qmarks = ','.join('?' * len(slugs))
-    texts = {r['slug']: r['text'] for r in conn.execute(
-        f'SELECT slug, text FROM items WHERE slug IN ({qmarks})', slugs)}
+    rows_by_slug = {r['slug']: r for r in conn.execute(
+        f'SELECT slug, text, timeline FROM items WHERE slug IN ({qmarks})', slugs)}
     links = _lore_links(conn, sorted({r['title'] for r in out if r['title']}), lore_limit)
     for r in out:
-        r['text'] = _snippet(texts.get(r['slug']) or '', text_limit)
+        src = rows_by_slug.get(r['slug'])
+        r['text'] = _snippet((src['text'] if src else '') or '', text_limit)
+        r['timeline'] = src['timeline'] if src else None
         r['lore'] = links.get(r['title'], [])
     return out
 
@@ -347,7 +357,7 @@ def item(slug):
     conn = connect()
     try:
         row = conn.execute(
-            'SELECT slug, title, text, release, item_type, source_url '
+            'SELECT slug, title, text, release, item_type, source_url, timeline, timeline_basis '
             'FROM items WHERE slug = ?', (slug,)).fetchone()
         if not row:
             return None
@@ -430,7 +440,7 @@ def verify(quote, speaker=None, exact=False):
 
 @_guard
 def search_total(term, type=None, activity=None, season=None, event=None, expansion=None,
-                 class_tag=None, exclude_stage=False):
+                 class_tag=None, exclude_stage=False, timeline=None):
     """Total FTS matches for a query (for paging). Mirrors search() filters."""
     term = clean_input(term, 500)
     if type is not None and type not in TYPE_TO_SOURCE:
@@ -452,6 +462,9 @@ def search_total(term, type=None, activity=None, season=None, event=None, expans
         params.extend(cparams)
         if exclude_stage:
             where += " AND speaker NOT IN ('Narration', 'Cutscene')"
+        if timeline:
+            where += ' AND timeline = ?'
+            params.append(str(timeline))
         return conn.execute(f'SELECT COUNT(*) FROM fts WHERE {where}', params).fetchone()[0]
     finally:
         conn.close()
@@ -542,7 +555,7 @@ def transcript(ref, speaker=None, limit=50, offset=0, full=False, include_stage=
     """Transcript metadata and dialogue lines. ref accepts a slug or title fragment."""
     conn = connect()
     try:
-        t = _resolve(conn, 'transcripts', ref, 'id, slug, title, release, characters, arc, source_url, source_tier')
+        t = _resolve(conn, 'transcripts', ref, 'id, slug, title, release, characters, arc, source_url, source_tier, timeline, timeline_basis')
         if not t:
             return None
         where = ['transcript_id = ?']

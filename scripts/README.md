@@ -13,6 +13,7 @@ Output feeds `db/migrate.py`; re-run migrate after ingesting.
 | `ingest-ishtar-commons-batch.py` | `source/transcripts/commons-*.md` | yes |
 | `build-lore-staging.py` | `archive/data/manifest/lore_entries.jsonl` | no (enrichment input) |
 | `gap-report.py` | `docs/GAPS.md` | no (generated report) |
+| `ishtar-timeline.py --fetch/--from/--report` | `source/ishtar-timeline.json` | yes (in-universe era snapshot; --report compares vs the timeline column) |
 
 All are resumable/idempotent and format output as `# Title` + `- Source:` +
 body, matching the migrate parsers. `ingest-destinypedia.py` keeps every

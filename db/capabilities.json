@@ -16,6 +16,7 @@
     "book_entries": "entries within books (provenance via parent book)",
     "transcripts": "transcript headers (curated markdown, Ishtar web, cutscene captions)",
     "transcript_lines": "canonical dialogue lines by speaker (seq ordered, stage directions flagged)",
+    "timeline_chapters": "in-universe Destiny timeline: story chapters (rank chronological, rows.timeline joins by slug)",
     "grimoire_cards": "Destiny 1 grimoire cards with source_url",
     "interactions": "short character dialogue beats",
     "items": "weapons/armor/gear lore and flavor text (text may be empty for stat-only items)",
@@ -122,7 +123,8 @@
     "standards": "STANDARDS.md",
     "quote_policy": "quote must trace to speaker-attributed canon; verify before quoting",
     "json_output": "every command supports --json (compact, parse-friendly)",
-    "counts": "authoritative counts come from the database; docs are synced by tests/sync-doc-counts.py"
+    "counts": "authoritative counts come from the database; docs are synced by tests/sync-doc-counts.py",
+    "timeline": "timeline = in-universe story chapter slug from timeline_chapters (rank = chronological order); basis: classification | release_name | scene_flashback | ishtar_timeline; NULL means unknown, never assume"
   },
   "api": "db/api.py (importable query layer used by the CLI and MCP server)",
   "mcp": {

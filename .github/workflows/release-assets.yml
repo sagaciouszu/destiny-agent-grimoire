@@ -16,11 +16,94 @@ on:
       tag:
         description: Release tag to attach compressed database assets to
         required: true
+  push:
+    branches: [master]
+    paths:
+      - 'source/**'
+      - 'archive/**'
+      - 'compendium/**'
+      - 'db/**'
+      - '.github/workflows/release-assets.yml'
 
 permissions:
   contents: write
 
 jobs:
+  # Every database-changing push must leave the static archives truthful:
+  # rebuild the full pipeline (migrate + enrichments), compare against the
+  # published release, fail loudly when they diverge (cut a release - the
+  # compress job then republishes all three assets), and self-heal missing
+  # compressed assets when the bytes already match.
+  archives-in-sync:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-26.04
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Rebuild the full release pipeline
+        run: |
+          python3 db/migrate.py
+          python3 db/enrich_lore.py
+          python3 db/enrich_manifest.py
+          python3 db/enrich_seals.py
+          python3 db/enrich_itemsets.py --apply
+
+      - name: Compare against the published release
+        id: sync
+        run: |
+          LOCAL=$(sha256sum db/grimoire.db | awk '{print $1}')
+          TAG=$(gh release view --json tagName -q .tagName)
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          if ! gh release download "$TAG" --pattern SHA256SUMS --clobber; then
+            echo "::error::no SHA256SUMS on release $TAG; publish a release"
+            exit 1
+          fi
+          PUB=$(grep -E '  grimoire\.db$' SHA256SUMS | awk '{print $1}')
+          if [ "$LOCAL" != "$PUB" ]; then
+            echo "::error::grimoire.db content changed (local $LOCAL != published $PUB). The static archives at /releases/latest/download/ are stale: cut a release from this commit and the compress job publishes grimoire.db + .xz + .gz + SHA256SUMS together."
+            exit 1
+          fi
+          echo "database matches release $TAG"
+
+      - name: Self-heal missing compressed assets
+        run: |
+          gh release download "$TAG" --pattern grimoire.db --clobber
+          NEED=""
+          gh release view "$TAG" --json assets -q '.assets[].name' > assets.txt || true
+          grep -qx 'grimoire.db.xz' assets.txt || NEED="xz"
+          grep -qx 'grimoire.db.gz' assets.txt || NEED="$NEED gz"
+          if [ -z "$NEED" ]; then
+            echo "all three assets present and in sync"
+            exit 0
+          fi
+          echo "repairing: $NEED"
+          case " $NEED " in *" xz "*) xz -9e -T0 -c grimoire.db > grimoire.db.xz;; esac
+          case " $NEED " in *" gz "*) gzip -9 -n -c grimoire.db > grimoire.db.gz;; esac
+          entry() {
+            if [ -f "$1" ]; then sha256sum "$1";
+            else grep -E "[0-9a-f]{64}  $1$" SHA256SUMS;
+            fi
+          }
+          {
+            grep -vE '  grimoire\.db(\.(xz|gz))?$' SHA256SUMS || true
+            entry grimoire.db
+            entry grimoire.db.xz
+            entry grimoire.db.gz
+          } | sort -k2 > SHA256SUMS.new
+          mv SHA256SUMS.new SHA256SUMS
+          cat SHA256SUMS
+          UPLOAD="SHA256SUMS"
+          [ -f grimoire.db.xz ] && UPLOAD="$UPLOAD grimoire.db.xz"
+          [ -f grimoire.db.gz ] && UPLOAD="$UPLOAD grimoire.db.gz"
+          gh release upload "$TAG" $UPLOAD --clobber
+        env:
+          TAG: ${{ steps.sync.outputs.tag }}
+
   compress-database:
     runs-on: ubuntu-26.04
     env:
