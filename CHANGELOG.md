@@ -50,7 +50,11 @@ Investigation follow-through (`GRIMOIRE-INVESTIGATION-REPORT.md` backlog 1-12):
   gzip -9) to every published release, round-trip-verified against the
   published asset with a refreshed `SHA256SUMS`; static endpoints under
   `/releases/latest/download/`, gzip being the zero-dependency pick for
-  Android apps.
+  Android apps. A daily sweep re-verifies that both compressed assets
+  decompress byte-identical to the published `grimoire.db` and repairs
+  them (recompress + upload) when an asset was replaced or is missing;
+  the workflow is fully checkout-free (it only needs the release bytes,
+  since enrichment dumps are local-only by design).
 - Two aggregate transcripts (`additional-edge-of-fate-contact-drifter`,
   `youtube-destinypedia-additional`) intentionally keep an empty
   `source_url`: they compile multiple upstreams (Ishtar/Destinypedia/YouTube)
