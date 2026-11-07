@@ -50,7 +50,8 @@ CREATE TABLE IF NOT EXISTS transcript_lines (
     is_stage_dir INTEGER DEFAULT 0,
     section TEXT,
     is_optional INTEGER DEFAULT 0,
-    class_tag TEXT
+    class_tag TEXT,
+    speaker_source TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_tl_transcript ON transcript_lines(transcript_id);
 CREATE INDEX IF NOT EXISTS idx_tl_speaker ON transcript_lines(speaker);

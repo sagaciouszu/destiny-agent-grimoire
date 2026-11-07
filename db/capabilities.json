@@ -16,7 +16,7 @@
     "books": "lore book metadata (slug matches live categories/book-<slug>)",
     "book_entries": "entries within books (provenance via parent book)",
     "transcripts": "transcript headers (curated markdown, Ishtar web, cutscene captions)",
-    "transcript_lines": "canonical dialogue lines by speaker (seq ordered, stage directions flagged, lang column for captions)",
+    "transcript_lines": "canonical dialogue lines by speaker (seq ordered, stage directions flagged, lang column for captions; speaker_source records attribution provenance for caption lines when present)",
     "caption_provenance": "per-line game-file provenance for captions (StringReference hash, package/entry origin, kind)",
     "timeline_chapters": "in-universe Destiny timeline: story chapters (rank chronological, rows.timeline joins by slug)",
     "grimoire_cards": "Destiny 1 grimoire cards with source_url",

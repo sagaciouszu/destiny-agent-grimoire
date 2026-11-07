@@ -15,7 +15,7 @@ Four independent axes:
 import re
 import sqlite3
 
-SCHEMA_VERSION = '1.4.0'
+SCHEMA_VERSION = '1.5.0'
 
 # Activity facet keys emitted by the game-caption extraction
 # (caption_activity.py NARRATOR/ACTIVITY_PAT keys) -> taxonomy slugs.
