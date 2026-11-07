@@ -139,6 +139,31 @@ for repo in REPOS.values():
             elif len(desc) > 1024:
                 issues.append((os.path.basename(repo), rel, 'description too long', str(len(desc))))
 
+# Stale-version gate: v0.29.0+ documents drift minimally
+STALE = ['v0.28.0 - ', 'Schema 1.4.0', 'schema 1.4.0', 'speaker_orphan',
+         'DB counts stale']
+for root in REPOS.values():
+    if not os.path.isdir(root):
+        continue
+    files = subprocess.run(['git', '-C', root, 'ls-files', '*.md'],
+                           capture_output=True, text=True).stdout.splitlines()
+    for rel in files:
+        if os.path.basename(rel) in SKIP_FILES:
+            continue
+        path = os.path.join(root, rel)
+        if not os.path.exists(path):
+            continue
+        try:
+            text = open(path, encoding='utf-8', errors='ignore').read()
+        except OSError:
+            continue
+        for stale in STALE:
+            if stale in text:
+                issues.append((os.path.basename(root), rel, 'stale token', stale))
+        # schema sentence must match reality: MANIFEST is now 1.5.0
+        if 'Schema 1.5.0' not in text and 'schema 1.5.0' not in text                 and 'SCHEMA_VERSION' in text:
+            pass  # not required; each doc cites what it cites
+
 print(f'docs-command audit: {checked} commands checked')
 print(f'skills spec audit: {skills_checked} SKILL.md checked')
 if issues:

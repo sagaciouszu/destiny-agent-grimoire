@@ -15,7 +15,9 @@ Four independent axes:
 import re
 import sqlite3
 
-SCHEMA_VERSION = '1.5.0'
+# Canonical schema version lives in SCHEMA_VERSION (one file, one consumer).
+import os as _os
+SCHEMA_VERSION = open(_os.path.join(_os.path.dirname(__file__), 'SCHEMA_VERSION')).read().strip()
 
 # Activity facet keys emitted by the game-caption extraction
 # (caption_activity.py NARRATOR/ACTIVITY_PAT keys) -> taxonomy slugs.
