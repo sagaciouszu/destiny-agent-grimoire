@@ -28,7 +28,8 @@ C = {
     'transcripts': q('SELECT COUNT(*) FROM transcripts'),
     'lines': q('SELECT COUNT(*) FROM transcript_lines'),
     'fts': q('SELECT COUNT(*) FROM fts'),
-    'eris': q("SELECT COUNT(*) FROM transcript_lines WHERE speaker = 'Eris Morn' AND is_stage_dir=0"),
+    'eris': q("SELECT COUNT(*) FROM transcript_lines tl JOIN transcripts t ON t.id = tl.transcript_id "
+              "WHERE speaker = 'Eris Morn' AND is_stage_dir=0 AND t.source_tier != 'game_caption'"),
     'drifter': q("SELECT COUNT(*) FROM transcript_lines WHERE speaker LIKE '%Drifter%'"),
     'drifter_exact': q("SELECT COUNT(*) FROM transcript_lines WHERE speaker = 'Drifter'"),
     'character_lines': q('SELECT COUNT(*) FROM character_lines'),
