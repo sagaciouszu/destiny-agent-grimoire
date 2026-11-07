@@ -102,7 +102,7 @@ lines, speaker attribution, activity facets, dedup verdicts, build
   extraction pass is stored as `confidence='derived'` (season/expansion filled
   from the activity catalogue, exactly as `classify()` would). Everything else
   stays `unknown` - caption text spans every era, so no season is inferred.
-- **Speakers come from four verified sources, never from guessing:**
+- **Speakers come from five verified sources, never from guessing:**
   (1) the curated activity announcer (one narrator per activity - this *is*
   the build's model: no per-line speaker exists for callouts);
   (2) cross-attribution, where a caption line's normalized text already exists
@@ -110,9 +110,24 @@ lines, speaker attribution, activity facets, dedup verdicts, build
   which stores a per-line FNV-1 speaker hash for vendor/quest greetings
   (`speaker_source='dialogue_node'`, 12 lines); (4) inline `[Petra]` prefixes
   (`speaker_source='line_prefix'`, prefix moved into the speaker column so the
-  line stays quoteable). Cutscenes, mission dialogue, ambient NPC pools and
-  callouts carry **no per-line speaker in this build** - recorded as an honest
-  gap. Full evidence: `/opt/vault/d2extraction/SPEAKER_ATTRIBUTION.md`.
+  line stays quoteable); (5) **Ishtar/web transcript containment**
+  (`speaker_source='ishtar_containment'`, 180 lines) - a caption line that is a
+  substantial fragment (>=50% of the longer string) of a *spoken* canon line
+  with exactly one speaker inherits it. The ratio guard is what stops a short
+  quote inside long lore prose from being mis-attributed. Cutscenes, mission
+  dialogue, ambient NPC pools and callouts carry **no per-line speaker in this
+  build** - recorded as an honest gap. Full evidence:
+  `/opt/vault/d2extraction/SPEAKER_ATTRIBUTION.md`.
+- **Table-level exclusion is per line, not per table.** Real speech shares
+  tables with lore paragraphs and objective text, so the extraction pass keeps
+  the spoken lines out of a table it otherwise classifies as `long_text` /
+  `objective` (75 lines recovered from 12 such tables). On-screen labels are
+  kept: they are rendered captions and carry personality.
+- **Investment-package lines were audited, not dropped:** 8,983 of the lines
+  come from `w64_investment_*`; 1,724 of those already exist in
+  `items`/`records`/`book_entries`/`grimoire_cards` (deduped by the normal
+  canon rule), the rest are quest/item prose and labels that the game renders
+  on screen.
 - **Stat/scoreboard lines stay complete but demoted** (`speaker='Narration'`,
   `is_stage_dir=1`), so they rank with other stage directions.
 - **Search surface:** `--type captions` (fts `source='caption'`), `--lang`
