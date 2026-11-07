@@ -38,16 +38,16 @@ flavor text, verify.
 | books | 110 | Book metadata |
 | book_entries | 1158 | Lore entries within books |
 | transcripts | 2422 | Transcript headers (quests, web, cutscenes, game captions) |
-| transcript_lines | 78741 | Canon dialogue and game captions by speaker |
+| transcript_lines | 78740 | Canon dialogue and game captions by speaker |
 | grimoire_cards | 2889 | Destiny 1 grimoire cards |
 | interactions | 2699 | Short character dialogue beats |
 | items | 58764 | Weapons / armor / gear lore + flavor |
 | records | 69 | Triumphs / seals |
 | characters | 20 | Named characters |
 | character_lines | 1229 | Canon character quotes for agents |
-| caption_provenance | 9608 | Caption line provenance (StringReference hash, package) |
-| fts | 130211 | FTS5 search index |
-| verify_fts | 130211 | Fast quote verification index |
+| caption_provenance | 9607 | Caption line provenance (StringReference hash, package) |
+| fts | 130210 | FTS5 search index |
+| verify_fts | 130210 | Fast quote verification index |
 | item_title_fts | 58764 | Item title lookup index |
 
 Taxonomy tables (additive; canon tables are never rewritten):
