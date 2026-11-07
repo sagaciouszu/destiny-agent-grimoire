@@ -49,6 +49,10 @@ SPEAKER_ALIASES = {
     'The Crow': 'Crow',
     # The Menagerie narrator is titled in-game; the corpus speaker is Calus.
     'Emperor Calus': 'Calus',
+    # Caption prefixes use short forms; the corpus keeps full names. The bare
+    # 'Petra' rows in the House of Wolves missions are Petra Venj.
+    'Petra': 'Petra Venj',
+    'Uldren': 'Uldren Sov',
     # Saint-14 is one character under many names; alias them so no source
     # variant fragments the corpus or trips the Roman-numeral speaker filter.
     'Saint-XIV': 'Saint-14',

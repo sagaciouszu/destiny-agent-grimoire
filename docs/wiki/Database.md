@@ -102,6 +102,17 @@ lines, speaker attribution, activity facets, dedup verdicts, build
   extraction pass is stored as `confidence='derived'` (season/expansion filled
   from the activity catalogue, exactly as `classify()` would). Everything else
   stays `unknown` - caption text spans every era, so no season is inferred.
+- **Speakers come from four verified sources, never from guessing:**
+  (1) the curated activity announcer (one narrator per activity - this *is*
+  the build's model: no per-line speaker exists for callouts);
+  (2) cross-attribution, where a caption line's normalized text already exists
+  in canon with exactly one speaker; (3) the `0x80808d54` dialogue-node def,
+  which stores a per-line FNV-1 speaker hash for vendor/quest greetings
+  (`speaker_source='dialogue_node'`, 12 lines); (4) inline `[Petra]` prefixes
+  (`speaker_source='line_prefix'`, prefix moved into the speaker column so the
+  line stays quoteable). Cutscenes, mission dialogue, ambient NPC pools and
+  callouts carry **no per-line speaker in this build** - recorded as an honest
+  gap. Full evidence: `/opt/vault/d2extraction/SPEAKER_ATTRIBUTION.md`.
 - **Stat/scoreboard lines stay complete but demoted** (`speaker='Narration'`,
   `is_stage_dir=1`), so they rank with other stage directions.
 - **Search surface:** `--type captions` (fts `source='caption'`), `--lang`
