@@ -117,7 +117,16 @@ lines, speaker attribution, activity facets, dedup verdicts, build
   quote inside long lore prose from being mis-attributed. Cutscenes, mission
   dialogue, ambient NPC pools and callouts carry **no per-line speaker in this
   build** - recorded as an honest gap. Full evidence:
-  `/opt/vault/d2extraction/SPEAKER_ATTRIBUTION.md`.
+  `/opt/vault/d2extraction/SPEAKER_ATTRIBUTION.md` (incl. the Phase 0
+  Tiger-engine literature audit, the 18,522-match FNV-1 triangulation that
+  found the companion-VO def class `0x80808d54`, and the exhaustive-SDH probe
+  that verified zero additional attributable lines beyond the 180).
+- **Exhaustive SDH review:** every caption line was joined against
+  canonical transcript lines (sentence-level, >=0.6 fragment ratio, unique
+  speaker); the residual found **zero additional matches** beyond the
+  containment set, and 4 marquee lines (Zavala's Red War speech, Cayde's
+  arc-soul line, Ghaul's Light speech, Hawthorne's "…he's right where he
+  needs to be.") were externally verified verbatim against Ishtar/Fandom.
 - **Table-level exclusion stays a whole-table rule, verified.** The 2,420
   non-ingested tables (`objective`/`long_text`/`item`/`ui`) are rendered menu,
   quest and lore text, not voiced audio. A full-corpus probe resolved the
