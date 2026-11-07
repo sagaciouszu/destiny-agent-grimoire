@@ -127,6 +127,22 @@ lines, speaker attribution, activity facets, dedup verdicts, build
   containment set, and 4 marquee lines (Zavala's Red War speech, Cayde's
   arc-soul line, Ghaul's Light speech, Hawthorne's "…he's right where he
   needs to be.") were externally verified verbatim against Ishtar/Fandom.
+- **No further speaker-recoverable VO exists in this build.** A 70-def
+  census of every VO def class (`0x80808d54`/`0x80809440`/`0x80805dbc`)
+  confirms: vendor desks carry resolvable FNV-1 name keys; the two companion
+  defs `w64_sandbox_0207[1015]` (Ghost) and `w64_sandbox_0378[5579]` (Sagira)
+  carry their 24+24 name-keyed voice lines too, but point at pkg `0x209`,
+  which does not exist in this Season of Arrivals install (several other
+  refs - pkg 4, pkg 521, pkg 930... - are likewise missing), so their caption
+  tables are unrecoverable locally; the Tower ambient pool `[3634]` references
+  local SR twins but key `0x1a81ab55` is an actor-class ID that matches no
+  extracted string in any letter case. Investment/quest activity defs carry
+  internal-name tags (`BRAY`, `Strand`, `Hellmouth`, `oasis`, `Descent`,
+  `Reactor`...) that are place/activity names, not speakers: 103 remaining
+  name-shaped keys brute-forced against all 580k extracted strings resolve to
+  nothing - they do not exist as display text. Callouts/activity VO acquire
+  the announcer at runtime (see Bungie TWAB notes on announcement VO), not
+  statically.
 - **Table-level exclusion stays a whole-table rule, verified.** The 2,420
   non-ingested tables (`objective`/`long_text`/`item`/`ui`) are rendered menu,
   quest and lore text, not voiced audio. A full-corpus probe resolved the
