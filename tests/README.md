@@ -3,7 +3,7 @@
 Shared validation for the archive and the agent interface. Persona-specific
 suites live in each agent repo under `tests/`; everything here is archive-wide
 or shared by every agent in the series. Numbers below are descriptive only;
-the authoritative counts are asserted live (`sync-doc-counts.py --sync`,
+the authoritative counts are asserted live (`sync-doc-counts.py --check`,
 `test-db.sh` against the built `db/grimoire.db`).
 
 ## Entry points
@@ -34,6 +34,16 @@ the authoritative counts are asserted live (`sync-doc-counts.py --sync`,
 - `sync-doc-counts.py` - rewrite documented counts from the database
   (`--check` for the CI-style staleness gate)
 - `source-overlap-verify.py` - curated markdown vs live Ishtar, filename/slug
+
+## Extended suite (on demand)
+
+- `extended-suite.sh` - extended checks beyond the core suite
+- `item-audit.py` - slugs, titles, URLs, optional text coverage for items
+- `taxonomy-deep-test.py` - tiers, seasons, events, lore, seals, manifest links
+- `caption-test.py` - game captions (`source_tier='game_caption'`): headers,
+  provenance, FTS+verify parity, persona canon exclusion
+- `class-filter-test.py` - hunter/titan/warlock variant filtering
+- `onboarding-smoke.sh` - offline clone/setup/audit on a fresh checkout
 
 ## Retrieval & MCP
 
