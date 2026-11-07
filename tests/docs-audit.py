@@ -160,9 +160,6 @@ for root in REPOS.values():
         for stale in STALE:
             if stale in text:
                 issues.append((os.path.basename(root), rel, 'stale token', stale))
-        # schema sentence must match reality: MANIFEST is now 1.5.0
-        if 'Schema 1.5.0' not in text and 'schema 1.5.0' not in text                 and 'SCHEMA_VERSION' in text:
-            pass  # not required; each doc cites what it cites
 
 print(f'docs-command audit: {checked} commands checked')
 print(f'skills spec audit: {skills_checked} SKILL.md checked')

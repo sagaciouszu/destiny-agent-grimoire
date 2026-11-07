@@ -361,7 +361,7 @@ serves every agent.
    `bash scripts/sync-wiki.sh` (add `--push` to publish the GitHub wiki; the
    script refuses model-control tokens and content drift).
 4. Run the gates in section 7: `grimoire-master-audit.sh`, then
-   `bash tests/master-audit.sh`  in each agent repo, plus a fresh-clone spot
+   `bash tests/master-audit.sh` in each agent repo, plus a fresh-clone spot
    check for layout changes.
 
 ### Caption contract (game captions are canon)
