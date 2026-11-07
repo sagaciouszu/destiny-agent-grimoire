@@ -1,3 +1,14 @@
+## v0.29.0 - Schema 1.5.0: caption attribution provenance (2026-11-07)
+
+`transcript_lines` gains a nullable `speaker_source` recording how a caption
+line's speaker was attached (`ishtar_containment`, `dialogue_node`,
+`line_prefix`). Previously the caption loader dropped it, so attribution
+provenance was lost. Schema 1.5.0; 206 attributed caption lines carry
+provenance (twins adopt the tag only when NULL, never a rewrite). Docs,
+STANDARDS and capabilities.json updated; fresh double rebuild verified
+byte-identical; Database.md covers the exhaustive-SDH evidence and the
+Ghost/Sagira companion-VO gap.
+
 ## v0.28.0 - Game caption corpus from the local build (2026-11-06)
 
 English subtitle and callout text extracted from the local build
