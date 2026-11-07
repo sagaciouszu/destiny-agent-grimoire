@@ -361,8 +361,26 @@ serves every agent.
    `bash scripts/sync-wiki.sh` (add `--push` to publish the GitHub wiki; the
    script refuses model-control tokens and content drift).
 4. Run the gates in section 7: `grimoire-master-audit.sh`, then
-   `bash tests/master-audit.sh` in each agent repo, plus a fresh-clone spot
+   `bash tests/master-audit.sh`  in each agent repo, plus a fresh-clone spot
    check for layout changes.
+
+### Caption contract (game captions are canon)
+
+- Caption lines keep their StringReference provenance forever; a caption line
+  that duplicates existing canon attaches provenance to the existing line, it
+  is never re-exported or re-attributed (`db/migrate.py` enforced).
+- Speaker attribution for captions comes from exactly five verified sources
+  (the curated activity announcer, canon-side cross-attribution, the
+  `0x80808d54` dialogue-node def, inline `[Speaker]` prefixes, Ishtar
+  containment >= 0.5 ratio, dialogue-form both sides, exactly one speaker) -
+  anything else is never guessed.
+- Persona canon excludes captions; persona-freshness, count-consistency and
+  caption-test all enforce it.
+- `speaker_source IS NULL` on a caption line is legal only for the audit
+  default speakers `Cutscene` / `Narration`.
+- Attribution provenance carries to canon twins in `speaker_source`; it is
+  set only by verified sources and never rewritten.
+
 5. Commit. Push tags and cut releases whenever one is needed - standing
    approval, no ceremony (CI tests the published database asset, so a database
    change simply ships by tagging). Explicit user approval is only required for
