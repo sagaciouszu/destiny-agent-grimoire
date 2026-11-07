@@ -507,6 +507,15 @@ def load_captions(conn):
             nl = norm_text(text)
             hit = canon.get(nl)
             if hit is not None:
+                # caption sees a newer attribution for a canon line: adopt it
+                # only when the canon row has no source yet, and never
+                # rewrite anyone's attribution.
+                line_ss = (line.get('speaker_source') or '').strip() or None
+                if line_ss:
+                    conn.execute(
+                        'UPDATE transcript_lines SET speaker_source=? '
+                        'WHERE id=? AND speaker_source IS NULL',
+                        (line_ss, hit))
                 stats['provenance'] += _caption_prov(
                     conn, hit, line, rec, src_pkg, src_entry)
                 stats['already_in_canon'] += 1
@@ -515,11 +524,12 @@ def load_captions(conn):
                 tid = _caption_header(conn, rec, acts, stats)
             speaker = canon_speaker(
                 line.get('speaker') or rec.get('speaker') or 'Cutscene')
+            line_ss = (line.get('speaker_source') or '').strip() or None
             lid = conn.execute(
                 'INSERT INTO transcript_lines (transcript_id,seq,speaker,line,'
-                'norm_line,is_stage_dir) VALUES (?,?,?,?,?,?)',
+                'norm_line,is_stage_dir,speaker_source) VALUES (?,?,?,?,?,?,?)',
                 (tid, seq, speaker, text, nl,
-                 1 if line.get('is_stage_dir') else 0)).lastrowid
+                 1 if line.get('is_stage_dir') else 0, line_ss)).lastrowid
             canon.setdefault(nl, lid)
             seq += 1
             stats['lines'] += 1
