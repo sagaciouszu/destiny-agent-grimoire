@@ -118,11 +118,16 @@ lines, speaker attribution, activity facets, dedup verdicts, build
   dialogue, ambient NPC pools and callouts carry **no per-line speaker in this
   build** - recorded as an honest gap. Full evidence:
   `/opt/vault/d2extraction/SPEAKER_ATTRIBUTION.md`.
-- **Table-level exclusion is per line, not per table.** Real speech shares
-  tables with lore paragraphs and objective text, so the extraction pass keeps
-  the spoken lines out of a table it otherwise classifies as `long_text` /
-  `objective` (75 lines recovered from 12 such tables). On-screen labels are
-  kept: they are rendered captions and carry personality.
+- **Table-level exclusion stays a whole-table rule, verified.** The 2,420
+  non-ingested tables (`objective`/`long_text`/`item`/`ui`) are rendered menu,
+  quest and lore text, not voiced audio. A full-corpus probe resolved the
+  English text of every table and scored each for dialogue-style: 361 of the
+  excluded tables score high (all written narrative/book prose -
+  sampled and confirmed), so they stay excluded. The 75 lines a heuristic had
+  recovered from 12 such tables were verified the same way and dropped; the
+  review file is kept at
+  `/opt/vault/d2extraction/subtitles/review_quarantine_recovered_lines.jsonl`.
+  On-screen labels are kept: they are rendered captions and carry personality.
 - **Investment-package lines were audited, not dropped:** 8,983 of the lines
   come from `w64_investment_*`; 1,724 of those already exist in
   `items`/`records`/`book_entries`/`grimoire_cards` (deduped by the normal
