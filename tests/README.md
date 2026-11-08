@@ -60,7 +60,7 @@ the authoritative counts are asserted live (`sync-doc-counts.py --check`,
 - `count-consistency.py` - persona/doc/DB agreement
 - `cutscene-verify.sh` - caption corpus verification (source references, FTS mirror)
 - `query-interface-test.sh` - CLI contract (search/item/list/record/...)
-- `docs-audit.py` - 375 documented commands resolve; skills spec; no stale `.md` claims
+- `docs-audit.py` - 378 documented commands resolve; skills spec; no stale `.md` claims
 
 ## Notes
 

@@ -87,6 +87,22 @@ SHARED = [
     (r'\(\d{4,6} dialogue lines\)', '({lines} dialogue lines)'),
     (r'searches all \d{3,5}', 'searches all {transcripts}'),
 ]
+SHARED_PROSE = [
+    # plain prose ("110 books, 2422 transcripts, 2889 grimoire cards, ...")
+    # never matching a number preceded by a digit or comma (prevents corrupting
+    # thousand-separated values like "2,422" or "78,740")
+    (r'(?<![\d,])\d{1,3}(?:,\d{3})+\s+transcripts\b', '{transcripts} transcripts'),
+    (r'(?<![\d,])\d{3,5}\s+transcripts\b', '{transcripts} transcripts'),
+    (r'(?<![\d,])\d{1,3}(?:,\d{3})*\s+dialogue\s+lines\b', '{lines} dialogue lines'),
+    (r'(?<![\d,])\d{3,5}\s+dialogue\s+lines\b', '{lines} dialogue lines'),
+    (r'(?<![\d,])\d{3,5}\s+grimoire\s+cards\b', '{cards} grimoire cards'),
+    (r'(?<![\d,])\d{3,5}\s+interactions\b', '{interactions} interactions'),
+    (r'(?<![\d,])\d{1,5}\s+records\b', '{records} records'),
+    (r'(?<![\d,])\d{3,5}\s+items\b', '{items} items'),
+    (r'(?<![\d,])\d{3,5}\s+entries\b', '{book_entries} entries'),
+    (r'\(\d{3,4}\s+lines\)', '({character_lines} lines)'),
+]
+
 ERIS_PATS = [
     (r'\b\d{3,4} canonical Eris', '{eris} canonical Eris'),
     (r'\(\d{3,4} Eris Morn lines\)', '({eris} Eris Morn lines)'),
@@ -191,9 +207,9 @@ for pat in [os.path.join(GRIMOIRE, '*.md'), os.path.join(GRIMOIRE, 'db', '*.md')
 CHECK = '--check' in sys.argv
 changes = []
 for path in sorted(set(FILES)):
-    if os.path.basename(path) == 'CHANGELOG.md':
+    if os.path.basename(path) in ('CHANGELOG.md', 'RELEASE.md'):
         continue
-    pats = list(SHARED)
+    pats = list(SHARED) + list(SHARED_PROSE)
     if path.startswith(DRIFTER + os.sep):
         pats += DRIFTER_PATS
     elif path.startswith(ERIS + os.sep):
