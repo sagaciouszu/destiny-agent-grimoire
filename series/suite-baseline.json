@@ -2,7 +2,7 @@
   "version": 1,
   "description": "No-loss baseline for per-agent master-audit suites. Additions are allowed; removals require an explicit baseline change.",
   "agents": {
-    "how-to-drift-for-agents": {
+    "destiny-agent-drifter": {
       "count": 23,
       "required": [
         "Archive & Link Validation",
@@ -30,7 +30,7 @@
         "No Personal Paths"
       ]
     },
-    "eris-morn": {
+    "destiny-agent-eris-morn": {
       "count": 18,
       "required": [
         "Module Completeness (16 checks)",

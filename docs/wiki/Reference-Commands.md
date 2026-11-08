@@ -50,7 +50,7 @@ bash scripts/sync-live-agents.sh --openclaw
 Per-agent:
 
 ```bash
-cd eris-morn
+cd destiny-agent-eris-morn
 bash setup.sh ../destiny-agent-grimoire --no-mcp
 bash tests/master-audit.sh
 bash tests/run-suites.sh

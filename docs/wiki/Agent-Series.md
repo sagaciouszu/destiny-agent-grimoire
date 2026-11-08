@@ -7,8 +7,8 @@ name, source repository, entry file, summary and consult scope.
 
 | Id | Agent | Source repository | Consult scope |
 |---|---|---|---|
-| `drifter` | The Drifter | `how-to-drift-for-agents` | Gambit, the Nine, the Dark Age, his own past |
-| `eris` | Eris Morn | `eris-morn` | Hive, the Moon, Savathun, the Witness, ritual lore |
+| `drifter` | The Drifter | `destiny-agent-drifter` | Gambit, the Nine, the Dark Age, his own past |
+| `eris` | Eris Morn | `destiny-agent-eris-morn` | Hive, the Moon, Savathun, the Witness, ritual lore |
 | `calus` | Emperor Calus | `destiny-agent-calus` | Calus, the Cabal, the Leviathan, Opulence |
 | `zavala` | Commander Zavala | `destiny-agent-zavala` | The Vanguard, the Last City, the coalition |
 | `ghost` | Ghost | `destiny-agent-ghost` | The Light, resurrection, the Traveler, the Guardian |
@@ -20,8 +20,8 @@ By default the sync script expects the agent repos beside this archive:
 ```text
 ../
   destiny-agent-grimoire/
-  how-to-drift-for-agents/
-  eris-morn/
+  destiny-agent-drifter/
+  destiny-agent-eris-morn/
   destiny-agent-calus/
   destiny-agent-zavala/
   destiny-agent-ghost/

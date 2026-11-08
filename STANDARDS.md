@@ -11,7 +11,7 @@ a change that is not done.
 
 - `destiny-agent-grimoire` is agent-agnostic: no persona, no agent-specific
   rules.
-- The five consumer agents (`how-to-drift-for-agents`, `eris-morn`,
+- The five consumer agents (`destiny-agent-drifter`, `destiny-agent-eris-morn`,
   `destiny-agent-calus`, `destiny-agent-zavala`, `destiny-agent-ghost`)
   reference the database through `lore/`: a symlink on Unix, a junction or
   clone on Windows. They own their personas; this repo owns canon.

@@ -30,8 +30,8 @@ GR = os.path.dirname(HERE)
 WORK = os.path.dirname(GR)
 REPOS = {k: v for k, v in {
     'grimoire': GR,
-    'drifter': os.path.join(WORK, 'how-to-drift-for-agents'),
-    'eris': os.path.join(WORK, 'eris-morn'),
+    'drifter': os.path.join(WORK, 'destiny-agent-drifter'),
+    'eris': os.path.join(WORK, 'destiny-agent-eris-morn'),
 }.items() if os.path.isdir(v)}
 if len(REPOS) < 3:
     print(f'note: {3 - len(REPOS)} agent repo(s) not present; validating {len(REPOS)} repo(s)')

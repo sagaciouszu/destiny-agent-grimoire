@@ -8,8 +8,8 @@
 CALLER="$1"
 AGENT="${2:-drifter}"
 case "$AGENT" in
-    drifter) MARKER=drifter.md; DIR=how-to-drift-for-agents ;;
-    eris)    MARKER=eris.md;    DIR=eris-morn ;;
+    drifter) MARKER=drifter.md; DIR=destiny-agent-drifter ;;
+    eris)    MARKER=eris.md;    DIR=destiny-agent-eris-morn ;;
     calus)   MARKER=calus.md;   DIR=destiny-agent-calus ;;
     *)       MARKER="$AGENT.md"; DIR="$AGENT" ;;
 esac

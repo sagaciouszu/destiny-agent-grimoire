@@ -232,8 +232,8 @@ repository minus the database lives outside the tree.
 | Suite | Command | Expected |
 |---|---|---|
 | Archive audit | `bash grimoire-master-audit.sh` | 11/11 |
-| Drifter agent audit | run tests/master-audit.sh in how-to-drift-for-agents | 22/22 |
-| Eris agent audit | run tests/master-audit.sh in eris-morn | 17/17 |
+| Drifter agent audit | run tests/master-audit.sh in destiny-agent-drifter | 22/22 |
+| Eris agent audit | run tests/master-audit.sh in destiny-agent-eris-morn | 17/17 |
 | Calus / Zavala / Ghost | run tests/master-audit.sh in each repo | 15/15 |
 | Agent suite manifests | `python3 tests/suite-manifest-test.py` | PASS |
 | Database integrity | `bash tests/test-db.sh` | 61 checks |

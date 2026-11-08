@@ -19,8 +19,8 @@ import glob
 HERE = os.path.dirname(os.path.abspath(__file__))
 GRIMOIRE = os.path.dirname(HERE)
 WORK = os.path.dirname(GRIMOIRE)
-ERIS = os.path.join(WORK, 'eris-morn')
-DRIFTER = os.path.join(WORK, 'how-to-drift-for-agents')
+ERIS = os.path.join(WORK, 'destiny-agent-eris-morn')
+DRIFTER = os.path.join(WORK, 'destiny-agent-drifter')
 
 conn = sqlite3.connect(os.path.join(GRIMOIRE, 'db', 'grimoire.db'))
 q = lambda sql: conn.execute(sql).fetchone()[0]

@@ -192,7 +192,7 @@ def persona_canon_excludes_captions():
         "SELECT speaker, COUNT(*) FROM fts WHERE source='caption' AND speaker='Drifter' "
         'GROUP BY 1').fetchone()
     assert rows, 'expected Drifter caption lines'
-    persona = os.path.join(os.path.dirname(ROOT), 'how-to-drift-for-agents', 'persona.json')
+    persona = os.path.join(os.path.dirname(ROOT), 'destiny-agent-drifter', 'persona.json')
     if not os.path.exists(persona):
         return                      # grimoire-only checkout: nothing to compare
     expected = json.load(open(persona, encoding='utf-8'))['canon_lines']
