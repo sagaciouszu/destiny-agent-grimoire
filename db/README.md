@@ -106,3 +106,8 @@ sqlite3 db/grimoire.db "SELECT key, value FROM meta;"
 ```
 
 The migration reads `source/` markdown plus `archive/data/*.jsonl` scratch files.
+It **does not** build the manifest-derived tables (or the lore index); those
+come from `python3 db/enrich_lore.py`, `enrich_manifest.py`, `enrich_seals.py`
+and `enrich_itemsets.py --apply` after fetching the manifest with
+`python3 archive/data/fetch_manifest.py --fetch --extract`. The full chain is
+the release recipe documented in `docs/wiki/Testing-and-Auditing.md`.
