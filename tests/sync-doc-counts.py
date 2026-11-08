@@ -87,21 +87,31 @@ SHARED = [
     (r'\(\d{4,6} dialogue lines\)', '({lines} dialogue lines)'),
     (r'searches all \d{3,5}', 'searches all {transcripts}'),
 ]
+# plain prose ("110 books, 2422 transcripts, ..."): rewrite ANY `<number> <noun>`
+# to the current DB count for that noun, unconditionally. This is a doc-sync:
+# the counts in these files are always the live numbers. Numbers keep the
+# style the source used (thousands separators are preserved).
 SHARED_PROSE = [
-    # plain prose ("110 books, 2422 transcripts, 2889 grimoire cards, ...")
-    # never matching a number preceded by a digit or comma (prevents corrupting
-    # thousand-separated values like "2,422" or "78,740")
-    (r'(?<![\d,])\d{1,3}(?:,\d{3})+\s+transcripts\b', '{transcripts} transcripts'),
-    (r'(?<![\d,])\d{3,5}\s+transcripts\b', '{transcripts} transcripts'),
-    (r'(?<![\d,])\d{1,3}(?:,\d{3})*\s+dialogue\s+lines\b', '{lines} dialogue lines'),
-    (r'(?<![\d,])\d{3,5}\s+dialogue\s+lines\b', '{lines} dialogue lines'),
-    (r'(?<![\d,])\d{3,5}\s+grimoire\s+cards\b', '{cards} grimoire cards'),
-    (r'(?<![\d,])\d{3,5}\s+interactions\b', '{interactions} interactions'),
-    (r'(?<![\d,])\d{1,5}\s+records\b', '{records} records'),
-    (r'(?<![\d,])\d{3,5}\s+items\b', '{items} items'),
-    (r'(?<![\d,])\d{3,5}\s+entries\b', '{book_entries} entries'),
-    (r'\(\d{3,4}\s+lines\)', '({character_lines} lines)'),
+    # (regex with named `num` group, C key) — `num` captures the number and
+    # the noun is a lookahead, so the match is the number only.
+    (r'(?<![\d,])(?P<num>\d{1,3}(?:,\d{3})+|\d{3,5})(?=\s+transcripts\b)', 'transcripts'),
+    (r'(?<![\d,])(?P<num>\d{1,3}(?:,\d{3})+|\d{3,5})(?=\s+dialogue\s+lines\b)', 'lines'),
+    (r'(?<![\d,])(?P<num>\d{1,3}(?:,\d{3})+|\d{3,5})(?=\s+grimoire\s+cards\b)', 'cards'),
+    (r'(?<![\d,])(?P<num>\d{1,3}(?:,\d{3})+|\d{3,5})(?=\s+interactions\b)', 'interactions'),
+    (r'(?<![\d,])(?P<num>\d{1,3}(?:,\d{3})+|\d{1,5})(?=\s+records\b)', 'records'),
+    (r'(?<![\d,])(?P<num>\d{1,3}(?:,\d{3})+|\d{3,5})(?=\s+items\b)', 'items'),
+    (r'(?<![\d,])(?P<num>\d{1,3}(?:,\d{3})+|\d{3,5})(?=\s+entries\b)', 'book_entries'),
+    (r'(?<![\d,])\((?P<num>\d{1,3}(?:,\d{3})+|\d{3,4})(?=\s+lines\))', 'character_lines'),
 ]
+
+
+_PROSE_KEYS = {'transcripts', 'lines', 'cards', 'interactions', 'records',
+               'items', 'book_entries', 'character_lines'}
+
+
+def _count(key, num_text):
+    value = C[key]
+    return '{:,}'.format(value) if ',' in num_text else str(value)
 
 ERIS_PATS = [
     (r'\b\d{3,4} canonical Eris', '{eris} canonical Eris'),
@@ -216,8 +226,13 @@ for path in sorted(set(FILES)):
         pats += ERIS_PATS
     s = open(path, encoding='utf-8').read()
     orig = s
-    for rx, tpl in pats:
-        s = re.sub(rx, lambda m: tpl.format(**C), s)
+    for rx, arg in pats:
+        if isinstance(arg, str) and arg in _PROSE_KEYS:
+            # prose: rewrite <num> <noun> in-place; if the pattern consumed
+            # the leading paren of a parenthesised count, restore it
+            s = re.sub(rx, lambda m: ('(' if m.group(0).startswith('(') else '') + _count(arg, m.group('num')), s)
+        else:
+            s = re.sub(rx, lambda m: arg.format(**C), s)
     if path == README:
         s = sync_inside_table(s, DB_PATH)
     elif path == SKILL:
