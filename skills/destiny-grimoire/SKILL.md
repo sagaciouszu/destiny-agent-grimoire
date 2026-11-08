@@ -29,7 +29,7 @@ flavor text, verify.
 
 - Repo root: wherever you cloned `destiny-agent-grimoire`
 - **Primary:** `db/grimoire.db` (SQLite + FTS5; if missing, bootstrap: `curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db -o db/grimoire.db` for the prebuilt asset (smaller: same endpoint with `.xz` / `.gz`, decompress with `xz -d` / `gzip -d`), or `python3 db/migrate.py` to build from checkout)
-- **Consumed by:** all five agents (Drifter, Eris Morn, Calus, Zavala, Ghost) via `lore/` (symlink, Windows junction or clone)
+- **Consumed by:** all six agents (Drifter, Eris Morn, Calus, Zavala, Ghost, Mara Sov) via `lore/` (symlink, Windows junction or clone)
 
 ## Data covering
 
@@ -218,7 +218,7 @@ sqlite3 db/grimoire.db "SELECT * FROM v_activity_coverage ORDER BY lines DESC LI
 2. **SQLite-first.** Do not read raw markdown from `source/` at query time; it is only the ingestion source.
 3. **Keep queries scoped.** Small `--limit N` values preserve token budget.
 4. **Do not edit this data directly.** The migration reads `source/` markdown + `archive/data/*.jsonl` and rebuilds the DB.
-5. **All five agents** (`destiny-agent-drifter`, `destiny-agent-eris-morn`, `destiny-agent-calus`, `destiny-agent-zavala`, `destiny-agent-ghost`) consume this database via `lore/` (a symlink, Windows junction or clone of this repo).
+5. **All six agents** (`destiny-agent-drifter`, `destiny-agent-eris-morn`, `destiny-agent-calus`, `destiny-agent-zavala`, `destiny-agent-ghost`, `destiny-agent-mara-sov`) consume this database via `lore/` (a symlink, Windows junction or clone of this repo).
 6. **Respect confidence.** Treat `unknown` classification as unknown; do not present a guessed season or activity as fact.
 7. **Mind coverage status.** `coverage_notes` says what the archive lacks: `partial_transcript` lines are real but incomplete, `no_dialogue` activities have none. Never fill a gap with an invented line.
 
