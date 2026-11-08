@@ -13,7 +13,7 @@
   <img src='https://img.shields.io/badge/made%20with-Destiny%20Grimoire-gold' alt='Made with Destiny Agent Grimoire'/>
 </p>
 
-**Version:** 0.29.1 | **Last updated:** 2026-11-08 | **Status:** Active
+**Version:** 0.29.1 | **Last push:** 2026-11-08 | **Status:** Active
 
 **Documentation site:** <https://sagaciouszu.github.io/grimoire-site/>
 
@@ -247,9 +247,9 @@ repository minus the database lives outside the tree.
 | Suite | Command | Expected |
 |---|---|---|
 | Archive audit | `bash grimoire-master-audit.sh` | 14/14 |
-| Drifter agent audit | run tests/master-audit.sh in destiny-agent-drifter | 23/23 |
-| Eris agent audit | run tests/master-audit.sh in destiny-agent-eris-morn | 18/18 |
-| Calus / Zavala / Ghost / Mara Sov | run tests/master-audit.sh in each repo | 18/18 |
+| Drifter agent audit | run tests/master-audit.sh in destiny-agent-drifter | 25/25 |
+| Eris agent audit | run tests/master-audit.sh in destiny-agent-eris-morn | 20/20 |
+| Calus / Zavala / Ghost / Mara Sov | run tests/master-audit.sh in each repo | 20/20 |
 | Agent suite manifests | `python3 tests/suite-manifest-test.py` | PASS |
 | Database integrity | `bash tests/test-db.sh` | 61 checks |
 | Query interface | `bash tests/query-interface-test.sh` | 89 checks |
