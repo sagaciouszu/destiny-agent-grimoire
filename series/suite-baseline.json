@@ -3,7 +3,7 @@
   "description": "No-loss baseline for per-agent master-audit suites. Additions are allowed; removals require an explicit baseline change.",
   "agents": {
     "destiny-agent-drifter": {
-      "count": 23,
+      "count": 25,
       "required": [
         "Archive & Link Validation",
         "Cross-Reference Validator",
@@ -21,6 +21,8 @@
         "Conversation (SQLite)",
         "Sample Conversation",
         "Golden Voice Snapshots",
+        "Suite Manifest",
+        "Shared Helpers",
         "Connection",
         "Memory Isolation",
         "Depends On Coverage",
@@ -31,7 +33,7 @@
       ]
     },
     "destiny-agent-eris-morn": {
-      "count": 18,
+      "count": 20,
       "required": [
         "Module Completeness (16 checks)",
         "Quote Verification (0 unverified)",
@@ -44,6 +46,8 @@
         "Conversation (SQLite)",
         "Sample Conversation",
         "Golden Voice Snapshots",
+        "Suite Manifest",
+        "Shared Helpers",
         "Connection",
         "Memory Isolation",
         "Depends On Coverage",
@@ -54,7 +58,7 @@
       ]
     },
     "destiny-agent-calus": {
-      "count": 18,
+      "count": 20,
       "required": [
         "Module Completeness",
         "Quote Verification",
@@ -69,6 +73,8 @@
         "Voice Consistency",
         "Voice Scorer",
         "Golden Voice Snapshots",
+        "Suite Manifest",
+        "Shared Helpers",
         "Depends On Coverage",
         "Token Estimate Coverage",
         "No Em-Dashes",
@@ -77,7 +83,7 @@
       ]
     },
     "destiny-agent-zavala": {
-      "count": 18,
+      "count": 20,
       "required": [
         "Module Completeness",
         "Quote Verification",
@@ -92,6 +98,8 @@
         "Voice Consistency",
         "Voice Scorer",
         "Golden Voice Snapshots",
+        "Suite Manifest",
+        "Shared Helpers",
         "Depends On Coverage",
         "Token Estimate Coverage",
         "No Em-Dashes",
@@ -100,7 +108,7 @@
       ]
     },
     "destiny-agent-ghost": {
-      "count": 18,
+      "count": 20,
       "required": [
         "Module Completeness",
         "Quote Verification",
@@ -115,6 +123,33 @@
         "Voice Consistency",
         "Voice Scorer",
         "Golden Voice Snapshots",
+        "Suite Manifest",
+        "Shared Helpers",
+        "Depends On Coverage",
+        "Token Estimate Coverage",
+        "No Em-Dashes",
+        "INDEX Completeness",
+        "No Personal Paths"
+      ]
+    },
+    "destiny-agent-mara-sov": {
+      "count": 20,
+      "required": [
+        "Module Completeness",
+        "Quote Verification",
+        "Multi-User Isolation",
+        "Memory Isolation",
+        "Connection",
+        "Persona Freshness",
+        "Conversation",
+        "Sample Conversation",
+        "Multi-Turn",
+        "Scenarios",
+        "Voice Consistency",
+        "Voice Scorer",
+        "Golden Voice Snapshots",
+        "Suite Manifest",
+        "Shared Helpers",
         "Depends On Coverage",
         "Token Estimate Coverage",
         "No Em-Dashes",
