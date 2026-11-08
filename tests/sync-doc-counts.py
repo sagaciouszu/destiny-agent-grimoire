@@ -98,6 +98,12 @@ SHARED_PROSE = [
     (r'(?<![\d,])(?P<num>\d{1,3}(?:,\d{3})+|\d{3,5})(?=\s+dialogue\s+lines\b)', 'lines'),
     (r'(?<![\d,])(?P<num>\d{1,3}(?:,\d{3})+|\d{3,5})(?=\s+grimoire\s+cards\b)', 'cards'),
     (r'(?<![\d,])(?P<num>\d{1,3}(?:,\d{3})+|\d{3,5})(?=\s+interactions\b)', 'interactions'),
+    # NOTE(doc-sync): unconditionally rewrites `<digits> records` to the live
+    # records-table count (69 today). It will match any digit-shaped phrase —
+    # 'triumph 31 records', 'she has 5 records to review' — not only claims
+    # about the database. The current corpus contains zero such cases (grep
+    # clean); do NOT land any unless it is a count claim (verified by running
+    # sync-doc-counts.py --check and reading the resulting diff).
     (r'(?<![\d,])(?P<num>\d{1,3}(?:,\d{3})+|\d{1,5})(?=\s+records\b)', 'records'),
     (r'(?<![\d,])(?P<num>\d{1,3}(?:,\d{3})+|\d{3,5})(?=\s+items\b)', 'items'),
     (r'(?<![\d,])(?P<num>\d{1,3}(?:,\d{3})+|\d{3,5})(?=\s+entries\b)', 'book_entries'),

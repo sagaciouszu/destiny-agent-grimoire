@@ -51,10 +51,25 @@ curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest
 curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db.gz -o db/grimoire.db.gz && gzip -d db/grimoire.db.gz
 ```
 
-Or build from this checkout (about two minutes, matches this commit):
+Or build a **core build** from this checkout (about two minutes, but it does
+NOT produce the same database asset as a release):
 
 ```bash
 python3 db/migrate.py
+```
+
+It leaves out the manifest-derived tables (`seals`, `item_sets`,
+`manifest_activities` + `_links`) and the lore index. For a faithful local
+build you additionally need the authoritative dump via `BUNGIE_API_KEY` and
+the enrich chain:
+
+```bash
+python3 archive/data/fetch_manifest.py --check
+python3 db/migrate.py
+python3 db/enrich_lore.py
+python3 db/enrich_manifest.py
+python3 db/enrich_seals.py
+python3 db/enrich_itemsets.py --apply
 ```
 
 **Step 3: query.**
