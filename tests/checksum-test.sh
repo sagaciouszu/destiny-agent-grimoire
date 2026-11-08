@@ -5,8 +5,8 @@ set -u
 
 ARCHIVE="${ARCHIVE:-$(cd "$(dirname "$0")/.." && pwd)}"
 WORK="$(dirname "$ARCHIVE")"
-if [ ! -d "$WORK/how-to-drift-for-agents" ]; then
-    echo "SKIP: how-to-drift-for-agents not present"
+if [ ! -d "$WORK/destiny-agent-drifter" ]; then
+    echo "SKIP: destiny-agent-drifter not present"
     exit 0
 fi
 TMP="$(mktemp -d /tmp/opencode/checksum-test.XXXXXX)"
@@ -32,7 +32,7 @@ git add -A >/dev/null 2>&1; git -c user.email=t@t -c user.name=t commit -qm init
 
 run_setup() {
     local dir="$1" dburl="$2" sumsurl="$3" loreurl="$4"
-    git clone -q "$WORK/how-to-drift-for-agents" "$dir" 2>/dev/null
+    git clone -q "$WORK/destiny-agent-drifter" "$dir" 2>/dev/null
     ( cd "$dir" && LORE_URL="$loreurl" RELEASE_DB_URL="$dburl" RELEASE_SUMS_URL="$sumsurl" \
         BOOTSTRAP=1 ./setup.sh --no-mcp </dev/null 2>&1 )
 }

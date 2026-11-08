@@ -218,7 +218,7 @@ sqlite3 db/grimoire.db "SELECT * FROM v_activity_coverage ORDER BY lines DESC LI
 2. **SQLite-first.** Do not read raw markdown from `source/` at query time; it is only the ingestion source.
 3. **Keep queries scoped.** Small `--limit N` values preserve token budget.
 4. **Do not edit this data directly.** The migration reads `source/` markdown + `archive/data/*.jsonl` and rebuilds the DB.
-5. **All five agents** (`how-to-drift-for-agents`, `eris-morn`, `destiny-agent-calus`, `destiny-agent-zavala`, `destiny-agent-ghost`) consume this database via `lore/` (a symlink, Windows junction or clone of this repo).
+5. **All five agents** (`destiny-agent-drifter`, `destiny-agent-eris-morn`, `destiny-agent-calus`, `destiny-agent-zavala`, `destiny-agent-ghost`) consume this database via `lore/` (a symlink, Windows junction or clone of this repo).
 6. **Respect confidence.** Treat `unknown` classification as unknown; do not present a guessed season or activity as fact.
 7. **Mind coverage status.** `coverage_notes` says what the archive lacks: `partial_transcript` lines are real but incomplete, `no_dialogue` activities have none. Never fill a gap with an invented line.
 

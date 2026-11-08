@@ -50,14 +50,14 @@ marked `disabled: true` so only the intended entry point loads.
 Linux/macOS:
 
 ```bash
-cd eris-morn
+cd destiny-agent-eris-morn
 bash setup.sh ../destiny-agent-grimoire --no-mcp
 ```
 
 Windows:
 
 ```bat
-cd eris-morn
+cd destiny-agent-eris-morn
 bash setup.sh path\to\destiny-agent-grimoire --no-mcp
 ```
 

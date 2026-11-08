@@ -6,7 +6,7 @@
     {
       "id": "drifter",
       "name": "The Drifter",
-      "source": "how-to-drift-for-agents",
+      "source": "destiny-agent-drifter",
       "entry": "drifter.md",
       "summary": "Gambler, Gambit handler, Dark Age survivor.",
       "consult": "Gambit, the Nine, Dark Age history, the Drifter's own past."
@@ -14,7 +14,7 @@
     {
       "id": "eris",
       "name": "Eris Morn",
-      "source": "eris-morn",
+      "source": "destiny-agent-eris-morn",
       "entry": "eris.md",
       "summary": "Hive expert, survivor of the Hellmouth, the Witch.",
       "consult": "Hive, the Moon, Savathun, the Witness, occult and ritual lore."

@@ -16,8 +16,8 @@ HERE = os.path.dirname(os.path.realpath(__file__))
 GR = os.path.dirname(HERE)
 WORK = os.path.dirname(GR)
 READMES = [os.path.join(GR, 'README.md'),
-           os.path.join(WORK, 'how-to-drift-for-agents', 'README.md'),
-           os.path.join(WORK, 'eris-morn', 'README.md')]
+           os.path.join(WORK, 'destiny-agent-drifter', 'README.md'),
+           os.path.join(WORK, 'destiny-agent-eris-morn', 'README.md')]
 URL = re.compile(r'https?://[^\s\'"<>)]+')
 
 

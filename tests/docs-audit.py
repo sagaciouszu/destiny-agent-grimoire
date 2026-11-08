@@ -12,8 +12,8 @@ import sys
 
 WORK = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 REPOS = {'grimoire': os.path.join(WORK, 'destiny-agent-grimoire'),
-         'drifter': os.path.join(WORK, 'how-to-drift-for-agents'),
-         'eris': os.path.join(WORK, 'eris-morn')}
+         'drifter': os.path.join(WORK, 'destiny-agent-drifter'),
+         'eris': os.path.join(WORK, 'destiny-agent-eris-morn')}
 SUBS = {'search', 'character', 'character-info', 'item', 'book', 'transcript',
         'find-item', 'record', 'verify', 'verify-many', 'list', 'activity',
         'event', 'coverage', 'lore', 'seal', 'seals', 'stats'}
