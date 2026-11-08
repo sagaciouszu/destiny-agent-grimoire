@@ -5,8 +5,8 @@ Uses the official MCP Python SDK (`mcp==2.3.0`). Read-only.
 
 ## Why
 
-- **One adapter, every agent.** The server lives in the archive, so Drifter, Eris
-  and any future agent share one install and one database.
+- **One adapter, every agent.** The server lives in the archive, so every
+  destiny agent in the series shares one install and one database.
 - **No shell required.** The CLI needs a shell and Python on the host; MCP clients
   (OpenCode, Claude Desktop, Cursor, hosted agents) call the same tools directly.
 - **Typed, not typed-by-hand.** Structured arguments and JSON results replace
@@ -32,8 +32,9 @@ onboarding:
 ./setup.sh --mcp        # or answer yes at the MCP prompt
 ```
 
-The adapter lives in this archive, so **one install serves every agent** that
-mounts it (Drifter, Eris, or any other runtime).
+The adapter lives in this archive, so **one install serves every agent
+in the series** that mounts it (Drifter, Eris, Calus, Zavala, Ghost, Mara Sov,
+or any other runtime entry point).
 
 The virtualenv is gitignored. The CLI stays dependency-free; only this adapter
 needs the SDK.
@@ -222,7 +223,7 @@ Read-only JSON resources for discovery without tool calls:
 ## Safety
 
 - SQLite is opened with URI `mode=ro`; writes fail at the driver level.
-- No arbitrary SQL tool is exposed. The eighteen query shapes are the whole surface.
+- No arbitrary SQL tool is exposed. The twenty-one tools are the whole surface.
 - No network access. The database path is resolved from `GRIMOIRE_DB` or
   `db/grimoire.db`.
 - Inputs are bounded: queries 1-500 chars, quotes 1-2000, limits 1-100.
