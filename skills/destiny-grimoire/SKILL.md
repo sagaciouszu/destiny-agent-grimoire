@@ -50,10 +50,10 @@ flavor text, verify.
 | fts | 130210 | FTS5 search index |
 | verify_fts | 130210 | Fast quote verification index |
 | item_title_fts | 58764 | Item title lookup index |
-| entities | 88 | Named entities (char/power/faction/place) |
-| entity_aliases | 134 | Attested name variants per entity |
-| entity_links | 24196 | Entity to document links with weights |
-| entity_relations | 3 | Entity to entity links (adjacency, primevals) |
+| entities | 89 | Named entities (char/power/faction/place) |
+| entity_aliases | 136 | Attested name variants per entity |
+| entity_links | 24595 | Entity to document links with weights |
+| entity_relations | 4 | Entity to entity links (adjacency, primevals) |
 
 Taxonomy tables (additive; canon tables are never rewritten):
 

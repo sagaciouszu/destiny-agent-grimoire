@@ -189,6 +189,7 @@ OWNER_RELATIONS = [
     ('The Gardener', 'related_to', 'The Traveler'),
     ('The Winnower', 'related_to', 'The Darkness'),
     ('Siren of Riven', 'adjacent_to', 'Riven'),
+    ('SIVA', 'related_to', 'Rasputin'),
 ]
 
 
