@@ -7,9 +7,11 @@ these functions. Read-only: connections use SQLite URI mode=ro.
 Environment:
   GRIMOIRE_DB  override the database path (default: db/grimoire.db)
 """
+import functools
 import os
 import re
 import sqlite3
+import unicodedata
 from pathlib import Path
 
 DEFAULT_DB = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'grimoire.db')
@@ -83,6 +85,238 @@ def norm(s):
     # Punctuation-only canon lines stay verifiable: keep the lowered text
     # (minus LIKE wildcards) so verify(':)') can match its canonical row.
     return re.sub(r'\s+', ' ', s.replace('%', ' ').replace('_', ' ')).strip()
+
+
+_ROMAN = {'ii': 2, 'iii': 3, 'iv': 4, 'vi': 6, 'vii': 7, 'viii': 8, 'ix': 9,
+          'x': 10, 'xi': 11, 'xii': 12, 'xiii': 13, 'xiv': 14, 'xv': 15}
+
+# Apostrophe/prime codepoints are deleted outright (possessive rule), everything
+# else outside [0-9a-z] becomes a space after the NFKD fold.
+_APOSTROPHES = "'’‘′`"
+_ALL_DASHES = '-–—/'
+
+
+def fold_name(s):
+    """Fold a name to the entity-web lookup key.
+
+    NFKD decompose, strip combining marks, casefold, delete apostrophes,
+    hyphens/dashes/slashes become spaces, remaining punctuation becomes a
+    space, single spaces, roman numerals fold to arabic (key generation only).
+    """
+    if not s:
+        return ''
+    s = unicodedata.normalize('NFKD', str(s))
+    s = ''.join(ch for ch in s if unicodedata.category(ch) != 'Mn')
+    s = s.casefold()
+    for ch in _APOSTROPHES:
+        s = s.replace(ch, '')
+    for ch in _ALL_DASHES:
+        s = s.replace(ch, ' ')
+    s = re.sub(r'[^0-9a-z ]+', ' ', s)
+    tokens = [str(_ROMAN[t]) if t in _ROMAN else t for t in s.split()]
+    return ' '.join(tokens)
+
+
+def _fold_key(s):
+    """norm_key for entity canonicals: fold_name plus leading 'the' strip."""
+    key = fold_name(s)
+    return key[4:] if key.startswith('the ') else key
+
+
+def _query_keys(base):
+    """Lookup keys for a folded query (order stable, deduplicated)."""
+    keys = [base]
+    if base.endswith(' s') and len(base) > 2:
+        keys.append(base[:-2].rstrip())
+    if base.startswith('the '):
+        keys.append(base[4:])
+    if base and not base.startswith('the '):
+        keys.append('the ' + base)
+    seen, out = set(), []
+    for key in keys:
+        if key and key not in seen:
+            seen.add(key)
+            out.append(key)
+    return out
+
+
+def _skeleton(s):
+    """Consonant skeleton used only by the phonetic (fuzzy) fallback."""
+    s = fold_name(s)
+    for a, b in [('ph', 'f'), ('ck', 'k'), ('qu', 'k'), ('x', 'ks'),
+                 ('th', 't'), ('sh', 's'), ('ch', 'c'), ('z', 's'),
+                 ('c', 'k'), ('q', 'k')]:
+        s = s.replace(a, b)
+    s = re.sub(r'[^a-z]', '', s)
+    return re.sub(r'[aeiouy]', '', s)
+
+
+def _edit_distance(a, b, cap=3):
+    if abs(len(a) - len(b)) > cap:
+        return cap + 1
+    prev = list(range(len(b) + 1))
+    for i, ca in enumerate(a, 1):
+        cur = [i] + [0] * len(b)
+        for j, cb in enumerate(b, 1):
+            cur[j] = min(cur[j - 1] + 1, prev[j] + 1, prev[j - 1] + (ca != cb))
+        prev = cur
+    return prev[-1]
+
+
+_ENTITY_KINDS = ('char', 'power', 'faction', 'place')
+
+
+@functools.lru_cache(maxsize=512)
+def _entity_resolve_cached(base, kind, limit, include_unreviewed):
+    keys = _query_keys(base)
+    conn = connect()
+    try:
+        placeholders = ','.join('?' * len(keys))
+        where = f'a.norm_alias IN ({placeholders})'
+        params = list(keys)
+        if kind:
+            where += ' AND e.kind = ?'
+            params.append(kind)
+        if not include_unreviewed:
+            where += ' AND a.reviewed = 1'
+        considered = conn.execute(
+            f'SELECT COUNT(DISTINCT e.id) FROM entity_aliases a JOIN entities e ON e.id = a.entity_id WHERE {where}',
+            params).fetchone()[0]
+        order = (" ORDER BY a.weight DESC, CASE a.confidence WHEN 'high' THEN 3 "
+                 "WHEN 'medium' THEN 2 ELSE 1 END DESC, e.id ASC")
+        rows = conn.execute(
+            'SELECT e.id AS entity_id, e.canonical, e.kind, e.confidence AS entity_confidence, '
+            'a.alias, a.norm_alias, a.confidence AS alias_confidence, a.requires_ctx, a.weight '
+            f'FROM entity_aliases a JOIN entities e ON e.id = a.entity_id WHERE {where}{order}',
+            params).fetchall()
+        # one row per entity: the best (first, per ORDER BY) matching alias wins
+        seen, results = set(), []
+        for r in rows:
+            if r['entity_id'] in seen:
+                continue
+            seen.add(r['entity_id'])
+            matched = ('canonical' if r['norm_alias'] == _fold_key(r['canonical']) or
+                       r['norm_alias'] == fold_name(r['canonical']) else 'alias')
+            results.append({
+                'entity_id': r['entity_id'], 'canonical': r['canonical'], 'kind': r['kind'],
+                'alias': r['alias'], 'matched': matched, 'fuzzy': False,
+                'confidence': r['alias_confidence'], 'requires_ctx': bool(r['requires_ctx']),
+                'score': round(min(1.0, r['weight'] / 3.0), 3),
+            })
+            if len(results) >= limit:
+                break
+        fuzzy = False
+        if considered == 0:
+            fuzzy = True
+            sql = ('SELECT e.id AS entity_id, e.canonical, e.kind, a.alias, a.confidence AS alias_confidence, '
+                   'a.norm_alias FROM entity_aliases a JOIN entities e ON e.id = a.entity_id '
+                   'WHERE a.reviewed = 1')
+            params = []
+            if kind:
+                sql += ' AND e.kind = ?'
+                params.append(kind)
+            skel = _skeleton(base)
+            cand = []
+            for r in conn.execute(sql, params):
+                dist = _edit_distance(skel, _skeleton(r['norm_alias']), cap=2)
+                if dist <= 2:
+                    cand.append((dist, r))
+            cand.sort(key=lambda item: (item[0], item[1]['entity_id']))
+            seen, results = set(), []
+            for dist, r in cand:
+                if r['entity_id'] in seen:
+                    continue
+                seen.add(r['entity_id'])
+                results.append({
+                    'entity_id': r['entity_id'], 'canonical': r['canonical'], 'kind': r['kind'],
+                    'alias': r['alias'], 'matched': 'fuzzy', 'fuzzy': True,
+                    'confidence': r['alias_confidence'], 'requires_ctx': False,
+                    'score': round(max(0.05, 0.5 - 0.25 * dist), 3),
+                })
+                if len(results) >= 3:
+                    break
+            considered = len(seen)
+        return {'results': results, 'fuzzy': fuzzy, 'candidates_considered': considered}
+    finally:
+        conn.close()
+
+
+def entity_resolve(query, kind=None, limit=5, include_unreviewed=False):
+    """Resolve a name to entity candidate(s).
+
+    Exact folded match first (alias key or canonical key), then a phonetic
+    fallback that is always flagged `fuzzy: true` with `score <= 0.5`. Never
+    silently picks: callers get a ranked list. `include_unreviewed` gates
+    reviewed=0 rows (strict by default).
+    """
+    query = clean_input(query, 200)
+    if kind is not None and kind not in _ENTITY_KINDS:
+        raise ValueError(f'kind must be one of: {", ".join(_ENTITY_KINDS)}')
+    limit = _limit(limit, 5)
+    base = fold_name(query)
+    res = _entity_resolve_cached(base, kind, limit, bool(include_unreviewed))
+    return {'query': query, 'normalized': base, **res}
+
+
+def entity_index():
+    """Curated entity list for the grimoire://entities resource."""
+    conn = connect()
+    try:
+        rows = conn.execute(
+            "SELECT e.canonical, e.kind, e.confidence, "
+            "(SELECT COUNT(*) FROM entity_aliases a WHERE a.entity_id = e.id) AS aliases, "
+            "(SELECT COUNT(*) FROM entity_links l WHERE l.entity_id = e.id) AS documents "
+            'FROM entities e ORDER BY e.kind, e.canonical').fetchall()
+        return [dict(r) for r in rows]
+    finally:
+        conn.close()
+
+
+def entity(ref, limit=10, kind=None, include_unreviewed=False):
+    """Entity detail: aliases, relations, document counts and top documents.
+
+    Exact (non-fuzzy) match required for the detail block; fuzzy candidates
+    are returned separately so callers never mistake a suggestion for a hit.
+    """
+    res = entity_resolve(ref, kind=kind, limit=limit, include_unreviewed=include_unreviewed)
+    top = res['results'][0] if res['results'] and not res['results'][0]['fuzzy'] else None
+    out = {**res, 'entity': None, 'aliases': [], 'relations': [],
+           'counts': {}, 'documents': [], 'total_documents': 0}
+    if top is None:
+        return out
+    eid = top['entity_id']
+    conn = connect()
+    try:
+        row = conn.execute(
+            'SELECT id, canonical, norm_key, kind, confidence, reviewed, source, first_seen '
+            'FROM entities WHERE id = ?', (eid,)).fetchone()
+        out['entity'] = dict(row)
+        out['aliases'] = [dict(r) for r in conn.execute(
+            'SELECT alias, norm_alias, confidence, requires_ctx, reviewed, weight '
+            'FROM entity_aliases WHERE entity_id = ? ORDER BY weight DESC, alias', (eid,))]
+        counts = dict(conn.execute(
+            'SELECT kind, COUNT(*) FROM entity_links WHERE entity_id = ? GROUP BY kind',
+            (eid,)).fetchall())
+        out['counts'] = counts
+        out['total_documents'] = sum(counts.values())
+        out['documents'] = [dict(r) for r in conn.execute(
+            'SELECT kind, ref, weight, match FROM entity_links '
+            'WHERE entity_id = ? ORDER BY weight DESC, ref LIMIT ?', (eid, _limit(limit, 10)))]
+        out['relations'] = [{'direction': 'out', 'relation': r['relation'],
+                             'target': r['canonical'], 'target_kind': r['kind']}
+                            for r in conn.execute(
+            'SELECT r.relation, t.canonical, t.kind FROM entity_relations r '
+            'JOIN entities t ON t.id = r.target_entity_id WHERE r.entity_id = ? '
+            'ORDER BY r.relation, t.canonical', (eid,))]
+        out['relations'] += [{'direction': 'in', 'relation': r['relation'],
+                              'source': r['canonical'], 'source_kind': r['kind']}
+                             for r in conn.execute(
+            'SELECT r.relation, t.canonical, t.kind FROM entity_relations r '
+            'JOIN entities t ON t.id = r.entity_id WHERE r.target_entity_id = ? '
+            'ORDER BY r.relation, t.canonical', (eid,))]
+        return out
+    finally:
+        conn.close()
 
 
 def connect():
@@ -173,9 +407,57 @@ def _limit(value, default):
 
 
 @_guard
+def _entity_fts_filter(conn, entity_name):
+    """Map an entity name to an FTS (source, source_slug) filter.
+
+    Returns (clause, params) or None when the entity resolves but links to
+    nothing the FTS indexes (e.g. seals only). Raises ValueError when the name
+    resolves to no reviewed entity.
+    """
+    res = entity_resolve(entity_name)
+    if not res['results'] or res['results'][0]['fuzzy']:
+        raise ValueError(f'entity not found: {entity_name} (try `entity <name>`)')
+    eid = res['results'][0]['entity_id']
+    rows = conn.execute('SELECT kind, ref FROM entity_links WHERE entity_id = ?', (eid,)).fetchall()
+    by_source = {}
+    book_entry_ids = []
+    for kind, ref in rows:
+        if kind == 'transcript':
+            by_source.setdefault('transcript_line', set()).add(ref)
+        elif kind == 'book':
+            by_source.setdefault('book_entry', set()).add(ref)
+        elif kind == 'book_entry':
+            book_entry_ids.append(int(ref.split(':', 1)[1]))
+        elif kind == 'lore_entry':
+            by_source.setdefault('lore_entry', set()).add('lore-' + ref.split(':', 1)[1])
+        elif kind == 'item':
+            by_source.setdefault('item', set()).add(ref)
+        elif kind == 'record':
+            by_source.setdefault('record', set()).add(ref)
+        # seals are not indexed in the FTS surface; they add no rows here
+    for i in range(0, len(book_entry_ids), 500):
+        chunk = book_entry_ids[i:i + 500]
+        q = ('SELECT DISTINCT books.slug FROM book_entries '
+             'JOIN books ON books.id = book_entries.book_id '
+             f"WHERE book_entries.id IN ({','.join('?' * len(chunk))})")
+        for (slug,) in conn.execute(q, chunk):
+            by_source.setdefault('book_entry', set()).add(slug)
+    clauses, params = [], []
+    for source, slugs in sorted(by_source.items()):
+        slugs = sorted(slugs)
+        if not slugs:
+            continue
+        clauses.append(f"(source = ? AND source_slug IN ({','.join('?' * len(slugs))}))")
+        params.append(source)
+        params.extend(slugs)
+    if not clauses:
+        return None
+    return ' AND (' + ' OR '.join(clauses) + ')', params
+
+
 def search(term, type=None, limit=10, full=False, offset=0, rank=True,
            activity=None, season=None, event=None, expansion=None, class_tag=None,
-           exclude_stage=False, timeline=None, lang=None):
+           exclude_stage=False, timeline=None, lang=None, entity=None):
     """Full-text search. Returns rows with a snippet unless full=True.
 
     The term is used as FTS5 syntax when valid; otherwise every word is quoted
@@ -192,12 +474,20 @@ def search(term, type=None, limit=10, full=False, offset=0, rank=True,
     lang filters to one document language (fts.lang is UNINDEXED, so this never
     affects bm25); the only populated value today is 'en' — future caption
     languages arrive as data, not a schema change.
+    entity restricts rows to documents the named entity is linked to in the
+    entity web (e.g. entity='Savathûn'); raise ValueError when the name does
+    not resolve to a reviewed entity.
     """
     term = clean_input(term, 500)
     if type is not None and type not in TYPE_TO_SOURCE:
         raise ValueError(f'type must be one of: {", ".join(TYPE_TO_SOURCE)}')
     conn = connect()
     try:
+        entity_clause = entity_params = None
+        if entity:
+            entity_clause, entity_params = _entity_fts_filter(conn, entity)
+            if entity_clause is None:
+                return []
         term = fts_query(conn, term)
         where = 'fts MATCH ?'
         params = [term]
@@ -219,6 +509,9 @@ def search(term, type=None, limit=10, full=False, offset=0, rank=True,
         if timeline:
             where += ' AND timeline = ?'
             params.append(str(timeline))
+        if entity_clause is not None:
+            where += entity_clause
+            params.extend(entity_params)
         params.append(_limit(limit, 10))
         params.append(_offset(offset))
         order = (" ORDER BY bm25(fts, 3.0, 1.0, 1.0, 1.0, 0.0)"
@@ -450,13 +743,18 @@ def verify(quote, speaker=None, exact=False):
 
 @_guard
 def search_total(term, type=None, activity=None, season=None, event=None, expansion=None,
-                 class_tag=None, exclude_stage=False, timeline=None, lang=None):
+                 class_tag=None, exclude_stage=False, timeline=None, lang=None, entity=None):
     """Total FTS matches for a query (for paging). Mirrors search() filters."""
     term = clean_input(term, 500)
     if type is not None and type not in TYPE_TO_SOURCE:
         raise ValueError(f'type must be one of: {", ".join(TYPE_TO_SOURCE)}')
     conn = connect()
     try:
+        entity_clause = entity_params = None
+        if entity:
+            entity_clause, entity_params = _entity_fts_filter(conn, entity)
+            if entity_clause is None:
+                return 0
         term = fts_query(conn, term)
         where = 'fts MATCH ?'
         params = [term]
@@ -478,6 +776,9 @@ def search_total(term, type=None, activity=None, season=None, event=None, expans
         if timeline:
             where += ' AND timeline = ?'
             params.append(str(timeline))
+        if entity_clause is not None:
+            where += entity_clause
+            params.extend(entity_params)
         return conn.execute(f'SELECT COUNT(*) FROM fts WHERE {where}', params).fetchone()[0]
     finally:
         conn.close()

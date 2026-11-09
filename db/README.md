@@ -19,6 +19,11 @@ python3 db/query.py search "Eris" --type transcripts --limit 10
 python3 db/query.py character "eris" --limit 20
 python3 db/query.py character "drifter" --limit 20
 
+# Entity web (schema 1.6.0): resolve any attested alias to its entity
+python3 db/query.py entity "Saint-14"
+python3 db/query.py entity "Elsie Bray" --json
+python3 db/query.py search "witness" --entity "The Witness" --limit 5
+
 # Item details
 python3 db/query.py item "0a0x-nightmask"
 
@@ -66,6 +71,27 @@ sqlite3 db/grimoire.db "SELECT slug, title, item_type FROM items WHERE item_type
 | `item_title_fts` | item titles for fast name lookup |
 | `meta` | DB version |
 
+### Entity web (additive, schema 1.6.0)
+
+| Table | Purpose |
+|-------|---------|
+| `entities` | 88 named entities: characters, powers, factions, places |
+| `entity_aliases` | 134 attested name variants; `norm_alias` is the resolver key |
+| `entity_links` | 24196 entity to document links with weights and match classes |
+| `entity_relations` | 3 entity to entity links (adjacency, primeval pairs) |
+| `entity_build_meta` | build audit trail (build_id, source hashes, timings) |
+
+| View | Purpose |
+|-------|---------|
+| `v_entity_resolve` | resolver path: alias + norm lookup to entities |
+| `v_entity_documents` | entity to ranked document list (weight DESC, ref) |
+| `v_entity_coverage` | per-kind coverage (entities, linked, links) |
+
+Build order: `python3 db/build_entity_web.py --db <copy>` creates and fills the
+tables on a copy of the database (see v0.33.0 release notes for the swap
+protocol and the books/cards SHA256 evidence). No existing table, view or
+row is touched; books/lore/transcripts are read-only build input.
+
 ### Indexed columns
 
 - `transcript_lines.speaker` for per-character queries
@@ -90,7 +116,9 @@ transcripts, interactions and records, but without items or grimoire cards.
 - `../mcp-server/` - optional stdio MCP adapter (official SDK, read-only)
 - `capabilities.json` - machine-readable interface manifest (tables, views, commands, contracts)
 - `v_speakers` view - canonical speakers with line counts
+- `v_entity_resolve` / `v_entity_documents` / `v_entity_coverage` views - the entity web's public API
 - `speaker_aliases` table - alias -> canonical mapping applied at migration
+- `db/build_entity_web.py` - the entity web builder (temp copy, never the live file)
 
 ## Query pattern for agents
 

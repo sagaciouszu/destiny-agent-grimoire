@@ -113,7 +113,8 @@ or `run.ps1` (the latter via `powershell.exe -NoProfile -ExecutionPolicy Bypass 
 
 | Tool | Purpose |
 |---|---|
-| `search` | full-text search with taxonomy filters |
+| `search` | full-text search with taxonomy filters and entity filter |
+| `entity` | resolve a name to an entity: aliases, documents, relations |
 | `character` | verified character lines |
 | `item` | item details and lore |
 | `verify` | quote verification |
@@ -141,7 +142,7 @@ All 28 seasons and 9 events are exposed. Activity and coverage results include
 ## Resources and prompts
 
 Resources mirror the main reads: books, characters, records, stats, activities,
-seasons, events, coverage and individual documents.
+seasons, events, coverage, entities and individual documents.
 
 Prompts:
 

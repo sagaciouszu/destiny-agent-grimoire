@@ -46,19 +46,27 @@
     "seal_records": "triumph records belonging to each seal",
     "meta": "self-describing build stamp (schema version, build date, live row counts)",
     "item_sets": "curated manifest armor sets mapped to season/event/expansion",
-    "item_set_members": "set membership and resolved item ids"
+    "item_set_members": "set membership and resolved item ids",
+    "entities": "entity web: one row per named character, power, faction or place (88 rows)",
+    "entity_aliases": "attested name variants; norm_alias is the resolver lookup key (134 rows)",
+    "entity_links": "entity to document links (attribution/canonical/alias/ctx matches with weights; ref grammar per kind)",
+    "entity_relations": "entity to entity adjacency (Siren adjacent to Riven; Gardener related_to Traveler; Winnower related_to Darkness)",
+    "entity_build_meta": "entity web build audit trail (build_id, source hashes, timings, counts)"
   },
   "views": {
     "v_speakers": "speaker, lines (canonical speakers with line counts)",
     "v_transcript_taxonomy": "transcript header joined to classification",
     "v_activity_coverage": "transcripts and lines per activity",
     "v_season_coverage": "transcripts and lines per season",
-    "v_event_coverage": "transcripts, lines and occurrences per event"
+    "v_event_coverage": "transcripts, lines and occurrences per event",
+    "v_entity_resolve": "alias + norm lookup to entities (resolver path)",
+    "v_entity_documents": "entity to ranked document list (weight DESC, ref)",
+    "v_entity_coverage": "per-kind entity web coverage (entities, linked, links, avg links)"
   },
   "commands": {
     "search": {
-      "usage": "query.py search \"<term>\" [--type T] [--activity A] [--season S] [--event E] [--expansion X] [--class hunter|titan|warlock] [--timeline SLUG] [--lang CODE] [--limit N] [--offset N] [--rank|--no-rank] [--json] [--full]",
-      "returns": "snippet context by default; --full for complete text"
+      "usage": "query.py search \"<term>\" [--type T] [--activity A] [--season S] [--event E] [--expansion X] [--class hunter|titan|warlock] [--timeline SLUG] [--lang CODE] [--entity NAME] [--limit N] [--offset N] [--rank|--no-rank] [--json] [--full]",
+      "returns": "snippet context by default; --full for complete text; --entity restricts to linked documents"
     },
     "character": {
       "usage": "query.py character \"<name>\" [--about <term>] [--all] [--canon-only] [--class hunter|titan|warlock] [--limit N] [--offset N] [--json]",
@@ -77,6 +85,10 @@
     "stats": {
       "usage": "query.py stats [--json]",
       "returns": "table row counts"
+    },
+    "entity": {
+      "usage": "query.py entity \"<name>\" [--kind char|power|faction|place] [--include-unreviewed] [--limit N] [--json]",
+      "returns": "aliases, document counts by kind, top documents, relations; fuzzy-flagged candidates when no exact match"
     },
     "book": {
       "usage": "query.py book \"<slug or title>\" [--limit N] [--offset N] [--full] [--json]"
@@ -138,6 +150,7 @@
     "read_only": true,
     "tools": [
       "search",
+      "entity",
       "character",
       "character_info",
       "item",
@@ -165,6 +178,7 @@
       "grimoire://characters",
       "grimoire://records",
       "grimoire://stats",
+      "grimoire://entities",
       "grimoire://book/{slug}",
       "grimoire://transcript/{slug}",
       "grimoire://character/{slug}",

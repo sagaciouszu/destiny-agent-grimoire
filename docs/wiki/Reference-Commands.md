@@ -24,6 +24,8 @@ bash tests/test-db.sh
 
 ```bash
 python3 db/query.py search "Crota" --limit 5
+python3 db/query.py search "witness" --entity "The Witness" --limit 5
+python3 db/query.py entity "Savathûn"
 python3 db/query.py character "Eris Morn" --limit 20
 python3 db/query.py transcript "Contact - Io" --speaker "Drifter"
 python3 db/query.py activity salvations-edge

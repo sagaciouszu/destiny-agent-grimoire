@@ -13,7 +13,7 @@
   <img src='https://img.shields.io/badge/made%20with-Destiny%20Grimoire-gold' alt='Made with Destiny Agent Grimoire'/>
 </p>
 
-**Version:** 0.30.0 | **Last push:** 2026-11-09 | **Status:** Active
+**Version:** 0.33.0 | **Last push:** 2026-11-09 | **Status:** Active
 
 **Documentation site:** <https://sagaciouszu.github.io/grimoire-site/>
 
@@ -142,7 +142,15 @@ No API keys, accounts or network access are required at runtime.
 | `speaker_aliases` | 23 | Alias to canonical speaker mapping |
 | `verify_fts` (index) | 130210 | Fast quote verification |
 | `item_title_fts` (index) | 58764 | Item title lookup |
-| **Total** | 551427 | Rows across every table, view and index above |
+| `entities` | 88 | Named characters, powers, factions and places |
+| `entity_aliases` | 134 | Attested name variants per entity |
+| `entity_links` | 24196 | Entity to document links (attribution/canonical/alias/ctx) |
+| `entity_relations` | 3 | Entity to entity links (adjacency, primeval pairs) |
+| `entity_build_meta` | 14 | Entity web build audit trail |
+| `v_entity_resolve` (view) | 134 | Resolver lookup (alias to entity) |
+| `v_entity_documents` (view) | 24196 | Entities with ranked document lists |
+| `v_entity_coverage` (view) | 4 | Per-kind entity web coverage |
+| **Total** | 600196 | Rows across every table, view and index above |
 
 Every content row carries provenance. Speaker aliases are canonicalized during
 migration. The full contract is `STANDARDS.md`.
@@ -156,9 +164,10 @@ migration. The full contract is `STANDARDS.md`.
   over local stdio; one adapter covers every agent that mounts this archive.
   Install with `bash mcp-server/install.sh`; tools, limits, client config and
   security: `mcp-server/README.md`.
-- **Interface:** one of `python3 db/query.py search|character|item|verify|book|transcript|find-item|record|list|activity|event|lore|seal|seals|coverage|stats`; read commands accept `--offset`.
+- **Interface:** one of `python3 db/query.py search|character|item|verify|book|transcript|find-item|record|list|activity|event|lore|seal|seals|coverage|stats|entity`; read commands accept `--offset`.
   `verify` is the quote-safety primitive (exit 1 when absent); every command
   accepts `--json`; search returns snippets unless `--full`.
+- **Entity web:** `python3 db/query.py entity "<name>"` resolves any attested alias to its entity (characters, powers, factions, places) and reports aliases, document counts, top documents and relations. `entity` also powers `search --entity <name>`.
 - **Discovery:** `db/capabilities.json` is a machine-readable manifest of tables,
   views, commands and contracts.
 - **Search surface:** FTS5 with a `source` column for exact type filters and

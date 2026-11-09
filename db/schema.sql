@@ -222,3 +222,88 @@ CREATE VIRTUAL TABLE IF NOT EXISTS item_title_fts USING fts5(
     title, slug UNINDEXED, item_type UNINDEXED, release UNINDEXED,
     tokenize='unicode61'
 );
+
+-- Entity web (additive; see db/build_entity_web.py and RELEASE v0.33.0).
+-- Books/lore/transcripts are read-only source of truth: these tables only
+-- reference them by slug/hash ref strings, never by constraint, so no
+-- existing row is ever rewritten.
+CREATE TABLE IF NOT EXISTS entities (
+    id          INTEGER PRIMARY KEY,
+    canonical   TEXT NOT NULL,
+    norm_key    TEXT NOT NULL UNIQUE,
+    kind        TEXT NOT NULL CHECK (kind IN ('char','power','faction','place')),
+    confidence  TEXT NOT NULL DEFAULT 'high'
+                CHECK (confidence IN ('high','medium','low')),
+    reviewed    INTEGER NOT NULL DEFAULT 0,
+    source      TEXT NOT NULL DEFAULT 'lexicon-v1',
+    first_seen  TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS idx_entities_kind ON entities(kind);
+
+CREATE TABLE IF NOT EXISTS entity_aliases (
+    id            INTEGER PRIMARY KEY,
+    entity_id     INTEGER NOT NULL REFERENCES entities(id) ON DELETE CASCADE,
+    alias         TEXT NOT NULL UNIQUE,
+    norm_alias    TEXT NOT NULL UNIQUE,
+    weight        REAL NOT NULL DEFAULT 1.0,
+    confidence    TEXT NOT NULL DEFAULT 'medium'
+                  CHECK (confidence IN ('high','medium','low')),
+    requires_ctx  INTEGER NOT NULL DEFAULT 0,
+    reviewed      INTEGER NOT NULL DEFAULT 0
+);
+CREATE INDEX IF NOT EXISTS idx_entity_aliases_entity ON entity_aliases(entity_id);
+
+CREATE TABLE IF NOT EXISTS entity_links (
+    id         INTEGER PRIMARY KEY,
+    entity_id  INTEGER NOT NULL REFERENCES entities(id) ON DELETE CASCADE,
+    kind       TEXT NOT NULL CHECK (kind IN
+                 ('transcript','book','book_entry','lore_entry','item','record','seal')),
+    ref        TEXT NOT NULL,
+    weight     REAL NOT NULL,
+    match      TEXT NOT NULL DEFAULT 'alias'
+               CHECK (match IN ('attribution','canonical','alias','ctx_alias','fuzzy')),
+    build_id   TEXT NOT NULL,
+    UNIQUE (entity_id, kind, ref)
+);
+CREATE INDEX IF NOT EXISTS idx_entity_links_entity ON entity_links(entity_id);
+CREATE INDEX IF NOT EXISTS idx_entity_links_kind_ref ON entity_links(kind, ref);
+CREATE INDEX IF NOT EXISTS idx_entity_links_rank ON entity_links(entity_id, weight DESC);
+
+CREATE TABLE IF NOT EXISTS entity_relations (
+    id               INTEGER PRIMARY KEY,
+    entity_id        INTEGER NOT NULL REFERENCES entities(id) ON DELETE CASCADE,
+    relation         TEXT NOT NULL CHECK (relation IN ('adjacent_to','related_to')),
+    target_entity_id INTEGER NOT NULL REFERENCES entities(id) ON DELETE CASCADE,
+    source           TEXT NOT NULL DEFAULT 'owner-ruling-2026-11-09',
+    UNIQUE (entity_id, relation, target_entity_id)
+);
+CREATE INDEX IF NOT EXISTS idx_entity_relations_target ON entity_relations(target_entity_id);
+
+CREATE TABLE IF NOT EXISTS entity_build_meta (
+    key   TEXT PRIMARY KEY,
+    value TEXT NOT NULL
+);
+
+CREATE VIEW IF NOT EXISTS v_entity_resolve AS
+SELECT e.id AS entity_id, e.canonical, e.kind, e.confidence AS entity_confidence,
+       a.alias, a.norm_alias, a.confidence AS alias_confidence,
+       a.requires_ctx, a.reviewed, e.norm_key
+FROM entity_aliases a JOIN entities e ON e.id = a.entity_id;
+
+CREATE VIEW IF NOT EXISTS v_entity_documents AS
+SELECT l.entity_id, e.canonical, e.kind, l.kind AS doc_kind, l.ref,
+       l.weight, l.match,
+       ROW_NUMBER() OVER (PARTITION BY l.entity_id
+                          ORDER BY l.weight DESC, l.ref) AS rank_in_entity
+FROM entity_links l JOIN entities e ON e.id = l.entity_id;
+
+CREATE VIEW IF NOT EXISTS v_entity_coverage AS
+WITH k AS (
+  SELECT e.id, e.kind, COUNT(l.id) AS links, SUM(l.weight) AS weight_sum
+  FROM entities e LEFT JOIN entity_links l ON l.entity_id = e.id
+  GROUP BY e.id
+)
+SELECT kind, COUNT(*) AS entities,
+       SUM(CASE WHEN links>0 THEN 1 ELSE 0 END) AS entities_with_links,
+       SUM(links) AS links, AVG(links) AS avg_links_per_entity
+FROM k GROUP BY kind;
