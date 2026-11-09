@@ -47,8 +47,8 @@
     "meta": "self-describing build stamp (schema version, build date, live row counts)",
     "item_sets": "curated manifest armor sets mapped to season/event/expansion",
     "item_set_members": "set membership and resolved item ids",
-    "entities": "entity web: one row per named character, power, faction or place (88 rows)",
-    "entity_aliases": "attested name variants; norm_alias is the resolver lookup key (134 rows)",
+    "entities": "entity web: one row per named character, power, faction or place (89 rows)",
+    "entity_aliases": "attested name variants; norm_alias is the resolver lookup key (136 rows)",
     "entity_links": "entity to document links (attribution/canonical/alias/ctx matches with weights; ref grammar per kind)",
     "entity_relations": "entity to entity adjacency (Siren adjacent to Riven; Gardener related_to Traveler; Winnower related_to Darkness)",
     "entity_build_meta": "entity web build audit trail (build_id, source hashes, timings, counts)"
