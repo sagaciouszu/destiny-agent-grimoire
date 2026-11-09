@@ -1,0 +1,182 @@
+kind	canonical	alias	lines_in_corpus	confidence	reason
+char	Ghost	Ghost	2668	high	speaker label (v_speakers); curated characters table
+char	Ghost	GHOST	26	high	speaker label, caps variant (v_speakers)
+char	Drifter	Drifter	1204	high	speaker label (v_speakers); curated characters table
+char	Drifter	The Drifter	0	high	speaker_aliases entry; not used as a speaker label; alias evidence only
+char	Eris Morn	Eris Morn	1017	high	speaker label (v_speakers); curated characters table
+char	Eris Morn	Eris	0	high	speaker_aliases entry; short alias, alias-table evidence only
+char	Eris Morn	Eris morn	0	high	speaker_aliases case variant ('Eris morn'); alias-table evidence only
+char	Osiris	Osiris	786	high	speaker label (v_speakers); curated characters table
+char	Osiris	OSIRIS	0	high	speaker_aliases caps variant; alias-table evidence only
+char	Zavala	Zavala	645	high	speaker label (v_speakers); curated characters table
+char	Zavala	Commander Zavala	0	high	speaker_aliases; alias-table evidence only
+char	Zavala	ZAVALA	0	high	speaker_aliases caps variant; alias-table evidence only
+char	Ikora	Ikora	607	high	speaker label (v_speakers); characters table lists 'Ikora Rey'
+char	Ikora	Ikora Rey	0	high	speaker_aliases + characters table name; not used as speaker label
+char	Calus	Calus	480	high	speaker label (v_speakers)
+char	Calus	Emperor Calus	0	high	speaker_aliases; alias-table evidence only
+char	Sloane	Sloane	470	high	speaker label (v_speakers); curated characters table
+char	Crow	Crow	466	high	speaker label (v_speakers)
+char	Crow	The Crow	0	high	speaker_aliases; alias-table evidence only
+char	Failsafe	Failsafe	394	high	speaker label (v_speakers); sub-labels Failsafe Second Half (3) / Cheerful (3) / Depressed (1) below threshold
+char	Saint-14	Saint-14	394	high	speaker label (v_speakers); curated characters table
+char	Saint-14	Saint XIV	0	high	speaker_aliases; roman-numeral suffix of Saint-14
+char	Saint-14	Saint-XIV	0	high	speaker_aliases; roman-numeral suffix variant
+char	Saint-14	Saint IV	0	medium	speaker_aliases; 'IV' could misparse as Saint-the-Fourth; keep flagged until reviewed
+char	Saint-14	The Saint	0	medium	speaker_aliases; 'The Saint' grants Saint-14 per speaker_aliases; owner confirm before auto-link
+char	Saint-14	Saint	0	low	polysemous token; DO NOT auto-link; alias-table evidence only
+char	Saint-14	Kellbreaker	0	medium	speaker_aliases; title-token alias; owner confirm
+char	Cayde-6	Cayde-6	382	high	speaker label (v_speakers); curated characters table
+char	Cayde-6	Cayde	0	high	speaker_aliases; alias-table evidence only
+char	Mithrax	Mithrax	341	high	speaker label (v_speakers)
+char	Mara Sov	Mara Sov	316	high	speaker label (v_speakers); curated characters table
+char	Mara Sov	Queen Mara Sov	0	high	speaker_aliases; alias-table evidence only
+char	Mara Sov	The Queen	37	low	AMBIGUOUS Mara Sov vs Savathûn (Witch Queen); DO NOT auto-merge; owner decision required
+char	Mara Sov	Queen Mars Sov	1	low	typo in source speaker labels; do not auto-merge; upstream owner fix
+char	Petra Venj	Petra Venj	285	high	speaker label (v_speakers)
+char	Petra Venj	Petra	0	high	speaker_aliases; alias-table evidence only
+char	Ana Bray	Ana Bray	271	high	speaker label (v_speakers)
+char	Ana Bray	Ana	24	medium	short label; likely Ana Bray; keep medium until reviewed
+char	Caiatl	Caiatl	260	high	speaker label (v_speakers)
+char	Caiatl	CAIATL	0	high	speaker_aliases caps variant; alias-table evidence only
+char	Lord Saladin	Lord Saladin	231	high	speaker label (v_speakers); curated characters table
+char	Variks	Variks	192	high	speaker label (v_speakers)
+char	Exo Stranger	Exo Stranger	172	high	speaker label (v_speakers)
+char	Exo Stranger	The Exo Stranger	3	high	below-20 clear cluster; grammatical variant of Exo Stranger
+char	Xivu Arath	Xivu Arath	172	high	speaker label (v_speakers)
+char	Nimbus	Nimbus	167	high	speaker label (v_speakers)
+char	Riven	Riven	158	high	speaker label (v_speakers)
+char	Siren of Riven	Siren of Riven	26	low	likely Riven-channelled siren voice; DO NOT auto-merge with Riven; owner decision
+char	Eramis	Eramis	157	high	speaker label (v_speakers)
+char	Sagira	Sagira	148	high	speaker label (v_speakers)
+char	Eido	Eido	147	high	speaker label (v_speakers); curated characters table
+char	Eido	Sjur Eido	25	high	full-name label cluster of Eido (v_speakers)
+char	Hawthorne	Hawthorne	133	high	speaker label (v_speakers)
+char	Amanda Holliday	Holliday	130	high	speaker label (v_speakers); Amanda Holliday cluster
+char	Amanda Holliday	Amanda	30	high	speaker label (v_speakers); Amanda Holliday cluster
+char	Amanda Holliday	Amanda Holliday	19	high	below-20 clear cluster; full-name label
+char	Amanda Holliday	AMANDA	0	high	speaker_aliases caps variant; alias-table evidence only
+char	Nokris	Nokris	126	high	speaker label (v_speakers); curated characters table
+char	Immaru	Immaru	117	high	speaker label (v_speakers)
+char	Echo of Navigation	Echo of Navigation	115	high	speaker label (v_speakers)
+char	Devrim Kay	Devrim	108	high	speaker label (v_speakers); Devrim Kay cluster
+char	Devrim Kay	Devrim Kay	65	high	speaker label (v_speakers); full-name cluster of Devrim
+char	Clovis Bray	Clovis Bray AI	106	medium	AI hologram voice; person-vs-AI conflation; owner may split into two entities
+char	Clovis Bray	Clovis Bray	20	medium	speaker label (v_speakers); person-vs-AI conflation; owner may split
+char	Lodi	Lodi	103	high	speaker label (v_speakers)
+char	Shuro Chi	Shuro Chi	101	high	speaker label (v_speakers)
+char	Asher	Asher	95	medium	likely Asher Mir (Mercury, Curse of Osiris); name inferred; owner confirm
+char	Asher	Asher Mir	2	medium	sparse speaker-label evidence; name inferred; owner confirm
+char	Spider	Spider	70	high	speaker label (v_speakers); curated characters table
+char	Spider	The Spider	51	high	speaker label (v_speakers); grammatical-variant cluster
+char	Savathûn	Savathûn	62	high	speaker label (v_speakers); corpus folded to 'savathun' (tl 266) vs lossy 'savath n' (tl 559) — NFKD fold required
+char	Lakshmi-2	Lakshmi-2	61	high	speaker label (v_speakers)
+char	Emissary (Orin)	Emissary	59	medium	Final Shape's Emissary = Orin; bare 'Emissary' ambiguous with D1 Emissary of the Nine; owner confirm
+char	Emissary (Orin)	Emissary (Orin)	26	medium	speaker label (v_speakers); characters table name
+char	Emissary (Orin)	The Emissary	18	medium	grammatical variant; D1 ambiguity; owner confirm
+char	Emissary (Orin)	Orin	8	medium	bare-name reveal label; owner confirm
+char	Uldren Sov	Uldren Sov	57	high	speaker label (v_speakers)
+char	Uldren Sov	Uldren	0	high	speaker_aliases; alias-table evidence only
+char	Vesper Central	Vesper Central	50	low	kind-ambiguous: Nessus location AI vs place; owner decides char vs place
+char	Ghaul	Ghaul	48	high	speaker label (v_speakers)
+char	Shaxx	Shaxx	47	high	speaker label (v_speakers); curated characters table
+char	Rohan	Rohan	45	high	speaker label (v_speakers); attribution only, no lore-role claim
+char	Guardian	Guardian	42	low	generic player-character label, not an NPC; exclude from auto-link
+char	Guardian	The Guardian	21	low	generic player-character label; exclude from auto-link
+char	Rasputin	Rasputin	42	high	speaker label (v_speakers); Warmind AI; distinct from power 'The Great Machine'
+char	Jisu Calerondo	Jisu Calerondo	38	high	speaker label (v_speakers)
+char	Rhulk	Rhulk	37	high	speaker label (v_speakers)
+char	Maya Sundaresh	Maya Sundaresh	35	high	speaker label (v_speakers)
+char	Glint	Glint	32	high	speaker label (v_speakers); attribution only, no lore-role claim
+char	Chioma Esi	Chioma Esi	30	high	speaker label (v_speakers)
+char	Chioma Esi	Chiomi Esi	0	low	typo in speaker_aliases; do NOT auto-merge; upstream owner fix
+char	Concierge AI	Concierge AI	30	low	generic tower-concierge AI label; no identity verified; exclude from auto-link
+char	Shiro-4	Shiro-4	30	high	speaker label (v_speakers)
+char	Shiro-4	Shiro	25	high	speaker label (v_speakers); short form of Shiro-4 cluster
+char	Nezarec	Nezarec	28	high	speaker label (v_speakers)
+char	Toland	Toland	27	high	speaker label (v_speakers); Toland the Shattered
+char	Awoken Corsair	Awoken Corsair	22	low	generic NPC label; exclude from auto-link
+char	Blue	Blue	22	medium	characters table name 'Blue (Drifter's Ghost)'; color-token collision; owner confirm
+char	Blue	Blue (Drifter's Ghost)	0	medium	characters table curated name; zero speaker lines under that exact label
+char	Ada-1	Ada-1	20	high	speaker label (v_speakers)
+char	Speaker	Speaker	10	high	below-20 clear (The Speaker); legacy Vanguard voice
+char	Speaker	The Speaker	7	high	below-20 grammatical variant of Speaker/The Speaker
+char	Oryx	Oryx	13	high	below-20 clear; the Taken King; major attested speaker
+char	Aunor	Aunor	14	medium	characters table curated; below-20 speaker lines (v_speakers)
+char	Bael	Bael	2	low	characters table curated; 2 speaker lines (plus sub-label 'VI (as Bael)' 1 line); identity unverified — owner confirm before linking
+char	Narration	Narration	6771	low	stage label, not an entity; EXCLUDE from entity build
+char	Cutscene	Cutscene	56089	low	stage label, not an entity; EXCLUDE from entity build
+power	The Witness	witness	1136	high	mentions tl 990 + be 50 + lore 96 (dupes excluded); 32 speaker lines ('Witness' 22, 'The Witness' 10)
+power	The Witness	the witness	823	high	mentions tl 733 + be 25 + lore 65; most-attested full phrase
+power	The Traveler	traveler	1568	high	mentions tl 1189 + be 169 + lore 210
+power	The Traveler	the traveler	1338	high	mentions tl 1000 + be 151 + lore 187
+power	The Darkness	darkness	1392	high	mentions tl 1013 + be 165 + lore 214; 'the Darkness' phrase 699
+power	The Darkness	the darkness	699	high	mentions tl 479 + be 105 + lore 115
+power	The Light	the light	1100	medium	polysemous (common noun); dominant reading in corpus is the power; context rule; bare 'light' 2975, exclude bare
+power	The Worm	the worm	85	medium	mentions tl 54 + be 19 + lore 12; Hive worm-god / Will of the Thousands; generic-worm noise 321, use phrase
+power	The Worm	xol	91	medium	mentions tl 83 + be 3 + lore 5; Xol = Will of the Thousands; same entity chain as The Worm; owner sign-off on merge
+power	The Worm	worm god	9	medium	mentions tl 7 + be 1 + lore 1; attested epithet
+power	The Nine	the nine	237	high	mentions tl 194 + be 19 + lore 24; 17 speaker lines ('The Nine' 13, 'Nine' 4); characters table lists The Nine
+power	The Nine	nine	306	low	mentions incl. number-word collision; EXCLUDE from auto-link
+power	The Veil	the veil	336	high	mentions tl 314 + be 10 + lore 12; Lightfall power
+power	The Veil	veil	453	high	mentions tl 416 + be 19 + lore 18
+power	The Great Machine	great machine	174	medium	mentions tl 101 + be 33 + lore 40; Eliksni-worshipped Rasputin network; Rasputin listed as separate char; owner decide if one or two entities
+power	The Gardener	the gardener	35	low	mentions tl 12 + be 17 + lore 6; appears ONLY in Gardener-and-Winnower creation parable; pre-creation entity; owner decision
+power	The Gardener	gardener	49	low	mentions tl 18 + be 19 + lore 12; parable entity; owner decision
+power	The Winnower	winnower	10	low	mentions tl 6 + be 4 + lore 0; appears ONLY in Gardener-and-Winnower creation parable; rival pre-creation power; owner decision
+faction	The Vanguard	vanguard	994	high	mentions tl 692 + be 118 + lore 184
+faction	The Vanguard	the vanguard	586	high	full phrase; tl 379 + be 90 + lore 117
+faction	Red Legion	red legion	387	high	mentions tl 291 + be 22 + lore 74
+faction	House of Salvation	house of salvation	28	medium	mentions tl 23 + be 0 + lore 5; zero book mentions; owner confirm
+faction	House of Devils	house of devils	28	medium	mentions tl 22 + be 4 + lore 2; Fallen house (EDZ/Witch Queen)
+faction	House of Winter	house of winter	13	medium	mentions tl 11 + be 1 + lore 1; thin evidence; context rule
+faction	House of Wolves	house of wolves	42	high	mentions tl 25 + be 7 + lore 10
+faction	House of Exile	house of exile	0	low	ZERO tl/be/lore mentions; 5 item-text hits (e.g. 'House of Exile Banner'); items-only attestation; exclude from auto-link until owner confirms
+faction	House of Cunning	house of cunning	0	low	ZERO corpus mentions anywhere (items 0); 'Temple of Cunning' is a Throne World location, unrelated; unattested — DO NOT auto-link
+faction	The Hidden	the hidden	81	high	mentions tl 48 + be 14 + lore 19; bare 'hidden' 375 too noisy — never link bare token
+faction	New Monarchy	new monarchy	39	medium	mentions tl 30 + be 4 + lore 5; items 95; D1 tower faction; owner confirm if out of scope
+faction	Future War Cult	future war cult	51	high	mentions tl 39 + be 5 + lore 7; items 80; D1 tower faction
+faction	Dead Orbit	dead orbit	49	high	mentions tl 29 + be 7 + lore 13; items 93; D1 tower faction
+faction	House of Light	house of light	93	medium	adopted Fallen house (Mithrax), TWIYM era; phrase also reads generically; context rule; owner confirm
+faction	The Taken	the taken	608	medium	mentions tl 545 + be 32 + lore 31; species-collective of the Darkness; species-vs-faction call for owner
+faction	The Scorn	the scorn	214	medium	mentions tl 189 + be 11 + lore 14; Worm-aligned species-collective; species-vs-faction call for owner; not in owner's candidate list
+place	Last City	last city	526	high	mentions tl 368 + be 60 + lore 98
+place	Last City	the last city	444	high	full phrase; tl 312 + be 59 + lore 73
+place	Dreaming City	dreaming city	370	high	mentions tl 288 + be 26 + lore 56
+place	Dreaming City	the dreaming city	343	high	full phrase; tl 263 + be 25 + lore 55
+place	Leviathan	leviathan	363	high	mentions tl 264 + be 40 + lore 59
+place	Leviathan	the leviathan	271	high	full phrase; tl 188 + be 35 + lore 48
+place	Cosmodrome	cosmodrome	118	high	mentions tl 91 + be 7 + lore 20
+place	Cosmodrome	the cosmodrome	98	high	full phrase; tl 76 + be 6 + lore 16
+place	Tangled Shore	tangled shore	162	high	mentions tl 119 + be 28 + lore 15
+place	Tangled Shore	the tangled shore	127	high	full phrase; tl 86 + be 26 + lore 15
+place	Nessus	nessus	364	high	mentions tl 304 + be 20 + lore 40
+place	The Moon	the moon	382	high	mentions tl 321 + be 31 + lore 30; 'lunar expanse' UNATTESTED in corpus (0 hits)
+place	The Moon	moon	552	medium	bare token; Earth-moon literal collision; context rule required
+place	Lunar Expanse	lunar expanse	0	low	ZERO corpus mentions; 'lunar' alone 83 hits (generic adjective); unattested — do not auto-link
+place	Vault of Glass	vault of glass	16	high	mentions tl 16 + be 0 + lore 0; rec 1; items 25; zero book-entry mentions
+place	Vault of Glass	the vault of glass	13	high	full phrase; tl 13; items 19
+place	Infinite Forest	infinite forest	158	high	mentions tl 141 + be 6 + lore 11; rec 5; items 36; Zero-Point site on Mercury
+place	Infinite Forest	the infinite forest	134	high	full phrase; tl 120 + be 4 + lore 10
+place	Black Garden	black garden	159	high	mentions tl 138 + be 9 + lore 12; rec 1; items 21; where Gardener and Winnower met
+place	Black Garden	the black garden	142	high	full phrase; tl 122 + be 9 + lore 11
+place	EDZ	edz	140	high	mentions tl 118 + be 6 + lore 16; rec 2; items 262
+place	EDZ	the edz	107	high	full phrase; tl 88 + be 5 + lore 14
+place	Plaguelands	plaguelands	14	medium	mentions tl 11 + be 1 + lore 2; items 15; Tangled Shore zone; thin evidence, context rule
+place	Plaguelands	the plaguelands	11	medium	full phrase; tl 8 + be 1 + lore 2
+place	The Tower	the tower	567	high	mentions tl 350 + be 91 + lore 126; rec 13; items 1407; context rule mandatory
+place	The Tower	tower	767	high	mentions tl 494 + be 115 + lore 158; context rule mandatory
+place	Spire of Stars	spire of stars	5	low	mentions tl 5 + be 0 + lore 0; items 8; Final Shape cosmic spire; thin evidence, owner confirm
+place	Spire of Stars	the spire of stars	0	low	full-phrase variant; ZERO tl/be/lore hits; items 1; thin evidence
+place	Mercury	mercury	257	high	extras beyond required list; tl 208 + be 19 + lore 30; rec 5; items 162; element/planet collision, context rule
+place	Venus	venus	121	high	mentions tl 75 + be 13 + lore 33; planet reading unopposed in corpus
+place	Mars	mars	312	high	mentions tl 249 + be 30 + lore 33; planet; deity reading unattested in corpus
+place	Europa	europa	367	high	mentions tl 282 + be 32 + lore 53; items 266; NOT 'Europe' (23 stray hits, excluded)
+place	Titan	titan	558	medium	GUARDIAN-CLASS collision ('a Titan') vs the moon; dominant corpus reading is the moon destination; context rule mandatory; owner may exclude
+place	Io	io	283	medium	short token; dominant reading is the moon; owner confirm
+place	Neptune	neptune	104	high	mentions tl 77 + be 11 + lore 16; items 56; Beyond Light / Neomuna ice giant
+place	Neomuna	neomuna	181	high	mentions tl 156 + be 12 + lore 13; items 69; Lightfall destination on Neptune
+place	The Pale Heart	pale heart	66	high	mentions tl 38 + be 3 + lore 25; items 53; Final Shape destination inside the Traveler
+place	The Pale Heart	the pale heart	56	high	full phrase; tl 29 + be 3 + lore 24
+power	The Nine	Five	11	high	Nine-facet alias per owner ruling 2026-11-09; chapter-sourced label from Monument of Triumph — Character Dialogue
+power	SIVA	SIVA	166	high	owner-commissioned: Rasputin's warmind-born nanomachine weapon; 166 tl + 11 book_entries + 4 lore_entry + 45 item matches

@@ -19,7 +19,7 @@ database with the SIVA entity and Nine-facet alias folded in one rebuild.
   see v0.33.2 for the speaker-side fold).
 - **`entity_aliases` 134 -> 136, `entities` 88 -> 89, `entity_links`
   24,196 -> 24,595, `entity_relations` 3 -> 4.**
-- Lexicon: `/home/sredshaw/Work/entity-lexicon-proposal.tsv` (owner-reviewed
+- Lexicon: `db/entity-lexicon-proposal.tsv` (owner-reviewed
   high-confidence pinned per owner manifesto for v0.34.0; SIVA from
   owner-ruling evidence). Gates: test-db 61/61; lore-integrity 17/17;
   query-interface 89/89; sync-doc-counts in sync.
