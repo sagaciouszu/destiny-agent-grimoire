@@ -142,15 +142,15 @@ No API keys, accounts or network access are required at runtime.
 | `speaker_aliases` | 23 | Alias to canonical speaker mapping |
 | `verify_fts` (index) | 130210 | Fast quote verification |
 | `item_title_fts` (index) | 58764 | Item title lookup |
-| `entities` | 88 | Named characters, powers, factions and places |
-| `entity_aliases` | 134 | Attested name variants per entity |
-| `entity_links` | 24196 | Entity to document links (attribution/canonical/alias/ctx) |
-| `entity_relations` | 3 | Entity to entity links (adjacency, primeval pairs) |
+| `entities` | 89 | Named characters, powers, factions and places |
+| `entity_aliases` | 136 | Attested name variants per entity |
+| `entity_links` | 24595 | Entity to document links (attribution/canonical/alias/ctx) |
+| `entity_relations` | 4 | Entity to entity links (adjacency, primeval pairs) |
 | `entity_build_meta` | 14 | Entity web build audit trail |
-| `v_entity_resolve` (view) | 134 | Resolver lookup (alias to entity) |
-| `v_entity_documents` (view) | 24196 | Entities with ranked document lists |
+| `v_entity_resolve` (view) | 136 | Resolver lookup (alias to entity) |
+| `v_entity_documents` (view) | 24595 | Entities with ranked document lists |
 | `v_entity_coverage` (view) | 4 | Per-kind entity web coverage |
-| **Total** | 600194 | Rows across every table, view and index above |
+| **Total** | 600998 | Rows across every table, view and index above |
 
 Every content row carries provenance. Speaker aliases are canonicalized during
 migration. The full contract is `STANDARDS.md`.
