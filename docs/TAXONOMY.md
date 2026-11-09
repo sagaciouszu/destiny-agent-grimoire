@@ -55,10 +55,11 @@ Current state (2026-11-04):
 
 Every Ishtar web transcript now carries the page's authoritative `Added In`
 release (1,130/1,130), captured by
-`archive/data/fetch_transcript_releases.py`. That is why transcript coverage is
-near-complete and why Destiny 1 content is now visible: 123 transcripts and
-4,140 dialogue lines across `destiny-1`, `the-dark-below`, `house-of-wolves`,
-`the-taken-king` and `rise-of-iron`.
+`archive/data/fetch_transcript_releases.py`. <!-- doc-sync:ignore -->
+That is why coverage is near-complete and why Destiny 1 content is
+visible: 123 transcripts and 4,140 dialogue lines across `destiny-1`,
+`the-dark-below`, `house-of-wolves`, `the-taken-king` and `rise-of-iron`.
+<!-- /doc-sync:ignore -->
 
 Ten Destinypedia verbatim transcripts close the remaining activity gaps where
 that wiki has a `Transcript` section: Salvation's Edge, Spire of Stars, Eater of
@@ -75,8 +76,11 @@ They are compiled from 63 activity dialogue videos and marked
 Season 28 also has a 202-line auto-captioned character-dialogue transcript.
 Season 27 has a 27-line reviewed transcript. Both are `partial_transcript`.
 
-Manifest item sets provide an optional classification gain: 19 curated sets
-resolved ~4,494 items that today remain low-confidence. The mapping lives
+<!-- doc-sync:ignore -->
+Manifest item sets provide an optional classification gain: 19 curated set
+lookups resolved ~4,494 of the previously ambiguous-looking items. The mapping
+lives
+<!-- /doc-sync:ignore -->
 in `db/enrich_itemsets.py` and only fills rows that are still unclassified.
 
 The one remaining unknown transcript is a beta entry with no release page. It

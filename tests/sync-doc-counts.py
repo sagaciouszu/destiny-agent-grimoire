@@ -244,13 +244,22 @@ for path in sorted(set(FILES)):
         pats += ERIS_PATS
     s = open(path, encoding='utf-8').read()
     orig = s
-    for rx, arg in pats:
-        if isinstance(arg, str) and arg in _PROSE_KEYS:
-            # prose: rewrite <num> <noun> in-place; if the pattern consumed
-            # the leading paren of a parenthesised count, restore it
-            s = re.sub(rx, lambda m: ('(' if m.group(0).startswith('(') else '') + _count(arg, m.group('num')), s)
-        else:
-            s = re.sub(rx, lambda m: arg.format(**C), s)
+    # Regions fenced by <!-- doc-sync:ignore --> ... <!-- /doc-sync:ignore -->
+    # are passed through untouched: they carry hand-authored, context-dependent
+    # counts (e.g. 'Destiny 1 visible: 123 transcripts...' is scoped to D1).
+    segments = re.split(r'(<!--\s*doc-sync:ignore\s*-->.*?<!--\s*/doc-sync:ignore\s*-->)', s, flags=re.S)
+    kept = []
+    for seg in segments:
+        if seg.startswith('<!--'):
+            kept.append(seg)
+            continue
+        for rx, arg in pats:
+            if isinstance(arg, str) and arg in _PROSE_KEYS:
+                seg = re.sub(rx, lambda m: ('(' if m.group(0).startswith('(') else '') + _count(arg, m.group('num')), seg)
+            else:
+                seg = re.sub(rx, lambda m: arg.format(**C), seg)
+        kept.append(seg)
+    s = ''.join(kept)
     if path == README:
         s = sync_inside_table(s, DB_PATH)
     elif path == SKILL:

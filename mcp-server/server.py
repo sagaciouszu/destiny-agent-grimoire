@@ -81,15 +81,59 @@ def _trim(text, limit=MAX_TEXT):
     return text
 
 
-def _cap(text, limit=MAX_RESOURCE):
-    """Bound resource payloads so reads cannot blow an agent context window."""
-    if text and len(text) > limit:
-        return text[:limit] + '...[truncated; page via the matching tool]'
-    return text
+def _json_len(obj):
+    return len(json.dumps(obj, ensure_ascii=False, separators=(',', ':')))
 
 
 def _jcap(obj):
-    return _cap(json.dumps(obj, ensure_ascii=False))
+    """Serialize a resource to JSON that always parses.
+
+    Bound: MAX_RESOURCE. Strategy: try pretty-printed first for readability,
+    fall back to compact, then shrink list-valued fields (prefix truncation)
+    until it fits. Trimmed collections carry a sibling `<key>_omitted` counter
+    so agents know exactly what was left behind and can repage via the tools.
+    """
+    pretty = json.dumps(obj, ensure_ascii=False)
+    if len(pretty) <= MAX_RESOURCE:
+        return pretty
+    work = json.loads(json.dumps(obj, ensure_ascii=False, separators=(',', ':')))
+    wrapped_top = isinstance(work, list)
+    if wrapped_top:
+        work = {'rows': work}
+    while _json_len(work) > MAX_RESOURCE:
+        # Pick the largest remaining list and binary-search the largest prefix
+        # that still leaves room for the omitted-counters we may add.
+        lst_key = None
+        lst_bytes = -1
+        for key, value in work.items():
+            if isinstance(value, list) and value:
+                b = _json_len(value)
+                if b > lst_bytes:
+                    lst_bytes, lst_key = b, key
+        if lst_key is None:
+            raise ValueError('resource payload exceeds MAX_RESOURCE')
+        lst = work[lst_key]
+        lo, hi = 0, len(lst) - 1
+        while lo <= hi:
+            mid = (lo + hi + 1) // 2
+            candidate = dict(work, **{lst_key: lst[:mid + 1]})
+            omitted_key = f'{lst_key}_omitted'
+            candidate[omitted_key] = len(lst) - (mid + 1)
+            if _json_len(candidate) <= MAX_RESOURCE:
+                lo = mid + 1
+            else:
+                hi = mid - 1
+        if hi < 0:
+            # Even a zero-length list does not fit; the scalar fields are too big.
+            raise ValueError(f'resource payload exceeds MAX_RESOURCE after trimming {lst_key}')
+        work = dict(work, **{lst_key: lst[:hi + 1]})
+        work[f'{lst_key}_omitted'] = len(lst) - (hi + 1)
+    if wrapped_top:
+        # Never silently swap a list for a dict when only the tail was clipped.
+        if 'rows_omitted' in work:
+            return json.dumps(work, ensure_ascii=False, separators=(',', ':'))
+        return json.dumps(work['rows'], ensure_ascii=False, separators=(',', ':'))
+    return json.dumps(work, ensure_ascii=False, separators=(',', ':'))
 
 
 @server.tool(annotations=READ_ONLY)
