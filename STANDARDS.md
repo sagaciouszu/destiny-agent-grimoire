@@ -74,6 +74,11 @@ inheritance, and `db/capabilities.json` sync.
 | `characters` | name, slug | | curated character index (compendium) |
 | `character_lines` | character_id, text, source_type, source_slug | norm_text, timeline | source_slug must resolve in `transcripts`; timeline inherited from it |
 | `speaker_aliases` | alias, canonical | | alias -> canonical speaker mapping |
+| `entities` | canonical, norm_key, kind, confidence, reviewed | | entity web; one row per named character, power, faction or place (88 rows); never rewrites canon |
+| `entity_aliases` | entity_id, alias, norm_alias, weight, confidence, requires_ctx, reviewed | | attested name variants; `norm_alias` is the resolver key |
+| `entity_links` | entity_id, kind, ref, weight, match, build_id | | ref resolves to exactly one parent row at build time; `UNIQUE (entity_id, kind, ref)` |
+| `entity_relations` | entity_id, relation, target_entity_id, source | | `adjacent_to` (Siren of Riven -> Riven), `related_to` (Gardener -> The Traveler, Winnower -> The Darkness) |
+| `entity_build_meta` | key, value | | build audit trail (build_id, hashes, timings) |
 | `fts` | | | exactly one row per indexed content row (1:1); carries `timeline` UNINDEXED |
 | `verify_fts` | | | normalized text + provenance; mirrors indexable rows for fast quote checks |
 | `item_title_fts` | | | item titles for fast name lookup |
@@ -224,7 +229,7 @@ match a recomputation of their source text.
 | each agent repo tests/master-audit.sh | agent-side suites (voice, quotes, modules, conversation, golden snapshots) plus shared structure checks |
 | `tests/mcp-test.py` (on demand, needs `mcp-server/.venv`) | MCP tools, both launchers, probe handshake, read-only guard, stdio, CLI-parity tools, stats/live agreement (12 checks) |
 | `tests/mcp-agent-optimization-test.py` (on demand, needs `mcp-server/.venv`) | LLM-facing surface: descriptions name every parameter, actionable ToolErrors, 25-token snippets, limit/offset clamps, resource caps, one-call item lookups, spoken_lines counts (25 checks) |
-| `tests/mcp-matrix-test.py` (on demand, needs `mcp-server/.venv`) | MCP calls across all 21 tools (154 calls), 3 concurrent clients, strict API parity, clean malformed-call errors |
+| `tests/mcp-matrix-test.py` (on demand, needs `mcp-server/.venv`) | MCP calls across all 22 tools (161 calls), 3 concurrent clients, strict API parity, clean malformed-call errors |
 | `tests/check-agent-structure.py <deps\|tokens\|dashes\|index\|paths> <workspace>` | per-agent: deps resolve, token accuracy, no em/en-dashes, INDEX lists every module and every reference resolves, no personal paths |
 | `tests/robustness-test.py` (on demand) | corrupt/truncated/missing databases, edge inputs, read-only enforcement, 160 concurrent queries, injection attempts |
 | `tests/agent-layout-test.sh` | OpenCode and OpenClaw layout, registry and peer blocks (39 checks) |
@@ -244,8 +249,8 @@ cross-character attribution checks.
 - Interface: `python3 db/query.py` with one of `search`, `character`,
   `character_info`, `item`, `book`, `transcript`, `find_item`, `record`,
   `verify`, `verify_many`, `list`, `activity`, `event`, `lore`, `seal`,
-  `seals`, `coverage`, `stats`. `sqlite3` is the escape hatch. No markdown
-  parsing at runtime.
+  `seals`, `coverage`, `stats`, `entity`. `sqlite3` is the escape hatch. No
+  markdown parsing at runtime.
 - Shared query layer: `db/api.py` returns data; the CLI formats it and the MCP
   server exposes the same functions as typed tools. One implementation.
 - MCP: `mcp-server/` is an optional stdio adapter using the official SDK. It is
@@ -256,13 +261,14 @@ cross-character attribution checks.
     agent workspace (the interactive prompt also offers it). The adapter
     belongs to the archive, so one install serves every agent; the venv is
     gitignored and the CLI stays dependency-free.
-  - 21 tools: `search`, `character`, `character_info`, `item`, `verify`,
+  - 22 tools: `search`, `entity`, `character`, `character_info`, `item`, `verify`,
     `verify_many`, `list_records`, `stats`, `book`, `transcript`, `find_item`,
     `activities`, `activity`, `seasons`, `events`, `event`, `coverage`,
     `record`, `seals`, `seal`, `lore`.
-  - 8 resources: `grimoire://books`, `grimoire://characters`,
+  - 9 resources: `grimoire://books`, `grimoire://characters`,
     `grimoire://records`, `grimoire://stats`, `grimoire://activities`,
-    `grimoire://seasons`, `grimoire://events`, `grimoire://coverage`.
+    `grimoire://seasons`, `grimoire://events`, `grimoire://coverage`,
+    `grimoire://entities`.
   - 4 templates: `grimoire://book/{slug}`, `grimoire://transcript/{slug}`,
     `grimoire://character/{slug}`, `grimoire://record/{slug}`.
   - 2 prompts: `quote_safe_lookup`, `character_brief`.

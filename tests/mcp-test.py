@@ -67,7 +67,7 @@ def tools_listed():
     srv = server.server
     tools = srv._tool_manager.list_tools()
     names = {t.name for t in tools}
-    want = {'search', 'character', 'item', 'verify', 'list_records', 'stats',
+    want = {'search', 'entity', 'character', 'item', 'verify', 'list_records', 'stats',
             'book', 'transcript', 'find_item', 'record', 'verify_many',
             'character_info', 'activities', 'activity', 'seasons', 'events',
             'event', 'coverage', 'seals', 'seal', 'lore'}
@@ -158,7 +158,7 @@ def protocol_smoke():
 
 
 print('MCP contract test')
-check('twenty-one tools registered', tools_listed)
+check('twenty-two tools registered', tools_listed)
 check('Unix and Windows launchers present', launchers_present)
 
 
@@ -246,9 +246,9 @@ def probe_works():
     probe = subprocess.run([sys.executable, os.path.join(ROOT, 'mcp-server', 'probe.py')],
                            capture_output=True, text=True, timeout=60)
     assert probe.returncode == 0, probe.stdout + probe.stderr
-    assert '21 tools' in probe.stdout, probe.stdout
+    assert '22 tools' in probe.stdout, probe.stdout
 
-check('probe handshake (21 tools)', probe_works)
+check('probe handshake (22 tools)', probe_works)
 
 print(f'\nPassed: {PASS} | Failed: {FAIL}')
 sys.exit(1 if FAIL else 0)

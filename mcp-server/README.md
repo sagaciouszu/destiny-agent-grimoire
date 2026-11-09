@@ -165,7 +165,8 @@ hand to separate a config-path problem from a server problem.
 
 | Tool | Arguments | Returns |
 |---|---|---|
-| `search` | `query`, `type?`, `limit=10`, `full=false`, `offset=0`, `rank=true`, `activity?`, `season?`, `event?`, `expansion?`, `class_tag?`, `exclude_stage=false`, `timeline?` | `{count, total, next_offset, rows}` with `snippet` and `timeline` (story-chapter slug) fields; ranked results demote stage directions/cutscene captions, `exclude_stage` drops them, `timeline` filters to one in-universe chapter |
+| `search` | `query`, `type?`, `limit=10`, `full=false`, `offset=0`, `rank=true`, `activity?`, `season?`, `event?`, `expansion?`, `class_tag?`, `exclude_stage=false`, `timeline?`, `lang?`, `entity?` | `{count, total, next_offset, rows}` with `snippet` and `timeline` (story-chapter slug) fields; ranked results demote stage directions/cutscene captions, `exclude_stage` drops them, `timeline` filters to one in-universe chapter, `entity` restricts to documents one entity is linked to (e.g. `entity="Savathûn"`) |
+| `entity` | `ref`, `kind?`, `limit=10`, `include_unreviewed=false` | ranked candidates (exact folded match first; phonetic fallback flagged `fuzzy` with `score <= 0.5`); exact match also returns aliases, relations, document counts and top documents |
 | `character` | `name`, `about?`, `all_lines=false`, `limit=20`, `offset=0`, `canon_only=false`, `class_tag?` | `{found, header, rows}` |
 | `item` | `slug` | bounded item row (title, `text` trimmed, `source_url`, `lore` links; no internal fields) |
 | `verify` | `quote`, `speaker?`, `exact=false` | `{quote, verified, matches}` with `exact` flags |
@@ -208,6 +209,7 @@ Read-only JSON resources for discovery without tool calls:
 - `grimoire://characters` - curated characters
 - `grimoire://records` - triumphs and seals
 - `grimoire://stats` - row counts
+- `grimoire://entities` - the entity web index (every entity, alias and document counts)
 - `grimoire://activities` - activities with coverage
 - `grimoire://seasons` - official seasons and episodes
 - `grimoire://events` - rotating events
@@ -223,7 +225,7 @@ Read-only JSON resources for discovery without tool calls:
 ## Safety
 
 - SQLite is opened with URI `mode=ro`; writes fail at the driver level.
-- No arbitrary SQL tool is exposed. The twenty-one tools are the whole surface.
+- No arbitrary SQL tool is exposed. The twenty-two tools are the whole surface.
 - No network access. The database path is resolved from `GRIMOIRE_DB` or
   `db/grimoire.db`.
 - Inputs are bounded: queries 1-500 chars, quotes 1-2000, limits 1-100.

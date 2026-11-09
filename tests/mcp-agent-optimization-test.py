@@ -64,7 +64,7 @@ def main():
 
     # 2. Every tool description names every parameter.
     tools = srv._tool_manager.list_tools()
-    check('21 tools registered', len(tools) == 21, f'got {len(tools)}')
+    check('22 tools registered', len(tools) == 22, f'got {len(tools)}')
     missing = []
     empty = []
     for t in tools:

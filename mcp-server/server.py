@@ -52,17 +52,19 @@ def _offset(value):
 
 server = MCPServer(
     'destiny-grimoire',
-    version='1.7.0',
+    version='1.8.0',
     instructions=(
         'Canonical Destiny lore. Tool map: search (keyword discovery across all '
-        'content), character + character_info (quotes and metadata by name), '
+        'content, with an optional entity filter), entity (resolve a name to an '
+        'entity: aliases, document counts, relations, fuzzy-flagged candidates), '
+        'character + character_info (quotes and metadata by name), '
         'find_item -> item (search items, then details with lore links), book / '
         'transcript / lore / record / seal (read one document by ref), activities '
         '/ activity / seasons / events / event / coverage (taxonomy and coverage), '
         'list_records (cheap listings), stats (row counts), verify / verify_many '
         '(quote check). Call verify with the speaker and exact=true before quoting '
-        'any line, and cite the source slug. Prefer search first, then fetch the '
-        'full document by slug. All queries are read-only.'),
+        'any line, and cite the source slug. Prefer search first, then entity, then '
+        'fetch the full document by slug. All queries are read-only.'),
 )
 
 
@@ -96,7 +98,7 @@ def search(query: str, type: str | None = None, limit: int = 10, full: bool = Fa
            season: str | None = None, event: str | None = None,
            expansion: str | None = None, class_tag: str | None = None,
            exclude_stage: bool = False, timeline: str | None = None,
-           lang: str | None = None) -> dict:
+           lang: str | None = None, entity: str | None = None) -> dict:
     """Full-text search over books, transcripts, cards, items, records and captions.
 
     Args:
@@ -119,6 +121,8 @@ def search(query: str, type: str | None = None, limit: int = 10, full: bool = Fa
             (23 chapters, chronological; see capabilities.json).
         lang: Document language code; every row is 'en' today and later caption
             languages arrive as data rows (see capabilities.json).
+        entity: Restrict to documents this entity is linked to in the entity
+            web, for example "Savathûn" or "The Witness".
 
     Rows carry a `snippet` field with the match context highlighted in brackets
     and a `timeline` field (the chapter slug, empty when unknown).
@@ -126,16 +130,42 @@ def search(query: str, type: str | None = None, limit: int = 10, full: bool = Fa
     rows = _api(api.search, query, type=type, limit=_limit(limit, 10), full=full,
                 offset=_offset(offset), rank=rank, activity=activity, season=season,
                 event=event, expansion=expansion, class_tag=class_tag,
-                exclude_stage=exclude_stage, timeline=timeline, lang=lang)
+                exclude_stage=exclude_stage, timeline=timeline, lang=lang, entity=entity)
     total = _api(api.search_total, query, type=type, activity=activity, season=season,
                  event=event, expansion=expansion, class_tag=class_tag,
-                 exclude_stage=exclude_stage, timeline=timeline, lang=lang)
+                 exclude_stage=exclude_stage, timeline=timeline, lang=lang, entity=entity)
     if full:
         for r in rows:
             r['text'] = _trim(r.get('text', ''))
     nxt = _offset(offset) + len(rows)
     return {'count': len(rows), 'total': total,
             'next_offset': nxt if nxt < total else None, 'rows': rows}
+
+
+@server.tool(annotations=READ_ONLY)
+def entity(ref: str, kind: str | None = None, limit: int = 10,
+           include_unreviewed: bool = False) -> dict:
+    """Resolve a name to an entity in the entity web.
+
+    Exact folded match first; when nothing matches, a phonetic fallback is
+    returned with fuzzy=true and score <= 0.5 (suggestions, never picks).
+
+    Args:
+        ref: Entity or alias name, for example "Savathûn", "Saint-14",
+            "The Exo Stranger" or "Elsie Bray".
+        kind: Optional filter: char, power, faction or place.
+        limit: Candidates to return (1-100).
+        include_unreviewed: Include reviewed=0 aliases (default strict).
+
+    Returns ranked candidates plus, for an exact match, the entity's aliases,
+    relations (adjacent_to / related_to), document counts by kind and the top
+    documents.
+    """
+    res = _api(api.entity, ref, limit=_limit(limit, 10), kind=kind,
+               include_unreviewed=include_unreviewed)
+    for row in res['documents']:
+        row['ref'] = _trim(row['ref'])
+    return res
 
 
 @server.tool(annotations=READ_ONLY)
@@ -462,6 +492,13 @@ def records_resource() -> str:
                  mime_type='application/json')
 def stats_resource() -> str:
     return _jcap(api.stats()['counts'])
+
+
+@server.resource('grimoire://entities', name='entities',
+                 description='Entity web: every entity with kind, alias count and document count',
+                 mime_type='application/json')
+def entities_resource() -> str:
+    return _jcap(api.entity_index())
 
 
 @server.resource('grimoire://activities', name='activities',

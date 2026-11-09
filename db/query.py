@@ -7,7 +7,8 @@ and quote verification. Every command exits non-zero on failure.
 Usage:
   query.py search "<term>" [--type books|transcripts|grimoire|interactions|items|records]
                            [--activity NAME] [--season N|NAME] [--event NAME]
-                           [--expansion NAME] [--limit N] [--json] [--full]
+                           [--expansion NAME] [--entity NAME] [--limit N] [--json] [--full]
+  query.py entity "<name>" [--kind char|power|faction|place] [--include-unreviewed] [--limit N] [--json]
   query.py character "<name>" [--about <term>] [--limit N] [--all] [--json]
   query.py item "<slug>" [--json]
   query.py verify "<quote>" [--speaker NAME] [--exact] [--json]
@@ -49,11 +50,12 @@ def cmd_search(args):
     out = api.search(query, type=args.type, limit=args.limit, full=args.full,
                      offset=args.offset, rank=args.rank, activity=args.activity,
                      season=args.season, event=args.event, expansion=args.expansion,
-                     class_tag=args.class_tag, timeline=args.timeline, lang=args.lang)
+                     class_tag=args.class_tag, timeline=args.timeline, lang=args.lang,
+                     entity=args.entity)
     total = api.search_total(query, type=args.type, activity=args.activity,
                              season=args.season, event=args.event,
                              expansion=args.expansion, class_tag=args.class_tag,
-                             timeline=args.timeline, lang=args.lang)
+                             timeline=args.timeline, lang=args.lang, entity=args.entity)
     if args.full:
         emit(out, args.json, lambda rs: [print(f"[{r['source']}] {r['title']}: {r['text'][:200]}") for r in rs])
     else:
@@ -61,6 +63,48 @@ def cmd_search(args):
     if not args.json:
         print(f'\n{len(out)} results of {total}')
     return 0 if out else 1
+
+
+def cmd_entity(args):
+    res = api.entity(args.name, limit=args.limit, kind=args.kind,
+                     include_unreviewed=args.include_unreviewed)
+    out = res['results']
+    if args.json:
+        print(json.dumps(res, ensure_ascii=False, separators=(',', ':')))
+        return 0 if out else 1
+    if not out:
+        print(f'Entity not found: {args.name}', file=sys.stderr)
+        return 1
+    top = out[0]
+    if top['fuzzy']:
+        print(f'No exact match for "{args.name}". Fuzzy candidates (score <= 0.5):')
+        for r in out:
+            print(f"  - {r['canonical']} ({r['kind']}, alias {r['alias']!r}, "
+                  f"score {r['score']}, confidence {r['confidence']})")
+        return 1
+    e = res['entity']
+    print(f"=== {e['canonical']} ({e['kind']}, confidence {e['confidence']}) ===")
+    print('Aliases: ' + ', '.join(f"{a['alias']} (weight {a['weight']:.2f}"
+                                  + (', ctx)' if a['requires_ctx'] else ')')
+                                  for a in res['aliases']))
+    counts = res['counts']
+    if counts:
+        print('Documents: ' + str(res['total_documents']) + ' ' +
+              '(' + ', '.join(f'{k}: {v}' for k, v in sorted(counts.items())) + ')')
+    else:
+        print('Documents: 0')
+    for rel in res['relations']:
+        if rel['direction'] == 'out':
+            print(f"Relation: {rel['relation']} -> {rel['target']} ({rel['target_kind']})")
+        else:
+            print(f"Relation: {rel['source']} ({rel['source_kind']}) -{rel['relation']}-> this entity")
+    if res['documents']:
+        print('Top documents:')
+        for d in res['documents']:
+            print(f"  - {d['kind']} {d['ref']} (weight {d['weight']:.2f}, {d['match']})")
+    if len(out) > 1:
+        print('Also matched: ' + ', '.join(sorted({r['canonical'] for r in out})))
+    return 0
 
 
 def cmd_character(args):
@@ -368,6 +412,7 @@ def main(argv=None):
     s.add_argument('--class', dest='class_tag', choices=['hunter','titan','warlock'])
     s.add_argument('--timeline', help='in-universe story chapter slug, e.g. the_dark_age')
     s.add_argument('--lang', help="document language code, e.g. 'en' (all rows are 'en' today; later caption drops add languages)")
+    s.add_argument('--entity', help='restrict to documents this entity is linked to (e.g. "Savathûn")')
     s.add_argument('--limit', type=int, default=10)
     s.add_argument('--offset', type=int, default=0)
     s.add_argument('--json', action='store_true')
@@ -377,6 +422,15 @@ def main(argv=None):
     s.add_argument('--no-rank', dest='rank', action='store_false',
                    help='keep insertion order')
     s.set_defaults(func=cmd_search)
+
+    en = sub.add_parser('entity', help='Entity web: aliases, documents, relations (fuzzy-flagged candidates)')
+    en.add_argument('name')
+    en.add_argument('--kind', choices=list(api._ENTITY_KINDS))
+    en.add_argument('--include-unreviewed', action='store_true',
+                    help='include reviewed=0 aliases in resolution')
+    en.add_argument('--limit', type=int, default=10)
+    en.add_argument('--json', action='store_true')
+    en.set_defaults(func=cmd_entity)
 
     c = sub.add_parser('character', help='Character lines')
     c.add_argument('name')

@@ -50,6 +50,10 @@ flavor text, verify.
 | fts | 130210 | FTS5 search index |
 | verify_fts | 130210 | Fast quote verification index |
 | item_title_fts | 58764 | Item title lookup index |
+| entities | 88 | Named entities (char/power/faction/place) |
+| entity_aliases | 134 | Attested name variants per entity |
+| entity_links | 24196 | Entity to document links with weights |
+| entity_relations | 3 | Entity to entity links (adjacency, primevals) |
 
 Taxonomy tables (additive; canon tables are never rewritten):
 
@@ -112,6 +116,12 @@ python3 db/query.py seal 2185719388
 
 # Database stats
 python3 db/query.py stats
+
+# Entity web (schema 1.6.0): resolve any attested name to its entity
+python3 db/query.py entity "Saint-14"
+python3 db/query.py entity "Elsie Bray"
+python3 db/query.py entity "Xivu Arath" --json
+python3 db/query.py search "witness" --entity "The Witness" --limit 5
 
 # Discovery (cheap)
 python3 db/query.py list books --limit 50
@@ -179,15 +189,17 @@ bash mcp-server/install.sh     # once: venv + official SDK
 
 It ships with this archive, so one install serves every agent that mounts it.
 
-Tools: `search`, `character`, `item`, `verify`, `list_records`, `stats`,
+Tools: `search`, `entity`, `character`, `item`, `verify`, `list_records`, `stats`,
 `book`, `transcript`, `find_item`, `record`, `verify_many`, `character_info`,
 `activities`, `activity`, `seasons`, `events`, `event`, `coverage`, `seals`,
 `seal`, `lore` — the same reads the CLI offers.
-`search` also takes `activity`, `season`, `event` and `expansion`.
+`search` also takes `activity`, `season`, `event`, `expansion` and `entity`.
+`entity` resolves a name to its entity (aliases, relations, document counts,
+fuzzy-flagged candidates when nothing matches exactly).
 Resources: `grimoire://books`,
 `grimoire://characters`, `grimoire://records`, `grimoire://stats`,
-`grimoire://activities`, `grimoire://seasons`, `grimoire://events`,
-`grimoire://coverage`, plus `grimoire://book/{slug}`,
+`grimoire://entities`, `grimoire://activities`, `grimoire://seasons`,
+`grimoire://events`, `grimoire://coverage`, plus `grimoire://book/{slug}`,
 `grimoire://transcript/{slug}`, `grimoire://character/{slug}` and
 `grimoire://record/{slug}` templates. The
 server is read-only, exposes no arbitrary SQL, clamps limits to 1-100 and trims
@@ -197,6 +209,9 @@ full text to 4000 characters. Full details: `mcp-server/README.md`.
 
 - `db/capabilities.json` - interface manifest (tables, commands, contracts)
 - `SELECT * FROM v_speakers;` - canonical speakers with line counts
+- `SELECT * FROM v_entity_resolve;` - alias + norm lookup to entities
+- `SELECT * FROM v_entity_documents;` - entity to ranked document list
+- `SELECT * FROM v_entity_coverage;` - per-kind entity web coverage
 - `SELECT * FROM v_activity_coverage;` - activity coverage and gaps
 - `SELECT * FROM v_season_coverage;` - season coverage
 - `SELECT * FROM v_event_coverage;` - event coverage

@@ -115,6 +115,11 @@ async def matrix(s):
     assert (await call(s, 'lore', {'ref': str(lore_hash)}))['hash'] == lore_hash
     vm = await call(s, 'verify_many', {'quotes': ['I am Eris Morn.', 'not canon zzz']})
     assert vm['total'] == 2 and vm['verified'] == 1
+    for name in ('eris morn', 'sathûn', 'the witness', 'nobody-here'):
+        res = await call(s, 'entity', {'ref': name, 'limit': 3})
+        assert isinstance(res, dict) and 'results' in res
+    assert (await call(s, 'entity', {'ref': 'Elsie Bray'}))['entity']['canonical'] == 'Elsie Bray'
+    assert (await call(s, 'search', {'query': 'hive', 'entity': 'Savathûn', 'limit': 2}))['count'] >= 0
     ci = await call(s, 'character_info', {'name': 'eris'})
     assert ci['quotes'] == 262 and 'Eris' in ci['aliases']
     assert (await call(s, 'search', {'query': 'hive', 'limit': 2, 'rank': False}))['count'] == 2
@@ -135,6 +140,9 @@ async def parity(s):
     assert (await call(s, 'list_records', {'kind': 'speakers', 'limit': 3}))['rows'] == api.listing('speakers', limit=3)
     assert (await call(s, 'seals', {}))['rows'] == api.seals()
     assert (await call(s, 'stats', {}))['counts'] == api.stats()['counts']
+    mcp_ent = await call(s, 'entity', {'ref': 'savathûn'})
+    api_ent = api.entity('savathûn')
+    assert mcp_ent['entity']['canonical'] == api_ent['entity']['canonical']
 
 
 async def errors(s):
@@ -184,7 +192,7 @@ async def main():
         async with ClientSession(r, w) as s:
             await s.initialize()
             tools = {t.name for t in (await s.list_tools()).tools}
-            report('twenty-one tools listed', tools == {'search', 'character', 'character_info',
+            report('twenty-two tools listed', tools == {'search', 'entity', 'character', 'character_info',
                                                        'item', 'verify', 'verify_many', 'list_records',
                                                        'stats', 'book', 'transcript', 'find_item', 'record',
                                                        'seals', 'seal', 'lore',
@@ -200,7 +208,8 @@ async def main():
             try:
                 resources = await s.list_resources()
                 uris = {str(r.uri) for r in resources.resources}
-                assert {'grimoire://books', 'grimoire://characters', 'grimoire://records', 'grimoire://stats'} <= uris, uris
+                assert {'grimoire://books', 'grimoire://characters', 'grimoire://records',
+                        'grimoire://stats', 'grimoire://entities'} <= uris, uris
                 body = await s.read_resource('grimoire://books')
                 assert 'Book' in body.contents[0].text
                 book_doc = await s.read_resource('grimoire://book/a-man-with-no-name')

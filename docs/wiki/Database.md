@@ -202,6 +202,70 @@ Zero coverage is classified, not guessed. `coverage_notes` records
 `no_dialogue`, `narration_only`, `dialogue_source_missing`,
 `partial_transcript` or `unverified`, with evidence. See `docs/TAXONOMY.md`.
 
+## Entity web
+
+The entity web is an additive layer (schema 1.6.0) that maps attested name
+variants onto named entities, then links those entities to the documents that
+mention them. It changes zero bytes of books, lore or transcripts.
+
+**Kinds:** `char` (individual NPC), `power` (world-scale agency), `faction`,
+`place`. Species are not entities; full-text search covers them. Five
+(Monument of Triumph, excluded pending owner review) and SIVA (excluded this
+release) are deliberately not modeled.
+
+| Object | Purpose |
+|---|---|
+| `entities` | 88 rows: canonical name, norm_key, kind, confidence, reviewed |
+| `entity_aliases` | 134 rows: attested spelling verbatim; `norm_alias` is the resolver key; `requires_ctx` gates context-sensitive phrases |
+| `entity_links` | 24196 rows: entity to document links; `kind` is transcript, book, book_entry, lore_entry, item, record or seal; `ref` is the parent slug or `table:id` |
+| `entity_relations` | entity to entity links (`adjacent_to`, `related_to`); used for the Riven-Siren adjacency and the Gardener/Winnower primeval pairs |
+| `entity_build_meta` | build audit trail: build_id, source TSV hash, pre-build DB hash, wall-clock timings |
+| `v_entity_resolve` | public view: alias + norm lookup to entities |
+| `v_entity_documents` | public view: entity to ranked document list |
+| `v_entity_coverage` | public view: per-kind coverage summary |
+
+**Resolver semantics** (`api.entity_resolve`, `v_entity_resolve`): NFKD fold,
+casefold, diacritics stripped, apostrophes deleted, hyphens and dashes become
+spaces, single spaces, leading "the" stripped from lookup keys only, roman
+numerals folded for keys only. Exact folded match first. When nothing
+matches, a phonetic fallback returns at most 3 candidates with `fuzzy: true`
+and `score <= 0.5`; fuzzy hits are suggestions, never silent picks, and never
+feed link derivation. `include_unreviewed=false` hides `reviewed=0` aliases
+(strict default). Possessives (`Zavala's`) fold to both `zavala s` and
+`zavala` keys.
+
+**Match weights:** attribution 4.0 (speaker slot, char to transcript only);
+canonical 3.0; reviewed alias 1.5; unreviewed alias 1.0; context-satisfied
+0.75; aggregate per document is `max(weight) + 0.25 * (distinct aliases - 1)`,
+capped at 4.0. `requires_ctx` aliases (The Tower, tower, Mercury, Diner,
+Pulled Pork, gardener/the gardener, winnower) match only attribution slots or
+the first sentence, so "the Tower" mid-sentence never links.
+
+**Entity vs alias:** Clovis Bray = Clovis Bray I = Clovis Bray AI (one
+entity). Elsie Bray is the canonical speaker label and entity name; Exo
+Stranger and Elisabeth Bray are aliases. Glint is its own entity (Crow's
+Ghost) with owner-attested aliases Diner and Pulled Pork. The Great Machine
+(Eliksni term) is an alias of The Traveler. Reflection of Osiris is folded
+into Osiris. Siren of Riven is modelled as an entity adjacent to Riven via
+`entity_relations` (creation of her will), not as an alias. The Gardener and
+The Winnower are powers with `related_to` links to The Traveler and The
+Darkness respectively, not aliases. Rasputin (char) and The Worm/Xol
+(power) are distinct entities.
+
+**Build:** `python3 db/build_entity_web.py --db <copy> [--dry-run]` loads the
+high-confidence lexicon (125 TSV rows, folded-duplicate variants merged) plus
+the owner rulings, scans the corpus read-only, verifies every ref resolves to
+exactly one parent row, then sets `meta.version=1.6.0` and live-count meta
+keys. Swap protocol: build on a temp copy, run `tests/test-db.sh` (61/61) and
+`tests/lore-integrity.sh` (17/17), verify books/cards SHA256 before/after,
+then swap atomically into `db/grimoire.db`. Books and cards are read-only;
+byte-identical proof is in the v0.33.0 release notes. Known limits: Memory of
+X / Nightmare of X labels and personification voices stay as transcript
+speaker labels with no entity rows this release; Five and SIVA are
+excluded; species are not modeled.
+
+Cost: +5.2 MB on disk (+2.2%), resolver p50 below 0.01 ms measured.
+
 ## Backup and release
 
 The database is distributed as a release asset with `SHA256SUMS`. Keep a rolling
