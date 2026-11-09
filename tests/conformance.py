@@ -28,11 +28,24 @@ import json
 HERE = os.path.dirname(os.path.realpath(__file__))
 GR = os.path.dirname(HERE)
 WORK = os.path.dirname(GR)
-REPOS = {k: v for k, v in {
-    'grimoire': GR,
+# canonical set of repos to audit (absence is reported, not fatal, but no
+# repo is silently skipped when present).  Only agents and the archive get
+# their READMEs checked against the README contract; the archival "template
+# Ghost Shell" is a meta-repo for new agents and is audited on the file
+# contract + skeleton-only structure.
+REPOS = {n: p for n, p in {
+    'calus': os.path.join(WORK, 'destiny-agent-calus'),
+    'zavala': os.path.join(WORK, 'destiny-agent-zavala'),
+    'ghost': os.path.join(WORK, 'destiny-agent-ghost'),
+    'mara-sov': os.path.join(WORK, 'destiny-agent-mara-sov'),
     'drifter': os.path.join(WORK, 'destiny-agent-drifter'),
     'eris': os.path.join(WORK, 'destiny-agent-eris-morn'),
-}.items() if os.path.isdir(v)}
+}.items() if os.path.isdir(p)}
+REPOS['grimoire'] = GR
+SKELETON = set()
+if os.path.isdir(os.path.join(WORK, 'destiny-agent-template')):
+    SKELETON.add(os.path.join(WORK, 'destiny-agent-template'))
+    REPOS['template'] = os.path.join(WORK, 'destiny-agent-template')
 if len(REPOS) < 3:
     print(f'note: {3 - len(REPOS)} agent repo(s) not present; validating {len(REPOS)} repo(s)')
 FIX = '--fix-tokens' in sys.argv
@@ -73,11 +86,24 @@ for name, root in REPOS.items():
             if ref.startswith('http') or ref == 'opencode.json':
                 continue
             cands = [os.path.join(root, ref), os.path.join(os.path.dirname(path), ref),
-                     os.path.join(root, 'lore', ref)]
-            cands += [os.path.join(r, ref) for r in REPOS.values()]
+                     os.path.join(root, 'lore', ref),
+                     os.path.join(root, 'tests', ref),
+                     os.path.join(root, 'scripts', ref)]
+            cands += [os.path.join(r, sub, ref) for r in REPOS.values()
+                      for sub in ('', 'tests', 'scripts', 'lore/tests', 'lore/scripts')]
             if not any(os.path.exists(c) for c in cands):
-                if len(REPOS) == 3:
-                    issues.append((name, rel, f'broken ref `{ref}`'))
+                note = (name, rel,
+                        f'broken ref `{ref}`')
+                if name == 'template':
+                    # template carries intentional placeholder refs ({{id}}.md
+                    # → the future agent's actual filename); do not hard-fail.
+                    continue
+                expected = {'destiny-agent-calus', 'destiny-agent-zavala',
+                            'destiny-agent-ghost', 'destiny-agent-mara-sov',
+                            'destiny-agent-drifter', 'destiny-agent-eris-morn'}
+                present = {os.path.basename(p) for p in list(REPOS.values())}
+                if expected <= present:
+                    issues.append(note)          # full workspace: broken is fatal
                 else:
                     missing_refs = globals().setdefault('_missing_refs', 0) + 1
                     globals()['_missing_refs'] = missing_refs
@@ -108,9 +134,13 @@ README_SECTIONS = {
                 '## License and attribution'],
 }
 README_SECTIONS['eris'] = README_SECTIONS['drifter']
+for sk in ('calus', 'zavala', 'ghost', 'mara-sov'):
+    README_SECTIONS[sk] = README_SECTIONS['drifter']
 README_META = re.compile(r'\*\*Version:\*\* \S+ \| \*\*Last push:\*\* \d{4}-\d{2}-\d{2} \| \*\*Status:\*\* Active')
 agent_sequences = {}
 for name, root in REPOS.items():
+    if name == 'template':
+        continue
     path = os.path.join(root, 'README.md')
     if not os.path.exists(path):
         issues.append((name, 'README.md', 'missing'))
