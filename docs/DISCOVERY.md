@@ -128,8 +128,9 @@ coverage API returns the notes and an `unexplained` list, so an agent can tell
 
 - Source scarcity, not schema, is the remaining constraint. Several vaulted
   raids have no surviving transcript source.
-- Item classification relies on release strings and title keywords; 9,513
-  items remain `unknown`.
+- Item classification relies on release strings and title keywords; every item
+  now carries a class, though 4,494 remain at `confidence='unknown'` pending
+  confirming evidence.
 - Authoritative Bungie manifest ingestion needs an API key. The curated
   catalogue is the fallback and is documented as such.
 

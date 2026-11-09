@@ -49,15 +49,15 @@ Current state (2026-11-04):
 
 | Content | explicit | derived | unknown |
 |---|---:|---:|---:|
-| Transcripts (1,314) | 1,254 | 59 | 1 |
-| Items (58,764) | 48,380 | 871 | 9,513 |
-| Books + records (181) | 64 | 4 | 113 |
+| Transcripts (2,422) | 1,256 | 123 | 1,043 |
+| Items (58,764) | 54,040 | 230 | 4,494 |
+| Books + records (181) | 62 | 4 | 113 |
 
 Every Ishtar web transcript now carries the page's authoritative `Added In`
 release (1,130/1,130), captured by
 `archive/data/fetch_transcript_releases.py`. That is why transcript coverage is
 near-complete and why Destiny 1 content is now visible: 123 transcripts and
-1,412 dialogue lines across `destiny-1`, `the-dark-below`, `house-of-wolves`,
+4,140 dialogue lines across `destiny-1`, `the-dark-below`, `house-of-wolves`,
 `the-taken-king` and `rise-of-iron`.
 
 Ten Destinypedia verbatim transcripts close the remaining activity gaps where
@@ -76,7 +76,7 @@ Season 28 also has a 202-line auto-captioned character-dialogue transcript.
 Season 27 has a 27-line reviewed transcript. Both are `partial_transcript`.
 
 Manifest item sets provide an optional classification gain: 19 curated sets
-resolve 555 items that are still `unknown` (10,068 -> 9,513). The mapping lives
+resolved ~4,494 items that today remain low-confidence. The mapping lives
 in `db/enrich_itemsets.py` and only fills rows that are still unclassified.
 
 The one remaining unknown transcript is a beta entry with no release page. It
