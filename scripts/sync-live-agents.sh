@@ -394,7 +394,8 @@ PY
         fi
     done <<< "$(manifest rows)"
     echo "synced $(manifest ids | paste -sd, - | sed 's/,/, /g') -> $OC_ROOT/workspace-*"
-    # Keep OpenClaw's MCP entry pointed at this checkout via an absolute path.
+    # Keep OpenClaw's MCP entry pointed at this checkout via the stable
+    # pointer symlink (~/.local/share/grimoire -> checkout) and wrapper.
     bash "$HERE/scripts/ensure-openclaw-mcp.sh" "$HERE" \
         || echo "warning: OpenClaw MCP config was not updated" >&2
 fi
