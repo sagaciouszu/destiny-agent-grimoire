@@ -70,8 +70,12 @@ OpenClaw's update doctor starts MCP servers to validate their tool schema, and
 it cannot resolve a bare `run.sh`. Onboarding takes care of this itself:
 
 - `setup.sh` runs `lore/scripts/ensure-openclaw-mcp.sh` after the archive is
-  linked (idempotent; backs up `openclaw.json` first; skips when OpenClaw is
-  not installed).
+  linked. The ensure script pins openclaw.json's `grimoire` entry to the
+  stable wrapper `~/.local/bin/grimoire-mcp` (which execs
+  `$GRIMOIRE_ROOT/mcp-server/run.sh` via the `~/.local/share/grimoire`
+  pointer symlink to this checkout), so relocating the archive only needs the
+  symlink refreshed — openclaw.json stays untouched. Idempotent; backs up
+  `openclaw.json` first; skips when OpenClaw is not installed.
 - `scripts/sync-live-agents.sh --openclaw` re-checks it on every sync.
 
 Verify with:

@@ -28,7 +28,7 @@ body, matching the migrate parsers. `ingest-destinypedia.py` keeps every
 | `sync-live-agents.sh [--openclaw] [--dry-run]` | deploy every agent in `series/agents.json` into OpenCode (agents/) or OpenClaw (workspace-<id>), preserving runtime memory and series blocks; skips agents with persona.json ready=false |
 | `../db/build-slim.py [out]` | 95 MB core database: books, transcripts, interactions, records (no items/cards) |
 | `coverage-report.py` | Markdown coverage report from the live database |
-| `ensure-openclaw-mcp.sh` | upsert an absolute grimoire MCP entry into `~/.openclaw/openclaw.json` (idempotent, backs up first, skips when OpenClaw is absent) |
+| `ensure-openclaw-mcp.sh` | keep OpenClaw's MCP pointer at the stable grimoire wrapper (idempotent, backs up first, skips when OpenClaw is absent) |
 | `sync-wiki.sh [--check\|--push]` | sync `docs/wiki/` into the GitHub wiki clone; `--check` fails on drift or model-control tokens, `--push` publishes |
 | `../db/enrich_lore.py` | manifest lore entries and FTS/verify |
 | `../db/enrich_manifest.py` | manifest activities, seasons and links |

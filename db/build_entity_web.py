@@ -17,7 +17,7 @@ marked requires_ctx match only attribution slots or first sentences.
 
 Usage:
   --db PATH       database to build on (the temp copy, never the live file)
-  --tsv PATH      entity lexicon TSV (default: /home/sredshaw/Work/entity-lexicon-proposal.tsv)
+  --tsv PATH      entity lexicon TSV (default: db/entity-lexicon-proposal.tsv)
   --dry-run       load + validate + print the lexicon plan, write nothing
   --report PATH   write a JSON build report
   --skip-scan     create tables/load lexicon, skip the corpus link scan
