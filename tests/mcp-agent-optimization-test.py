@@ -125,21 +125,28 @@ def main():
     check('offset=999999 clamps to 10000 (no rows past the data)',
           capped['count'] == 0, str(capped['count']))
 
-    # 7. Resource payloads stay inside the cap.
-    oversized = []
+    # 7. Resource payloads stay inside the cap and remain parseable JSON.
+    problems = []
     for fn in (server.books_resource, server.characters_resource,
                server.records_resource, server.stats_resource,
                server.activities_resource, server.seasons_resource,
                server.events_resource, server.coverage_resource,
                lambda: server.book_resource('book-above-all-else'),
                lambda: server.transcript_resource('contact-io'),
+               lambda: server.transcript_resource('menagerie'),
+               lambda: server.transcript_resource('season-of-arrivals'),
                lambda: server.character_resource('drifter'),
                lambda: server.record_resource('a-friend-in-need')):
         text = fn()
-        if len(text) > MAX_RESOURCE + 64:
-            oversized.append(f'{fn.__name__}={len(text)}')
-    check(f'resources capped at ~{MAX_RESOURCE} chars', not oversized,
-          ','.join(oversized))
+        if len(text) > MAX_RESOURCE:
+            problems.append(f'{fn.__name__}={len(text)}>{MAX_RESOURCE}')
+            continue
+        try:
+            json.loads(text)
+        except Exception as exc:
+            problems.append(f'{fn.__name__}: unparseable ({exc})')
+    check(f'resources ≤{MAX_RESOURCE} chars and parse as JSON', not problems,
+          ','.join(problems))
 
     # 8. find_item carries text+lore so agents skip the follow-up item() call.
     found = server.find_item('Gjallarhorn', limit=3)
