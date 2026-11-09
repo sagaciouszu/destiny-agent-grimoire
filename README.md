@@ -134,7 +134,7 @@ No API keys, accounts or network access are required at runtime.
 | `manifest_links` | 329 | Curated activity/season to manifest hash |
 | `seals` | 70 | Manifest seal nodes |
 | `seal_records` | 1004 | Triumph records per seal |
-| `v_speakers` (view) | 232 | Canonical speakers with line counts |
+| `v_speakers` (view) | 231 | Canonical speakers with line counts |
 | `v_transcript_taxonomy` (view) | 2422 | Transcripts joined to classification |
 | `v_activity_coverage` (view) | 71 | Transcripts and lines per activity |
 | `v_season_coverage` (view) | 28 | Transcripts and lines per season |
@@ -150,7 +150,7 @@ No API keys, accounts or network access are required at runtime.
 | `v_entity_resolve` (view) | 134 | Resolver lookup (alias to entity) |
 | `v_entity_documents` (view) | 24196 | Entities with ranked document lists |
 | `v_entity_coverage` (view) | 4 | Per-kind entity web coverage |
-| **Total** | 600195 | Rows across every table, view and index above |
+| **Total** | 600194 | Rows across every table, view and index above |
 
 Every content row carries provenance. Speaker aliases are canonicalized during
 migration. The full contract is `STANDARDS.md`.

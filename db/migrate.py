@@ -73,6 +73,7 @@ SPEAKER_ALIASES = {
     'Shiro': 'Shiro-4',
     'The Spider': 'Spider',
     'Nine': 'The Nine',
+    'Five': 'The Nine',
     'Tyra': 'Tyra Karn',
     "Tyra Karn's Voice": 'Tyra Karn',
     'Female voice': 'Unknown female voice',
