@@ -1,7 +1,7 @@
 # v0.30.0 - D1 speaker attribution normalization
 
 > **Depends On:** STANDARDS.md
-> **Token Estimate:** ~0.5K tokens
+> **Token Estimate:** ~0.8K tokens
 
 **2026-11-09**
 
