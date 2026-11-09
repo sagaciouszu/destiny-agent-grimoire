@@ -75,10 +75,10 @@ sqlite3 db/grimoire.db "SELECT slug, title, item_type FROM items WHERE item_type
 
 | Table | Purpose |
 |-------|---------|
-| `entities` | 88 named entities: characters, powers, factions, places |
-| `entity_aliases` | 134 attested name variants; `norm_alias` is the resolver key |
-| `entity_links` | 24196 entity to document links with weights and match classes |
-| `entity_relations` | 3 entity to entity links (adjacency, primeval pairs) |
+| `entities` | 89 named entities: characters, powers, factions, places |
+| `entity_aliases` | 136 attested name variants; `norm_alias` is the resolver key |
+| `entity_links` | 24595 entity to document links with weights and match classes |
+| `entity_relations` | 4 entity to entity links (adjacency, primeval pairs) |
 | `entity_build_meta` | build audit trail (build_id, source hashes, timings) |
 
 | View | Purpose |
