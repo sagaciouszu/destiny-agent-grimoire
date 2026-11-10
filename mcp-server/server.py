@@ -294,7 +294,11 @@ def list_records(kind: str, limit: int = 50, offset: int = 0) -> dict:
 
 @server.tool(annotations=READ_ONLY)
 def stats() -> dict:
-    """Row counts plus top item types and speakers."""
+    """Row counts plus top item types and speakers.
+
+    A pre-1.9 database has no `caption_sightings`; the response carries
+    `missing_tables` instead of failing, so a client can show the gap.
+    """
     return _api(api.stats)
 
 

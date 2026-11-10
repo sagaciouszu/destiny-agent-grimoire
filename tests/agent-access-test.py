@@ -102,6 +102,20 @@ def main():
     check('query CLI stats', stats.returncode == 0 and 'transcripts' in stats.stdout,
           stats.stderr.strip())
 
+    # Old databases must degrade, not crash: stats reports missing tables.
+    old_db = tempfile.mktemp(suffix='.db')
+    sqlite3.connect(old_db).close()
+    try:
+        env = dict(os.environ, GRIMOIRE_DB=old_db)
+        probe = run([sys.executable, '-c',
+                     'import json, db.api as a; print(json.dumps(a.stats()))'],
+                    env=env)
+        check('old database stats report missing tables',
+              probe.returncode == 0 and 'caption_sightings' in probe.stdout
+              and 'missing_tables' in probe.stdout, probe.stderr.strip())
+    finally:
+        os.remove(old_db)
+
     # The public roster is published data; it must be the same registry, not a
     # second hand-maintained list.
     site = os.path.join(os.path.dirname(ROOT), 'destiny-agent-grimoire-site',
