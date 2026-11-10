@@ -153,7 +153,15 @@ the build in `archive/data/builds.json`, rebuilds and runs the gates.
   `caption_sightings` row, never an inline rewrite of an earlier build.
 - Running against the registered current build is a **no-op** (exit 0).
 - `--dry-run` plans every stage and writes nothing; `--self-test` proves the
-  drift report names a changed line.
+  drift report names a changed line (including punctuation-only changes).
+- Source identity: `destiny2.exe` sha256 is checked before and after extraction,
+  `--expected-sha256` can pin it, and the hash is recorded in the build note.
+- A failed gate rolls back `builds.json` and the new tier file; a refused
+  `--force` on the current build prevents duplicate sightings.
+- Drift compares against the latest registered build, not always the original
+  current file.
+- After a successful rebuild the script exports site stats, syncs doc counts and
+  runs the docs-consistency gate.
 - A build whose English tables cannot be resolved is skipped and logged, not
   guessed.
 

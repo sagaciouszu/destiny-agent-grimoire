@@ -127,6 +127,12 @@ Acceptance met:
 A real second live build was not available in this environment; the synthetic
 drift self-test and the current-build no-op are the exercised paths.
 
+**Hardening after review:** failed gates roll back `builds.json` and the tier
+file; drift compares against the latest registered build; validator output is
+required (no silent partial tier); `--force` is refused on the current build;
+`destiny2.exe` sha256 is checked/recorded; post-rebuild site/doc counts and the
+docs-consistency gate run; punctuation-only drift is reported.
+
 ---
 
 ## Q4 — Caption-tier label in `character(all_lines=True)`
