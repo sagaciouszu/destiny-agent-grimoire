@@ -107,30 +107,22 @@ attrib -r -s -h lore /s /d
 rmdir /s /q lore
 ```
 
-## Verify the deployment
+## Check it works
 
 ```bash
 python3 lore/db/query.py stats
-bash lore/tests/agent-layout-test.sh
-bash tests/master-audit.sh
 ```
 
-Agent master audits:
+If the counts print, the agent can read the archive. Start a conversation and ask
+a question in the agent's area; a grounded answer cites verified lines from the
+database.
 
-| Agent | Suites |
-|---|---:|
-| Drifter | 25 |
-| Eris | 20 |
-| Calus | 20 |
-| Zavala | 20 |
-| Ghost | 20 |
-| Mara Sov | 20 |
+## Use the agent
 
-The shared runner reads `tests/suites.json`:
+OpenCode lists the agent by its display name. Choose it, then talk normally.
+The agent loads its core voice first and escalates to deeper modules only when
+the conversation needs them.
 
-```bash
-bash tests/run-suites.sh
-bash tests/run-suites.sh --tier core
-```
-
-Suite additions are allowed. Removals fail the central manifest guard.
+To consult another persona from inside a conversation, use the matching
+`<id>-consult` agent. Consult agents are read-only and answer in character; they
+do not change your files or delegate further.

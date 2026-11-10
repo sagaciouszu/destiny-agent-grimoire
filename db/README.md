@@ -4,7 +4,7 @@ SQLite database for the Destiny lore repository. Single file, no external connec
 
 File: `grimoire.db` (SQLite, FTS5 full-text search enabled). Built from `source/` + `archive/` by `migrate.py`; not committed, prebuilt copies attached to releases.
 
-Full build/provenance matrix: [`docs/wiki/Builds.md`](../docs/wiki/Builds.md).
+Full build/provenance matrix: [`docs/process/Builds.md`](../docs/process/Builds.md).
 
 ## Quick start
 
@@ -146,4 +146,4 @@ It **does not** build the manifest-derived tables (or the lore index); those
 come from `python3 db/enrich_lore.py`, `enrich_manifest.py`, `enrich_seals.py`
 and `enrich_itemsets.py --apply` after fetching the manifest with
 `python3 archive/data/fetch_manifest.py --fetch --extract`. The full chain is
-the release recipe documented in `docs/wiki/Testing-and-Auditing.md`.
+the release recipe documented in `docs/process/Testing-and-Auditing.md`.

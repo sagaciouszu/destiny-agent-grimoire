@@ -48,19 +48,21 @@ without deleting an existing deployment.
 Consult agents are read-only. They answer questions in character and must verify
 quotes before using them.
 
-## Suite manifests
-
-Each agent owns `tests/suites.json`, the exact command list from its
-`master-audit.sh`, tagged `core`, `persona` or `experimental`. The central
-baseline in `series/suite-baseline.json` prevents accidental suite loss.
-
-Run an agent's suites from its own repo:
+## How to run one
 
 ```bash
-bash tests/run-suites.sh
-bash tests/run-suites.sh --tier core
-bash tests/run-suites.sh --list
+cd destiny-agent-eris-morn
+bash setup.sh ../destiny-agent-grimoire
 ```
+
+Then choose the agent in your runtime. See [Agent Setup](Agent-Setup.md) for
+OpenCode and OpenClaw deployment, destinations and environment variables.
+
+## How to use them together
+
+The primary agent answers in its own voice. A `<id>-consult` copy answers
+questions from a peer persona when you need a second perspective. Consult copies
+are read-only: they do not edit files, run commands or delegate again.
 
 ## Sync
 

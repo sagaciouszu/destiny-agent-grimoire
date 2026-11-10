@@ -159,11 +159,3 @@ Prompts:
 - control characters, bidi marks and zero-width characters stripped
 - speaker matching respects name boundaries
 
-## Test
-
-```bash
-mcp-server/.venv/bin/python tests/mcp-test.py
-```
-
-The contract test covers tool registration, search, verify accept/reject, limits,
-read-only access and a real stdio handshake.
