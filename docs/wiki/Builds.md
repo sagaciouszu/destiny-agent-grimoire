@@ -19,7 +19,7 @@ count was read from the live database or the extraction vault on 2026-11-09.
 | Build ID | Bungie stamp | App release | Pkg format | Cfg version | EN baseline | Extraction status |
 |---|---|---|---|---|---|---|
 | `sunrise-pre-bl` | `86657.20.08.23.1800.d2_rc` | Destiny 2: Shadowkeep / Season of Arrivals era (~Sep 2020 build) | Tiger `.pkg`, package version **38** | not recorded | EN-only | Extracted 2026-11-07/08 → `/opt/vault/games/sunrise` (~74 GB, 1,709 `.pkg` files, verified). Caption corpus reconciled into Grimoire (1,106 tables / 9,282 lines). Extraction prior art, released as v0.29.0+. |
-| `build-25932352` | `245114.26.10.13.2000.v500_live.main` | Update **9.7.0.6** (Oct 20 2026), Steam buildid **25932352**, appid 1085660 | Tiger `.pkg`, package version **53** (layout differs from v38: entry table at `0x44`, `pkg_id` at `0x10`, `file_size` at `0x120`; tables byte-layout compatible) | not recorded | EN-only (45 `_en` VO files; no other locales present) | Phase 1 probe complete 2026-11-09 (`/opt/vault/d2-bl-extract/reports/build-25932352-probe.md`). Copy at `/opt/vault/d2-bl-extract/build-25932352` (2,498 files / 2,417 `.pkg`, 162,825,758,961 bytes, matches Steam install). **No captions extracted yet** - content is encrypted with rotated keys; see "What the 2026 build unlocks". |
+| `build-25932352` | `245114.26.10.13.2000.v500_live.main` | Update **9.7.0.6** (Oct 20 2026), Steam buildid **25932352**, appid 1085660 | Tiger `.pkg`, package version **53** (layout differs from v38: entry table at `0x44`, `pkg_id` at `0x10`, `file_size` at `0x120`; tables byte-layout compatible) | not recorded | EN-only | Container verified and byte-identical copy at `/opt/vault/d2-bl-extract/build-25932352` (2,498 files, 162,825,758,961 B; `destiny2.exe` sha256 `fe69488d…c305cfb`). `w64_sr_globals_*` StringBanks are cleartext UTF-8 (class `0x808099f1`); package `w64_sr_globals_0294` (**634 EN entries**) is extracted and ingested. The other 15 globals packages are pending extraction. |
 
 Manifest note: the Bungie manifest stamp `245114.26.10.13.2000-1-bnet.66137`
 corresponds to the same content build (same prefix, fetched via Bungie API
@@ -28,12 +28,12 @@ taxonomy `monument-of-triumph`.
 
 ## Extraction tiers
 
-Counts read from the live `db/grimoire.db` on 2026-11-09 (2,424 transcript
-headers, 78,928 lines, `caption_provenance` 9,607 rows).
+Counts read from the live `db/grimoire.db` on 2026-11-10 (2,936 transcript
+headers, 82,249 lines, `caption_provenance` 12,934 rows).
 
 | Tier (`source_tier`) | Rows (headers / lines) | Build / source |
 |---|---|---|
-| `game_caption` | 1,106 / 9,282 | `sunrise-pre-bl` (EN). Committed corpus `archive/data/captions.jsonl` (69 records, all `source_build='sunrise-pre-bl'`; 1,106 loaded as `source_tier='game_caption'`). `build-25932352` pending extraction. |
+| `game_caption` | 1,618 / 12,603 | Two builds. `sunrise-pre-bl`: 1,106 / 9,282 from committed `archive/data/captions.jsonl`. `build-25932352`: 512 / 3,321 from `archive/data/captions-live.jsonl` (package `w64_sr_globals_0294`, 3,327 provenance rows, 6 of them attached to pre-existing non-caption lines). |
 | Web transcripts, `ishtar-collective.net` (Ishtar Collective, archival primary, human-verified) | 1,236 pages total: `ishtar_web` 1,129 / 15,850 lines · `ishtar_main` 101 / 4,203 · `ishtar_commons` 26 / 354 · `published` 8 / 22 · `validated` 7 / 22 | Web captures, era-scoped; primary source for DCV-era (vaulted) content. Not build-derived. |
 | `destinypedia` | 10 / 981 | Verbatim from the Destinypedia wiki (front-matter `Tier: destinypedia`). Destinypedia is corroboration per the source hierarchy in `STANDARDS.md`, not the primary. |
 | `youtube_captions` | 6 / 638 | YouTube-caption-derived; speaker labels reviewed where noted in the source file (e.g. `partial-expedition` lists 26 sources, "speaker labels reviewed"). Not build-derived. |
@@ -59,51 +59,57 @@ EN, `sunrise-pre-bl`):
 4. `source_build='sunrise-pre-bl'` (every record in `archive/data/captions.jsonl`
    carries it; nothing mixes builds silently).
 
-What `build-25932352` would carry instead: the same logical table lives in a
-v53 package (e.g. the `w64_investment_globals_client_*` family, split by the
-patch model); `source_build='build-25932352'`; package offsets, entry/block
-layout and the def-hash namespace all differ (v53: entry table at `0x44`, not
-`0x110`), so the StringReference hashes would have to be re-derived after
-decryption - the hash scheme for the live build is **TBD, not the v38 scheme**.
-Nothing from the 2026 build is in the caption tier yet. Chapter ownership and
+What `build-25932352` carries instead: the same logical text lives in a v53
+StringBank package (`w64_sr_globals_*`, class `0x808099f1`); the build exposes
+no per-line StringReference hash for these banks, so identity is
+`(source_pkg, bank_entry, record_index, record_part)`. `source_build` is
+`build-25932352`; package offsets and entry/block layout differ from v38, but
+the StringBank payload is cleartext UTF-8. Nothing is re-hashed or guessed.
+
+Live worked example: `caption-live-0294-5234-dialogue` is built from entry 5234
+of `w64_sr_globals_0294`; each line records the bank entry, the record slot,
+the paragraph part and the build. `source_pkg` keeps the full package name
+with its patch suffix (`_0294`), not the family stub. Chapter ownership and
 verification flow: `docs/wiki/Captions.md`.
 
-## What the 2026 build unlocks once parsed
+## What the 2026 build unlocks
 
 Honest status of `build-25932352` (probe report 2026-11-09,
-`/opt/vault/d2-bl-extract/reports/build-25932352-probe.md` and
-`EXTRACTION_MISSION.md`):
+`/opt/vault/d2-bl-extract/reports/build-25932352-probe.md`; single-table proof
+and tier audit under the same vault):
 
 - **Container layer verified.** v53 layout decodes byte-exactly on 2,417/2,417
-  packages (`file_size@0x120` matches actual size everywhere; entry/block
-  tables parse on every sampled file; SHA-1 block hashing verifies).
-- **Zero pre-BL-usable text blocks.** The pre-BL AES-GCM keys/nonce fail
-  211/211 sampled blocks across ~50 families; `flags==1` (Oodle-only) blocks
-  do not exist; every text-relevant block is `flags==3` or `flags==7`
-  (encrypted). No plaintext def payloads exist to shortcut identification.
-  The def-hash namespace fully rotated (`0x80809A88/8A` and the BL+ narrator
-  marker `0x80809733` are 0-occurrences).
-- **Narrator neighborhood candidate.** `0x80809738` (1,158 entries in
-  `sr_*`, 44.7% of `sr_audio`, 45.6% of `sr_dialog`; mean ~100 B, `0x54`
-  modal) is the live candidate for the BL+ audio-narrator def class - the
-  audio packages now co-locate `0x808099f1` string-bank-class refs, absent in
-  sunrise's audio families. **Content level: UNVERIFIED.** No speaker name
-  can be quoted from this build until Gate 0 (live AES-GCM keys) clears.
-- **2024+ speaker-name gameplay subtitles precedent.** Per `STANDARDS.md`,
-  the live build's gameplay speaker-name subtitles are accepted as attribution
-  *with provenance* (`speaker_source` naming the build), gameplay subtitles
-  only, never for cinematics, never as persona canon.
-- **Schema bump.** Schema is now **1.7.0** (`db/SCHEMA_VERSION`): a `builds`
-  registry table and `caption_provenance.source_build` ship in this release;
-  future caption rows trace back to a build.
-- **Gate 0 / Phase 2.** Phase 2 (EN caption extraction,
-  `reports/build-25932352-vo.md`) cannot start until the live keys/nonce
-  schedule are obtained; the probe's risk-ordered opening move is
-  `w64_sr_globals_0548_*` → `client` → `investment` → `ui` →
-  crucible/kepler/s25/planet → dialog/audio → cinematics/video last.
+  packages. The copy in the vault is byte-identical to the Steam install.
+- **StringBank text is not encrypted.** The earlier "rotated AES-GCM keys"
+  verdict applies to encrypted block classes, not to the `w64_sr_globals_*`
+  StringBanks: `0x808099f1` entries decode as cleartext UTF-8 with the
+  `tiger-pkg` unpacker plus `liboodle-data-shared.so`. Package `0294` proves
+  the path: 634 EN entries, 17,990 strings, 0 parse failures.
+- **One package is ingested.** `w64_sr_globals_0294` contributes 3,327 live
+  provenance rows (736 `dialogue`, 1,823 `narration`, 768 `objective`; 38 named
+  speakers, all from in-string attribution). Every row traces to
+  `(package, entry, record, part, build)`.
+- **Filters are deliberate.** 13,614 short labels/UI headings, 1,503 noise
+  strings, 245 duplicates, 911 item-text fragments and 91 mechanical
+  perk/modifier lines were dropped; 259 of 634 entries yielded no kept line.
+  The per-package counts ship in
+  `archive/data/locale-maps/w64_sr_globals_0294.stats.json`.
+- **Locale resolution is verified, not guessed.** `scripts/resolve-locales.py`
+  reproduces the content-verified EN entry list for package `0294` exactly
+  (634/634, zero false positives). The other 15 globals packages need
+  extraction before they can be resolved; a package that cannot be pinned by
+  two independent script anchors is skipped and logged.
+- **Schema bump.** Schema is now **1.8.0** (`db/SCHEMA_VERSION`):
+  `caption_provenance.record_index` and `record_part` join
+  `source_build`/`source_pkg`/`bank_entry`.
+- **Known limit.** `caption_provenance` is one row per line. Where the live
+  build repeats text the 2020 build already shipped, the row keeps
+  `sunrise-pre-bl`; the live sighting is logged in the audit, not stored as a
+  second row. 157 emitted live lines merged into existing canon this way (6 of
+  them onto non-caption web lines).
 
-Milestones are exactly those in the two documents above; none of the above is
-a shipped release. No milestone beyond the probe exists.
+`build-25932352` is legitimate for current-era extraction and verification,
+never as ground truth for what an earlier expansion shipped.
 
 ## Non-goals / out of scope
 

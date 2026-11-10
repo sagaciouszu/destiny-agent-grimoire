@@ -1,7 +1,7 @@
 # Standards
 
 > **Depends On:** none (standards reference)
-> **Token Estimate:** ~7.6K tokens
+> **Token Estimate:** ~10.3K tokens
 
 The contract every file, script, and database row in this repository must meet.
 Verification gates (section 7) enforce these rules; a change that breaks them is
@@ -66,6 +66,24 @@ ground truth for what Beyond Light shipped.
 
 A corpus that claims coverage it does not have is invalid; era expansion only
 lands with the gate suite green and release notes naming the sources.
+
+**String-bank text is not subtitle captions.** A live `w64_sr_globals` package
+carries the game's whole text surface, not a subtitle track: quest prose,
+objectives, item and perk copy, callouts, and some dialogue, all in one table.
+When it is ingested into the caption tier:
+
+- the build is the authoritative provenance, not the bucket: `source_build`
+  says which client shipped the line; `kind` (`dialogue`, `narration`,
+  `objective`) is a **heuristic** label from punctuation and attribution, and
+  is never presented as a build-side fact;
+- a line that carries its own attribution (`"..." —Name`) is dialogue and its
+  speaker is that name; nothing else is attributed;
+- mechanical copy (perk and modifier stat text) and fragments of item entries
+  the corpus already holds are **excluded**, because a lore corpus must not
+  return the same text twice in two shapes;
+- one build's string banks are not era-pure. A single package can hold text
+  from several expansions and seasons; package order is not chronology and
+  must never be used to date a line.
 
 ## 2. Repository connection matrix
 

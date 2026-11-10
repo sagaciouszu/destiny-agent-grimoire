@@ -6,7 +6,7 @@
     "engine": "sqlite",
     "fts": "fts5 (porter unicode61)",
     "build": "python3 db/migrate.py",
-    "caption_source": "archive/data/captions.jsonl (game captions, build sunrise-pre-bl, English only; raw subtitle exports stay local)",
+    "caption_source": "archive/data/captions.jsonl (game captions, build sunrise-pre-bl, English only) + archive/data/captions-live.jsonl (live build build-25932352, English only); raw subtitle exports stay local",
     "release_asset": "https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db",
     "release_asset_xz": "https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db.xz",
     "release_asset_gz": "https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db.gz",
