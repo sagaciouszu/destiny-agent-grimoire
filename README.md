@@ -161,8 +161,8 @@ migration. The full contract is `STANDARDS.md`.
 
 ## For agents
 
-- **Wiki:** `docs/wiki/Home.md` covers setup, architecture, database, CLI, MCP,
-  agents, platforms, testing and troubleshooting.
+- **Wiki:** `docs/wiki/Home.md` covers setup, query CLI, MCP,
+  agents, platforms and troubleshooting.
 - **Skill:** `skills/destiny-grimoire/SKILL.md` is the drop-in agent skill.
 - **MCP (optional):** `mcp-server/run.sh` serves typed tools to non-shell clients
   over local stdio; one adapter covers every agent that mounts this archive.
