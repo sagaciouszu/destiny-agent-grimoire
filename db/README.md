@@ -58,22 +58,22 @@ sqlite3 db/grimoire.db "SELECT slug, title, item_type FROM items WHERE item_type
 
 | Table | Purpose |
 |-------|---------|
-| `books` | 110 lore books (slug, title, source_url, entry_count) |
 | `book_entries` | 1158 entries within books (FK to books) |
-| `transcripts` | 9229 transcript headers (quest + cutscene + web) |
-| `transcript_lines` | Canonical dialogue by speaker; `speaker_source` set for attributed caption lines |
+| `books` | 110 lore books (slug, title, source_url, entry_count) |
 | `caption_provenance` | One row per caption line: current build/package/entry/slot index |
 | `caption_sightings` | Every observation of a caption record line (build, package, slot, paragraph) |
+| `character_lines` | Canon character quotes ready for agent use |
+| `characters` | 20 named characters |
+| `fts` | FTS5 search over all tables |
 | `grimoire_cards` | 2889 Destiny 1 grimoire cards |
 | `interactions` | 2699 short character dialogue beats |
-| `items` | Weapons, armor, gear lore + flavor text |
-| `records` | 69 triumphs/seals with canonical text |
-| `characters` | 20 named characters |
-| `character_lines` | Canon character quotes ready for agent use |
-| `fts` | FTS5 search over all tables |
-| `verify_fts` | normalized text + provenance for fast quote verification |
 | `item_title_fts` | item titles for fast name lookup |
+| `items` | Weapons, armor, gear lore + flavor text |
 | `meta` | DB version |
+| `records` | 69 triumphs/seals with canonical text |
+| `transcript_lines` | Canonical dialogue by speaker; `speaker_source` set for attributed caption lines |
+| `transcripts` | 9229 transcript headers (quest + cutscene + web) |
+| `verify_fts` | normalized text + provenance for fast quote verification |
 
 ### Entity web (additive, schema 1.7.0)
 
@@ -81,15 +81,15 @@ sqlite3 db/grimoire.db "SELECT slug, title, item_type FROM items WHERE item_type
 |-------|---------|
 | `entities` | 89 named entities: characters, powers, factions, places |
 | `entity_aliases` | 136 attested name variants; `norm_alias` is the resolver key |
+| `entity_build_meta` | build audit trail (build_id, source hashes, timings) |
 | `entity_links` | 33578 entity to document links with weights and match classes |
 | `entity_relations` | 4 entity to entity links (adjacency, primeval pairs) |
-| `entity_build_meta` | build audit trail (build_id, source hashes, timings) |
 
 | View | Purpose |
 |-------|---------|
-| `v_entity_resolve` | resolver path: alias + norm lookup to entities |
-| `v_entity_documents` | entity to ranked document list (weight DESC, ref) |
 | `v_entity_coverage` | per-kind coverage (entities, linked, links) |
+| `v_entity_documents` | entity to ranked document list (weight DESC, ref) |
+| `v_entity_resolve` | resolver path: alias + norm lookup to entities |
 
 Build order: `python3 db/build_entity_web.py --db <copy>` creates and fills the
 tables on a copy of the database (see v0.33.0 release notes for the swap

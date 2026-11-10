@@ -5,14 +5,14 @@ Output feeds `db/migrate.py`; re-run migrate after ingesting.
 
 | Script | Writes to | Consumed by migrate |
 |--------|-----------|---------------------|
-| `ingest-grimoire.py <slug>...` | `source/cards/` | yes (globs `source/cards/*.md`) |
-| `ingest-record.py <slug>...` | `source/records/` | yes (globs `source/records/*.md`) |
-| `ingest-destinypedia.py --page ... --slug ...` | `source/transcripts/` | yes (globs `source/transcripts/*.md`) |
-| `ingest-ishtar-commons.py --topic N --slug ...` | `source/transcripts/` | yes (globs `source/transcripts/*.md`) |
-| `crawl-ishtar-commons.py` | `archive/data/commons/` (local) | no (raw crawl) |
-| `ingest-ishtar-commons-batch.py` | `source/transcripts/commons-*.md` | yes |
 | `build-lore-staging.py` | `archive/data/manifest/lore_entries.jsonl` | no (enrichment input) |
+| `crawl-ishtar-commons.py` | `archive/data/commons/` (local) | no (raw crawl) |
 | `gap-report.py` | `docs/GAPS.md` | no (generated report) |
+| `ingest-destinypedia.py --page ... --slug ...` | `source/transcripts/` | yes (globs `source/transcripts/*.md`) |
+| `ingest-grimoire.py <slug>...` | `source/cards/` | yes (globs `source/cards/*.md`) |
+| `ingest-ishtar-commons-batch.py` | `source/transcripts/commons-*.md` | yes |
+| `ingest-ishtar-commons.py --topic N --slug ...` | `source/transcripts/` | yes (globs `source/transcripts/*.md`) |
+| `ingest-record.py <slug>...` | `source/records/` | yes (globs `source/records/*.md`) |
 | `ishtar-timeline.py --fetch/--from/--report` | `source/ishtar-timeline.json` | yes (in-universe era snapshot; --report compares vs the timeline column) |
 
 All are resumable/idempotent and format output as `# Title` + `- Source:` +
@@ -23,18 +23,18 @@ body, matching the migrate parsers. `ingest-destinypedia.py` keeps every
 
 | Script | Purpose |
 |--------|---------|
-| `release-stage.sh <version> [--dry-run]` | copy the database, write `SHA256SUMS`, print publish commands |
-| `backup.sh [zip]` | rolling archive backup without the database, plus checksum |
-| `sync-live-agents.sh [--openclaw] [--dry-run]` | deploy every agent in `series/agents.json` into OpenCode (agents/) or OpenClaw (workspace-<id>), preserving runtime memory and series blocks; skips agents with persona.json ready=false |
+| `../archive/data/fetch_transcript_releases.py` | authoritative transcript release map |
 | `../db/build-slim.py [out]` | 224 MB core database: books, transcripts, captions, interactions, records (no items/cards) |
-| `coverage-report.py` | Markdown coverage report from the live database |
-| `ensure-openclaw-mcp.sh` | keep OpenClaw's MCP pointer at the stable grimoire wrapper (idempotent, backs up first, skips when OpenClaw is absent) |
-| `sync-wiki.sh [--check\|--push]` | sync `docs/wiki/` into the GitHub wiki clone; `--check` fails on drift or model-control tokens, `--push` publishes |
+| `../db/enrich_itemsets.py --apply` | curated armour-set classification |
 | `../db/enrich_lore.py` | manifest lore entries and FTS/verify |
 | `../db/enrich_manifest.py` | manifest activities, seasons and links |
 | `../db/enrich_seals.py` | seal/triumph tree |
-| `../db/enrich_itemsets.py --apply` | curated armour-set classification |
-| `../archive/data/fetch_transcript_releases.py` | authoritative transcript release map |
+| `backup.sh [zip]` | rolling archive backup without the database, plus checksum |
+| `coverage-report.py` | Markdown coverage report from the live database |
+| `ensure-openclaw-mcp.sh` | keep OpenClaw's MCP pointer at the stable grimoire wrapper (idempotent, backs up first, skips when OpenClaw is absent) |
+| `release-stage.sh <version> [--dry-run]` | copy the database, write `SHA256SUMS`, print publish commands |
+| `sync-live-agents.sh [--openclaw] [--dry-run]` | deploy every agent in `series/agents.json` into OpenCode (agents/) or OpenClaw (workspace-<id>), preserving runtime memory and series blocks; skips agents with persona.json ready=false |
+| `sync-wiki.sh [--check\|--push]` | sync `docs/wiki/` into the GitHub wiki clone; `--check` fails on drift or model-control tokens, `--push` publishes |
 
 Bulk content (items, interactions, web transcripts, cutscene captions) uses
 the scrapers in `archive/` writing JSONL:
