@@ -44,6 +44,15 @@ build covers everything that still ships).
 the build/id it came from (`sunrise-pre-bl`, `build-25932352`, ...);
 `caption_provenance` and friends never mix builds silently.
 
+**A build is not a proxy for an earlier build.** The live client is the
+current game with years of Bungie changes on top of its content: recast
+voices, rewritten lines, moved items and dropped activities. Text that
+differs from an earlier era's capture is drift, not an error — canon lines
+alike keep the era capture text; a drift log is the deliverable, never an
+inline rewrite. The live build (`build-25932352`) is legitimate for
+current-era extraction, 2024+ gameplay labels and verification, never as
+ground truth for what Beyond Light shipped.
+
 **2024+ speaker-name gameplay subtitles** are accepted as speaker attribution
 **with provenance labels** (`speaker_source` naming the live build), but:
 
