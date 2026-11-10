@@ -37,8 +37,8 @@ flavor text, verify.
 |-------|------|---------|
 | books | 110 | Book metadata |
 | book_entries | 1158 | Lore entries within books |
-| transcripts | 2422 | Transcript headers (quests, web, cutscenes, game captions) |
-| transcript_lines | 78740 | Canon dialogue and game captions by speaker |
+| transcripts | 2424 | Transcript headers (quests, web, cutscenes, game captions) |
+| transcript_lines | 78928 | Canon dialogue and game captions by speaker |
 | grimoire_cards | 2889 | Destiny 1 grimoire cards |
 | interactions | 2699 | Short character dialogue beats |
 | items | 58764 | Weapons / armor / gear lore + flavor |
@@ -47,12 +47,12 @@ flavor text, verify.
 | character_lines | 1229 | Canon character quotes for agents |
 | caption_provenance | 9607 | Caption line provenance (StringReference hash, package) |
 | speaker_source | 206 | Attribution provenance on caption lines (ishtar_containment/dialogue_node/line_prefix) |
-| fts | 130210 | FTS5 search index |
-| verify_fts | 130210 | Fast quote verification index |
+| fts | 130398 | FTS5 search index |
+| verify_fts | 130398 | Fast quote verification index |
 | item_title_fts | 58764 | Item title lookup index |
 | entities | 89 | Named entities (char/power/faction/place) |
 | entity_aliases | 136 | Attested name variants per entity |
-| entity_links | 24595 | Entity to document links with weights |
+| entity_links | 24622 | Entity to document links with weights |
 | entity_relations | 4 | Entity to entity links (adjacency, primevals) |
 
 Taxonomy tables (additive; canon tables are never rewritten):
@@ -64,7 +64,7 @@ Taxonomy tables (additive; canon tables are never rewritten):
 | activities | 71 | Raids, dungeons, seasonal activities, missions |
 | events | 9 | Festival, Dawning, Solstice, Guardian Games, Crimson Days, Revelry, Moments of Triumph, Bungie Day, Iron Banner |
 | event_occurrences | 72 | Event year, dates and season |
-| transcript_classification | 2422 | Activity/season/event per transcript with confidence |
+| transcript_classification | 2424 | Activity/season/event per transcript with confidence |
 | item_classification | 58764 | Season/event per item |
 | document_classification | 179 | Season/event per book or record |
 | lore_entries | 2962 | Bungie manifest lore entries |

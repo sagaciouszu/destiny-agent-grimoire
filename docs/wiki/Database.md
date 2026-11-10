@@ -218,7 +218,7 @@ release) are deliberately not modeled.
 |---|---|
 | `entities` | 89 rows: canonical name, norm_key, kind, confidence, reviewed |
 | `entity_aliases` | 136 rows: attested spelling verbatim; `norm_alias` is the resolver key; `requires_ctx` gates context-sensitive phrases |
-| `entity_links` | 24595 rows: entity to document links; `kind` is transcript, book, book_entry, lore_entry, item, record or seal; `ref` is the parent slug or `table:id` |
+| `entity_links` | 24622 rows: entity to document links; `kind` is transcript, book, book_entry, lore_entry, item, record or seal; `ref` is the parent slug or `table:id` |
 | `entity_relations` | entity to entity links (`adjacent_to`, `related_to`); used for the Riven-Siren adjacency and the Gardener/Winnower primeval pairs |
 | `entity_build_meta` | build audit trail: build_id, source TSV hash, pre-build DB hash, wall-clock timings |
 | `v_entity_resolve` | public view: alias + norm lookup to entities |

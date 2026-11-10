@@ -58,7 +58,7 @@ sqlite3 db/grimoire.db "SELECT slug, title, item_type FROM items WHERE item_type
 |-------|---------|
 | `books` | 110 lore books (slug, title, source_url, entry_count) |
 | `book_entries` | 1158 entries within books (FK to books) |
-| `transcripts` | 2422 transcript headers (quest + cutscene + web) |
+| `transcripts` | 2424 transcript headers (quest + cutscene + web) |
 | `transcript_lines` | Canonical dialogue by speaker; `speaker_source` set for attributed caption lines |
 | `grimoire_cards` | 2889 Destiny 1 grimoire cards |
 | `interactions` | 2699 short character dialogue beats |
@@ -77,7 +77,7 @@ sqlite3 db/grimoire.db "SELECT slug, title, item_type FROM items WHERE item_type
 |-------|---------|
 | `entities` | 89 named entities: characters, powers, factions, places |
 | `entity_aliases` | 136 attested name variants; `norm_alias` is the resolver key |
-| `entity_links` | 24595 entity to document links with weights and match classes |
+| `entity_links` | 24622 entity to document links with weights and match classes |
 | `entity_relations` | 4 entity to entity links (adjacency, primeval pairs) |
 | `entity_build_meta` | build audit trail (build_id, source hashes, timings) |
 
