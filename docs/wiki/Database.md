@@ -261,7 +261,7 @@ Darkness respectively, not aliases. Rasputin (char) and The Worm/Xol
 high-confidence lexicon (125 TSV rows, folded-duplicate variants merged) plus
 the owner rulings, scans the corpus read-only, verifies every ref resolves to
 exactly one parent row, then sets `meta.version=1.6.0` and live-count meta
-keys. Swap protocol: build on a temp copy, run `tests/test-db.sh` (65/65) and
+keys. Swap protocol: build on a temp copy, run `tests/test-db.sh` (67/67) and
 `tests/lore-integrity.sh` (17/17), verify books/cards SHA256 before/after,
 then swap atomically into `db/grimoire.db`. Books and cards are read-only;
 byte-identical proof is in the v0.33.0 release notes. Known limits: Memory of

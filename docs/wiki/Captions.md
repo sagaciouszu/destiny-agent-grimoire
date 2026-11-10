@@ -1,9 +1,9 @@
 # Captions
 
-Build identities and the tier -> provenance mapping: [`docs/wiki/Builds.md`](Builds.md).
+Build identities and the tier -> provenance mapping: [`Builds.md`](Builds.md).
 
 English captions extracted from local game builds: `sunrise-pre-bl` (Season of
-Arrivals, 2020) and `build-25932352` (the live build as of 2026-10/11). Every
+Arrivals, 2020) and `build-25932352` (Update 9.7.0.6, Oct 2026). Every
 caption row names the build it came from via the slug/`source_build`
 field; nothing mixes builds silently. `source_tier='game_caption'`,
 `lang='en'`. Everything here is validated by tests; nothing in this document is
@@ -37,9 +37,9 @@ Every English line lives on exactly one caption table. `migrate.py` loads
 - **Activity facets are curated, never guessed.** The activity keyword verdict
   is stored as `confidence='derived'` with season/expansion filled from the
   activity catalogue (exactly `classify()` behaviour).
-- **No per-line speaker exists for callouts or mission dialogue in the 2019
-  build.** `0x80808d54` holds a FNV-1 speaker hash only on the 2019 vendor-desk
-  greetings; `build-25932352` (2024+ client) adds gameplay speaker-name
+- **No per-line speaker exists for callouts or mission dialogue in the
+  `sunrise-pre-bl` build.** `0x80808d54` holds a FNV-1 speaker hash only on that
+  build's vendor-desk greetings; `build-25932352` (Update 9.7.0.6) adds gameplay speaker-name
   subtitles, which are accepted with provenance (`speaker_source` naming the
   build) and never apply to cinematics. Any attempt to add per-line speakers
   elsewhere is fabricated attribution and tests reject it).
@@ -127,6 +127,6 @@ docs-audit enforce keeping them out.
 
 ## Related reading
 
-- `docs/wiki/Database.md` — structure, schema, FTS, verification flow
+- `Database.md` — structure, schema, FTS, verification flow
 - `SPEAKER_ATTRIBUTION.md` (private extraction note, not distributed) — line-by-line evidence trail
 - `tests/caption-test.py` — the normative definition of correct captions

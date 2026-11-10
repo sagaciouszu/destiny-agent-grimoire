@@ -38,8 +38,8 @@ curl.exe -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/la
 ```
 
 Smaller companions of the same bytes live at the same endpoint:
-`grimoire.db.xz` (29 MiB, `xz -d`, `tar -xJf` on Windows) and
-`grimoire.db.gz` (56 MiB, `gzip -d`, `tar -xzf` on Windows). The gzip asset
+`grimoire.db.xz` (41.9 MiB, `xz -d`; use 7-Zip on Windows) and
+`grimoire.db.gz` (78.6 MiB, `gzip -d`; use 7-Zip on Windows). The gzip asset
 needs nothing beyond gzip, which is what Android apps decompress with
 `GZIPInputStream`.
 
@@ -53,8 +53,12 @@ The prebuilt asset is checked against the release `SHA256SUMS` by the agent
 installers. To check it yourself:
 
 ```bash
-sha256sum -c SHA256SUMS
+grep '  grimoire.db$' SHA256SUMS | sha256sum -c -
 ```
+
+`SHA256SUMS` also lists the `.xz` and `.gz` companions. Checking the whole file
+fails unless every listed asset is present, so select the line for the file you
+actually downloaded.
 
 ## First queries
 

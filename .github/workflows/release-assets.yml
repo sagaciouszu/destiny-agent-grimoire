@@ -2,8 +2,8 @@ name: Release assets
 
 # Keep the static database endpoints truthful:
 #   grimoire.db      - the published artifact (operator upload)
-#   grimoire.db.xz   - smallest (29 MiB, xz -9e); Linux/macOS/Termux/7-Zip
-#   grimoire.db.gz   - universal (56 MiB); Android apps via GZIPInputStream
+#   grimoire.db.xz   - smallest (~41.9 MiB, xz -9e); Linux/macOS/Termux/7-Zip
+#   grimoire.db.gz   - universal (~78.6 MiB); Android apps via GZIPInputStream
 #   SHA256SUMS       - digests for all three
 #
 # Triggers: on publish (immediate), on dispatch (backfill a tag, defaults to

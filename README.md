@@ -46,10 +46,10 @@ Smaller companions of the same bytes are published by the release-assets
 workflow at the same static endpoint:
 
 ```bash
-# 29 MiB, smallest: xz -d
+# 41.9 MiB, smallest: xz -d
 curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db.xz -o db/grimoire.db.xz && xz -d db/grimoire.db.xz
 
-# 56 MiB, zero dependencies: gzip -d (Android apps: GZIPInputStream)
+# 78.6 MiB, zero dependencies: gzip -d (Android apps: GZIPInputStream)
 curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db.gz -o db/grimoire.db.gz && gzip -d db/grimoire.db.gz
 ```
 
@@ -262,7 +262,7 @@ repository minus the database lives outside the tree.
 | Suite | Command | Expected |
 |---|---|---|
 | Agent access | `python3 tests/agent-access-test.py` | PASS |
-| Agent layout | `bash tests/agent-layout-test.sh` | 39 checks |
+| Agent layout | `bash tests/agent-layout-test.sh` | 108 checks |
 | Agent suite manifests | `python3 tests/suite-manifest-test.py` | PASS |
 | Agnostic contract | `python3 tests/agnostic-test.py` | PASS |
 | Archive audit | `bash grimoire-master-audit.sh` | 18/18 |

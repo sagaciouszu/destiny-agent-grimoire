@@ -7,7 +7,7 @@ wrong; do not guess one in.
 ## Why this page exists
 
 Every caption, transcript and provenance row derives from a specific game
-build. The wiki's caption note in `docs/wiki/Captions.md` points here, and
+build. The wiki's caption note in `Captions.md` points here, and
 `STANDARDS.md` requires every raw capture and curated row to name the build it
 came from (`sunrise-pre-bl`, `build-25932352`, ...). This page is the single
 registry of those builds: what they are, where they were extracted, what
@@ -42,7 +42,7 @@ headers, 125,324 lines, `caption_provenance` 56,119 rows, `caption_sightings`
 
 `books`, `records`, `cards` and `lore_entries` derive from the same web/manifest
 sources and carry the same provenance discipline; they are out of scope for
-this page. See `docs/wiki/Database.md` for structure and
+this page. See `Database.md` for structure and
 `STANDARDS.md` (Source hierarchy) for precedence.
 
 ## Provenance chain, worked example
@@ -71,7 +71,7 @@ Live worked example: `caption-live-0294-5234-dialogue` is built from entry 5234
 of `w64_sr_globals_0294`; each line records the bank entry, the record slot,
 the paragraph part and the build. `source_pkg` keeps the full package name
 with its patch suffix (`_0294`), not the family stub. Chapter ownership and
-verification flow: `docs/wiki/Captions.md`.
+verification flow: `Captions.md`.
 
 ## What the 2026 build unlocks
 
@@ -193,4 +193,4 @@ the build in `archive/data/builds.json`, rebuilds and runs the gates.
 - **Captions are not persona canon** (`STANDARDS.md` §Caption contract, §10):
   persona counts are unaffected by captions.
 - This page registers builds and tiers; it does not re-document caption rules
-  (`docs/wiki/Captions.md`) or schema (`docs/wiki/Database.md`).
+  (`Captions.md`) or schema (`Database.md`).

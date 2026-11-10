@@ -8,9 +8,12 @@ the authoritative counts are asserted live (`sync-doc-counts.py --check`,
 
 ## Entry points
 
-- Grimoire: `bash grimoire-master-audit.sh` (14 suites, archive-wide)
+- Grimoire: `bash grimoire-master-audit.sh` (18 suites, archive-wide)
 - Agents: run `bash tests/master-audit.sh` in each agent repo
 - `suite-manifest-test.py` - suite loss/drift guard
+- `agent-helpers/` - canonical copies of the helpers distributed byte-identically
+  to every agent repo; `shared-helpers-test.sh` fails on drift or a missing
+  canonical file
 - `resolve-workspace.sh <caller> [drifter|eris]` - layout-independent resolution
   for agent suites (`lore/` may be a symlink or a clone)
 

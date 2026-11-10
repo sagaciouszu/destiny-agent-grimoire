@@ -16,7 +16,7 @@ Expected: **18 / 18 suites passed**.
 | Lore Archive Integrity | book and card structure |
 | Cutscene Caption Verification | caption sources and matches |
 | Query Interface | 91 CLI and API checks |
-| Agent Layout | OpenCode and OpenClaw layout, 39 checks |
+| Agent Layout | OpenCode and OpenClaw layout, 108 checks |
 | File Conformance | repository-wide format rules |
 | Agnostic Contract | shared executables read `series/agents.json`; no hardcoded agent repo |
 | Source Overlap vs Live | source and database agreement |

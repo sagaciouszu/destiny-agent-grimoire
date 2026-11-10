@@ -357,7 +357,7 @@ match a recomputation of their source text.
 | `tests/mcp-matrix-test.py` (on demand, needs `mcp-server/.venv`) | MCP calls across all 22 tools (161 calls), 3 concurrent clients, strict API parity, clean malformed-call errors |
 | `tests/check-agent-structure.py <deps\|tokens\|dashes\|index\|paths> <workspace>` | per-agent: deps resolve, token accuracy, no em/en-dashes, INDEX lists every module and every reference resolves, no personal paths |
 | `tests/robustness-test.py` (on demand) | corrupt/truncated/missing databases, edge inputs, read-only enforcement, 160 concurrent queries, injection attempts |
-| `tests/agent-layout-test.sh` | OpenCode and OpenClaw layout, registry and peer blocks (39 checks) |
+| `tests/agent-layout-test.sh` | OpenCode and OpenClaw layout, registry and peer blocks (108 checks) |
 | `tests/agent-parity-test.sh` | every present agent exposes the same shared capabilities |
 | `tests/onboarding-smoke.sh` | clone + setup + master audit for every local agent, offline |
 | `tests/suite-manifest-test.py` | per-agent suite manifests match master-audit and the no-loss baseline |
@@ -537,7 +537,7 @@ serves every agent.
   `release.published` (plus `workflow_dispatch` with a `tag` to backfill older
   releases), recompresses the published `grimoire.db` with `xz -9e` and
   `gzip -9`, round-trip-verifies both (byte `cmp` + `PRAGMA integrity_check`),
-  and uploads `grimoire.db.xz` (29 MiB) and `grimoire.db.gz` (56 MiB) with a
+  and uploads `grimoire.db.xz` (41.9 MiB) and `grimoire.db.gz` (78.6 MiB) with a
   refreshed `SHA256SUMS`. Static endpoints:
   `releases/latest/download/grimoire.db.xz` and
   `releases/latest/download/grimoire.db.gz`. Android apps should consume the
