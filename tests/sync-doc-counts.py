@@ -31,12 +31,6 @@ C = {
     'transcripts': q('SELECT COUNT(*) FROM transcripts'),
     'lines': q('SELECT COUNT(*) FROM transcript_lines'),
     'fts': q('SELECT COUNT(*) FROM fts'),
-    'eris': q("SELECT COUNT(*) FROM transcript_lines tl JOIN transcripts t ON t.id = tl.transcript_id "
-              "WHERE speaker = 'Eris Morn' AND is_stage_dir=0 AND t.source_tier != 'game_caption'"),
-    'drifter': q("SELECT COUNT(*) FROM transcript_lines tl JOIN transcripts t ON t.id=tl.transcript_id "
-                  "WHERE tl.speaker LIKE '%Drifter%' AND COALESCE(t.source_tier,'') != 'game_caption'"),
-    'drifter_exact': q("SELECT COUNT(*) FROM transcript_lines tl JOIN transcripts t ON t.id=tl.transcript_id "
-                       "WHERE tl.speaker = 'Drifter' AND COALESCE(t.source_tier,'') != 'game_caption'"),
     'character_lines': q('SELECT COUNT(*) FROM character_lines'),
     'books': q('SELECT COUNT(*) FROM books'),
     'book_entries': q('SELECT COUNT(*) FROM book_entries'),
@@ -134,31 +128,48 @@ def _count(key, num_text):
     value = C[key]
     return '{:,}'.format(value) if ',' in num_text else str(value)
 
-# Legacy prose shapes kept for the two agents that used them before the
-# registry existed. They stay until each agent owns its count-claim patterns
-# (P1 template work); new agents get the generic shapes below.
-LEGACY_PATS = {
-    'eris': [
-        (r'\b\d{3,4} canonical Eris', '{eris} canonical Eris'),
-        (r'\(\d{3,4} Eris Morn lines\)', '({eris} Eris Morn lines)'),
-        (r'\(\d{3,4} canonical Eris transcript lines\)',
-         '({eris} canonical Eris transcript lines)'),
-    ],
-    'drifter': [
-        (r'All \d+ Drifter quotes', 'All {drifter} Drifter quotes'),
-        (r'canonical transcripts \(\d+ Drifter lines\)',
-         'canonical transcripts ({drifter} Drifter lines)'),
-        (r'\b\d{3,4} Drifter transcript lines in the database',
-         '{drifter_exact} Drifter transcript lines in the database'),
-        (r'\b\d{3,4} verified Drifter quotes', '{drifter} verified Drifter quotes'),
-    ],
-}
+def persona_counts(ident):
+    """Counts an agent's own doc-count-patterns.json may reference."""
+    row = _roster.entry(ident) or {}
+    persona = os.path.join(AGENT_REPOS.get(ident, ''), 'persona.json')
+    speaker = row.get('name') or ident
+    canon = None
+    if os.path.isfile(persona):
+        data = json.load(open(persona, encoding='utf-8'))
+        speaker = data.get('speaker') or speaker
+        canon = data.get('canon_lines')
+    db = os.path.join(GRIMOIRE, 'db', 'grimoire.db')
+    probe = sqlite3.connect(f'file:{db}?mode=ro', uri=True)
+    try:
+        exact = probe.execute(
+            'SELECT COUNT(*) FROM transcript_lines tl '
+            'JOIN transcripts t ON t.id=tl.transcript_id '
+            "WHERE tl.speaker=? AND tl.is_stage_dir=0 "
+            "AND COALESCE(t.source_tier,'') != 'game_caption'",
+            (speaker,)).fetchone()[0]
+        like = probe.execute(
+            'SELECT COUNT(*) FROM transcript_lines tl '
+            'JOIN transcripts t ON t.id=tl.transcript_id '
+            "WHERE tl.speaker LIKE ? "
+            "AND COALESCE(t.source_tier,'') != 'game_caption'",
+            (f'%{speaker}%',)).fetchone()[0]
+    finally:
+        probe.close()
+    return {'canon': canon if canon is not None else exact,
+            'speaker_exact': exact, 'speaker_like': like}
 
 
 def persona_patterns(ident):
-    """Generic count-claim shapes for an agent with no legacy patterns."""
+    """Agent-local prose shapes, or the generic count-claim shapes."""
     row = _roster.entry(ident) or {}
     name = row.get('name') or ident
+    local = os.path.join(AGENT_REPOS.get(ident, ''), 'tests',
+                         'doc-count-patterns.json')
+    if os.path.isfile(local):
+        data = json.load(open(local, encoding='utf-8'))
+        values = persona_counts(ident)
+        return [(p['regex'], p['replacement'].format(**values))
+                for p in data.get('patterns', [])]
     path = os.path.join(AGENT_REPOS.get(ident, ''), 'persona.json')
     if not os.path.isfile(path):
         return []
@@ -283,7 +294,7 @@ for path in sorted(set(FILES)):
         pats += list(SHARED_PROSE)
     for ident, repo in AGENT_REPOS.items():
         if path.startswith(repo + os.sep):
-            pats += LEGACY_PATS.get(ident) or persona_patterns(ident)
+            pats += persona_patterns(ident)
             break
     s = open(path, encoding='utf-8').read()
     orig = s
