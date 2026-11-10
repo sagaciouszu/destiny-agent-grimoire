@@ -7,10 +7,11 @@ executable without re-deriving context. Status values: `queued`, `active`,
 | # | Item | Priority | Estimate | Status |
 |---|---|---|---|---|
 | Q1 | Second-provenance table (`caption_sightings`) | P0 | 2–3 h | **done** |
+| Q6 | Ecosystem pass: agents, template, tooling, tests, site | P0 | 4–6 h | queued |
 | Q2 | Parser for class `0x808099ef` | P1 | 3–6 h | queued |
 | Q3 | Live-build refresh automation | P2 | 4–6 h | queued |
-| Q4 | Caption-tier label in `character(all_lines=True)` | P3 | 30 min | queued |
-| Q5 | Confirm `w64_sr_globals_0134` is empty | P4 | 30 min | queued |
+| Q4 | Caption-tier label in `character(all_lines=True)` | P3 | 30 min | folded into Q6 |
+| Q5 | Confirm `w64_sr_globals_0134` is empty | P4 | 30 min | folded into Q6 |
 
 ---
 
@@ -55,6 +56,23 @@ sighting resolves to a line and a registered build; expected per-record and
 per-build totals come from the source; lines seen by both builds equal the
 JSONL text intersection (1,651); no NULL `captured_at`; full rebuild and gates
 green.
+
+---
+
+## Q6 — Ecosystem pass
+
+**Prompt:** `/opt/vault/d2-bl-extract/COMPREHENSIVE-PASS-PROMPT.md`
+
+Bring every consumer of the v0.39.0 database in line: six agents, template and
+persona generation, MCP/API/query tooling, tests, docs/wiki and the public site.
+Seed defects: stale site counts and install sizes, `source-persona.py` resolving
+caption-only speakers from `v_speakers`, missing schema-1.9.0 entry in
+`GRIMOIRE-CHANGES.md`, and site roster data duplicated from the series registry.
+
+Parallel plan: one read-only inventory + three read-only audits (agents, site,
+template), then disjoint-repo edits, then a serial gate/deploy wave. Q4 and Q5
+are closed inside this pass. Q2/Q3 remain separate and change the DB, so freeze
+v0.39.0 or land them first.
 
 ---
 
