@@ -12,7 +12,7 @@ executable without re-deriving context. Status values: `queued`, `active`,
 | Q3 | Live-build refresh automation | P2 | 4–6 h | **done** (v0.39.2) |
 | Q4 | Caption-tier label in `character(all_lines=True)` | P3 | 30 min | **done** (Q6) |
 | Q5 | Confirm `w64_sr_globals_0134` is empty | P4 | 30 min | **done** (Q6) |
-| Q7 | Deep ecosystem pass: standards, template, agents/webs, recount, MCP, site | P0 | 6–8 h | **P5 done**, P6 next |
+| Q7 | Deep ecosystem pass: standards, template, agents/webs, recount, MCP, site | P0 | 6–8 h | **done** |
 
 ---
 
@@ -235,3 +235,12 @@ pages document `--dry-run` and `GRIMOIRE_DB`. `npm run check` is green, the site
 deployed (`9246e3d`) and live pages were spot-checked (9,229 transcripts, 22
 tools, 25/25 and 20/20 audits). GitHub description updated; wiki in sync. Next:
 P6 integration and release.
+
+**P6 status (2026-11-10):** complete. Database is byte-identical to v0.39.3;
+grimoire v0.39.4 released with `grimoire.db`, `.xz`, `.gz` and `SHA256SUMS`.
+Six agents tagged and released (v0.1.6; Drifter and Eris v0.14.3). Site deployed
+(`b6063e7`) and live pages spot-checked (Drifter v0.14.3 25/25, Zavala v0.1.6
+20/20). Wiki in sync; all repositories clean. Final gates: master 18/18, six
+agent audits 20/20 (Drifter 25/25), MCP 12/12, 25/25, matrix 8/8, template
+offline and real-corpus, site `npm run check`, docs-consistency 5/5.
+
