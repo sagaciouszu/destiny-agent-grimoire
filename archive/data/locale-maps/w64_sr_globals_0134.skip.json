@@ -1,0 +1,8 @@
+{
+ "build_id": "build-25932352",
+ "package": "w64_sr_globals_0134",
+ "class_hash": "808099f1",
+ "en_entries": [],
+ "tables_detected": 0,
+ "reason": "entries use non-StringBank classes (0x80809a81, 0x80809b23, ...); the 0x808099f1 resolver finds 0 tables, so the package is skipped rather than guessed"
+}

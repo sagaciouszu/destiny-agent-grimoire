@@ -16,7 +16,7 @@
     "books": "lore book metadata (slug matches live categories/book-<slug>)",
     "book_entries": "entries within books (provenance via parent book)",
     "transcripts": "transcript headers (curated markdown, Ishtar web, cutscene captions)",
-    "transcript_lines": "canonical dialogue lines by speaker (seq ordered, stage directions flagged, lang column for captions; speaker_source records attribution provenance for caption lines when present)",
+    "transcript_lines": "dialogue lines by speaker (includes caption-tier rows; seq ordered, stage directions flagged, lang column for captions; speaker_source records attribution provenance for caption lines when present)",
     "caption_provenance": "per-line current game-file provenance for captions (StringReference hash, package/entry origin, kind); every observation is in caption_sightings",
     "builds": "build registry: one row per game build / web capture the corpus was built from (build_id, Bungie stamp, package count, bytes, captured_at); every row that carries game content points at a row here",
     "timeline_chapters": "in-universe Destiny timeline: story chapters (rank chronological, rows.timeline joins by slug)",
@@ -56,7 +56,7 @@
     "caption_sightings": "every observation of a caption line (build, package, entry, slot, paragraph), including builds whose provenance lost the one-row-per-line race"
   },
   "views": {
-    "v_speakers": "speaker, lines (canonical speakers with line counts)",
+    "v_speakers": "speaker, lines (discovery view across all tiers; includes caption-only speakers)",
     "v_transcript_taxonomy": "transcript header joined to classification",
     "v_activity_coverage": "transcripts and lines per activity",
     "v_season_coverage": "transcripts and lines per season",

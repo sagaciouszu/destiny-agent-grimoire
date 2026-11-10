@@ -55,6 +55,9 @@ jobs:
       - name: Documentation audit
         run: python3 tests/docs-audit.py
 
+      - name: Documentation consistency
+        run: python3 tests/docs-consistency.py
+
       - name: Item audit
         run: python3 tests/item-audit.py
 

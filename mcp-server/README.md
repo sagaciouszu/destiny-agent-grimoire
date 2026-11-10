@@ -168,7 +168,7 @@ hand to separate a config-path problem from a server problem.
 | `activities` | `activity_type?`, `season?`, `event?`, `limit=100`, `offset=0` | raids, dungeons and seasonal activities with coverage |
 | `activity` | `ref`, `limit=50`, `offset=0` | activity details, coverage, speakers, transcripts |
 | `book` | `ref`, `limit=20`, `offset=0`, `full=false` | book metadata and entries |
-| `character` | `name`, `about?`, `all_lines=false`, `limit=20`, `offset=0`, `canon_only=false`, `class_tag?` | `{found, header, rows}` |
+| `character` | `name`, `about?`, `all_lines=false`, `limit=20`, `offset=0`, `canon_only=false`, `class_tag?` | `{found, header, rows}`; rows carry `source_tier`, and the header names the caption tier when present |
 | `character_info` | `name` | aliases, quote count, spoken lines |
 | `coverage` | none | coverage matrix, gap lists and `coverage_notes` statuses/evidence |
 | `entity` | `ref`, `kind?`, `limit=10`, `include_unreviewed=false` | ranked candidates (exact folded match first; phonetic fallback flagged `fuzzy` with `score <= 0.5`); exact match also returns aliases, relations, document counts and top documents |
@@ -176,7 +176,7 @@ hand to separate a config-path problem from a server problem.
 | `events` | none | rotating events with coverage and occurrence counts |
 | `find_item` | `query`, `limit=10`, `offset=0` | item rows with flavor-text snippets and linked lore titles (no follow-up `item` call needed for most lookups) |
 | `item` | `slug` | bounded item row (title, `text` trimmed, `source_url`, `lore` links; no internal fields) |
-| `list_records` | `kind`, `limit=50`, `offset=0` | `{count, rows}` for books, characters, speakers, records (alias: triumphs), activities, seasons, events, lore, seals |
+| `list_records` | `kind`, `limit=50`, `offset=0` | `{count, rows}` for books, characters, speakers, records (alias: triumphs), activities, seasons, events, lore, seals; `speakers` includes caption-only names |
 | `lore` | `ref` | manifest lore entry (body trimmed) with linked item names |
 | `record` | `ref` | triumph or seal details |
 | `seal` | `ref` | seal details and its triumph records |

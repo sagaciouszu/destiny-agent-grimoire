@@ -128,5 +128,5 @@ docs-audit enforce keeping them out.
 ## Related reading
 
 - `docs/wiki/Database.md` — structure, schema, FTS, verification flow
-- `SPEAKER_ATTRIBUTION.md` (extraction vault) — line-by-line evidence trail
+- `SPEAKER_ATTRIBUTION.md` (private extraction note, not distributed) — line-by-line evidence trail
 - `tests/caption-test.py` — the normative definition of correct captions

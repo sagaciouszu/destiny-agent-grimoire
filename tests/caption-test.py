@@ -204,6 +204,18 @@ def sightings():
         'meta caption_sightings is stale'
 
 
+def character_tiers():
+    """Caption-only speakers are labelled, and rows carry their tier."""
+    cap = api.character('Lord Shaxx', all_lines=True, limit=2)
+    assert cap and '(caption lines)' in cap['header'], cap and cap['header']
+    assert all(r.get('source_tier') == 'game_caption' for r in cap['rows']), \
+        'caption rows are not labelled game_caption'
+    mixed = api.character('Calus', all_lines=True, limit=500)
+    assert mixed and 'caption' in mixed['header'], mixed and mixed['header']
+    assert any(r.get('source_tier') == 'game_caption' for r in mixed['rows']), \
+        'mixed page did not include caption rows'
+
+
 def no_duplicate_text():
     """A caption line never repeats text that canon already holds."""
     shared = one(
@@ -328,6 +340,7 @@ for name, fn in [
     ('caption lines keep provenance', provenance),
     ('caption builds are registered and traceable', build_scope),
     ('caption sightings retain merged builds', sightings),
+    ('character lines name their caption tier', character_tiers),
     ('no caption text duplicates canon', no_duplicate_text),
     ('activity facets are curated and resolve', facets),
     ('caption rows indexed exactly once', indexes),

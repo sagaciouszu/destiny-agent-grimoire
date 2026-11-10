@@ -542,10 +542,21 @@ def _speaker_variants(name):
     return [v for v in variants if v]
 
 
+def _tier_label(rows):
+    """Name the provenance tier of a page of transcript rows."""
+    tiers = {r.get('source_tier') for r in rows}
+    if tiers == {'game_caption'}:
+        return 'caption lines'
+    if 'game_caption' in tiers:
+        return 'transcript + caption lines'
+    return 'transcript lines'
+
+
 def _transcript_lines(conn, name, pattern, limit, offset, canon_only=False, class_tag=None):
     for variant in _speaker_variants(name):
         params = [f'%{_like(variant)}%']
-        sql = ("SELECT line AS text, speaker, '' AS source_slug, t.timeline "
+        sql = ("SELECT line AS text, speaker, '' AS source_slug, t.timeline, "
+               "t.source_tier AS source_tier "
                "FROM transcript_lines JOIN transcripts t ON t.id = transcript_lines.transcript_id "
                "WHERE speaker LIKE ? ESCAPE '\\' AND is_stage_dir=0")
         if canon_only:
@@ -578,7 +589,8 @@ def character(name, about=None, all_lines=False, limit=20, offset=0, canon_only=
         pattern = f'%{_like(about.lower())}%' if about else None
         if all_lines:
             params = [f'%{_like(name)}%']
-            sql = ("SELECT line AS text, speaker, '' AS source_slug, t.timeline "
+            sql = ("SELECT line AS text, speaker, '' AS source_slug, t.timeline, "
+                   "t.source_tier AS source_tier "
                    "FROM transcript_lines JOIN transcripts t ON t.id = transcript_lines.transcript_id "
                    "WHERE speaker LIKE ? ESCAPE '\\' AND is_stage_dir=0")
             if canon_only:
@@ -592,8 +604,8 @@ def character(name, about=None, all_lines=False, limit=20, offset=0, canon_only=
             sql += ' LIMIT ? OFFSET ?'
             params.append(_limit(limit, 20))
             params.append(_offset(offset))
-            rows = conn.execute(sql, params).fetchall()
-            return {'header': f'=== {name} (transcript lines) ===', 'rows': [dict(r) for r in rows]}
+            rows = [dict(r) for r in conn.execute(sql, params).fetchall()]
+            return {'header': f'=== {name} ({_tier_label(rows)}) ===', 'rows': rows}
 
         ch = _resolve_character(conn, name)
         if not ch:
@@ -601,7 +613,7 @@ def character(name, about=None, all_lines=False, limit=20, offset=0, canon_only=
                                      class_tag=class_tag)
             if not rows:
                 return None
-            return {'header': f'=== {name} (transcript lines) ===', 'rows': rows}
+            return {'header': f'=== {name} ({_tier_label(rows)}) ===', 'rows': rows}
         params = [ch['id']]
         sql = "SELECT text, '' AS speaker, source_slug, timeline FROM character_lines WHERE character_id = ?"
         if pattern:

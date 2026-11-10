@@ -31,6 +31,7 @@ rows = conn.execute("""
     FROM transcript_lines tl
     JOIN transcripts t ON t.id = tl.transcript_id
     WHERE tl.speaker NOT IN ('Narration', 'Cutscene')
+      AND COALESCE(t.source_tier, '') != 'game_caption'
     GROUP BY tl.speaker
     ORDER BY COUNT(*), tl.speaker
 """).fetchall()

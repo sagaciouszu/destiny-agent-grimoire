@@ -113,19 +113,19 @@ nothing mixes builds silently.
   (2) cross-attribution, where a caption line's normalized text already exists
   in canon with exactly one speaker; (3) the `0x80808d54` dialogue-node def,
   which stores a per-line FNV-1 speaker hash for vendor/quest greetings
-  (`speaker_source='dialogue_node'`, 12 lines); (4) inline `[Petra]` prefixes
+  (`speaker_source='dialogue_node'`, 27 lines); (4) inline `[Petra]` prefixes
   (`speaker_source='line_prefix'`, prefix moved into the speaker column so the
   line stays quoteable); (5) **Ishtar/web transcript containment**
-  (`speaker_source='ishtar_containment'`, 180 lines) - a caption line that is a
+  (`speaker_source='ishtar_containment'`, 131 lines) - a caption line that is a
   substantial fragment (>=50% of the longer string) of a *spoken* canon line
   with exactly one speaker inherits it. The ratio guard is what stops a short
   quote inside long lore prose from being mis-attributed. Cutscenes, mission
   dialogue, ambient NPC pools and callouts carry **no per-line speaker in this
   build** - recorded as an honest gap. Full evidence:
-  `/opt/vault/d2extraction/SPEAKER_ATTRIBUTION.md` (incl. the Phase 0
+  the private extraction notes (`SPEAKER_ATTRIBUTION.md`, not distributed) (incl. the Phase 0
   Tiger-engine literature audit, the 18,522-match FNV-1 triangulation that
   found the companion-VO def class `0x80808d54`, and the exhaustive-SDH probe
-  that verified zero additional attributable lines beyond the 180).
+  that verified zero additional attributable lines beyond the 131).
 - **Exhaustive SDH review:** every caption line was joined against
   canonical transcript lines (sentence-level, >=0.6 fragment ratio, unique
   speaker); the residual found **zero additional matches** beyond the
@@ -156,7 +156,7 @@ nothing mixes builds silently.
   sampled and confirmed), so they stay excluded. The 75 lines a heuristic had
   recovered from 12 such tables were verified the same way and dropped; the
   review file is kept at
-  `/opt/vault/d2extraction/subtitles/review_quarantine_recovered_lines.jsonl`.
+  the private extraction review list (`review_quarantine_recovered_lines.jsonl`, not distributed).
   On-screen labels are kept: they are rendered captions and carry personality.
 - **Investment-package lines were audited, not dropped:** 8,983 of the lines
   come from `w64_investment_*`; 1,724 of those already exist in

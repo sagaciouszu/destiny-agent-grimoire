@@ -12,6 +12,7 @@ name, source repository, entry file, summary and consult scope.
 | `calus` | Emperor Calus | `destiny-agent-calus` | Calus, the Cabal, the Leviathan, Opulence |
 | `zavala` | Commander Zavala | `destiny-agent-zavala` | The Vanguard, the Last City, the coalition |
 | `ghost` | Ghost | `destiny-agent-ghost` | The Light, resurrection, the Traveler, the Guardian |
+| `mara-sov` | Mara Sov | `destiny-agent-mara-sov` | The Awoken, the Dreaming City, the Ascendant Plane, Riven |
 
 ## Source repositories
 
@@ -25,6 +26,7 @@ By default the sync script expects the agent repos beside this archive:
   destiny-agent-calus/
   destiny-agent-zavala/
   destiny-agent-ghost/
+  destiny-agent-mara-sov/
 ```
 
 Override the parent directory with `AGENT_REPOS_DIR`.
@@ -41,6 +43,7 @@ without deleting an existing deployment.
 - `calus-consult`
 - `zavala-consult`
 - `ghost-consult`
+- `mara-sov-consult`
 
 Consult agents are read-only. They answer questions in character and must verify
 quotes before using them.

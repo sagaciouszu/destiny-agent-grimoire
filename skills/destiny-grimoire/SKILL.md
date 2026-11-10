@@ -47,7 +47,7 @@ flavor text, verify.
 | character_lines | 1229 | Canon character quotes for agents |
 | caption_provenance | 56119 | Caption line provenance (StringReference hash, package) |
 | caption_sightings | 63359 | Every observation of a caption record line (build, package, slot) |
-| speaker_source | 206 | Attribution provenance on caption lines (ishtar_containment/dialogue_node/line_prefix) |
+| transcript_lines.speaker_source | 4214 | Attribution provenance column (build-25932352/ishtar_containment/dialogue_node/line_prefix) |
 | fts | 176794 | FTS5 search index |
 | verify_fts | 176794 | Fast quote verification index |
 | item_title_fts | 58764 | Item title lookup index |
@@ -209,7 +209,7 @@ full text to 4000 characters. Full details: `mcp-server/README.md`.
 ## Extras
 
 - `db/capabilities.json` - interface manifest (tables, commands, contracts)
-- `SELECT * FROM v_speakers;` - canonical speakers with line counts
+- `SELECT * FROM v_speakers;` - speaker line counts (discovery view; includes caption-only speakers)
 - `SELECT * FROM v_entity_resolve;` - alias + norm lookup to entities
 - `SELECT * FROM v_entity_documents;` - entity to ranked document list
 - `SELECT * FROM v_entity_coverage;` - per-kind entity web coverage
@@ -230,7 +230,7 @@ sqlite3 db/grimoire.db "SELECT * FROM v_activity_coverage ORDER BY lines DESC LI
 
 ## Rules
 
-1. **Only use verified quotes.** Canon is what lives in `transcript_lines` and `character_lines`. Do not paraphrase lore as quotes. Run `verify` with the speaker and `--exact` before quoting; if it fails, do not quote the line.
+1. **Only use verified quotes.** Canon is what lives in `transcript_lines` and `character_lines`; persona canon additionally excludes caption-tier rows. Do not paraphrase lore as quotes. Run `verify` with the speaker and `--exact` before quoting; if it fails, do not quote the line.
 2. **SQLite-first.** Do not read raw markdown from `source/` at query time; it is only the ingestion source.
 3. **Keep queries scoped.** Small `--limit N` values preserve token budget.
 4. **Do not edit this data directly.** The migration reads `source/` markdown + `archive/data/*.jsonl` and rebuilds the DB.

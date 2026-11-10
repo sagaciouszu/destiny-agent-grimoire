@@ -40,6 +40,9 @@ else
 fi
 check "$Q character eris --limit 2 | grep -q 'Eris Morn'" "character curated quotes"
 check "$Q character calus --limit 2 | grep -q 'transcript lines'" "character falls back to transcripts"
+check "$Q character 'Lord Shaxx' --all --limit 2 | grep -q 'caption lines'" "character labels caption-only speakers"
+CAP_TIER=$($Q character 'Lord Shaxx' --all --limit 1 --json | python3 -c 'import json,sys; print(json.load(sys.stdin)[0]["source_tier"])')
+check "[ \"$CAP_TIER\" = game_caption ]" "character rows carry source_tier ($CAP_TIER)"
 check "$Q character 'The Drifter' --limit 1 | grep -q '(drifter)'" "character resolves curated aliases"
 check "$Q character-info calus | grep -qE 'spoken lines: [1-9]'" "character-info falls back to transcripts"
 check "$Q character eris --about hive --all --limit 3 | grep -qi 'hive'" "character --about filter"

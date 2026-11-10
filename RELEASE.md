@@ -1,85 +1,80 @@
-# v0.39.0 - Caption sighting log: schema 1.9.0
+# v0.39.1 - Ecosystem pass: caption-tier surfaces and docs
 
 > **Depends On:** STANDARDS.md
 > **Token Estimate:** ~1.2K tokens
 
 **2026-11-10**
 
-Data + schema release. `caption_provenance` still holds one row per line; the
-new `caption_sightings` table keeps every observation, including the builds and
-packages whose provenance lost that race.
+Code + docs patch. The database is unchanged from v0.39.0 (same schema 1.9.0,
+same 9,229 transcripts / 125,324 lines / 63,359 sightings); this release aligns
+every consumer and adds the missing caption-tier surfaces.
 
 ## What's Changed
 
-- **Schema 1.9.0**: `caption_sightings` logs one row per processed caption
-  record line, keyed by `(line_id, source_build, source_slug, line_ord)`.
-  `source_slug` + ordinal is the identity because sunrise lines carry no record
-  index; a physical-slot key collapsed 1,070 genuinely distinct lines.
-- **Every sighting retained.** 63,359 rows: 51,735 live + 11,624 sunrise;
-  7,681 merged lines, including 1,651 live lines that repeat 2020 canon and
-  3,572 cross-package repeats. `caption_provenance` is unchanged at 56,119.
-- **Cross-package repeats kept.** `scripts/combine-live-captions.py` no longer
-  dedupes repeated text across packages by default (the loader still collapses
-  it to one canon line). `--dedupe-cross-package` is available for a slim file.
-- **Build registration moved before caption load**, so every sighting carries
-  `captured_at` from `builds`; the column is NOT NULL and `source_build` is a
-  foreign key. `INSERT OR REPLACE` on `builds` was left unchanged because the
-  registry is written before any sighting exists.
-- **Gate derives expectations from the source.** `tests/caption-test.py`
-  compares per-record and per-build totals to the JSONL, not constants, and
-  checks the dual-build line count against the JSONL text intersection (1,651),
-  referential integrity, `PRAGMA foreign_key_check`, and timestamp truth.
-- Counts after rebuild: transcripts 9,229, lines 125,324, FTS 176,794; caption
-  tier 7,911 headers / 55,678 lines.
+- **`character` names the tier.** `character(all_lines=True)` and the speaker
+  fallback now return `source_tier` per row and label the page `caption lines`
+  or `transcript + caption lines` when the returned rows include captions.
+  `--canon-only` still means "exclude optional/variant lines", not "exclude
+  captions"; agent docs now say so explicitly.
+- **`0134` closed.** Its entries use non-StringBank classes (`0x80809a81`,
+  `0x80809b23`); the `0x808099f1` resolver correctly finds 0 tables, so the
+  package is skipped with a reason rather than treated as missing English.
+- **One site stats source.** `scripts/export-site-stats.py` writes the counts,
+  schema, release and sizes the public site consumes as the site stats JSON;
+  the site's stat grid, install sizes and MCP tool list render from it.
+- **Cross-repo docs gate.** `tests/docs-consistency.py` checks stale counts and
+  sizes, the site snapshot, agent README metadata, MCP tool names and relative
+  links; it is wired into CI and skips absent siblings.
+- **Generators corrected.** `coverage-report.py` and `speaker-audit.py` now use
+  the persona predicate (`is_stage_dir=0`, `is_optional=0`,
+  `source_tier != 'game_caption'`); `v_speakers` is described everywhere as a
+  discovery view, not a curated list.
+- **Template + agents + wiki.** `source-persona.py` resolves names and lines
+  through one caption-excluded predicate and rejects caption-only names with a
+  clear error; a regression test covers it. Six agent repos and the wiki had
+  their rosters, suite counts, tool lists, `speaker_source` counts and database
+  sizes synced. Persona canon was not changed.
 
 ## Verification
 
-Full from-source rebuild (migrate -> enrich -> Queen fold -> entity web).
-Gates: test-db 65/65, lore-integrity 17/17, query-interface 89/89, caption
-11/11, containment 11/11, mcp 12/12 + 8/8 + 25/25, conformance, source overlap,
-cutscene verification, speaker audit, master audit 14/14.
+Master audit 14/14; test-db 65/65; caption 12/12; query interface 91/91;
+docs-consistency 5/5; MCP 12/12, matrix 8/8, optimization 25/25. Six agent
+audits pass (25/25, 20/20 ×5), persona freshness green. Template tests and the
+new caption-only resolver test pass. Site `npm run check` passes (stats, links,
+accessibility, axe, tapes, roster).
 
 ## Asset
 
-`grimoire.db` (plus `.xz`/`.gz`) attached to this release; rebuild with
+`grimoire.db` (plus `.xz`/`.gz`) is byte-identical to v0.39.0; it is attached
+again so `releases/latest/download/grimoire.db` keeps working. Rebuild with
 `python3 db/migrate.py` and the enrich chain in `README.md`.
 
 ## Known limits
 
-- The sighting log is per processed record line, not per physical slot. If two
-  live records ever overlap the same bank slot, both are stored; today the
-  overlap is zero.
-- `caption_provenance.kind` remains first-writer-wins. 1,696 lines carry more
-  than one `kind` across sightings; the per-package value lives in
-  `caption_sightings`.
-- 4,442 of 8,597 English entries contribute a line; 3,588 remain empty after
-  filtering.
+- Q2 (`0x808099ef` parser) and Q3 (live-build refresh automation) remain queued;
+  both change the DB and need a count re-sync afterwards.
+- `v_speakers` intentionally includes 191 caption-only speakers. A separate
+  canon-speaker view would be a schema change.
+- `--canon-only` does not exclude caption rows; filter `source_tier` explicitly
+  when you need persona-canon text.
 
-# v0.38.0 - Corpus widening: all live string-bank packages
+# v0.39.0 - Caption sighting log: schema 1.9.0
 
 > **Depends On:** STANDARDS.md
 > **Token Estimate:** ~0.9K tokens
 
 **2026-11-10**
 
-Data-only release (schema 1.8.0). The live caption tier grows from one package
-to fifteen, and a speaker now requires the quoted `"..." —Name` evidence.
-
-## What's Changed
-
-- 15 of 16 `w64_sr_globals_*` packages (8,597 English entries); `0134` has no
-  English entries and is skipped. 153,558 strings -> 51,737 package-local lines
-  -> 48,163 after cross-package dedupe -> 46,512 provenance rows (v0.39.0
-  retains the 3,572 repeats as sightings).
-- Package patch layers are mounted before extraction; base-only text is stale.
-- Language gate excludes six German tables in `029e`; independent lexicon check
-  passes 40 tables per package across all 15 packages with 0 flags.
-- Zero item-text fragments; speakers come only from quoted attributions.
-- Counts: transcripts 9,229, lines 125,324, FTS 176,794.
+Schema release. `caption_provenance` remains one row per line; the new
+`caption_sightings` table retains every observation, keyed by
+`(line_id, source_build, source_slug, line_ord)`. 63,359 rows: 51,735 live +
+11,624 sunrise, including 7,681 merged lines. Counts: 9,229 transcripts,
+125,324 lines, 176,794 FTS entries.
 
 ## Verification
 
-Full rebuild; master audit 14/14 (persona counts synced post-release).
+Full from-source rebuild; master audit 14/14; test-db 65/65; caption 11/11;
+query 89/89; MCP suites green.
 
 ## Asset
 

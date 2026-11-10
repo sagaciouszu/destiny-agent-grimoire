@@ -119,11 +119,12 @@ Agent master audits:
 
 | Agent | Suites |
 |---|---:|
-| Drifter | 22 |
-| Eris | 17 |
-| Calus | 15 |
-| Zavala | 15 |
-| Ghost | 15 |
+| Drifter | 25 |
+| Eris | 20 |
+| Calus | 20 |
+| Zavala | 20 |
+| Ghost | 20 |
+| Mara Sov | 20 |
 
 The shared runner reads `tests/suites.json`:
 

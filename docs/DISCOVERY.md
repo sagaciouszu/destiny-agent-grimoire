@@ -30,8 +30,8 @@ Four independent axes, additive to the canon tables:
 | Axis | Table | Cardinality |
 |---|---|---|
 | Expansion | `expansions` | 18 |
-| Season / episode | `seasons` | 26 (official numbers) |
-| Activity | `activities` | 67 |
+| Season / episode | `seasons` | 28 (official numbers) |
+| Activity | `activities` | 71 |
 | Event | `events` + `event_occurrences` | 9 events, 72 occurrences |
 
 Classification lives in `transcript_classification`, `item_classification` and
@@ -62,7 +62,7 @@ Episodes are not ordinary seasons, so they carry `season_type='episode'` and an
 | `manual` | curated override |
 | `unknown` | nothing matched |
 
-Current transcript split: 1,254 explicit, 59 derived, 1 unknown. The remaining
+Current transcript split: 1,258 explicit, 123 derived, 7,848 unknown. The remaining
 derived rows are generated cutscene compilations and Commons topics without a
 release page. They remain searchable by text; they are simply not attributed.
 
@@ -71,7 +71,7 @@ release page. They remain searchable by text; they are simply not attributed.
 Filters compile to `fts.source_slug IN (subquery)` so FTS still drives the scan
 and the taxonomy tables answer the membership question.
 
-Measured on 118,944 FTS rows, 10 results:
+Measured on the index as it stood at the time, 10 results (the index is now 176,794 rows):
 
 | Query | Time |
 |---|---|
