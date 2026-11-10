@@ -21,8 +21,9 @@ shipped in a release.
   expands from Shadowkeep/SoA to Destiny 2 launch through the current
   live build, with the per-content pre-vault sourcing rule and
   build-labeled provenance (see commit `1bb4a2d`). This release is a
-  docs-only policy change; the BL data remains Vision of Vision
-  unchanged in this tag (BL/WQ/Lightfall/TFS/RoElines already shipped).
+  docs-only policy change; the Beyond Light-era transcript content is
+  unchanged in this tag. The scope policy it ships is the one the
+  live-build extraction phase (`build-25932352`) will execute against.
 - **Speaker aliases 23 -> 57** ship in this release: 34 folds added in
   `f68e8a1` (e.g. `? Exo Stranger` -> `Elsie Bray`, `Five` ->
   `The Nine`, `Devrim` -> `Devrim Kay`, `Reflection of Osiris` ->
