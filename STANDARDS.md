@@ -276,6 +276,7 @@ the producer's output; it never hand-maintains a second copy.
 | site `../destiny-agent-grimoire-site/_data/grimoire.json` | `scripts/export-site-stats.py` | every site stat block | `../destiny-agent-grimoire-site/scripts/check-stats.py`; docs-consistency |
 | site `../destiny-agent-grimoire-site/_data/agents.js` | hand-maintained roster and audit totals | persona pages | `../destiny-agent-grimoire-site/scripts/check-roster.py` |
 | `series/agents.json` | hand-maintained roster | sync, layout, conformance, counts | layout, count-consistency, conformance |
+| agent `reference/knowledge-web.md` snapshot | `scripts/generate-knowledge-web.py --apply` | agents, docs-consistency | `--check`; master audit |
 
 Rules:
 
@@ -346,6 +347,8 @@ match a recomputation of their source text.
 | `tests/sync-readme-meta.py --check` | README metadata matches git tag / HEAD date |
 | `tests/docs-consistency.py` | stale counts/sizes, site snapshot, agent metadata, MCP README parity, relative links across every repo |
 | `tests/agnostic-test.py` | shared scripts read `series/agents.json`; no hardcoded agent repo in a shared executable |
+| `tests/agent-access-test.py` | setup dry-run and dangling links, missing-database failure, read-only database, site roster parity |
+| `scripts/generate-knowledge-web.py --check` | each agent knowledge web carries a canon snapshot that matches the database |
 | each agent repo tests/master-audit.sh | agent-side suites (voice, quotes, modules, conversation, golden snapshots) plus shared structure checks |
 | `tests/mcp-test.py` (on demand, needs `mcp-server/.venv`) | MCP tools, both launchers, probe handshake, read-only guard, stdio, CLI-parity tools, stats/live agreement (12 checks) |
 | `tests/mcp-agent-optimization-test.py` (on demand, needs `mcp-server/.venv`) | LLM-facing surface: descriptions name every parameter, actionable ToolErrors, 25-token snippets, limit/offset clamps, resource caps, one-call item lookups, spoken_lines counts (25 checks) |

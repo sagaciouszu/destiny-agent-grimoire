@@ -6,7 +6,7 @@
 bash grimoire-master-audit.sh
 ```
 
-Expected: **16 / 16 suites passed**.
+Expected: **18 / 18 suites passed**.
 
 | Suite | Covers |
 |---|---|
@@ -26,6 +26,8 @@ Expected: **16 / 16 suites passed**.
 | Peer Permission Leak Audit | deployed agents deny reads/greps on peer dirs and peer source repos |
 | Persona/DB/Prose Count Consistency | persona.json, live DB and derived doc counts agree |
 | Documentation Consistency | stale counts, site snapshot, agent metadata, MCP README, links |
+| Agent Access | setup dry-run, dangling link, missing database, read-only DB, site roster |
+| Knowledge Webs | generated canon snapshot matches the database |
 
 ## Agent audits
 

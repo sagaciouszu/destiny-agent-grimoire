@@ -12,7 +12,7 @@ executable without re-deriving context. Status values: `queued`, `active`,
 | Q3 | Live-build refresh automation | P2 | 4–6 h | **done** (v0.39.2) |
 | Q4 | Caption-tier label in `character(all_lines=True)` | P3 | 30 min | **done** (Q6) |
 | Q5 | Confirm `w64_sr_globals_0134` is empty | P4 | 30 min | **done** (Q6) |
-| Q7 | Deep ecosystem pass: standards, template, agents/webs, recount, MCP, site | P0 | 6–8 h | **P1 done**, P2 next |
+| Q7 | Deep ecosystem pass: standards, template, agents/webs, recount, MCP, site | P0 | 6–8 h | **P2 done**, P3 next |
 
 ---
 
@@ -203,3 +203,12 @@ stale schema and caption-counted personas, and `setup.sh` gains `--dry-run`,
 `grimoire_schema`. Verification: template self-test (offline and real corpus),
 caption resolver, fixture sourcing, token estimates, conformance and
 docs-consistency. Next: P2 agent access and knowledge webs.
+
+**P2 status (2026-11-10):** complete. All six agents share the template setup
+contract (`--dry-run`, `GRIMOIRE_DB`, dangling-link recovery).
+`tests/agent-access-test.py` proves setup help and dry-run behavior,
+missing-database failure, read-only database access and site roster parity.
+`scripts/generate-knowledge-web.py` owns a generated canon snapshot in every
+agent `reference/knowledge-web.md` and runs `--check` in the master audit. All
+six agent audits pass (20/20; Drifter 25/25); master audit 18/18. Next: P3
+recount and scratch test agents.
