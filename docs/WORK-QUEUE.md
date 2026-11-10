@@ -12,6 +12,7 @@ executable without re-deriving context. Status values: `queued`, `active`,
 | Q3 | Live-build refresh automation | P2 | 4–6 h | **done** (v0.39.2) |
 | Q4 | Caption-tier label in `character(all_lines=True)` | P3 | 30 min | **done** (Q6) |
 | Q5 | Confirm `w64_sr_globals_0134` is empty | P4 | 30 min | **done** (Q6) |
+| Q7 | Deep ecosystem pass: standards, template, agents/webs, recount, MCP, site | P0 | 6–8 h | queued |
 
 ---
 
@@ -168,3 +169,18 @@ sidecar. Do not treat it as covered.
 - Q2 → closed 2026-11-10 as non-prose (no parser, no DB change).
 - Q3 → tooling release, no schema change.
 - Q4/Q5 → batch into the next release; no DB artifact change for Q4.
+
+---
+
+## Q7 — Deep ecosystem pass
+
+**Plan:** `/opt/vault/d2-bl-extract/DEEP-ECOSYSTEM-PLAN.md`
+
+Ordered pass over the agnostic contract, template/generation, agent access and
+knowledge webs, a full code recount with three scratch test agents (Ghost,
+Drifter, Eris), MCP/skill/card decision, then stats/readmes/site. Designed for
+a ~200k token envelope with a hard checkpoint before the 01:00 UTC DeepSeek
+peak window.
+
+**Gate:** P0 standards must land before any template/agent/site docs. Test
+agents are scratch-only and are never published.
