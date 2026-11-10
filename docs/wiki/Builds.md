@@ -19,7 +19,7 @@ count was read from the live database or the extraction vault on 2026-11-09.
 | Build ID | Bungie stamp | App release | Pkg format | Cfg version | EN baseline | Extraction status |
 |---|---|---|---|---|---|---|
 | `sunrise-pre-bl` | `86657.20.08.23.1800.d2_rc` | Destiny 2: Shadowkeep / Season of Arrivals era (~Sep 2020 build) | Tiger `.pkg`, package version **38** | not recorded | EN-only | Extracted 2026-11-07/08 → `/opt/vault/games/sunrise` (~74 GB, 1,709 `.pkg` files, verified). Caption corpus reconciled into Grimoire (1,106 tables / 9,282 lines). Extraction prior art, released as v0.29.0+. |
-| `build-25932352` | `245114.26.10.13.2000.v500_live.main` | Update **9.7.0.6** (Oct 20 2026), Steam buildid **25932352**, appid 1085660 | Tiger `.pkg`, package version **53** (layout differs from v38: entry table at `0x44`, `pkg_id` at `0x10`, `file_size` at `0x120`; tables byte-layout compatible) | not recorded | EN-only | Container verified and byte-identical copy at `/opt/vault/d2-bl-extract/build-25932352` (2,498 files, 162,825,758,961 B; `destiny2.exe` sha256 `fe69488d…c305cfb`). `w64_sr_globals_*` StringBanks are cleartext UTF-8 (class `0x808099f1`); package `w64_sr_globals_0294` (**634 EN entries**) is extracted and ingested. The other 15 globals packages are pending extraction. |
+| `build-25932352` | `245114.26.10.13.2000.v500_live.main` | Update **9.7.0.6** (Oct 20 2026), Steam buildid **25932352**, appid 1085660 | Tiger `.pkg`, package version **53** (layout differs from v38: entry table at `0x44`, `pkg_id` at `0x10`, `file_size` at `0x120`; tables byte-layout compatible) | not recorded | EN-only | Container verified and byte-identical copy at `/opt/vault/d2-bl-extract/build-25932352` (2,498 files, 162,825,758,961 B; `destiny2.exe` sha256 `fe69488d…c305cfb`). `w64_sr_globals_*` StringBanks are cleartext UTF-8 (class `0x808099f1`); **15 of 16 packages ingested** (8,597 English entries). `0134` has no English string-bank entries and is skipped. |
 
 Manifest note: the Bungie manifest stamp `245114.26.10.13.2000-1-bnet.66137`
 corresponds to the same content build (same prefix, fetched via Bungie API
@@ -33,7 +33,7 @@ headers, 82,249 lines, `caption_provenance` 12,934 rows).
 
 | Tier (`source_tier`) | Rows (headers / lines) | Build / source |
 |---|---|---|
-| `game_caption` | 1,617 / 12,611 | Two builds. `sunrise-pre-bl`: 1,106 / 9,282 from committed `archive/data/captions.jsonl`. `build-25932352`: 517 / 3,329 from `archive/data/captions-live.jsonl` (package `w64_sr_globals_0294`, 3,335 provenance rows, 6 of them attached to pre-existing non-caption lines). |
+| `game_caption` | 7,911 / 55,678 | Two builds. `sunrise-pre-bl`: 1,106 / 9,282 from committed `archive/data/captions.jsonl`. `build-25932352`: 6,805 / 46,396 from `archive/data/captions-live.jsonl` (15 packages, 46,512 provenance rows; 116 of them attach to pre-existing non-caption lines). |
 | Web transcripts, `ishtar-collective.net` (Ishtar Collective, archival primary, human-verified) | 1,236 pages total: `ishtar_web` 1,129 / 15,850 lines · `ishtar_main` 101 / 4,203 · `ishtar_commons` 26 / 354 · `published` 8 / 22 · `validated` 7 / 22 | Web captures, era-scoped; primary source for DCV-era (vaulted) content. Not build-derived. |
 | `destinypedia` | 10 / 981 | Verbatim from the Destinypedia wiki (front-matter `Tier: destinypedia`). Destinypedia is corroboration per the source hierarchy in `STANDARDS.md`, not the primary. |
 | `youtube_captions` | 6 / 638 | YouTube-caption-derived; speaker labels reviewed where noted in the source file (e.g. `partial-expedition` lists 26 sources, "speaker labels reviewed"). Not build-derived. |
@@ -75,46 +75,50 @@ verification flow: `docs/wiki/Captions.md`.
 ## What the 2026 build unlocks
 
 Honest status of `build-25932352` (probe report 2026-11-09,
-`/opt/vault/d2-bl-extract/reports/build-25932352-probe.md`; single-table proof
-and tier audit under the same vault):
+`/opt/vault/d2-bl-extract/reports/build-25932352-probe.md`; single-table proof,
+tier audit and post-fix addenda under the same vault):
 
 - **Container layer verified.** v53 layout decodes byte-exactly on 2,417/2,417
   packages. The copy in the vault is byte-identical to the Steam install.
 - **StringBank text is not encrypted.** The earlier "rotated AES-GCM keys"
   verdict applies to encrypted block classes, not to the `w64_sr_globals_*`
   StringBanks: `0x808099f1` entries decode as cleartext UTF-8 with the
-  `tiger-pkg` unpacker plus `liboodle-data-shared.so`. Package `0294` proves
-  the path: 634 EN entries, 17,990 strings, 0 parse failures.
+  `tiger-pkg` unpacker plus `liboodle-data-shared.so`.
 - **Layers are mounted, not guessed.** A package family ships a base (`_0`)
-  plus patch layers. Package `0294` has one patch (`_1`): 1,158 entries
-  overlay, 13 entries replace their class. `scripts/merge-pkg-layers.py`
-  produces the mounted view. The patched text is current-build text
-  (`Gambit Ops`, `Buildcraft Stakes`), so base-only extraction is stale and is
-  not used for the shipped tier.
-- **One package is ingested.** `w64_sr_globals_0294` contributes 3,335 live
-  provenance rows (740 `dialogue`, 1,824 `narration`, 771 `objective`; 38 named
-  speakers, all from in-string attribution). Every row traces to
+  plus patch layers. Across the 15 ingested families that is 1,158 entries
+  added, 146,986 overlaid and 636 class replacements; for `0294` alone, 1,158
+  entries overlay and 13 change class. `scripts/merge-pkg-layers.py` produces
+  the mounted view. Patched text is current-build text (`Gambit Ops`,
+  `Buildcraft Stakes`); base-only extraction is stale and is not shipped.
+- **15 of 16 packages are ingested.** 8,597 English entries, 153,558 strings,
+  51,737 package-local lines -> 48,163 after cross-package dedupe -> 46,512
+  live provenance rows (11,678 `dialogue`, 26,945 `narration`, 7,889
+  `objective`) and 46,396 caption lines. 257 named speakers, every one from a
+  quoted `"..." —Name` attribution. Every row traces to
   `(package, entry, record, part, build)`.
-- **Filters are deliberate.** 13,695 short labels/UI headings, 1,526 noise
-  strings, 241 duplicates, 898 item-text fragments and 91 mechanical
-  perk/modifier lines were dropped; 258 of 633 parsed entries yielded no kept
-  line. One entry (`5892`) is superseded by a patch class the parser does not
-  understand and is skipped, not back-filled from the stale base. The
-  per-package counts ship in
-  `archive/data/locale-maps/w64_sr_globals_0294.stats.json`.
-- **Locale resolution is verified, not guessed.** `scripts/resolve-locales.py`
-  reproduces the content-verified EN entry list for package `0294` exactly
-  (634/634, zero false positives). The other 15 globals packages need
-  extraction before they can be resolved; a package that cannot be pinned by
-  two independent script anchors is skipped and logged.
-- **Schema bump.** Schema is now **1.8.0** (`db/SCHEMA_VERSION`):
-  `caption_provenance.record_index` and `record_part` join
-  `source_build`/`source_pkg`/`bank_entry`.
+- **Coverage is honest, not total.** 4,442 of 8,597 English entries (52%)
+  contribute at least one kept line; 3,588 yield nothing after filtering.
+  `w64_sr_globals_0134` has no English string-bank entries and is skipped.
+- **Filters are deliberate.** 122,528 short labels/UI headings, 6,723 noise
+  strings, 5,231 duplicates, 13,949 item-text fragments and 1,378 mechanical
+  perk/modifier lines were dropped. The per-package counts ship in
+  `archive/data/locale-maps/<package>.stats.json`.
+- **Locale resolution is conservative.** `scripts/resolve-locales.py` emits an
+  entry only when its table is pinned by at least two independent script
+  anchors and reproduces `0294`'s verified EN list exactly (634/634, zero
+  false positives). Two packages resolve `high`, 13 `medium` (one or more
+  unanchored tables skipped and logged); nothing is guessed.
+- **Language gate.** `scripts/validate-live-language.py` rejected six German
+  tables in `w64_sr_globals_029e` (the resolver had placed them on English
+  slots). The shipped tier has 0 Cyrillic, 0 CJK and 0 Polish-diacritic lines;
+  23 German-diacritic hits are English proper nouns (`Häkke`, `Jötunn`).
+- **Schema 1.8.0** (`db/SCHEMA_VERSION`): `caption_provenance.record_index` and
+  `record_part` join `source_build`/`source_pkg`/`bank_entry`.
 - **Known limit.** `caption_provenance` is one row per line. Where the live
-  build repeats text the 2020 build already shipped, the row keeps
-  `sunrise-pre-bl`; the live sighting is logged in the audit, not stored as a
-  second row. 157 emitted live lines merged into existing canon this way (6 of
-  them onto non-caption web lines).
+  build repeats text the corpus already holds, the row keeps the earlier build
+  or source; 1,651 emitted live lines merged this way, 116 onto non-caption
+  web/cutscene lines. Cross-package repeated text was deduped before load
+  (1,229 lines).
 
 `build-25932352` is legitimate for current-era extraction and verification,
 never as ground truth for what an earlier expansion shipped.
