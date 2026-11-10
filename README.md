@@ -17,6 +17,8 @@
 
 **Documentation site:** <https://sagaciouszu.github.io/destiny-agent-grimoire-site/>
 
+**Limits and provenance:** <https://sagaciouszu.github.io/destiny-agent-grimoire-site/grimoire/limits/>
+
 One canonical, agent-first Destiny lore archive: a single SQLite database with
 FTS5 search, built from committed sources, with a documented quote policy and
 verification gates. No external services at runtime.

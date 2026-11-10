@@ -63,6 +63,16 @@ def main():
         "SELECT COUNT(*) FROM transcript_lines tl JOIN transcripts t "
         "ON t.id=tl.transcript_id WHERE t.source_tier='game_caption'"
     ).fetchone()[0]
+    speakers = conn.execute('SELECT COUNT(*) FROM v_speakers').fetchone()[0]
+    canon_speakers = conn.execute(
+        'SELECT COUNT(*) FROM v_canon_speakers').fetchone()[0]
+    timeline_unknown = conn.execute(
+        'SELECT COUNT(*) FROM transcripts WHERE timeline IS NULL').fetchone()[0]
+    source_url_missing = conn.execute(
+        "SELECT COUNT(*) FROM transcripts WHERE source_url IS NULL "
+        "OR source_url = ''").fetchone()[0]
+    coverage = dict(conn.execute(
+        'SELECT status, COUNT(*) FROM coverage_notes GROUP BY status').fetchall())
     conn.close()
 
     capabilities = json.load(open(os.path.join(ROOT, "db", "capabilities.json"),
@@ -79,6 +89,12 @@ def main():
             **counts,
             "caption_headers": caption,
             "caption_lines": caption_lines,
+            "speakers": speakers,
+            "canon_speakers": canon_speakers,
+            "timeline_unknown": timeline_unknown,
+            "source_url_missing": source_url_missing,
+            "coverage_no_dialogue": coverage.get('no_dialogue', 0),
+            "coverage_partial": coverage.get('partial_transcript', 0),
         },
         "mcp_tools": len(mcp_tools),
         "mcp_tool_names": sorted(mcp_tools),
