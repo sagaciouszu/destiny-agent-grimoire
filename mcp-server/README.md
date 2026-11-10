@@ -165,28 +165,28 @@ hand to separate a config-path problem from a server problem.
 
 | Tool | Arguments | Returns |
 |---|---|---|
-| `search` | `query`, `type?`, `limit=10`, `full=false`, `offset=0`, `rank=true`, `activity?`, `season?`, `event?`, `expansion?`, `class_tag?`, `exclude_stage=false`, `timeline?`, `lang?`, `entity?` | `{count, total, next_offset, rows}` with `snippet` and `timeline` (story-chapter slug) fields; ranked results demote stage directions/cutscene captions, `exclude_stage` drops them, `timeline` filters to one in-universe chapter, `entity` restricts to documents one entity is linked to (e.g. `entity="Savathûn"`) |
-| `entity` | `ref`, `kind?`, `limit=10`, `include_unreviewed=false` | ranked candidates (exact folded match first; phonetic fallback flagged `fuzzy` with `score <= 0.5`); exact match also returns aliases, relations, document counts and top documents |
-| `character` | `name`, `about?`, `all_lines=false`, `limit=20`, `offset=0`, `canon_only=false`, `class_tag?` | `{found, header, rows}` |
-| `item` | `slug` | bounded item row (title, `text` trimmed, `source_url`, `lore` links; no internal fields) |
-| `verify` | `quote`, `speaker?`, `exact=false` | `{quote, verified, matches}` with `exact` flags |
-| `list_records` | `kind`, `limit=50`, `offset=0` | `{count, rows}` for books, characters, speakers, records (alias: triumphs), activities, seasons, events, lore, seals |
-| `stats` | none | row counts, top item types, top speakers |
-| `book` | `ref`, `limit=20`, `offset=0`, `full=false` | book metadata and entries |
-| `transcript` | `ref`, `speaker?`, `limit=50`, `offset=0`, `full=false`, `include_stage=false`, `canon_only=false`, `section?`, `class_tag?` | transcript metadata and lines |
-| `find_item` | `query`, `limit=10`, `offset=0` | item rows with flavor-text snippets and linked lore titles (no follow-up `item` call needed for most lookups) |
-| `record` | `ref` | triumph or seal details |
-| `seals` | none | `{count, rows}` for every manifest seal with record counts |
-| `seal` | `ref` | seal details and its triumph records |
-| `lore` | `ref` | manifest lore entry (body trimmed) with linked item names |
-| `verify_many` | `quotes`, `speaker?`, `exact=false` | up to 20 quote checks at once |
-| `character_info` | `name` | aliases, quote count, spoken lines |
 | `activities` | `activity_type?`, `season?`, `event?`, `limit=100`, `offset=0` | raids, dungeons and seasonal activities with coverage |
 | `activity` | `ref`, `limit=50`, `offset=0` | activity details, coverage, speakers, transcripts |
-| `seasons` | none | all 28 seasons/episodes with official numbers and coverage |
-| `events` | none | rotating events with coverage and occurrence counts |
-| `event` | `ref` | event details, yearly occurrences and transcripts |
+| `book` | `ref`, `limit=20`, `offset=0`, `full=false` | book metadata and entries |
+| `character` | `name`, `about?`, `all_lines=false`, `limit=20`, `offset=0`, `canon_only=false`, `class_tag?` | `{found, header, rows}` |
+| `character_info` | `name` | aliases, quote count, spoken lines |
 | `coverage` | none | coverage matrix, gap lists and `coverage_notes` statuses/evidence |
+| `entity` | `ref`, `kind?`, `limit=10`, `include_unreviewed=false` | ranked candidates (exact folded match first; phonetic fallback flagged `fuzzy` with `score <= 0.5`); exact match also returns aliases, relations, document counts and top documents |
+| `event` | `ref` | event details, yearly occurrences and transcripts |
+| `events` | none | rotating events with coverage and occurrence counts |
+| `find_item` | `query`, `limit=10`, `offset=0` | item rows with flavor-text snippets and linked lore titles (no follow-up `item` call needed for most lookups) |
+| `item` | `slug` | bounded item row (title, `text` trimmed, `source_url`, `lore` links; no internal fields) |
+| `list_records` | `kind`, `limit=50`, `offset=0` | `{count, rows}` for books, characters, speakers, records (alias: triumphs), activities, seasons, events, lore, seals |
+| `lore` | `ref` | manifest lore entry (body trimmed) with linked item names |
+| `record` | `ref` | triumph or seal details |
+| `seal` | `ref` | seal details and its triumph records |
+| `seals` | none | `{count, rows}` for every manifest seal with record counts |
+| `search` | `query`, `type?`, `limit=10`, `full=false`, `offset=0`, `rank=true`, `activity?`, `season?`, `event?`, `expansion?`, `class_tag?`, `exclude_stage=false`, `timeline?`, `lang?`, `entity?` | `{count, total, next_offset, rows}` with `snippet` and `timeline` (story-chapter slug) fields; ranked results demote stage directions/cutscene captions, `exclude_stage` drops them, `timeline` filters to one in-universe chapter, `entity` restricts to documents one entity is linked to (e.g. `entity="Savathûn"`) |
+| `seasons` | none | all 28 seasons/episodes with official numbers and coverage |
+| `stats` | none | row counts, top item types, top speakers |
+| `transcript` | `ref`, `speaker?`, `limit=50`, `offset=0`, `full=false`, `include_stage=false`, `canon_only=false`, `section?`, `class_tag?` | transcript metadata and lines |
+| `verify` | `quote`, `speaker?`, `exact=false` | `{quote, verified, matches}` with `exact` flags |
+| `verify_many` | `quotes`, `speaker?`, `exact=false` | up to 20 quote checks at once |
 
 MCP limits clamp to 1-100 to protect the agent's context; the CLI is not clamped
 to 100 (the shared API allows up to 10,000). `offset` values above 10,000 clamp

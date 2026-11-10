@@ -94,11 +94,11 @@ More commands are in the sections below.
 
 | Requirement | Needed for | Notes |
 |---|---|---|
+| `curl` | optional prebuilt database | otherwise build locally |
+| `git` | cloning and version history | |
+| MCP SDK (optional) | typed tools for agents without a shell | Python 3.10+; `bash mcp-server/install.sh` |
 | `python3` 3.8+ | migration, query CLI, tests | standard library only |
 | `sqlite3` | optional raw SQL | the CLI uses Python's built-in driver |
-| `curl` | optional prebuilt database | otherwise build locally |
-| MCP SDK (optional) | typed tools for agents without a shell | Python 3.10+; `bash mcp-server/install.sh` |
-| `git` | cloning and version history | |
 | ~400 MB disk | sources plus built database | database is ~300 MB |
 
 No API keys, accounts or network access are required at runtime.
@@ -107,50 +107,50 @@ No API keys, accounts or network access are required at runtime.
 
 | Table | Rows | Purpose |
 |---|---|---|
-| `books` | 110 | Book-level metadata |
+| `activities` | 71 | Raids, dungeons, seasonal activities and missions |
 | `book_entries` | 1158 | Lore entries within books |
-| `transcripts` | 9229 | Transcript headers |
-| `transcript_lines` | 125324 | Canon dialogue (speaker, line) |
+| `books` | 110 | Book-level metadata |
 | `caption_provenance` | 56119 | Caption line provenance (hash, package, entry) |
 | `caption_sightings` | 63359 | Every observation of a caption record line (build, package, slot) |
+| `character_lines` | 1229 | Quote-ready character lines |
+| `characters` | 20 | Curated character index |
+| `coverage_notes` | 10 | Explicit status for zero-coverage gaps |
+| `document_classification` | 179 | Season/event per book and record |
+| `entities` | 89 | Named characters, powers, factions and places |
+| `entity_aliases` | 136 | Attested name variants per entity |
+| `entity_build_meta` | 14 | Entity web build audit trail |
+| `entity_links` | 33578 | Entity to document links (attribution/canonical/alias/ctx) |
+| `entity_relations` | 4 | Entity to entity links (adjacency, primeval pairs) |
+| `event_occurrences` | 72 | Event year, dates and season |
+| `events` | 9 | Rotating events including removed ones |
+| `expansions` | 18 | Major releases from Destiny 1 through Renegades |
+| `fts` | 176794 | FTS5 index over all content |
 | `grimoire_cards` | 2889 | Destiny 1 grimoire cards |
 | `interactions` | 2699 | Short dialogue beats |
-| `items` | 58764 | Weapons, armor and gear lore |
-| `records` | 69 | Triumphs and seals |
-| `characters` | 20 | Curated character index |
-| `character_lines` | 1229 | Quote-ready character lines |
-| `fts` | 176794 | FTS5 index over all content |
-| `expansions` | 18 | Major releases from Destiny 1 through Renegades |
-| `seasons` | 28 | Official numeric seasons; 24-26 are episodes |
-| `events` | 9 | Rotating events including removed ones |
-| `event_occurrences` | 72 | Event year, dates and season |
-| `activities` | 71 | Raids, dungeons, seasonal activities and missions |
-| `transcript_classification` | 9229 | Activity/season/event per transcript |
 | `item_classification` | 58764 | Season/event per item |
-| `document_classification` | 179 | Season/event per book and record |
-| `coverage_notes` | 10 | Explicit status for zero-coverage gaps |
+| `item_title_fts` (index) | 58764 | Item title lookup |
+| `items` | 58764 | Weapons, armor and gear lore |
 | `lore_entries` | 2962 | Bungie manifest lore entries (local enrichment) |
 | `lore_entry_items` | 2068 | Lore entry to item-title links |
 | `manifest_activities` | 3744 | Full manifest activity catalogue |
 | `manifest_links` | 329 | Curated activity/season to manifest hash |
-| `seals` | 70 | Manifest seal nodes |
+| `records` | 69 | Triumphs and seals |
 | `seal_records` | 1004 | Triumph records per seal |
+| `seals` | 70 | Manifest seal nodes |
+| `seasons` | 28 | Official numeric seasons; 24-26 are episodes |
+| `speaker_aliases` | 57 | Alias to canonical speaker mapping |
+| `transcript_classification` | 9229 | Activity/season/event per transcript |
+| `transcript_lines` | 125324 | Canon dialogue (speaker, line) |
+| `transcripts` | 9229 | Transcript headers |
+| `v_activity_coverage` (view) | 71 | Transcripts and lines per activity |
+| `v_entity_coverage` (view) | 4 | Per-kind entity web coverage |
+| `v_entity_documents` (view) | 33578 | Entities with ranked document lists |
+| `v_entity_resolve` (view) | 136 | Resolver lookup (alias to entity) |
+| `v_event_coverage` (view) | 9 | Transcripts, lines and occurrences per event |
+| `v_season_coverage` (view) | 28 | Transcripts and lines per season |
 | `v_speakers` (view) | 423 | Canonical speakers with line counts |
 | `v_transcript_taxonomy` (view) | 9229 | Transcripts joined to classification |
-| `v_activity_coverage` (view) | 71 | Transcripts and lines per activity |
-| `v_season_coverage` (view) | 28 | Transcripts and lines per season |
-| `v_event_coverage` (view) | 9 | Transcripts, lines and occurrences per event |
-| `speaker_aliases` | 57 | Alias to canonical speaker mapping |
 | `verify_fts` (index) | 176794 | Fast quote verification |
-| `item_title_fts` (index) | 58764 | Item title lookup |
-| `entities` | 89 | Named characters, powers, factions and places |
-| `entity_aliases` | 136 | Attested name variants per entity |
-| `entity_links` | 33578 | Entity to document links (attribution/canonical/alias/ctx) |
-| `entity_relations` | 4 | Entity to entity links (adjacency, primeval pairs) |
-| `entity_build_meta` | 14 | Entity web build audit trail |
-| `v_entity_resolve` (view) | 136 | Resolver lookup (alias to entity) |
-| `v_entity_documents` (view) | 33578 | Entities with ranked document lists |
-| `v_entity_coverage` (view) | 4 | Per-kind entity web coverage |
 | **Total** | 889234 | Rows across every table, view and index above |
 
 Every content row carries provenance. Speaker aliases are canonicalized during
@@ -191,9 +191,9 @@ Connection matrix:
 | From | To | Mechanism |
 |---|---|---|
 | agent repos | this archive | `lore/` symlink or clone, then `lore/db/query.py` |
-| agent `setup.sh` | this archive | clone or symlink, download or build the database |
 | MCP client | this archive | `mcp-server/run.sh` (stdio, read-only) |
 | release workflow | consumers | `grimoire.db` attached to each release, checksum verified |
+| agent `setup.sh` | this archive | clone or symlink, download or build the database |
 
 ## Repository layout
 
@@ -256,17 +256,17 @@ repository minus the database lives outside the tree.
 
 | Suite | Command | Expected |
 |---|---|---|
+| Agent layout | `bash tests/agent-layout-test.sh` | 39 checks |
+| Agent suite manifests | `python3 tests/suite-manifest-test.py` | PASS |
 | Archive audit | `bash grimoire-master-audit.sh` | 14/14 |
+| Calus / Zavala / Ghost / Mara Sov | run tests/master-audit.sh in each repo | 20/20 |
+| Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 checks |
+| Database integrity | `bash tests/test-db.sh` | 65 checks |
 | Drifter agent audit | run tests/master-audit.sh in destiny-agent-drifter | 25/25 |
 | Eris agent audit | run tests/master-audit.sh in destiny-agent-eris-morn | 20/20 |
-| Calus / Zavala / Ghost / Mara Sov | run tests/master-audit.sh in each repo | 20/20 |
-| Agent suite manifests | `python3 tests/suite-manifest-test.py` | PASS |
-| Database integrity | `bash tests/test-db.sh` | 65 checks |
-| Query interface | `bash tests/query-interface-test.sh` | 89 checks |
-| Agent layout | `bash tests/agent-layout-test.sh` | 39 checks |
-| Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 checks |
-| MCP contract | `mcp-server/.venv/bin/python tests/mcp-test.py` | 12/12 checks |
 | File conformance | `python3 tests/conformance.py` | PASS |
+| MCP contract | `mcp-server/.venv/bin/python tests/mcp-test.py` | 12/12 checks |
+| Query interface | `bash tests/query-interface-test.sh` | 89 checks |
 
 Agent audits run from their own repos and call shared gates through
 `lore/tests/`; the archive audit is shared-only.
