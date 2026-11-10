@@ -122,8 +122,9 @@ nothing mixes builds silently.
   quote inside long lore prose from being mis-attributed. Cutscenes, mission
   dialogue, ambient NPC pools and callouts carry **no per-line speaker in this
   build** - recorded as an honest gap. Full evidence:
-  the private extraction notes (`SPEAKER_ATTRIBUTION.md`, not distributed) (incl. the Phase 0
-  Tiger-engine literature audit, the 18,522-match FNV-1 triangulation that
+  the private extraction notes (`SPEAKER_ATTRIBUTION.md`, not distributed),
+  including the initial extraction pass, the Tiger-engine literature audit, the
+  18,522-match FNV-1 triangulation that
   found the companion-VO def class `0x80808d54`, and the exhaustive-SDH probe
   that verified zero additional attributable lines beyond the 131).
 - **Exhaustive SDH review:** every caption line was joined against

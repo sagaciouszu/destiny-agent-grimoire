@@ -183,7 +183,7 @@ the build in `archive/data/builds.json`, rebuilds and runs the gates.
   > current game with years of Bungie changes on top of its content: recast
   > voices, rewritten lines, moved items and dropped activities. Text that
   > differs from an earlier era's capture is drift, not an error — canon lines
-  > alike keep the era capture text; a drift log is the deliverable, never an
+  > alike keep the era capture text; the drift log is the record, never an
   > inline rewrite. The live build (`build-25932352`) is legitimate for
   > current-era extraction, 2024+ gameplay labels and verification, never as
   > ground truth for what Beyond Light shipped.
