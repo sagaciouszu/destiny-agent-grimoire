@@ -12,7 +12,7 @@ executable without re-deriving context. Status values: `queued`, `active`,
 | Q3 | Live-build refresh automation | P2 | 4–6 h | **done** (v0.39.2) |
 | Q4 | Caption-tier label in `character(all_lines=True)` | P3 | 30 min | **done** (Q6) |
 | Q5 | Confirm `w64_sr_globals_0134` is empty | P4 | 30 min | **done** (Q6) |
-| Q7 | Deep ecosystem pass: standards, template, agents/webs, recount, MCP, site | P0 | 6–8 h | queued |
+| Q7 | Deep ecosystem pass: standards, template, agents/webs, recount, MCP, site | P0 | 6–8 h | **P0 done**, P1 next |
 
 ---
 
@@ -184,3 +184,11 @@ peak window.
 
 **Gate:** P0 standards must land before any template/agent/site docs. Test
 agents are scratch-only and are never published.
+
+**P0 status (2026-11-10):** complete. `STANDARDS.md` carries the agnostic
+contract and generated-artifact rules; shared doc/gate scripts read
+`series/agents.json`; `tests/agnostic-test.py` enforces it in the master audit
+(15/15); query-interface count corrected to 91. Census:
+`/opt/vault/d2-bl-extract/reports/deep-census.{json,md}`. Next: P1 template
+harness (including moving the legacy per-persona count patterns out of the
+shared doc-sync script).
