@@ -33,6 +33,7 @@ body, matching the migrate parsers. `ingest-destinypedia.py` keeps every
 | `coverage-report.py` | Markdown coverage report from the live database |
 | `refresh-live-build.py --source DIR [--dry-run]` | unpack/merge/resolve/extract/validate/combine a new live build, register it, rebuild and gate |
 | `export-site-stats.py --out PATH` | one JSON snapshot of counts/sizes for the site |
+| `generate-knowledge-web.py --check\|--apply` | managed canon snapshot in each agent `reference/knowledge-web.md` |
 | `ensure-openclaw-mcp.sh` | keep OpenClaw's MCP pointer at the stable grimoire wrapper (idempotent, backs up first, skips when OpenClaw is absent) |
 | `release-stage.sh <version> [--dry-run]` | copy the database, write `SHA256SUMS`, print publish commands |
 | `sync-live-agents.sh [--openclaw] [--dry-run]` | deploy every agent in `series/agents.json` into OpenCode (agents/) or OpenClaw (workspace-<id>), preserving runtime memory and series blocks; skips agents with persona.json ready=false |
