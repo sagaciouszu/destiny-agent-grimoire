@@ -29,7 +29,8 @@ conn.execute('PRAGMA journal_mode=DELETE')
 conn.execute('VACUUM')
 counts = {t: conn.execute(f'SELECT COUNT(*) FROM {t}').fetchone()[0]
           for t in ('books', 'book_entries', 'transcripts', 'transcript_lines',
-                    'interactions', 'records', 'characters', 'character_lines', 'fts', 'verify_fts')}
+                    'interactions', 'records', 'characters', 'character_lines',
+                    'caption_provenance', 'caption_sightings', 'fts', 'verify_fts')}
 conn.close()
 print(f'wrote {OUT} ({os.path.getsize(OUT) / 1048576:.0f} MB)')
 print(' '.join(f'{k}={v}' for k, v in counts.items()))

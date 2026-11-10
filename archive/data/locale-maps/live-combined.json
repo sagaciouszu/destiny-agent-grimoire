@@ -1,5 +1,5 @@
 {
- "cross_package_duplicates": {
+ "cross_package_duplicate_lines": {
   "w64_sr_globals_0295": 32,
   "w64_sr_globals_0296": 200,
   "w64_sr_globals_0297": 122,
@@ -14,10 +14,11 @@
   "w64_sr_globals_02a0": 167,
   "w64_sr_globals_0548": 70
  },
+ "cross_package_duplicates_retained": true,
  "item_fragments_dropped": {
   "w64_sr_globals_029b": 2
  },
- "lines": 48163,
+ "lines": 51735,
  "packages": 15,
- "records": 7342
+ "records": 7670
 }

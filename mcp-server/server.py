@@ -52,7 +52,7 @@ def _offset(value):
 
 server = MCPServer(
     'destiny-grimoire',
-    version='1.8.0',
+    version='1.9.0',
     instructions=(
         'Canonical Destiny lore. Tool map: search (keyword discovery across all '
         'content, with an optional entity filter), entity (resolve a name to an '

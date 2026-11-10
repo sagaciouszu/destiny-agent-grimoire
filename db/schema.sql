@@ -75,6 +75,30 @@ CREATE INDEX IF NOT EXISTS idx_cp_kind ON caption_provenance(kind);
 CREATE INDEX IF NOT EXISTS idx_cp_pkg ON caption_provenance(source_pkg);
 CREATE INDEX IF NOT EXISTS idx_cp_hash ON caption_provenance(hash);
 
+-- Every observation of a caption line, including the ones that lose the
+-- one-row-per-line race in caption_provenance. `caption_provenance` stays the
+-- current/fast index; this is the observation log. Identity is one row per
+-- processed JSONL line: the source record slug plus the line's ordinal in that
+-- record. A physical-slot key would collapse genuinely distinct sunrise lines
+-- that share a bank entry and carry no record index (measured: 1,070 lines).
+CREATE TABLE IF NOT EXISTS caption_sightings (
+    line_id INTEGER NOT NULL REFERENCES transcript_lines(id) ON DELETE CASCADE,
+    source_build TEXT NOT NULL REFERENCES builds(build_id),
+    source_slug TEXT NOT NULL,    -- caption record slug (unique across both files)
+    line_ord INTEGER NOT NULL,    -- index in the record's `lines` array
+    source_pkg TEXT,              -- package base, e.g. w64_sr_globals_0294
+    source_entry INTEGER,         -- StringReference entry index
+    bank_entry INTEGER,           -- StringBank entry index
+    record_index INTEGER,         -- slot in the bank entry
+    record_part INTEGER,          -- paragraph within a multi-paragraph slot
+    kind TEXT,                    -- table kind at this sighting
+    hash INTEGER,                 -- StringReference hash when the build has one
+    captured_at TEXT NOT NULL,    -- builds.captured_at for this build
+    PRIMARY KEY (line_id, source_build, source_slug, line_ord)
+) WITHOUT ROWID;
+CREATE INDEX IF NOT EXISTS idx_cs_build ON caption_sightings(source_build);
+CREATE INDEX IF NOT EXISTS idx_cs_slug ON caption_sightings(source_slug);
+
 -- Build registry: one row per game build / manifest snapshot the corpus was
 -- built on. Caption rows in caption_provenance.source_build name a row of
 -- this table. Every future ingestion run registers itself here (STANDARDS.md,

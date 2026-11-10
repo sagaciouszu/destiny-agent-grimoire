@@ -6,6 +6,7 @@ build. This guards the invariants that make them safe to search:
 
   - headers carry the tier, language and a taxonomy row;
   - every caption line keeps StringReference provenance;
+  - every processed record line keeps a sighting, including merged lines;
   - no caption line duplicates text already in canon (search never returns the
     same line twice, and no second attribution is introduced);
   - activity facets are curated ('derived') and their vocabulary resolves to
@@ -25,10 +26,12 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, os.path.join(ROOT, 'db'))
 import api       # noqa: E402
+import migrate   # noqa: E402  (norm_text: one normalisation implementation)
 import taxonomy  # noqa: E402
 
 DB = os.environ.get('GRIMOIRE_DB') or os.path.join(ROOT, 'db', 'grimoire.db')
 JSONL = os.path.join(ROOT, 'archive', 'data', 'captions.jsonl')
+LIVE_JSONL = os.path.join(ROOT, 'archive', 'data', 'captions-live.jsonl')
 PASS = FAIL = 0
 
 
@@ -117,8 +120,88 @@ def build_scope():
         misfiled = one(
             "SELECT COUNT(*) FROM caption_provenance p JOIN transcript_lines tl "
             "ON tl.id=p.line_id WHERE p.source_build='build-25932352' "
-            "AND tl.speaker_source='build-25932352' AND p.kind != 'dialogue'")
-        assert misfiled == 0, f'{misfiled} live-attributed lines not classed as dialogue'
+            "AND tl.speaker_source='build-25932352' AND p.kind != 'dialogue' "
+            "AND NOT EXISTS (SELECT 1 FROM caption_sightings s "
+            "WHERE s.line_id=p.line_id AND s.source_build=p.source_build "
+            "AND s.kind='dialogue')")
+        assert misfiled == 0, f'{misfiled} live-attributed lines have no dialogue sighting'
+
+
+def sightings():
+    """Every processed caption line is retained, including lines provenance drops.
+
+    Expected shape comes from the source JSONL, never a constant: one sighting
+    per non-empty record line, grouped by `(build, record slug)`. That catches a
+    key that silently collapses sunrise lines sharing a bank entry.
+    """
+    records = []
+    for path in (JSONL, LIVE_JSONL):
+        with open(path, encoding='utf-8') as fh:
+            records.extend(json.loads(raw) for raw in fh)
+    slugs = [r['slug'] for r in records]
+    assert len(slugs) == len(set(slugs)), 'caption record slugs are not unique'
+
+    per_record, per_build = {}, {}
+    sunrise_texts, live_texts = set(), set()
+    for rec in records:
+        build = rec.get('source_build') or 'sunrise-pre-bl'
+        count = 0
+        for line in rec.get('lines', []):
+            text = (line.get('text') or '').strip()
+            if not text:
+                continue
+            count += 1
+            norm = migrate.norm_text(text)
+            (sunrise_texts if build == 'sunrise-pre-bl' else live_texts).add(norm)
+        if count:
+            per_record[(build, rec['slug'])] = count
+            per_build[build] = per_build.get(build, 0) + count
+
+    actual_record = {(b, s): n for b, s, n in conn.execute(
+        'SELECT source_build, source_slug, COUNT(*) FROM caption_sightings '
+        'GROUP BY 1,2')}
+    assert actual_record == per_record, 'sightings do not match the source record lines'
+    actual_build = dict(conn.execute(
+        'SELECT source_build, COUNT(*) FROM caption_sightings GROUP BY 1'))
+    assert actual_build == per_build, f'sighting build totals differ: {actual_build} != {per_build}'
+
+    missing = one(
+        'SELECT COUNT(*) FROM caption_provenance p '
+        'LEFT JOIN caption_sightings s ON s.line_id=p.line_id '
+        'AND s.source_build=p.source_build '
+        "AND COALESCE(s.source_pkg,'')=COALESCE(p.source_pkg,'') "
+        'AND COALESCE(s.source_entry,-1)=COALESCE(p.source_entry,-1) '
+        'AND COALESCE(s.bank_entry,-1)=COALESCE(p.bank_entry,-1) '
+        'AND COALESCE(s.record_index,-1)=COALESCE(p.record_index,-1) '
+        'AND COALESCE(s.record_part,-1)=COALESCE(p.record_part,-1) '
+        'WHERE s.line_id IS NULL')
+    assert missing == 0, f'{missing} provenance rows have no matching sighting'
+    orphan = one('SELECT COUNT(*) FROM caption_sightings s '
+                 'LEFT JOIN transcript_lines tl ON tl.id=s.line_id WHERE tl.id IS NULL')
+    assert orphan == 0, f'{orphan} orphaned sightings'
+    stale = one('SELECT COUNT(*) FROM caption_sightings s '
+                'LEFT JOIN builds b ON b.build_id=s.source_build WHERE b.build_id IS NULL')
+    assert stale == 0, f'{stale} sightings name an unregistered build'
+    assert conn.execute('PRAGMA foreign_key_check').fetchall() == [], \
+        'foreign key check failed'
+    assert one('SELECT COUNT(DISTINCT line_id) FROM caption_sightings') == \
+        one('SELECT COUNT(*) FROM caption_provenance'), \
+        'sighting line set does not match provenance'
+
+    multi = one('SELECT COUNT(*) FROM (SELECT line_id FROM caption_sightings '
+                'GROUP BY 1 HAVING COUNT(DISTINCT source_build) > 1)')
+    expected_multi = len(sunrise_texts & live_texts)
+    assert multi == expected_multi, \
+        f'{multi} lines seen by both builds, source says {expected_multi}'
+
+    assert one('SELECT COUNT(*) FROM caption_sightings WHERE captured_at IS NULL') == 0, \
+        'sighting without captured_at'
+    drift = one('SELECT COUNT(*) FROM caption_sightings s JOIN builds b '
+                'ON b.build_id=s.source_build WHERE s.captured_at != b.captured_at')
+    assert drift == 0, f'{drift} sightings have a captured_at that differs from builds'
+    meta = dict(conn.execute("SELECT key, value FROM meta WHERE key='caption_sightings'"))
+    assert meta.get('caption_sightings') == str(one('SELECT COUNT(*) FROM caption_sightings')), \
+        'meta caption_sightings is stale'
 
 
 def no_duplicate_text():
@@ -244,6 +327,7 @@ for name, fn in [
     ('caption headers are tagged, English and classified', headers),
     ('caption lines keep provenance', provenance),
     ('caption builds are registered and traceable', build_scope),
+    ('caption sightings retain merged builds', sightings),
     ('no caption text duplicates canon', no_duplicate_text),
     ('activity facets are curated and resolve', facets),
     ('caption rows indexed exactly once', indexes),

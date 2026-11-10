@@ -24,12 +24,12 @@ check() {
 }
 
 # Check tables exist
-for t in books book_entries transcripts transcript_lines grimoire_cards interactions items records characters character_lines fts meta; do
+for t in books book_entries transcripts transcript_lines grimoire_cards interactions items records characters character_lines fts meta caption_provenance caption_sightings; do
     check "[ -n \"\$(sqlite3 \"$DB\" \"SELECT name FROM sqlite_master WHERE type='table' AND name='$t'\")\" ]" "table $t exists"
 done
 
 # Check counts > 0
-for t in books book_entries transcripts transcript_lines grimoire_cards interactions items records characters character_lines; do
+for t in books book_entries transcripts transcript_lines grimoire_cards interactions items records characters character_lines caption_provenance caption_sightings; do
     N=$(sqlite3 "$DB" "SELECT COUNT(*) FROM $t")
     check "[ $N -gt 0 ]" "table $t has rows ($N)"
 done

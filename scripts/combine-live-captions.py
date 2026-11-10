@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Combine validated per-package live-caption files into one tier.
 
-Two filters run at this level, because they cannot be decided per package:
+Filters run at this level, because they cannot be decided per package:
 
-  * cross-package duplicate text: a table can appear in more than one globals
-    package; the first package in id order keeps the line and later copies are
-    dropped (caption_provenance is one row per line).
   * item-text fragments: the per-package extractor already drops containment
     matches, but a line can normalise onto a corpus item only after merge.
+  * cross-package duplicate text: a table can appear in more than one globals
+    package. By default every copy is kept so `caption_sightings` records each
+    package that carried it; the loader still collapses the text to one canon
+    line. Pass `--dedupe-cross-package` for a slim file.
 
 Input: a directory of `<package>.validated.jsonl` files.
 Output: one sorted JSONL plus a JSON report.
@@ -35,6 +36,8 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--report", required=True)
     ap.add_argument("--items-jsonl", default=None)
+    ap.add_argument("--dedupe-cross-package", action="store_true",
+                    help="drop repeated text from later packages (loses sightings)")
     args = ap.parse_args()
 
     index = ContainmentIndex.from_jsonl(args.items_jsonl) if args.items_jsonl else None
@@ -53,13 +56,16 @@ def main():
             kept = []
             for line in rec.get("lines", []):
                 key = norm(line.get("text", ""))
-                if key in seen:
+                repeated = key in seen
+                if repeated and args.dedupe_cross_package:
                     dup[pkg] = dup.get(pkg, 0) + 1
                     continue
                 if index is not None and index.is_fragment(line.get("text", "")):
                     frag[pkg] = frag.get(pkg, 0) + 1
                     continue
                 seen[key] = pkg
+                if repeated:
+                    dup[pkg] = dup.get(pkg, 0) + 1
                 kept.append(line)
             if kept:
                 rec["lines"] = kept
@@ -75,7 +81,8 @@ def main():
         "packages": len(files),
         "records": len(records),
         "lines": sum(len(r["lines"]) for r in records),
-        "cross_package_duplicates": dict(sorted(dup.items())),
+        "cross_package_duplicate_lines": dict(sorted(dup.items())),
+        "cross_package_duplicates_retained": not args.dedupe_cross_package,
         "item_fragments_dropped": dict(sorted(frag.items())),
     }
     with open(args.report, "w", encoding="utf-8") as fh:

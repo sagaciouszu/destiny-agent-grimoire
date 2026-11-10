@@ -41,6 +41,7 @@ the authoritative counts are asserted live (`sync-doc-counts.py --check`,
 - `item-audit.py` - slugs, titles, URLs, optional text coverage for items
 - `taxonomy-deep-test.py` - tiers, seasons, events, lore, seals, manifest links
 - `caption-test.py` - game captions (`source_tier='game_caption'`): headers,
+  provenance + sightings (merged lines keep every build),
   provenance, FTS+verify parity, persona canon exclusion
 - `class-filter-test.py` - hunter/titan/warlock variant filtering
 - `onboarding-smoke.sh` - offline clone/setup/audit on a fresh checkout

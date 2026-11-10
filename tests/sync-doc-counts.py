@@ -118,7 +118,7 @@ SHARED_PROSE = [
     # sync-doc-counts.py --check and reading the resulting diff).
     (r'(?<![\d,])(?P<num>\d{1,3}(?:,\d{3})+|\d{3,5})(?=\s+records\b)', 'records'),
     (r'(?<![\d,])(?P<num>\d{1,3}(?:,\d{3})+|\d{3,5})(?=\s+items\b)', 'items'),
-    (r'(?<![\d,])(?P<num>\d{1,3}(?:,\d{3})+|\d{3,5})(?=\s+entries\b)', 'book_entries'),
+    (r'(?<![\d,])(?P<num>\d{1,3}(?:,\d{3})+|\d{3,5})(?=\s+entries\s+within\s+books\b)', 'book_entries'),
     (r'(?<![\d,])\((?P<num>\d{1,3}(?:,\d{3})+|\d{3,4})(?=\s+lines\))', 'character_lines'),
 ]
 
