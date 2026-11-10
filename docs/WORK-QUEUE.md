@@ -12,7 +12,7 @@ executable without re-deriving context. Status values: `queued`, `active`,
 | Q3 | Live-build refresh automation | P2 | 4–6 h | **done** (v0.39.2) |
 | Q4 | Caption-tier label in `character(all_lines=True)` | P3 | 30 min | **done** (Q6) |
 | Q5 | Confirm `w64_sr_globals_0134` is empty | P4 | 30 min | **done** (Q6) |
-| Q7 | Deep ecosystem pass: standards, template, agents/webs, recount, MCP, site | P0 | 6–8 h | **P4 done**, P5 next |
+| Q7 | Deep ecosystem pass: standards, template, agents/webs, recount, MCP, site | P0 | 6–8 h | **P5 done**, P6 next |
 
 ---
 
@@ -226,3 +226,12 @@ on a pre-1.9 database instead of failing; MCP README and skill document the
 schema, caption-tier and `v_speakers` caveats. Card decision: defer
 (`/opt/vault/d2-bl-extract/reports/card-decision.md`). Next: P5 stats, readmes
 and site.
+
+
+**P5 status (2026-11-10):** complete. Site stats regenerated for v0.39.3;
+`scripts/sync-agents.py` now owns roster metadata (repo, entry, version, release
+URL, last update, audit totals) and runs `--check` in `npm run check`; setup
+pages document `--dry-run` and `GRIMOIRE_DB`. `npm run check` is green, the site
+deployed (`9246e3d`) and live pages were spot-checked (9,229 transcripts, 22
+tools, 25/25 and 20/20 audits). GitHub description updated; wiki in sync. Next:
+P6 integration and release.
