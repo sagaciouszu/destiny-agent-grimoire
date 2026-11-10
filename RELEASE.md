@@ -39,8 +39,10 @@ Full from-source rebuild (migrate -> enrich -> Queen fold -> entity web).
 Gates: test-db 61/61, lore-integrity 17/17, query-interface 89/89, caption
 10/10, containment 11/11, mcp-test 12/12, mcp-matrix 8/8,
 mcp-agent-optimization 25/25, file conformance, source overlap, cutscene
-verification, speaker audit, master audit 13/14 (only the pre-existing
-persona-count drift remains).
+verification, speaker audit, master audit 14/14.
+Post-release: `scripts/verify-live-english.py` independently checks 40 tables
+per package against the existing English canon (15/15 pass, no flags), and the
+persona counts are synced (no database change).
 
 ## Asset
 
@@ -55,10 +57,8 @@ persona-count drift remains).
 - `caption_provenance` is one row per line: 1,651 emitted live lines merged
   into existing canon (116 onto non-caption web/cutscene lines).
 - The resolver emits only anchored tables; 13 of 15 packages are
-  `medium` confidence with unanchored blocks skipped. The language gate covers
-  whole-table misassignment, not missing tables.
-- `tests/count-consistency.py` still reports the pre-existing persona-count
-  drift (zavala, ghost, mara-sov); persona canon is unchanged by this release.
+  `medium` confidence with unanchored blocks skipped. The independent English
+  check covers sampled tables, not missing ones.
 
 # v0.37.1 - Mounted package layers for the live tier
 

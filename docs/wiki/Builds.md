@@ -112,6 +112,10 @@ tier audit and post-fix addenda under the same vault):
   tables in `w64_sr_globals_029e` (the resolver had placed them on English
   slots). The shipped tier has 0 Cyrillic, 0 CJK and 0 Polish-diacritic lines;
   23 German-diacritic hits are English proper nouns (`Häkke`, `Jötunn`).
+- **Independent English check.** `scripts/verify-live-english.py` scores
+  slots against a lexicon built from the corpus's existing English canon, not
+  the resolver's stopword lists. 40 tables per package across all 15 packages:
+  English median 0.897–0.936, translated siblings 0.000–0.079, **0 flags**.
 - **Schema 1.8.0** (`db/SCHEMA_VERSION`): `caption_provenance.record_index` and
   `record_part` join `source_build`/`source_pkg`/`bank_entry`.
 - **Known limit.** `caption_provenance` is one row per line. Where the live
