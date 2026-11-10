@@ -7,7 +7,7 @@ wrong; do not guess one in.
 ## Why this page exists
 
 Every caption, transcript and provenance row derives from a specific game
-build. The wiki's caption note in `Captions.md` points here, and
+build. The caption note in `Captions.md` points here, and
 `STANDARDS.md` requires every raw capture and curated row to name the build it
 came from (`sunrise-pre-bl`, `build-25932352`, ...). This page is the single
 registry of those builds: what they are, where they were extracted, what

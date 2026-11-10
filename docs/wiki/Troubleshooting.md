@@ -4,11 +4,7 @@
 
 Symptom: `FATAL: database not built` or `no such table`.
 
-```bash
-python3 db/migrate.py
-```
-
-Or download the release asset:
+Download the release asset:
 
 ```bash
 curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db -o db/grimoire.db
@@ -24,7 +20,7 @@ Check the obvious causes first:
 - FTS syntax in the query. Quote literal terms if needed.
 - A filter that excludes the result, such as `--season`, `--activity` or
   `--expansion`.
-- The database is unenriched. Run the enrichment steps and rebuild FTS.
+- You built a core database instead of using the release asset; some optional tables are intentionally absent.
 
 Use `python3 db/query.py stats` to confirm the database is populated.
 
@@ -45,26 +41,6 @@ bash scripts/sync-live-agents.sh
 
 4. Check `persona.json`; `ready: false` skips the agent.
 
-## Agent audit fails after a data update
-
-The persona count or generated quote index can be stale:
-
-```bash
-cd destiny-agent-grimoire
-python3 tests/sync-doc-counts.py
-```
-
-Then rerun the agent master audit. Do not lower a count to make a test pass; fix
-the data or regenerate the persona.
-
-## Suite manifest failure
-
-Symptom: `baseline suites missing` or `manifest and master-audit commands differ`.
-
-A suite was removed or its command changed without updating
-`tests/suites.json`. Re-add the suite or explicitly update the manifest and the
-central baseline if the removal is intentional.
-
 ## MCP not connecting
 
 Run the server directly:
@@ -82,9 +58,6 @@ mcp-server\run.cmd
 Check the client config at `~/.config/opencode/opencode.json` and use an absolute
 path. Confirm the virtualenv exists:
 
-```bash
-mcp-server/.venv/bin/python tests/mcp-test.py
-```
 
 ## Lore directory left behind
 
@@ -102,11 +75,11 @@ mklink /J lore path\to\destiny-agent-grimoire
 ## Release checksum mismatch
 
 Re-download the asset and compare against `SHA256SUMS`. Do not use a truncated or
-partially downloaded database. If the mismatch persists, rebuild from the tagged
-commit and treat the release asset as bad.
+partially downloaded database. If the mismatch persists, delete the file and download it again; do not
+open or migrate a truncated database.
 
-## Slow build
+## First query is slow
 
-A full build takes about two minutes. Manifest enrichment can take longer on a
-cold filesystem. If the build is much slower, check disk space and whether the
-manifest archive is present under `archive/data/manifest/`.
+The database is about 300 MB. Local SSD access is fast; a network drive, a cold
+cache or a container bind mount can add seconds. Confirm the file is local and
+that `python3 db/query.py stats` opens it without copying.

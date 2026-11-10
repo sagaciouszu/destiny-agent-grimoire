@@ -5,11 +5,11 @@
 | Need | Version | Used for |
 |---|---|---|
 | Git | any current release | clone and updates |
-| Python | 3.8+ | migration, query CLI, tests |
+| Python | 3.8+ | query CLI and local build |
 | `curl` | any current release | optional prebuilt database download |
 | Python | 3.10+ | optional MCP adapter |
 
-The query CLI and tests use the Python standard library only. No API keys or
+The query CLI uses the Python standard library only. No API keys or
 network access are required at runtime.
 
 ## Clone
@@ -42,12 +42,6 @@ Smaller companions of the same bytes live at the same endpoint:
 `grimoire.db.gz` (78.6 MiB, `gzip -d`; use 7-Zip on Windows). The gzip asset
 needs nothing beyond gzip, which is what Android apps decompress with
 `GZIPInputStream`.
-
-**Or build from this checkout** (about two minutes):
-
-```bash
-python3 db/migrate.py
-```
 
 The prebuilt asset is checked against the release `SHA256SUMS` by the agent
 installers. To check it yourself:
@@ -83,7 +77,8 @@ prints a client config snippet. See [MCP Server](MCP-Server.md).
 
 ## Next steps
 
-- [Database](Database.md) for enrichment and rebuilds
 - [Query CLI](Query-CLI.md) for filters and JSON output
+- [MCP Server](MCP-Server.md) for typed tools in MCP clients
 - [Agent Setup](Agent-Setup.md) to deploy the character agents
-- [Testing and Auditing](Testing-and-Auditing.md) before changing anything
+- [Limits and provenance](https://sagaciouszu.github.io/destiny-agent-grimoire-site/grimoire/limits/)
+  for what the archive does and does not contain

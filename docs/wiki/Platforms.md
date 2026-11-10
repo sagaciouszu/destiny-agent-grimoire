@@ -28,7 +28,7 @@ sudo pacman -S --needed git python python-pip curl base-devel
 ### Alpine Linux
 
 ```bash
-sudo apk add git python3 py3-pip curl build-base
+sudo apk add git python3 py3-pip curl
 ```
 
 Then, for any distribution:
@@ -36,7 +36,8 @@ Then, for any distribution:
 ```bash
 git clone https://github.com/sagaciouszu/destiny-agent-grimoire.git
 cd destiny-agent-grimoire
-python3 db/migrate.py
+mkdir -p db
+curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db -o db/grimoire.db
 bash scripts/sync-live-agents.sh
 bash mcp-server/install.sh
 ```
@@ -56,7 +57,8 @@ brew install git python curl
 ```bash
 git clone https://github.com/sagaciouszu/destiny-agent-grimoire.git
 cd destiny-agent-grimoire
-python3 db/migrate.py
+mkdir -p db
+curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db -o db/grimoire.db
 bash scripts/sync-live-agents.sh
 bash mcp-server/install.sh
 ```
@@ -75,12 +77,13 @@ Prerequisites:
 - Python 3.10+
 - Git Bash or PowerShell
 
-Clone and build:
+Clone and get the database:
 
 ```bat
 git clone https://github.com/sagaciouszu/destiny-agent-grimoire.git
 cd destiny-agent-grimoire
-python3 db/migrate.py
+mkdir -p db
+curl.exe -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db -o db/grimoire.db
 bash scripts/sync-live-agents.sh
 ```
 

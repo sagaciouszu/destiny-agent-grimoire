@@ -4,31 +4,29 @@ The Grimoire is one canonical SQLite archive for Destiny lore, dialogue, items,
 activities, seasons and events. Agents and MCP clients query the same database,
 so a fact verified in one place is verified everywhere.
 
-This directory is the versioned copy of the project wiki. It is safe to edit and
-review in the same pull request as the code.
+This wiki documents the runtime artifact: how to install it, query it, connect
+MCP clients, deploy the agents and fix problems.
 
 ## Start here
 
 | I want to... | Read |
 |---|---|
 | Set up the archive | [Getting Started](Getting-Started.md) |
-| Understand the pieces | [Architecture](Architecture.md) |
-| Build or rebuild the database | [Database](Database.md) |
 | Query from a shell | [Query CLI](Query-CLI.md) |
+| Find a command fast | [Reference Commands](Reference-Commands.md) |
 | Connect an MCP client | [MCP Server](MCP-Server.md) |
 | Work with the agents | [Agent Series](Agent-Series.md), [Agent Setup](Agent-Setup.md) |
-| Run the gates | [Testing and Auditing](Testing-and-Auditing.md) |
-| Fix a problem | [Troubleshooting](Troubleshooting.md) |
-| Find a command fast | [Reference Commands](Reference-Commands.md) |
 | Install on my OS | [Platform Notes](Platforms.md) |
+| Fix a problem | [Troubleshooting](Troubleshooting.md) |
+| Check limits and provenance | [Limits and provenance](https://sagaciouszu.github.io/destiny-agent-grimoire-site/grimoire/limits/) |
 
 ## Core principle
 
 The database is the runtime source of truth. Do not parse `source/` markdown at
-runtime, and do not scrape live sites during a query. Sources are ingested at
-build time; agents read the built database.
+runtime, and do not scrape live sites during a query. Sources are ingested when
+the database is built; agents read the built database.
 
-## What makes it different
+## What the runtime gives you
 
 - **One archive, many voices.** Six character agents share the same canon.
 - **Quote safety first.** `verify` checks a line before an agent may quote it.
@@ -38,10 +36,14 @@ build time; agents read the built database.
   guess.
 - **Read-only runtime.** The CLI and MCP adapter open SQLite in read-only mode.
 
-## Outside this wiki
+## Limits
 
-- `README.md` - quick start and repository map
-- `STANDARDS.md` - schema, provenance and change rules
-- `docs/TAXONOMY.md` - classification contract
-- `docs/DISCOVERY.md` - why discovery is organised this way
-- `docs/GAPS.md` - current coverage ledger
+The user-facing honesty contract is the site page linked above. It records the
+caption tier, missing timelines, source gaps and non-completeness. If a claim
+elsewhere conflicts with that page, that page wins.
+
+## Developer documentation
+
+This wiki is not build or process documentation. Build steps, schema internals,
+provenance rules and test gates live in the repository: `README.md`,
+`STANDARDS.md`, `docs/process/` and `tests/README.md`.
