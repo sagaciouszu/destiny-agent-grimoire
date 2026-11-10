@@ -185,7 +185,7 @@ hand to separate a config-path problem from a server problem.
 | `activities` | `activity_type?`, `season?`, `event?`, `limit=100`, `offset=0` | raids, dungeons and seasonal activities with coverage |
 | `activity` | `ref`, `limit=50`, `offset=0` | activity details, coverage, speakers, transcripts |
 | `book` | `ref`, `limit=20`, `offset=0`, `full=false` | book metadata and entries |
-| `character` | `name`, `about?`, `all_lines=false`, `limit=20`, `offset=0`, `canon_only=false`, `class_tag?` | `{found, header, rows}`; rows carry `source_tier`, and the header names the caption tier when present |
+| `character` | `name`, `about?`, `all_lines=false`, `limit=20`, `offset=0`, `canon_only=false`, `class_tag?`, `tier?`, `exclude_tier?` | `{found, header, rows}`; rows carry `source_tier`, and the header names the caption tier when present |
 | `character_info` | `name` | aliases, quote count, spoken lines |
 | `coverage` | none | coverage matrix, gap lists and `coverage_notes` statuses/evidence |
 | `entity` | `ref`, `kind?`, `limit=10`, `include_unreviewed=false` | ranked candidates (exact folded match first; phonetic fallback flagged `fuzzy` with `score <= 0.5`); exact match also returns aliases, relations, document counts and top documents |
@@ -202,8 +202,15 @@ hand to separate a config-path problem from a server problem.
 | `seasons` | none | all 28 seasons/episodes with official numbers and coverage |
 | `stats` | none | row counts, top item types, top speakers |
 | `transcript` | `ref`, `speaker?`, `limit=50`, `offset=0`, `full=false`, `include_stage=false`, `canon_only=false`, `section?`, `class_tag?` | transcript metadata and lines |
-| `verify` | `quote`, `speaker?`, `exact=false` | `{quote, verified, matches}` with `exact` flags |
-| `verify_many` | `quotes`, `speaker?`, `exact=false` | up to 20 quote checks at once |
+| `verify` | `quote`, `speaker?`, `exact=false` | `{quote, verified, speaker, exact, matches}`; a miss is a normal result, not an error |
+| `verify_many` | `quotes`, `speaker?`, `exact=false` | up to 20 quote checks: `{verified, total, results}`, one result per quote in input order |
+
+**Failure modes.** A search or listing with no match returns an empty `rows`
+list and `total: 0`, not an error. Reference tools (`item`, `book`, `transcript`,
+`activity`, `event`, `record`, `seal`, `lore`, `character_info`) raise a
+`ToolError` naming the missing reference; use the matching `find_*` or `list_*`
+tool to discover a valid one. Invalid arguments raise `ToolError` with the
+accepted range.
 
 MCP limits clamp to 1-100 to protect the agent's context; the CLI is not clamped
 to 100 (the shared API allows up to 10,000). `offset` values above 10,000 clamp

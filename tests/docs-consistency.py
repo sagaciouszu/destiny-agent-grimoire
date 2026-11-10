@@ -35,7 +35,10 @@ STALE = ["2,422", "78,740", "130,210", "9,607", "12,934", "206 rows",
          "260 MB", "170 MB", "61 checks", "13/13", "21 exposed",
          "Eighteen read-only tools", "Five character agents",
          "five character agents", "180 lines", "12 lines", "1,254",
-         "118,944", "73,012", "23/18", "22/17"]
+         "118,944", "73,012", "23/18", "22/17",
+         "29 MiB", "56 MiB", "65 checks", "89 checks", "91 checks",
+         "seven scripts", "2024+ client", "tar -xJf", "tar -xzf",
+         "sha256sum -c SHA256SUMS"]
 HISTORICAL = ("RELEASE.md", "CHANGELOG.md", "BeyondLight-Roadmap.md",
               "GRIMOIRE-CHANGES.md", "live-tier", "post-fix")
 

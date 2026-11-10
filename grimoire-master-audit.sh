@@ -17,14 +17,14 @@ run() {
     if bash "$1" >/dev/null 2>&1; then echo "  ✓ [$2] PASS"; PASS=$((PASS+1));
     else echo "  ✗ [$2] FAIL"; FAIL=$((FAIL+1)); fi
 }
-run "$ARCHIVE/tests/test-db.sh" "Database Integrity (65 checks)"
+run "$ARCHIVE/tests/test-db.sh" "Database Integrity (67 checks)"
 # run() executes a suite with bash, so Python suites are invoked explicitly.
 if python3 "$ARCHIVE/tests/caption-test.py" >/dev/null 2>&1; then echo "  ✓ [Game Caption Corpus] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Game Caption Corpus] FAIL"; FAIL=$((FAIL+1)); fi
 run "$ARCHIVE/tests/compendium-check.sh" "Compendium Files"
 run "$ARCHIVE/tests/lore-integrity.sh" "Lore Archive Integrity"
 run "$ARCHIVE/tests/cutscene-verify.sh" "Cutscene Caption Verification"
-run "$ARCHIVE/tests/query-interface-test.sh" "Query Interface (89 checks)"
-run "$ARCHIVE/tests/agent-layout-test.sh" "Agent Layout (OpenCode/OpenClaw, 39 checks)"
+run "$ARCHIVE/tests/query-interface-test.sh" "Query Interface (97 checks)"
+run "$ARCHIVE/tests/agent-layout-test.sh" "Agent Layout (OpenCode/OpenClaw, 108 checks)"
 if python3 "$ARCHIVE/tests/conformance.py" >/dev/null 2>&1; then echo "  ✓ [File Conformance] PASS"; PASS=$((PASS+1)); else echo "  ✗ [File Conformance] FAIL"; FAIL=$((FAIL+1)); fi
 if python3 "$ARCHIVE/tests/agnostic-test.py" >/dev/null 2>&1; then echo "  ✓ [Agnostic Contract] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Agnostic Contract] FAIL"; FAIL=$((FAIL+1)); fi
 if python3 "$ARCHIVE/tests/docs-consistency.py" >/dev/null 2>&1; then echo "  ✓ [Documentation Consistency] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Documentation Consistency] FAIL"; FAIL=$((FAIL+1)); fi

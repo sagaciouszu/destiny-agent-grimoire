@@ -5,8 +5,10 @@ sighting log followed in v0.39.0 (schema 1.9.0).
 
 ## What the arena looks like (evidence-backed)
 
-Live build = `build-25932352` (Update 9.7.0.6, Oct 20 2026), Steam appid 1085660,
-v53 container, AES-wrapped everywhere. Shelf-life note from
+Builds referenced here: `sunrise-pre-bl` (2020) and `build-25932352`
+(Update 9.7.0.6, Oct 2026), Steam appid 1085660, v53 container, AES-wrapped
+everywhere. This page is historical and does not track the current live build.
+Shelf-life note from
 the private probe report (`build-25932352-probe.md`, not distributed):
 
 - 2,417 `.pkg` on disk, matches Steam install byte-for-byte.
@@ -26,7 +28,7 @@ the private probe report (`build-25932352-probe.md`, not distributed):
   yields 6 locales' name tables together; no need to also distribute patch
   containing `SR_GLOBALS_*`.
 
-## Beyond Light coverage today (v0.36.0)
+## Beyond Light coverage at v0.36.0
 
 Beyond Light-era source entries on the Ishtar timeline: 72 (30 BL proper +
 Hunt 5 + Chosen 13 + Splicer 8 + Lost 16). All 72 are in the corpus as
@@ -62,7 +64,7 @@ Attack vector: split-file strategy instead of one big flip.
 3. Wire `db/migrate.py` so VO extraction picks up localized name tables and
    propagates into FTS indexes; evaluate recall on 10 live canon lines.
 
-**Deliverable:** `docs/wiki/Builds.md` gains an EN-globals section; entity web
+**Deliverable:** `Builds.md` gains an EN-globals section; entity web
 gains ~30 new links (enemy-title lookups only); release `v0.37.0` shipped
 `schema 1.8.0`; `v0.39.0` shipped `schema 1.9.0`.
 
@@ -91,7 +93,7 @@ with `is_stage_dir=0`. Timed to v0.38.0.
 reconciled by that window.
 - Phase 2a is enough to land v0.37.0; 2b/2c are sequenced but not blocking.
 - Speakers must never ship as fact unless 2024 HUD prints them; BL below-light
-  era ships `speaker='Cutscene'` on unknown VO just like the 2019 build.
+  era ships `speaker='Cutscene'` on unknown VO just like `sunrise-pre-bl`.
 
 ## Something IS not true about what exists
 

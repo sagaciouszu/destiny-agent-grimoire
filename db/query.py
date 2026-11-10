@@ -52,10 +52,15 @@ def cmd_search(args):
                      season=args.season, event=args.event, expansion=args.expansion,
                      class_tag=args.class_tag, timeline=args.timeline, lang=args.lang,
                      entity=args.entity)
-    total = api.search_total(query, type=args.type, activity=args.activity,
-                             season=args.season, event=args.event,
-                             expansion=args.expansion, class_tag=args.class_tag,
-                             timeline=args.timeline, lang=args.lang, entity=args.entity)
+    # The total is only printed for humans; --json callers use len(rows).
+    # Skipping the second FTS pass halves the work on the agent path.
+    total = None
+    if not args.json:
+        total = api.search_total(query, type=args.type, activity=args.activity,
+                                 season=args.season, event=args.event,
+                                 expansion=args.expansion, class_tag=args.class_tag,
+                                 timeline=args.timeline, lang=args.lang,
+                                 entity=args.entity)
     if args.full:
         emit(out, args.json, lambda rs: [print(f"[{r['source']}] {r['title']}: {r['text'][:200]}") for r in rs])
     else:

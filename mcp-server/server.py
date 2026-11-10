@@ -173,6 +173,10 @@ def search(query: str, type: str | None = None, limit: int = 10, full: bool = Fa
 
     Rows carry a `snippet` field with the match context highlighted in brackets
     and a `timeline` field (the chapter slug, empty when unknown).
+
+
+    Returns:
+        {count, total, next_offset, rows}. `total` is the unpaged match count; `rows` are bounded snippets unless `full`; `next_offset` is null on the last page.
     """
     rows = _api(api.search, query, type=type, limit=_limit(limit, 10), full=full,
                 offset=_offset(offset), rank=rank, activity=activity, season=season,
@@ -237,6 +241,10 @@ def character(name: str, about: str | None = None, all_lines: bool = False,
             (`ishtar_main,ishtar_web`). Forces transcript rows because curated
             compendium rows carry no tier.
         exclude_tier: Exclude this source tier, for example `game_caption`.
+
+
+    Returns:
+        {found, header, rows}. `found` is true when the character resolved; each row carries line, speaker, transcript and timeline fields.
     """
     res = _api(api.character, name, about=about, all_lines=all_lines,
                 limit=_limit(limit, 20), offset=_offset(offset), canon_only=canon_only,
@@ -255,6 +263,10 @@ def item(slug: str) -> dict:
     Args:
         slug: Lowercase-hyphen slug, for example "gjallarhorn". Discover slugs
             with find_item first; never guess one.
+
+
+    Returns:
+        one item row with slug, title, type, release and optional text and lore links. Raises ToolError when the slug is unknown; use find_item to discover one.
     """
     row = _api(api.item, slug)
     if row is None:
@@ -297,6 +309,10 @@ def list_records(kind: str, limit: int = 50, offset: int = 0) -> dict:
             persona-canon membership list.
         limit: Maximum rows (1-100).
         offset: Rows to skip (0-10000; higher values clamp to 10000).
+
+
+    Returns:
+        {count, rows}. `count` is the page size, not the corpus total.
     """
     rows = _api(api.listing, kind, limit=_limit(limit, 50), offset=_offset(offset))
     return {'count': len(rows), 'rows': rows}
@@ -308,6 +324,10 @@ def stats() -> dict:
 
     A pre-1.9 database has no `caption_sightings`; the response carries
     `missing_tables` instead of failing, so a client can show the gap.
+
+
+    Returns:
+        archive counts and build metadata, the same payload as `query.py stats --json`.
     """
     return _api(api.stats)
 
@@ -320,16 +340,24 @@ def verify_many(quotes: list[str], speaker: str | None = None, exact: bool = Fal
         quotes: 1-20 strings to check.
         speaker: Require this attribution for every quote.
         exact: Require full canonical lines.
+
+
+    Returns:
+        {verified, total, results}. `results` is one verify payload per quote, in input order.
     """
     return _api(api.verify_many, quotes, speaker=speaker, exact=exact)
 
 
 @server.tool(annotations=READ_ONLY)
 def character_info(name: str) -> dict:
-    """Character metadata, aliases and line counts.
+    """Character metadata for one name: aliases, quote count and spoken-line count.
 
     Args:
         name: Character name or slug.
+
+
+    Returns:
+        character metadata, aliases and quote counts. Raises ToolError when no character or speaker matches.
     """
     res = _api(api.character_info, name)
     if res is None:
@@ -346,6 +374,10 @@ def book(ref: str, limit: int = 20, offset: int = 0, full: bool = False) -> dict
         limit: Entries per page (1-100).
         offset: Entries to skip (0-10000).
         full: Return full entry text instead of a snippet.
+
+
+    Returns:
+        {book, total, limit, offset, entries}. Raises ToolError when the reference does not resolve.
     """
     res = _api(api.book, ref, limit=_limit(limit, 20), offset=_offset(offset), full=full)
     if res is None:
@@ -380,6 +412,10 @@ def transcript(ref: str, speaker: str | None = None, limit: int = 50, offset: in
         tier: Only this transcript source tier; comma-separate several.
         exclude_tier: Exclude this transcript source tier, for example
             `game_caption`.
+
+
+    Returns:
+        {transcript, total, limit, offset, rows}. Raises ToolError when the reference does not resolve.
     """
     res = _api(api.transcript, ref, speaker=speaker, limit=_limit(limit, 50),
                offset=_offset(offset), full=full, include_stage=include_stage,
@@ -402,6 +438,10 @@ def find_item(query: str, limit: int = 10, offset: int = 0) -> dict:
         query: Title words or slug.
         limit: Maximum rows (1-100).
         offset: Rows to skip (0-10000; higher values clamp to 10000).
+
+
+    Returns:
+        {count, total, limit, offset, rows}. An empty rows list means no title or slug matched.
     """
     return _api(api.find_item, query, limit=_limit(limit, 10), offset=_offset(offset))
 
@@ -418,6 +458,10 @@ def activities(activity_type: str | None = None, season: str | None = None,
         event: Optional rotating event slug or name.
         limit: Maximum rows (1-100).
         offset: Rows to skip (0-10000).
+
+
+    Returns:
+        {count, rows} filtered by the supplied activity, season, event or expansion.
     """
     rows = _api(api.activities, activity_type=activity_type, season=season,
                 event=event, limit=_limit(limit, 100), offset=_offset(offset))
@@ -432,6 +476,10 @@ def activity(ref: str, limit: int = 50, offset: int = 0) -> dict:
         ref: Activity slug or name fragment (raid, dungeon, seasonal activity).
         limit: Transcripts per page (1-100).
         offset: Transcripts to skip (0-10000).
+
+
+    Returns:
+        one activity with transcript and line coverage. Raises ToolError when the reference does not resolve.
     """
     res = _api(api.activity, ref, limit=_limit(limit, 50), offset=_offset(offset))
     if res is None:
@@ -441,14 +489,22 @@ def activity(ref: str, limit: int = 50, offset: int = 0) -> dict:
 
 @server.tool(annotations=READ_ONLY)
 def seasons() -> dict:
-    """Every season and episode with its official number and coverage."""
+    """List every season and episode with official number, type and coverage counts.
+
+    Returns:
+        Returns: {count, rows} for every season.
+    """
     rows = _api(api.seasons)
     return {'count': len(rows), 'rows': rows}
 
 
 @server.tool(annotations=READ_ONLY)
 def events() -> dict:
-    """Every rotating event with coverage and occurrence count."""
+    """List every rotating event with its coverage and occurrence count.
+
+    Returns:
+        Returns: {count, rows} for every rotating event.
+    """
     rows = _api(api.events)
     return {'count': len(rows), 'rows': rows}
 
@@ -459,6 +515,10 @@ def event(ref: str) -> dict:
 
     Args:
         ref: Event slug or name fragment, for example "Festival of the Lost".
+
+
+    Returns:
+        one event with occurrences and coverage. Raises ToolError when the reference does not resolve.
     """
     res = _api(api.event, ref)
     if res is None:
@@ -474,6 +534,10 @@ def coverage() -> dict:
     narration_only, dialogue_source_missing, no_dialogue or missing. The
     `notes` list explains every non-covered entity, and `gaps.unexplained`
     is empty when every zero-coverage entity has a status.
+
+
+    Returns:
+        {activities, seasons, events, notes, gaps}. `notes` is per-entity coverage status; a missing transcript is recorded, never guessed.
     """
     return _api(api.coverage)
 
@@ -485,6 +549,10 @@ def record(ref: str) -> dict:
     Args:
         ref: Record slug (lowercase-hyphen, for example "a-friend-in-need") or
             a title fragment; discover slugs with list_records(kind="records").
+
+
+    Returns:
+        one record entry. Raises ToolError when the reference does not resolve.
     """
     res = _api(api.record, ref)
     if res is None:
@@ -510,6 +578,10 @@ def seal(ref: str) -> dict:
     Args:
         ref: Seal hash or name fragment, for example "30th Anniversary".
             Discover names with seals().
+
+
+    Returns:
+        one seal with its records. Raises ToolError when the reference does not resolve.
     """
     res = _api(api.seal, ref)
     if res is None:
@@ -525,6 +597,10 @@ def lore(ref: str) -> dict:
         ref: Numeric lore hash or a TITLE fragment (lore entries have no slug;
             "the-books-of-sorrow" style slugs will not resolve — pass e.g.
             "Books of Sorrow" or a hash).
+
+
+    Returns:
+        one lore entry. Raises ToolError when the reference does not resolve.
     """
     res = _api(api.lore, ref)
     if res is None:
