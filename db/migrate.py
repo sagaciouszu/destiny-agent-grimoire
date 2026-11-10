@@ -442,16 +442,23 @@ def _caption_pkg(url):
 
 
 def _caption_prov(conn, line_id, line, rec, src_pkg, src_entry):
-    """Attach one caption line's StringReference provenance.
+    """Attach one caption line's build provenance.
 
     INSERT OR IGNORE: several caption tables can carry the same canon line, and
     caption_provenance has one row per line. Returns 1 when a row was written.
+
+    `hash` is the build's StringReference hash and stays NULL for banks whose
+    build does not expose one (the live v53 string banks); `record_index` is
+    then the line's position in that bank entry, so every line still traces
+    back to an exact slot in an exact build.
     """
     cur = conn.execute(
         'INSERT OR IGNORE INTO caption_provenance '
-        '(line_id,hash,kind,source_pkg,source_entry,bank_entry,source_build) VALUES (?,?,?,?,?,?,?)',
+        '(line_id,hash,kind,source_pkg,source_entry,bank_entry,record_index,'
+        'record_part,source_build) VALUES (?,?,?,?,?,?,?,?,?)',
         (line_id, line.get('hash'), rec.get('kind_class'), src_pkg, src_entry,
-         rec.get('bank_entry'), (rec.get('source_build') or 'sunrise-pre-bl')))
+         rec.get('bank_entry'), line.get('record_index'), line.get('record_part'),
+         (rec.get('source_build') or 'sunrise-pre-bl')))
     return cur.rowcount
 
 
@@ -496,11 +503,19 @@ def _caption_header(conn, rec, acts, stats):
 
 
 def load_captions(conn):
-    """Load English game captions from archive/data/captions.jsonl.
+    """Load English game captions from the build caption files.
 
-    One record is one caption table extracted from the local build: a
-    transcript header (source_tier='game_caption', lang='en'), its lines, a
-    taxonomy row, and per-line StringReference provenance in caption_provenance.
+    Sources (loaded in this order, deterministic):
+      * `archive/data/captions.jsonl`       - `sunrise-pre-bl` (2020 client)
+      * `archive/data/captions-live.jsonl`  - `build-25932352` (2026 live client)
+
+    They stay in separate files so one build's text can never be silently
+    merged into another's; the build each line came from is recorded in
+    `caption_provenance.source_build`.
+
+    One record is one caption table extracted from a build: a transcript header
+    (source_tier='game_caption', lang='en'), its lines, a taxonomy row, and
+    per-line build provenance.
 
     Rules:
       * speakers canonicalise through SPEAKER_ALIASES like every other loader;
@@ -515,11 +530,10 @@ def load_captions(conn):
     the curated facets, and before the FTS build so caption rows are indexed
     with source='caption'.
     """
-    path = os.path.join(ROOT, 'archive', 'data', 'captions.jsonl')
+    paths = [os.path.join(ROOT, 'archive', 'data', 'captions.jsonl'),
+             os.path.join(ROOT, 'archive', 'data', 'captions-live.jsonl')]
     stats = {'transcripts': 0, 'lines': 0, 'already_in_canon': 0,
              'provenance': 0, 'facets': 0, 'unresolved_facets': 0}
-    if not os.path.exists(path):
-        return stats
 
     # norm_line -> canon line id (lowest id first: deterministic, and a caption
     # line that already exists attaches its provenance to that row).
@@ -532,45 +546,48 @@ def load_captions(conn):
     acts = {r[0]: r for r in conn.execute(
         'SELECT slug, activity_type, season_slug, expansion_slug FROM activities')}
 
-    for raw in open(path, encoding='utf-8'):
-        rec = json.loads(raw)
-        src_pkg, src_entry = _caption_pkg(rec.get('source_url', ''))
-        tid, seq = None, 0
-        for line in rec.get('lines', []):
-            text = (line.get('text') or '').strip()
-            if not text:
-                continue
-            nl = norm_text(text)
-            hit = canon.get(nl)
-            if hit is not None:
-                # caption sees a newer attribution for a canon line: adopt it
-                # only when the canon row has no source yet, and never
-                # rewrite anyone's attribution.
+    for path in paths:
+        if not os.path.exists(path):
+            continue
+        for raw in open(path, encoding='utf-8'):
+            rec = json.loads(raw)
+            src_pkg, src_entry = _caption_pkg(rec.get('source_url', ''))
+            tid, seq = None, 0
+            for line in rec.get('lines', []):
+                text = (line.get('text') or '').strip()
+                if not text:
+                    continue
+                nl = norm_text(text)
+                hit = canon.get(nl)
+                if hit is not None:
+                    # caption sees a newer attribution for a canon line: adopt it
+                    # only when the canon row has no source yet, and never
+                    # rewrite anyone's attribution.
+                    line_ss = (line.get('speaker_source') or '').strip() or None
+                    if line_ss:
+                        conn.execute(
+                            'UPDATE transcript_lines SET speaker_source=? '
+                            'WHERE id=? AND speaker_source IS NULL',
+                            (line_ss, hit))
+                    stats['provenance'] += _caption_prov(
+                        conn, hit, line, rec, src_pkg, src_entry)
+                    stats['already_in_canon'] += 1
+                    continue
+                if tid is None:      # header appears only when a line is new
+                    tid = _caption_header(conn, rec, acts, stats)
+                speaker = canon_speaker(
+                    line.get('speaker') or rec.get('speaker') or 'Cutscene')
                 line_ss = (line.get('speaker_source') or '').strip() or None
-                if line_ss:
-                    conn.execute(
-                        'UPDATE transcript_lines SET speaker_source=? '
-                        'WHERE id=? AND speaker_source IS NULL',
-                        (line_ss, hit))
+                lid = conn.execute(
+                    'INSERT INTO transcript_lines (transcript_id,seq,speaker,line,'
+                    'norm_line,is_stage_dir,speaker_source) VALUES (?,?,?,?,?,?,?)',
+                    (tid, seq, speaker, text, nl,
+                     1 if line.get('is_stage_dir') else 0, line_ss)).lastrowid
+                canon.setdefault(nl, lid)
+                seq += 1
+                stats['lines'] += 1
                 stats['provenance'] += _caption_prov(
-                    conn, hit, line, rec, src_pkg, src_entry)
-                stats['already_in_canon'] += 1
-                continue
-            if tid is None:      # header appears only when a line is new
-                tid = _caption_header(conn, rec, acts, stats)
-            speaker = canon_speaker(
-                line.get('speaker') or rec.get('speaker') or 'Cutscene')
-            line_ss = (line.get('speaker_source') or '').strip() or None
-            lid = conn.execute(
-                'INSERT INTO transcript_lines (transcript_id,seq,speaker,line,'
-                'norm_line,is_stage_dir,speaker_source) VALUES (?,?,?,?,?,?,?)',
-                (tid, seq, speaker, text, nl,
-                 1 if line.get('is_stage_dir') else 0, line_ss)).lastrowid
-            canon.setdefault(nl, lid)
-            seq += 1
-            stats['lines'] += 1
-            stats['provenance'] += _caption_prov(
-                conn, lid, line, rec, src_pkg, src_entry)
+                    conn, lid, line, rec, src_pkg, src_entry)
     return stats
 
 
@@ -1066,9 +1083,11 @@ def migrate():
          'Destiny 2: Monument of Triumph (Update 9.7.0.6, Oct 20 2026) live client',
          'game_build', '245114.26.10.13.2000.v500_live.main',
          '/opt/vault/d2-bl-extract/build-25932352',
-         'pending', 2417, 162825758961,
+         '2026-11-09', 2417, 162825758961,
          'Update 9.7.0.6; Steam buildid 25932352; appid 1085660; package format v53. '
-         'Extraction pending Gate 0 (live AES-GCM keys). See docs/wiki/Builds.md.'),
+         'w64_sr_globals_* string banks are cleartext UTF-8 (13 locales per table); '
+         'English caption tier extracted from package 0294, 634 entries. Def blocks in '
+         'the other package classes stay AES-GCM + Oodle. See docs/wiki/Builds.md.'),
     ]
     for row in BUILD_ROWS:
         conn.execute(

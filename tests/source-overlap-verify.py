@@ -92,9 +92,13 @@ for fname in sorted(os.listdir(MD_DIR)):
     if not src or 'ishtar-collective' not in src:
         continue  # non-Ishtar provenance (youtube-*, weblore-*, ingame-quotes-*)
     m = re.search(r'/transcripts/([^/\s]+)', src)
-    # Known-benign rename: file kept the original short DB slug; content
-    # verified against the live quest- page (89% shingle coverage).
-    ALLOW = {('ace-in-the-hole', 'quest-ace-in-the-hole')}
+    # Known-benign renames: the file keeps the short DB slug; the Ishtar story
+    # page lives under the `story-` prefix (verified 2026-11-10). All three were
+    # ingested in v0.35.0 from the story pages.
+    ALLOW = {('ace-in-the-hole', 'quest-ace-in-the-hole'),
+             ('awaken-queensguard', 'story-awaken-queensguard'),
+             ('retribution', 'story-retribution'),
+             ('we-stand-unbroken', 'story-we-stand-unbroken')}
     if m and m.group(1) != fname[:-3] and (fname[:-3], m.group(1)) not in ALLOW:
         mislabeled.append((fname[:-3], m.group(1)))
 if mislabeled:

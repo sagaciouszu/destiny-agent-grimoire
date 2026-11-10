@@ -93,8 +93,11 @@ SEASON_NUMBERS=$(sqlite3 "$DB" "SELECT COUNT(DISTINCT season_number) FROM season
 check "[ $SEASON_NUMBERS -eq 28 ]" "official season numbers are unique ($SEASON_NUMBERS seasons)"
 UNTIERED=$(sqlite3 "$DB" "SELECT COUNT(*) FROM transcripts WHERE source_tier IS NULL OR source_tier=''")
 check "[ $UNTIERED -eq 0 ]" "every transcript has a source tier ($UNTIERED missing)"
-UNKNOWN_SHARE=$(sqlite3 "$DB" "SELECT CAST(100 * SUM(confidence='unknown') / COUNT(*) AS INT) FROM transcript_classification")
-check "[ $UNKNOWN_SHARE -lt 50 ]" "unknown classification below 50% ($UNKNOWN_SHARE%)"
+# Caption transcripts are deliberately 'unknown' (standard: never guess a season
+# from caption text), so they are excluded from the classification-coverage gate;
+# counting them would make the metric measure how many captions the corpus holds.
+UNKNOWN_SHARE=$(sqlite3 "$DB" "SELECT CAST(100 * SUM(c.confidence='unknown') / COUNT(*) AS INT) FROM transcript_classification c JOIN transcripts t ON t.id=c.transcript_id WHERE t.source_tier!='game_caption'")
+check "[ $UNKNOWN_SHARE -lt 50 ]" "unknown classification below 50% ($UNKNOWN_SHARE% of classifiable transcripts)"
 
 # Shipped artifact: no WAL mode, no -wal/-shm sidecars
 JOURNAL=$(sqlite3 "$DB" "PRAGMA journal_mode")

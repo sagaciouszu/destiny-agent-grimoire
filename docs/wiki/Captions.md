@@ -44,7 +44,39 @@ Every English line lives on exactly one caption table. `migrate.py` loads
   like `Speaker`/`Narration` is an *audit trail* of the absence of a build-
   side attribution mechanism, not a gap in enforcement.
 
+## Live-build string banks (`build-25932352`)
+
+The live client has no separate subtitle package for this text. English lives
+inside `w64_sr_globals_*` StringBank entries, thirteen locales per logical
+table, cleartext UTF-8. It is ingested from
+`archive/data/captions-live.jsonl`, one record per `(entry, kind)`.
+
+| property | value |
+|---|---|
+| provenance | `caption_provenance.source_build='build-25932352'` |
+| line identity | `source_pkg` + `bank_entry` + `record_index` (the build exposes no per-line StringReference hash, so `hash` is NULL) |
+| `kind` | `dialogue`, `narration`, `objective` — heuristic, from punctuation and in-string attribution |
+| speaker | only from `"..." —Name` inside the string; everything else `Cutscene` |
+| season/act | never inferred |
+
+**Excluded by design:** short labels and UI headings, mechanical copy (perk and
+modifier stat text), and lines that are fragments of an `items` entry the
+corpus already holds. The extractor reports each drop count per package so the
+gap is visible rather than hidden.
+
+**Known limitation.** `caption_provenance` is one row per line. If the live
+build repeats text the 2020 build already shipped, the row keeps
+`sunrise-pre-bl` and the live sighting is not stored. The drift log, not this
+table, is where a second-build sighting is recorded.
+
+**English selection.** Locale is positional, not an in-file field. The English
+entry list for each package is committed under
+`archive/data/locale-maps/` and was derived from a content-verified locale
+pass; a package whose English entries cannot be verified is skipped and logged
+rather than guessed.
+
 ## Captions dedup vs persona canon (exact rule)
+
 
 Persona canon EXCLUDES caption lines: `persona.json` `canon_lines` counts lines
 with `source_tier != 'game_caption'`. This is a hard predicate, enforced by

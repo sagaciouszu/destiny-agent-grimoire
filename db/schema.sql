@@ -57,16 +57,18 @@ CREATE INDEX IF NOT EXISTS idx_tl_transcript ON transcript_lines(transcript_id);
 CREATE INDEX IF NOT EXISTS idx_tl_speaker ON transcript_lines(speaker);
 CREATE INDEX IF NOT EXISTS idx_tl_norm ON transcript_lines(norm_line);
 
--- Game-file caption provenance. Every caption line keeps its StringReference
--- hash and package origin so a canonical line traces back to the build it
--- came from. Lives outside the canon columns of transcript_lines.
+-- Game-file caption provenance. Every caption line keeps its build origin so a
+-- canonical line traces back to the build it came from. Lives outside the
+-- canon columns of transcript_lines.
 CREATE TABLE IF NOT EXISTS caption_provenance (
     line_id INTEGER PRIMARY KEY REFERENCES transcript_lines(id) ON DELETE CASCADE,
-    hash INTEGER,               -- StringReference hash; NULL for unlinked banks
-    kind TEXT,                  -- table kind: cinematic | dialogue | callout | activity_narration
+    hash INTEGER,               -- StringReference hash; NULL where the build has none
+    kind TEXT,                  -- table kind: cinematic | dialogue | callout | activity_narration | narration | objective
     source_pkg TEXT,            -- package base, e.g. w64_globals_01cf
     source_entry INTEGER,       -- StringReference entry index
     bank_entry INTEGER,         -- StringBank entry index
+    record_index INTEGER,       -- line's slot in the bank entry; NULL for hash-keyed tiers
+    record_part INTEGER,        -- paragraph within a multi-paragraph slot; NULL when unsplit
     source_build TEXT NOT NULL DEFAULT 'sunrise-pre-bl'  -- builds.build_id; NULL never
 );
 CREATE INDEX IF NOT EXISTS idx_cp_kind ON caption_provenance(kind);

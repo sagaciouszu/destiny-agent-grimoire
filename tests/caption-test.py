@@ -85,6 +85,42 @@ def provenance():
         'meta caption_provenance is stale'
 
 
+def build_scope():
+    """Every provenance row names a registered build; live rows are traceable.
+
+    The corpus holds two game builds. Each row must point at `builds`, and a
+    build that does not expose per-line StringReference hashes (the v53 live
+    client) must still be traceable to the exact slot it came from.
+    """
+    stale = one('SELECT COUNT(*) FROM caption_provenance p '
+                "LEFT JOIN builds b ON b.build_id=p.source_build WHERE b.build_id IS NULL")
+    assert stale == 0, f'{stale} caption provenance rows name an unregistered build'
+    per_build = dict(conn.execute(
+        'SELECT source_build, COUNT(*) FROM caption_provenance GROUP BY 1'))
+    assert per_build, 'no caption provenance rows at all'
+    live = per_build.get('build-25932352', 0)
+    if live:
+        missing = one(
+            "SELECT COUNT(*) FROM caption_provenance WHERE source_build='build-25932352' "
+            'AND (record_index IS NULL OR record_part IS NULL OR source_pkg IS NULL '
+            'OR bank_entry IS NULL)')
+        assert missing == 0, f'{missing} live caption rows without slot provenance'
+        collapsed = one(
+            "SELECT COUNT(*) FROM caption_provenance WHERE source_build='build-25932352' "
+            "AND source_pkg NOT GLOB '*_[0-9a-f][0-9a-f][0-9a-f][0-9a-f]'")
+        assert collapsed == 0, f'{collapsed} live caption rows lost their package id'
+        dup_slot = one(
+            "SELECT COUNT(*) FROM (SELECT source_pkg, bank_entry, record_index, record_part "
+            "FROM caption_provenance WHERE source_build='build-25932352' "
+            'GROUP BY 1,2,3,4 HAVING COUNT(*) > 1)')
+        assert dup_slot == 0, f'{dup_slot} live caption slots map to more than one line'
+        misfiled = one(
+            "SELECT COUNT(*) FROM caption_provenance p JOIN transcript_lines tl "
+            "ON tl.id=p.line_id WHERE p.source_build='build-25932352' "
+            "AND tl.speaker NOT IN ('Cutscene','Narration') AND p.kind != 'dialogue'")
+        assert misfiled == 0, f'{misfiled} attributed live lines not classed as dialogue'
+
+
 def no_duplicate_text():
     """A caption line never repeats text that canon already holds."""
     shared = one(
@@ -207,6 +243,7 @@ print('=== CAPTION TEST ===')
 for name, fn in [
     ('caption headers are tagged, English and classified', headers),
     ('caption lines keep provenance', provenance),
+    ('caption builds are registered and traceable', build_scope),
     ('no caption text duplicates canon', no_duplicate_text),
     ('activity facets are curated and resolve', facets),
     ('caption rows indexed exactly once', indexes),
