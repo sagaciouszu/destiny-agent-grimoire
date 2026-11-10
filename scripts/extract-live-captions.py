@@ -266,6 +266,8 @@ def main():
     ap.add_argument("--items-jsonl",
                     default=os.path.join(ROOT, "archive", "data", "items.jsonl"))
     ap.add_argument("--stats", help="write a JSON stats sidecar here")
+    ap.add_argument("--build-scoped-slug", action="store_true",
+                    help="prefix record slugs with the build id (multi-build tiers)")
     args = ap.parse_args()
 
     lm = json.load(open(args.locale_map, encoding="utf-8"))
@@ -355,9 +357,12 @@ def main():
                 e["kept"] += 1
 
         for kind, lines in groups.items():
+            slug = f"caption-live-{pkg_id:04x}-{entry}-{kind}"
+            if args.build_scoped_slug:
+                slug = f"caption-live-{build}-{pkg_id:04x}-{entry}-{kind}"
             records.append({
                 "kind": "caption",
-                "slug": f"caption-live-{pkg_id:04x}-{entry}-{kind}",
+                "slug": slug,
                 "title": None,
                 "speaker": None,
                 "activity": None,

@@ -557,6 +557,9 @@ def load_captions(conn):
     """
     paths = [os.path.join(ROOT, 'archive', 'data', 'captions.jsonl'),
              os.path.join(ROOT, 'archive', 'data', 'captions-live.jsonl')]
+    live_dir = os.path.join(ROOT, 'archive', 'data', 'live-builds')
+    if os.path.isdir(live_dir):
+        paths += sorted(glob.glob(os.path.join(live_dir, '*.jsonl')))
     stats = {'transcripts': 0, 'lines': 0, 'already_in_canon': 0,
              'provenance': 0, 'sightings': 0, 'sightings_merged': 0,
              'facets': 0, 'unresolved_facets': 0}
@@ -1025,27 +1028,10 @@ def migrate():
     print(f'timeline: {tl_stats}')
 
     # Build registry: one row per source the corpus was built on (Builds.md).
-    # Registered BEFORE load_captions() so each sighting can carry the build's
-    # captured_at date. Point-in-time facts; refreshed by the release that
-    # re-ingests a tier.
-    BUILD_ROWS = [
-        ('sunrise-pre-bl',
-         'Destiny 2: Shadowkeep / Season of Arrivals (pre-Beyond-Light) EN client',
-         'game_build', '86657.20.08.23.1800.d2_rc', '/opt/vault/games/sunrise',
-         '2026-11-07', 1709, 74095694848,
-         'Pre-Beyond-Light build; package format v38; English-only caption tier '
-         'extracted 2026-11-07/08. Corpus released starting v0.29.0.'),
-        ('build-25932352',
-         'Destiny 2: Monument of Triumph (Update 9.7.0.6, Oct 20 2026) live client',
-         'game_build', '245114.26.10.13.2000.v500_live.main',
-         '/opt/vault/d2-bl-extract/build-25932352',
-         '2026-11-09', 2417, 162825758961,
-         'Update 9.7.0.6; Steam buildid 25932352; appid 1085660; package format v53. '
-         'w64_sr_globals_* string banks are cleartext UTF-8 (13 locales per table); '
-         'English caption tier extracted from 15 packages (46,512 provenance rows). '
-         'Def blocks in the other package classes stay AES-GCM + Oodle. '
-         'See docs/wiki/Builds.md.'),
-    ]
+    # The registry is data-driven so a refresh can add a build without editing
+    # this file; archive/data/builds.json is committed with the corpus.
+    BUILD_ROWS_FILE = os.path.join(ROOT, 'archive', 'data', 'builds.json')
+    BUILD_ROWS = json.load(open(BUILD_ROWS_FILE, encoding='utf-8'))
     for row in BUILD_ROWS:
         # UPSERT, not INSERT OR REPLACE: sightings reference build_id, and a
         # REPLACE would delete/re-insert the row (FK violation on an
@@ -1057,7 +1043,10 @@ def migrate():
             'ON CONFLICT(build_id) DO UPDATE SET label=excluded.label, '
             'kind=excluded.kind, version=excluded.version, source=excluded.source, '
             'captured_at=excluded.captured_at, package_count=excluded.package_count, '
-            'byte_count=excluded.byte_count, notes=excluded.notes', row)
+            'byte_count=excluded.byte_count, notes=excluded.notes',
+            (row['build_id'], row['label'], row['kind'], row['version'],
+             row['source'], row['captured_at'], row.get('package_count'),
+             row.get('byte_count'), row.get('notes', '')))
     builds_count = conn.execute('SELECT COUNT(*) FROM builds').fetchone()[0]
     print(f'builds: {builds_count}')
 

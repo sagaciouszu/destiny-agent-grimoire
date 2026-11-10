@@ -1,0 +1,24 @@
+[
+ {
+  "build_id": "sunrise-pre-bl",
+  "label": "Destiny 2: Shadowkeep / Season of Arrivals (pre-Beyond-Light) EN client",
+  "kind": "game_build",
+  "version": "86657.20.08.23.1800.d2_rc",
+  "source": "private extraction vault (not distributed)",
+  "captured_at": "2026-11-07",
+  "package_count": 1709,
+  "byte_count": 74095694848,
+  "notes": "Pre-Beyond-Light build; package format v38; English-only caption tier extracted 2026-11-07/08. Corpus released starting v0.29.0."
+ },
+ {
+  "build_id": "build-25932352",
+  "label": "Destiny 2: Monument of Triumph (Update 9.7.0.6, Oct 20 2026) live client",
+  "kind": "game_build",
+  "version": "245114.26.10.13.2000.v500_live.main",
+  "source": "private extraction vault (not distributed)",
+  "captured_at": "2026-11-09",
+  "package_count": 2417,
+  "byte_count": 162825758961,
+  "notes": "Update 9.7.0.6; Steam buildid 25932352; appid 1085660; package format v53. w64_sr_globals_* string banks are cleartext UTF-8 (13 locales per table); English caption tier extracted from 15 packages (46,512 provenance rows). Def blocks in the other package classes stay AES-GCM + Oodle. 0134 is a non-StringBank family."
+ }
+]
