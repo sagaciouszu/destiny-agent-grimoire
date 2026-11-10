@@ -146,7 +146,7 @@ When it is ingested into the caption tier:
 
 ## 3. Database contract
 
-Every table below is part of the schema contract. `tests/test-db.sh` (65 checks)
+Every table below is part of the schema contract. `tests/test-db.sh` (67 checks)
 verifies schema presence, counts, the `timeline_chapters` vocabulary, transcript
 timeline coverage, the transcript/FTS `timeline` mirror, `character_lines`
 inheritance, and `db/capabilities.json` sync.
@@ -185,6 +185,8 @@ inheritance, and `db/capabilities.json` sync.
 | `item_classification` | item_id, confidence | season_slug, event_slug, expansion_slug, evidence | additive |
 | `document_classification` | source, source_slug | season_slug, event_slug, expansion_slug, confidence, evidence | books and records |
 | `coverage_notes` | entity_type, slug, status | evidence, source_url | one row per zero-coverage activity, event or season; status is `covered`, `partial_transcript`, `narration_only`, `dialogue_source_missing`, `no_dialogue` or `missing` |
+
+Public views: `v_speakers` is discovery (423 observed speakers, including caption-only names); `v_canon_speakers` is persona-canon membership (230 speakers with at least one non-stage, non-optional, non-caption line); the entity and taxonomy views serve resolution and coverage. A view row is not a persona and never rewrites canon.
 
 ### Taxonomy rules
 
@@ -335,11 +337,11 @@ match a recomputation of their source text.
 
 | Gate | Enforces |
 |------|----------|
-| `tests/test-db.sh` | schema integrity, counts, no orphans, no entity leakage, character provenance, canonical speakers, card provenance, live meta stamp, class-tag and normalization invariants, capabilities sync (65 checks) |
+| `tests/test-db.sh` | schema integrity, counts, no orphans, no entity leakage, character provenance, canonical speakers, card provenance, live meta stamp, class-tag and normalization invariants, capabilities sync (67 checks) |
 | `tests/lore-integrity.sh` | source archive structure, book/transcript/card/record counts |
 | `tests/lore-format.sh` | transcript markdown format |
 | `tests/cutscene-verify.sh` | caption corroboration, encoding, cross-video consistency, attribution |
-| `tests/query-interface-test.sh` | CLI and API surface, 91 checks |
+| `tests/query-interface-test.sh` | CLI and API surface, 97 checks |
 | `tests/db-source-crosscheck.py` | database slugs vs source files, provenance URLs, index completeness |
 | `tests/caption-test.py` | game captions: headers/language, StringReference provenance, no duplicate canon text, curated activity facets, FTS/verification parity, demoted stat lines, caption search, persona canon exclusion |
 | `tests/speaker-audit.py` | reclassified parse noise must not reappear |

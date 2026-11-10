@@ -143,6 +143,7 @@ No API keys, accounts or network access are required at runtime.
 | `transcript_lines` | 125324 | Canon dialogue (speaker, line) |
 | `transcripts` | 9229 | Transcript headers |
 | `v_activity_coverage` (view) | 71 | Transcripts and lines per activity |
+| `v_canon_speakers` (view) | 230 | Persona-canon speakers (excludes caption-only, optional-only and stage rows) |
 | `v_entity_coverage` (view) | 4 | Per-kind entity web coverage |
 | `v_entity_documents` (view) | 33578 | Entities with ranked document lists |
 | `v_entity_resolve` (view) | 136 | Resolver lookup (alias to entity) |
@@ -151,7 +152,7 @@ No API keys, accounts or network access are required at runtime.
 | `v_speakers` (view) | 423 | Speakers with line counts (includes caption-only) |
 | `v_transcript_taxonomy` (view) | 9229 | Transcripts joined to classification |
 | `verify_fts` (index) | 176794 | Fast quote verification |
-| **Total** | 889234 | Rows across every table, view and index above |
+| **Total** | 889464 | Rows across every table, view and index above |
 
 Every content row carries provenance. Speaker aliases are canonicalized during
 migration. The full contract is `STANDARDS.md`.
@@ -265,14 +266,14 @@ repository minus the database lives outside the tree.
 | Archive audit | `bash grimoire-master-audit.sh` | 18/18 |
 | Calus / Zavala / Ghost / Mara Sov | run tests/master-audit.sh in each repo | 20/20 |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 checks |
-| Database integrity | `bash tests/test-db.sh` | 65 checks |
+| Database integrity | `bash tests/test-db.sh` | 67 checks |
 | Drifter agent audit | run tests/master-audit.sh in destiny-agent-drifter | 25/25 |
 | Eris agent audit | run tests/master-audit.sh in destiny-agent-eris-morn | 20/20 |
 | Documentation consistency | `python3 tests/docs-consistency.py` | PASS |
 | File conformance | `python3 tests/conformance.py` | PASS |
 | Knowledge webs | `python3 scripts/generate-knowledge-web.py --check` | PASS |
 | MCP contract | `mcp-server/.venv/bin/python tests/mcp-test.py` | 12/12 checks |
-| Query interface | `bash tests/query-interface-test.sh` | 91 checks |
+| Query interface | `bash tests/query-interface-test.sh` | 97 checks |
 
 Agent audits run from their own repos and call shared gates through
 `lore/tests/`; the archive audit is shared-only.

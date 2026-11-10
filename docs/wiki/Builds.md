@@ -116,6 +116,8 @@ are in the private extraction vault, not this repository):
   slots against a lexicon built from the corpus's existing English canon, not
   the resolver's stopword lists. 40 tables per package across all 15 packages:
   English median 0.897–0.936, translated siblings 0.000–0.079, **0 flags**.
+- **Schema 1.10.0** (`db/SCHEMA_VERSION`): adds `v_canon_speakers` (230
+  persona-canon speakers; `v_speakers` remains the 423-row discovery view).
 - **Schema 1.9.0** (`db/SCHEMA_VERSION`): `caption_provenance.record_index`
   and `record_part` join `source_build`/`source_pkg`/`bank_entry`, and
   `caption_sightings` logs every processed record line

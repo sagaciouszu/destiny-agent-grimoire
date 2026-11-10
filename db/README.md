@@ -123,6 +123,7 @@ transcripts, interactions and records, but without items or grimoire cards.
 - `../mcp-server/` - optional stdio MCP adapter (official SDK, read-only)
 - `capabilities.json` - machine-readable interface manifest (tables, views, commands, contracts)
 - `v_speakers` view - speakers with line counts (a discovery view; includes caption-only speakers)
+- `v_canon_speakers` view - persona-canon speakers (non-stage, non-optional, non-caption; 230 rows)
 - `v_entity_resolve` / `v_entity_documents` / `v_entity_coverage` views - the entity web's public API
 - `speaker_aliases` table - alias -> canonical mapping applied at migration
 - `db/build_entity_web.py` - the entity web builder (temp copy, never the live file)

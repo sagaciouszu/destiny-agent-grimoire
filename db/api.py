@@ -552,7 +552,38 @@ def _tier_label(rows):
     return 'transcript lines'
 
 
-def _transcript_lines(conn, name, pattern, limit, offset, canon_only=False, class_tag=None):
+def _tier_values(value):
+    """Normalise a tier filter: list, tuple or comma-separated string."""
+    if not value:
+        return []
+    if isinstance(value, str):
+        value = value.split(',')
+    out = []
+    for item in value:
+        for part in str(item).split(','):
+            name = part.strip()
+            if name and name not in out:
+                out.append(name)
+    return out
+
+
+def _tier_sql(tiers=None, exclude_tiers=None, alias='t'):
+    """SQL fragment and params for an include/exclude tier filter."""
+    clauses, params = [], []
+    include = _tier_values(tiers)
+    exclude = _tier_values(exclude_tiers)
+    if include:
+        clauses.append(f"{alias}.source_tier IN ({','.join('?' * len(include))})")
+        params.extend(include)
+    if exclude:
+        clauses.append(f"COALESCE({alias}.source_tier, '') NOT IN "
+                       f"({','.join('?' * len(exclude))})")
+        params.extend(exclude)
+    return clauses, params
+
+
+def _transcript_lines(conn, name, pattern, limit, offset, canon_only=False,
+                      class_tag=None, tiers=None, exclude_tiers=None):
     for variant in _speaker_variants(name):
         params = [f'%{_like(variant)}%']
         sql = ("SELECT line AS text, speaker, '' AS source_slug, t.timeline, "
@@ -564,6 +595,10 @@ def _transcript_lines(conn, name, pattern, limit, offset, canon_only=False, clas
         if class_tag:
             sql += " AND (class_tag IS NULL OR class_tag='' OR class_tag=?)"
             params.append(str(class_tag).lower())
+        tier_clauses, tier_params = _tier_sql(tiers, exclude_tiers)
+        for clause in tier_clauses:
+            sql += ' AND ' + clause
+        params.extend(tier_params)
         if pattern:
             sql += " AND LOWER(line) LIKE ? ESCAPE '\\'"
             params.append(pattern)
@@ -578,11 +613,12 @@ def _transcript_lines(conn, name, pattern, limit, offset, canon_only=False, clas
 
 @_guard
 def character(name, about=None, all_lines=False, limit=20, offset=0, canon_only=False,
-              class_tag=None):
+              class_tag=None, tiers=None, exclude_tiers=None):
     """Curated character quotes, or transcript lines for any canon speaker.
 
     Curated characters use the compendium. Speakers who exist only in
-    transcripts fall back to their canonical lines.
+    transcripts fall back to their canonical lines. A tier filter always uses
+    transcript rows, because curated compendium rows carry no source tier.
     """
     conn = connect()
     try:
@@ -598,6 +634,10 @@ def character(name, about=None, all_lines=False, limit=20, offset=0, canon_only=
             if class_tag:
                 sql += " AND (class_tag IS NULL OR class_tag='' OR class_tag=?)"
                 params.append(str(class_tag).lower())
+            tier_clauses, tier_params = _tier_sql(tiers, exclude_tiers)
+            for clause in tier_clauses:
+                sql += ' AND ' + clause
+            params.extend(tier_params)
             if pattern:
                 sql += " AND LOWER(line) LIKE ? ESCAPE '\\'"
                 params.append(pattern)
@@ -608,9 +648,10 @@ def character(name, about=None, all_lines=False, limit=20, offset=0, canon_only=
             return {'header': f'=== {name} ({_tier_label(rows)}) ===', 'rows': rows}
 
         ch = _resolve_character(conn, name)
-        if not ch:
+        if not ch or _tier_values(tiers) or _tier_values(exclude_tiers):
             rows = _transcript_lines(conn, name, pattern, limit, offset, canon_only=canon_only,
-                                     class_tag=class_tag)
+                                     class_tag=class_tag, tiers=tiers,
+                                     exclude_tiers=exclude_tiers)
             if not rows:
                 return None
             return {'header': f'=== {name} ({_tier_label(rows)}) ===', 'rows': rows}
@@ -883,13 +924,28 @@ def book(ref, limit=20, offset=0, full=False):
 
 @_guard
 def transcript(ref, speaker=None, limit=50, offset=0, full=False, include_stage=False,
-               canon_only=False, section=None, class_tag=None):
-    """Transcript metadata and dialogue lines. ref accepts a slug or title fragment."""
+               canon_only=False, section=None, class_tag=None, tiers=None,
+               exclude_tiers=None):
+    """Transcript metadata and dialogue lines. ref accepts a slug or title fragment.
+
+    A transcript has one source tier, so a tier filter either includes the
+    whole transcript or returns its metadata with zero lines and
+    `tier_match: false`.
+    """
     conn = connect()
     try:
         t = _resolve(conn, 'transcripts', ref, 'id, slug, title, release, characters, arc, source_url, source_tier, timeline, timeline_basis')
         if not t:
             return None
+        tier = (t['source_tier'] or '')
+        include = _tier_values(tiers)
+        exclude = _tier_values(exclude_tiers)
+        tier_match = ((not include or tier in include)
+                      and tier not in exclude)
+        if not tier_match:
+            return {'transcript': dict(t), 'total': 0, 'limit': _limit(limit, 50),
+                    'offset': _offset(offset), 'lines': [], 'tier_match': False,
+                    'tier_filter': {'tiers': include, 'exclude_tiers': exclude}}
         where = ['transcript_id = ?']
         params = [t['id']]
         if not include_stage:
@@ -921,7 +977,7 @@ def transcript(ref, speaker=None, limit=50, offset=0, full=False, include_stage=
             'expansion_slug, confidence, evidence FROM transcript_classification '
             'WHERE transcript_id=?', (t['id'],)).fetchone()
         out = {'transcript': dict(t), 'total': total, 'limit': _limit(limit, 50),
-               'offset': _offset(offset), 'lines': lines}
+               'offset': _offset(offset), 'lines': lines, 'tier_match': True}
         if tax:
             out['taxonomy'] = dict(tax)
         return out
@@ -1343,10 +1399,11 @@ def coverage():
 
 def listing(kind, limit=50, offset=0):
     kind = {'triumphs': 'records', 'triumph': 'records'}.get(kind, kind)
-    if kind not in ('books', 'characters', 'speakers', 'records',
+    if kind not in ('books', 'characters', 'speakers', 'canon_speakers', 'records',
                     'activities', 'seasons', 'events', 'lore', 'seals'):
-        raise ValueError('kind must be one of: books, characters, speakers, records, '
-                         'activities, seasons, events, lore, seals, triumphs (alias of records)')
+        raise ValueError('kind must be one of: books, characters, speakers, '
+                         'canon_speakers, records, activities, seasons, events, '
+                         'lore, seals, triumphs (alias of records)')
     conn = connect()
     try:
         n = _limit(limit, 50)
@@ -1359,6 +1416,10 @@ def listing(kind, limit=50, offset=0):
             rows = conn.execute(
                 "SELECT speaker, COUNT(*) AS lines FROM transcript_lines "
                 "WHERE speaker NOT IN ('Narration','Cutscene') GROUP BY speaker ORDER BY 2 DESC LIMIT ? OFFSET ?", (n, o))
+        elif kind == 'canon_speakers':
+            rows = conn.execute(
+                'SELECT speaker, lines, transcripts FROM v_canon_speakers '
+                'ORDER BY lines DESC, speaker LIMIT ? OFFSET ?', (n, o))
         elif kind == 'activities':
             rows = conn.execute(
                 'SELECT slug, name, activity_type, season_slug, transcripts, lines '

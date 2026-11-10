@@ -63,7 +63,8 @@
     "v_event_coverage": "transcripts, lines and occurrences per event",
     "v_entity_resolve": "alias + norm lookup to entities (resolver path)",
     "v_entity_documents": "entity to ranked document list (weight DESC, ref)",
-    "v_entity_coverage": "per-kind entity web coverage (entities, linked, links, avg links)"
+    "v_entity_coverage": "per-kind entity web coverage (entities, linked, links, avg links)",
+    "v_canon_speakers": "speaker, lines, transcripts (persona-canon membership; excludes caption-only, optional-only and stage rows)"
   },
   "commands": {
     "search": {
@@ -71,7 +72,7 @@
       "returns": "snippet context by default; --full for complete text; --entity restricts to linked documents"
     },
     "character": {
-      "usage": "query.py character \"<name>\" [--about <term>] [--all] [--canon-only] [--class hunter|titan|warlock] [--limit N] [--offset N] [--json]",
+      "usage": "query.py character \"<name>\" [--about <term>] [--all] [--canon-only] [--tier TIER] [--exclude-tier TIER] [--class hunter|titan|warlock] [--limit N] [--offset N] [--json]",
       "returns": "curated quotes by default; --all for raw transcript lines"
     },
     "item": {
@@ -96,7 +97,7 @@
       "usage": "query.py book \"<slug or title>\" [--limit N] [--offset N] [--full] [--json]"
     },
     "transcript": {
-      "usage": "query.py transcript \"<slug or title>\" [--speaker NAME] [--section NAME] [--canon-only] [--class hunter|titan|warlock] [--limit N] [--offset N] [--full] [--json]"
+      "usage": "query.py transcript \"<slug or title>\" [--speaker NAME] [--section NAME] [--canon-only] [--tier TIER] [--exclude-tier TIER] [--class hunter|titan|warlock] [--limit N] [--offset N] [--full] [--json]"
     },
     "find_item": {
       "usage": "query.py find-item \"<title>\" [--limit N] [--offset N] [--json]"

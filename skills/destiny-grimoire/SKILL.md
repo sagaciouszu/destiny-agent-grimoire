@@ -79,10 +79,12 @@ Use `db/query.py` for everything. Interface wraps common patterns. Examples
 name real corpus speakers so the commands run as written; they are illustrative,
 not a preferred agent or persona.
 
-Schema 1.9.0. `stats` reports `missing_tables` on a pre-1.9 database instead of
+Schema 1.10.0. `stats` reports `missing_tables` on an older database instead of
 failing. `v_speakers` is a discovery view (it includes caption-only names), not
-a canon roster. Captions are searchable canon but excluded from persona counts;
-`--canon-only` excludes optional/variant lines, not captions.
+a canon roster; `v_canon_speakers` is the persona-canon membership list (230
+speakers). Captions are searchable canon but excluded from persona counts;
+`--canon-only` excludes optional/variant lines, not captions. Use `--tier` /
+`--exclude-tier` to filter a source tier explicitly.
 
 ```bash
 # Full-text search
@@ -95,6 +97,7 @@ python3 db/query.py search "bank under attack" --type captions --limit 5
 python3 db/query.py search "calus" --season 7 --limit 5
 python3 db/query.py search "nightmare" --activity nightmare-containment
 python3 db/query.py search "crucible" --event "Iron Banner"
+python3 db/query.py list canon-speakers --limit 20   # persona-canon membership
 python3 db/query.py search "witness" --expansion "The Final Shape"
 
 # Activity / season / event browsing
@@ -217,6 +220,7 @@ full text to 4000 characters. Full details: `mcp-server/README.md`.
 
 - `db/capabilities.json` - interface manifest (tables, commands, contracts)
 - `SELECT * FROM v_speakers;` - speaker line counts (discovery view; includes caption-only speakers)
+- `SELECT * FROM v_canon_speakers;` - persona-canon speakers only (230 rows)
 - `SELECT * FROM v_entity_resolve;` - alias + norm lookup to entities
 - `SELECT * FROM v_entity_documents;` - entity to ranked document list
 - `SELECT * FROM v_entity_coverage;` - per-kind entity web coverage

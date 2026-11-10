@@ -10,6 +10,7 @@ Registry-driven. For every present agent repository:
 
 Read-only; no network. Skips absent repositories.
 """
+import hashlib
 import os
 import re
 import shutil
@@ -85,6 +86,41 @@ def main():
                   broken.returncode != 0 and 'database present' in text, text[-300:])
         finally:
             shutil.rmtree(empty, ignore_errors=True)
+
+        # The agent's own mounted archive: same database, same query surface.
+        lore = os.path.join(repo, 'lore')
+        lore_db = os.path.join(lore, 'db', 'grimoire.db')
+        has_lore = os.path.isfile(lore_db)
+        check('lore database present', has_lore)
+        if has_lore:
+            def digest(path):
+                h = hashlib.sha256()
+                with open(path, 'rb') as fh:
+                    for chunk in iter(lambda: fh.read(8 * 1024 * 1024), b''):
+                        h.update(chunk)
+                return h.hexdigest()
+            check('lore database matches the archive',
+                  digest(lore_db) == digest(DB))
+            query = os.path.join(lore, 'db', 'query.py')
+            check('agent query interface',
+                  run([sys.executable, query, 'stats']).returncode == 0)
+            persona_path = os.path.join(repo, 'persona.json')
+            speaker = None
+            if os.path.isfile(persona_path):
+                import json as _json
+                speaker = _json.load(open(persona_path, encoding='utf-8')).get('speaker')
+            if speaker:
+                check('persona speaker resolves',
+                      run([sys.executable, query, 'character-info', speaker]).returncode == 0)
+                check('persona freshness',
+                      run([sys.executable, os.path.join(repo, 'tests', 'persona-freshness.py'),
+                           persona_path, lore_db]).returncode == 0)
+            check('lore lookup',
+                  run([sys.executable, query, 'lore', "Gate Lord's Eye"]).returncode == 0)
+            check('seal lookup',
+                  run([sys.executable, query, 'seal', 'Conqueror']).returncode == 0)
+            check('MCP launcher',
+                  os.access(os.path.join(lore, 'mcp-server', 'run.sh'), os.X_OK))
 
     # Read-only and CLI surface are archive-level, checked once.
     try:

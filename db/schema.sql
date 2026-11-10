@@ -207,6 +207,22 @@ CREATE VIEW IF NOT EXISTS v_speakers AS
     WHERE speaker NOT IN ('Narration', 'Cutscene')
     GROUP BY speaker;
 
+-- Canon speakers: at least one persona-canon line (non-stage, non-optional,
+-- non-caption). v_speakers stays the discovery view; this one is the curated
+-- membership list. Raw speaker strings are kept, including qualifiers.
+CREATE VIEW IF NOT EXISTS v_canon_speakers AS
+    SELECT tl.speaker AS speaker,
+           COUNT(*) AS lines,
+           COUNT(DISTINCT tl.transcript_id) AS transcripts
+    FROM transcript_lines tl
+    JOIN transcripts t ON t.id = tl.transcript_id
+    WHERE tl.speaker IS NOT NULL
+      AND tl.speaker NOT IN ('Narration', 'Cutscene')
+      AND tl.is_stage_dir = 0
+      AND tl.is_optional = 0
+      AND COALESCE(t.source_tier, '') != 'game_caption'
+    GROUP BY tl.speaker;
+
 -- In-universe Destiny timeline: story chapters (rank = chronological order).
 -- Rows carry the chapter slug in their `timeline` column; join this table for
 -- rank/label. NULL timeline = unknown position (honest gap, not a default).

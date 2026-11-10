@@ -21,7 +21,7 @@ SUBS = {'search', 'character', 'character-info', 'item', 'book', 'transcript',
 FLAGS = {'--limit', '--offset', '--json', '--full', '--type', '--about', '--all',
          '--speaker', '--exact', '--rank', '--no-rank', '--include-stage',
          '--activity', '--season', '--event', '--expansion', '--class', '--entity',
-        '--canon-only'}
+        '--canon-only', '--tier', '--exclude-tier'}
 SKIP_FILES = {'CHANGELOG.md', 'RELEASE.md'}
 issues = []
 checked = 0

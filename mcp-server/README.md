@@ -71,7 +71,7 @@ background service.
 
 ## Database compatibility
 
-The adapter targets schema **1.9.0**. It does not invent a schema upgrade.
+The adapter targets schema **1.10.0**. It does not invent a schema upgrade.
 
 - `stats` includes `caption_sightings`. On a pre-1.9 database the response
   carries `missing_tables: ["caption_sightings", ...]` and omits that count
@@ -193,7 +193,7 @@ hand to separate a config-path problem from a server problem.
 | `events` | none | rotating events with coverage and occurrence counts |
 | `find_item` | `query`, `limit=10`, `offset=0` | item rows with flavor-text snippets and linked lore titles (no follow-up `item` call needed for most lookups) |
 | `item` | `slug` | bounded item row (title, `text` trimmed, `source_url`, `lore` links; no internal fields) |
-| `list_records` | `kind`, `limit=50`, `offset=0` | `{count, rows}` for books, characters, speakers, records (alias: triumphs), activities, seasons, events, lore, seals; `speakers` includes caption-only names |
+| `list_records` | `kind`, `limit=50`, `offset=0` | `{count, rows}` for books, characters, speakers, canon_speakers, records (alias: triumphs), activities, seasons, events, lore, seals; `speakers` includes caption-only names, `canon_speakers` does not |
 | `lore` | `ref` | manifest lore entry (body trimmed) with linked item names |
 | `record` | `ref` | triumph or seal details |
 | `seal` | `ref` | seal details and its triumph records |

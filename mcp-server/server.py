@@ -50,9 +50,12 @@ def _offset(value):
         return 0
     return max(0, min(value, 10000))
 
+SCHEMA_VERSION = open(os.path.join(ROOT, 'db', 'SCHEMA_VERSION'),
+                      encoding='utf-8').read().strip()
+
 server = MCPServer(
     'destiny-grimoire',
-    version='1.9.0',
+    version=SCHEMA_VERSION,
     instructions=(
         'Canonical Destiny lore. Tool map: search (keyword discovery across all '
         'content, with an optional entity filter), entity (resolve a name to an '
@@ -215,7 +218,8 @@ def entity(ref: str, kind: str | None = None, limit: int = 10,
 @server.tool(annotations=READ_ONLY)
 def character(name: str, about: str | None = None, all_lines: bool = False,
               limit: int = 20, offset: int = 0, canon_only: bool = False,
-              class_tag: str | None = None) -> dict:
+              class_tag: str | None = None, tier: str | None = None,
+              exclude_tier: str | None = None) -> dict:
     """Character lines from canon.
 
     Rows carry `timeline`, the in-universe story chapter of the source
@@ -229,10 +233,14 @@ def character(name: str, about: str | None = None, all_lines: bool = False,
         offset: Rows to skip (0-10000).
         canon_only: Exclude optional/variant lines.
         class_tag: Base lines plus hunter, titan or warlock variants.
+        tier: Only this source tier; comma-separate several
+            (`ishtar_main,ishtar_web`). Forces transcript rows because curated
+            compendium rows carry no tier.
+        exclude_tier: Exclude this source tier, for example `game_caption`.
     """
     res = _api(api.character, name, about=about, all_lines=all_lines,
                 limit=_limit(limit, 20), offset=_offset(offset), canon_only=canon_only,
-                class_tag=class_tag)
+                class_tag=class_tag, tiers=tier, exclude_tiers=exclude_tier)
     if res is None:
         return {'found': False, 'header': '', 'rows': []}
     for row in res['rows']:
@@ -283,8 +291,10 @@ def list_records(kind: str, limit: int = 50, offset: int = 0) -> dict:
     """Cheap discovery listings.
 
     Args:
-        kind: books, characters, speakers, records (or triumphs), activities,
-            seasons, events, or lore.
+        kind: books, characters, speakers, canon_speakers, records (or
+            triumphs), activities, seasons, events, or lore. `speakers` is
+            discovery (includes caption-only names); `canon_speakers` is the
+            persona-canon membership list.
         limit: Maximum rows (1-100).
         offset: Rows to skip (0-10000; higher values clamp to 10000).
     """
@@ -350,7 +360,8 @@ def book(ref: str, limit: int = 20, offset: int = 0, full: bool = False) -> dict
 def transcript(ref: str, speaker: str | None = None, limit: int = 50, offset: int = 0,
                full: bool = False, include_stage: bool = False,
                canon_only: bool = False, section: str | None = None,
-               class_tag: str | None = None) -> dict:
+               class_tag: str | None = None, tier: str | None = None,
+               exclude_tier: str | None = None) -> dict:
     """Read a transcript and its dialogue lines.
 
     The transcript metadata carries `timeline` (in-universe story chapter slug,
@@ -366,10 +377,14 @@ def transcript(ref: str, speaker: str | None = None, limit: int = 50, offset: in
         canon_only: Exclude optional/variant lines.
         section: Only lines from this section or location.
         class_tag: Base lines plus hunter, titan or warlock variants.
+        tier: Only this transcript source tier; comma-separate several.
+        exclude_tier: Exclude this transcript source tier, for example
+            `game_caption`.
     """
     res = _api(api.transcript, ref, speaker=speaker, limit=_limit(limit, 50),
                offset=_offset(offset), full=full, include_stage=include_stage,
-               canon_only=canon_only, section=section, class_tag=class_tag)
+               canon_only=canon_only, section=section, class_tag=class_tag,
+               tiers=tier, exclude_tiers=exclude_tier)
     if res is None:
         raise ToolError(f'transcript not found: {ref}')
     if full:

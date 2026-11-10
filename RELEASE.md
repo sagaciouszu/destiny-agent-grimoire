@@ -1,3 +1,38 @@
+# v0.40.0 - Tier filters and canon speakers
+
+**2026-11-10**
+
+Schema **1.10.0** data and API release. The corpus is unchanged at 9,229
+transcripts / 125,324 lines / 63,359 caption sightings.
+
+## What's Changed
+
+- **`v_canon_speakers` view.** 230 speakers with at least one persona-canon
+  line (non-stage, non-optional, non-caption). `v_speakers` remains the 423-row
+  discovery view. New `list canon-speakers` / MCP `list_records("canon_speakers")`.
+- **Explicit tier filters.** `character` and `transcript` accept `--tier` and
+  `--exclude-tier` (repeatable or comma-separated), in the CLI and MCP.
+  `--canon-only` still means optional/variant only; persona canon is
+  `--canon-only --exclude-tier game_caption`.
+- **Clear transcript mismatch.** A tier filter that excludes a transcript
+  returns its metadata with `tier_match: false` and zero lines, not "not found".
+- **Schema stamping.** `db/build_entity_web.py` and the MCP server read
+  `db/SCHEMA_VERSION` instead of hardcoding 1.9.0.
+- **Access gate consolidated.** The per-agent checks from the legacy
+  shell access test moved into `tests/agent-access-test.py`; the
+  extended suite is 11 checks with no lost assertion.
+- Counts: database 67 checks, query interface 97 checks.
+
+## Verification
+
+Master audit 18/18; test-db 67/67; query 97/97; caption 13/13; MCP 12/12,
+25/25, matrix 8/8 (161 calls); six agent audits 20/20 (Drifter 25/25);
+conformance, docs-consistency, onboarding smoke 72/72; extended suite 11/11.
+
+## Asset
+
+`grimoire.db` (schema 1.10.0) plus `.xz`/`.gz` and `SHA256SUMS`.
+
 # v0.39.4 - Ecosystem contract and MCP compatibility
 
 **2026-11-10**
@@ -28,46 +63,3 @@ spot check; docs-consistency 5/5.
 
 `grimoire.db` plus `.xz`/`.gz` is byte-identical to v0.39.3 and is attached again
 so `releases/latest/download/grimoire.db` keeps working.
-
-# v0.39.3 - Refresh tooling hardening
-
-> **Depends On:** STANDARDS.md
-> **Token Estimate:** ~0.9K tokens
-
-**2026-11-10**
-
-Tooling patch. The database is byte-identical to v0.39.2 (schema 1.9.0, 9,229
-transcripts / 125,324 lines / 63,359 sightings). This release fixes the refresh
-script's failure and multi-build paths after review.
-
-## What's Changed
-
-- **Failure rollback.** A failed gate restores `archive/data/builds.json` and the previous
-  tier file, so a failed refresh cannot make the next run a no-op against a
-  half-built database.
-- **Correct drift baseline.** Drift compares against the latest registered
-  build (`live-builds/<current>.jsonl` when present), not always the original
-  `captions-live.jsonl`.
-- **No silent partial tiers.** Language validation must produce its output and
-  report; a crash aborts the refresh instead of silently omitting a package.
-- **`--force` guard.** Forcing the registered current build is refused because
-  it would create a second per-build file and duplicate sightings.
-- **Source identity.** `destiny2.exe` sha256 is checked before and after
-  extraction (optional `--expected-sha256`) and recorded in the build note. A
-  source change mid-run aborts.
-- **Counts propagate.** After a successful rebuild the script exports site
-  stats, syncs doc counts and runs `tests/docs-consistency.py`; failures are
-  reported with a nonzero exit.
-- **Drift detail.** Text comparison is raw, so punctuation/case-only changes
-  are reported; `latest_live_build` sorts by date/numeric id; `--report out.json`
-  no longer crashes on an empty dirname.
-
-## Verification
-
-Refresh self-test, current-build no-op, synthetic dry-run, master audit 14/14,
-test-db 65/65, caption 12/12, docs-consistency 5/5. DB artifact unchanged.
-
-## Asset
-
-`grimoire.db` (plus `.xz`/`.gz`) is byte-identical to v0.39.2 and is attached
-again so `releases/latest/download/grimoire.db` keeps working.
