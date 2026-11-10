@@ -747,6 +747,34 @@ def _verify_index(conn, nq):
             for r in rows if nq in (r[0] or '')]
 
 
+def _verify_with_conn(conn, quote, speaker=None, exact=False):
+    """Verify one quote using a caller-owned connection."""
+    if not quote or len(quote) > 2000:
+        raise ValueError('quote must be 1-2000 characters')
+    quote = clean_input(quote, 2000)
+    nq = norm(quote)
+    if not nq:
+        return {'quote': quote, 'verified': False, 'speaker': speaker,
+                'exact': exact, 'matches': []}
+    hits = _verify_index(conn, nq)
+    if not hits and not re.search(r'[a-z0-9]', nq):
+        hits = _verify_exact(conn, nq)
+    if exact:
+        hits = [h for h in hits if h['norm'] == nq]
+    if speaker:
+        hits = [h for h in hits if h['speaker'] and _speaker_matches(speaker, h['speaker'])]
+    seen, uniq = set(), []
+    for h in hits:
+        key = (h['source'], h['slug'], h['speaker'])
+        if key in seen:
+            continue
+        seen.add(key)
+        uniq.append({'source': h['source'], 'slug': h['slug'], 'speaker': h['speaker'],
+                     'exact': h['norm'] == nq})
+    return {'quote': quote, 'verified': bool(uniq), 'speaker': speaker,
+            'exact': exact, 'matches': uniq}
+
+
 @_guard
 def verify(quote, speaker=None, exact=False):
     """Check a quoted string against canon.
@@ -762,36 +790,11 @@ def verify(quote, speaker=None, exact=False):
 
     Returns {'quote', 'verified', 'speaker', 'exact', 'matches'}.
     """
-    if not quote or len(quote) > 2000:
-        raise ValueError('quote must be 1-2000 characters')
-    quote = clean_input(quote, 2000)
-    nq = norm(quote)
-    if not nq:
-        return {'quote': quote, 'verified': False, 'speaker': speaker,
-                'exact': exact, 'matches': []}
     conn = connect()
     try:
-        hits = _verify_index(conn, nq)
-        if not hits and not re.search(r'[a-z0-9]', nq):
-            hits = _verify_exact(conn, nq)
+        return _verify_with_conn(conn, quote, speaker=speaker, exact=exact)
     finally:
         conn.close()
-
-    if exact:
-        hits = [h for h in hits if h['norm'] == nq]
-    if speaker:
-        hits = [h for h in hits if h['speaker'] and _speaker_matches(speaker, h['speaker'])]
-
-    seen, uniq = set(), []
-    for h in hits:
-        key = (h['source'], h['slug'], h['speaker'])
-        if key in seen:
-            continue
-        seen.add(key)
-        uniq.append({'source': h['source'], 'slug': h['slug'], 'speaker': h['speaker'],
-                     'exact': h['norm'] == nq})
-    return {'quote': quote, 'verified': bool(uniq), 'speaker': speaker,
-            'exact': exact, 'matches': uniq}
 
 
 @_guard
@@ -844,7 +847,12 @@ def verify_many(quotes, speaker=None, exact=False):
         raise ValueError('quotes must be a list of 1-20 strings')
     if len(quotes) > 20:
         raise ValueError('at most 20 quotes per call')
-    results = [verify(q, speaker=speaker, exact=exact) for q in quotes]
+    conn = connect()
+    try:
+        results = [_verify_with_conn(conn, q, speaker=speaker, exact=exact)
+                   for q in quotes]
+    finally:
+        conn.close()
     return {'verified': sum(1 for r in results if r['verified']), 'total': len(results),
             'results': results}
 
