@@ -1,0 +1,14 @@
+{
+ "class_hash": "808099ef",
+ "verdict": "not_prose",
+ "files_scanned": 8656,
+ "packages": 13,
+ "size_range_bytes": [120, 2460],
+ "ascii_word_runs": 0,
+ "evidence": [
+  "0294/5892 ef is 152 bytes: header 0x50, count 10, type 0x80800070, then ten 32-bit values",
+  "the base 0x808099f1 entry at 0294/5892 held 38 text records; none of that text appears in the ef file",
+  "across all 8,656 ef files there are zero runs of three or more space-separated ASCII words"
+ ],
+ "consequence": "Class 0x808099ef is a hash/reference table, not a text bank. No parser is warranted; 0294/5892 remains skipped as unparseable and the gap is documented, not guessed."
+}

@@ -125,6 +125,10 @@ are in the private extraction vault, not this repository):
   including 7,681 merged lines and every cross-package repeat that the current
   index cannot hold. `source_slug` + `line_ord` is the identity, so sunrise
   lines that share a bank entry are not collapsed.
+- **Class `0x808099ef` is not text.** 8,656 entries across 13 packages carry
+  hash/reference tables (120–2,460 B, zero ASCII word runs); `0294/5892` is one
+  of them and stays skipped. Evidence:
+  `archive/data/locale-maps/class-808099ef.skip.json`.
 
 `build-25932352` is legitimate for current-era extraction and verification,
 never as ground truth for what an earlier expansion shipped.
