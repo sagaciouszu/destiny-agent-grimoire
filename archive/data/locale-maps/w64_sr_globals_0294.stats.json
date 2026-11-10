@@ -1,16 +1,17 @@
 {
  "build_id": "build-25932352",
  "counts": {
-  "dropped_dup": 245,
-  "dropped_item_fragment": 911,
-  "dropped_label": 13614,
+  "dropped_dup": 241,
+  "dropped_item_fragment": 898,
+  "dropped_label": 13695,
   "dropped_mechanics": 91,
-  "dropped_noise": 1503,
-  "entries": 634,
-  "kept_dialogue": 746,
-  "kept_narration": 1921,
-  "kept_objective": 817,
-  "strings": 17990
+  "dropped_noise": 1526,
+  "entries": 633,
+  "kept_dialogue": 750,
+  "kept_narration": 1922,
+  "kept_objective": 820,
+  "skipped_unparseable": 1,
+  "strings": 18100
  },
  "empty_entries": {
   "1019": {
@@ -30,7 +31,7 @@
    "noise": 1
   },
   "112": {
-   "label": 16
+   "label": 17
   },
   "1133": {
    "label": 18,
@@ -58,10 +59,10 @@
    "noise": 1
   },
   "1300": {
-   "label": 4
+   "label": 15
   },
   "1313": {
-   "label": 15,
+   "label": 16,
    "noise": 7
   },
   "1351": {
@@ -73,7 +74,7 @@
    "noise": 1
   },
   "138": {
-   "label": 71
+   "label": 72
   },
   "1454": {
    "label": 1,
@@ -224,7 +225,7 @@
    "label": 14
   },
   "2598": {
-   "label": 49
+   "label": 52
   },
   "2649": {
    "label": 40
@@ -339,14 +340,14 @@
    "label": 59
   },
   "3299": {
-   "noise": 342
+   "noise": 364
   },
   "3313": {
    "label": 42,
    "noise": 26
   },
   "333": {
-   "label": 30
+   "label": 31
   },
   "3378": {
    "label": 16
@@ -396,7 +397,7 @@
    "label": 2
   },
   "3663": {
-   "label": 23,
+   "label": 25,
    "noise": 1
   },
   "3689": {
@@ -551,7 +552,7 @@
    "label": 72
   },
   "502": {
-   "label": 21
+   "label": 24
   },
   "5117": {
    "label": 9
@@ -565,9 +566,6 @@
   },
   "5273": {
    "label": 4
-  },
-  "5351": {
-   "label": 12
   },
   "5416": {
    "label": 1
@@ -603,8 +601,8 @@
    "noise": 5
   },
   "5636": {
-   "label": 6,
-   "noise": 6
+   "label": 7,
+   "noise": 7
   },
   "5726": {
    "label": 8,
@@ -730,7 +728,7 @@
    "label": 1
   },
   "6722": {
-   "label": 31
+   "label": 32
   },
   "6748": {
    "label": 20
@@ -754,15 +752,15 @@
    "noise": 1
   },
   "7163": {
-   "label": 36,
-   "noise": 10
+   "label": 41,
+   "noise": 9
   },
   "7189": {
-   "label": 37,
+   "label": 33,
    "noise": 2
   },
   "7202": {
-   "label": 46,
+   "label": 38,
    "noise": 12
   },
   "7280": {
@@ -919,10 +917,17 @@
    "label": 1
   }
  },
- "entries_read": 634,
- "lines": 3484,
+ "entries_read": 633,
+ "lines": 3492,
  "package": "w64_sr_globals_0294",
  "package_id": 660,
- "records": 579,
- "strings": 17990
+ "records": 578,
+ "strings": 18100,
+ "unparseable_entries": [
+  {
+   "entry": 5892,
+   "error": "/opt/vault/d2-bl-extract/temp/out-w64_sr_globals_0294_mounted/5892_808099ef_t8_s0.bin: header size",
+   "file": "5892_808099ef_t8_s0.bin"
+  }
+ ]
 }

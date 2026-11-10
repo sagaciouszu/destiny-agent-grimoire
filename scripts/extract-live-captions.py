@@ -271,6 +271,7 @@ def main():
         print(f"containment: {index.size} item texts indexed")
 
     stats = collections.Counter()
+    unparseable = []
     seen = set()
     records = []
     per_entry = {}
@@ -281,7 +282,15 @@ def main():
         entry = int(name.split("_", 1)[0])
         if entry not in en:
             continue
-        parsed = parse_string_bank(os.path.join(args.dir, name))
+        try:
+            parsed = parse_string_bank(os.path.join(args.dir, name))
+        except (AssertionError, struct.error) as exc:
+            # A patch layer can replace an entry with a class this parser does
+            # not understand. Never fall back to the stale base text: skip and
+            # record the entry so the gap is visible.
+            stats["skipped_unparseable"] += 1
+            unparseable.append({"entry": entry, "file": name, "error": str(exc)})
+            continue
         stats["entries"] += 1
         e = per_entry.setdefault(entry, collections.Counter())
 
@@ -368,6 +377,8 @@ def main():
               "dropped_mechanics", "dropped_item_fragment"):
         print(f"  {k:22s}: {stats[k]}")
     print(f"  entries with 0 kept  : {len(empty)}")
+    if unparseable:
+        print(f"  entries skipped      : {len(unparseable)} (unparseable class)")
     print(f"wrote      : {args.out}")
 
     if args.stats:
@@ -381,6 +392,7 @@ def main():
             "lines": sum(len(r["lines"]) for r in records),
             "counts": {k: stats[k] for k in sorted(stats)},
             "empty_entries": empty,
+            "unparseable_entries": unparseable,
         }
         with open(args.stats, "w", encoding="utf-8") as fh:
             json.dump(payload, fh, indent=1, sort_keys=True)
