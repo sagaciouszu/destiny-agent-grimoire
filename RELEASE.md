@@ -1,90 +1,47 @@
-# v0.40.1 - Honesty and provenance pass
+# v0.40.2 - Truth and onboarding pass
 
+> **Depends On:** INDEX.md
+> **Token Estimate:** ~152 tokens
 **2026-11-10**
-
-Documentation and site patch. The database is byte-identical to v0.40.0.
 
 ## What's Changed
 
-- The site publishes a **Limits and provenance** page and a plain-text facts
-  file: scope, caption tier, timeline and source gaps, speaker rules and AI caveats.
-- Site samples are gated by the site's sample check: 18 samples across 6 agents
-  pass `verify --exact`.
-- README claims are precise: "verified" means present in this library, not
-  officially published; the corpus is not described as complete.
-- `scripts/export-site-stats.py` exports caption, speaker, timeline, source-URL
-  and coverage counts so the honesty page cannot drift.
+- Install instructions now match the release: the checksum step selects the
+  downloaded file because `SHA256SUMS` lists the plain, xz and gzip assets;
+  decompression uses `xz -d` / `gzip -d` (7-Zip on Windows) instead of treating
+  a raw stream as a tar archive.
+- Compressed asset sizes are stated from the published files: 41.9 MiB xz and
+  78.6 MiB gzip.
+- Live gate counts are documented from the gates themselves: database 67,
+  query interface 97, agent layout 108, master audit 18/18.
+- Coverage-note figures are labelled as entries, since the table spans
+  activities, events and seasons.
+- Build-identity wording replaces era guesses; the Beyond Light roadmap is
+  marked historical and no longer claims to track the live build.
+- The shared-helper guard now has canonical copies under
+  `tests/agent-helpers/` and fails on drift or a missing canonical file instead
+  of silently skipping.
+- Nineteen MCP tools gained `Returns:` contracts; three terse descriptions were
+  expanded; the MCP README documents the tier parameters and the
+  empty-result-versus-`ToolError` distinction.
+- `search --json` no longer runs a second FTS pass just to compute a total the
+  JSON path never prints.
+- `docs-consistency` now rejects the stale sizes, gate counts and decompression
+  instructions that this release fixes.
+
+## Database
+
+No database content change. This release publishes the same `grimoire.db`
+bytes as v0.40.1 (sha256 `34b5bf1c…3445d044`, 316,776,448 bytes), so an existing
+install needs no re-download.
 
 ## Verification
 
-Master audit 18/18; six agent audits 20/20 (Drifter 25/25); site `npm run check`
-(42 pages, 18 samples, 83 tapes); docs-consistency 5/5; conformance pass.
-
-## Asset
-`grimoire.db` plus `.xz`/`.gz` is byte-identical to v0.40.0.
-
-# v0.40.0 - Tier filters and canon speakers
-
-**2026-11-10**
-
-Schema **1.10.0** data and API release. The corpus is unchanged at 9,229
-transcripts / 125,324 lines / 63,359 caption sightings.
-
-## What's Changed
-
-- **`v_canon_speakers` view.** 230 speakers with at least one persona-canon
-  line (non-stage, non-optional, non-caption). `v_speakers` remains the 423-row
-  discovery view. New `list canon-speakers` / MCP `list_records("canon_speakers")`.
-- **Explicit tier filters.** `character` and `transcript` accept `--tier` and
-  `--exclude-tier` (repeatable or comma-separated), in the CLI and MCP.
-  `--canon-only` still means optional/variant only; persona canon is
-  `--canon-only --exclude-tier game_caption`.
-- **Clear transcript mismatch.** A tier filter that excludes a transcript
-  returns its metadata with `tier_match: false` and zero lines, not "not found".
-- **Schema stamping.** `db/build_entity_web.py` and the MCP server read
-  `db/SCHEMA_VERSION` instead of hardcoding 1.9.0.
-- **Access gate consolidated.** The per-agent checks from the legacy
-  shell access test moved into `tests/agent-access-test.py`; the
-  extended suite is 11 checks with no lost assertion.
-- Counts: database 67 checks, query interface 97 checks.
-
-## Verification
-
-Master audit 18/18; test-db 67/67; query 97/97; caption 13/13; MCP 12/12,
-25/25, matrix 8/8 (161 calls); six agent audits 20/20 (Drifter 25/25);
-conformance, docs-consistency, onboarding smoke 72/72; extended suite 11/11.
-
-## Asset
-
-`grimoire.db` (schema 1.10.0) plus `.xz`/`.gz` and `SHA256SUMS`.
-
-# v0.39.4 - Ecosystem contract and MCP compatibility
-
-**2026-11-10**
-
-Tooling, documentation and API patch. The database is byte-identical to v0.39.3
-(schema 1.9.0, 9,229 transcripts / 125,324 lines / 63,359 sightings).
-
-## What's Changed
-
-- Agnostic contract in `STANDARDS.md`; shared scripts read `series/agents.json`
-  and `tests/agnostic-test.py` guards it.
-- Template fixture harness, atomic generator, stricter finalize and
-  `setup.sh --dry-run`/`GRIMOIRE_DB`.
-- Six agents share the setup contract; generated knowledge-web snapshots;
-  `tests/agent-access-test.py` proves missing-DB, dangling-link, read-only and
-  site-roster behavior.
-- MCP `stats` reports `missing_tables`/`schema_version` on a pre-1.9 database;
-  README and skill document caption tiers and `v_speakers`.
-- Site stats and roster metadata regenerated; card creation deferred.
-
-## Verification
-
-Master audit 18/18; six agent audits 20/20 (Drifter 25/25); template fixture and
-real-corpus tests; MCP 12/12, 25/25, matrix 8/8 (161 calls); site check and live
-spot check; docs-consistency 5/5.
-
-## Asset
-
-`grimoire.db` plus `.xz`/`.gz` is byte-identical to v0.39.3 and is attached again
-so `releases/latest/download/grimoire.db` keeps working.
+- `bash grimoire-master-audit.sh`: 18/18.
+- `bash tests/test-db.sh`: 67/67.
+- `bash tests/query-interface-test.sh`: 97/97.
+- `python3 tests/caption-test.py`: pass.
+- `python3 tests/agent-access-test.py`: pass.
+- MCP: 12/12 contract, 25/25 matrix, 8/8 optimization.
+- Six agent audits: 20/20 each, Drifter 27/27, Eris 22/22.
+- Site `npm run check`: pass.
