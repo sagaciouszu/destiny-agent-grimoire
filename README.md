@@ -9,7 +9,7 @@
   <a href='https://github.com/sagaciouszu/destiny-agent-grimoire/actions/workflows/ci.yml'><img src='https://github.com/sagaciouszu/destiny-agent-grimoire/actions/workflows/ci.yml/badge.svg' alt='CI'/></a>
   <img src='https://img.shields.io/github/last-commit/sagaciouszu/destiny-agent-grimoire?label=last%20push&color=blue' alt='Last push'/>
   <img src='https://img.shields.io/badge/license-MIT-green' alt='License'/>
-  <img src='https://img.shields.io/badge/tests-15%2F15%20audit%20suites-brightgreen' alt='Tests'/>
+  <img src='https://img.shields.io/badge/tests-16%2F16%20audit%20suites-brightgreen' alt='Tests'/>
   <img src='https://img.shields.io/badge/made%20with-Destiny%20Grimoire-gold' alt='Made with Destiny Agent Grimoire'/>
 </p>
 
@@ -261,7 +261,7 @@ repository minus the database lives outside the tree.
 | Agent layout | `bash tests/agent-layout-test.sh` | 39 checks |
 | Agent suite manifests | `python3 tests/suite-manifest-test.py` | PASS |
 | Agnostic contract | `python3 tests/agnostic-test.py` | PASS |
-| Archive audit | `bash grimoire-master-audit.sh` | 15/15 |
+| Archive audit | `bash grimoire-master-audit.sh` | 16/16 |
 | Calus / Zavala / Ghost / Mara Sov | run tests/master-audit.sh in each repo | 20/20 |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 checks |
 | Database integrity | `bash tests/test-db.sh` | 65 checks |
