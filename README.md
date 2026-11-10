@@ -144,13 +144,13 @@ No API keys, accounts or network access are required at runtime.
 | `item_title_fts` (index) | 58764 | Item title lookup |
 | `entities` | 89 | Named characters, powers, factions and places |
 | `entity_aliases` | 136 | Attested name variants per entity |
-| `entity_links` | 24622 | Entity to document links (attribution/canonical/alias/ctx) |
+| `entity_links` | 24619 | Entity to document links (attribution/canonical/alias/ctx) |
 | `entity_relations` | 4 | Entity to entity links (adjacency, primeval pairs) |
 | `entity_build_meta` | 14 | Entity web build audit trail |
 | `v_entity_resolve` (view) | 136 | Resolver lookup (alias to entity) |
-| `v_entity_documents` (view) | 24622 | Entities with ranked document lists |
+| `v_entity_documents` (view) | 24619 | Entities with ranked document lists |
 | `v_entity_coverage` (view) | 4 | Per-kind entity web coverage |
-| **Total** | 601658 | Rows across every table, view and index above |
+| **Total** | 601652 | Rows across every table, view and index above |
 
 Every content row carries provenance. Speaker aliases are canonicalized during
 migration. The full contract is `STANDARDS.md`.

@@ -66,11 +66,29 @@ CREATE TABLE IF NOT EXISTS caption_provenance (
     kind TEXT,                  -- table kind: cinematic | dialogue | callout | activity_narration
     source_pkg TEXT,            -- package base, e.g. w64_globals_01cf
     source_entry INTEGER,       -- StringReference entry index
-    bank_entry INTEGER          -- StringBank entry index
+    bank_entry INTEGER,         -- StringBank entry index
+    source_build TEXT NOT NULL DEFAULT 'sunrise-pre-bl'  -- builds.build_id; NULL never
 );
 CREATE INDEX IF NOT EXISTS idx_cp_kind ON caption_provenance(kind);
 CREATE INDEX IF NOT EXISTS idx_cp_pkg ON caption_provenance(source_pkg);
 CREATE INDEX IF NOT EXISTS idx_cp_hash ON caption_provenance(hash);
+
+-- Build registry: one row per game build / manifest snapshot the corpus was
+-- built on. Caption rows in caption_provenance.source_build name a row of
+-- this table. Every future ingestion run registers itself here (STANDARDS.md,
+-- Corpus scope). Counts below are point-in-time snapshots, refreshed by the
+-- release that re-ingests a tier.
+CREATE TABLE IF NOT EXISTS builds (
+    build_id      TEXT PRIMARY KEY,   -- 'sunrise-pre-bl', 'build-25932352', ...
+    label         TEXT NOT NULL,      -- human-facing name
+    kind          TEXT NOT NULL CHECK (kind IN ('game_build','web_capture','manifest')),
+    version       TEXT NOT NULL,      -- Bungie stamp / 'n/a' for web captures
+    source        TEXT NOT NULL,      -- install path or author domain
+    captured_at   TEXT NOT NULL,      -- ISO date of extraction or capture snapshot; 'pending' if not run yet
+    package_count INTEGER,            -- NULL for web captures / pending
+    byte_count    INTEGER,            -- NULL for web captures / pending
+    notes         TEXT NOT NULL DEFAULT ''
+);
 
 CREATE TABLE IF NOT EXISTS grimoire_cards (
     id INTEGER PRIMARY KEY,

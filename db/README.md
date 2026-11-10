@@ -4,6 +4,8 @@ SQLite database for the Destiny lore repository. Single file, no external connec
 
 File: `grimoire.db` (SQLite, FTS5 full-text search enabled). Built from `source/` + `archive/` by `migrate.py`; not committed, prebuilt copies attached to releases.
 
+Full build/provenance matrix: [`docs/wiki/Builds.md`](../docs/wiki/Builds.md).
+
 ## Quick start
 
 ```bash
@@ -19,7 +21,7 @@ python3 db/query.py search "Eris" --type transcripts --limit 10
 python3 db/query.py character "eris" --limit 20
 python3 db/query.py character "drifter" --limit 20
 
-# Entity web (schema 1.6.0): resolve any attested alias to its entity
+# Entity web (schema 1.7.0): resolve any attested alias to its entity
 python3 db/query.py entity "Saint-14"
 python3 db/query.py entity "Elsie Bray" --json
 python3 db/query.py search "witness" --entity "The Witness" --limit 5
@@ -71,13 +73,13 @@ sqlite3 db/grimoire.db "SELECT slug, title, item_type FROM items WHERE item_type
 | `item_title_fts` | item titles for fast name lookup |
 | `meta` | DB version |
 
-### Entity web (additive, schema 1.6.0)
+### Entity web (additive, schema 1.7.0)
 
 | Table | Purpose |
 |-------|---------|
 | `entities` | 89 named entities: characters, powers, factions, places |
 | `entity_aliases` | 136 attested name variants; `norm_alias` is the resolver key |
-| `entity_links` | 24622 entity to document links with weights and match classes |
+| `entity_links` | 24619 entity to document links with weights and match classes |
 | `entity_relations` | 4 entity to entity links (adjacency, primeval pairs) |
 | `entity_build_meta` | build audit trail (build_id, source hashes, timings) |
 

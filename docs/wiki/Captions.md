@@ -1,5 +1,7 @@
 # Captions
 
+Build identities and the tier -> provenance mapping: [`docs/wiki/Builds.md`](Builds.md).
+
 English captions extracted from local game builds: `sunrise-pre-bl` (Season of
 Arrivals, 2020) and `build-25932352` (the live build as of 2026-10/11). Every
 caption row names the build it came from via the slug/`source_build`

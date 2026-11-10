@@ -18,6 +18,7 @@
     "transcripts": "transcript headers (curated markdown, Ishtar web, cutscene captions)",
     "transcript_lines": "canonical dialogue lines by speaker (seq ordered, stage directions flagged, lang column for captions; speaker_source records attribution provenance for caption lines when present)",
     "caption_provenance": "per-line game-file provenance for captions (StringReference hash, package/entry origin, kind)",
+    "builds": "build registry: one row per game build / web capture the corpus was built from (build_id, Bungie stamp, package count, bytes, captured_at); every row that carries game content points at a row here",
     "timeline_chapters": "in-universe Destiny timeline: story chapters (rank chronological, rows.timeline joins by slug)",
     "grimoire_cards": "Destiny 1 grimoire cards with source_url",
     "interactions": "short character dialogue beats",
