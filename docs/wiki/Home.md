@@ -44,6 +44,6 @@ elsewhere conflicts with that page, that page wins.
 
 ## Developer documentation
 
-This wiki is not build or process documentation. Build steps, schema internals,
-provenance rules and test gates live in the repository: `README.md`,
-`STANDARDS.md`, `docs/process/` and `tests/README.md`.
+This wiki is not build or process documentation. Build steps, schema internals
+and provenance rules live in the repository: `README.md`, `STANDARDS.md` and
+`docs/process/`.
