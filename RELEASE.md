@@ -1,3 +1,48 @@
+# v0.36.0 - Build registry: schema 1.7.0
+
+> **Depends On:** STANDARDS.md
+> **Token Estimate:** ~0.9K tokens
+
+**2026-11-10**
+
+Data + integrity release, no schema migration content (additive only,
+1.6.0 -> 1.7.0). Grimoire.db ships a new `builds` table; every caption
+row traces to its build.
+
+## What's Changed
+
+- **New `builds` table** (registry): one row per game build the corpus
+  came from - `sunrise-pre-bl` (Shadowkeep / Season of Arrivals client,
+  package format v38, `86657.20.08.23.1800.d2_rc`, extracted 2026-11-07)
+  and `build-25932352` (live Monument of Triumph / Update 9.7.0.6 client,
+  Steam buildid 25932352, Bungie stamp `245114.26.10.13.2000.v500_live.main`,
+  package format v53). Point-in-time package/byte counts documented.
+- **`caption_provenance.source_build`** (NOT NULL DEFAULT
+  `'sunrise-pre-bl'`): every caption row now carries its build id;
+  9,607 of 9,607 provenance rows tagged.
+- **STANDARDS / Captions / Builds chain**: `docs/wiki/Builds.md` is the
+  single registry of builds + extraction tiers (game_caption,
+  ishtar_web, ishtar_main, ishtar_commons, destinypedia, youtube_captions,
+  cutscene). STANDARDS and Captions point to it.
+- **Fresh rebuild from source**: enrich chain re-run;
+  `scripts/apply-queen-fold.py` replaces the former inline SQL fold
+  (22 Riven / 15 Mara Sov re-applied identically); entity web rebuilt
+  (links now 24,622).
+
+## Verification
+
+Gates: test-db 61/61, lore-integrity 17/17, query-interface 89/89,
+mcp-test 12/12, mcp-matrix 8/8, mcp-agent-optimization 25/25,
+doc-sync clean. Migrated fresh *after* the wiki edits to keep the v0.35.0
+counts intact; all numbers in the current docs sync accordingly.
+
+## Notes
+
+Schema evolution 1.6.0 -> 1.7.0 is additive: fresh builds derive it from
+`db/schema.sql`; the v0.36.0 artifact contains it via the from-source
+rebuild. Capabilities.json carries the builds row; live-build caption
+extraction remains Phase 2 - see `EXTRACTION_MISSION.md`.
+
 # v0.35.0 - Beyond Light ingest: Season of Defiance corpus
 
 > **Depends On:** STANDARDS.md
