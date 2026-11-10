@@ -1,9 +1,7 @@
 {
- "_note": "English entry indices for one sw64 package, derived from the content-verified locale pass recorded in /opt/vault/d2-bl-extract/reports/globals-decode.md (structural 13-locale blocks + hard-script anchors; 431 partial-table members content-verified individually). Entry order is the package entry table; the locale of an entry is positional, not an in-file field. Untranslated entries are locale-neutral and may legitimately appear under more than one locale.",
  "build_id": "build-25932352",
  "package": "w64_sr_globals_0294",
  "package_id": 660,
- "locales_present": 13,
  "en_entries": [
   8,
   21,
@@ -461,7 +459,6 @@
   5853,
   5866,
   5879,
-  5892,
   5905,
   5918,
   5930,
@@ -640,5 +637,23 @@
   8178,
   8191
  ],
- "count": 634
+ "resolution": {
+  "confidence": "high",
+  "tables_detected": 636,
+  "tables_verified": 632,
+  "skipped_blocks": [],
+  "rejected_non_english": [
+   {
+    "first_entry": 1569,
+    "size": 1,
+    "reason": "singleton, no cycle anchor; marker=None, english-words=0/5, non-english-words=2"
+   },
+   {
+    "first_entry": 7995,
+    "size": 1,
+    "reason": "singleton, no cycle anchor; marker=None, english-words=0/19, non-english-words=3"
+   }
+  ]
+ },
+ "language_exclusions": []
 }

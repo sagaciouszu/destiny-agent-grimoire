@@ -62,7 +62,8 @@ check("encoding sanity", all_cut_lines > 0 and garbage / all_cut_lines <= 0.001,
 canon = [norm(l) for l, in conn.execute("""
     SELECT tl.line FROM transcript_lines tl
     JOIN transcripts t ON t.id=tl.transcript_id
-    WHERE t.slug NOT LIKE 'cutscene-%' AND tl.is_stage_dir=0 AND LENGTH(tl.line) >= 15""")]
+    WHERE t.slug NOT LIKE 'cutscene-%' AND tl.is_stage_dir=0 AND LENGTH(tl.line) >= 15
+    AND COALESCE(t.source_tier, '') != 'game_caption'""")]
 canon += [norm(t) for t, in conn.execute("SELECT text FROM interactions WHERE text != ''")]
 canon_sh = shingles(canon)
 

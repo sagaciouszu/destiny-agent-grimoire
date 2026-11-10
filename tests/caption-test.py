@@ -117,8 +117,8 @@ def build_scope():
         misfiled = one(
             "SELECT COUNT(*) FROM caption_provenance p JOIN transcript_lines tl "
             "ON tl.id=p.line_id WHERE p.source_build='build-25932352' "
-            "AND tl.speaker NOT IN ('Cutscene','Narration') AND p.kind != 'dialogue'")
-        assert misfiled == 0, f'{misfiled} attributed live lines not classed as dialogue'
+            "AND tl.speaker_source='build-25932352' AND p.kind != 'dialogue'")
+        assert misfiled == 0, f'{misfiled} live-attributed lines not classed as dialogue'
 
 
 def no_duplicate_text():

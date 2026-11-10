@@ -1,0 +1,23 @@
+{
+ "cross_package_duplicates": {
+  "w64_sr_globals_0295": 32,
+  "w64_sr_globals_0296": 200,
+  "w64_sr_globals_0297": 122,
+  "w64_sr_globals_0298": 89,
+  "w64_sr_globals_0299": 240,
+  "w64_sr_globals_029a": 182,
+  "w64_sr_globals_029b": 531,
+  "w64_sr_globals_029c": 673,
+  "w64_sr_globals_029d": 752,
+  "w64_sr_globals_029e": 297,
+  "w64_sr_globals_029f": 217,
+  "w64_sr_globals_02a0": 167,
+  "w64_sr_globals_0548": 70
+ },
+ "item_fragments_dropped": {
+  "w64_sr_globals_029b": 2
+ },
+ "lines": 48163,
+ "packages": 15,
+ "records": 7342
+}

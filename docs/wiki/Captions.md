@@ -48,32 +48,38 @@ Every English line lives on exactly one caption table. `migrate.py` loads
 
 The live client has no separate subtitle package for this text. English lives
 inside `w64_sr_globals_*` StringBank entries, thirteen locales per logical
-table, cleartext UTF-8. It is ingested from
+table, cleartext UTF-8. Fifteen of sixteen packages are ingested from
 `archive/data/captions-live.jsonl`, one record per `(entry, kind)`.
+`w64_sr_globals_0134` has no English string-bank entries.
 
 | property | value |
 |---|---|
-| provenance | `caption_provenance.source_build='build-25932352'` |
-| line identity | `source_pkg` + `bank_entry` + `record_index` (the build exposes no per-line StringReference hash, so `hash` is NULL) |
-| `kind` | `dialogue`, `narration`, `objective` — heuristic, from punctuation and in-string attribution |
-| speaker | only from `"..." —Name` inside the string; everything else `Cutscene` |
+| provenance | `caption_provenance.source_build='build-25932352'`, 46,512 rows |
+| line identity | `source_pkg` + `bank_entry` + `record_index` + `record_part` (the build exposes no per-line StringReference hash, so `hash` is NULL) |
+| `kind` | 11,678 `dialogue`, 26,945 `narration`, 7,889 `objective` — heuristic, from punctuation and in-string attribution |
+| speaker | only from a quoted `"..." —Name`; 257 named speakers; everything else `Cutscene` |
 | season/act | never inferred |
 
-**Excluded by design:** short labels and UI headings, mechanical copy (perk and
-modifier stat text), and lines that are fragments of an `items` entry the
-corpus already holds. The extractor reports each drop count per package so the
-gap is visible rather than hidden.
-
-**Known limitation.** `caption_provenance` is one row per line. If the live
-build repeats text the 2020 build already shipped, the row keeps
-`sunrise-pre-bl` and the live sighting is not stored. The drift log, not this
-table, is where a second-build sighting is recorded.
+**Excluded by design:** short labels and UI headings (122,528), mechanical copy
+(perk and modifier stat text, 1,378), item-text fragments (13,949), noise
+strings (6,723) and duplicates (5,231 package-local, 3,572 cross-package).
+Each package's drop/keep counts ship as a stats sidecar.
 
 **English selection.** Locale is positional, not an in-file field. The English
-entry list for each package is committed under
-`archive/data/locale-maps/` and was derived from a content-verified locale
-pass; a package whose English entries cannot be verified is skipped and logged
-rather than guessed.
+entry list for each package is committed under `archive/data/locale-maps/` and
+comes from `scripts/resolve-locales.py`, which emits an entry only when its
+table is pinned by at least two independent script anchors. It reproduces
+package `0294`'s content-verified list exactly (634/634); two packages resolve
+`high`, 13 `medium` with unanchored tables skipped and logged.
+`scripts/validate-live-language.py` then rejects whole tables whose aggregate
+text is another language (six German tables in `029e`). A package or table that
+cannot be verified is skipped and logged, never guessed.
+
+**Known limitation.** `caption_provenance` is one row per line. If the live
+build repeats text the corpus already holds, the row keeps the earlier build or
+source and the newest sighting is not stored; 1,651 emitted live lines merged
+this way, 116 onto non-caption web/cutscene lines. The drift log, not this
+table, is where a second-build sighting is recorded.
 
 ## Captions dedup vs persona canon (exact rule)
 

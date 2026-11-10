@@ -1,16 +1,15 @@
 {
  "build_id": "build-25932352",
  "counts": {
-  "dropped_dup": 241,
+  "dropped_dup": 240,
   "dropped_item_fragment": 898,
-  "dropped_label": 13695,
+  "dropped_label": 13696,
   "dropped_mechanics": 91,
   "dropped_noise": 1526,
   "entries": 633,
   "kept_dialogue": 750,
   "kept_narration": 1922,
   "kept_objective": 820,
-  "skipped_unparseable": 1,
   "strings": 18100
  },
  "empty_entries": {
@@ -918,16 +917,21 @@
   }
  },
  "entries_read": 633,
+ "language_validation": {
+  "dropped": [],
+  "dropped_records": 0,
+  "kept_records": 578
+ },
+ "layer_merge": {
+  "added": 0,
+  "class_replaced": 13,
+  "files": 8192,
+  "overlaid": 8179
+ },
  "lines": 3492,
  "package": "w64_sr_globals_0294",
  "package_id": 660,
  "records": 578,
  "strings": 18100,
- "unparseable_entries": [
-  {
-   "entry": 5892,
-   "error": "/opt/vault/d2-bl-extract/temp/out-w64_sr_globals_0294_mounted/5892_808099ef_t8_s0.bin: header size",
-   "file": "5892_808099ef_t8_s0.bin"
-  }
- ]
+ "unparseable_entries": []
 }

@@ -1,0 +1,75 @@
+{
+ "build_id": "build-25932352",
+ "package": "w64_sr_globals_0293",
+ "package_id": 659,
+ "en_entries": [
+  7597,
+  7610,
+  7623,
+  7636,
+  7649,
+  7661,
+  7674,
+  7687,
+  7700,
+  7713,
+  7726,
+  7739,
+  7752,
+  7765,
+  7778,
+  7791,
+  7804,
+  7817,
+  7830,
+  7843,
+  7856,
+  7869,
+  7882,
+  7895,
+  7908,
+  7921,
+  7934,
+  7947,
+  7960,
+  7973,
+  7986,
+  7999,
+  8012,
+  8018,
+  8031,
+  8044,
+  8057,
+  8070,
+  8083,
+  8096,
+  8109,
+  8122,
+  8135,
+  8148,
+  8161,
+  8174
+ ],
+ "resolution": {
+  "confidence": "medium",
+  "tables_detected": 47,
+  "tables_verified": 46,
+  "skipped_blocks": [
+   {
+    "first_entry": 8187,
+    "last_entry": 8191,
+    "size": 5,
+    "hard_anchors": [
+     [
+      8188,
+      1,
+      "JA"
+     ]
+    ],
+    "reason": "block has 1 hard-script anchor(s)"
+   }
+  ],
+  "rejected_non_english": []
+ },
+ "language_exclusions": []
+}

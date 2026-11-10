@@ -149,6 +149,14 @@ NOISE = re.compile(
     r"\[.*\]$|.{0,2}$)")
 
 
+QUOTE_PAIRS = {'"': '"', "'": "'", "\u201c": "\u201d", "\u2018": "\u2019"}
+
+
+def is_quoted(s):
+    s = s.strip()
+    return len(s) >= 2 and s[0] in QUOTE_PAIRS and s[-1] == QUOTE_PAIRS[s[0]]
+
+
 def looks_like_speaker(cand):
     """A speaker label is short, capitalised and free of sentence punctuation."""
     words = cand.split()
@@ -156,7 +164,7 @@ def looks_like_speaker(cand):
         return False
     if not words[0][:1].isupper():
         return False
-    if re.search(r"[.,;:!?()\"]", cand):
+    if re.search(r"[.,;:!?()\"|{}\[\]/\\#@*_]", cand):
         return False
     # Reject descriptive phrases: every word must be capitalised, a particle
     # ("the", "of", "and"), or an acronym / designation such as AI or LAI-701.
@@ -179,9 +187,13 @@ def split_line(raw):
     m = ATTRIBUTION.search(text)
     if m:
         cand = m.group(1).strip().rstrip(".,;:")
-        if looks_like_speaker(cand):
+        body = text[:m.start()].strip()
+        # The evidence pattern is `"..." —Name`. Requiring the quoted body is
+        # what separates a speaker from a document byline ("Chapter 6 —
+        # Beguiled") or a section heading.
+        if looks_like_speaker(cand) and is_quoted(body):
             speaker = cand
-            text = text[:m.start()].strip()
+            text = body
 
     # Multi-paragraph strings become separate lines; keep the raw paragraph
     # index so (entry, record, part) is a stable line identity.
