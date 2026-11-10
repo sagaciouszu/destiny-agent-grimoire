@@ -1,81 +1,73 @@
-# v0.39.1 - Ecosystem pass: caption-tier surfaces and docs
+# v0.39.2 - Live-build refresh tooling
 
 > **Depends On:** STANDARDS.md
-> **Token Estimate:** ~1.2K tokens
+> **Token Estimate:** ~0.77K tokens
 
 **2026-11-10**
 
-Code + docs patch. The database is unchanged from v0.39.0 (same schema 1.9.0,
-same 9,229 transcripts / 125,324 lines / 63,359 sightings); this release aligns
-every consumer and adds the missing caption-tier surfaces.
+Tooling release, no schema change (still 1.9.0). The live caption tier can now
+be refreshed from a new build without hand-running the pipeline or rewriting an
+earlier build's text.
 
 ## What's Changed
 
-- **`character` names the tier.** `character(all_lines=True)` and the speaker
-  fallback now return `source_tier` per row and label the page `caption lines`
-  or `transcript + caption lines` when the returned rows include captions.
-  `--canon-only` still means "exclude optional/variant lines", not "exclude
-  captions"; agent docs now say so explicitly.
-- **`0134` closed.** Its entries use non-StringBank classes (`0x80809a81`,
-  `0x80809b23`); the `0x808099f1` resolver correctly finds 0 tables, so the
-  package is skipped with a reason rather than treated as missing English.
-- **One site stats source.** `scripts/export-site-stats.py` writes the counts,
-  schema, release and sizes the public site consumes as the site stats JSON;
-  the site's stat grid, install sizes and MCP tool list render from it.
-- **Cross-repo docs gate.** `tests/docs-consistency.py` checks stale counts and
-  sizes, the site snapshot, agent README metadata, MCP tool names and relative
-  links; it is wired into CI and skips absent siblings.
-- **Generators corrected.** `coverage-report.py` and `speaker-audit.py` now use
-  the persona predicate (`is_stage_dir=0`, `is_optional=0`,
-  `source_tier != 'game_caption'`); `v_speakers` is described everywhere as a
-  discovery view, not a curated list.
-- **Template + agents + wiki.** `source-persona.py` resolves names and lines
-  through one caption-excluded predicate and rejects caption-only names with a
-  clear error; a regression test covers it. Six agent repos and the wiki had
-  their rosters, suite counts, tool lists, `speaker_source` counts and database
-  sizes synced. Persona canon was not changed.
+- **Data-driven build registry.** `archive/data/builds.json` is now the source
+  of truth; `db/migrate.py` reads it, so a refreshed build survives a
+  from-source rebuild. `builds` still has the two current rows.
+- **Per-build live tiers.** New builds write to
+  `archive/data/live-builds/<build>.jsonl` with build-scoped slugs; the current
+  build stays in `archive/data/captions-live.jsonl`. `db/migrate.py` loads both,
+  and a changed line becomes a new `caption_sightings` row, never an inline
+  rewrite.
+- **`scripts/refresh-live-build.py`** automates source validation, layer
+  unpack/merge, locale resolution, extraction, language validation, combine,
+  drift report, build registration, rebuild and gates.
+- **Safe defaults.** The registered current build is a no-op (exit 0);
+  `--dry-run` plans every stage and writes nothing; `--self-test` proves a
+  changed line appears in the drift report.
+- **Extractor option** `--build-scoped-slug` writes
+  `caption-live-<build>-<package>-<entry>-<kind>` slugs for multi-build tiers.
+- Docs: `docs/wiki/Builds.md` refresh section and `scripts/README.md` entry.
 
 ## Verification
 
 Master audit 14/14; test-db 65/65; caption 12/12; query interface 91/91;
-docs-consistency 5/5; MCP 12/12, matrix 8/8, optimization 25/25. Six agent
-audits pass (25/25, 20/20 ×5), persona freshness green. Template tests and the
-new caption-only resolver test pass. Site `npm run check` passes (stats, links,
-accessibility, axe, tapes, roster).
+docs-consistency 5/5; MCP 12/12, 8/8, 25/25. Refresh self-test passes; current
+build dry-run/no-op passes. From-source rebuild reproduces the same counts:
+9,229 transcripts, 125,324 lines, 63,359 sightings.
 
 ## Asset
 
-`grimoire.db` (plus `.xz`/`.gz`) is byte-identical to v0.39.0; it is attached
-again so `releases/latest/download/grimoire.db` keeps working. Rebuild with
-`python3 db/migrate.py` and the enrich chain in `README.md`.
+`grimoire.db` (plus `.xz`/`.gz`) attached. Counts are unchanged; the build
+registry text in the artifact is now sourced from `archive/data/builds.json`.
 
 ## Known limits
 
-- Q2 (`0x808099ef` parser) and Q3 (live-build refresh automation) remain queued;
-  both change the DB and need a count re-sync afterwards.
-- `v_speakers` intentionally includes 191 caption-only speakers. A separate
-  canon-speaker view would be a schema change.
-- `--canon-only` does not exclude caption rows; filter `source_tier` explicitly
-  when you need persona-canon text.
+- No real second live build was available in this environment; the synthetic
+  drift self-test and current-build no-op are the exercised paths. SteamCMD
+  exposes only the public branch, so a private branch cannot be fetched.
+- Q2 is closed as non-prose; `0294/5892` remains skipped with evidence.
+- `v_speakers` remains a discovery view (423, including caption-only names).
 
-# v0.39.0 - Caption sighting log: schema 1.9.0
+# v0.39.1 - Ecosystem pass: caption-tier surfaces and docs
 
 > **Depends On:** STANDARDS.md
 > **Token Estimate:** ~0.9K tokens
 
 **2026-11-10**
 
-Schema release. `caption_provenance` remains one row per line; the new
-`caption_sightings` table retains every observation, keyed by
-`(line_id, source_build, source_slug, line_ord)`. 63,359 rows: 51,735 live +
-11,624 sunrise, including 7,681 merged lines. Counts: 9,229 transcripts,
-125,324 lines, 176,794 FTS entries.
+Code + docs patch; database unchanged from v0.39.0. `character(all_lines)`
+rows carry `source_tier` and label the caption tier; `0134` closed as a
+non-StringBank family; `scripts/export-site-stats.py` is the site's single
+stats source; `tests/docs-consistency.py` gates counts, site data, agent
+metadata, MCP tools and links. Template, six agents, wiki and site aligned;
+persona canon untouched.
 
 ## Verification
 
-Full from-source rebuild; master audit 14/14; test-db 65/65; caption 11/11;
-query 89/89; MCP suites green.
+Master audit 14/14; test-db 65/65; caption 12/12; query 91/91; MCP suites green;
+docs-consistency 5/5; six agent audits green; site `npm run check` green.
 
 ## Asset
 
-`grimoire.db` (plus `.xz`/`.gz`) attached to this release.
+`grimoire.db` (plus `.xz`/`.gz`) byte-identical to v0.39.0.

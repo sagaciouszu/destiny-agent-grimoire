@@ -9,7 +9,7 @@ executable without re-deriving context. Status values: `queued`, `active`,
 | Q1 | Second-provenance table (`caption_sightings`) | P0 | 2–3 h | **done** |
 | Q6 | Ecosystem pass: agents, template, tooling, tests, site | P0 | 4–6 h | **done** |
 | Q2 | Parser for class `0x808099ef` | P1 | 1 h spike | **done** (not prose) |
-| Q3 | Live-build refresh automation | P2 | 4–6 h | queued |
+| Q3 | Live-build refresh automation | P2 | 4–6 h | **done** (v0.39.2) |
 | Q4 | Caption-tier label in `character(all_lines=True)` | P3 | 30 min | **done** (Q6) |
 | Q5 | Confirm `w64_sr_globals_0134` is empty | P4 | 30 min | **done** (Q6) |
 
@@ -107,35 +107,25 @@ to hide it.
 
 ## Q3 — Live-build refresh automation
 
-**Problem.** Widening was run by hand: copy build, extract 36 layers, merge,
-resolve, extract, validate, combine, rebuild. A live update will need the same
-sequence, and manual runs are where provenance mistakes happen.
+**Status:** done (2026-11-10) · **Tooling release:** v0.39.2.
 
-**Design.** `scripts/refresh-live-build.sh` (or `.py`) with `--dry-run`:
+`scripts/refresh-live-build.py` automates the sequence: source validation,
+layer unpack/merge, locale resolution, extraction (build-scoped slugs),
+language validation, combine, drift report, build registration, rebuild and
+gates. `archive/data/builds.json` is now the data-driven build registry, and
+`db/migrate.py` loads `archive/data/live-builds/*.jsonl` alongside the current
+captions file.
 
-1. Read the installed build id (`steamcmd` app_info or the build stamp) and
-   compare with `builds`.
-2. Copy a new build to `/opt/vault/d2-bl-extract/build-<id>/`; verify
-   `destiny2.exe` hash and file count.
-3. Unpack every `w64_sr_globals_*` layer; `merge-pkg-layers.py` per family.
-4. `resolve-locales.py` per family; diff the new map against the committed one
-   and report added/removed entries.
-5. `extract-live-captions.py` with the committed maps; validate language;
-   `combine-live-captions.py`; write the combined report.
-6. Rebuild, gates, and a drift report: per package, lines added/removed/
-   rewritten, speakers changed, entries newly empty.
-7. Never rewrite an era capture; a changed line is a new sighting (Q1), not an
-   inline edit.
+Acceptance met:
+- current build is a no-op and exits 0;
+- `--dry-run` plans every stage and writes nothing;
+- `--self-test` proves a changed line appears in the drift report;
+- a registered build is added to `builds.json` and survives a from-source
+  rebuild;
+- new build files use build-scoped slugs, so earlier builds are never rewritten.
 
-**Acceptance.**
-- Running against the current build is a no-op (0 changed lines) and exits 0.
-- `--dry-run` prints every step and writes nothing.
-- A synthetic one-line patch produces a drift report naming that line.
-- `builds` row updated with `captured_at` and extraction notes.
-
-**Risks.** SteamCMD branch access is public-only; a build that is not on the
-public branch cannot be fetched. Record `unavailable` rather than substituting
-an older build.
+A real second live build was not available in this environment; the synthetic
+drift self-test and the current-build no-op are the exercised paths.
 
 ---
 

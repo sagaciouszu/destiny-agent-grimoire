@@ -133,6 +133,30 @@ are in the private extraction vault, not this repository):
 `build-25932352` is legitimate for current-era extraction and verification,
 never as ground truth for what an earlier expansion shipped.
 
+## Refreshing the live tier
+
+The live build is refreshed by one script, not by hand:
+
+```bash
+python3 scripts/refresh-live-build.py \
+  --source /path/to/build-<id> --version "<bungie stamp>" --dry-run
+```
+
+It unpacks every `w64_sr_globals` layer, merges the layers, resolves locales,
+extracts English, validates language, combines, writes a drift report, registers
+the build in `archive/data/builds.json`, rebuilds and runs the gates.
+
+- A new build is written to `archive/data/live-builds/<build>.jsonl` with
+  **build-scoped slugs**; the current build stays in
+  `archive/data/captions-live.jsonl`.
+- `db/migrate.py` loads both, so a changed line becomes a new
+  `caption_sightings` row, never an inline rewrite of an earlier build.
+- Running against the registered current build is a **no-op** (exit 0).
+- `--dry-run` plans every stage and writes nothing; `--self-test` proves the
+  drift report names a changed line.
+- A build whose English tables cannot be resolved is skipped and logged, not
+  guessed.
+
 ## Non-goals / out of scope
 
 - **Cinematics never carry speaker labels.** They are excluded by Bungie's own

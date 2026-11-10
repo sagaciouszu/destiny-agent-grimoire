@@ -17,6 +17,7 @@ build. This guards the invariants that make them safe to search:
 
 Run: python3 tests/caption-test.py
 """
+import glob
 import json
 import os
 import sqlite3
@@ -32,6 +33,8 @@ import taxonomy  # noqa: E402
 DB = os.environ.get('GRIMOIRE_DB') or os.path.join(ROOT, 'db', 'grimoire.db')
 JSONL = os.path.join(ROOT, 'archive', 'data', 'captions.jsonl')
 LIVE_JSONL = os.path.join(ROOT, 'archive', 'data', 'captions-live.jsonl')
+LIVE_DIR = os.path.join(ROOT, 'archive', 'data', 'live-builds')
+LIVE_FILES = [LIVE_JSONL] + sorted(glob.glob(os.path.join(LIVE_DIR, '*.jsonl')))
 PASS = FAIL = 0
 
 
@@ -135,14 +138,14 @@ def sightings():
     key that silently collapses sunrise lines sharing a bank entry.
     """
     records = []
-    for path in (JSONL, LIVE_JSONL):
+    for path in (JSONL, *LIVE_FILES):
         with open(path, encoding='utf-8') as fh:
             records.extend(json.loads(raw) for raw in fh)
     slugs = [r['slug'] for r in records]
     assert len(slugs) == len(set(slugs)), 'caption record slugs are not unique'
 
     per_record, per_build = {}, {}
-    sunrise_texts, live_texts = set(), set()
+    text_sets = {}
     for rec in records:
         build = rec.get('source_build') or 'sunrise-pre-bl'
         count = 0
@@ -151,8 +154,7 @@ def sightings():
             if not text:
                 continue
             count += 1
-            norm = migrate.norm_text(text)
-            (sunrise_texts if build == 'sunrise-pre-bl' else live_texts).add(norm)
+            text_sets.setdefault(build, set()).add(migrate.norm_text(text))
         if count:
             per_record[(build, rec['slug'])] = count
             per_build[build] = per_build.get(build, 0) + count
@@ -190,9 +192,12 @@ def sightings():
 
     multi = one('SELECT COUNT(*) FROM (SELECT line_id FROM caption_sightings '
                 'GROUP BY 1 HAVING COUNT(DISTINCT source_build) > 1)')
-    expected_multi = len(sunrise_texts & live_texts)
+    union = set().union(*text_sets.values()) if text_sets else set()
+    expected_multi = sum(
+        1 for text in union
+        if sum(1 for texts in text_sets.values() if text in texts) > 1)
     assert multi == expected_multi, \
-        f'{multi} lines seen by both builds, source says {expected_multi}'
+        f'{multi} lines seen by more than one build, source says {expected_multi}'
 
     assert one('SELECT COUNT(*) FROM caption_sightings WHERE captured_at IS NULL') == 0, \
         'sighting without captured_at'
