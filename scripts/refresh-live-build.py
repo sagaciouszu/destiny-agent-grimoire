@@ -26,10 +26,10 @@ Usage:
 import argparse
 import datetime
 import glob
+import hashlib
 import json
 import os
 import re
-import shutil
 import subprocess
 import sys
 import tempfile
@@ -74,9 +74,34 @@ def registered_builds():
 
 
 def latest_live_build(rows):
-    live = [r["build_id"] for r in rows if r.get("kind") == "game_build"
+    live = [r for r in rows if r.get("kind") == "game_build"
             and r["build_id"].startswith("build-")]
-    return live[-1] if live else None
+    if not live:
+        return None
+    live.sort(key=lambda r: (r.get("captured_at", ""),
+                             int(r["build_id"].rsplit("-", 1)[1])))
+    return live[-1]["build_id"]
+
+
+def latest_live_path(build):
+    """The freshest tier to diff a new build against."""
+    if build:
+        candidate = os.path.join(LIVE_DIR, f"{build}.jsonl")
+        if os.path.exists(candidate):
+            return candidate
+    return CURRENT_LIVE
+
+
+def source_fingerprint(source):
+    """sha256 of destiny2.exe when present; None when the tree has none."""
+    exe = os.path.join(source, "destiny2.exe")
+    if not os.path.exists(exe):
+        return None
+    digest = hashlib.sha256()
+    with open(exe, "rb") as fh:
+        for chunk in iter(lambda: fh.read(8 * 1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def source_build_id(source, explicit):
@@ -98,7 +123,7 @@ def tier_lines(path):
         for line in rec.get("lines", []):
             text = (line.get("text") or "").strip()
             if text:
-                lines[(package, norm(text))] = text
+                lines[(package, text)] = text
     return lines
 
 
@@ -137,7 +162,13 @@ def self_test():
         assert report["added"] == 1 and report["removed"] == 1, report
         assert "The new line." in report["added_samples"], report
         assert "The old line." in report["removed_samples"], report
-    print("self-test: drift report names the changed line")
+        with open(new, "w", encoding="utf-8") as fh:
+            fh.write(json.dumps({**base, "source_build": "build-new", "lines": [
+                {"text": "The old line!", "speaker": None, "record_index": 0,
+                 "record_part": 0}]}) + "\n")
+        punctuation = drift_report(old, new, "build-old", "build-new")
+        assert punctuation["added"] == 1 and punctuation["removed"] == 1, punctuation
+    print("self-test: drift report names changed text (including punctuation)")
     return 0
 
 
@@ -183,6 +214,8 @@ def main():
     ap.add_argument("--source", help="build tree containing packages/")
     ap.add_argument("--build-id")
     ap.add_argument("--version", default="unknown")
+    ap.add_argument("--expected-sha256",
+                    help="expected destiny2.exe sha256 for the source build")
     ap.add_argument("--work", default=DEFAULT_WORK)
     ap.add_argument("--report", help="drift report path")
     ap.add_argument("--dry-run", action="store_true")
@@ -200,8 +233,14 @@ def main():
     build = source_build_id(args.source, args.build_id)
     rows = registered_builds()
     current = latest_live_build(rows)
-    if build == current and not args.force:
+    if build == current:
+        if args.force:
+            raise SystemExit(
+                "refusing --force on the registered current build: it would "
+                "write a second per-build file and duplicate sightings")
         print(f"current build already registered: {build} (no-op)")
+        if args.dry_run:
+            print("dry-run: current build; nothing to extract")
         return 0
     if not os.path.isdir(args.source):
         raise SystemExit(f"source not found: {args.source}")
@@ -214,6 +253,14 @@ def main():
         VAULT, "reports", f"live-refresh-{build}.json")
     print(f"refresh {current or 'none'} -> {build}")
     print(f"source: {args.source} ({len(families)} families)")
+
+    fingerprint = source_fingerprint(args.source)
+    if fingerprint is None:
+        print("warning: no destiny2.exe in the source; source fingerprint unavailable")
+    elif args.expected_sha256 and fingerprint != args.expected_sha256:
+        raise SystemExit(
+            f"source destiny2.exe sha256 {fingerprint} != expected "
+            f"{args.expected_sha256}")
 
     if args.dry_run:
         for family, layers in sorted(families.items()):
@@ -255,29 +302,49 @@ def main():
         run(["python3", os.path.join(HERE, "extract-live-captions.py"),
              "--dir", merged, "--locale-map", map_path, "--out", out_jsonl,
              "--stats", stats, "--build-scoped-slug"], cwd=ROOT)
-        run(["python3", os.path.join(HERE, "validate-live-language.py"),
-             "--in", out_jsonl,
-             "--out", os.path.join(validated_dir, f"{family}.validated.jsonl"),
-             "--report", os.path.join(work, "captions", f"{family}.language.json")],
-            cwd=ROOT, check=False)
+        validated = os.path.join(validated_dir, f"{family}.validated.jsonl")
+        language = os.path.join(work, "captions", f"{family}.language.json")
+        result = run(["python3", os.path.join(HERE, "validate-live-language.py"),
+                      "--in", out_jsonl, "--out", validated,
+                      "--report", language], cwd=ROOT, check=False)
+        if result.returncode not in (0, 1) or not os.path.exists(validated) \
+                or not os.path.exists(language):
+            raise SystemExit(
+                f"language validation failed for {family} (rc={result.returncode}); "
+                "refusing to build a partial tier")
+        dropped = json.load(open(language, encoding="utf-8")).get("dropped_records", 0)
+        if dropped:
+            print(f"  {family}: language gate dropped {dropped} table(s)")
+
+    if source_fingerprint(args.source) != fingerprint:
+        raise SystemExit("source build changed during extraction; refusing to register")
 
     combined = os.path.join(LIVE_DIR, f"{build}.jsonl")
+    combined_tmp = combined + ".tmp"
     run(["python3", os.path.join(HERE, "combine-live-captions.py"),
-         "--dir", validated_dir, "--out", combined,
+         "--dir", validated_dir, "--out", combined_tmp,
          "--report", os.path.join(work, "combined.json"),
          "--items-jsonl", os.path.join(ROOT, "archive", "data", "items.jsonl")],
         cwd=ROOT)
+    original_tier = open(combined, "rb").read() if os.path.exists(combined) else None
+    os.replace(combined_tmp, combined)
 
-    report = drift_report(CURRENT_LIVE, combined, current or "none", build)
-    os.makedirs(os.path.dirname(report_path), exist_ok=True)
+    report = drift_report(latest_live_path(current), combined, current or "none", build)
+    report_dir = os.path.dirname(report_path)
+    if report_dir:
+        os.makedirs(report_dir, exist_ok=True)
     with open(report_path, "w", encoding="utf-8") as fh:
         json.dump(report, fh, indent=1)
     print(f"drift: +{report['added']} / -{report['removed']} -> {report_path}")
 
+    original_builds = open(BUILDS, encoding="utf-8").read() if os.path.exists(BUILDS) else None
     if build not in [r["build_id"] for r in rows]:
         pkg_files = glob.glob(os.path.join(args.source, "packages", "*.pkg"))
         if not pkg_files:
             pkg_files = glob.glob(os.path.join(args.source, "*.pkg"))
+        note = f"Added by scripts/refresh-live-build.py from {args.source}."
+        if fingerprint:
+            note += f" destiny2.exe sha256={fingerprint}."
         rows.append({
             "build_id": build,
             "label": f"Destiny 2 live client ({build})",
@@ -287,7 +354,7 @@ def main():
             "captured_at": datetime.date.today().isoformat(),
             "package_count": len(pkg_files) or None,
             "byte_count": sum(os.path.getsize(p) for p in pkg_files) or None,
-            "notes": f"Added by scripts/refresh-live-build.py from {args.source}.",
+            "notes": note,
         })
         with open(BUILDS, "w", encoding="utf-8") as fh:
             json.dump(rows, fh, indent=1)
@@ -295,11 +362,39 @@ def main():
         print(f"registered {build} in {BUILDS}")
 
     if not args.skip_gates:
-        for cmd in GATES:
-            run(cmd, cwd=ROOT)
+        try:
+            for cmd in GATES:
+                run(cmd, cwd=ROOT)
+        except BaseException:
+            if original_builds is not None:
+                with open(BUILDS, "w", encoding="utf-8") as fh:
+                    fh.write(original_builds)
+            if original_tier is None:
+                if os.path.exists(combined):
+                    os.remove(combined)
+            else:
+                with open(combined, "wb") as fh:
+                    fh.write(original_tier)
+            print("refresh failed: rolled back builds.json and the new tier")
+            raise
+
+        # Counts changed: refresh the site snapshot and the docs, then prove
+        # the cross-repo consistency gate.
+        site = os.path.join(os.path.dirname(ROOT), "destiny-agent-grimoire-site")
+        post = []
+        if os.path.isdir(site):
+            post.append(["python3", os.path.join(HERE, "export-site-stats.py"),
+                         "--out", os.path.join(site, "_data", "grimoire.json")])
+        post += [["python3", "tests/sync-doc-counts.py"],
+                 ["python3", "tests/docs-consistency.py"]]
+        for cmd in post:
+            result = run(cmd, cwd=ROOT, check=False)
+            if result.returncode != 0:
+                print(f"warning: post-build docs/site step failed: {' '.join(cmd)}")
+                print("the build is registered; fix docs/site before committing")
+                return 1
     print(f"refresh complete: {build}")
     return 0
-
 
 if __name__ == "__main__":
     sys.exit(main())
