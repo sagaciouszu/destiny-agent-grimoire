@@ -8,7 +8,7 @@ executable without re-deriving context. Status values: `queued`, `active`,
 |---|---|---|---|---|
 | Q1 | Second-provenance table (`caption_sightings`) | P0 | 2–3 h | **done** |
 | Q6 | Ecosystem pass: agents, template, tooling, tests, site | P0 | 4–6 h | **done** |
-| Q2 | Parser for class `0x808099ef` | P1 | 3–6 h | queued |
+| Q2 | Parser for class `0x808099ef` | P1 | 1 h spike | **done** (not prose) |
 | Q3 | Live-build refresh automation | P2 | 4–6 h | queued |
 | Q4 | Caption-tier label in `character(all_lines=True)` | P3 | 30 min | **done** (Q6) |
 | Q5 | Confirm `w64_sr_globals_0134` is empty | P4 | 30 min | **done** (Q6) |
@@ -72,44 +72,36 @@ caption-only speakers from `v_speakers`, missing schema-1.9.0 entry in
 
 Parallel plan: one read-only inventory + three read-only audits (agents, site,
 template), then disjoint-repo edits, then a serial gate/deploy wave. Q4 and Q5
-are closed inside this pass. Q2/Q3 remain separate and change the DB, so freeze
-v0.39.0 or land them first.
+are closed inside this pass. Q2 closed as non-prose; Q3 remains separate and
+changes the DB, so freeze v0.39.0 or land it first.
 
 **Result (v0.39.1):** Q4/Q5 closed; six agent audits green and docs synced;
 template resolver fixed with a caption-only regression test; site counts now
 come from `_data/grimoire.json` and deploy checks pass; `tests/docs-consistency.py`
-is green. Q2/Q3 remain queued.
+is green. Q2 closed as non-prose; Q3 remains queued.
 
 ---
 
-## Q2 — Parser for class `0x808099ef`
+## Q2 — Class `0x808099ef`: closed, not prose
 
-**Problem.** Patch layers replace 13 entries per affected table with class
-`0x808099ef` (header size `0x50`, not `0x40`). `0294/5892` is one such English
-entry; the extractor skips it and logs `unparseable_entries`. Across the 15
-packages, 636 entries are class replacements, so the gap is larger than one
-line.
+**Status:** done (2026-11-10) · **Verdict:** hash/reference table, no parser.
 
-**Investigation.**
-1. Dump `5892_808099ef_t8_s0.bin` and its sibling locales; compare record
-   layout with the `0x808099f1` parser in `scripts/extract-live-captions.py`.
-2. The header has `0x50`, an array of `0x80d41a12`-style hashes at `0x18`, and
-   `0x80809fb8` near `0x5c`. Determine whether it is a StringBank variant
-   (hash-keyed records) or a wrapper around another class.
-3. Decode one record and compare against the English text the table would
-   carry (neighbouring locales / item corpus).
+### Evidence
 
-**Acceptance.**
-- A `parse_ef` implementation with structural asserts and a fixture test.
-- `0294/5892` yields English text; the language gate and independent English
-  check both pass for it.
-- Every class-replaced entry is either parsed or skipped with a reason in the
-  stats sidecar; no silent gaps.
-- Re-extract affected packages only; regenerate maps/stats; rebuild + gates.
+- 8,656 `*_808099ef_*.bin` files across 13 mounted packages; sizes 120–2,460 B.
+- `0294/5892` is 152 B: header `0x50`, count 10, type `0x80800070`, followed by
+  ten 32-bit values — not records and not UTF-8.
+- The base `0x808099f1` entry at `0294/5892` held 38 text records (holiday
+  cookie text). None of that text appears in the ef file.
+- Across all 8,656 ef files: zero runs of three or more space-separated ASCII
+  words, zero English markers.
+- The patch replaces the text table with a hash/reference table; the prose is
+  not carried in this class.
 
-**Risks.** The class may not contain prose at all (could be a hash table or a
-different bank type). If so, close Q2 as "not prose" and record the evidence;
-do not force a parser.
+**Consequence.** No parser. `0294/5892` remains in the extractor's
+`unparseable_entries` and the gap is recorded in
+`archive/data/locale-maps/class-808099ef.skip.json`. Coverage is not loosened
+to hide it.
 
 ---
 
@@ -177,6 +169,6 @@ sidecar. Do not treat it as covered.
 ## Release cadence
 
 - Q1 → v0.39.0 (schema 1.9.0).
-- Q2 → v0.39.x or v0.40.0 depending on whether it adds entries.
+- Q2 → closed 2026-11-10 as non-prose (no parser, no DB change).
 - Q3 → tooling release, no schema change.
 - Q4/Q5 → batch into the next release; no DB artifact change for Q4.
