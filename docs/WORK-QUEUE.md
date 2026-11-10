@@ -13,6 +13,7 @@ executable without re-deriving context. Status values: `queued`, `active`,
 | Q4 | Caption-tier label in `character(all_lines=True)` | P3 | 30 min | **done** (Q6) |
 | Q5 | Confirm `w64_sr_globals_0134` is empty | P4 | 30 min | **done** (Q6) |
 | Q7 | Deep ecosystem pass: standards, template, agents/webs, recount, MCP, site | P0 | 6–8 h | **done** |
+| Q8 | Tier filters, `v_canon_speakers`, access-test consolidation, refresh runbook | P0 | 4–5 h | planned |
 
 ---
 
@@ -250,3 +251,16 @@ patterns moved into `tests/doc-count-patterns.json` in the Drifter and Eris
 repos. `tests/sync-doc-counts.py` now contains no persona name or repository.
 Drifter 25/25 and Eris 20/20 remain green; conformance and docs-consistency
 pass. This is on master after the v0.39.4 tag and will ride the next release.
+
+
+## Q8 — Remaining work plan
+
+**Plan:** `/opt/vault/d2-bl-extract/REMAINING-WORK-PLAN.md`
+
+Order: explicit `--tier`/`--exclude-tier` filters, then `v_canon_speakers`
+(schema 1.10.0), then consolidate the access gates, then the live-build refresh
+runbook when a public build appears. Items A-C bundle into v0.40.0; item D is
+trigger-based.
+
+**Gate:** full rebuild and 18-suite audit for the schema view; agent audits for
+the bundled release.
