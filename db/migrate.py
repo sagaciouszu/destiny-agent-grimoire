@@ -462,6 +462,28 @@ def _caption_prov(conn, line_id, line, rec, src_pkg, src_entry):
     return cur.rowcount
 
 
+def _caption_sighting(conn, line_id, line, rec, src_pkg, src_entry,
+                      line_ord, captured_at):
+    """Log one observation of a caption line, even when provenance already exists.
+
+    Identity is the processed record line: `(record slug, line ordinal)`. Sunrise
+    lines carry no record index, so a physical-slot key would collapse genuinely
+    different lines that share a bank entry. `caption_provenance` remains one
+    row per line; this table keeps every sighting.
+    """
+    build = rec.get('source_build') or 'sunrise-pre-bl'
+    conn.execute(
+        'INSERT INTO caption_sightings '
+        '(line_id,source_build,source_slug,line_ord,source_pkg,source_entry,'
+        'bank_entry,record_index,record_part,kind,hash,captured_at) '
+        'VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
+        (line_id, build, rec.get('slug'), line_ord, src_pkg, src_entry,
+         rec.get('bank_entry'), line.get('record_index'),
+         line.get('record_part'), rec.get('kind_class'), line.get('hash'),
+         captured_at))
+    return 1
+
+
 def _caption_header(conn, rec, acts, stats):
     """Insert a caption transcript header and its taxonomy row.
 
@@ -523,6 +545,9 @@ def load_captions(conn):
         inserted a second time -- its provenance attaches to the existing line,
         so search never returns the same text twice and no attribution
         conflict is introduced;
+      * every processed record line also writes one `caption_sightings` row,
+        so a later build's observation survives even when the one-row-per-line
+        provenance index already belongs to an earlier build;
       * the activity facet is the curated extraction verdict; every other
         transcript stays 'unknown'. Never guess a season from caption text.
 
@@ -533,7 +558,14 @@ def load_captions(conn):
     paths = [os.path.join(ROOT, 'archive', 'data', 'captions.jsonl'),
              os.path.join(ROOT, 'archive', 'data', 'captions-live.jsonl')]
     stats = {'transcripts': 0, 'lines': 0, 'already_in_canon': 0,
-             'provenance': 0, 'facets': 0, 'unresolved_facets': 0}
+             'provenance': 0, 'sightings': 0, 'sightings_merged': 0,
+             'facets': 0, 'unresolved_facets': 0}
+
+    # Build date for each sighting. Registered before load_captions() so the
+    # map is complete; fall back to NULL for an unregistered build rather than
+    # inventing a date.
+    captured = {r[0]: r[1] for r in conn.execute(
+        'SELECT build_id, captured_at FROM builds')}
 
     # norm_line -> canon line id (lowest id first: deterministic, and a caption
     # line that already exists attaches its provenance to that row).
@@ -552,8 +584,12 @@ def load_captions(conn):
         for raw in open(path, encoding='utf-8'):
             rec = json.loads(raw)
             src_pkg, src_entry = _caption_pkg(rec.get('source_url', ''))
+            build = rec.get('source_build') or 'sunrise-pre-bl'
+            captured_at = captured.get(build)
+            if captured_at is None:
+                raise SystemExit(f'caption build not registered in builds: {build}')
             tid, seq = None, 0
-            for line in rec.get('lines', []):
+            for line_ord, line in enumerate(rec.get('lines', [])):
                 text = (line.get('text') or '').strip()
                 if not text:
                     continue
@@ -571,6 +607,10 @@ def load_captions(conn):
                             (line_ss, hit))
                     stats['provenance'] += _caption_prov(
                         conn, hit, line, rec, src_pkg, src_entry)
+                    stats['sightings'] += _caption_sighting(
+                        conn, hit, line, rec, src_pkg, src_entry, line_ord,
+                        captured_at)
+                    stats['sightings_merged'] += 1
                     stats['already_in_canon'] += 1
                     continue
                 if tid is None:      # header appears only when a line is new
@@ -588,6 +628,9 @@ def load_captions(conn):
                 stats['lines'] += 1
                 stats['provenance'] += _caption_prov(
                     conn, lid, line, rec, src_pkg, src_entry)
+                stats['sightings'] += _caption_sighting(
+                    conn, lid, line, rec, src_pkg, src_entry, line_ord,
+                    captured_at)
     return stats
 
 
@@ -981,6 +1024,43 @@ def migrate():
     tl_stats = derive_timeline(conn)
     print(f'timeline: {tl_stats}')
 
+    # Build registry: one row per source the corpus was built on (Builds.md).
+    # Registered BEFORE load_captions() so each sighting can carry the build's
+    # captured_at date. Point-in-time facts; refreshed by the release that
+    # re-ingests a tier.
+    BUILD_ROWS = [
+        ('sunrise-pre-bl',
+         'Destiny 2: Shadowkeep / Season of Arrivals (pre-Beyond-Light) EN client',
+         'game_build', '86657.20.08.23.1800.d2_rc', '/opt/vault/games/sunrise',
+         '2026-11-07', 1709, 74095694848,
+         'Pre-Beyond-Light build; package format v38; English-only caption tier '
+         'extracted 2026-11-07/08. Corpus released starting v0.29.0.'),
+        ('build-25932352',
+         'Destiny 2: Monument of Triumph (Update 9.7.0.6, Oct 20 2026) live client',
+         'game_build', '245114.26.10.13.2000.v500_live.main',
+         '/opt/vault/d2-bl-extract/build-25932352',
+         '2026-11-09', 2417, 162825758961,
+         'Update 9.7.0.6; Steam buildid 25932352; appid 1085660; package format v53. '
+         'w64_sr_globals_* string banks are cleartext UTF-8 (13 locales per table); '
+         'English caption tier extracted from 15 packages (46,512 provenance rows). '
+         'Def blocks in the other package classes stay AES-GCM + Oodle. '
+         'See docs/wiki/Builds.md.'),
+    ]
+    for row in BUILD_ROWS:
+        # UPSERT, not INSERT OR REPLACE: sightings reference build_id, and a
+        # REPLACE would delete/re-insert the row (FK violation on an
+        # incremental run).
+        conn.execute(
+            'INSERT INTO builds '
+            '(build_id,label,kind,version,source,captured_at,package_count,byte_count,notes) '
+            'VALUES (?,?,?,?,?,?,?,?,?) '
+            'ON CONFLICT(build_id) DO UPDATE SET label=excluded.label, '
+            'kind=excluded.kind, version=excluded.version, source=excluded.source, '
+            'captured_at=excluded.captured_at, package_count=excluded.package_count, '
+            'byte_count=excluded.byte_count, notes=excluded.notes', row)
+    builds_count = conn.execute('SELECT COUNT(*) FROM builds').fetchone()[0]
+    print(f'builds: {builds_count}')
+
     # Game captions (archive/data/captions.jsonl): English subtitle and callout
     # text from the local build. Loaded after taxonomy so the curated activity
     # facets survive, and before the FTS build so caption rows index as
@@ -988,6 +1068,7 @@ def migrate():
     cap_stats = load_captions(conn)
     print('captions: %(transcripts)d transcripts, %(lines)d lines, '
           '%(already_in_canon)d already in canon, %(provenance)d provenance rows, '
+          '%(sightings)d sightings (%(sightings_merged)d on merged lines), '
           '%(facets)d activity facets, %(unresolved_facets)d unresolved' % cap_stats)
     t_count += cap_stats['transcripts']
     tl_count += cap_stats['lines']
@@ -1070,32 +1151,7 @@ def migrate():
     itf_count = conn.execute('SELECT COUNT(*) FROM item_title_fts').fetchone()[0]
     print(f'item title entries: {itf_count}')
 
-    # Build registry: one row per source the corpus was built on (Builds.md).
-    # Point-in-time facts; refreshed by the release that re-ingests a tier.
-    BUILD_ROWS = [
-        ('sunrise-pre-bl',
-         'Destiny 2: Shadowkeep / Season of Arrivals (pre-Beyond-Light) EN client',
-         'game_build', '86657.20.08.23.1800.d2_rc', '/opt/vault/games/sunrise',
-         '2026-11-07', 1709, 74095694848,
-         'Pre-Beyond-Light build; package format v38; English-only caption tier '
-         'extracted 2026-11-07/08. Corpus released starting v0.29.0.'),
-        ('build-25932352',
-         'Destiny 2: Monument of Triumph (Update 9.7.0.6, Oct 20 2026) live client',
-         'game_build', '245114.26.10.13.2000.v500_live.main',
-         '/opt/vault/d2-bl-extract/build-25932352',
-         '2026-11-09', 2417, 162825758961,
-         'Update 9.7.0.6; Steam buildid 25932352; appid 1085660; package format v53. '
-         'w64_sr_globals_* string banks are cleartext UTF-8 (13 locales per table); '
-         'English caption tier extracted from package 0294, 634 entries. Def blocks in '
-         'the other package classes stay AES-GCM + Oodle. See docs/wiki/Builds.md.'),
-    ]
-    for row in BUILD_ROWS:
-        conn.execute(
-            'INSERT OR REPLACE INTO builds '
-            '(build_id,label,kind,version,source,captured_at,package_count,byte_count,notes) '
-            'VALUES (?,?,?,?,?,?,?,?,?)', row)
-    builds_count = conn.execute('SELECT COUNT(*) FROM builds').fetchone()[0]
-    print(f'builds: {builds_count}')
+    # Build registry was registered before load_captions (above).
 
     # Meta: a self-describing stamp for the shipped artifact. Every count key
     # must equal a live COUNT(*) (tests/test-db.sh enforces it).
@@ -1123,6 +1179,7 @@ def migrate():
         ('coverage_notes', str(conn.execute('SELECT COUNT(*) FROM coverage_notes').fetchone()[0])),
         ('speaker_aliases', str(conn.execute('SELECT COUNT(*) FROM speaker_aliases').fetchone()[0])),
         ('caption_provenance', str(conn.execute('SELECT COUNT(*) FROM caption_provenance').fetchone()[0])),
+        ('caption_sightings', str(conn.execute('SELECT COUNT(*) FROM caption_sightings').fetchone()[0])),
         ('builds', str(builds_count)),
     ]:
         conn.execute('INSERT OR REPLACE INTO meta (key,value) VALUES (?,?)', (k, v))

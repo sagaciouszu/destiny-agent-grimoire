@@ -62,6 +62,8 @@ sqlite3 db/grimoire.db "SELECT slug, title, item_type FROM items WHERE item_type
 | `book_entries` | 1158 entries within books (FK to books) |
 | `transcripts` | 9229 transcript headers (quest + cutscene + web) |
 | `transcript_lines` | Canonical dialogue by speaker; `speaker_source` set for attributed caption lines |
+| `caption_provenance` | One row per caption line: current build/package/entry/slot index |
+| `caption_sightings` | Every observation of a caption record line (build, package, slot, paragraph) |
 | `grimoire_cards` | 2889 Destiny 1 grimoire cards |
 | `interactions` | 2699 short character dialogue beats |
 | `items` | Weapons, armor, gear lore + flavor text |

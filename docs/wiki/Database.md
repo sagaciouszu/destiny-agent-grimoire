@@ -90,15 +90,19 @@ a better source.
 
 ## Game captions
 
-`migrate.py` loads `archive/data/captions.jsonl` (committed, curated: English
-lines, speaker attribution, activity facets, dedup verdicts, one build label
-per record - currently `sunrise-pre-bl`; `build-25932352` pending extraction
-under the widened era scope) as `source_tier='game_caption'`, `lang='en'`.
+`migrate.py` loads `archive/data/captions.jsonl` (`sunrise-pre-bl`) and
+`archive/data/captions-live.jsonl` (`build-25932352`, 15 packages) as
+`source_tier='game_caption'`, `lang='en'`. Each record carries a build label;
+nothing mixes builds silently.
 
 - **No duplicate text.** A caption line whose normalized text already exists in
   canon is not inserted again; its StringReference hash and package origin
   attach to the existing line in `caption_provenance` instead. Search therefore
   never returns the same line twice, and no second attribution is introduced.
+- **Every sighting is kept.** `caption_provenance` is one row per line;
+  `caption_sightings` logs every processed record line (`source_slug` +
+  `line_ord`), so a build that repeats earlier text still leaves an
+  observation with its package, entry and slot.
 - **Facets are curated, never guessed.** The activity keyword verdict from the
   extraction pass is stored as `confidence='derived'` (season/expansion filled
   from the activity catalogue, exactly as `classify()` would). Everything else
@@ -187,7 +191,8 @@ Languages are a data drop, not a schema change: `transcripts.lang` and
    slug suffixed with the language so headers stay unique.
 2. Point `load_captions()` at the extra file(s); insertions are additive.
 3. Copy the English counterpart's `transcript_classification` row (identical
-   content - do not re-derive) and keep `caption_provenance` per line.
+   content - do not re-derive), keep `caption_provenance` per line, and write
+   the matching `caption_sightings` row.
 4. Re-run the full build sequence, `tests/caption-test.py`, the pinned corpus
    counts in `tests/query-interface-test.sh` (activity line counts move) and
    `python3 tests/sync-doc-counts.py`.
@@ -257,7 +262,7 @@ Darkness respectively, not aliases. Rasputin (char) and The Worm/Xol
 high-confidence lexicon (125 TSV rows, folded-duplicate variants merged) plus
 the owner rulings, scans the corpus read-only, verifies every ref resolves to
 exactly one parent row, then sets `meta.version=1.6.0` and live-count meta
-keys. Swap protocol: build on a temp copy, run `tests/test-db.sh` (61/61) and
+keys. Swap protocol: build on a temp copy, run `tests/test-db.sh` (65/65) and
 `tests/lore-integrity.sh` (17/17), verify books/cards SHA256 before/after,
 then swap atomically into `db/grimoire.db`. Books and cards are read-only;
 byte-identical proof is in the v0.33.0 release notes. Known limits: Memory of

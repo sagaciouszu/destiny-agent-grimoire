@@ -112,6 +112,7 @@ No API keys, accounts or network access are required at runtime.
 | `transcripts` | 9229 | Transcript headers |
 | `transcript_lines` | 125324 | Canon dialogue (speaker, line) |
 | `caption_provenance` | 56119 | Caption line provenance (hash, package, entry) |
+| `caption_sightings` | 63359 | Every observation of a caption record line (build, package, slot) |
 | `grimoire_cards` | 2889 | Destiny 1 grimoire cards |
 | `interactions` | 2699 | Short dialogue beats |
 | `items` | 58764 | Weapons, armor and gear lore |
@@ -150,7 +151,7 @@ No API keys, accounts or network access are required at runtime.
 | `v_entity_resolve` (view) | 136 | Resolver lookup (alias to entity) |
 | `v_entity_documents` (view) | 33578 | Entities with ranked document lists |
 | `v_entity_coverage` (view) | 4 | Per-kind entity web coverage |
-| **Total** | 825875 | Rows across every table, view and index above |
+| **Total** | 889234 | Rows across every table, view and index above |
 
 Every content row carries provenance. Speaker aliases are canonicalized during
 migration. The full contract is `STANDARDS.md`.
@@ -260,7 +261,7 @@ repository minus the database lives outside the tree.
 | Eris agent audit | run tests/master-audit.sh in destiny-agent-eris-morn | 20/20 |
 | Calus / Zavala / Ghost / Mara Sov | run tests/master-audit.sh in each repo | 20/20 |
 | Agent suite manifests | `python3 tests/suite-manifest-test.py` | PASS |
-| Database integrity | `bash tests/test-db.sh` | 61 checks |
+| Database integrity | `bash tests/test-db.sh` | 65 checks |
 | Query interface | `bash tests/query-interface-test.sh` | 89 checks |
 | Agent layout | `bash tests/agent-layout-test.sh` | 39 checks |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 checks |

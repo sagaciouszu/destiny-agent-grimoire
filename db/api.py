@@ -1385,7 +1385,7 @@ def stats():
                   'expansions', 'seasons', 'events', 'event_occurrences', 'activities',
                   'transcript_classification', 'item_classification',
                   'document_classification', 'lore_entries', 'lore_entry_items',
-                  'caption_provenance']:
+                  'caption_provenance', 'caption_sightings']:
             counts[t] = conn.execute(f'SELECT COUNT(*) FROM {t}').fetchone()[0]
         top_items = [{'item_type': r[0], 'count': r[1]} for r in conn.execute(
             "SELECT item_type, COUNT(*) FROM items WHERE item_type != '' "

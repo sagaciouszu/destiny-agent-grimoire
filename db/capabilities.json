@@ -17,7 +17,7 @@
     "book_entries": "entries within books (provenance via parent book)",
     "transcripts": "transcript headers (curated markdown, Ishtar web, cutscene captions)",
     "transcript_lines": "canonical dialogue lines by speaker (seq ordered, stage directions flagged, lang column for captions; speaker_source records attribution provenance for caption lines when present)",
-    "caption_provenance": "per-line game-file provenance for captions (StringReference hash, package/entry origin, kind)",
+    "caption_provenance": "per-line current game-file provenance for captions (StringReference hash, package/entry origin, kind); every observation is in caption_sightings",
     "builds": "build registry: one row per game build / web capture the corpus was built from (build_id, Bungie stamp, package count, bytes, captured_at); every row that carries game content points at a row here",
     "timeline_chapters": "in-universe Destiny timeline: story chapters (rank chronological, rows.timeline joins by slug)",
     "grimoire_cards": "Destiny 1 grimoire cards with source_url",
@@ -52,7 +52,8 @@
     "entity_aliases": "attested name variants; norm_alias is the resolver lookup key (136 rows)",
     "entity_links": "entity to document links (attribution/canonical/alias/ctx matches with weights; ref grammar per kind)",
     "entity_relations": "entity to entity adjacency (Siren adjacent to Riven; Gardener related_to Traveler; Winnower related_to Darkness)",
-    "entity_build_meta": "entity web build audit trail (build_id, source hashes, timings, counts)"
+    "entity_build_meta": "entity web build audit trail (build_id, source hashes, timings, counts)",
+    "caption_sightings": "every observation of a caption line (build, package, entry, slot, paragraph), including builds whose provenance lost the one-row-per-line race"
   },
   "views": {
     "v_speakers": "speaker, lines (canonical speakers with line counts)",

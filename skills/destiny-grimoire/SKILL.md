@@ -46,6 +46,7 @@ flavor text, verify.
 | characters | 20 | Named characters |
 | character_lines | 1229 | Canon character quotes for agents |
 | caption_provenance | 56119 | Caption line provenance (StringReference hash, package) |
+| caption_sightings | 63359 | Every observation of a caption record line (build, package, slot) |
 | speaker_source | 206 | Attribution provenance on caption lines (ishtar_containment/dialogue_node/line_prefix) |
 | fts | 176794 | FTS5 search index |
 | verify_fts | 176794 | Fast quote verification index |

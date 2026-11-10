@@ -6,7 +6,7 @@ executable without re-deriving context. Status values: `queued`, `active`,
 
 | # | Item | Priority | Estimate | Status |
 |---|---|---|---|---|
-| Q1 | Second-provenance table (`caption_sightings`) | P0 | 2–3 h | queued |
+| Q1 | Second-provenance table (`caption_sightings`) | P0 | 2–3 h | **done** |
 | Q2 | Parser for class `0x808099ef` | P1 | 3–6 h | queued |
 | Q3 | Live-build refresh automation | P2 | 4–6 h | queued |
 | Q4 | Caption-tier label in `character(all_lines=True)` | P3 | 30 min | queued |
@@ -16,46 +16,45 @@ executable without re-deriving context. Status values: `queued`, `active`,
 
 ## Q1 — Second-provenance table
 
-**Problem.** `caption_provenance` is one row per line (`line_id` PRIMARY KEY).
-When the live build repeats text the corpus already holds, the live sighting is
-dropped: 1,651 emitted live lines merged this way, 116 onto non-caption
-web/cutscene lines. The audit can list them only from the pre-load JSONL.
+**Status: done in v0.39.0 (schema 1.9.0).**
 
-**Design.** Keep `caption_provenance` as the fast one-row-per-line index. Add:
+**Problem.** `caption_provenance` is one row per line (`line_id` PRIMARY KEY).
+When a later build repeats text the corpus already holds, its sighting was
+dropped (1,651 live lines onto 2020 canon, 3,572 cross-package repeats).
+
+**Implemented.** `caption_provenance` stays the one-row-per-line current index.
+`caption_sightings` is the observation log:
 
 ```sql
 CREATE TABLE caption_sightings (
-    id INTEGER PRIMARY KEY,
     line_id INTEGER NOT NULL REFERENCES transcript_lines(id) ON DELETE CASCADE,
-    source_build TEXT NOT NULL,
-    source_pkg TEXT,
-    source_entry INTEGER,
-    bank_entry INTEGER,
-    record_index INTEGER,
-    record_part INTEGER,
-    kind TEXT,
-    hash INTEGER,
-    captured_at TEXT,
-    UNIQUE (line_id, source_build, source_pkg, bank_entry, record_index, record_part)
-);
+    source_build TEXT NOT NULL REFERENCES builds(build_id),
+    source_slug TEXT NOT NULL,    -- caption record slug
+    line_ord INTEGER NOT NULL,    -- index in the record's lines array
+    source_pkg TEXT, source_entry INTEGER, bank_entry INTEGER,
+    record_index INTEGER, record_part INTEGER,
+    kind TEXT, hash INTEGER,
+    captured_at TEXT NOT NULL,
+    PRIMARY KEY (line_id, source_build, source_slug, line_ord)
+) WITHOUT ROWID;
 ```
 
-- `migrate.py` writes a sighting for **every** caption line, including merged
-  ones, and backfills one sunrise sighting per existing provenance row.
-- `caption_provenance` remains the canonical/current row; `caption_sightings`
-  is the observation log.
-- Schema bump to 1.9.0; `db/capabilities.json`, `db/README.md`, `Database.md`.
+Identity is the processed record line, not the physical slot: sunrise lines
+carry no record index, and a slot key collapsed 1,070 genuinely distinct lines
+(sharing a bank entry) in the first draft. `load_captions()` writes one
+sighting for every non-empty record line, merged or new, and
+`combine-live-captions.py` now retains cross-package repeats by default.
 
-**Acceptance.**
-- Every caption line has ≥1 sighting; no duplicate
-  `(line, build, package, entry, record, part)`.
-- The 1,651 merged live lines have exactly 2 sightings (era + live).
-- `tests/caption-test.py` gains `sightings()` covering both invariants.
-- Full rebuild + all gates green; release v0.39.0.
+**Result.** 63,359 sightings (51,735 live + 11,624 sunrise), 7,681 merged
+lines, 0 collapsed; `caption_provenance` unchanged at 56,119. The `sightings()`
+gate derives expected totals from the JSONL, so it catches a key regression
+without hardcoded counts.
 
-**Risks.** New table increases DB size slightly; keep `caption_provenance`
-unchanged for query speed. Do not make the API join the sightings table by
-default.
+**Acceptance met.** Every provenance row has a matching sighting; every
+sighting resolves to a line and a registered build; expected per-record and
+per-build totals come from the source; lines seen by both builds equal the
+JSONL text intersection (1,651); no NULL `captured_at`; full rebuild and gates
+green.
 
 ---
 

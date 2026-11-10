@@ -20,6 +20,11 @@ Every English line lives on exactly one caption table. `migrate.py` loads
   table's StringReference hash/package attaches to the existing canon line
   via `caption_provenance` (one row per *line*, never two for the same text).
   Search never returns the same text twice.
+- **Every observation is retained.** `caption_sightings` records each
+  processed record line (`source_slug` + `line_ord`), including lines whose
+  provenance was claimed by an earlier build and repeats across packages. The
+  two layers answer different questions: provenance = what the line is now,
+  sightings = everywhere it has been seen.
 - **Attribution provenance is stored, not dropped.** `transcript_lines.speaker_source`
   holds how the speaker for an attributed caption line was attached; the
   caption loader re-adopts it on canon twins only when their own field is NULL.
@@ -55,6 +60,7 @@ table, cleartext UTF-8. Fifteen of sixteen packages are ingested from
 | property | value |
 |---|---|
 | provenance | `caption_provenance.source_build='build-25932352'`, 46,512 rows |
+| sightings | `caption_sightings` 63,359 rows total; one per processed record line |
 | line identity | `source_pkg` + `bank_entry` + `record_index` + `record_part` (the build exposes no per-line StringReference hash, so `hash` is NULL) |
 | `kind` | 11,678 `dialogue`, 26,945 `narration`, 7,889 `objective` — heuristic, from punctuation and in-string attribution |
 | speaker | only from a quoted `"..." —Name`; 257 named speakers; everything else `Cutscene` |
@@ -62,8 +68,10 @@ table, cleartext UTF-8. Fifteen of sixteen packages are ingested from
 
 **Excluded by design:** short labels and UI headings (122,528), mechanical copy
 (perk and modifier stat text, 1,378), item-text fragments (13,949), noise
-strings (6,723) and duplicates (5,231 package-local, 3,572 cross-package).
-Each package's drop/keep counts ship as a stats sidecar.
+strings (6,723) and package-local duplicates (5,231). Cross-package repeats
+(1,229 lines) are **kept**: the loader collapses the text to one canon line and
+`caption_sightings` records each package that carried it. Each package's
+drop/keep counts ship as a stats sidecar.
 
 **English selection.** Locale is positional, not an in-file field. The English
 entry list for each package is committed under `archive/data/locale-maps/` and
@@ -79,11 +87,11 @@ siblings; 40 tables per package across all 15 packages pass with English
 medians of 0.90+ and no flags. A package or table that cannot be verified is
 skipped and logged, never guessed.
 
-**Known limitation.** `caption_provenance` is one row per line. If the live
-build repeats text the corpus already holds, the row keeps the earlier build or
-source and the newest sighting is not stored; 1,651 emitted live lines merged
-this way, 116 onto non-caption web/cutscene lines. The drift log, not this
-table, is where a second-build sighting is recorded.
+**Merged lines.** `caption_provenance` keeps the first build's row; the later
+sighting is stored in `caption_sightings` (7,681 merged lines today, including
+1,651 live lines that repeat 2020 canon and 3,572 cross-package repeats). No
+observation is lost; a query that wants every build must read the sightings
+table, and a query that wants the current index reads provenance.
 
 ## Captions dedup vs persona canon (exact rule)
 

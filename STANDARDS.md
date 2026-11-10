@@ -115,7 +115,7 @@ When it is ingested into the caption tier:
 
 ## 3. Database contract
 
-Every table below is part of the schema contract. `tests/test-db.sh` (61 checks)
+Every table below is part of the schema contract. `tests/test-db.sh` (65 checks)
 verifies schema presence, counts, the `timeline_chapters` vocabulary, transcript
 timeline coverage, the transcript/FTS `timeline` mirror, `character_lines`
 inheritance, and `db/capabilities.json` sync.
@@ -127,6 +127,7 @@ inheritance, and `db/capabilities.json` sync.
 | `transcripts` | slug, title | release, characters, arc, source_url, source_tier, timeline, timeline_basis, lang | release empty when the source lacks it; `source_tier` records provenance precedence; `timeline` is the in-universe story chapter (see `timeline_chapters`), NULL when unknown; `lang` is the document language (`en` today, caption languages drop in as data) |
 | `transcript_lines` | transcript_id, seq, speaker, line, norm_line | is_stage_dir, section, is_optional, class_tag, speaker_source | seq contiguous from 0; class_tag is hunter, titan or warlock; speaker_source is nullable, set for caption lines with attribution provenance |
 | `caption_provenance` | line_id | hash, kind, source_pkg, source_entry, bank_entry | one row per caption line (and per canon line a caption reuses): StringReference hash, package/entry/bank origin and table kind; never guesses |
+| `caption_sightings` | line_id, source_build, source_slug, line_ord | source_pkg, source_entry, bank_entry, record_index, record_part, kind, hash, captured_at | one row per processed caption record line: every build/package observation, including lines whose provenance row names an earlier build; never collapses distinct sunrise lines |
 | `grimoire_cards` | slug, title, body, source_url | game, timeline, timeline_basis | D1 cards only; timeline via `source/ishtar-timeline.json` (110 on-timeline cards), NULL otherwise |
 | `interactions` | slug, title, text | speaker, release, source_url, timeline, timeline_basis | speaker may be empty (narrated scenes) |
 | `items` | slug, title | text, release, item_type, source_url, timeline, timeline_basis | 16k stat-only items have no lore text by design; ~600 junk release strings stay NULL |
@@ -277,7 +278,7 @@ match a recomputation of their source text.
 
 | Gate | Enforces |
 |------|----------|
-| `tests/test-db.sh` | schema integrity, counts, no orphans, no entity leakage, character provenance, canonical speakers, card provenance, live meta stamp, class-tag and normalization invariants, capabilities sync (61 checks) |
+| `tests/test-db.sh` | schema integrity, counts, no orphans, no entity leakage, character provenance, canonical speakers, card provenance, live meta stamp, class-tag and normalization invariants, capabilities sync (65 checks) |
 | `tests/lore-integrity.sh` | source archive structure, book/transcript/card/record counts |
 | `tests/lore-format.sh` | transcript markdown format |
 | `tests/cutscene-verify.sh` | caption corroboration, encoding, cross-video consistency, attribution |

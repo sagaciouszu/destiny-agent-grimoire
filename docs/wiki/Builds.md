@@ -28,8 +28,9 @@ taxonomy `monument-of-triumph`.
 
 ## Extraction tiers
 
-Counts read from the live `db/grimoire.db` on 2026-11-10 (2,936 transcript
-headers, 82,249 lines, `caption_provenance` 12,934 rows).
+Counts read from the live `db/grimoire.db` on 2026-11-10 (9,229 transcript
+headers, 125,324 lines, `caption_provenance` 56,119 rows, `caption_sightings`
+63,359 rows).
 
 | Tier (`source_tier`) | Rows (headers / lines) | Build / source |
 |---|---|---|
@@ -116,13 +117,15 @@ tier audit and post-fix addenda under the same vault):
   slots against a lexicon built from the corpus's existing English canon, not
   the resolver's stopword lists. 40 tables per package across all 15 packages:
   English median 0.897–0.936, translated siblings 0.000–0.079, **0 flags**.
-- **Schema 1.8.0** (`db/SCHEMA_VERSION`): `caption_provenance.record_index` and
-  `record_part` join `source_build`/`source_pkg`/`bank_entry`.
-- **Known limit.** `caption_provenance` is one row per line. Where the live
-  build repeats text the corpus already holds, the row keeps the earlier build
-  or source; 1,651 emitted live lines merged this way, 116 onto non-caption
-  web/cutscene lines. Cross-package repeated text was deduped before load
-  (1,229 lines).
+- **Schema 1.9.0** (`db/SCHEMA_VERSION`): `caption_provenance.record_index`
+  and `record_part` join `source_build`/`source_pkg`/`bank_entry`, and
+  `caption_sightings` logs every processed record line
+  (`line_id`, `source_build`, `source_slug`, `line_ord`).
+- **Two provenance layers.** `caption_provenance` is one row per line (the
+  current index). `caption_sightings` is the observation log: 63,359 rows,
+  including 7,681 merged lines and every cross-package repeat that the current
+  index cannot hold. `source_slug` + `line_ord` is the identity, so sunrise
+  lines that share a bank entry are not collapsed.
 
 `build-25932352` is legitimate for current-era extraction and verification,
 never as ground truth for what an earlier expansion shipped.
