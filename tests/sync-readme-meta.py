@@ -12,9 +12,10 @@ import sys
 HERE = os.path.dirname(os.path.realpath(__file__))
 GR = os.path.dirname(HERE)
 WORK = os.path.dirname(GR)
-REPOS = {'grimoire': GR,
-         'drifter': os.path.join(WORK, 'destiny-agent-drifter'),
-         'eris': os.path.join(WORK, 'destiny-agent-eris-morn')}
+sys.path.insert(0, HERE)
+import _roster
+REPOS = {'grimoire': GR}
+REPOS.update(_roster.repos())
 META = re.compile(r'\*\*Version:\*\* (\S+) \| \*\*Last push:\*\* (\d{4}-\d{2}-\d{2}) \| \*\*Status:\*\* (\S+)')
 
 

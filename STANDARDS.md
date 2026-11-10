@@ -11,11 +11,9 @@ a change that is not done.
 
 - `destiny-agent-grimoire` is agent-agnostic: no persona, no agent-specific
   rules.
-- The six consumer agents (`destiny-agent-drifter`, `destiny-agent-eris-morn`,
-  `destiny-agent-calus`, `destiny-agent-zavala`, `destiny-agent-ghost`,
-  `destiny-agent-mara-sov`) reference the database through `lore/`: a
-  symlink on Unix, a junction or clone on Windows. They own their personas;
-  this repo owns canon.
+- The consumer agents listed in `series/agents.json` reference the database
+  through `lore/`: a symlink on Unix, a junction or clone on Windows. They own
+  their personas; this repo owns canon.
 - Documentation lives in two tiers: `README.md` and `docs/wiki/` are written
   for humans; `skills/` and each agent's AGENTS.md/TOOLS.md are written
   for agents (commands first, prose second, no narrative detours).
@@ -24,6 +22,39 @@ a change that is not done.
 - The database (`db/grimoire.db`) is a build artifact: never committed,
   rebuilt from `source/` + `archive/` by `python3 db/migrate.py`, published as
   a release asset.
+
+### Agnostic contract
+
+The archive is one shared service for many agents. It must not encode a
+preferred persona, voice or workflow.
+
+- **One roster source.** `series/agents.json` is the only list of agents,
+  repositories, entry files and peer relationships. Shared scripts read it;
+  they never hardcode a repository name, a default agent or a hand-copied
+  roster. `tests/count-consistency.py` is the reference implementation.
+- **No persona default in shared files.** `README.md`, `STANDARDS.md`,
+  `db/README.md`, `scripts/README.md`, `mcp-server/README.md`, `skills/**` and
+  `docs/wiki/**` describe the contract, not one agent. A corpus speaker may
+  appear in an example only to demonstrate a real query, and the example is
+  labelled illustrative; it never implies a preferred agent, voice or memory.
+- **Persona material stays with its owner.** SOUL.md, voice guides,
+  relationships, private memory and agent-specific tests live in the agent
+  repository. The archive may validate the contract; it never writes a persona
+  and never carries per-agent rules in a shared gate.
+- **Discovered speakers are not canon.** `v_speakers` is a discovery view of
+  every observed speaker, including caption-only names. It is not a canon
+  roster and must not be presented as one. Canon membership is the `characters`
+  table plus the `persona.json` of an agent that owns that persona.
+- **Caption tier is canon, not persona canon.** Captions are searchable and
+  quotable. `persona.json` `canon_lines` excludes them. `--canon-only` means
+  "exclude optional and variant lines", never "exclude captions"; documentation
+  must state that distinction where the flag appears.
+- **Cross-agent collaboration is data.** The registry defines peers and the
+  read-only `-consult` copies. There is no shared private memory, no shared
+  editable workspace and no implicit delegation beyond one hop.
+- **The site publishes the roster.** Naming the production agents on the site
+  is publishing registry data, not a default. Site templates must still render
+  an arbitrary registry row and must not assume one agent.
 
 ### Corpus scope (era coverage)
 
@@ -230,6 +261,31 @@ see `docs/wiki/Builds.md`). The raw subtitle exports it is derived from stay in
 curation, not a redistributable asset: commit the curated rows, never the raw
 dump.
 
+### Generated artifacts and single sources
+
+Counts, versions, rosters and wiki pages have one producer. A consumer reads
+the producer's output; it never hand-maintains a second copy.
+
+| Artifact | Producer | Consumer | Guard |
+|---|---|---|---|
+| `db/grimoire.db` | `db/migrate.py` then the four `db/enrich_*.py` steps | CLI, API, MCP, agents, releases | `tests/test-db.sh`; release `SHA256SUMS` |
+| `db/capabilities.json` | hand-maintained interface manifest | docs, MCP, site export | `tests/test-db.sh` compares every table and view |
+| README count claims | `tests/sync-doc-counts.py` | every README, wiki page, skill, site | `--check`; `tests/docs-consistency.py` |
+| README version/date line | `tests/sync-readme-meta.py` | every repository README | `--check`; `tests/docs-consistency.py` |
+| `docs/wiki/*.md` | repo docs, pushed by `scripts/sync-wiki.sh` | GitHub wiki | `--check`; conformance and docs-consistency |
+| site `../destiny-agent-grimoire-site/_data/grimoire.json` | `scripts/export-site-stats.py` | every site stat block | `../destiny-agent-grimoire-site/scripts/check-stats.py`; docs-consistency |
+| site `../destiny-agent-grimoire-site/_data/agents.js` | hand-maintained roster and audit totals | persona pages | `../destiny-agent-grimoire-site/scripts/check-roster.py` |
+| `series/agents.json` | hand-maintained roster | sync, layout, conformance, counts | layout, count-consistency, conformance |
+
+Rules:
+
+- A new count or roster claim is added to the producer and the guard in the
+  same change. A literal with no producer is a future stale number.
+- Historical release notes and changelogs are exempt: they record what shipped,
+  not what is current.
+- `--check` modes are the gate; write modes are maintenance commands run before
+  a release, never part of an agent's runtime.
+
 ## 4. Naming
 
 - Slugs: lowercase, hyphenated, taken from the live page slug wherever one
@@ -282,12 +338,14 @@ match a recomputation of their source text.
 | `tests/lore-integrity.sh` | source archive structure, book/transcript/card/record counts |
 | `tests/lore-format.sh` | transcript markdown format |
 | `tests/cutscene-verify.sh` | caption corroboration, encoding, cross-video consistency, attribution |
-| `tests/query-interface-test.sh` | CLI and API surface, 89 checks |
+| `tests/query-interface-test.sh` | CLI and API surface, 91 checks |
 | `tests/db-source-crosscheck.py` | database slugs vs source files, provenance URLs, index completeness |
 | `tests/caption-test.py` | game captions: headers/language, StringReference provenance, no duplicate canon text, curated activity facets, FTS/verification parity, demoted stat lines, caption search, persona canon exclusion |
 | `tests/speaker-audit.py` | reclassified parse noise must not reappear |
 | `tests/sync-doc-counts.py --check` | docs counts match the database |
 | `tests/sync-readme-meta.py --check` | README metadata matches git tag / HEAD date |
+| `tests/docs-consistency.py` | stale counts/sizes, site snapshot, agent metadata, MCP README parity, relative links across every repo |
+| `tests/agnostic-test.py` | shared scripts read `series/agents.json`; no hardcoded agent repo in a shared executable |
 | each agent repo tests/master-audit.sh | agent-side suites (voice, quotes, modules, conversation, golden snapshots) plus shared structure checks |
 | `tests/mcp-test.py` (on demand, needs `mcp-server/.venv`) | MCP tools, both launchers, probe handshake, read-only guard, stdio, CLI-parity tools, stats/live agreement (12 checks) |
 | `tests/mcp-agent-optimization-test.py` (on demand, needs `mcp-server/.venv`) | LLM-facing surface: descriptions name every parameter, actionable ToolErrors, 25-token snippets, limit/offset clamps, resource caps, one-call item lookups, spoken_lines counts (25 checks) |

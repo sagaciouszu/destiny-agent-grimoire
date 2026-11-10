@@ -12,7 +12,13 @@ TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 
 REGISTRY="$ARCHIVE/series/agents.json"
-if [ -d "$WORK/destiny-agent-drifter" ] && [ -d "$WORK/destiny-agent-eris-morn" ] && [ -d "$WORK/destiny-agent-calus" ]; then
+if python3 - "$REGISTRY" "$WORK" <<'PY'
+import json, os, sys
+rows = json.load(open(sys.argv[1]))['agents']
+sys.exit(0 if rows and all(os.path.isdir(os.path.join(sys.argv[2], a['source']))
+                           for a in rows) else 1)
+PY
+then
     SRC="$WORK"
 else
     SRC="$TMP/src"
@@ -79,7 +85,7 @@ check "every companion file is disabled" \
     '[ "$(grep -rl --include="*.md" "^disabled: true$" "$DEST" | wc -l)" -eq "$((TOTAL - ACTIVE))" ]'
 
 BAD="$TMP/bad-registry.json"
-printf '%s' '{"series":"x","agents":[{"id":"evil","name":"Evil","source":"destiny-agent-drifter","entry":"../../evil.md"}]}' > "$BAD"
+printf '%s' '{"series":"x","agents":[{"id":"evil","name":"Evil","source":"destiny-agent-fixture","entry":"../../evil.md"}]}' > "$BAD"
 if SERIES_MANIFEST="$BAD" AGENT_REPOS_DIR="$SRC" OPENCODE_AGENTS="$DEST" NO_RELOAD=1 \
     bash "$ARCHIVE/scripts/sync-live-agents.sh" >/dev/null 2>&1; then
     echo "  ✗ registry rejects path traversal"; FAIL=$((FAIL+1))

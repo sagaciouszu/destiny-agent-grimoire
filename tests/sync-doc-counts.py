@@ -3,13 +3,15 @@
 
 Counts (transcripts, transcript lines, FTS rows, per-character lines) move
 every time scrape data is ingested; docs drift silently. This tool rewrites
-every known claim pattern from db/grimoire.db in one pass across all three
-repositories. CHANGELOG.md is exempt (historical sections stay frozen); hand-
-edit its in-flight release section instead.
+every known claim pattern from db/grimoire.db in one pass across the archive
+and every agent repository listed in series/agents.json. CHANGELOG.md is exempt
+(historical sections stay frozen); hand-edit its in-flight release section
+instead.
 
 Usage: python3 tests/sync-doc-counts.py [--check]
   --check  report what would change, write nothing (exit 1 if stale)
 """
+import json
 import os
 import re
 import sqlite3
@@ -19,8 +21,9 @@ import glob
 HERE = os.path.dirname(os.path.abspath(__file__))
 GRIMOIRE = os.path.dirname(HERE)
 WORK = os.path.dirname(GRIMOIRE)
-ERIS = os.path.join(WORK, 'destiny-agent-eris-morn')
-DRIFTER = os.path.join(WORK, 'destiny-agent-drifter')
+sys.path.insert(0, HERE)
+import _roster
+AGENT_REPOS = _roster.repos()
 
 conn = sqlite3.connect(os.path.join(GRIMOIRE, 'db', 'grimoire.db'))
 q = lambda sql: conn.execute(sql).fetchone()[0]
@@ -131,17 +134,48 @@ def _count(key, num_text):
     value = C[key]
     return '{:,}'.format(value) if ',' in num_text else str(value)
 
-ERIS_PATS = [
-    (r'\b\d{3,4} canonical Eris', '{eris} canonical Eris'),
-    (r'\(\d{3,4} Eris Morn lines\)', '({eris} Eris Morn lines)'),
-    (r'\(\d{3,4} canonical Eris transcript lines\)', '({eris} canonical Eris transcript lines)'),
-]
-DRIFTER_PATS = [
-    (r'All \d+ Drifter quotes', 'All {drifter} Drifter quotes'),
-    (r'canonical transcripts \(\d+ Drifter lines\)', 'canonical transcripts ({drifter} Drifter lines)'),
-    (r'\b\d{3,4} Drifter transcript lines in the database', '{drifter_exact} Drifter transcript lines in the database'),
-    (r'\b\d{3,4} verified Drifter quotes', '{drifter} verified Drifter quotes'),
-]
+# Legacy prose shapes kept for the two agents that used them before the
+# registry existed. They stay until each agent owns its count-claim patterns
+# (P1 template work); new agents get the generic shapes below.
+LEGACY_PATS = {
+    'eris': [
+        (r'\b\d{3,4} canonical Eris', '{eris} canonical Eris'),
+        (r'\(\d{3,4} Eris Morn lines\)', '({eris} Eris Morn lines)'),
+        (r'\(\d{3,4} canonical Eris transcript lines\)',
+         '({eris} canonical Eris transcript lines)'),
+    ],
+    'drifter': [
+        (r'All \d+ Drifter quotes', 'All {drifter} Drifter quotes'),
+        (r'canonical transcripts \(\d+ Drifter lines\)',
+         'canonical transcripts ({drifter} Drifter lines)'),
+        (r'\b\d{3,4} Drifter transcript lines in the database',
+         '{drifter_exact} Drifter transcript lines in the database'),
+        (r'\b\d{3,4} verified Drifter quotes', '{drifter} verified Drifter quotes'),
+    ],
+}
+
+
+def persona_patterns(ident):
+    """Generic count-claim shapes for an agent with no legacy patterns."""
+    row = _roster.entry(ident) or {}
+    name = row.get('name') or ident
+    path = os.path.join(AGENT_REPOS.get(ident, ''), 'persona.json')
+    if not os.path.isfile(path):
+        return []
+    canon = json.load(open(path, encoding='utf-8')).get('canon_lines')
+    if canon is None:
+        return []
+    esc = re.escape(name)
+    return [
+        # Rewrite only the line count; the per-agent transcript count after
+        # "across" is a different measure and must not become the DB total.
+        (r'\d[\d,]*(?=\s+lines across\s+\d[\d,]*\s+transcripts)',
+         str(canon)),
+        (r'\|\s*Canonical lines\s*\|\s*\d[\d,]*\s*\|',
+         '| Canonical lines | ' + str(canon) + ' |'),
+        (r'\(\d[\d,]*\s+' + esc + r'\s+lines?\)',
+         '(' + str(canon) + ' ' + name + ' lines)'),
+    ]
 
 def sync_inside_table(text, db_path):
     """Regenerate the README 'What is inside' table, total row included.
@@ -227,23 +261,30 @@ for pat in [os.path.join(GRIMOIRE, '*.md'), os.path.join(GRIMOIRE, 'db', '*.md')
             os.path.join(GRIMOIRE, 'skills', 'destiny-grimoire', '*.md'),
             os.path.join(GRIMOIRE, 'compendium', '*.md'),
             os.path.join(GRIMOIRE, 'docs', 'wiki', '*.md'),
-            os.path.join(GRIMOIRE, 'docs', '*.md'),
-            os.path.join(DRIFTER, '*.md'), os.path.join(DRIFTER, 'core', '*.md'),
-            os.path.join(DRIFTER, 'reference', '*.md'),
-            os.path.join(ERIS, '*.md'), os.path.join(ERIS, 'core', '*.md'),
-            os.path.join(ERIS, 'reference', '*.md')]:
+            os.path.join(GRIMOIRE, 'docs', '*.md')]:
     FILES.extend(glob.glob(pat))
+for repo in AGENT_REPOS.values():
+    if not os.path.isdir(repo):
+        continue
+    for sub in ('', 'core', 'reference'):
+        FILES.extend(glob.glob(os.path.join(repo, sub, '*.md')))
 
 CHECK = '--check' in sys.argv
 changes = []
 for path in sorted(set(FILES)):
     if os.path.basename(path) in ('CHANGELOG.md', 'RELEASE.md'):
         continue
-    pats = list(SHARED) + list(SHARED_PROSE)
-    if path.startswith(DRIFTER + os.sep):
-        pats += DRIFTER_PATS
-    elif path.startswith(ERIS + os.sep):
-        pats += ERIS_PATS
+    # The unconditional prose rewrite is safe in the archive, where a bare
+    # "<n> transcripts" always means the whole DB. Agent docs carry per-persona
+    # measures (for example "456 lines across 33 transcripts"), so they only
+    # get the explicit shapes above.
+    pats = list(SHARED)
+    if path.startswith(GRIMOIRE + os.sep):
+        pats += list(SHARED_PROSE)
+    for ident, repo in AGENT_REPOS.items():
+        if path.startswith(repo + os.sep):
+            pats += LEGACY_PATS.get(ident) or persona_patterns(ident)
+            break
     s = open(path, encoding='utf-8').read()
     orig = s
     # Regions fenced by <!-- doc-sync:ignore --> ... <!-- /doc-sync:ignore -->

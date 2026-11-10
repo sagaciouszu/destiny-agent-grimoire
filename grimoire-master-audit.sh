@@ -25,7 +25,8 @@ run "$ARCHIVE/tests/lore-integrity.sh" "Lore Archive Integrity"
 run "$ARCHIVE/tests/cutscene-verify.sh" "Cutscene Caption Verification"
 run "$ARCHIVE/tests/query-interface-test.sh" "Query Interface (89 checks)"
 run "$ARCHIVE/tests/agent-layout-test.sh" "Agent Layout (OpenCode/OpenClaw, 39 checks)"
-if python3 "$ARCHIVE/tests/conformance.py" >/dev/null 2>&1; then echo "  ✓ [File Conformance (all 3 repos)] PASS"; PASS=$((PASS+1)); else echo "  ✗ [File Conformance (all 3 repos)] FAIL"; FAIL=$((FAIL+1)); fi
+if python3 "$ARCHIVE/tests/conformance.py" >/dev/null 2>&1; then echo "  ✓ [File Conformance] PASS"; PASS=$((PASS+1)); else echo "  ✗ [File Conformance] FAIL"; FAIL=$((FAIL+1)); fi
+if python3 "$ARCHIVE/tests/agnostic-test.py" >/dev/null 2>&1; then echo "  ✓ [Agnostic Contract] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Agnostic Contract] FAIL"; FAIL=$((FAIL+1)); fi
 if python3 "$ARCHIVE/tests/source-overlap-verify.py" >/dev/null 2>&1; then echo "  ✓ [Source Overlap vs Live] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Source Overlap vs Live] FAIL"; FAIL=$((FAIL+1)); fi
 if python3 "$ARCHIVE/tests/speaker-audit.py" >/dev/null 2>&1; then echo "  ✓ [Speaker Noise Gate] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Speaker Noise Gate] FAIL"; FAIL=$((FAIL+1)); fi
 if python3 "$ARCHIVE/tests/suite-manifest-test.py" >/dev/null 2>&1; then echo "  ✓ [Agent Suite Manifests] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Agent Suite Manifests] FAIL"; FAIL=$((FAIL+1)); fi

@@ -11,15 +11,17 @@ import subprocess
 import sys
 
 WORK = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-REPOS = {'grimoire': os.path.join(WORK, 'destiny-agent-grimoire'),
-         'drifter': os.path.join(WORK, 'destiny-agent-drifter'),
-         'eris': os.path.join(WORK, 'destiny-agent-eris-morn')}
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import _roster
+REPOS = {'grimoire': os.path.join(WORK, 'destiny-agent-grimoire')}
+REPOS.update(_roster.repos())
 SUBS = {'search', 'character', 'character-info', 'item', 'book', 'transcript',
         'find-item', 'record', 'verify', 'verify-many', 'list', 'activity',
         'event', 'coverage', 'lore', 'seal', 'seals', 'stats', 'entity'}
 FLAGS = {'--limit', '--offset', '--json', '--full', '--type', '--about', '--all',
          '--speaker', '--exact', '--rank', '--no-rank', '--include-stage',
-         '--activity', '--season', '--event', '--expansion', '--class', '--entity'}
+         '--activity', '--season', '--event', '--expansion', '--class', '--entity',
+        '--canon-only'}
 SKIP_FILES = {'CHANGELOG.md', 'RELEASE.md'}
 issues = []
 checked = 0

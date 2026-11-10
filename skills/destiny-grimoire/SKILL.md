@@ -75,7 +75,9 @@ Taxonomy tables (additive; canon tables are never rewritten):
 
 ## How to query
 
-Use `db/query.py` for everything. Interface wraps common patterns.
+Use `db/query.py` for everything. Interface wraps common patterns. Examples
+name real corpus speakers so the commands run as written; they are illustrative,
+not a preferred agent or persona.
 
 ```bash
 # Full-text search
