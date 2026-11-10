@@ -244,3 +244,9 @@ Six agents tagged and released (v0.1.6; Drifter and Eris v0.14.3). Site deployed
 agent audits 20/20 (Drifter 25/25), MCP 12/12, 25/25, matrix 8/8, template
 offline and real-corpus, site `npm run check`, docs-consistency 5/5.
 
+
+**Post-release cleanup (2026-11-10):** the last shared persona-specific count
+patterns moved into `tests/doc-count-patterns.json` in the Drifter and Eris
+repos. `tests/sync-doc-counts.py` now contains no persona name or repository.
+Drifter 25/25 and Eris 20/20 remain green; conformance and docs-consistency
+pass. This is on master after the v0.39.4 tag and will ride the next release.
