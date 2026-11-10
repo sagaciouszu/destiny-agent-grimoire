@@ -13,7 +13,7 @@
   <img src='https://img.shields.io/badge/made%20with-Destiny%20Grimoire-gold' alt='Made with Destiny Agent Grimoire'/>
 </p>
 
-**Version:** 0.36.0 | **Last push:** 2026-11-09 | **Status:** Active
+**Version:** 0.37.0 | **Last push:** 2026-11-10 | **Status:** Active
 
 **Documentation site:** <https://sagaciouszu.github.io/destiny-agent-grimoire-site/>
 
@@ -109,22 +109,22 @@ No API keys, accounts or network access are required at runtime.
 |---|---|---|
 | `books` | 110 | Book-level metadata |
 | `book_entries` | 1158 | Lore entries within books |
-| `transcripts` | 2936 | Transcript headers |
-| `transcript_lines` | 82249 | Canon dialogue (speaker, line) |
-| `caption_provenance` | 12934 | Caption line provenance (hash, package, entry) |
+| `transcripts` | 2935 | Transcript headers |
+| `transcript_lines` | 82257 | Canon dialogue (speaker, line) |
+| `caption_provenance` | 12942 | Caption line provenance (hash, package, entry) |
 | `grimoire_cards` | 2889 | Destiny 1 grimoire cards |
 | `interactions` | 2699 | Short dialogue beats |
 | `items` | 58764 | Weapons, armor and gear lore |
 | `records` | 69 | Triumphs and seals |
 | `characters` | 20 | Curated character index |
 | `character_lines` | 1229 | Quote-ready character lines |
-| `fts` | 133719 | FTS5 index over all content |
+| `fts` | 133727 | FTS5 index over all content |
 | `expansions` | 18 | Major releases from Destiny 1 through Renegades |
 | `seasons` | 28 | Official numeric seasons; 24-26 are episodes |
 | `events` | 9 | Rotating events including removed ones |
 | `event_occurrences` | 72 | Event year, dates and season |
 | `activities` | 71 | Raids, dungeons, seasonal activities and missions |
-| `transcript_classification` | 2936 | Activity/season/event per transcript |
+| `transcript_classification` | 2935 | Activity/season/event per transcript |
 | `item_classification` | 58764 | Season/event per item |
 | `document_classification` | 179 | Season/event per book and record |
 | `coverage_notes` | 10 | Explicit status for zero-coverage gaps |
@@ -135,22 +135,22 @@ No API keys, accounts or network access are required at runtime.
 | `seals` | 70 | Manifest seal nodes |
 | `seal_records` | 1004 | Triumph records per seal |
 | `v_speakers` (view) | 246 | Canonical speakers with line counts |
-| `v_transcript_taxonomy` (view) | 2936 | Transcripts joined to classification |
+| `v_transcript_taxonomy` (view) | 2935 | Transcripts joined to classification |
 | `v_activity_coverage` (view) | 71 | Transcripts and lines per activity |
 | `v_season_coverage` (view) | 28 | Transcripts and lines per season |
 | `v_event_coverage` (view) | 9 | Transcripts, lines and occurrences per event |
 | `speaker_aliases` | 57 | Alias to canonical speaker mapping |
-| `verify_fts` (index) | 133719 | Fast quote verification |
+| `verify_fts` (index) | 133727 | Fast quote verification |
 | `item_title_fts` (index) | 58764 | Item title lookup |
 | `entities` | 89 | Named characters, powers, factions and places |
 | `entity_aliases` | 136 | Attested name variants per entity |
-| `entity_links` | 25276 | Entity to document links (attribution/canonical/alias/ctx) |
+| `entity_links` | 25279 | Entity to document links (attribution/canonical/alias/ctx) |
 | `entity_relations` | 4 | Entity to entity links (adjacency, primeval pairs) |
 | `entity_build_meta` | 14 | Entity web build audit trail |
 | `v_entity_resolve` (view) | 136 | Resolver lookup (alias to entity) |
-| `v_entity_documents` (view) | 25276 | Entities with ranked document lists |
+| `v_entity_documents` (view) | 25279 | Entities with ranked document lists |
 | `v_entity_coverage` (view) | 4 | Per-kind entity web coverage |
-| **Total** | 617805 | Rows across every table, view and index above |
+| **Total** | 617840 | Rows across every table, view and index above |
 
 Every content row carries provenance. Speaker aliases are canonicalized during
 migration. The full contract is `STANDARDS.md`.

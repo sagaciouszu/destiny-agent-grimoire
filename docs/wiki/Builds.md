@@ -33,7 +33,7 @@ headers, 82,249 lines, `caption_provenance` 12,934 rows).
 
 | Tier (`source_tier`) | Rows (headers / lines) | Build / source |
 |---|---|---|
-| `game_caption` | 1,618 / 12,603 | Two builds. `sunrise-pre-bl`: 1,106 / 9,282 from committed `archive/data/captions.jsonl`. `build-25932352`: 512 / 3,321 from `archive/data/captions-live.jsonl` (package `w64_sr_globals_0294`, 3,327 provenance rows, 6 of them attached to pre-existing non-caption lines). |
+| `game_caption` | 1,617 / 12,611 | Two builds. `sunrise-pre-bl`: 1,106 / 9,282 from committed `archive/data/captions.jsonl`. `build-25932352`: 517 / 3,329 from `archive/data/captions-live.jsonl` (package `w64_sr_globals_0294`, 3,335 provenance rows, 6 of them attached to pre-existing non-caption lines). |
 | Web transcripts, `ishtar-collective.net` (Ishtar Collective, archival primary, human-verified) | 1,236 pages total: `ishtar_web` 1,129 / 15,850 lines · `ishtar_main` 101 / 4,203 · `ishtar_commons` 26 / 354 · `published` 8 / 22 · `validated` 7 / 22 | Web captures, era-scoped; primary source for DCV-era (vaulted) content. Not build-derived. |
 | `destinypedia` | 10 / 981 | Verbatim from the Destinypedia wiki (front-matter `Tier: destinypedia`). Destinypedia is corroboration per the source hierarchy in `STANDARDS.md`, not the primary. |
 | `youtube_captions` | 6 / 638 | YouTube-caption-derived; speaker labels reviewed where noted in the source file (e.g. `partial-expedition` lists 26 sources, "speaker labels reviewed"). Not build-derived. |
@@ -85,14 +85,22 @@ and tier audit under the same vault):
   StringBanks: `0x808099f1` entries decode as cleartext UTF-8 with the
   `tiger-pkg` unpacker plus `liboodle-data-shared.so`. Package `0294` proves
   the path: 634 EN entries, 17,990 strings, 0 parse failures.
-- **One package is ingested.** `w64_sr_globals_0294` contributes 3,327 live
-  provenance rows (736 `dialogue`, 1,823 `narration`, 768 `objective`; 38 named
+- **Layers are mounted, not guessed.** A package family ships a base (`_0`)
+  plus patch layers. Package `0294` has one patch (`_1`): 1,158 entries
+  overlay, 13 entries replace their class. `scripts/merge-pkg-layers.py`
+  produces the mounted view. The patched text is current-build text
+  (`Gambit Ops`, `Buildcraft Stakes`), so base-only extraction is stale and is
+  not used for the shipped tier.
+- **One package is ingested.** `w64_sr_globals_0294` contributes 3,335 live
+  provenance rows (740 `dialogue`, 1,824 `narration`, 771 `objective`; 38 named
   speakers, all from in-string attribution). Every row traces to
   `(package, entry, record, part, build)`.
-- **Filters are deliberate.** 13,614 short labels/UI headings, 1,503 noise
-  strings, 245 duplicates, 911 item-text fragments and 91 mechanical
-  perk/modifier lines were dropped; 259 of 634 entries yielded no kept line.
-  The per-package counts ship in
+- **Filters are deliberate.** 13,695 short labels/UI headings, 1,526 noise
+  strings, 241 duplicates, 898 item-text fragments and 91 mechanical
+  perk/modifier lines were dropped; 258 of 633 parsed entries yielded no kept
+  line. One entry (`5892`) is superseded by a patch class the parser does not
+  understand and is skipped, not back-filled from the stale base. The
+  per-package counts ship in
   `archive/data/locale-maps/w64_sr_globals_0294.stats.json`.
 - **Locale resolution is verified, not guessed.** `scripts/resolve-locales.py`
   reproduces the content-verified EN entry list for package `0294` exactly
