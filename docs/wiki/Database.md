@@ -176,10 +176,9 @@ nothing mixes builds silently.
 - **Gate:** `tests/caption-test.py` (registered in `grimoire-master-audit.sh`).
 
 - **Attribution provenance is stored, not dropped.** `transcript_lines.speaker_source`
-  records how a speaker was attached (`ishtar_containment`, `dialogue_node`,
-  `line_prefix`, or null). Schema 1.5.0 populates it for every attributed
-  caption line (206 rows); the caption loader re-adopts it on canon-twin rows
-  only when their own field is null.
+  records how a speaker was attached (`build-25932352`, `ishtar_containment`,
+  `dialogue_node`, `line_prefix`, or null). Present on 4,214 rows; the caption
+  loader re-adopts it on canon-twin rows only when their own field is null.
 
 ### Adding a language later
 

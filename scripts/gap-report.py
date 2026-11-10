@@ -60,7 +60,12 @@ def main():
         'SELECT entity_type,slug,status,evidence,source_url '
         'FROM coverage_notes ORDER BY entity_type,slug').fetchall()
     sparse = conn.execute(
-        'SELECT speaker,lines FROM v_speakers WHERE lines < 25 ORDER BY lines DESC LIMIT 25').fetchall()
+        "SELECT tl.speaker, COUNT(*) AS lines FROM transcript_lines tl "
+        "JOIN transcripts t ON t.id=tl.transcript_id "
+        "WHERE tl.speaker NOT IN ('Narration','Cutscene') "
+        "AND COALESCE(t.source_tier,'') != 'game_caption' "
+        "GROUP BY tl.speaker HAVING COUNT(*) < 25 "
+        "ORDER BY lines DESC LIMIT 25").fetchall()
     games = conn.execute(
         "SELECT COALESCE(e.game,'Unclassified') game, COUNT(DISTINCT t.id), "
         "COUNT(tl.id) FROM transcripts t "
@@ -68,6 +73,7 @@ def main():
         "LEFT JOIN expansions e ON e.slug=c.expansion_slug "
         "LEFT JOIN transcript_lines tl ON tl.transcript_id=t.id "
         "AND tl.speaker NOT IN ('Narration','Cutscene') "
+        "WHERE COALESCE(t.source_tier,'') != 'game_caption' "
         'GROUP BY 1 ORDER BY 2 DESC').fetchall()
     print(f'''# Canon Gap Ledger
 

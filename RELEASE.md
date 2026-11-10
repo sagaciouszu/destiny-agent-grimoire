@@ -69,7 +69,8 @@ to fifteen, and a speaker now requires the quoted `"..." —Name` evidence.
 
 - 15 of 16 `w64_sr_globals_*` packages (8,597 English entries); `0134` has no
   English entries and is skipped. 153,558 strings -> 51,737 package-local lines
-  -> 48,163 after cross-package dedupe -> 46,512 provenance rows.
+  -> 48,163 after cross-package dedupe -> 46,512 provenance rows (v0.39.0
+  retains the 3,572 repeats as sightings).
 - Package patch layers are mounted before extraction; base-only text is stale.
 - Language gate excludes six German tables in `029e`; independent lexicon check
   passes 40 tables per package across all 15 packages with 0 flags.

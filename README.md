@@ -99,7 +99,7 @@ More commands are in the sections below.
 | `curl` | optional prebuilt database | otherwise build locally |
 | MCP SDK (optional) | typed tools for agents without a shell | Python 3.10+; `bash mcp-server/install.sh` |
 | `git` | cloning and version history | |
-| ~260 MB disk | sources plus built database | database is ~170 MB |
+| ~400 MB disk | sources plus built database | database is ~300 MB |
 
 No API keys, accounts or network access are required at runtime.
 

@@ -26,7 +26,7 @@ body, matching the migrate parsers. `ingest-destinypedia.py` keeps every
 | `release-stage.sh <version> [--dry-run]` | copy the database, write `SHA256SUMS`, print publish commands |
 | `backup.sh [zip]` | rolling archive backup without the database, plus checksum |
 | `sync-live-agents.sh [--openclaw] [--dry-run]` | deploy every agent in `series/agents.json` into OpenCode (agents/) or OpenClaw (workspace-<id>), preserving runtime memory and series blocks; skips agents with persona.json ready=false |
-| `../db/build-slim.py [out]` | 95 MB core database: books, transcripts, interactions, records (no items/cards) |
+| `../db/build-slim.py [out]` | 224 MB core database: books, transcripts, captions, interactions, records (no items/cards) |
 | `coverage-report.py` | Markdown coverage report from the live database |
 | `ensure-openclaw-mcp.sh` | keep OpenClaw's MCP pointer at the stable grimoire wrapper (idempotent, backs up first, skips when OpenClaw is absent) |
 | `sync-wiki.sh [--check\|--push]` | sync `docs/wiki/` into the GitHub wiki clone; `--check` fails on drift or model-control tokens, `--push` publishes |

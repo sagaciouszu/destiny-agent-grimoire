@@ -35,7 +35,7 @@ headers, 125,324 lines, `caption_provenance` 56,119 rows, `caption_sightings`
 | Tier (`source_tier`) | Rows (headers / lines) | Build / source |
 |---|---|---|
 | `game_caption` | 7,911 / 55,678 | Two builds. `sunrise-pre-bl`: 1,106 / 9,282 from committed `archive/data/captions.jsonl`. `build-25932352`: 6,805 / 46,396 from `archive/data/captions-live.jsonl` (15 packages, 46,512 provenance rows; 116 of them attach to pre-existing non-caption lines). |
-| Web transcripts, `ishtar-collective.net` (Ishtar Collective, archival primary, human-verified) | 1,236 pages total: `ishtar_web` 1,129 / 15,850 lines · `ishtar_main` 101 / 4,203 · `ishtar_commons` 26 / 354 · `published` 8 / 22 · `validated` 7 / 22 | Web captures, era-scoped; primary source for DCV-era (vaulted) content. Not build-derived. |
+| Web transcripts, `ishtar-collective.net` (Ishtar Collective, archival primary, human-verified) | 1,271 pages total: `ishtar_web` 1,129 / 15,850 lines · `ishtar_main` 101 / 4,203 · `ishtar_commons` 26 / 354 · `published` 8 / 22 · `validated` 7 / 22 | Web captures, era-scoped; primary source for DCV-era (vaulted) content. Not build-derived. |
 | `destinypedia` | 10 / 981 | Verbatim from the Destinypedia wiki (front-matter `Tier: destinypedia`). Destinypedia is corroboration per the source hierarchy in `STANDARDS.md`, not the primary. |
 | `youtube_captions` | 6 / 638 | YouTube-caption-derived; speaker labels reviewed where noted in the source file (e.g. `partial-expedition` lists 26 sources, "speaker labels reviewed"). Not build-derived. |
 | `cutscene` (cutscene captions) | 31 / 47,576 | Curated cutscene transcripts from YouTube cutscene compilations; rows carry speaker `Cutscene` or stage notes, never invented speaker labels. Not build-derived. |
@@ -92,8 +92,8 @@ tier audit and post-fix addenda under the same vault):
   the mounted view. Patched text is current-build text (`Gambit Ops`,
   `Buildcraft Stakes`); base-only extraction is stale and is not shipped.
 - **15 of 16 packages are ingested.** 8,597 English entries, 153,558 strings,
-  51,737 package-local lines -> 48,163 after cross-package dedupe -> 46,512
-  live provenance rows (11,678 `dialogue`, 26,945 `narration`, 7,889
+  51,737 package-local lines -> 51,735 after the global containment pass
+  (cross-package repeats retained) -> 46,512 live provenance rows (11,678 `dialogue`, 26,945 `narration`, 7,889
   `objective`) and 46,396 caption lines. 257 named speakers, every one from a
   quoted `"..." —Name` attribution. Every row traces to
   `(package, entry, record, part, build)`.
