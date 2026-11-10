@@ -72,8 +72,12 @@ table is pinned by at least two independent script anchors. It reproduces
 package `0294`'s content-verified list exactly (634/634); two packages resolve
 `high`, 13 `medium` with unanchored tables skipped and logged.
 `scripts/validate-live-language.py` then rejects whole tables whose aggregate
-text is another language (six German tables in `029e`). A package or table that
-cannot be verified is skipped and logged, never guessed.
+text is another language (six German tables in `029e`).
+`scripts/verify-live-english.py` independently scores sampled slots against a
+lexicon built from existing English canon and compares them with translated
+siblings; 40 tables per package across all 15 packages pass with English
+medians of 0.90+ and no flags. A package or table that cannot be verified is
+skipped and logged, never guessed.
 
 **Known limitation.** `caption_provenance` is one row per line. If the live
 build repeats text the corpus already holds, the row keeps the earlier build or
