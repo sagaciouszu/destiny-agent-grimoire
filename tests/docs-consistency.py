@@ -162,6 +162,36 @@ def mcp_tools():
         f"MCP README drift: missing {sorted(manifest - documented)}, extra {sorted(documented - manifest)}"
 
 
+PLAN_LEAKS = (
+    (r"/opt/vault", "private vault path"),
+    (r"/home/[A-Za-z0-9._-]+/", "absolute home path"),
+    (r"/Users/[A-Za-z0-9._-]+/", "absolute home path"),
+    (r"DeepSeek", "internal model/provider note"),
+    (r"token envelope", "internal token budget"),
+    (r"workstream", "internal workstream"),
+    (r"work queue", "internal work queue"),
+    (r"hard checkpoint", "internal checkpoint"),
+    (r"billing boundary", "internal billing note"),
+    (r"scratch (test )?agent", "scratch-agent note"),
+    (r"## Ingestion plan", "plan section"),
+    (r"## Decision rules", "plan section"),
+    (r"Stop-loss", "plan rule"),
+    (r"P[0-9] status", "internal phase status"),
+)
+
+
+def public_surface():
+    bad = []
+    for path in current_docs():
+        if not path.endswith((".md", ".njk", ".txt")):
+            continue
+        text = open(path, encoding="utf-8", errors="ignore").read()
+        for pattern, label in PLAN_LEAKS:
+            if re.search(pattern, text, re.I):
+                bad.append(f"{os.path.relpath(path, WORK)}: {label}")
+    assert not bad, "internal plan/private-path leak: " + "; ".join(bad[:8])
+
+
 def relative_links():
     bad = []
     for path in current_docs():
@@ -188,6 +218,7 @@ check("no stale counts or sizes in current docs", stale_counts)
 check("site stats snapshot matches the DB", site_stats)
 check("agent README metadata matches tags and HEAD", agent_metadata)
 check("MCP README tools match the manifest", mcp_tools)
+check("no internal plans or private paths in public docs", public_surface)
 check("relative Markdown links resolve", relative_links)
 print(f"\nPassed: {PASS} | Failed: {FAIL}")
 sys.exit(1 if FAIL else 0)
