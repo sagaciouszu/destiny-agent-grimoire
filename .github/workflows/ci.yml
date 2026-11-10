@@ -20,8 +20,16 @@ jobs:
       - name: Database (release asset, verified)
         run: |
           mkdir -p db
-          curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db -o db/grimoire.db
-          curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/SHA256SUMS -o /tmp/SHA256SUMS
+          # A tag push can reach CI before the release asset is uploaded.
+          for attempt in $(seq 1 18); do
+            if curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db -o db/grimoire.db && \
+               curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/SHA256SUMS -o /tmp/SHA256SUMS; then
+              break
+            fi
+            [ "$attempt" = 18 ] && { echo "release assets not ready"; exit 1; }
+            echo "release assets not ready (attempt $attempt); retrying in 10s"
+            sleep 10
+          done
           grep '  grimoire\.db$' /tmp/SHA256SUMS > /tmp/SHA256SUMS.db
           cd db && sha256sum -c /tmp/SHA256SUMS.db
 
@@ -90,8 +98,16 @@ jobs:
         shell: bash
         run: |
           mkdir -p db
-          curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db -o db/grimoire.db
-          curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/SHA256SUMS -o SHA256SUMS
+          # A tag push can reach CI before the release asset is uploaded.
+          for attempt in $(seq 1 18); do
+            if curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db -o db/grimoire.db && \
+               curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/SHA256SUMS -o SHA256SUMS; then
+              break
+            fi
+            [ "$attempt" = 18 ] && { echo "release assets not ready"; exit 1; }
+            echo "release assets not ready (attempt $attempt); retrying in 10s"
+            sleep 10
+          done
           grep '  grimoire\.db$' SHA256SUMS > SHA256SUMS.db
           cd db && sha256sum -c ../SHA256SUMS.db
 
