@@ -12,7 +12,7 @@ executable without re-deriving context. Status values: `queued`, `active`,
 | Q3 | Live-build refresh automation | P2 | 4–6 h | **done** (v0.39.2) |
 | Q4 | Caption-tier label in `character(all_lines=True)` | P3 | 30 min | **done** (Q6) |
 | Q5 | Confirm `w64_sr_globals_0134` is empty | P4 | 30 min | **done** (Q6) |
-| Q7 | Deep ecosystem pass: standards, template, agents/webs, recount, MCP, site | P0 | 6–8 h | **P0 done**, P1 next |
+| Q7 | Deep ecosystem pass: standards, template, agents/webs, recount, MCP, site | P0 | 6–8 h | **P1 done**, P2 next |
 
 ---
 
@@ -192,3 +192,14 @@ contract and generated-artifact rules; shared doc/gate scripts read
 `/opt/vault/d2-bl-extract/reports/deep-census.{json,md}`. Next: P1 template
 harness (including moving the legacy per-persona count patterns out of the
 shared doc-sync script).
+
+**P1 status (2026-11-10):** complete. The template ships a deterministic
+fixture database (`tests/fixture-db.py`) and an offline generate/source test
+(`tests/test-fixture-sourcing.py`); `tests/test-template.py` discovers its
+optional real-corpus speaker from the data instead of naming one. `new-agent.py`
+stages and promotes atomically, `finalize-persona.py` rejects zero canon, a
+stale schema and caption-counted personas, and `setup.sh` gains `--dry-run`,
+`GRIMOIRE_DB` and dangling-link recovery. `source-persona.py` stamps
+`grimoire_schema`. Verification: template self-test (offline and real corpus),
+caption resolver, fixture sourcing, token estimates, conformance and
+docs-consistency. Next: P2 agent access and knowledge webs.
