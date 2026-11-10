@@ -7,11 +7,11 @@ executable without re-deriving context. Status values: `queued`, `active`,
 | # | Item | Priority | Estimate | Status |
 |---|---|---|---|---|
 | Q1 | Second-provenance table (`caption_sightings`) | P0 | 2–3 h | **done** |
-| Q6 | Ecosystem pass: agents, template, tooling, tests, site | P0 | 4–6 h | queued |
+| Q6 | Ecosystem pass: agents, template, tooling, tests, site | P0 | 4–6 h | **done** |
 | Q2 | Parser for class `0x808099ef` | P1 | 3–6 h | queued |
 | Q3 | Live-build refresh automation | P2 | 4–6 h | queued |
-| Q4 | Caption-tier label in `character(all_lines=True)` | P3 | 30 min | folded into Q6 |
-| Q5 | Confirm `w64_sr_globals_0134` is empty | P4 | 30 min | folded into Q6 |
+| Q4 | Caption-tier label in `character(all_lines=True)` | P3 | 30 min | **done** (Q6) |
+| Q5 | Confirm `w64_sr_globals_0134` is empty | P4 | 30 min | **done** (Q6) |
 
 ---
 
@@ -62,6 +62,7 @@ green.
 ## Q6 — Ecosystem pass
 
 **Prompt:** `/opt/vault/d2-bl-extract/COMPREHENSIVE-PASS-PROMPT.md`
+**Report:** `/opt/vault/d2-bl-extract/reports/ecosystem-pass.md`
 
 Bring every consumer of the v0.39.0 database in line: six agents, template and
 persona generation, MCP/API/query tooling, tests, docs/wiki and the public site.
@@ -73,6 +74,11 @@ Parallel plan: one read-only inventory + three read-only audits (agents, site,
 template), then disjoint-repo edits, then a serial gate/deploy wave. Q4 and Q5
 are closed inside this pass. Q2/Q3 remain separate and change the DB, so freeze
 v0.39.0 or land them first.
+
+**Result (v0.39.1):** Q4/Q5 closed; six agent audits green and docs synced;
+template resolver fixed with a caption-only regression test; site counts now
+come from `_data/grimoire.json` and deploy checks pass; `tests/docs-consistency.py`
+is green. Q2/Q3 remain queued.
 
 ---
 

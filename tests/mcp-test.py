@@ -188,6 +188,9 @@ def taxonomy_tools():
     assert server.search('failsafe', season=24, limit=3)['total'] == \
         server.search('failsafe', season='echoes', limit=3)['total']
     assert server.character('Calus', about='Hunter', class_tag='hunter', limit=3)['rows']
+    cap = server.character('Lord Shaxx', all_lines=True, limit=2)
+    assert '(caption lines)' in cap['header'], cap['header']
+    assert all(r['source_tier'] == 'game_caption' for r in cap['rows']), cap['rows']
     tr = server.transcript('menagerie', class_tag='hunter', limit=10)
     assert all(line['class_tag'] in (None, 'hunter') for line in tr['lines'])
 

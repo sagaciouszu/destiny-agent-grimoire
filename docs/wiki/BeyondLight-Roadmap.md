@@ -1,14 +1,13 @@
 # Beyond Light → Renegades — Ingestion Roadmap
 
-**Status**: corpus carried as of v0.36.0; this is the controlling document for
-the live-build lane. Parked rotation: anything about 2020-era captions expired
-before this plan.
+**Status**: historical roadmap; the live-build lane shipped v0.38.0 and the
+sighting log followed in v0.39.0 (schema 1.9.0).
 
 ## What the arena looks like (evidence-backed)
 
 Live build = `build-25932352` (Update 9.7.0.6, Oct 20 2026), Steam appid 1085660,
 v53 container, AES-wrapped everywhere. Shelf-life note from
-`/opt/vault/d2-bl-extract/reports/build-25932352-probe.md`:
+the private probe report (`build-25932352-probe.md`, not distributed):
 
 - 2,417 `.pkg` on disk, matches Steam install byte-for-byte.
 - `w64_sr_globals_0294_0` contains multi-locale tables of **names**: enemies
@@ -64,8 +63,8 @@ Attack vector: split-file strategy instead of one big flip.
    propagates into FTS indexes; evaluate recall on 10 live canon lines.
 
 **Deliverable:** `docs/wiki/Builds.md` gains an EN-globals section; entity web
-gains ~30 new links (enemy-title lookups only); release `v0.37.0` ships
-`schema 1.8.0`.
+gains ~30 new links (enemy-title lookups only); release `v0.37.0` shipped
+`schema 1.8.0`; `v0.39.0` shipped `schema 1.9.0`.
 
 ### Phase 2b — EN VO tier (Beyond Light only first)
 

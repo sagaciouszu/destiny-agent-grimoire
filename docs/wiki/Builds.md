@@ -12,14 +12,14 @@ build. The wiki's caption note in `docs/wiki/Captions.md` points here, and
 came from (`sunrise-pre-bl`, `build-25932352`, ...). This page is the single
 registry of those builds: what they are, where they were extracted, what
 state the extraction is in. Nothing in this document is aspirational - every
-count was read from the live database or the extraction vault on 2026-11-09.
+count was read from the live database or the extraction vault on 2026-11-10.
 
 ## Game builds
 
 | Build ID | Bungie stamp | App release | Pkg format | Cfg version | EN baseline | Extraction status |
 |---|---|---|---|---|---|---|
-| `sunrise-pre-bl` | `86657.20.08.23.1800.d2_rc` | Destiny 2: Shadowkeep / Season of Arrivals era (~Sep 2020 build) | Tiger `.pkg`, package version **38** | not recorded | EN-only | Extracted 2026-11-07/08 → `/opt/vault/games/sunrise` (~74 GB, 1,709 `.pkg` files, verified). Caption corpus reconciled into Grimoire (1,106 tables / 9,282 lines). Extraction prior art, released as v0.29.0+. |
-| `build-25932352` | `245114.26.10.13.2000.v500_live.main` | Update **9.7.0.6** (Oct 20 2026), Steam buildid **25932352**, appid 1085660 | Tiger `.pkg`, package version **53** (layout differs from v38: entry table at `0x44`, `pkg_id` at `0x10`, `file_size` at `0x120`; tables byte-layout compatible) | not recorded | EN-only | Container verified and byte-identical copy at `/opt/vault/d2-bl-extract/build-25932352` (2,498 files, 162,825,758,961 B; `destiny2.exe` sha256 `fe69488d…c305cfb`). `w64_sr_globals_*` StringBanks are cleartext UTF-8 (class `0x808099f1`); **15 of 16 packages ingested** (8,597 English entries). `0134` has no English string-bank entries and is skipped. |
+| `sunrise-pre-bl` | `86657.20.08.23.1800.d2_rc` | Destiny 2: Shadowkeep / Season of Arrivals era (~Sep 2020 build) | Tiger `.pkg`, package version **38** | not recorded | EN-only | Extracted 2026-11-07/08 (1,709 `.pkg` files, verified); the extraction vault is private and not part of this repository. Caption corpus reconciled into Grimoire (1,106 tables / 9,282 lines). Extraction prior art, released as v0.29.0+. |
+| `build-25932352` | `245114.26.10.13.2000.v500_live.main` | Update **9.7.0.6** (Oct 20 2026), Steam buildid **25932352**, appid 1085660 | Tiger `.pkg`, package version **53** (layout differs from v38: entry table at `0x44`, `pkg_id` at `0x10`, `file_size` at `0x120`; tables byte-layout compatible) | not recorded | EN-only | Container verified from the installed Steam copy (2,498 files, 162,825,758,961 B; `destiny2.exe` sha256 `fe69488d…c305cfb`); the extraction vault is private. `w64_sr_globals_*` StringBanks are cleartext UTF-8 (class `0x808099f1`); **15 of 16 packages ingested** (8,597 English entries). `0134` is skipped: its entries use non-StringBank classes (`0x80809a81`, `0x80809b23`), so the `0x808099f1` resolver correctly finds 0 tables. |
 
 Manifest note: the Bungie manifest stamp `245114.26.10.13.2000-1-bnet.66137`
 corresponds to the same content build (same prefix, fetched via Bungie API
@@ -75,12 +75,11 @@ verification flow: `docs/wiki/Captions.md`.
 
 ## What the 2026 build unlocks
 
-Honest status of `build-25932352` (probe report 2026-11-09,
-`/opt/vault/d2-bl-extract/reports/build-25932352-probe.md`; single-table proof,
-tier audit and post-fix addenda under the same vault):
+Honest status of `build-25932352` (probe report 2026-11-09; single-table proof, tier audit and post-fix addenda
+are in the private extraction vault, not this repository):
 
 - **Container layer verified.** v53 layout decodes byte-exactly on 2,417/2,417
-  packages. The copy in the vault is byte-identical to the Steam install.
+  packages. The local extraction copy is byte-identical to the Steam install.
 - **StringBank text is not encrypted.** The earlier "rotated AES-GCM keys"
   verdict applies to encrypted block classes, not to the `w64_sr_globals_*`
   StringBanks: `0x808099f1` entries decode as cleartext UTF-8 with the

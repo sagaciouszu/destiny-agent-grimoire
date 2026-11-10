@@ -148,7 +148,7 @@ No API keys, accounts or network access are required at runtime.
 | `v_entity_resolve` (view) | 136 | Resolver lookup (alias to entity) |
 | `v_event_coverage` (view) | 9 | Transcripts, lines and occurrences per event |
 | `v_season_coverage` (view) | 28 | Transcripts and lines per season |
-| `v_speakers` (view) | 423 | Canonical speakers with line counts |
+| `v_speakers` (view) | 423 | Speakers with line counts (includes caption-only) |
 | `v_transcript_taxonomy` (view) | 9229 | Transcripts joined to classification |
 | `verify_fts` (index) | 176794 | Fast quote verification |
 | **Total** | 889234 | Rows across every table, view and index above |
@@ -232,6 +232,8 @@ python3 db/enrich_lore.py
 python3 db/enrich_manifest.py
 python3 db/enrich_seals.py
 python3 db/enrich_itemsets.py --apply   # optional item-set mapping
+python3 scripts/export-site-stats.py \
+  --out ../destiny-agent-grimoire-site/_data/grimoire.json   # site counts
 python3 tests/sync-doc-counts.py
 python3 tests/sync-readme-meta.py
 python3 scripts/coverage-report.py
@@ -264,6 +266,7 @@ repository minus the database lives outside the tree.
 | Database integrity | `bash tests/test-db.sh` | 65 checks |
 | Drifter agent audit | run tests/master-audit.sh in destiny-agent-drifter | 25/25 |
 | Eris agent audit | run tests/master-audit.sh in destiny-agent-eris-morn | 20/20 |
+| Documentation consistency | `python3 tests/docs-consistency.py` | PASS |
 | File conformance | `python3 tests/conformance.py` | PASS |
 | MCP contract | `mcp-server/.venv/bin/python tests/mcp-test.py` | 12/12 checks |
 | Query interface | `bash tests/query-interface-test.sh` | 89 checks |

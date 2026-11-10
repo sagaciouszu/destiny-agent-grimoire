@@ -39,6 +39,8 @@ python3 db/query.py search "hive sword logic" --limit 10
 python3 db/query.py search "witness" --entity "The Witness" --limit 5
 python3 db/query.py entity "Savathûn"
 python3 db/query.py character "Eris Morn" --limit 20
+# rows carry source_tier; the header says "caption lines" or
+# "transcript + caption lines" when the page includes game-caption rows
 python3 db/query.py item bad-juju
 python3 db/query.py find-item "Bad Juju"
 python3 db/query.py transcript "Contact - Io" --speaker "Drifter" --limit 20

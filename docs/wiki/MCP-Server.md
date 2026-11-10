@@ -61,7 +61,7 @@ bash mcp-server/probe.sh
 ```
 
 The probe performs a real `initialize` -> `tools/list` handshake and prints the
-21 exposed tools. On Windows run `python mcp-server\probe.py`.
+22 exposed tools. On Windows run `python mcp-server\probe.py`.
 
 ### OpenClaw
 
@@ -115,12 +115,12 @@ or `run.ps1` (the latter via `powershell.exe -NoProfile -ExecutionPolicy Bypass 
 |---|---|
 | `search` | full-text search with taxonomy filters and entity filter |
 | `entity` | resolve a name to an entity: aliases, documents, relations |
-| `character` | verified character lines |
+| `character` | verified character lines; rows carry `source_tier` and the header names the caption tier |
 | `item` | item details and lore |
 | `verify` | quote verification |
 | `verify_many` | up to 20 quotes at once |
 | `character_info` | aliases and quote counts |
-| `list_records` | books, characters, speakers, records, activities, seasons, events |
+| `list_records` | books, characters, speakers, records, activities, seasons, events; `speakers` includes caption-only names |
 | `book` | book metadata and entries |
 | `transcript` | transcript metadata and lines |
 | `find_item` | item title or slug lookup |

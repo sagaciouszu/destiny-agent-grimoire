@@ -71,7 +71,7 @@ sqlite3 db/grimoire.db "SELECT slug, title, item_type FROM items WHERE item_type
 | `items` | Weapons, armor, gear lore + flavor text |
 | `meta` | DB version |
 | `records` | 69 triumphs/seals with canonical text |
-| `transcript_lines` | Canonical dialogue by speaker; `speaker_source` set for attributed caption lines |
+| `transcript_lines` | Dialogue by speaker (includes caption-tier rows); `speaker_source` set for attributed caption lines |
 | `transcripts` | 9229 transcript headers (quest + cutscene + web) |
 | `verify_fts` | normalized text + provenance for fast quote verification |
 
@@ -119,7 +119,7 @@ transcripts, interactions and records, but without items or grimoire cards.
 - `api.py` - importable query layer shared by the CLI and the MCP server
 - `../mcp-server/` - optional stdio MCP adapter (official SDK, read-only)
 - `capabilities.json` - machine-readable interface manifest (tables, views, commands, contracts)
-- `v_speakers` view - canonical speakers with line counts
+- `v_speakers` view - speakers with line counts (a discovery view; includes caption-only speakers)
 - `v_entity_resolve` / `v_entity_documents` / `v_entity_coverage` views - the entity web's public API
 - `speaker_aliases` table - alias -> canonical mapping applied at migration
 - `db/build_entity_web.py` - the entity web builder (temp copy, never the live file)

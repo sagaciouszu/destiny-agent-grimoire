@@ -33,10 +33,14 @@ def main():
     total, dialogue = conn.execute(
         'SELECT COUNT(*), SUM(is_stage_dir=0) FROM transcript_lines').fetchone()
     speakers = conn.execute(
-        "SELECT speaker, lines FROM v_speakers WHERE lower(speaker) IN "
+        "SELECT tl.speaker, COUNT(*) AS lines FROM transcript_lines tl "
+        "JOIN transcripts t ON t.id=tl.transcript_id "
+        "WHERE lower(tl.speaker) IN "
         "('calus','rhulk','nezarec','savathûn','oryx','riven','sjur eido','sedia',"
         "'xivu arath','mara sov','sloane','failsafe','caiatl','rhulk') "
-        'ORDER BY lines DESC').fetchall()
+        "AND tl.is_stage_dir=0 AND tl.is_optional=0 "
+        "AND COALESCE(t.source_tier,'') != 'game_caption' "
+        'GROUP BY tl.speaker ORDER BY lines DESC').fetchall()
 
     def pick(rows):
         return [(r[0], r[1], r[3], r[4], r[5], r[6]) for r in rows]
@@ -44,7 +48,7 @@ def main():
     raids = pick([r for r in acts if r[2] == 'raid'])
     dungeons = pick([r for r in acts if r[2] == 'dungeon'])
     seasonal = pick([r for r in acts if r[2] in ('seasonal', 'public_event')])
-    gaps = [r[0] for r in acts if r[4] == 0]
+    gaps = [r[0] for r in acts if r[5] == 0]   # no dialogue lines
     event_gaps = [r[0] for r in evs if r[2] == 0]
 
     print(f'''# Canon Coverage: Activities, Seasons and Events

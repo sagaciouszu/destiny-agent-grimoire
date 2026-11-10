@@ -6,11 +6,12 @@
 bash grimoire-master-audit.sh
 ```
 
-Expected: **13 / 13 suites passed**.
+Expected: **14 / 14 suites passed**.
 
 | Suite | Covers |
 |---|---|
 | Database Integrity | tables, counts, FTS, provenance, schema |
+| Game Caption Corpus | caption headers, provenance, sightings and persona exclusion |
 | Compendium Files | character quote index |
 | Lore Archive Integrity | book and card structure |
 | Cutscene Caption Verification | caption sources and matches |
@@ -34,11 +35,12 @@ bash tests/master-audit.sh
 
 | Agent | Suites |
 |---|---:|
-| Drifter | 23 |
-| Eris | 18 |
-| Calus | 18 |
-| Zavala | 18 |
-| Ghost | 18 |
+| Drifter | 25 |
+| Eris | 20 |
+| Calus | 20 |
+| Zavala | 20 |
+| Ghost | 20 |
+| Mara Sov | 20 |
 
 The shared runner reads `tests/suites.json`:
 
