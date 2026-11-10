@@ -6,7 +6,7 @@
 bash grimoire-master-audit.sh
 ```
 
-Expected: **15 / 15 suites passed**.
+Expected: **16 / 16 suites passed**.
 
 | Suite | Covers |
 |---|---|
@@ -25,6 +25,7 @@ Expected: **15 / 15 suites passed**.
 | Tree Mirror | cross-platform sync replaces rsync (copy/delete/excludes) |
 | Peer Permission Leak Audit | deployed agents deny reads/greps on peer dirs and peer source repos |
 | Persona/DB/Prose Count Consistency | persona.json, live DB and derived doc counts agree |
+| Documentation Consistency | stale counts, site snapshot, agent metadata, MCP README, links |
 
 ## Agent audits
 

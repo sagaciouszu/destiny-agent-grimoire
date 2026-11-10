@@ -188,7 +188,7 @@ agents are scratch-only and are never published.
 **P0 status (2026-11-10):** complete. `STANDARDS.md` carries the agnostic
 contract and generated-artifact rules; shared doc/gate scripts read
 `series/agents.json`; `tests/agnostic-test.py` enforces it in the master audit
-(15/15); query-interface count corrected to 91. Census:
+(16/16; docs-consistency is in the same run); query-interface count corrected to 91. Census:
 `/opt/vault/d2-bl-extract/reports/deep-census.{json,md}`. Next: P1 template
 harness (including moving the legacy per-persona count patterns out of the
 shared doc-sync script).
