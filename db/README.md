@@ -111,7 +111,7 @@ row is touched; books/lore/transcripts are read-only build input.
 
 ## Slim profile
 
-`python3 db/build-slim.py [out]` builds a 95 MB core database with books,
+`python3 db/build-slim.py [out]` builds a 224 MB core database with books,
 transcripts, interactions and records, but without items or grimoire cards.
 
 ## Extras

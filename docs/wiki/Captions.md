@@ -28,9 +28,8 @@ Every English line lives on exactly one caption table. `migrate.py` loads
 - **Attribution provenance is stored, not dropped.** `transcript_lines.speaker_source`
   holds how the speaker for an attributed caption line was attached; the
   caption loader re-adopts it on canon twins only when their own field is NULL.
-  Values: `ishtar_containment`, `dialogue_node`, `line_prefix`. Schema 1.5.0
-  records provenance for every attributed caption line (206 rows: 180 +
-  12 + 2 initially committed).
+  Values: `build-25932352`, `ishtar_containment`, `dialogue_node`,
+  `line_prefix`. Present on 4,214 rows (4,054 live + 131 + 27 + 2).
 - **`speaker_source IS NULL`** only for lines the build never attributes
   (`speaker='Cutscene'` / `'Narration'` / store names). Never author one in
   prose; tests reject it for speaker_source IS NULL lines whose speaker is
@@ -54,7 +53,8 @@ Every English line lives on exactly one caption table. `migrate.py` loads
 The live client has no separate subtitle package for this text. English lives
 inside `w64_sr_globals_*` StringBank entries, thirteen locales per logical
 table, cleartext UTF-8. Fifteen of sixteen packages are ingested from
-`archive/data/captions-live.jsonl`, one record per `(entry, kind)`.
+`archive/data/captions-live.jsonl`, one record per `(package, entry, kind)`;
+repeated text across packages keeps a separate record and sighting.
 `w64_sr_globals_0134` has no English string-bank entries.
 
 | property | value |
