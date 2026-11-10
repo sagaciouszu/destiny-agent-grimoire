@@ -25,6 +25,37 @@ a change that is not done.
   rebuilt from `source/` + `archive/` by `python3 db/migrate.py`, published as
   a release asset.
 
+### Corpus scope (era coverage)
+
+The corpus covers **Destiny 2 from launch (Sep 2017) through the current live
+build at the time a row is added** - campaigns, expansions, seasons, episodes
+and seasonal events. Destiny 1 content (Dark Below, House of Wolves, The
+Taken King, Rise of Iron and D1 expansions in D2) is included where canon
+verbatim text exists; it is the only D1 coverage.
+
+**Sourcing rule:** any D2 build from launch to the current live build is a
+legitimate source, but each piece of content may only be sourced from a build
+that still shipped it. A post-vault build must never be used as the source
+for vaulted content; use the era transcripts/manifests that captured it at
+its time (Web captures are the primary source for DCV-era content; the live
+build covers everything that still ships).
+
+**Provenance is labeled per build.** Every raw capture and curated row carries
+the build/id it came from (`sunrise-pre-bl`, `build-25932352`, ...);
+`caption_provenance` and friends never mix builds silently.
+
+**2024+ speaker-name gameplay subtitles** are accepted as speaker attribution
+**with provenance labels** (`speaker_source` naming the live build), but:
+
+- they apply only to gameplay subtitles - cinematics are excluded by Bungie's
+  own implementation and this standard mirrors that exclusion,
+- they are never claimed as fact without corroboration for anything canon-
+  affecting; attribution stays evidence-first,
+- they never rewrite persona canon counts (the caption exclusion still holds).
+
+A corpus that claims coverage it does not have is invalid; era expansion only
+lands with the gate suite green and release notes naming the sources.
+
 ## 2. Repository connection matrix
 
 | From | To | Mechanism |
@@ -162,8 +193,9 @@ Only curated material may be committed, with provenance naming the local build,
 for example `- Source: local game files (<build>)`. That includes the scraped
 JSONL corpora under `archive/data/` and the curated caption corpus
 `archive/data/captions.jsonl` - English lines only, with speaker attribution,
-activity facets, dedup verdicts and the build id (`sunrise-pre-bl`) recorded in
-each record. The raw subtitle exports it is derived from stay in
+activity facets, dedup verdicts and the build id recorded in each record
+(builds seen to date: `sunrise-pre-bl`, then `build-25932352`, each labeled;
+see Captions.md). The raw subtitle exports it is derived from stay in
 `archive/data/subtitles/` and remain gitignored. Extracted text is evidence for
 curation, not a redistributable asset: commit the curated rows, never the raw
 dump.

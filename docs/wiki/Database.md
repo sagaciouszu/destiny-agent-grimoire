@@ -91,8 +91,9 @@ a better source.
 ## Game captions
 
 `migrate.py` loads `archive/data/captions.jsonl` (committed, curated: English
-lines, speaker attribution, activity facets, dedup verdicts, build
-`sunrise-pre-bl`) as `source_tier='game_caption'`, `lang='en'`.
+lines, speaker attribution, activity facets, dedup verdicts, one build label
+per record - currently `sunrise-pre-bl`; `build-25932352` pending extraction
+under the widened era scope) as `source_tier='game_caption'`, `lang='en'`.
 
 - **No duplicate text.** A caption line whose normalized text already exists in
   canon is not inserted again; its StringReference hash and package origin
