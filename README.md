@@ -13,7 +13,7 @@
   <img src='https://img.shields.io/badge/made%20with-Destiny%20Grimoire-gold' alt='Made with Destiny Agent Grimoire'/>
 </p>
 
-**Version:** 0.39.2 | **Last push:** 2026-11-10 | **Status:** Active
+**Version:** 0.39.3 | **Last push:** 2026-11-10 | **Status:** Active
 
 **Documentation site:** <https://sagaciouszu.github.io/destiny-agent-grimoire-site/>
 
