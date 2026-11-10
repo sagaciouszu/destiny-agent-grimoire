@@ -42,7 +42,9 @@ build covers everything that still ships).
 
 **Provenance is labeled per build.** Every raw capture and curated row carries
 the build/id it came from (`sunrise-pre-bl`, `build-25932352`, ...);
-`caption_provenance` and friends never mix builds silently.
+`caption_provenance` and friends never mix builds silently. Build identities,
+versions and the extraction-tier to provenance mapping live in
+`docs/wiki/Builds.md`.
 
 **A build is not a proxy for an earlier build.** The live client is the
 current game with years of Bungie changes on top of its content: recast
@@ -204,7 +206,7 @@ JSONL corpora under `archive/data/` and the curated caption corpus
 `archive/data/captions.jsonl` - English lines only, with speaker attribution,
 activity facets, dedup verdicts and the build id recorded in each record
 (builds seen to date: `sunrise-pre-bl`, then `build-25932352`, each labeled;
-see Captions.md). The raw subtitle exports it is derived from stay in
+see `docs/wiki/Builds.md`). The raw subtitle exports it is derived from stay in
 `archive/data/subtitles/` and remain gitignored. Extracted text is evidence for
 curation, not a redistributable asset: commit the curated rows, never the raw
 dump.

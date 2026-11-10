@@ -40,7 +40,7 @@ sys.path.insert(0, HERE)
 import api  # noqa: E402  (fold_name, _fold_key: one shared implementation)
 
 DEFAULT_TSV = os.path.join(HERE, 'entity-lexicon-proposal.tsv')
-NEW_SCHEMA_VERSION = '1.6.0'
+NEW_SCHEMA_VERSION = '1.7.0'
 BUILD_ID = 'entity-web-v0.33.0-2026-11-09'
 SRC_NOTE = 'source/lexicon-v1 + owner-rulings-2026-11-09'
 

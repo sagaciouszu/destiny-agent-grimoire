@@ -449,9 +449,9 @@ def _caption_prov(conn, line_id, line, rec, src_pkg, src_entry):
     """
     cur = conn.execute(
         'INSERT OR IGNORE INTO caption_provenance '
-        '(line_id,hash,kind,source_pkg,source_entry,bank_entry) VALUES (?,?,?,?,?,?)',
+        '(line_id,hash,kind,source_pkg,source_entry,bank_entry,source_build) VALUES (?,?,?,?,?,?,?)',
         (line_id, line.get('hash'), rec.get('kind_class'), src_pkg, src_entry,
-         rec.get('bank_entry')))
+         rec.get('bank_entry'), (rec.get('source_build') or 'sunrise-pre-bl')))
     return cur.rowcount
 
 
@@ -1053,6 +1053,31 @@ def migrate():
     itf_count = conn.execute('SELECT COUNT(*) FROM item_title_fts').fetchone()[0]
     print(f'item title entries: {itf_count}')
 
+    # Build registry: one row per source the corpus was built on (Builds.md).
+    # Point-in-time facts; refreshed by the release that re-ingests a tier.
+    BUILD_ROWS = [
+        ('sunrise-pre-bl',
+         'Destiny 2: Shadowkeep / Season of Arrivals (pre-Beyond-Light) EN client',
+         'game_build', '86657.20.08.23.1800.d2_rc', '/opt/vault/games/sunrise',
+         '2026-11-07', 1709, 74095694848,
+         'Pre-Beyond-Light build; package format v38; English-only caption tier '
+         'extracted 2026-11-07/08. Corpus released starting v0.29.0.'),
+        ('build-25932352',
+         'Destiny 2: Monument of Triumph (Update 9.7.0.6, Oct 20 2026) live client',
+         'game_build', '245114.26.10.13.2000.v500_live.main',
+         '/opt/vault/d2-bl-extract/build-25932352',
+         'pending', 2417, 162825758961,
+         'Update 9.7.0.6; Steam buildid 25932352; appid 1085660; package format v53. '
+         'Extraction pending Gate 0 (live AES-GCM keys). See docs/wiki/Builds.md.'),
+    ]
+    for row in BUILD_ROWS:
+        conn.execute(
+            'INSERT OR REPLACE INTO builds '
+            '(build_id,label,kind,version,source,captured_at,package_count,byte_count,notes) '
+            'VALUES (?,?,?,?,?,?,?,?,?)', row)
+    builds_count = conn.execute('SELECT COUNT(*) FROM builds').fetchone()[0]
+    print(f'builds: {builds_count}')
+
     # Meta: a self-describing stamp for the shipped artifact. Every count key
     # must equal a live COUNT(*) (tests/test-db.sh enforces it).
     for k, v in [
@@ -1079,6 +1104,7 @@ def migrate():
         ('coverage_notes', str(conn.execute('SELECT COUNT(*) FROM coverage_notes').fetchone()[0])),
         ('speaker_aliases', str(conn.execute('SELECT COUNT(*) FROM speaker_aliases').fetchone()[0])),
         ('caption_provenance', str(conn.execute('SELECT COUNT(*) FROM caption_provenance').fetchone()[0])),
+        ('builds', str(builds_count)),
     ]:
         conn.execute('INSERT OR REPLACE INTO meta (key,value) VALUES (?,?)', (k, v))
 
