@@ -12,7 +12,7 @@ executable without re-deriving context. Status values: `queued`, `active`,
 | Q3 | Live-build refresh automation | P2 | 4–6 h | **done** (v0.39.2) |
 | Q4 | Caption-tier label in `character(all_lines=True)` | P3 | 30 min | **done** (Q6) |
 | Q5 | Confirm `w64_sr_globals_0134` is empty | P4 | 30 min | **done** (Q6) |
-| Q7 | Deep ecosystem pass: standards, template, agents/webs, recount, MCP, site | P0 | 6–8 h | **P2 done**, P3 next |
+| Q7 | Deep ecosystem pass: standards, template, agents/webs, recount, MCP, site | P0 | 6–8 h | **P4 done**, P5 next |
 
 ---
 
@@ -212,3 +212,17 @@ missing-database failure, read-only database access and site roster parity.
 agent `reference/knowledge-web.md` and runs `--check` in the master audit. All
 six agent audits pass (20/20; Drifter 25/25); master audit 18/18. Next: P3
 recount and scratch test agents.
+
+**P3 status (2026-11-10):** complete. Recount at
+`/opt/vault/d2-bl-extract/reports/deep-recount.{json,md}`; 16 duplicate code
+groups are intentional shared helpers; no dead script confirmed. Ghost (2,690),
+Drifter (1,149) and Eris (1,011) scratch agents all pass 20/20; stress cases
+(caption-only, missing DB, old schema, sparse 20-line speaker, side-by-side)
+pass. Scratch agents stay in `/tmp/opencode/test-agents/` and are not published.
+
+**P4 status (2026-11-10):** complete. MCP contract 12/12, optimization 25/25,
+matrix 8/8 (161 calls), probe 22 tools. `stats` now reports `missing_tables`
+on a pre-1.9 database instead of failing; MCP README and skill document the
+schema, caption-tier and `v_speakers` caveats. Card decision: defer
+(`/opt/vault/d2-bl-extract/reports/card-decision.md`). Next: P5 stats, readmes
+and site.

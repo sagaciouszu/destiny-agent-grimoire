@@ -1389,22 +1389,48 @@ def listing(kind, limit=50, offset=0):
 
 @_guard
 def stats():
+    """Row counts and top lists, tolerant of an older schema.
+
+    A pre-1.9 database has no `caption_sightings`; that table (and any other
+    missing one) is reported in `missing_tables` instead of failing the whole
+    call. Consumers should show the gap rather than imply the counts are
+    complete.
+    """
     conn = connect()
     try:
-        counts = {}
+        counts, missing = {}, []
         for t in ['books', 'book_entries', 'transcripts', 'transcript_lines', 'grimoire_cards',
                   'interactions', 'items', 'records', 'characters', 'character_lines', 'fts',
                   'expansions', 'seasons', 'events', 'event_occurrences', 'activities',
                   'transcript_classification', 'item_classification',
                   'document_classification', 'lore_entries', 'lore_entry_items',
                   'caption_provenance', 'caption_sightings']:
-            counts[t] = conn.execute(f'SELECT COUNT(*) FROM {t}').fetchone()[0]
-        top_items = [{'item_type': r[0], 'count': r[1]} for r in conn.execute(
-            "SELECT item_type, COUNT(*) FROM items WHERE item_type != '' "
-            'GROUP BY item_type ORDER BY 2 DESC LIMIT 10').fetchall()]
-        top_speakers = [{'speaker': r[0], 'count': r[1]} for r in conn.execute(
-            "SELECT speaker, COUNT(*) FROM transcript_lines WHERE speaker != '' "
-            'GROUP BY speaker ORDER BY 2 DESC LIMIT 10').fetchall()]
-        return {'counts': counts, 'top_item_types': top_items, 'top_speakers': top_speakers}
+            try:
+                counts[t] = conn.execute(f'SELECT COUNT(*) FROM {t}').fetchone()[0]
+            except sqlite3.OperationalError:
+                missing.append(t)
+        try:
+            top_items = [{'item_type': r[0], 'count': r[1]} for r in conn.execute(
+                "SELECT item_type, COUNT(*) FROM items WHERE item_type != '' "
+                'GROUP BY item_type ORDER BY 2 DESC LIMIT 10').fetchall()]
+        except sqlite3.OperationalError:
+            top_items = []
+        try:
+            top_speakers = [{'speaker': r[0], 'count': r[1]} for r in conn.execute(
+                "SELECT speaker, COUNT(*) FROM transcript_lines WHERE speaker != '' "
+                'GROUP BY speaker ORDER BY 2 DESC LIMIT 10').fetchall()]
+        except sqlite3.OperationalError:
+            top_speakers = []
+        out = {'counts': counts, 'top_item_types': top_items,
+               'top_speakers': top_speakers}
+        try:
+            row = conn.execute("SELECT value FROM meta WHERE key='version'").fetchone()
+        except sqlite3.OperationalError:
+            row = None
+        if row:
+            out['schema_version'] = row[0]
+        if missing:
+            out['missing_tables'] = missing
+        return out
     finally:
         conn.close()

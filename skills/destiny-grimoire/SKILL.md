@@ -79,6 +79,11 @@ Use `db/query.py` for everything. Interface wraps common patterns. Examples
 name real corpus speakers so the commands run as written; they are illustrative,
 not a preferred agent or persona.
 
+Schema 1.9.0. `stats` reports `missing_tables` on a pre-1.9 database instead of
+failing. `v_speakers` is a discovery view (it includes caption-only names), not
+a canon roster. Captions are searchable canon but excluded from persona counts;
+`--canon-only` excludes optional/variant lines, not captions.
+
 ```bash
 # Full-text search
 python3 db/query.py search "Crota" --limit 5

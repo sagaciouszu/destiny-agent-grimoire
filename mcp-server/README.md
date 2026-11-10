@@ -69,6 +69,23 @@ stops it. If you launch it by hand, keep that window open while any client is
 using it; closing it drops the connection. Do not run it as a long-lived
 background service.
 
+## Database compatibility
+
+The adapter targets schema **1.9.0**. It does not invent a schema upgrade.
+
+- `stats` includes `caption_sightings`. On a pre-1.9 database the response
+  carries `missing_tables: ["caption_sightings", ...]` and omits that count
+  instead of failing the call. Show the gap; do not present the counts as
+  complete.
+- `character` rows carry `source_tier`, and the header names the
+  `game_caption` tier when present. A caption line is searchable canon but not
+  persona canon; filter `source_tier` explicitly when a caller needs the
+  curated voice only.
+- `list_records(kind="speakers")` is a discovery listing. It includes
+  caption-only names and is not a canon roster.
+- If a table or column is missing, rebuild the database from the current
+  release asset or `python3 db/migrate.py` rather than editing it in place.
+
 ## Client configuration
 
 OpenCode (`~/.config/opencode/opencode.json`), from an agent workspace where the
