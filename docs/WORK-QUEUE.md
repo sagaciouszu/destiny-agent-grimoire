@@ -14,6 +14,7 @@ executable without re-deriving context. Status values: `queued`, `active`,
 | Q5 | Confirm `w64_sr_globals_0134` is empty | P4 | 30 min | **done** (Q6) |
 | Q7 | Deep ecosystem pass: standards, template, agents/webs, recount, MCP, site | P0 | 6–8 h | **done** |
 | Q8 | Tier filters, `v_canon_speakers`, access-test consolidation, refresh runbook | P0 | 4–5 h | **A-C done**, D on trigger |
+| Q9 | Honesty and provenance pass: site limits, llms.txt, precise claims, sample gate | P0 | 2 h | **done** |
 
 ---
 
@@ -270,3 +271,11 @@ on `character` and `transcript` (CLI and MCP); `v_canon_speakers` (230 rows,
 schema 1.10.0) with `list canon-speakers` / MCP `canon_speakers`; the access
 gate absorbed the legacy connection test (extended suite 11). D remains a
 runbook: run `scripts/refresh-live-build.py` when a new public build appears.
+
+**Q9 status (2026-11-10):** complete in v0.40.1 and agent v0.1.8 / v0.14.5.
+The site publishes `/grimoire/limits/` (what the corpus is and is not, caption
+tier, timeline/source gaps, speaker rules, quote semantics, AI caveats) and
+`/llms.txt` for ingestion. `scripts/check-samples.py` verifies all 18 roster
+samples with `verify --exact`. README claims now say "present in this library",
+not official canon, and every live repo links the site and limits page. GitHub
+homepage URLs were repaired from the dead `grimoire-site` paths.
