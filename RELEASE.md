@@ -1,3 +1,34 @@
+# v0.39.4 - Ecosystem contract and MCP compatibility
+
+**2026-11-10**
+
+Tooling, documentation and API patch. The database is byte-identical to v0.39.3
+(schema 1.9.0, 9,229 transcripts / 125,324 lines / 63,359 sightings).
+
+## What's Changed
+
+- Agnostic contract in `STANDARDS.md`; shared scripts read `series/agents.json`
+  and `tests/agnostic-test.py` guards it.
+- Template fixture harness, atomic generator, stricter finalize and
+  `setup.sh --dry-run`/`GRIMOIRE_DB`.
+- Six agents share the setup contract; generated knowledge-web snapshots;
+  `tests/agent-access-test.py` proves missing-DB, dangling-link, read-only and
+  site-roster behavior.
+- MCP `stats` reports `missing_tables`/`schema_version` on a pre-1.9 database;
+  README and skill document caption tiers and `v_speakers`.
+- Site stats and roster metadata regenerated; card creation deferred.
+
+## Verification
+
+Master audit 18/18; six agent audits 20/20 (Drifter 25/25); template fixture and
+real-corpus tests; MCP 12/12, 25/25, matrix 8/8 (161 calls); site check and live
+spot check; docs-consistency 5/5.
+
+## Asset
+
+`grimoire.db` plus `.xz`/`.gz` is byte-identical to v0.39.3 and is attached again
+so `releases/latest/download/grimoire.db` keeps working.
+
 # v0.39.3 - Refresh tooling hardening
 
 > **Depends On:** STANDARDS.md
@@ -40,25 +71,3 @@ test-db 65/65, caption 12/12, docs-consistency 5/5. DB artifact unchanged.
 
 `grimoire.db` (plus `.xz`/`.gz`) is byte-identical to v0.39.2 and is attached
 again so `releases/latest/download/grimoire.db` keeps working.
-
-# v0.39.2 - Live-build refresh tooling
-
-> **Depends On:** STANDARDS.md
-> **Token Estimate:** ~0.8K tokens
-
-**2026-11-10**
-
-Tooling release, schema 1.9.0. `archive/data/builds.json` is now the data-driven
-build registry; `archive/data/live-builds/<build>.jsonl` holds future builds
-with build-scoped slugs; `scripts/refresh-live-build.py` automates unpack,
-merge, resolve, extract, validate, combine, drift, register, rebuild and gates.
-Current-build no-op, `--dry-run` and `--self-test` included.
-
-## Verification
-
-Master audit 14/14; test-db 65/65; caption 12/12; query 91/91; MCP suites green;
-refresh self-test and no-op pass.
-
-## Asset
-
-`grimoire.db` (plus `.xz`/`.gz`) attached to this release.
