@@ -33,14 +33,9 @@ WORK = os.path.dirname(GR)
 # their READMEs checked against the README contract; the archival "template
 # Ghost Shell" is a meta-repo for new agents and is audited on the file
 # contract + skeleton-only structure.
-REPOS = {n: p for n, p in {
-    'calus': os.path.join(WORK, 'destiny-agent-calus'),
-    'zavala': os.path.join(WORK, 'destiny-agent-zavala'),
-    'ghost': os.path.join(WORK, 'destiny-agent-ghost'),
-    'mara-sov': os.path.join(WORK, 'destiny-agent-mara-sov'),
-    'drifter': os.path.join(WORK, 'destiny-agent-drifter'),
-    'eris': os.path.join(WORK, 'destiny-agent-eris-morn'),
-}.items() if os.path.isdir(p)}
+sys.path.insert(0, HERE)
+import _roster
+REPOS = {n: p for n, p in _roster.repos(WORK).items() if os.path.isdir(p)}
 REPOS['grimoire'] = GR
 SKELETON = set()
 if os.path.isdir(os.path.join(WORK, 'destiny-agent-template')):
@@ -98,9 +93,8 @@ for name, root in REPOS.items():
                     # template carries intentional placeholder refs ({{id}}.md
                     # → the future agent's actual filename); do not hard-fail.
                     continue
-                expected = {'destiny-agent-calus', 'destiny-agent-zavala',
-                            'destiny-agent-ghost', 'destiny-agent-mara-sov',
-                            'destiny-agent-drifter', 'destiny-agent-eris-morn'}
+                expected = {os.path.basename(p)
+                            for p in _roster.repos(WORK).values()}
                 present = {os.path.basename(p) for p in list(REPOS.values())}
                 if expected <= present:
                     issues.append(note)          # full workspace: broken is fatal

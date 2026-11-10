@@ -6,9 +6,9 @@ adds a stable interface without replacing the existing audit. Every command
 runs with HERE/REPO/LORE/WORKSPACE exported, matching master-audit.sh.
 
 Usage:
-    python3 tests/run-suite-manifest.py ../destiny-agent-eris-morn
-    python3 tests/run-suite-manifest.py ../destiny-agent-eris-morn --tier core
-    python3 tests/run-suite-manifest.py ../destiny-agent-eris-morn --list
+    python3 tests/run-suite-manifest.py ../<agent-repo>
+    python3 tests/run-suite-manifest.py ../<agent-repo> --tier core
+    python3 tests/run-suite-manifest.py ../<agent-repo> --list
 """
 import argparse
 import json

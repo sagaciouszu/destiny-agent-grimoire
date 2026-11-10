@@ -58,6 +58,9 @@ jobs:
       - name: Documentation consistency
         run: python3 tests/docs-consistency.py
 
+      - name: Agnostic contract
+        run: python3 tests/agnostic-test.py
+
       - name: Item audit
         run: python3 tests/item-audit.py
 

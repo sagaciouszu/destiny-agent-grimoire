@@ -6,7 +6,7 @@
 bash grimoire-master-audit.sh
 ```
 
-Expected: **14 / 14 suites passed**.
+Expected: **15 / 15 suites passed**.
 
 | Suite | Covers |
 |---|---|
@@ -15,9 +15,10 @@ Expected: **14 / 14 suites passed**.
 | Compendium Files | character quote index |
 | Lore Archive Integrity | book and card structure |
 | Cutscene Caption Verification | caption sources and matches |
-| Query Interface | 89 CLI and API checks |
+| Query Interface | 91 CLI and API checks |
 | Agent Layout | OpenCode and OpenClaw layout, 39 checks |
 | File Conformance | repository-wide format rules |
+| Agnostic Contract | shared executables read `series/agents.json`; no hardcoded agent repo |
 | Source Overlap vs Live | source and database agreement |
 | Speaker Noise Gate | junk speakers and aliases |
 | Agent Suite Manifests | no suite loss or drift |

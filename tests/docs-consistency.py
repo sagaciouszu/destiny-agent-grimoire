@@ -26,9 +26,9 @@ ROOT = os.path.dirname(HERE)
 WORK = os.path.dirname(ROOT)
 DB = os.environ.get("GRIMOIRE_DB") or os.path.join(ROOT, "db", "grimoire.db")
 SITE = os.path.join(WORK, "destiny-agent-grimoire-site")
-AGENTS = ["destiny-agent-calus", "destiny-agent-drifter",
-          "destiny-agent-eris-morn", "destiny-agent-ghost",
-          "destiny-agent-mara-sov", "destiny-agent-zavala"]
+sys.path.insert(0, HERE)
+import _roster
+AGENTS = [os.path.basename(p) for p in _roster.repos().values()]
 TEMPLATE = os.path.join(WORK, "destiny-agent-template")
 
 STALE = ["2,422", "78,740", "130,210", "9,607", "12,934", "206 rows",

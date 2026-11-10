@@ -9,7 +9,7 @@
   <a href='https://github.com/sagaciouszu/destiny-agent-grimoire/actions/workflows/ci.yml'><img src='https://github.com/sagaciouszu/destiny-agent-grimoire/actions/workflows/ci.yml/badge.svg' alt='CI'/></a>
   <img src='https://img.shields.io/github/last-commit/sagaciouszu/destiny-agent-grimoire?label=last%20push&color=blue' alt='Last push'/>
   <img src='https://img.shields.io/badge/license-MIT-green' alt='License'/>
-  <img src='https://img.shields.io/badge/tests-14%2F14%20audit%20suites-brightgreen' alt='Tests'/>
+  <img src='https://img.shields.io/badge/tests-15%2F15%20audit%20suites-brightgreen' alt='Tests'/>
   <img src='https://img.shields.io/badge/made%20with-Destiny%20Grimoire-gold' alt='Made with Destiny Agent Grimoire'/>
 </p>
 
@@ -260,7 +260,8 @@ repository minus the database lives outside the tree.
 |---|---|---|
 | Agent layout | `bash tests/agent-layout-test.sh` | 39 checks |
 | Agent suite manifests | `python3 tests/suite-manifest-test.py` | PASS |
-| Archive audit | `bash grimoire-master-audit.sh` | 14/14 |
+| Agnostic contract | `python3 tests/agnostic-test.py` | PASS |
+| Archive audit | `bash grimoire-master-audit.sh` | 15/15 |
 | Calus / Zavala / Ghost / Mara Sov | run tests/master-audit.sh in each repo | 20/20 |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 checks |
 | Database integrity | `bash tests/test-db.sh` | 65 checks |
@@ -269,7 +270,7 @@ repository minus the database lives outside the tree.
 | Documentation consistency | `python3 tests/docs-consistency.py` | PASS |
 | File conformance | `python3 tests/conformance.py` | PASS |
 | MCP contract | `mcp-server/.venv/bin/python tests/mcp-test.py` | 12/12 checks |
-| Query interface | `bash tests/query-interface-test.sh` | 89 checks |
+| Query interface | `bash tests/query-interface-test.sh` | 91 checks |
 
 Agent audits run from their own repos and call shared gates through
 `lore/tests/`; the archive audit is shared-only.

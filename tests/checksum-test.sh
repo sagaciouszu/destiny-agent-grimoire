@@ -5,8 +5,18 @@ set -u
 
 ARCHIVE="${ARCHIVE:-$(cd "$(dirname "$0")/.." && pwd)}"
 WORK="$(dirname "$ARCHIVE")"
-if [ ! -d "$WORK/destiny-agent-drifter" ]; then
-    echo "SKIP: destiny-agent-drifter not present"
+AGENT_REPO=$(python3 - "$ARCHIVE" "$WORK" <<'PY'
+import json, os, sys
+rows = json.load(open(os.path.join(sys.argv[1], 'series', 'agents.json')))['agents']
+for row in rows:
+    path = os.path.join(sys.argv[2], row['source'])
+    if os.path.isdir(path):
+        print(path)
+        break
+PY
+)
+if [ -z "$AGENT_REPO" ]; then
+    echo "SKIP: no agent repository present"
     exit 0
 fi
 TMP="$(mktemp -d /tmp/opencode/checksum-test.XXXXXX)"
@@ -32,7 +42,7 @@ git add -A >/dev/null 2>&1; git -c user.email=t@t -c user.name=t commit -qm init
 
 run_setup() {
     local dir="$1" dburl="$2" sumsurl="$3" loreurl="$4"
-    git clone -q "$WORK/destiny-agent-drifter" "$dir" 2>/dev/null
+    git clone -q "$AGENT_REPO" "$dir" 2>/dev/null
     ( cd "$dir" && LORE_URL="$loreurl" RELEASE_DB_URL="$dburl" RELEASE_SUMS_URL="$sumsurl" \
         BOOTSTRAP=1 ./setup.sh --no-mcp </dev/null 2>&1 )
 }

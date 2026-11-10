@@ -15,9 +15,10 @@ import urllib.request
 HERE = os.path.dirname(os.path.realpath(__file__))
 GR = os.path.dirname(HERE)
 WORK = os.path.dirname(GR)
-READMES = [os.path.join(GR, 'README.md'),
-           os.path.join(WORK, 'destiny-agent-drifter', 'README.md'),
-           os.path.join(WORK, 'destiny-agent-eris-morn', 'README.md')]
+sys.path.insert(0, HERE)
+import _roster
+READMES = [os.path.join(GR, 'README.md')]
+READMES += [os.path.join(p, 'README.md') for p in _roster.repos().values()]
 URL = re.compile(r'https?://[^\s\'"<>)]+')
 
 

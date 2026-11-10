@@ -8,6 +8,9 @@ Full build/provenance matrix: [`docs/wiki/Builds.md`](../docs/wiki/Builds.md).
 
 ## Quick start
 
+Examples name real corpus speakers so the commands work as written. They are
+illustrative: no speaker or agent is preferred.
+
 ```bash
 # Stats
 python3 db/query.py stats

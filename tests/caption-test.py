@@ -25,6 +25,8 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
+sys.path.insert(0, HERE)
+import _roster  # noqa: E402
 sys.path.insert(0, os.path.join(ROOT, 'db'))
 import api       # noqa: E402
 import migrate   # noqa: E402  (norm_text: one normalisation implementation)
@@ -328,7 +330,9 @@ def persona_canon_excludes_captions():
         "SELECT speaker, COUNT(*) FROM fts WHERE source='caption' AND speaker='Drifter' "
         'GROUP BY 1').fetchone()
     assert rows, 'expected Drifter caption lines'
-    persona = os.path.join(os.path.dirname(ROOT), 'destiny-agent-drifter', 'persona.json')
+    # Drifter is a data fixture here (it has caption rows); the repository is
+    # resolved through the registry so no shared test names an agent checkout.
+    persona = os.path.join(_roster.repos().get('drifter', ''), 'persona.json')
     if not os.path.exists(persona):
         return                      # grimoire-only checkout: nothing to compare
     expected = json.load(open(persona, encoding='utf-8'))['canon_lines']
