@@ -1,3 +1,28 @@
+# v0.40.1 - Honesty and provenance pass
+
+**2026-11-10**
+
+Documentation and site patch. The database is byte-identical to v0.40.0.
+
+## What's Changed
+
+- The site publishes a **Limits and provenance** page and a plain-text facts
+  file: scope, caption tier, timeline and source gaps, speaker rules and AI caveats.
+- Site samples are gated by the site's sample check: 18 samples across 6 agents
+  pass `verify --exact`.
+- README claims are precise: "verified" means present in this library, not
+  officially published; the corpus is not described as complete.
+- `scripts/export-site-stats.py` exports caption, speaker, timeline, source-URL
+  and coverage counts so the honesty page cannot drift.
+
+## Verification
+
+Master audit 18/18; six agent audits 20/20 (Drifter 25/25); site `npm run check`
+(42 pages, 18 samples, 83 tapes); docs-consistency 5/5; conformance pass.
+
+## Asset
+`grimoire.db` plus `.xz`/`.gz` is byte-identical to v0.40.0.
+
 # v0.40.0 - Tier filters and canon speakers
 
 **2026-11-10**
