@@ -16,8 +16,8 @@
   query interface 97, agent layout 108, master audit 18/18.
 - Coverage-note figures are labelled as entries, since the table spans
   activities, events and seasons.
-- Build-identity wording replaces era guesses; the Beyond Light roadmap is
-  marked historical and no longer claims to track the live build.
+- Build-identity wording replaces era guesses; the Beyond Light page is a
+  historical coverage record and no longer claims to track the live build.
 - The shared-helper guard now has canonical copies under
   `tests/agent-helpers/` and fails on drift or a missing canonical file instead
   of silently skipping.
@@ -45,3 +45,10 @@ install needs no re-download.
 - MCP: 12/12 contract, 25/25 matrix, 8/8 optimization.
 - Six agent audits: 20/20 each, Drifter 27/27, Eris 22/22.
 - Site `npm run check`: pass.
+
+## Asset
+
+`grimoire.db` (316,776,448 bytes, sha256 `34b5bf1c…3445d044`) is attached to the
+release with `SHA256SUMS`. The release workflow adds `grimoire.db.xz` and
+`grimoire.db.gz` and refreshes the manifest. The database content is identical
+to v0.40.1.
