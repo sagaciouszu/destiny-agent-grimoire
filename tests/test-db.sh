@@ -41,6 +41,10 @@ check "[ $ENT -eq 0 ]" "no HTML entity leakage ($ENT rows)"
 # Standards gates (see STANDARDS.md)
 VSPK=$(sqlite3 "$DB" "SELECT COUNT(*) FROM v_speakers" 2>/dev/null || echo 0)
 check "[ $VSPK -gt 50 ]" "v_speakers view populated ($VSPK speakers)"
+VCANON=$(sqlite3 "$DB" "SELECT COUNT(*) FROM v_canon_speakers" 2>/dev/null || echo 0)
+check "[ $VCANON -gt 50 ]" "v_canon_speakers view populated ($VCANON speakers)"
+NONCANON=$(sqlite3 "$DB" "SELECT COUNT(*) FROM v_canon_speakers c LEFT JOIN v_speakers s ON s.speaker=c.speaker WHERE s.speaker IS NULL" 2>/dev/null || echo 99)
+check "[ $NONCANON -eq 0 ]" "v_canon_speakers is a subset of v_speakers ($NONCANON orphans)"
 ALIASES=$(sqlite3 "$DB" "SELECT COUNT(*) FROM speaker_aliases" 2>/dev/null || echo 0)
 check "[ $ALIASES -ge 6 ]" "speaker_aliases table populated ($ALIASES aliases)"
 VARIANTS=$(sqlite3 "$DB" "SELECT COUNT(*) FROM transcript_lines WHERE speaker IN ('Commander Zavala','Cayde','Eris','Eris morn','Ikora Rey','Chiomi Esi')")

@@ -324,6 +324,18 @@ def api_surface():
         'caption rows unreachable through the activity facet'
 
 
+def tier_filters():
+    """Explicit source-tier filters separate captions from curated lines."""
+    captions = api.character('Ghost', all_lines=True, tiers=['game_caption'], limit=5)
+    assert captions and captions['rows'], 'caption tier filter returned nothing'
+    assert all(r['source_tier'] == 'game_caption' for r in captions['rows'])
+    curated = api.character('Ghost', all_lines=True, exclude_tiers=['game_caption'], limit=5)
+    assert curated and curated['rows'], 'exclude-tier returned nothing'
+    assert all(r['source_tier'] != 'game_caption' for r in curated['rows'])
+    mismatch = api.transcript('contact-io', tiers=['game_caption'])
+    assert mismatch and mismatch['tier_match'] is False and not mismatch['lines']
+
+
 def persona_canon_excludes_captions():
     """persona.json counts stay authoritative: captions are excluded."""
     rows = conn.execute(
@@ -356,6 +368,7 @@ for name, fn in [
     ('caption speakers are canonical', speakers),
     ('stat captions stay demoted', stage_dirs),
     ('search reaches captions by type, lang and activity', api_surface),
+    ('tier filters separate captions', tier_filters),
     ('persona canon excludes captions', persona_canon_excludes_captions),
 ]:
     check(name, fn)

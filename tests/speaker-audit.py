@@ -35,7 +35,21 @@ rows = conn.execute("""
     GROUP BY tl.speaker
     ORDER BY COUNT(*), tl.speaker
 """).fetchall()
+try:
+    canon_view = conn.execute('SELECT speaker FROM v_canon_speakers').fetchall()
+except sqlite3.OperationalError:
+    print('FAIL: v_canon_speakers missing; rebuild the database (schema 1.10.0)')
+    sys.exit(1)
 conn.close()
+
+canon = {r[0] for r in canon_view}
+observed = {r[0] for r in rows}
+if len(canon) < 50:
+    print(f'FAIL: v_canon_speakers has only {len(canon)} rows')
+    sys.exit(1)
+if not canon <= observed:
+    print(f'FAIL: {len(canon - observed)} canon view speakers lack a canon line')
+    sys.exit(1)
 
 rare = [r for r in rows if r[1] <= 2 and not KEEP_HINT.match(r[0])]
 noise = [r for r in rare if KNOWN_NOISE.match(r[0]) or re.search(r'[:\[\]{}|]', r[0]) or len(r[0]) > 40]

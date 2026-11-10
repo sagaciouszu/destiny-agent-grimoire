@@ -110,7 +110,8 @@ def cmd_entity(args):
 def cmd_character(args):
     res = api.character(args.name, about=args.about, all_lines=args.all, limit=args.limit,
                         offset=args.offset, canon_only=args.canon_only,
-                        class_tag=args.class_tag)
+                        class_tag=args.class_tag, tiers=args.tier,
+                        exclude_tiers=args.exclude_tier)
     if res is None:
         print(f'Character not found: {args.name}', file=sys.stderr)
         return 1
@@ -186,7 +187,8 @@ def cmd_verify(args):
 
 
 def cmd_list(args):
-    out = api.listing(args.kind, limit=args.limit, offset=args.offset)
+    kind = args.kind.replace('-', '_')
+    out = api.listing(kind, limit=args.limit, offset=args.offset)
     if args.json:
         print(json.dumps(out, ensure_ascii=False, separators=(',', ':')))
     else:
@@ -221,7 +223,8 @@ def cmd_transcript(args):
     res = api.transcript(args.ref, speaker=args.speaker, limit=args.limit,
                          offset=args.offset, full=args.full, include_stage=args.include_stage,
                          canon_only=args.canon_only, section=args.section,
-                         class_tag=args.class_tag)
+                         class_tag=args.class_tag, tiers=args.tier,
+                         exclude_tiers=args.exclude_tier)
     if res is None:
         print(f'Transcript not found: {args.ref}', file=sys.stderr)
         return 1
@@ -238,6 +241,8 @@ def cmd_transcript(args):
             print('Taxonomy: ' + ' | '.join(str(b) for b in bits if b))
         if t.get('source_tier'):
             print('Source tier: ' + t['source_tier'])
+        if res.get('tier_match') is False:
+            print('Tier filter excluded this transcript.')
         for line in res['lines']:
             print(f"[{line['speaker']}] {line['text']}")
         print(f"\nShowing {len(res['lines'])} of {res['total']} (offset {res['offset']})")
@@ -437,6 +442,10 @@ def main(argv=None):
     c.add_argument('--about', help='only lines mentioning this term')
     c.add_argument('--all', action='store_true', help='all transcript lines, not just curated quotes')
     c.add_argument('--canon-only', action='store_true', help='exclude optional/variant lines')
+    c.add_argument('--tier', action='append', metavar='TIER',
+                   help='only this source tier (repeatable or comma-separated)')
+    c.add_argument('--exclude-tier', action='append', metavar='TIER',
+                   help='exclude this source tier, for example game_caption')
     c.add_argument('--class', dest='class_tag', choices=['hunter','titan','warlock'])
     c.add_argument('--limit', type=int, default=20)
     c.add_argument('--offset', type=int, default=0)
@@ -456,8 +465,8 @@ def main(argv=None):
     v.set_defaults(func=cmd_verify)
 
     l = sub.add_parser('list', help='Cheap discovery listings')
-    l.add_argument('kind', choices=['books', 'characters', 'speakers', 'records',
-                                   'activities', 'seasons', 'events', 'lore', 'seals'])
+    l.add_argument('kind', choices=['books', 'characters', 'speakers', 'canon-speakers',
+                                   'records', 'activities', 'seasons', 'events', 'lore', 'seals'])
     l.add_argument('--limit', type=int, default=50)
     l.add_argument('--offset', type=int, default=0)
     l.add_argument('--json', action='store_true')
@@ -479,6 +488,10 @@ def main(argv=None):
     tr.add_argument('--full', action='store_true')
     tr.add_argument('--include-stage', action='store_true')
     tr.add_argument('--canon-only', action='store_true', help='exclude optional/variant lines')
+    tr.add_argument('--tier', action='append', metavar='TIER',
+                    help='only this transcript source tier (repeatable or comma-separated)')
+    tr.add_argument('--exclude-tier', action='append', metavar='TIER',
+                    help='exclude this transcript source tier, for example game_caption')
     tr.add_argument('--section', help='only lines from this section/location')
     tr.add_argument('--class', dest='class_tag', choices=['hunter','titan','warlock'])
     tr.add_argument('--json', action='store_true')

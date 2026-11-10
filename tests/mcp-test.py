@@ -191,6 +191,12 @@ def taxonomy_tools():
     cap = server.character('Lord Shaxx', all_lines=True, limit=2)
     assert '(caption lines)' in cap['header'], cap['header']
     assert all(r['source_tier'] == 'game_caption' for r in cap['rows']), cap['rows']
+    tier = server.character('Lord Shaxx', all_lines=True, tier='game_caption', limit=2)
+    assert tier['rows'] and all(r['source_tier'] == 'game_caption' for r in tier['rows'])
+    curated = server.character('Ghost', all_lines=True, exclude_tier='game_caption', limit=2)
+    assert curated['rows'] and all(r['source_tier'] != 'game_caption' for r in curated['rows'])
+    mismatch = server.transcript('contact-io', tier='game_caption')
+    assert mismatch['tier_match'] is False and not mismatch['lines']
     tr = server.transcript('menagerie', class_tag='hunter', limit=10)
     assert all(line['class_tag'] in (None, 'hunter') for line in tr['lines'])
 
