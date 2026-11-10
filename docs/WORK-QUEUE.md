@@ -13,7 +13,7 @@ executable without re-deriving context. Status values: `queued`, `active`,
 | Q4 | Caption-tier label in `character(all_lines=True)` | P3 | 30 min | **done** (Q6) |
 | Q5 | Confirm `w64_sr_globals_0134` is empty | P4 | 30 min | **done** (Q6) |
 | Q7 | Deep ecosystem pass: standards, template, agents/webs, recount, MCP, site | P0 | 6–8 h | **done** |
-| Q8 | Tier filters, `v_canon_speakers`, access-test consolidation, refresh runbook | P0 | 4–5 h | planned |
+| Q8 | Tier filters, `v_canon_speakers`, access-test consolidation, refresh runbook | P0 | 4–5 h | **A-C done**, D on trigger |
 
 ---
 
@@ -264,3 +264,9 @@ trigger-based.
 
 **Gate:** full rebuild and 18-suite audit for the schema view; agent audits for
 the bundled release.
+
+**Q8 A-C status (2026-11-10):** complete in v0.40.0. `--tier`/`--exclude-tier`
+on `character` and `transcript` (CLI and MCP); `v_canon_speakers` (230 rows,
+schema 1.10.0) with `list canon-speakers` / MCP `canon_speakers`; the access
+gate absorbed the legacy connection test (extended suite 11). D remains a
+runbook: run `scripts/refresh-live-build.py` when a new public build appears.
