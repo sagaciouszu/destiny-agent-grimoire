@@ -103,7 +103,7 @@ More commands are in the sections below.
 | MCP SDK (optional) | typed tools for agents without a shell | Python 3.10+; `bash mcp-server/install.sh` |
 | `python3` 3.8+ | migration, query CLI, tests | standard library only |
 | `sqlite3` | optional raw SQL | the CLI uses Python's built-in driver |
-| ~400 MB disk | sources plus built database | database is ~300 MB |
+| ~400 MB disk | sources plus built database | database is ~270 MB |
 
 No API keys, accounts or network access are required at runtime.
 
@@ -273,8 +273,8 @@ repository minus the database lives outside the tree.
 | Calus / Zavala / Ghost / Mara Sov | run tests/master-audit.sh in each repo | 20/20 |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 checks |
 | Database integrity | `bash tests/test-db.sh` | 67 checks |
-| Drifter agent audit | run tests/master-audit.sh in destiny-agent-drifter | 25/25 |
-| Eris agent audit | run tests/master-audit.sh in destiny-agent-eris-morn | 20/20 |
+| Drifter agent audit | run tests/master-audit.sh in destiny-agent-drifter | 27/27 |
+| Eris agent audit | run tests/master-audit.sh in destiny-agent-eris-morn | 22/22 |
 | Documentation consistency | `python3 tests/docs-consistency.py` | PASS |
 | File conformance | `python3 tests/conformance.py` | PASS |
 | Knowledge webs | `python3 scripts/generate-knowledge-web.py --check` | PASS |
