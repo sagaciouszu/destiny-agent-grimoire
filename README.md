@@ -46,10 +46,10 @@ Smaller companions of the same bytes are published by the release-assets
 workflow at the same static endpoint:
 
 ```bash
-# 41.9 MiB, smallest: xz -d
+# 40.6 MiB, smallest: xz -d
 curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db.xz -o db/grimoire.db.xz && xz -d db/grimoire.db.xz
 
-# 78.6 MiB, zero dependencies: gzip -d (Android apps: GZIPInputStream)
+# 72.6 MiB, zero dependencies: gzip -d (Android apps: GZIPInputStream)
 curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db.gz -o db/grimoire.db.gz && gzip -d db/grimoire.db.gz
 ```
 
