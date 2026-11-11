@@ -486,9 +486,11 @@ serves every agent.
 
 1. Ingest (`archive/` scrapers or `scripts/ingest-*`) into the documented
    paths.
-2. `python3 db/migrate.py`, then the enrichment steps
-   (`db/enrich_lore.py`, `db/enrich_manifest.py`, `db/enrich_seals.py`,
-   `db/enrich_itemsets.py --apply`); verify the counts printed on stdout.
+2. `python3 db/migrate.py`, then `python3 scripts/apply-queen-fold.py` (the
+   owner speaker split), then the enrichment steps (`db/enrich_lore.py`,
+   `db/enrich_manifest.py`, `db/enrich_seals.py`,
+   `db/enrich_itemsets.py --apply`), then `db/build_entity_web.py --db
+   db/grimoire.db`; verify the counts printed on stdout.
 3. Refresh derived docs: `python3 tests/sync-doc-counts.py`,
    `python3 tests/sync-readme-meta.py`, `python3 scripts/gap-report.py`,
    `bash scripts/sync-wiki.sh` (add `--push` to publish the GitHub wiki; the

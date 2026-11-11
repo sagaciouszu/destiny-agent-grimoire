@@ -5,17 +5,18 @@ The Queen never existed as a person in Destiny: the Throne World "Mara Sov and
 Riven" slot. 22 lines go to Riven (Throne World / Forsaken / Nothing Left to
 Say), 15 lines go to Mara Sov (Queen's Court, The Machinist seq 4/6). The
 split is DB-only by design: a from-source `db/migrate.py` re-creates the
-origionals; this script re-applies the ruling identically to any build.
+originals; this script re-applies the ruling identically to any build.
 
 Idempotent. Run after migrate() and before the entity-web build:
 
     python3 scripts/apply-queen-fold.py [--dry-run]
 """
 import argparse
+import os
 import sqlite3
 import sys
 
-DB = '/home/sredshaw/destiny/destiny-agent-grimoire/db/grimoire.db'
+DB = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'db', 'grimoire.db')
 
 RIVEN = [
     ('caption-w64-globals-03d1-5760', None),
