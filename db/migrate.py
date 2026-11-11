@@ -1073,66 +1073,44 @@ def migrate():
     tl_cards = dict(conn.execute('SELECT slug, COALESCE(timeline, "") FROM grimoire_cards'))
     tl_books = dict(conn.execute('SELECT slug, COALESCE(timeline, "") FROM books'))
     def add_fts(title, text, speaker='', body='', source='', source_slug='',
-                class_tag='', timeline='', lang='en'):
+                class_tag='', timeline='', lang='en', norm=''):
         # lang is the document language: every row in this build is English,
         # later caption languages arrive as data rows (see capabilities.json).
+        # norm is the normalized text used for quote verification (folded from
+        # verify_fts in schema 1.12.0).
         nonlocal fts_id
         fts_id += 1
-        conn.execute('INSERT INTO fts (rowid,title,text,speaker,body,source,source_slug,class_tag,timeline,lang) VALUES (?,?,?,?,?,?,?,?,?,?)',
+        conn.execute('INSERT INTO fts (rowid,title,text,speaker,body,source,source_slug,class_tag,timeline,lang,norm) VALUES (?,?,?,?,?,?,?,?,?,?,?)',
             (fts_id, title, text or '', speaker, body or '', source, source_slug,
-             class_tag, timeline or '', lang))
+             class_tag, timeline or '', lang, norm or ''))
     for bid, slug, title in conn.execute('SELECT id,slug,title FROM books').fetchall():
-        for eid, etitle, ebody in conn.execute('SELECT id,title,body FROM book_entries WHERE book_id=?', (bid,)).fetchall():
+        for eid, etitle, ebody, enorm in conn.execute('SELECT id,title,body,norm_text FROM book_entries WHERE book_id=?', (bid,)).fetchall():
             add_fts(f'{title}: {etitle}', ebody, source='book_entry', source_slug=slug,
-                    timeline=tl_books.get(slug, ''))
+                    timeline=tl_books.get(slug, ''), norm=enorm)
     for tid, slug, title, tier in conn.execute(
             'SELECT id, slug, title, source_tier FROM transcripts').fetchall():
-        for tlid, sp, line, ctag in conn.execute(
-                'SELECT id,speaker,line,class_tag FROM transcript_lines WHERE transcript_id=?', (tid,)).fetchall():
+        for tlid, sp, line, ctag, nline in conn.execute(
+                'SELECT id,speaker,line,class_tag,norm_line FROM transcript_lines WHERE transcript_id=?', (tid,)).fetchall():
             # Game captions are their own source so search can rank and filter
             # them (`--type captions`); every other line stays transcript_line.
             add_fts(title, line, sp,
                     source='caption' if tier == 'game_caption' else 'transcript_line',
                     source_slug=slug, class_tag=ctag or '',
-                    timeline=tl_by_tid.get(tid, ''))
-    for gid, slug, title, body in conn.execute('SELECT id,slug,title,body FROM grimoire_cards').fetchall():
+                    timeline=tl_by_tid.get(tid, ''), norm=nline)
+    for gid, slug, title, body, nbody in conn.execute('SELECT id,slug,title,body,norm_body FROM grimoire_cards').fetchall():
         add_fts(title, body, source='grimoire_card', source_slug=slug,
-                timeline=tl_cards.get(slug, ''))
-    for iid, slug, title, speaker, text in conn.execute('SELECT id,slug,title,speaker,text FROM interactions').fetchall():
+                timeline=tl_cards.get(slug, ''), norm=nbody)
+    for iid, slug, title, speaker, text, ntext in conn.execute('SELECT id,slug,title,speaker,text,norm_text FROM interactions').fetchall():
         add_fts(title, text, speaker, source='interaction', source_slug=slug,
-                timeline=tl_interactions.get(slug, ''))
-    for iid, slug, title, text in conn.execute('SELECT id,slug,title,text FROM items').fetchall():
+                timeline=tl_interactions.get(slug, ''), norm=ntext)
+    for iid, slug, title, text, ntext in conn.execute('SELECT id,slug,title,text,norm_text FROM items').fetchall():
         if text:  # stat-only items have no searchable text
             add_fts(title, text, source='item', source_slug=slug,
-                    timeline=tl_items.get(slug, ''))
-    for rid, slug, title, body in conn.execute('SELECT id,slug,title,body FROM records').fetchall():
+                    timeline=tl_items.get(slug, ''), norm=ntext)
+    for rid, slug, title, body, nbody in conn.execute('SELECT id,slug,title,body,norm_body FROM records').fetchall():
         add_fts(title, body, source='record', source_slug=slug,
-                timeline=tl_records.get(slug, ''))
+                timeline=tl_records.get(slug, ''), norm=nbody)
     print(f'fts entries: {fts_id}')
-
-    # Verification index: normalized text with provenance (documents only)
-    print('building verification index...')
-    for sql in (
-        "INSERT INTO verify_fts(norm, source, slug, speaker) "
-        "SELECT tl.norm_line, "
-        "CASE WHEN t.source_tier='game_caption' THEN 'caption' ELSE 'transcript' END, "
-        "t.slug, tl.speaker "
-        "FROM transcript_lines tl JOIN transcripts t ON t.id=tl.transcript_id",
-        "INSERT INTO verify_fts(norm, source, slug, speaker) "
-        "SELECT e.norm_text, 'book', b.slug, '' "
-        "FROM book_entries e JOIN books b ON b.id=e.book_id",
-        "INSERT INTO verify_fts(norm, source, slug, speaker) "
-        "SELECT norm_body, 'grimoire_card', slug, '' FROM grimoire_cards",
-        "INSERT INTO verify_fts(norm, source, slug, speaker) "
-        "SELECT norm_text, 'interaction', slug, speaker FROM interactions",
-        "INSERT INTO verify_fts(norm, source, slug, speaker) "
-        "SELECT norm_text, 'item', slug, '' FROM items WHERE text != ''",
-        "INSERT INTO verify_fts(norm, source, slug, speaker) "
-        "SELECT norm_body, 'record', slug, '' FROM records",
-    ):
-        conn.execute(sql)
-    v_count = conn.execute('SELECT COUNT(*) FROM verify_fts').fetchone()[0]
-    print(f'verification entries: {v_count}')
 
     conn.execute(
         "INSERT INTO item_title_fts(title, slug, item_type, release) "

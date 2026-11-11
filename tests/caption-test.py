@@ -274,8 +274,6 @@ def indexes():
                 f'ON t.id=tl.transcript_id WHERE {CAP}')
     fts = one("SELECT COUNT(*) FROM fts WHERE source='caption'")
     assert fts == lines, f'fts caption rows {fts} != caption lines {lines}'
-    ver = one("SELECT COUNT(*) FROM verify_fts WHERE source='caption'")
-    assert ver == lines, f'verify caption rows {ver} != caption lines {lines}'
     assert one("SELECT COUNT(*) FROM fts WHERE lang IS NULL OR lang=''") == 0, \
         'fts rows without a language'
     assert one("SELECT COUNT(*) FROM fts WHERE source='caption' AND lang!='en'") == 0, \

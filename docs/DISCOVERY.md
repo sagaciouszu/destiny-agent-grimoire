@@ -100,7 +100,7 @@ No new full scans were introduced; the activity filter uses
 
 Manifest lore entries, seals and triumphs are additive enrichment, not canon
 dialogue. They are indexed for discovery (`source=lore_entry`), while seal and
-triumph descriptions stay out of `verify_fts`. `lore`, `seal` and `seals`
+triumph descriptions stay out of the verification index. `lore`, `seal` and `seals`
 provide direct lookups.
 
 ## Class variants and user preferences

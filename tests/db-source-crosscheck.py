@@ -100,7 +100,6 @@ def indexes():
     if has_lore:
         expected += conn.execute(
             'SELECT COUNT(*) FROM lore_entries WHERE is_duplicate=0').fetchone()[0]
-    assert conn.execute('SELECT COUNT(*) FROM verify_fts').fetchone()[0] == expected
     assert conn.execute('SELECT COUNT(*) FROM fts').fetchone()[0] == expected
 
 check('search and verification indexes are complete', indexes)

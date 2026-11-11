@@ -80,10 +80,12 @@ T_EXPECTED=$(sqlite3 "$DB" "SELECT COUNT(*) FROM items WHERE title != ''")
 T_ACTUAL=$(sqlite3 "$DB" "SELECT COUNT(*) FROM item_title_fts")
 check "[ $T_ACTUAL -eq $T_EXPECTED ]" "item title index complete ($T_ACTUAL rows)"
 
-# Verification index mirrors indexable rows
+# Verification index folded into fts.norm: every indexable row must carry a norm
 V_EXPECTED=$(sqlite3 "$DB" "SELECT (SELECT COUNT(*) FROM transcript_lines)+(SELECT COUNT(*) FROM book_entries)+(SELECT COUNT(*) FROM grimoire_cards)+(SELECT COUNT(*) FROM interactions)+(SELECT COUNT(*) FROM items WHERE text!='')+(SELECT COUNT(*) FROM records) + COALESCE((SELECT COUNT(*) FROM lore_entries WHERE is_duplicate=0),0)")
-V_ACTUAL=$(sqlite3 "$DB" "SELECT COUNT(*) FROM verify_fts")
-check "[ $V_ACTUAL -eq $V_EXPECTED ]" "verification index complete ($V_ACTUAL rows)"
+V_ACTUAL=$(sqlite3 "$DB" "SELECT COUNT(*) FROM fts WHERE norm != ''")
+check "[ $V_ACTUAL -eq $V_EXPECTED ]" "verification index folded into fts.norm ($V_ACTUAL rows)"
+# No verify_fts table remains (schema 1.12.0 folded it into fts.norm)
+check "[ -z \"$(sqlite3 \"$DB\" \"SELECT name FROM sqlite_master WHERE type='table' AND name='verify_fts'\")\" ]" "verify_fts removed (folded into fts.norm)"
 
 # Taxonomy integrity (additive layer, see docs/TAXONOMY.md)
 for t in expansions seasons events event_occurrences activities transcript_classification item_classification document_classification; do

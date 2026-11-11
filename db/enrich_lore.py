@@ -56,7 +56,6 @@ def main():
 
     # Idempotent refresh: clear previous enrichment only.
     conn.execute("DELETE FROM fts WHERE source='lore_entry'")
-    conn.execute("DELETE FROM verify_fts WHERE source='lore_entry'")
     conn.execute('DELETE FROM lore_entry_items')
     conn.execute('DELETE FROM lore_entries')
 
@@ -110,12 +109,9 @@ def main():
             continue
         fts_id += 1
         conn.execute(
-            'INSERT INTO fts (rowid,title,text,speaker,body,source,source_slug,lang) '
-            'VALUES (?,?,?,?,?,?,?,?)',
-            (fts_id, title, body, '', '', 'lore_entry', f'lore-{h}', 'en'))
-        conn.execute(
-            'INSERT INTO verify_fts (norm,source,slug,speaker) VALUES (?,?,?,?)',
-            (nb, 'lore_entry', f'lore-{h}', ''))
+            'INSERT INTO fts (rowid,title,text,speaker,body,source,source_slug,lang,norm) '
+            'VALUES (?,?,?,?,?,?,?,?,?)',
+            (fts_id, title, body, '', '', 'lore_entry', f'lore-{h}', 'en', nb))
         v_id += 1
 
     unique = len(rows) - sum(1 for r in rows if r[5])
