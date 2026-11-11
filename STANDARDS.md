@@ -539,7 +539,7 @@ serves every agent.
   `release.published` (plus `workflow_dispatch` with a `tag` to backfill older
   releases), recompresses the published `grimoire.db` with `xz -9e` and
   `gzip -9`, round-trip-verifies both (byte `cmp` + `PRAGMA integrity_check`),
-  and uploads `grimoire.db.xz` (41.9 MiB) and `grimoire.db.gz` (78.6 MiB) with a
+  and uploads `grimoire.db.xz` (40.6 MiB) and `grimoire.db.gz` (72.6 MiB) with a
   refreshed `SHA256SUMS`. Static endpoints:
   `releases/latest/download/grimoire.db.xz` and
   `releases/latest/download/grimoire.db.gz`. Android apps should consume the
