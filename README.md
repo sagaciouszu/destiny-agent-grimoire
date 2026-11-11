@@ -155,8 +155,7 @@ No API keys, accounts or network access are required at runtime.
 | `v_season_coverage` (view) | 28 | Transcripts and lines per season |
 | `v_speakers` (view) | 423 | Speakers with line counts (includes caption-only) |
 | `v_transcript_taxonomy` (view) | 9229 | Transcripts joined to classification |
-| `verify_fts` (index) | 176794 | Fast quote verification |
-| **Total** | 889464 | Rows across every table, view and index above |
+| **Total** | 712670 | Rows across every table, view and index above |
 
 Every content row carries provenance. Speaker aliases are canonicalized during
 migration. The full contract is `STANDARDS.md`.

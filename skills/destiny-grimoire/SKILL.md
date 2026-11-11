@@ -49,7 +49,6 @@ flavor text, verify.
 | caption_sightings | 63359 | Every observation of a caption record line (build, package, slot) |
 | transcript_lines.speaker_source | 4214 | Attribution provenance column (build-25932352/ishtar_containment/dialogue_node/line_prefix) |
 | fts | 176794 | FTS5 search index |
-| verify_fts | 176794 | Fast quote verification index |
 | item_title_fts | 58764 | Item title lookup index |
 | entities | 89 | Named entities (char/power/faction/place) |
 | entity_aliases | 136 | Attested name variants per entity |

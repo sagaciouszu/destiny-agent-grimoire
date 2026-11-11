@@ -121,6 +121,11 @@ are in the private extraction vault, not this repository):
   `items`, `records`, `character_lines`, `lore_entries`); `transcript_lines`
   keeps its normalized index for caption dedupe joins. The shipped database is
   about 30 MiB smaller with no content change.
+- **Schema 1.12.0** (`db/SCHEMA_VERSION`): folds the `verify_fts`
+  verification index (176,794 rows, ~56.8 MB) into a normalized `norm` column
+  on `fts`. `fts` now carries six indexed columns (title, text, speaker, body,
+  source, norm); `bm25(fts, 3.0, 1.0, 1.0, 1.0, 0.0, 0.0)` keeps ranking
+  byte-identical. The shipped database is ~31 MB smaller with no content change.
 - **Speaker fold survives rebuilds.** `The Queen` canonicalizes to `Mara Sov`,
   matching the fold already present in the shipped corpus (37 lines across 11
   transcripts); without the alias a fresh rebuild lost their attribution links.

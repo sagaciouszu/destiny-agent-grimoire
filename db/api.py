@@ -514,7 +514,7 @@ def search(term, type=None, limit=10, full=False, offset=0, rank=True,
             params.extend(entity_params)
         params.append(_limit(limit, 10))
         params.append(_offset(offset))
-        order = (" ORDER BY bm25(fts, 3.0, 1.0, 1.0, 1.0, 0.0)"
+        order = (" ORDER BY bm25(fts, 3.0, 1.0, 1.0, 1.0, 0.0, 0.0)"
                  " + CASE WHEN source='item' THEN 1.0 ELSE 0 END"
                  " + CASE WHEN source='caption' THEN -1.0 ELSE 0 END"
                  " + CASE WHEN speaker='Narration' THEN 2.0"
@@ -729,7 +729,7 @@ def item(slug):
 def _verify_exact(conn, nq):
     """Tokenizer-edge rows (punctuation-only norms) that FTS phrases can't match."""
     rows = conn.execute(
-        'SELECT norm, source, slug, speaker FROM verify_fts WHERE norm = ? LIMIT 50',
+        'SELECT norm, source, source_slug, speaker FROM fts WHERE norm = ? LIMIT 50',
         (nq,)).fetchall()
     return [{'source': r[1], 'slug': r[2], 'speaker': r[3], 'norm': r[0]} for r in rows]
 
@@ -739,8 +739,8 @@ def _verify_index(conn, nq):
     phrase = '"' + nq.replace('"', '""') + '"'
     try:
         rows = conn.execute(
-            'SELECT norm, source, slug, speaker FROM verify_fts '
-            'WHERE verify_fts MATCH ? LIMIT 500', (phrase,)).fetchall()
+            'SELECT norm, source, source_slug, speaker FROM fts '
+            'WHERE fts MATCH ? LIMIT 500', ('norm:' + phrase,)).fetchall()
     except sqlite3.OperationalError:
         return []
     return [{'source': r[1], 'slug': r[2], 'speaker': r[3], 'norm': r[0]}

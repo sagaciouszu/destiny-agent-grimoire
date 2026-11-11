@@ -232,7 +232,7 @@ CREATE TABLE IF NOT EXISTS meta (
 );
 
 CREATE VIRTUAL TABLE IF NOT EXISTS fts USING fts5(
-    title, text, speaker, body, source,
+    title, text, speaker, body, source, norm,
     source_slug UNINDEXED,
     class_tag UNINDEXED,
     timeline UNINDEXED,
@@ -243,12 +243,6 @@ CREATE VIRTUAL TABLE IF NOT EXISTS fts USING fts5(
 -- Activity / season / event taxonomy lives in db/taxonomy.py (single source).
 -- migrate.py calls taxonomy.ensure_schema() so fresh builds get the tables
 -- without duplicating the DDL here.
-
--- Fast quote verification: normalized text with provenance (documents only)
-CREATE VIRTUAL TABLE IF NOT EXISTS verify_fts USING fts5(
-    norm, source UNINDEXED, slug UNINDEXED, speaker UNINDEXED,
-    tokenize='porter unicode61'
-);
 
 -- Item title lookup for find_item (titles only; lore text stays in fts)
 CREATE TABLE IF NOT EXISTS lore_entries (

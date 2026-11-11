@@ -172,7 +172,6 @@ inheritance, and `db/capabilities.json` sync.
 | `entity_relations` | entity_id, relation, target_entity_id, source | | `adjacent_to` (Siren of Riven -> Riven), `related_to` (Gardener -> The Traveler, Winnower -> The Darkness) |
 | `entity_build_meta` | key, value | | build audit trail (build_id, hashes, timings) |
 | `fts` | | | exactly one row per indexed content row (1:1); carries `timeline` UNINDEXED |
-| `verify_fts` | | | normalized text + provenance; mirrors indexable rows for fast quote checks |
 | `item_title_fts` | | | item titles for fast name lookup |
 | `lore_entries` | id, hash, title | subtitle, body, norm_body, source, source_url, is_duplicate, duplicate_of | `hash` is unique; `source` defaults `bungie_manifest` |
 | `lore_entry_items` | lore_hash, item_title | | PRIMARY KEY (lore_hash, item_title) |

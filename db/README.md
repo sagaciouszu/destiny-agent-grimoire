@@ -76,7 +76,6 @@ sqlite3 db/grimoire.db "SELECT slug, title, item_type FROM items WHERE item_type
 | `records` | 69 triumphs/seals with canonical text |
 | `transcript_lines` | Dialogue by speaker (includes caption-tier rows); `speaker_source` set for attributed caption lines |
 | `transcripts` | 9229 transcript headers (quest + cutscene + web) |
-| `verify_fts` | normalized text + provenance for fast quote verification |
 
 ### Entity web (additive, schema 1.7.0)
 

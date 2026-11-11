@@ -46,7 +46,6 @@ C = {
     'entity_links': q('SELECT COUNT(*) FROM entity_links'),
     'entity_relations': q('SELECT COUNT(*) FROM entity_relations'),
     'aliases': q('SELECT COUNT(*) FROM speaker_aliases'),
-    'verify': q('SELECT COUNT(*) FROM verify_fts'),
     'item_titles': q('SELECT COUNT(*) FROM item_title_fts'),
 }
 conn.close()
@@ -84,7 +83,6 @@ SHARED = [
     (r'\| `entity_relations` \| \d+', '| `entity_relations` | {entity_relations}'),
     (r'\d+ entity to document links', '{entity_links} entity to document links'),
     (r'\d+ rows: entity to document links', '{entity_links} rows: entity to document links'),
-    (r'\| `verify_fts` \(index\) \| \d+', '| `verify_fts` (index) | {verify}'),
     (r'\| `item_title_fts` \(index\) \| \d+', '| `item_title_fts` (index) | {item_titles}'),
     (r'\d+ characters \(\d+ canon lines\)', '{characters} characters ({character_lines} canon lines)'),
     (r'\d+ characters \(\d+ lines\)', '{characters} characters ({character_lines} lines)'),
