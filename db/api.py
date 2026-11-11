@@ -457,7 +457,8 @@ def _entity_fts_filter(conn, entity_name):
 
 def search(term, type=None, limit=10, full=False, offset=0, rank=True,
            activity=None, season=None, event=None, expansion=None, class_tag=None,
-           exclude_stage=False, timeline=None, lang=None, entity=None):
+           exclude_stage=False, timeline=None, lang=None, entity=None,
+           with_total=False):
     """Full-text search. Returns rows with a snippet unless full=True.
 
     The term is used as FTS5 syntax when valid; otherwise every word is quoted
@@ -519,6 +520,10 @@ def search(term, type=None, limit=10, full=False, offset=0, rank=True,
                  " + CASE WHEN source='caption' THEN -1.0 ELSE 0 END"
                  " + CASE WHEN speaker='Narration' THEN 2.0"
                  " WHEN speaker='Cutscene' THEN 1.0 ELSE 0 END") if rank else ''
+        total = None
+        if with_total:
+            total_params = params[:-2]
+            total = conn.execute(f'SELECT COUNT(*) FROM fts WHERE {where}', total_params).fetchone()[0]
         try:
             if full:
                 rows = conn.execute(
@@ -529,7 +534,10 @@ def search(term, type=None, limit=10, full=False, offset=0, rank=True,
                     f'FROM fts WHERE {where}{order} LIMIT ? OFFSET ?', params).fetchall()
         except sqlite3.OperationalError as e:
             raise ValueError(f'invalid search query: {e}') from e
-        return [dict(r) for r in rows]
+        rows = [dict(r) for r in rows]
+        if with_total:
+            return rows, total
+        return rows
     finally:
         conn.close()
 
@@ -624,27 +632,11 @@ def character(name, about=None, all_lines=False, limit=20, offset=0, canon_only=
     try:
         pattern = f'%{_like(about.lower())}%' if about else None
         if all_lines:
-            params = [f'%{_like(name)}%']
-            sql = ("SELECT line AS text, speaker, '' AS source_slug, t.timeline, "
-                   "t.source_tier AS source_tier "
-                   "FROM transcript_lines JOIN transcripts t ON t.id = transcript_lines.transcript_id "
-                   "WHERE speaker LIKE ? ESCAPE '\\' AND is_stage_dir=0")
-            if canon_only:
-                sql += ' AND is_optional=0'
-            if class_tag:
-                sql += " AND (class_tag IS NULL OR class_tag='' OR class_tag=?)"
-                params.append(str(class_tag).lower())
-            tier_clauses, tier_params = _tier_sql(tiers, exclude_tiers)
-            for clause in tier_clauses:
-                sql += ' AND ' + clause
-            params.extend(tier_params)
-            if pattern:
-                sql += " AND LOWER(line) LIKE ? ESCAPE '\\'"
-                params.append(pattern)
-            sql += ' LIMIT ? OFFSET ?'
-            params.append(_limit(limit, 20))
-            params.append(_offset(offset))
-            rows = [dict(r) for r in conn.execute(sql, params).fetchall()]
+            rows = _transcript_lines(conn, name, pattern, limit, offset, canon_only=canon_only,
+                                     class_tag=class_tag, tiers=tiers,
+                                     exclude_tiers=exclude_tiers)
+            if not rows:
+                return None
             return {'header': f'=== {name} ({_tier_label(rows)}) ===', 'rows': rows}
 
         ch = _resolve_character(conn, name)

@@ -178,13 +178,11 @@ def search(query: str, type: str | None = None, limit: int = 10, full: bool = Fa
     Returns:
         {count, total, next_offset, rows}. `total` is the unpaged match count; `rows` are bounded snippets unless `full`; `next_offset` is null on the last page.
     """
-    rows = _api(api.search, query, type=type, limit=_limit(limit, 10), full=full,
+    rows, total = _api(api.search, query, type=type, limit=_limit(limit, 10), full=full,
                 offset=_offset(offset), rank=rank, activity=activity, season=season,
                 event=event, expansion=expansion, class_tag=class_tag,
-                exclude_stage=exclude_stage, timeline=timeline, lang=lang, entity=entity)
-    total = _api(api.search_total, query, type=type, activity=activity, season=season,
-                 event=event, expansion=expansion, class_tag=class_tag,
-                 exclude_stage=exclude_stage, timeline=timeline, lang=lang, entity=entity)
+                exclude_stage=exclude_stage, timeline=timeline, lang=lang, entity=entity,
+                with_total=True)
     if full:
         for r in rows:
             r['text'] = _trim(r.get('text', ''))
