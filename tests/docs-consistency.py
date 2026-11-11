@@ -5,10 +5,12 @@ Checks the current docs (not historical release notes) against the database,
 the MCP manifest and the sibling repos:
 
   - stale literal counts/sizes anywhere in current user or agent docs;
+  - agent-count claims in current docs match series/agents.json;
   - the site stats snapshot matches the DB;
   - agent README metadata matches its tag and HEAD date;
   - MCP tool names in mcp-server/README.md match capabilities.json;
-  - relative Markdown links resolve.
+  - relative Markdown links resolve;
+  - no timestamped "live build as of <date>" claims in current docs.
 
 Read-only. Skips cleanly when a sibling repo is absent.
 Exit 1 on any drift.
@@ -213,6 +215,65 @@ def relative_links():
     assert not bad, "broken relative links: " + "; ".join(bad[:8])
 
 
+# --- positive roster assertion: docs must state the real agent count --------
+COUNT_WORDS = ("one two three four five six seven eight nine ten eleven twelve "
+               "thirteen fourteen fifteen sixteen seventeen eighteen nineteen "
+               "twenty").split()
+COUNT_NUM = {w: i for i, w in enumerate(COUNT_WORDS, 1)}
+# "<n> character agents", "<n> agents in this series" and "<n> characters"
+# are roster-size claims; they must equal len(series/agents.json)["agents"].
+# Digits are only trusted next to "agents" (a digit+"characters" claim is
+# almost always a string length here: "4000 characters per row"), and
+# "N more X" is a relative claim, not a roster size.
+COUNT_CLAIM = re.compile(
+    r"(?i)\b(?<![\d,])(\d+)\s+(?!more\b)(?:character[\s-]+)?agents\b"
+    r"|\b(" + "|".join(COUNT_WORDS) + r")\s+(?!more\b)(?:character[\s-]+)?agents\b"
+    r"|\b(" + "|".join(COUNT_WORDS) + r")\s+(?!more\b)characters\b")
+
+# --- frozen build claims: "live build as of <date>" goes stale silently ------
+STAMP = (r"(?:20\d\d-\d\d-\d\d|(?:January|February|March|April|May|June|July|"
+         r"August|September|October|November|December)\s+20\d\d)")
+FROZEN_BUILD = re.compile(
+    r"(?i)(?:\b(?:live|current|client) build as of\b"
+    rf"|\bas of {STAMP}[^\n]*\b(?:live|current|client) build\b"
+    rf"|\b(?:live|current|client) build\b[^\n]*\bas of {STAMP}\b)")
+
+
+def agent_count_claims():
+    manifest = json.load(open(os.path.join(ROOT, "series", "agents.json"),
+                              encoding="utf-8"))["agents"]
+    roster = len(AGENTS)                       # length via tests/_roster.py
+    assert len(manifest) == roster, (
+        f"series/agents.json lists {len(manifest)} agents but the "
+        f"_roster.py roster exposes {roster} (duplicate id or an entry "
+        "missing id/source)")
+    hits = []
+    for path in current_docs():
+        if any(marker in path for marker in HISTORICAL):
+            continue                           # release notes record history
+        text = open(path, encoding="utf-8", errors="ignore").read()
+        for m in COUNT_CLAIM.finditer(text):
+            raw = m.group(1) or m.group(2) or m.group(3)
+            n = int(raw) if raw.isdigit() else COUNT_NUM[raw.lower()]
+            if n != len(manifest):
+                line = text.count("\n", 0, m.start()) + 1
+                hits.append(f"{os.path.relpath(path, WORK)}:{line}: "
+                            f"{raw} agents/characters (roster has {len(manifest)})")
+    assert not hits, "agent-count claim drift: " + "; ".join(hits[:8])
+
+
+def frozen_build_claims():
+    hits = []
+    for path in current_docs():
+        if any(marker in path for marker in HISTORICAL):
+            continue
+        text = open(path, encoding="utf-8", errors="ignore").read()
+        for m in FROZEN_BUILD.finditer(text):
+            line = text.count("\n", 0, m.start()) + 1
+            hits.append(f"{os.path.relpath(path, WORK)}:{line}: {m.group(0)!r}")
+    assert not hits, "timestamped live-build claim: " + "; ".join(hits[:8])
+
+
 print("=== DOCS CONSISTENCY ===")
 check("no stale counts or sizes in current docs", stale_counts)
 check("site stats snapshot matches the DB", site_stats)
@@ -220,5 +281,7 @@ check("agent README metadata matches tags and HEAD", agent_metadata)
 check("MCP README tools match the manifest", mcp_tools)
 check("no internal plans or private paths in public docs", public_surface)
 check("relative Markdown links resolve", relative_links)
+check("agent-count claims match the series roster", agent_count_claims)
+check("no timestamped live-build claims in current docs", frozen_build_claims)
 print(f"\nPassed: {PASS} | Failed: {FAIL}")
 sys.exit(1 if FAIL else 0)
