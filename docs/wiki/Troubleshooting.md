@@ -80,6 +80,6 @@ open or migrate a truncated database.
 
 ## First query is slow
 
-The database is about 300 MB. Local SSD access is fast; a network drive, a cold
+The database is about 270 MB. Local SSD access is fast; a network drive, a cold
 cache or a container bind mount can add seconds. Confirm the file is local and
 that `python3 db/query.py stats` opens it without copying.

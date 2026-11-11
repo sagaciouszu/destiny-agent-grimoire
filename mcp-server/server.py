@@ -208,9 +208,10 @@ def entity(ref: str, kind: str | None = None, limit: int = 10,
         limit: Candidates to return (1-100).
         include_unreviewed: Include reviewed=0 aliases (default strict).
 
-    Returns ranked candidates plus, for an exact match, the entity's aliases,
-    relations (adjacent_to / related_to), document counts by kind and the top
-    documents.
+    Returns:
+        {fuzzy, candidates, ...}: ranked candidates; for an exact match also
+        aliases, relations, document counts by kind and top documents.
+        No match returns fuzzy=false with empty candidates, never an error.
     """
     res = _api(api.entity, ref, limit=_limit(limit, 10), kind=kind,
                include_unreviewed=include_unreviewed)
@@ -289,8 +290,10 @@ def verify(quote: str, speaker: str | None = None, exact: bool = False) -> dict:
         speaker: Require this attribution; sources with no speaker are excluded.
         exact: Require a full canonical row, not a substring.
 
-    Returns verified=true only when the text traces to canonical content, with
-    source, speaker and exact-match flags.
+    Returns:
+        {verified, ...}: verified=true only when the text traces to canon, plus
+        source, speaker and exact-match flags. A miss returns verified=false
+        with a reason, never an error.
     """
     try:
         return json.loads(_verify_cached(quote, speaker or '', exact))
@@ -492,7 +495,7 @@ def seasons() -> dict:
     """List every season and episode with official number, type and coverage counts.
 
     Returns:
-        Returns: {count, rows} for every season.
+        {count, rows}: every season with number, type and coverage counts.
     """
     rows = _api(api.seasons)
     return {'count': len(rows), 'rows': rows}
@@ -503,7 +506,7 @@ def events() -> dict:
     """List every rotating event with its coverage and occurrence count.
 
     Returns:
-        Returns: {count, rows} for every rotating event.
+        {count, rows}: every rotating event with coverage and occurrence count.
     """
     rows = _api(api.events)
     return {'count': len(rows), 'rows': rows}
