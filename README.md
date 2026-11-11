@@ -13,7 +13,7 @@
   <img src='https://img.shields.io/badge/made%20with-Destiny%20Grimoire-gold' alt='Made with Destiny Agent Grimoire'/>
 </p>
 
-**Version:** 0.40.3 | **Last push:** 2026-11-10 | **Status:** Active
+**Version:** 0.41.0 | **Last push:** 2026-11-10 | **Status:** Active
 
 **Documentation site:** <https://sagaciouszu.github.io/destiny-agent-grimoire-site/>
 
@@ -68,10 +68,12 @@ the enrich chain:
 ```bash
 python3 archive/data/fetch_manifest.py --check
 python3 db/migrate.py
+python3 scripts/apply-queen-fold.py
 python3 db/enrich_lore.py
 python3 db/enrich_manifest.py
 python3 db/enrich_seals.py
 python3 db/enrich_itemsets.py --apply
+python3 db/build_entity_web.py --db db/grimoire.db
 ```
 
 **Step 3: query.**
@@ -231,10 +233,12 @@ python3 archive/data/fetch_manifest.py --fetch --extract
 
 # rebuild, then apply local manifest enrichment
 python3 db/migrate.py
+python3 scripts/apply-queen-fold.py
 python3 db/enrich_lore.py
 python3 db/enrich_manifest.py
 python3 db/enrich_seals.py
-python3 db/enrich_itemsets.py --apply   # optional item-set mapping
+python3 db/enrich_itemsets.py --apply
+python3 db/build_entity_web.py --db db/grimoire.db   # optional item-set mapping
 python3 scripts/export-site-stats.py \
   --out ../destiny-agent-grimoire-site/_data/grimoire.json   # site counts
 python3 tests/sync-doc-counts.py

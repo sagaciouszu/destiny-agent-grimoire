@@ -38,7 +38,7 @@ rows = conn.execute("""
 try:
     canon_view = conn.execute('SELECT speaker FROM v_canon_speakers').fetchall()
 except sqlite3.OperationalError:
-    print('FAIL: v_canon_speakers missing; rebuild the database (schema 1.10.0)')
+    print('FAIL: v_canon_speakers missing; rebuild the database (schema 1.11.0)')
     sys.exit(1)
 conn.close()
 

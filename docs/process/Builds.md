@@ -116,6 +116,14 @@ are in the private extraction vault, not this repository):
   slots against a lexicon built from the corpus's existing English canon, not
   the resolver's stopword lists. 40 tables per package across all 15 packages:
   English median 0.897–0.936, translated siblings 0.000–0.079, **0 flags**.
+- **Schema 1.11.0** (`db/SCHEMA_VERSION`): removes seven unused
+  normalized-text indexes (`book_entries`, `grimoire_cards`, `interactions`,
+  `items`, `records`, `character_lines`, `lore_entries`); `transcript_lines`
+  keeps its normalized index for caption dedupe joins. The shipped database is
+  about 30 MiB smaller with no content change.
+- **Speaker fold survives rebuilds.** `The Queen` canonicalizes to `Mara Sov`,
+  matching the fold already present in the shipped corpus (37 lines across 11
+  transcripts); without the alias a fresh rebuild lost their attribution links.
 - **Schema 1.10.0** (`db/SCHEMA_VERSION`): adds `v_canon_speakers` (230
   persona-canon speakers; `v_speakers` remains the 423-row discovery view).
 - **Schema 1.9.0** (`db/SCHEMA_VERSION`): `caption_provenance.record_index`

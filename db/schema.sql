@@ -21,7 +21,6 @@ CREATE TABLE IF NOT EXISTS book_entries (
     seq INTEGER
 );
 CREATE INDEX IF NOT EXISTS idx_book_entries_book ON book_entries(book_id);
-CREATE INDEX IF NOT EXISTS idx_book_entries_norm ON book_entries(norm_text);
 
 CREATE TABLE IF NOT EXISTS transcripts (
     id INTEGER PRIMARY KEY,
@@ -128,7 +127,6 @@ CREATE TABLE IF NOT EXISTS grimoire_cards (
     timeline_basis TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_gc_slug ON grimoire_cards(slug);
-CREATE INDEX IF NOT EXISTS idx_gc_norm ON grimoire_cards(norm_body);
 
 CREATE TABLE IF NOT EXISTS interactions (
     id INTEGER PRIMARY KEY,
@@ -144,7 +142,6 @@ CREATE TABLE IF NOT EXISTS interactions (
 );
 CREATE INDEX IF NOT EXISTS idx_int_slug ON interactions(slug);
 CREATE INDEX IF NOT EXISTS idx_int_speaker ON interactions(speaker);
-CREATE INDEX IF NOT EXISTS idx_int_norm ON interactions(norm_text);
 
 CREATE TABLE IF NOT EXISTS items (
     id INTEGER PRIMARY KEY,
@@ -160,7 +157,6 @@ CREATE TABLE IF NOT EXISTS items (
 );
 CREATE INDEX IF NOT EXISTS idx_items_slug ON items(slug);
 CREATE INDEX IF NOT EXISTS idx_items_type ON items(item_type);
-CREATE INDEX IF NOT EXISTS idx_items_norm ON items(norm_text);
 
 CREATE TABLE IF NOT EXISTS records (
     id INTEGER PRIMARY KEY,
@@ -174,7 +170,6 @@ CREATE TABLE IF NOT EXISTS records (
     timeline_basis TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_records_slug ON records(slug);
-CREATE INDEX IF NOT EXISTS idx_records_norm ON records(norm_body);
 
 CREATE TABLE IF NOT EXISTS characters (
     id INTEGER PRIMARY KEY,
@@ -194,7 +189,6 @@ CREATE TABLE IF NOT EXISTS character_lines (
 );
 CREATE INDEX IF NOT EXISTS idx_cl_character ON character_lines(character_id);
 CREATE INDEX IF NOT EXISTS idx_cl_source ON character_lines(source_type, source_slug);
-CREATE INDEX IF NOT EXISTS idx_cl_norm ON character_lines(norm_text);
 
 CREATE TABLE IF NOT EXISTS speaker_aliases (
     alias TEXT PRIMARY KEY,
@@ -269,7 +263,6 @@ CREATE TABLE IF NOT EXISTS lore_entries (
     is_duplicate INTEGER DEFAULT 0,
     duplicate_of TEXT
 );
-CREATE INDEX IF NOT EXISTS idx_lore_norm ON lore_entries(norm_body);
 
 CREATE TABLE IF NOT EXISTS lore_entry_items (
     lore_hash INTEGER NOT NULL,

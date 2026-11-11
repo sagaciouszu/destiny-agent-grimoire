@@ -54,10 +54,12 @@ Use this to confirm the database opened and to see current row counts.
 
 ```bash
 python3 db/migrate.py
+python3 scripts/apply-queen-fold.py
 python3 db/enrich_lore.py
 python3 db/enrich_manifest.py
 python3 db/enrich_seals.py
 python3 db/enrich_itemsets.py --apply
+python3 db/build_entity_web.py --db db/grimoire.db
 bash grimoire-master-audit.sh
 ```
 

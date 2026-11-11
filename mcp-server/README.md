@@ -71,7 +71,7 @@ background service.
 
 ## Database compatibility
 
-The adapter targets schema **1.10.0**. It does not invent a schema upgrade.
+The adapter targets schema **1.11.0**. It does not invent a schema upgrade.
 
 - `stats` includes `caption_sightings`. On a pre-1.9 database the response
   carries `missing_tables: ["caption_sightings", ...]` and omits that count

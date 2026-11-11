@@ -102,9 +102,8 @@ row is touched; books/lore/transcripts are read-only build input.
 ### Indexed columns
 
 - `transcript_lines.speaker` for per-character queries
-- `transcript_lines.norm_line` for `LIKE '%substring%'` lookups
+- `transcript_lines.norm_line` for normalized equality joins (caption dedupe)
 - `items.item_type` for category lookups  
-- `items.norm_text` for substring matching
 - All FTS5 virtual table columns via `MATCH '<term>'`
 
 ## Schema version
@@ -145,5 +144,7 @@ The migration reads `source/` markdown plus `archive/data/*.jsonl` scratch files
 It **does not** build the manifest-derived tables (or the lore index); those
 come from `python3 db/enrich_lore.py`, `enrich_manifest.py`, `enrich_seals.py`
 and `enrich_itemsets.py --apply` after fetching the manifest with
-`python3 archive/data/fetch_manifest.py --fetch --extract`. The full chain is
-the release recipe documented in `docs/process/Testing-and-Auditing.md`.
+`python3 archive/data/fetch_manifest.py --fetch --extract`. Run
+`python3 scripts/apply-queen-fold.py` after migrate (the owner speaker split),
+then `python3 db/build_entity_web.py --db db/grimoire.db`. The full chain is the
+release recipe documented in `docs/process/Testing-and-Auditing.md`.

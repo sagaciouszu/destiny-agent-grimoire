@@ -79,7 +79,7 @@ Use `db/query.py` for everything. Interface wraps common patterns. Examples
 name real corpus speakers so the commands run as written; they are illustrative,
 not a preferred agent or persona.
 
-Schema 1.10.0. `stats` reports `missing_tables` on an older database instead of
+Schema 1.11.0. `stats` reports `missing_tables` on an older database instead of
 failing. `v_speakers` is a discovery view (it includes caption-only names), not
 a canon roster; `v_canon_speakers` is the persona-canon membership list (230
 speakers). Captions are searchable canon but excluded from persona counts;

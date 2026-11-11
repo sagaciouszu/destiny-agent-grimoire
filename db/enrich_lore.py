@@ -39,7 +39,6 @@ CREATE TABLE IF NOT EXISTS lore_entries (
     is_duplicate INTEGER DEFAULT 0,
     duplicate_of TEXT
 );
-CREATE INDEX IF NOT EXISTS idx_lore_norm ON lore_entries(norm_body);
 CREATE TABLE IF NOT EXISTS lore_entry_items (
     lore_hash INTEGER NOT NULL,
     item_title TEXT NOT NULL,
