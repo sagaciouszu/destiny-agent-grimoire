@@ -13,11 +13,46 @@ Exit 0 pass / 1 fail.
 """
 import json
 import os
+import re
 import sqlite3
 import sys
 
 HERE = os.path.dirname(os.path.realpath(__file__))
 ROOT = os.path.dirname(HERE)
+
+
+def tool_description_word_counts():
+    """Return list of (tool_name, word_count) for each @server.tool in server.py.
+
+    The measured text is the first paragraph of the docstring before the
+    Args:/Returns: sections.
+    """
+    src = open(os.path.join(ROOT, 'mcp-server', 'server.py'),
+               encoding='utf-8').read()
+    out = []
+    for m in re.finditer(r'@server\.tool\b', src):
+        def_idx = src.find('def ', m.end())
+        if def_idx == -1:
+            continue
+        nm = re.match(r'def\s+(\w+)', src[def_idx:])
+        if not nm:
+            continue
+        name = nm.group(1)
+        doc_start = src.find('"""', def_idx)
+        if doc_start == -1:
+            continue
+        doc_end = src.find('"""', doc_start + 3)
+        if doc_end == -1:
+            continue
+        doc = src[doc_start + 3:doc_end]
+        text = doc
+        for marker in ('Args:', 'Returns:'):
+            if marker in text:
+                text = text.split(marker, 1)[0]
+        paras = [p.strip() for p in text.split('\n\n') if p.strip()]
+        first = paras[0] if paras else ''
+        out.append((name, len(first.split())))
+    return out
 
 VENV_PY = next((p for p in (
     os.path.join(ROOT, 'mcp-server', '.venv', 'bin', 'python'),
@@ -77,6 +112,23 @@ def main():
     check('every tool has a description', not empty, ','.join(empty))
     check('every parameter appears in its tool description',
           not missing, ','.join(missing))
+
+    # WS7.4: word budget for tool descriptions (warn only, never fail).
+    budget_counts = tool_description_word_counts()
+    in_band = 0
+    for name, wc in budget_counts:
+        if 15 <= wc <= 80:
+            in_band += 1
+        else:
+            if wc < 15:
+                suggestion = ('expand the first paragraph to at least 15 words '
+                              '(state what it returns and when to use it)')
+            else:
+                suggestion = ('trim the first paragraph to at most 80 words')
+            print(f'  WARN: {name} description has {wc} words '
+                  f'(outside 15-80): {suggestion}')
+    print(f'  Word budget recorded: {len(budget_counts)} tools measured, '
+          f'{in_band} in band, {len(budget_counts) - in_band} out of band')
 
     # 3. Errors are actionable: no tracebacks, allowed values present.
     for name, args, needle in (
