@@ -508,7 +508,33 @@ def main():
     ap.add_argument('--dry-run', action='store_true')
     ap.add_argument('--report')
     ap.add_argument('--skip-scan', action='store_true')
+    ap.add_argument('--compare', metavar='OTHER_DB',
+                    help='compare entity_links of --db against OTHER_DB and exit')
     args = ap.parse_args()
+
+    if args.compare:
+        import sqlite3 as _sq
+        a = _sq.connect(f'file:{os.path.abspath(args.db)}?mode=ro', uri=True)
+        b = _sq.connect(f'file:{os.path.abspath(args.compare)}?mode=ro', uri=True)
+        def rows(conn):
+            return set(conn.execute(
+                'SELECT e.canonical, e.kind, l.kind, l.ref FROM entity_links l '
+                'JOIN entities e ON e.id = l.entity_id').fetchall())
+        ra, rb = rows(a), rows(b)
+        only_a, only_b = ra - rb, rb - ra
+        print(f'current: {len(ra)} links, compare: {len(rb)} links')
+        print(f'only in current: {len(only_a)}')
+        print(f'only in compare: {len(only_b)}')
+        if only_a or only_b:
+            for r in sorted(only_a)[:10]:
+                print(f'  + {r}')
+            for r in sorted(only_b)[:10]:
+                print(f'  - {r}')
+            a.close(); b.close()
+            return 1
+        a.close(); b.close()
+        print('OK: entity_links identical by (entity_slug, kind, ref)')
+        return 0
 
     db_path = os.path.abspath(args.db)
     log(f'build target: {db_path}')
