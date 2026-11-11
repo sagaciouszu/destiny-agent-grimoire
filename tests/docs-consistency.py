@@ -274,6 +274,62 @@ def frozen_build_claims():
     assert not hits, "timestamped live-build claim: " + "; ".join(hits[:8])
 
 
+def table_count_claims():
+    if not os.path.exists(DB):
+        return
+    actual = q("SELECT COUNT(*) FROM sqlite_master WHERE type='table'")[0]
+    hits = []
+    for path in current_docs():
+        if any(marker in path for marker in HISTORICAL):
+            continue
+        text = open(path, encoding="utf-8", errors="ignore").read()
+        for m in re.finditer(r"(\d+)\s*(?:tables|tables in the database|database tables)",
+                             text, re.I):
+            n = int(m.group(1))
+            if n != actual:
+                line = text.count("\n", 0, m.start()) + 1
+                hits.append(f"{os.path.relpath(path, WORK)}:{line}: "
+                            f"{m.group(0)} (DB has {actual} tables)")
+    assert not hits, "table-count claim drift: " + "; ".join(hits[:8])
+
+
+def agent_audit_counts():
+    if not os.path.isdir(SITE):
+        return
+    agents_js = os.path.join(SITE, "_data", "agents.js")
+    if not os.path.exists(agents_js):
+        return
+    text = open(agents_js, encoding="utf-8").read()
+    ids = re.findall(r'id:\s*"([^"]+)"', text)
+    audits = re.findall(r'audit:\s*\{\s*passed:\s*(\d+)\s*,\s*total:\s*(\d+)\s*\}',
+                        text)
+    if len(ids) != len(audits):
+        raise AssertionError(
+            f"agents.js: {len(ids)} ids but {len(audits)} audit blocks")
+    repos = _roster.repos()
+    hits = []
+    for aid, (passed, total) in zip(ids, audits):
+        passed = int(passed)
+        total = int(total)
+        if passed != total:
+            hits.append(f"{aid}: audit {passed}/{total} is not green")
+        repo = repos.get(aid)
+        if repo is None:
+            repo = os.path.join(WORK, f"destiny-agent-{aid}")
+        suites_path = os.path.join(repo, "tests", "suites.json")
+        if not os.path.exists(suites_path):
+            continue
+        try:
+            suite_count = json.load(open(suites_path, encoding="utf-8"))["count"]
+        except (KeyError, ValueError, OSError) as exc:
+            hits.append(f"{aid}: cannot read suites.json ({exc})")
+            continue
+        if total != suite_count:
+            hits.append(f"{aid}: audit total {total} != suites.json count "
+                        f"{suite_count}")
+    assert not hits, "agent audit count drift: " + "; ".join(hits)
+
+
 print("=== DOCS CONSISTENCY ===")
 check("no stale counts or sizes in current docs", stale_counts)
 check("site stats snapshot matches the DB", site_stats)
@@ -283,5 +339,7 @@ check("no internal plans or private paths in public docs", public_surface)
 check("relative Markdown links resolve", relative_links)
 check("agent-count claims match the series roster", agent_count_claims)
 check("no timestamped live-build claims in current docs", frozen_build_claims)
+check("table-count claims match the database", table_count_claims)
+check("agent audit counts match live manifests", agent_audit_counts)
 print(f"\nPassed: {PASS} | Failed: {FAIL}")
 sys.exit(1 if FAIL else 0)
