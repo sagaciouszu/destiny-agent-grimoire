@@ -1,3 +1,38 @@
+# v0.42.0 - verify_fts folded into fts.norm (schema 1.12.0)
+
+**2026-11-12**
+
+Schema **1.12.0** data and API release. The corpus is unchanged (9,229
+transcripts / 125,324 lines / 63,359 sightings). The verification index
+(verify_fts, 176,794 rows, ~56.8 MB) is folded into a normalized `norm`
+column on `fts`. `fts` now carries six indexed columns (title, text, speaker,
+body, source, norm); `bm25(fts, 3.0, 1.0, 1.0, 1.0, 0.0, 0.0)` keeps ranking
+byte-identical.
+
+## What's Changed
+- Schema 1.12.0: `fts` gains indexed `norm` column; `verify_fts` dropped.
+- `db/migrate.py`: `add_fts` passes normalized text; verify_fts INSERT removed.
+- `db/enrich_lore.py`: verify_fts DELETE/INSERT removed; norm in fts INSERT.
+- `db/api.py`: `bm25` 6-weight; verify queries `fts.norm`.
+- `db/build-slim.py`: verify_fts DELETE/count removed.
+- Tests: caption-test, db-source-crosscheck, sync-doc-counts, test-db updated.
+- Docs: capabilities, README (Total 712,670), db/README, STANDARDS, SKILL, DISCOVERY, Builds.
+- Database is 258 MB (was 271 MB), ~13 MB smaller, identical content.
+- Query: `search` returns total from one pass; character-lines block merged.
+- MCP: `Returns:` headings normalized; word-budget check (warn <15 or >80).
+- docs-consistency: 10 checks (table counts, audit counts, roster, live-build).
+- Fixture policy: all six agents' test fixtures replaced with synthetic text.
+
+## Verification
+
+Master audit 18/18; DB 67; query 97; caption 13; access 88; MCP 12/25/8;
+six agent audits 20/20 (Drifter 27/27, Eris 22/22); site npm run check.
+Rebuild parity: fts 176,794 rows, entity_links 33,578 identical by slug.
+
+## Asset
+
+`grimoire.db` plus `.xz`/`.gz` (SHA256SUMS). Schema 1.12.0.
+
 # v0.41.0 - Smaller database, reproducible speaker split
 
 > **Depends On:** INDEX.md
