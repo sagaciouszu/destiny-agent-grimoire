@@ -34,7 +34,7 @@ AGENTS = [os.path.basename(p) for p in _roster.repos().values()]
 TEMPLATE = os.path.join(WORK, "destiny-agent-template")
 
 STALE = ["2,422", "78,740", "130,210", "9,607", "12,934", "206 rows",
-         "260 MB", "170 MB", "61 checks", "13/13", "21 exposed",
+         "270 MB", "170 MB", "61 checks", "13/13", "21 exposed",
          "Eighteen read-only tools", "Five character agents",
          "five character agents", "180 lines", "12 lines", "1,254",
          "118,944", "73,012", "23/18", "22/17",
