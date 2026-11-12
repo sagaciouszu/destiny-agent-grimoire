@@ -136,17 +136,6 @@ def seals():
     assert one('SELECT COUNT(*) FROM seal_records') >= 800
 
 
-def manifest():
-    assert one('SELECT COUNT(*) FROM manifest_activities') > 3000
-    for kind, table in (('activity', 'activities'), ('season', 'seasons')):
-        n = one(f"SELECT COUNT(*) FROM manifest_links l WHERE l.kind='{kind}' AND NOT EXISTS "
-                f"(SELECT 1 FROM {table} x WHERE x.slug=l.curated_slug)")
-        assert n == 0, f'{kind} link orphans: {n}'
-    n = one("SELECT COUNT(*) FROM manifest_links l WHERE l.kind='activity' AND NOT EXISTS "
-            '(SELECT 1 FROM manifest_activities m WHERE m.hash=l.manifest_hash)')
-    assert n == 0, f'manifest hash orphans: {n}'
-
-
 def metadata():
     assert one('SELECT COUNT(*) FROM transcript_lines WHERE section LIKE "++%"') == 0
     assert one('SELECT COUNT(*) FROM transcript_lines WHERE section != ""') > 100
@@ -205,7 +194,6 @@ for name, fn in [
     ('event occurrences unique', events),
     ('lore flags and search parity', lore),
     ('seal records resolve', seals),
-    ('manifest catalogue and links resolve', manifest),
     ('section/optional metadata', metadata),
     ('class variant tags', class_tags),
     ('API lore lookup', api_lore),

@@ -60,8 +60,7 @@ NOT produce the same database asset as a release):
 python3 db/migrate.py
 ```
 
-It leaves out the manifest-derived tables (`seals`, `item_sets`,
-`manifest_activities` + `_links`) and the lore index. For a faithful local
+It leaves out the manifest-derived tables (`seals`) and the lore index. For a faithful local
 build you additionally need the authoritative dump via `BUNGIE_API_KEY` and
 the enrich chain:
 
@@ -70,9 +69,7 @@ python3 archive/data/fetch_manifest.py --check
 python3 db/migrate.py
 python3 scripts/apply-queen-fold.py
 python3 db/enrich_lore.py
-python3 db/enrich_manifest.py
 python3 db/enrich_seals.py
-python3 db/enrich_itemsets.py --apply
 python3 db/build_entity_web.py --db db/grimoire.db
 ```
 
@@ -136,8 +133,6 @@ No API keys, accounts or network access are required at runtime.
 | `items` | 58764 | Weapons, armor and gear lore |
 | `lore_entries` | 2962 | Bungie manifest lore entries (local enrichment) |
 | `lore_entry_items` | 2068 | Lore entry to item-title links |
-| `manifest_activities` | 3744 | Full manifest activity catalogue |
-| `manifest_links` | 329 | Curated activity/season to manifest hash |
 | `records` | 69 | Triumphs and seals |
 | `seal_records` | 1004 | Triumph records per seal |
 | `seals` | 70 | Manifest seal nodes |
@@ -155,7 +150,7 @@ No API keys, accounts or network access are required at runtime.
 | `v_season_coverage` (view) | 28 | Transcripts and lines per season |
 | `v_speakers` (view) | 423 | Speakers with line counts (includes caption-only) |
 | `v_transcript_taxonomy` (view) | 9229 | Transcripts joined to classification |
-| **Total** | 712670 | Rows across every table, view and index above |
+| **Total** | 708597 | Rows across every table, view and index above |
 
 Every content row carries provenance. Speaker aliases are canonicalized during
 migration. The full contract is `STANDARDS.md`.
@@ -234,10 +229,8 @@ python3 archive/data/fetch_manifest.py --fetch --extract
 python3 db/migrate.py
 python3 scripts/apply-queen-fold.py
 python3 db/enrich_lore.py
-python3 db/enrich_manifest.py
 python3 db/enrich_seals.py
-python3 db/enrich_itemsets.py --apply
-python3 db/build_entity_web.py --db db/grimoire.db   # optional item-set mapping
+python3 db/build_entity_web.py --db db/grimoire.db
 python3 scripts/export-site-stats.py \
   --out ../destiny-agent-grimoire-site/_data/grimoire.json   # site counts
 python3 tests/sync-doc-counts.py

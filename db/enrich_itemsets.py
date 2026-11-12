@@ -9,7 +9,8 @@ Without --apply it reports the yield only. With --apply it fills
 `item_classification` for matching items that are still `unknown`.
 
 Only curated, high-confidence set mappings are used. Conflicting or uncertain
-sets are left alone.
+sets are left alone. The item_sets/item_set_members tables were removed in
+schema 1.12.0 (dead schema, zero app readers).
 """
 import argparse
 import json
@@ -47,26 +48,6 @@ SET_MAP = {
     'Exodus Down': (None, None, 'destiny-2'),
 }
 
-SCHEMA = """
-CREATE TABLE IF NOT EXISTS item_sets (
-    hash INTEGER PRIMARY KEY,
-    name TEXT,
-    season_slug TEXT,
-    event_slug TEXT,
-    expansion_slug TEXT,
-    evidence TEXT
-);
-CREATE TABLE IF NOT EXISTS item_set_members (
-    set_hash INTEGER NOT NULL,
-    item_hash INTEGER NOT NULL,
-    item_title TEXT,
-    item_id INTEGER,
-    matched INTEGER DEFAULT 0,
-    PRIMARY KEY (set_hash, item_hash)
-);
-"""
-
-
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--apply', action='store_true')
@@ -80,9 +61,6 @@ def main():
             names[int(h)] = n
 
     conn = sqlite3.connect(DB_PATH)
-    conn.executescript(SCHEMA)
-    conn.execute('DELETE FROM item_sets')
-    conn.execute('DELETE FROM item_set_members')
     matched_total = 0
     set_count = 0
     for d in sets.values():
@@ -91,9 +69,6 @@ def main():
             continue
         season, event, expansion = SET_MAP[name]
         set_hash = int(d['hash'])
-        conn.execute('INSERT INTO item_sets (hash,name,season_slug,event_slug,expansion_slug,evidence) '
-                     'VALUES (?,?,?,?,?,?)',
-                     (set_hash, name, season, event, expansion, 'curated_set_map'))
         set_count += 1
         member_ids = []
         for item_hash in d.get('setItems', []):
@@ -103,10 +78,6 @@ def main():
                 matched_total += 1
             for item_id in item_ids:
                 member_ids.append(item_id)
-            conn.execute('INSERT INTO item_set_members '
-                         '(set_hash,item_hash,item_title,item_id,matched) VALUES (?,?,?,?,?)',
-                         (set_hash, item_hash, title, item_ids[0] if item_ids else None,
-                          1 if item_ids else 0))
         if args.apply and member_ids:
             q = ','.join('?' * len(member_ids))
             conn.execute(
