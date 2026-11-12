@@ -12,15 +12,16 @@ rows).
 - Schema 1.13.0: drop `manifest_activities`, `manifest_links`, `item_sets`,
   `item_set_members`; 52 → 48 tables.
 - `db/enrich_manifest.py`: no longer creates or fills tables; keeps manifest
-  conflict reporting (`enrich_seals.py` is now the only table-creating enrich).
+  conflict reporting (`db/enrich_seals.py` is now the only table-creating enrich).
 - `db/enrich_itemsets.py`: keeps `item_classification` updates; no table writes.
 - `db/schema.sql`: already carried none of the four tables; no change needed.
 - `db/capabilities.json`: four removed entries.
 - `tests/taxonomy-deep-test.py`: `manifest()` check and registration removed;
   16 checks remain.
 - Tests: `test-db.sh` gains one real check (68 total).
-- Docs: README build chain, `db/README`, `STANDARDS`, `SKILL`, `Database.md`,
-  `Testing-and-Auditing.md`, `Builds.md` schema history.
+- Docs: README build chain, `db/README.md`, `STANDARDS.md`,
+  `skills/destiny-grimoire/SKILL.md`, `docs/process/Database.md`,
+  `docs/process/Testing-and-Auditing.md`, `docs/process/Builds.md`.
 - Database: 269,221,888 bytes (~269 MB / 260 MiB-rounded), ~0.4 MB smaller.
 
 ## Test fix
@@ -29,7 +30,7 @@ pre-expanded string, so `sqlite3` failed and the `-z` assertion passed
 vacuously. The query now runs into a variable first; a negative control
 confirms the check fails when `verify_fts` is present.
 
-## Verify
+## Verification
 - Full from-source rebuild: migrate → queen-fold → enrich_lore →
   enrich_seals → enrich_itemsets → build_entity_web.
 - Master audit 18/18; DB 68; query 97; caption 13; access 88; MCP 12/25/8
