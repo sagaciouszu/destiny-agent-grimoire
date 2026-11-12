@@ -10,7 +10,7 @@ Without --apply it reports the yield only. With --apply it fills
 
 Only curated, high-confidence set mappings are used. Conflicting or uncertain
 sets are left alone. The item_sets/item_set_members tables were removed in
-schema 1.12.0 (dead schema, zero app readers).
+schema 1.13.0 (dead schema, zero app readers).
 """
 import argparse
 import json
