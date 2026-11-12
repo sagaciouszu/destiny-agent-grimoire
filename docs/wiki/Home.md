@@ -18,6 +18,7 @@ MCP clients, deploy the agents and fix problems.
 | Work with the agents | [Agent Series](Agent-Series.md), [Agent Setup](Agent-Setup.md) |
 | Install on my OS | [Platform Notes](Platforms.md) |
 | Fix a problem | [Troubleshooting](Troubleshooting.md) |
+| Search the docs site | [Site search](https://sagaciouszu.github.io/destiny-agent-grimoire-site/search/) |
 | Check limits and provenance | [Limits and provenance](https://sagaciouszu.github.io/destiny-agent-grimoire-site/grimoire/limits/) |
 
 ## Core principle
