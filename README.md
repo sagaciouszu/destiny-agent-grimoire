@@ -103,7 +103,7 @@ More commands are in the sections below.
 | MCP SDK (optional) | typed tools for agents without a shell | Python 3.10+; `bash mcp-server/install.sh` |
 | `python3` 3.8+ | migration, query CLI, tests | standard library only |
 | `sqlite3` | optional raw SQL | the CLI uses Python's built-in driver |
-| ~400 MB disk | sources plus built database | database is ~270 MB |
+| ~400 MB disk | sources plus built database | database is ~260 MB |
 
 No API keys, accounts or network access are required at runtime.
 
