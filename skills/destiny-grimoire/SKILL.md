@@ -68,7 +68,6 @@ Taxonomy tables (additive; canon tables are never rewritten):
 | item_classification | 58764 | Season/event per item |
 | document_classification | 179 | Season/event per book or record |
 | lore_entries | 2962 | Bungie manifest lore entries |
-| manifest_activities | 3744 | Full manifest activity catalogue |
 | seals | 70 | Manifest seals |
 | seal_records | 1004 | Triumph records per seal |
 

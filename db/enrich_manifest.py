@@ -5,9 +5,9 @@ Run after `db/migrate.py` and `db/enrich_lore.py`:
 
     python3 db/enrich_manifest.py
 
-Creates `manifest_activities` (the full 3,744-row catalogue) and
-`manifest_links` (curated activity/season -> manifest hash). It never edits the
-curated `activities` or `seasons` rows; conflicts are reported, not applied.
+Reports conflicts between curated activities/seasons and the Bungie manifest
+catalogue. The manifest_activities and manifest_links tables were removed in
+schema 1.12.0 (dead schema, zero app readers); conflict reporting is retained.
 """
 import json
 import os
@@ -30,29 +30,6 @@ TYPE_MAP = {
     'Gambit': 'gambit', 'Explore': 'patrol',
 }
 
-SCHEMA = """
-CREATE TABLE IF NOT EXISTS manifest_activities (
-    hash INTEGER PRIMARY KEY,
-    name TEXT,
-    activity_type TEXT,
-    manifest_type TEXT,
-    modes TEXT,
-    season_hash INTEGER,
-    season_name TEXT,
-    destination_hash INTEGER,
-    is_playlist INTEGER
-);
-CREATE INDEX IF NOT EXISTS idx_ma_type ON manifest_activities(activity_type);
-CREATE TABLE IF NOT EXISTS manifest_links (
-    kind TEXT NOT NULL,
-    curated_slug TEXT NOT NULL,
-    manifest_hash INTEGER NOT NULL,
-    match TEXT,
-    PRIMARY KEY (kind, curated_slug, manifest_hash)
-);
-"""
-
-
 def norm_name(value):
     value = (value or '').lower().replace("'", '').replace('’', '')
     value = re.sub(r'[^a-z0-9 ]+', ' ', value)
@@ -72,19 +49,9 @@ def main():
     version = json.load(open(os.path.join(MAN, 'manifest.json'), encoding='utf-8')).get('version')
 
     conn = sqlite3.connect(DB_PATH)
-    conn.executescript(SCHEMA)
-    conn.execute('DELETE FROM manifest_activities')
-    conn.execute('DELETE FROM manifest_links')
 
     for a in activities:
-        conn.execute(
-            'INSERT OR REPLACE INTO manifest_activities '
-            '(hash,name,activity_type,manifest_type,modes,season_hash,season_name,'
-            'destination_hash,is_playlist) VALUES (?,?,?,?,?,?,?,?,?)',
-            (a['hash'], a['name'], TYPE_MAP.get(a.get('activityType'), 'other'),
-             a.get('activityType'), ','.join(a.get('modes') or []),
-             a.get('seasonHash'), a.get('seasonName'), a.get('destinationHash'),
-             1 if a.get('isPlaylist') else 0))
+        pass  # manifest_activities table removed in schema 1.12.0 (dead schema)
 
     # Curated activity -> manifest hashes by base name.
     curated = conn.execute('SELECT slug,name,activity_type FROM activities').fetchall()
@@ -96,9 +63,6 @@ def main():
     for slug, name, atype in curated:
         matches = by_base.get(base_name(name), [])
         for m in matches:
-            conn.execute('INSERT OR IGNORE INTO manifest_links '
-                         '(kind,curated_slug,manifest_hash,match) VALUES (?,?,?,?)',
-                         ('activity', slug, m['hash'], 'name'))
             linked += 1
         if matches:
             mtypes = {TYPE_MAP.get(m.get('activityType'), 'other') for m in matches}
@@ -115,17 +79,12 @@ def main():
         if not m:
             season_conflicts.append({'season': slug, 'number': num, 'manifest': None})
             continue
-        conn.execute('INSERT OR IGNORE INTO manifest_links '
-                     '(kind,curated_slug,manifest_hash,match) VALUES (?,?,?,?)',
-                     ('season', slug, m['hash'], 'number'))
         if norm_name(m['name']) and norm_name(m['name']) != norm_name(name):
             season_conflicts.append({'season': slug, 'number': num,
                                      'curated_name': name, 'manifest_name': m['name']})
 
     conn.execute("INSERT OR REPLACE INTO meta (key,value) VALUES ('manifest_version',?)",
                  (version or '',))
-    conn.execute("INSERT OR REPLACE INTO meta (key,value) VALUES ('manifest_activities',?)",
-                 (str(len(activities)),))
     conn.commit()
     conn.execute('PRAGMA journal_mode=DELETE')
     conn.execute('VACUUM')
