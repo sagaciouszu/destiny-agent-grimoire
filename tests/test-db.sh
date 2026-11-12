@@ -85,7 +85,10 @@ V_EXPECTED=$(sqlite3 "$DB" "SELECT (SELECT COUNT(*) FROM transcript_lines)+(SELE
 V_ACTUAL=$(sqlite3 "$DB" "SELECT COUNT(*) FROM fts WHERE norm != ''")
 check "[ $V_ACTUAL -eq $V_EXPECTED ]" "verification index folded into fts.norm ($V_ACTUAL rows)"
 # No verify_fts table remains (schema 1.12.0 folded it into fts.norm)
-check "[ -z \"$(sqlite3 \"$DB\" \"SELECT name FROM sqlite_master WHERE type='table' AND name='verify_fts'\")\" ]" "verify_fts removed (folded into fts.norm)"
+# Query into a variable first: `\"$DB\"` inside a pre-expanded string becomes
+# literal quotes and sqlite3 fails to open the file, making -z pass vacuously.
+VERIFY_FTS=$(sqlite3 "$DB" "SELECT name FROM sqlite_master WHERE type='table' AND name='verify_fts'")
+check "[ -z \"$VERIFY_FTS\" ]" "verify_fts removed (folded into fts.norm)"
 
 # Taxonomy integrity (additive layer, see docs/TAXONOMY.md)
 for t in expansions seasons events event_occurrences activities transcript_classification item_classification document_classification; do

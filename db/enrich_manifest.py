@@ -7,7 +7,7 @@ Run after `db/migrate.py` and `db/enrich_lore.py`:
 
 Reports conflicts between curated activities/seasons and the Bungie manifest
 catalogue. The manifest_activities and manifest_links tables were removed in
-schema 1.12.0 (dead schema, zero app readers); conflict reporting is retained.
+schema 1.13.0 (dead schema, zero app readers); conflict reporting is retained.
 """
 import json
 import os
@@ -51,7 +51,7 @@ def main():
     conn = sqlite3.connect(DB_PATH)
 
     for a in activities:
-        pass  # manifest_activities table removed in schema 1.12.0 (dead schema)
+        pass  # manifest_activities table removed in schema 1.13.0 (dead schema)
 
     # Curated activity -> manifest hashes by base name.
     curated = conn.execute('SELECT slug,name,activity_type FROM activities').fetchall()

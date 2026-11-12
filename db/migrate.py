@@ -1077,7 +1077,7 @@ def migrate():
         # lang is the document language: every row in this build is English,
         # later caption languages arrive as data rows (see capabilities.json).
         # norm is the normalized text used for quote verification (folded from
-        # verify_fts in schema 1.12.0).
+        # verify_fts in schema 1.12.0, dropped tables in 1.13.0).
         nonlocal fts_id
         fts_id += 1
         conn.execute('INSERT INTO fts (rowid,title,text,speaker,body,source,source_slug,class_tag,timeline,lang,norm) VALUES (?,?,?,?,?,?,?,?,?,?,?)',
