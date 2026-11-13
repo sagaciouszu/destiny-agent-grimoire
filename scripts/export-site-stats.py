@@ -101,7 +101,6 @@ def main():
         "sizes": {
             "db_bytes": size,
             "db_mb": int(round(size / (1024 * 1024), -1)),
-            "slim_mb": 224,
         },
     }
     os.makedirs(os.path.dirname(os.path.abspath(args.out)), exist_ok=True)
