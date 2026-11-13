@@ -46,10 +46,10 @@ Smaller companions of the same bytes are published by the release-assets
 workflow at the same static endpoint:
 
 ```bash
-# 40.6 MiB, smallest: xz -d
+# 33.6 MiB, smallest: xz -d
 curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db.xz -o db/grimoire.db.xz && xz -d db/grimoire.db.xz
 
-# 72.6 MiB, zero dependencies: gzip -d (Android apps: GZIPInputStream)
+# 60.5 MiB, zero dependencies: gzip -d (Android apps: GZIPInputStream)
 curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db.gz -o db/grimoire.db.gz && gzip -d db/grimoire.db.gz
 ```
 
@@ -264,7 +264,7 @@ repository minus the database lives outside the tree.
 | Archive audit | `bash grimoire-master-audit.sh` | 18/18 |
 | Calus / Zavala / Ghost / Mara Sov | run tests/master-audit.sh in each repo | 20/20 |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 checks |
-| Database integrity | `bash tests/test-db.sh` | 67 checks |
+| Database integrity | `bash tests/test-db.sh` | 68 checks |
 | Drifter agent audit | run tests/master-audit.sh in destiny-agent-drifter | 27/27 |
 | Eris agent audit | run tests/master-audit.sh in destiny-agent-eris-morn | 22/22 |
 | Documentation consistency | `python3 tests/docs-consistency.py` | PASS |

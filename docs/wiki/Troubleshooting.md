@@ -10,8 +10,8 @@ Download the release asset:
 curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db -o db/grimoire.db
 ```
 
-The release also carries `grimoire.db.xz` (40.6 MiB) and `grimoire.db.gz`
-(72.6 MiB) at the same static endpoint if the plain asset transfers slowly.
+The release also carries `grimoire.db.xz` (33.6 MiB) and `grimoire.db.gz`
+(60.5 MiB) at the same static endpoint if the plain asset transfers slowly.
 
 ## Query returns nothing
 
