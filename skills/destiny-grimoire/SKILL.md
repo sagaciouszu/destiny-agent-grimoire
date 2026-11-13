@@ -77,12 +77,15 @@ Use `db/query.py` for everything. Interface wraps common patterns. Examples
 name real corpus speakers so the commands run as written; they are illustrative,
 not a preferred agent or persona.
 
-Schema 1.11.0. `stats` reports `missing_tables` on an older database instead of
-failing. `v_speakers` is a discovery view (it includes caption-only names), not
-a canon roster; `v_canon_speakers` is the persona-canon membership list (230
-speakers). Captions are searchable canon but excluded from persona counts;
-`--canon-only` excludes optional/variant lines, not captions. Use `--tier` /
-`--exclude-tier` to filter a source tier explicitly.
+Schema 1.13.0. Four unused derived tables (`manifest_activities`,
+`manifest_links`, `item_sets` and `item_set_members`) were removed; do not expect
+them in the current database. `stats` reports `missing_tables` on an older
+database instead of failing. `v_speakers` is a discovery view (it includes
+caption-only names), not a canon roster; `v_canon_speakers` is the
+persona-canon membership list (230 speakers). Captions are searchable canon
+but excluded from persona counts; `--canon-only` excludes optional/variant
+lines, not captions. Use `--tier` / `--exclude-tier` to filter a source tier
+explicitly.
 
 ```bash
 # Full-text search

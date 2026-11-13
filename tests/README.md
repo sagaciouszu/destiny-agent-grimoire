@@ -3,8 +3,8 @@
 Shared validation for the archive and the agent interface. Persona-specific
 suites live in each agent repo under `tests/`; everything here is archive-wide
 or shared by every agent in the series. Numbers below are descriptive only;
-the authoritative counts are asserted live (`sync-doc-counts.py --check`,
-`test-db.sh` against the built `db/grimoire.db`).
+the authoritative counts are asserted live (`sync-doc-counts.py --check`, which
+also checks suite counts, and `test-db.sh` against the built `db/grimoire.db`).
 
 ## Entry points
 
@@ -34,8 +34,10 @@ the authoritative counts are asserted live (`sync-doc-counts.py --check`,
   blocks installed from `series/agents.json`
 - `sync-readme-meta.py` - stamp or check version and last-push metadata in the
   three READMEs (`--check` for CI)
-- `sync-doc-counts.py` - rewrite documented counts from the database
-  (`--check` for the CI-style staleness gate)
+- `sync-doc-counts.py` - rewrite documented data and suite counts
+  (`--check` for the staleness gate)
+- `suite_counts.py` - read check totals from each suite's live scorecard
+- `gen-suite-counts.py` - regenerate suite-count literals across current docs
 - `source-overlap-verify.py` - curated markdown vs live Ishtar, filename/slug
 
 ## Extended suite (on demand)

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Sync documentation count claims to the live database.
+"""Sync documentation count claims to the live database and test suites.
 
 Counts (transcripts, transcript lines, FTS rows, per-character lines) move
 every time scrape data is ingested; docs drift silently. This tool rewrites
@@ -10,6 +10,8 @@ instead.
 
 Usage: python3 tests/sync-doc-counts.py [--check]
   --check  report what would change, write nothing (exit 1 if stale)
+
+Suite check totals are read from live test scorecards by gen-suite-counts.py.
 """
 import json
 import os
@@ -17,6 +19,7 @@ import re
 import sqlite3
 import sys
 import glob
+import subprocess
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 GRIMOIRE = os.path.dirname(HERE)
@@ -324,6 +327,13 @@ for path in sorted(set(FILES)):
         if not CHECK:
             open(path, 'w', encoding='utf-8').write(s)
 
+# Check and sync suite-count literals in the same pass. This keeps the
+# historical table/prose count updater as the single documented entry point.
+suite_sync = subprocess.run(
+    [sys.executable, os.path.join(HERE, 'gen-suite-counts.py')] +
+    (['--check'] if CHECK else []),
+    cwd=GRIMOIRE)
+
 print('DB counts:', C)
 if changes:
     print(('WOULD UPDATE: ' if CHECK else 'UPDATED: ') + str(len(changes)) + ' files')
@@ -331,4 +341,4 @@ if changes:
         print('  ', os.path.relpath(c, WORK))
 else:
     print('all documentation counts already in sync')
-sys.exit(1 if (CHECK and changes) else 0)
+sys.exit(1 if (CHECK and (changes or suite_sync.returncode != 0)) else suite_sync.returncode)

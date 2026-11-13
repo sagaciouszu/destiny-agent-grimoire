@@ -106,6 +106,11 @@ No API keys, accounts or network access are required at runtime.
 
 ## What is inside
 
+The live database uses schema 1.13.0 and has 48 tables. Four obsolete derived
+tables (`manifest_activities`, `manifest_links`, `item_sets` and
+`item_set_members`) were removed in 1.13.0; they are not part of the current
+schema or enrichment output.
+
 | Table | Rows | Purpose |
 |---|---|---|
 | `activities` | 71 | Raids, dungeons, seasonal activities and missions |

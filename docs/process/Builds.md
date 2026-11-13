@@ -126,11 +126,12 @@ are in the private extraction vault, not this repository):
   on `fts`. `fts` now carries six indexed columns (title, text, speaker, body,
   source, norm); `bm25(fts, 3.0, 1.0, 1.0, 1.0, 0.0, 0.0)` keeps ranking
   byte-identical. The shipped database is ~31 MB smaller with no content change.
-- **Schema 1.13.0** (`db/SCHEMA_VERSION`): drops four derived tables with no
+- **Schema 1.13.0** (`db/SCHEMA_VERSION`): removes four derived tables with no
   application readers — `manifest_activities`, `manifest_links`, `item_sets`
-  and `item_set_members`. `enrich_manifest.py` keeps its conflict reporting but
-  no longer creates or fills tables; `enrich_itemsets.py` still applies
-  `item_classification` updates. 52 → 48 tables, corpus unchanged.
+  and `item_set_members`. `enrich_manifest.py` keeps its conflict reporting
+  but no longer creates or fills those tables; `enrich_itemsets.py` still
+  applies `item_classification` updates. The schema now has 48 tables (down
+  from 52); the corpus is unchanged.
 - **Speaker fold survives rebuilds.** `The Queen` canonicalizes to `Mara Sov`,
   matching the fold already present in the shipped corpus (37 lines across 11
   transcripts); without the alias a fresh rebuild lost their attribution links.
