@@ -34,15 +34,16 @@ AGENTS = [os.path.basename(p) for p in _roster.repos().values()]
 TEMPLATE = os.path.join(WORK, "destiny-agent-template")
 
 STALE = ["2,422", "78,740", "130,210", "9,607", "12,934", "206 rows",
-         "270 MB", "170 MB", "61 checks", "13/13", "21 exposed",
+         "270 MB", "170 MB", "13/13", "21 exposed",
          "Eighteen read-only tools", "Five character agents",
          "five character agents", "180 lines", "12 lines", "1,254",
          "118,944", "73,012", "23/18", "22/17",
-         "29 MiB", "56 MiB", "41.9 MiB", "78.6 MiB", "65 checks", "89 checks", "91 checks",
+         "29 MiB", "56 MiB", "41.9 MiB", "78.6 MiB",
          "seven scripts", "2024+ client", "tar -xJf", "tar -xzf",
          "sha256sum -c SHA256SUMS"]
 HISTORICAL = ("RELEASE.md", "CHANGELOG.md", "BeyondLight-Roadmap.md",
-              "GRIMOIRE-CHANGES.md", "live-tier", "post-fix")
+              "GRIMOIRE-CHANGES.md", "live-tier", "post-fix",
+              "Builds.md", "Captions.md")
 
 PASS = FAIL = 0
 
@@ -74,6 +75,7 @@ def current_docs():
              os.path.join(ROOT, "skills", "destiny-grimoire", "SKILL.md"),
              os.path.join(ROOT, "STANDARDS.md")]
     paths += glob.glob(os.path.join(ROOT, "docs", "*.md"))
+    paths += glob.glob(os.path.join(ROOT, "docs", "process", "*.md"))
     paths += glob.glob(os.path.join(ROOT, "docs", "wiki", "*.md"))
     if os.path.isdir(SITE):
         paths += glob.glob(os.path.join(SITE, "*.md"))
@@ -293,6 +295,68 @@ def table_count_claims():
     assert not hits, "table-count claim drift: " + "; ".join(hits[:8])
 
 
+def suite_count(command, pattern):
+    """Run a suite and parse its reported check count.
+
+    Returns the integer count, or None if the suite could not run (the check
+    then skips rather than fails — a missing suite is a CI problem, not a
+    documentation problem).
+    """
+    try:
+        out = subprocess.run(command, capture_output=True, text=True,
+                             timeout=600).stdout
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    m = re.search(pattern, out)
+    return int(m.group(1)) if m else None
+
+
+DERIVED = [
+    # (label, command, regex, documented literal regex - specific to that label)
+    ("Database integrity", ["bash", "tests/test-db.sh"], r"Passed: (\d+)",
+     r"Database integrity.*?\|.*?(\d+)\s*checks"),
+    ("Query interface", ["bash", "tests/query-interface-test.sh"], r"Passed: (\d+)",
+     r"Query interface.*?\|.*?(\d+)\s*CLI and API checks"),
+    ("Agent layout", ["bash", "tests/agent-layout-test.sh"], r"Passed: (\d+)",
+     r"Agent layout.*?\|.*?(\d+)\s*checks"),
+    ("Cutscene captions", ["bash", "tests/cutscene-verify.sh"], r"Passed: (\d+)/(\d+)",
+     r"Cutscene captions.*?\|.*?(\d+)/(\d+)\s*checks"),
+    ("MCP contract", ["mcp-server/.venv/bin/python", "tests/mcp-test.py"],
+     r"Passed: (\d+)", r"MCP contract.*?\|.*?(\d+)/(\d+)\s*checks"),
+    ("MCP agent optimisation",
+     ["mcp-server/.venv/bin/python", "tests/mcp-agent-optimization-test.py"],
+     r"Passed: (\d+)", r"MCP agent optimisation.*?\|.*?(\d+)\s*checks"),
+]
+
+
+def derived_counts():
+    """Every suite count in the docs must equal the suite's own reported count.
+
+    Replaces the hand-maintained STALE denylist for check counts. A suite that
+    cannot run is skipped; a suite that runs and reports a different number is
+    a failure, whether or not anyone remembered to add the old value to the
+    denylist.
+    """
+    actual = {}
+    for label, command, pattern, _ in DERIVED:
+        actual[label] = suite_count(command, pattern)
+    hits = []
+    for path in current_docs():
+        if any(marker in path for marker in HISTORICAL):
+            continue
+        text = open(path, encoding="utf-8", errors="ignore").read()
+        for label, _command, _pattern, literal_re in DERIVED:
+            n = actual[label]
+            if n is None:
+                continue
+            for m in re.finditer(literal_re, text):
+                if int(m.group(1)) != n:
+                    line = text.count("\n", 0, m.start()) + 1
+                    hits.append(f"{os.path.relpath(path, WORK)}:{line}: "
+                                f"{m.group(0)} (suite reports {n})")
+    assert not hits, "suite-count claim drift: " + "; ".join(hits[:8])
+
+
 def agent_audit_counts():
     if not os.path.isdir(SITE):
         return
@@ -341,5 +405,6 @@ check("agent-count claims match the series roster", agent_count_claims)
 check("no timestamped live-build claims in current docs", frozen_build_claims)
 check("table-count claims match the database", table_count_claims)
 check("agent audit counts match live manifests", agent_audit_counts)
+check("suite-count claims match the live suites", derived_counts)
 print(f"\nPassed: {PASS} | Failed: {FAIL}")
 sys.exit(1 if FAIL else 0)
