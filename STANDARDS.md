@@ -146,7 +146,7 @@ When it is ingested into the caption tier:
 
 ## 3. Database contract
 
-Every table below is part of the schema contract. `tests/test-db.sh` (67 checks)
+Every table below is part of the schema contract. `tests/test-db.sh` (68 checks)
 verifies schema presence, counts, the `timeline_chapters` vocabulary, transcript
 timeline coverage, the transcript/FTS `timeline` mirror, `character_lines`
 inheritance, and `db/capabilities.json` sync.
@@ -336,7 +336,7 @@ match a recomputation of their source text.
 
 | Gate | Enforces |
 |------|----------|
-| `tests/test-db.sh` | schema integrity, counts, no orphans, no entity leakage, character provenance, canonical speakers, card provenance, live meta stamp, class-tag and normalization invariants, capabilities sync (67 checks) |
+| `tests/test-db.sh` | schema integrity, counts, no orphans, no entity leakage, character provenance, canonical speakers, card provenance, live meta stamp, class-tag and normalization invariants, capabilities sync (68 checks) |
 | `tests/lore-integrity.sh` | source archive structure, book/transcript/card/record counts |
 | `tests/lore-format.sh` | transcript markdown format |
 | `tests/cutscene-verify.sh` | caption corroboration, encoding, cross-video consistency, attribution |
@@ -537,7 +537,7 @@ serves every agent.
   `release.published` (plus `workflow_dispatch` with a `tag` to backfill older
   releases), recompresses the published `grimoire.db` with `xz -9e` and
   `gzip -9`, round-trip-verifies both (byte `cmp` + `PRAGMA integrity_check`),
-  and uploads `grimoire.db.xz` (40.6 MiB) and `grimoire.db.gz` (72.6 MiB) with a
+  and uploads `grimoire.db.xz` (33.6 MiB) and `grimoire.db.gz` (60.5 MiB) with a
   refreshed `SHA256SUMS`. Static endpoints:
   `releases/latest/download/grimoire.db.xz` and
   `releases/latest/download/grimoire.db.gz`. Android apps should consume the

@@ -38,8 +38,8 @@ curl.exe -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/la
 ```
 
 Smaller companions of the same bytes live at the same endpoint:
-`grimoire.db.xz` (40.6 MiB, `xz -d`; use 7-Zip on Windows) and
-`grimoire.db.gz` (72.6 MiB, `gzip -d`; use 7-Zip on Windows). The gzip asset
+`grimoire.db.xz` (33.6 MiB, `xz -d`; use 7-Zip on Windows) and
+`grimoire.db.gz` (60.5 MiB, `gzip -d`; use 7-Zip on Windows). The gzip asset
 needs nothing beyond gzip, which is what Android apps decompress with
 `GZIPInputStream`.
 

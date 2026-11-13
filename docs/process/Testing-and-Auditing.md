@@ -15,7 +15,7 @@ Expected: **18 / 18 suites passed**.
 | Compendium Files | character quote index |
 | Lore Archive Integrity | book and card structure |
 | Cutscene Caption Verification | caption sources and matches |
-| Query Interface | 91 CLI and API checks |
+| Query Interface | 97 CLI and API checks |
 | Agent Layout | OpenCode and OpenClaw layout, 108 checks |
 | File Conformance | repository-wide format rules |
 | Agnostic Contract | shared executables read `series/agents.json`; no hardcoded agent repo |
@@ -39,8 +39,8 @@ bash tests/master-audit.sh
 
 | Agent | Suites |
 |---|---:|
-| Drifter | 25 |
-| Eris | 20 |
+| Drifter | 27 |
+| Eris | 22 |
 | Calus | 20 |
 | Zavala | 20 |
 | Ghost | 20 |
