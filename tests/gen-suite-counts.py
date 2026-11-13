@@ -23,12 +23,13 @@ AGENT_REPOS = _roster.repos()
 
 # Map each suite to stable identifiers found on the same documentation line.
 IDENTIFIERS = {
-    "Database integrity": ("test-db.sh",),
-    "Query interface": ("query-interface-test.sh",),
-    "Agent layout": ("agent-layout-test.sh",),
-    "Cutscene captions": ("cutscene-verify.sh",),
-    "MCP contract": ("mcp-test.py",),
-    "MCP agent optimisation": ("mcp-agent-optimization-test.py",),
+    "Database integrity": ("test-db.sh", "Database integrity"),
+    "Query interface": ("query-interface-test.sh", "Query Interface"),
+    "Agent layout": ("agent-layout-test.sh", "Agent Layout"),
+    "Cutscene captions": ("cutscene-verify.sh", "Cutscene captions"),
+    "MCP contract": ("mcp-test.py", "MCP contract"),
+    "MCP agent optimisation": ("mcp-agent-optimization-test.py",
+                              "MCP agent optimisation"),
 }
 
 
@@ -74,7 +75,7 @@ def collect_files():
     return sorted({path for path in files if os.path.isfile(path)})
 
 
-def sync_text(text, counts):
+def sync_text(text, counts, path=None):
     out = []
     changed = False
     for line in text.splitlines(keepends=True):
@@ -82,13 +83,28 @@ def sync_text(text, counts):
         if re.search(r"\bchecks\b", line, re.I):
             for label, identifiers in IDENTIFIERS.items():
                 count = display_count(label, counts.get(label))
-                if count is None or not any(token in line for token in identifiers):
+                if count is None or not any(
+                        token.casefold() in line.casefold()
+                        for token in identifiers):
                     continue
                 # Replace the check-count token on this suite's line only;
                 # preserve surrounding punctuation and singular/plural style.
                 line = re.sub(r"\b\d+(?:/\d+)?(?=\s+checks\b)", count, line,
                               count=1, flags=re.I)
+                if label == "Query interface":
+                    line = re.sub(
+                        r"\b\d+(?=\s+CLI and API checks\b)", count, line,
+                        count=1, flags=re.I)
                 break
+            if path and os.path.relpath(path, WORK) == \
+                    os.path.join("destiny-agent-template", "PORTING.md"):
+                for label, word in (("Query interface", "interface"),
+                                    ("Database integrity", "database")):
+                    count = display_count(label, counts.get(label))
+                    if count is not None:
+                        line = re.sub(
+                            rf"\b{word}\s+\d+(?=\s+checks\b)",
+                            f"{word} {count}", line, count=1, flags=re.I)
         changed |= line != original
         out.append(line)
     return "".join(out), changed
@@ -104,7 +120,7 @@ def main():
             continue
         with open(path, encoding="utf-8") as stream:
             original = stream.read()
-        updated, changed = sync_text(original, counts)
+        updated, changed = sync_text(original, counts, path=path)
         if changed:
             changes.append(path)
             if not check_only:

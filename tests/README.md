@@ -20,6 +20,8 @@ also checks suite counts, and `test-db.sh` against the built `db/grimoire.db`).
 ## Archive integrity
 
 - `test-db.sh` - database integrity (schema, FTS, orphans, counts, timeline)
+- `fixture-canon-guard.py` - agent test literals must not embed long verbatim
+  transcript lines; runs as part of `conformance.py` and prints paths only
 - `lore-integrity.sh` - archive structure (books, transcripts, cards, records)
 - `lore-format.sh` - source markdown transcript format
 - `lore-quote-count.sh` - per-character transcript line counts vs the database
@@ -28,7 +30,7 @@ also checks suite counts, and `test-db.sh` against the built `db/grimoire.db`).
   paths, gitignored refs, headers (also invoked by `conformance.py`)
 - `conformance.py` - per-file conformance across all three repos (headers, refs,
   token accuracy, persona-agnostic grimoire, tracked symlinks, README contract,
-  command targets, agent document parity)
+  command targets, agent document parity, synthetic-fixture/canon guard)
 - `agent-layout-test.sh` - deployment shape: manifest-driven per-agent dirs, no
   `lore` symlink inside `agents/`, only entry agents active, companions and peer
   blocks installed from `series/agents.json`
@@ -66,7 +68,8 @@ also checks suite counts, and `test-db.sh` against the built `db/grimoire.db`).
 - `count-consistency.py` - persona/doc/DB agreement
 - `cutscene-verify.sh` - caption corpus verification (source references, FTS mirror)
 - `query-interface-test.sh` - CLI contract (search/item/list/record/...)
-- `docs-audit.py` - 378 documented commands resolve; skills spec; no stale `.md` claims
+- `docs-audit.py` - documented commands and skill spec; suite-check literals
+  match live scores via `gen-suite-counts.py --check`
 - `docs-consistency.py` - cross-repo docs: stale counts/sizes, site stats snapshot,
   agent README metadata, MCP tool list, relative links (skips absent siblings)
 

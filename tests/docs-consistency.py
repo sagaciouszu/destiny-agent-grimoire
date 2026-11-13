@@ -322,7 +322,7 @@ DERIVED = [
     ("Database integrity", ["bash", "tests/test-db.sh"], r"Passed: (\d+)",
      r"Database integrity.*?\|.*?(\d+)\s*checks"),
     ("Query interface", ["bash", "tests/query-interface-test.sh"], r"Passed: (\d+)",
-     r"Query interface.*?\|.*?(\d+)\s*CLI and API checks"),
+     r"(?i)Query interface.*?\|.*?(\d+)\s*CLI and API checks"),
     ("Agent layout", ["bash", "tests/agent-layout-test.sh"], r"Passed: (\d+)",
      r"Agent layout.*?\|.*?(\d+)\s*checks"),
     ("Cutscene captions", ["bash", "tests/cutscene-verify.sh"], r"Passed: (\d+)/(\d+)",
