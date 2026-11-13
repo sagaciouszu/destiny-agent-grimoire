@@ -163,6 +163,25 @@ for root in REPOS.values():
             if stale in text:
                 issues.append((os.path.basename(root), rel, 'stale token', stale))
 
+# Count claims are generated from live suite scorecards. Reuse that generator
+# in check mode so this audit catches manual literals that drift from the same
+# source of truth, rather than adding another count denylist.
+COUNT_GENERATOR = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                               'gen-suite-counts.py')
+try:
+    result = subprocess.run(
+        [sys.executable, COUNT_GENERATOR, '--check'],
+        cwd=os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+        capture_output=True, text=True, timeout=900)
+    if result.returncode:
+        detail = '; '.join((result.stdout or result.stderr).splitlines()[:5])
+        issues.append(('grimoire', 'suite-counts',
+                       'documented suite counts differ from live scorecards',
+                       detail))
+except (OSError, subprocess.TimeoutExpired) as exc:
+    issues.append(('grimoire', 'suite-counts',
+                   'could not verify generated suite counts', str(exc)))
+
 print(f'docs-command audit: {checked} commands checked')
 print(f'skills spec audit: {skills_checked} SKILL.md checked')
 if issues:

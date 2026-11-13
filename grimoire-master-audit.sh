@@ -23,7 +23,7 @@ if python3 "$ARCHIVE/tests/caption-test.py" >/dev/null 2>&1; then echo "  ✓ [G
 run "$ARCHIVE/tests/compendium-check.sh" "Compendium Files"
 run "$ARCHIVE/tests/lore-integrity.sh" "Lore Archive Integrity"
 run "$ARCHIVE/tests/cutscene-verify.sh" "Cutscene Caption Verification"
-run "$ARCHIVE/tests/query-interface-test.sh" "Query Interface (97 checks)"
+run "$ARCHIVE/tests/query-interface-test.sh" "Query Interface (98 checks)"
 run "$ARCHIVE/tests/agent-layout-test.sh" "Agent Layout (OpenCode/OpenClaw, 108 checks)"
 if python3 "$ARCHIVE/tests/conformance.py" >/dev/null 2>&1; then echo "  ✓ [File Conformance] PASS"; PASS=$((PASS+1)); else echo "  ✗ [File Conformance] FAIL"; FAIL=$((FAIL+1)); fi
 if python3 "$ARCHIVE/tests/agnostic-test.py" >/dev/null 2>&1; then echo "  ✓ [Agnostic Contract] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Agnostic Contract] FAIL"; FAIL=$((FAIL+1)); fi

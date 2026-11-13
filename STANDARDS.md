@@ -331,6 +331,9 @@ match a recomputation of their source text.
   context, reported speech, and impressions must be explicitly attributed.
 - When a quote cannot be traced: unquote it, do not delete it.
 - Unverified count must stay zero in every shipped audit.
+- Agent test fixtures use authored synthetic text, not long verbatim transcript
+  lines. `tests/conformance.py` checks agent test trees against the local
+  transcript database and reports locations only.
 
 ## 7. Verification gates
 
@@ -340,13 +343,15 @@ match a recomputation of their source text.
 | `tests/lore-integrity.sh` | source archive structure, book/transcript/card/record counts |
 | `tests/lore-format.sh` | transcript markdown format |
 | `tests/cutscene-verify.sh` | caption corroboration, encoding, cross-video consistency, attribution |
-| `tests/query-interface-test.sh` | CLI and API surface, 97 checks |
+| `tests/query-interface-test.sh` | CLI and API surface, 98 checks |
 | `tests/db-source-crosscheck.py` | database slugs vs source files, provenance URLs, index completeness |
 | `tests/caption-test.py` | game captions: headers/language, StringReference provenance, no duplicate canon text, curated activity facets, FTS/verification parity, demoted stat lines, caption search, persona canon exclusion |
 | `tests/speaker-audit.py` | reclassified parse noise must not reappear |
 | `tests/sync-doc-counts.py --check` | docs counts match the database |
 | `tests/sync-readme-meta.py --check` | README metadata matches git tag / HEAD date |
 | `tests/docs-consistency.py` | stale counts/sizes, site snapshot, agent metadata, MCP README parity, relative links across every repo |
+| `tests/docs-audit.py` | documented commands and skill frontmatter; suite-count claims match live scorecards through `gen-suite-counts.py --check` |
+| `tests/conformance.py` | file and README contracts, workspace references, token estimates, and the agent fixture/canon guard |
 | `tests/agnostic-test.py` | shared scripts read `series/agents.json`; no hardcoded agent repo in a shared executable |
 | `tests/agent-access-test.py` | setup dry-run and dangling links, missing-database failure, read-only database, site roster parity |
 | `scripts/generate-knowledge-web.py --check` | each agent knowledge web carries a canon snapshot that matches the database |

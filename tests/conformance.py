@@ -118,6 +118,18 @@ for name, root in REPOS.items():
                 else:
                     issues.append((name, rel, f'token estimate ~{m.group(1)}K vs measured ~{actual/1000:.1f}K ({drift:.0f}% off)'))
 
+# Agent test fixtures are synthetic: they must not embed long verbatim
+# transcript lines. The guard reads the local database but reports paths only.
+FIXTURE_GUARD = os.path.join(HERE, 'fixture-canon-guard.py')
+fixture_guard_summary = None
+if os.path.isfile(FIXTURE_GUARD):
+    result = subprocess.run([sys.executable, FIXTURE_GUARD],
+                            capture_output=True, text=True)
+    fixture_guard_summary = (result.stdout or result.stderr).strip().splitlines()
+    if result.returncode:
+        for line in fixture_guard_summary:
+            issues.append(('fixtures', 'tests', line))
+
 # README contract (STANDARDS section 12)
 README_SECTIONS = {
     'grimoire': ['## Quick start for Guardians', '## Requirements', '## What is inside',
@@ -337,6 +349,8 @@ if os.path.exists(META_SCRIPT):
             issues.append(('README', 'metadata', line.strip()))
 
 print(f'files scanned: {sum(len(files_of(r)) for r in REPOS.values())}')
+if fixture_guard_summary:
+    print(fixture_guard_summary[-1])
 if globals().get('_missing_refs'):
     print(f'note: {globals()["_missing_refs"]} workspace-level refs unresolved (agent repos absent)')
 if FIX:

@@ -550,6 +550,21 @@ def _speaker_variants(name):
     return [v for v in variants if v]
 
 
+def _single_exact_speaker(conn, variant):
+    """Use the speaker index only when exact lookup preserves substring scope."""
+    exact = conn.execute(
+        'SELECT speaker FROM transcript_lines WHERE speaker=? LIMIT 1',
+        (variant,)).fetchone()
+    if not exact:
+        return None
+    pattern = f'%{_like(variant)}%'
+    matches = conn.execute(
+        "SELECT DISTINCT speaker FROM transcript_lines "
+        "WHERE speaker LIKE ? ESCAPE '\\' LIMIT 2",
+        (pattern,)).fetchall()
+    return exact[0] if len(matches) == 1 and matches[0][0] == exact[0] else None
+
+
 def _tier_label(rows):
     """Name the provenance tier of a page of transcript rows."""
     tiers = {r.get('source_tier') for r in rows}
@@ -592,12 +607,24 @@ def _tier_sql(tiers=None, exclude_tiers=None, alias='t'):
 
 def _transcript_lines(conn, name, pattern, limit, offset, canon_only=False,
                       class_tag=None, tiers=None, exclude_tiers=None):
+    primary = (name or '').strip()
     for variant in _speaker_variants(name):
-        params = [f'%{_like(variant)}%']
+        # Fast-path only a caller's exact, case-matching label. Stripped aliases
+        # keep the broader substring predicate to preserve legacy semantics.
+        exact_speaker = (_single_exact_speaker(conn, variant)
+                         if variant == primary
+                         and not primary.lower().startswith('the ')
+                         else None)
+        if exact_speaker:
+            speaker_filter = 'speaker = ?'
+            params = [exact_speaker]
+        else:
+            speaker_filter = "speaker LIKE ? ESCAPE '\\'"
+            params = [f'%{_like(variant)}%']
         sql = ("SELECT line AS text, speaker, '' AS source_slug, t.timeline, "
                "t.source_tier AS source_tier "
                "FROM transcript_lines JOIN transcripts t ON t.id = transcript_lines.transcript_id "
-               "WHERE speaker LIKE ? ESCAPE '\\' AND is_stage_dir=0")
+               f"WHERE {speaker_filter} AND is_stage_dir=0")
         if canon_only:
             sql += ' AND is_optional=0'
         if class_tag:

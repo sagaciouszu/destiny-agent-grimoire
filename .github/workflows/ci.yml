@@ -60,6 +60,13 @@ jobs:
       - name: Retrieval evaluation
         run: python3 tests/retrieval-eval.py
 
+      # The documentation audit syncs suite-count claims from live scorecards,
+      # including the optional MCP suites; provision their venv first.
+      - name: MCP dependencies
+        run: |
+          python3 -m venv mcp-server/.venv
+          mcp-server/.venv/bin/pip install --require-hashes -r mcp-server/requirements.lock.txt
+
       - name: Documentation audit
         run: python3 tests/docs-audit.py
 
@@ -71,11 +78,6 @@ jobs:
 
       - name: Item audit
         run: python3 tests/item-audit.py
-
-      - name: MCP dependencies
-        run: |
-          python3 -m venv mcp-server/.venv
-          mcp-server/.venv/bin/pip install --require-hashes -r mcp-server/requirements.lock.txt
 
       - name: MCP contract
         run: mcp-server/.venv/bin/python tests/mcp-test.py
