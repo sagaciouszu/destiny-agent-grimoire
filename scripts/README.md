@@ -1,23 +1,19 @@
 # Scripts
 
-One-off ingestion utilities for content types not covered by `archive/scrape.py`.
+Active ingestion utilities for content types not covered by `archive/scrape.py`.
 Output feeds `db/migrate.py`; re-run migrate after ingesting.
 
 | Script | Writes to | Consumed by migrate |
 |--------|-----------|---------------------|
 | `build-lore-staging.py` | `archive/data/manifest/lore_entries.jsonl` | no (enrichment input) |
-| `crawl-ishtar-commons.py` | `archive/data/commons/` (local) | no (raw crawl) |
 | `gap-report.py` | `docs/GAPS.md` | no (generated report) |
-| `ingest-destinypedia.py --page ... --slug ...` | `source/transcripts/` | yes (globs `source/transcripts/*.md`) |
-| `ingest-grimoire.py <slug>...` | `source/cards/` | yes (globs `source/cards/*.md`) |
 | `ingest-ishtar-commons-batch.py` | `source/transcripts/commons-*.md` | yes |
-| `ingest-ishtar-commons.py --topic N --slug ...` | `source/transcripts/` | yes (globs `source/transcripts/*.md`) |
-| `ingest-record.py <slug>...` | `source/records/` | yes (globs `source/records/*.md`) |
 | `ishtar-timeline.py --fetch/--from/--report` | `source/ishtar-timeline.json` | yes (in-universe era snapshot; --report compares vs the timeline column) |
 
-All are resumable/idempotent and format output as `# Title` + `- Source:` +
-body, matching the migrate parsers. `ingest-destinypedia.py` keeps every
-"or alternatively" and class-exclusive variant; it never merges them.
+The retained batch importer is resumable/idempotent and formats output as
+`# Title` + `- Source:` + body, matching the migrate parsers. The archived
+`archive/legacy/scripts/ingest-destinypedia.py` kept every "or alternatively"
+and class-exclusive variant; it never merged them.
 
 ## Operations
 
@@ -45,3 +41,24 @@ the scrapers in `archive/` writing JSONL:
 - `archive/scrape.py` - items, interactions
 - `archive/data/fetch_transcripts_web.py` - all Ishtar transcript pages
 - `archive/data/fetch_cutscenes.py` - cutscene compilation captions
+
+## Archived scripts (2026-11-13)
+
+The following one-off utilities had no active callers. Their source is retained
+under `archive/legacy/scripts/`; current corpus data remains in `source/` and
+`archive/data/`.
+
+| Archived path | Status / replacement |
+|---|---|
+| `archive/legacy/scripts/apply-vo-captions.py` | Historical one-time caption attribution pass; current captions are already curated in the canonical JSONL. |
+| `archive/legacy/scripts/crawl-ishtar-commons.py` | Superseded by the retained batch ingestion workflow and curated transcript source. |
+| `archive/legacy/scripts/ingest-destinypedia.py` | Historical one-off; existing transcript markdown remains the migration input. |
+| `archive/legacy/scripts/ingest-grimoire.py` | Historical one-off; existing card markdown remains the migration input. |
+| `archive/legacy/scripts/ingest-ishtar-commons.py` | Superseded by the retained batch utility; existing transcript markdown remains the migration input. |
+| `archive/legacy/scripts/ingest-record.py` | Historical one-off; existing record markdown remains the migration input. |
+| `archive/legacy/scripts/verify-containment.py` | Historical evidence-ledger generator; verification logic remains covered by `tests/containment-test.py`. |
+
+Other scripts in this directory remain active: in particular, the live-build
+orchestration steps, `generate-knowledge-web.py` (master-audit gate),
+`sync-wiki.sh`, and the locale/language validation tools are intentionally
+retained.
