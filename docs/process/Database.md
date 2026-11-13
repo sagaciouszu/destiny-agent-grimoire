@@ -38,6 +38,15 @@ The check covers required tables, row counts, FTS queries, HTML entity leakage,
 speaker canonicalisation, provenance URLs, classification completeness and
 schema version.
 
+## Schema lifecycle
+
+The current schema is 1.13.0 (`db/SCHEMA_VERSION`) and contains 48 tables.
+Schema 1.13.0 removed the obsolete derived tables `manifest_activities`,
+`manifest_links`, `item_sets` and `item_set_members`; they are not created by
+current enrichment. `enrich_manifest.py` still reports manifest conflicts, and
+`enrich_itemsets.py` still applies item classification updates. The removal did
+not change corpus content.
+
 ## Stats
 
 ```bash
