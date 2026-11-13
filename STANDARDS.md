@@ -675,6 +675,10 @@ Rules:
   fan-made and non-commercial; no license is granted to Bungie IP.
 - Every repository carries a `NOTICE` describing that split, and its README has a
   Licensing subsection. `tests/conformance.py` enforces both.
+- Two intentional `NOTICE` variants are maintained: Drifter and Eris include
+  a longer third-party-source attribution; Calus, Ghost, Mara Sov, Zavala and
+  the template use the compact project-attribution form. Both preserve the
+  same MIT-code / Bungie-IP boundary; do not normalize these copies.
 
 ## 16. Agent engineering standards (adopted from upstream)
 
