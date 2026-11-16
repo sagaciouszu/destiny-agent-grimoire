@@ -59,7 +59,17 @@ def main():
             def size(rel):
                 p = os.path.join(ws, rel)
                 return len(open(p, encoding='utf-8').read()) / 4 / 1000 if os.path.exists(p) else None
-            minimal = size(core)
+            def tier_files(row):
+                # Files the INDEX row names; 'this file' means INDEX.md itself.
+                # Drifter/Eris name only the core file; the other agents also
+                # name the entry file (the agent's system prompt).
+                refs = re.findall(r'`([^`]+\.md)`', row)
+                if 'this file' in row:
+                    refs = ['INDEX.md'] + refs
+                return refs
+            m_min = re.search(rf'\| Minimal \|[^\n]*', idx_text)
+            minimal = sum(size(r) or 0 for r in
+                          (tier_files(m_min.group(0)) if m_min else [core]))
             voice_core = 'voice/' + core.replace('-core.md', '-voice-core.md')
             standard = (minimal + (size(voice_core) or 0) + (size('core/relationships.md') or 0))
             deep = sum(len(open(f, encoding='utf-8').read()) / 4 / 1000 for f in files)
