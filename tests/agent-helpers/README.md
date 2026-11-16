@@ -12,13 +12,16 @@ symlinks. This directory is the canonical side of the guard.
 | `run-suites.sh` | `tests/run-suites.sh` | suite entry point |
 | `suite-manifest-test.py` | `tests/suite-manifest-test.py` | suite loss/drift guard |
 | `shared-helpers-test.sh` | `tests/shared-helpers-test.sh` | this guard |
+| `connection-test.sh` | `tests/connection-test.sh` | lore/MCP/query-interface smoke |
 
 The guard (`tests/shared-helpers-test.sh`) fails when a copy differs **or when a
 canonical file is missing**. It does not silently skip missing files.
 
-To change a helper: edit this directory, copy the file to all six agent repos and
-to `destiny-agent-template/template/`, then run `bash tests/shared-helpers-test.sh`
-in each. Update this table if the set changes.
+To change a helper: edit this directory, then run
+`bash scripts/sync-shared-tests.sh` from the grimoire checkout to push the
+canonical copies to all six agent repos and `destiny-agent-template/template/`.
+Verify with `bash scripts/sync-shared-tests.sh --check` and the per-agent
+`shared-helpers-test.sh` gate. Update this table if the set changes.
 
 Deliberately **not** shared: `setup.sh` (now identical by construction, not a
 test helper), persona tests, fixtures, public keys, and Drifter/Eris custom

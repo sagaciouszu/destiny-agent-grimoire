@@ -36,7 +36,7 @@ check() {
 }
 
 echo "=== SHARED HELPERS TEST ==="
-for helper in memory-test.py run-suites.sh suite-manifest-test.py; do
+for helper in memory-test.py run-suites.sh suite-manifest-test.py connection-test.sh; do
     check "tests/$helper" "$helper"
 done
 check "memory.py" "memory.py"
