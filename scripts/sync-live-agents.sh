@@ -15,7 +15,7 @@ WORK="${AGENT_REPOS_DIR:-$(dirname "$HERE")}"
 MANIFEST="${SERIES_MANIFEST:-$HERE/series/agents.json}"
 DRY=""; MIRROR_DRY=""
 TARGET="opencode"
-DEST="${OPENCODE_AGENTS:-$HOME/.config/opencode/agents}"
+DEST="${OPENCODE_AGENTS:-${XDG_CONFIG_HOME:-$HOME/.config}/opencode/agents}"
 
 for arg in "$@"; do
     case "$arg" in
@@ -28,7 +28,13 @@ for arg in "$@"; do
 done
 
 if [ "$TARGET" = "opencode" ]; then
-    [ -d "$DEST" ] || { echo "FATAL: $DEST missing"; exit 1; }
+    if [ ! -d "$DEST" ]; then
+        if [ -n "$DRY" ]; then
+            echo "would create $DEST"
+        else
+            mkdir -p "$DEST" || { echo "FATAL: cannot create $DEST"; exit 1; }
+        fi
+    fi
 else
     $DRY mkdir -p "$OC_ROOT"
 fi
@@ -114,7 +120,12 @@ if [ "$TARGET" = "opencode" ]; then
 
     while IFS=$'\t' read -r id source entry; do
         src="$WORK/$source"
-        [ -d "$src" ] || { echo "FATAL: source missing: $src" >&2; exit 1; }
+        if [ ! -d "$src" ]; then
+            echo "FATAL: source missing: $src" >&2
+            echo "Clone the agent repo beside the grimoire checkout, e.g.:" >&2
+            echo "  git clone https://github.com/sagaciouszu/$source.git \"$WORK/$source\"" >&2
+            exit 1
+        fi
         if ! require_ready "$src"; then
             echo "SKIP: $id is not ready (persona.json ready=false)"
             continue
@@ -138,6 +149,12 @@ if [ "$TARGET" = "opencode" ]; then
             python3 - "$DEST/$entry" "$id" "$DEST/$id" <<'PY'
 import re, sys
 path, agent, dest_dir = sys.argv[1], sys.argv[2], sys.argv[3]
+import os as _os
+_home = _os.path.expanduser('~')
+_disp_base = dest_dir
+if _disp_base.startswith(_home):
+    _disp_base = '~' + _disp_base[len(_home):]
+abs_path = _disp_base
 text = open(path, encoding='utf-8').read()
 names = [f'{agent}-core.md', f'{agent}-voice.md', 'INDEX.md', 'USER.md',
          'SOUL.md', 'IDENTITY.md', 'TOOLS.md', 'README.md', 'RELEASE.md']
@@ -146,8 +163,7 @@ text = re.sub(pattern, rf'{agent}/\1', text)
 for directory in ('core/', 'voice/', 'world/', 'reference/'):
     text = re.sub(rf'(?<![\w/]){directory}', f'{agent}/{directory}', text)
 
-# Add absolute path hint for OpenCode deployment
-abs_path = f'~/.config/opencode/agents/{agent}'
+# Adapter install path, derived from the deployment destination.
 file_locations = f'''
 ## File locations
 
@@ -356,7 +372,12 @@ PY
 else
     while IFS=$'\t' read -r id source entry; do
         src="$WORK/$source"
-        [ -d "$src" ] || { echo "FATAL: source missing: $src" >&2; exit 1; }
+        if [ ! -d "$src" ]; then
+            echo "FATAL: source missing: $src" >&2
+            echo "Clone the agent repo beside the grimoire checkout, e.g.:" >&2
+            echo "  git clone https://github.com/sagaciouszu/$source.git \"$WORK/$source\"" >&2
+            exit 1
+        fi
         if ! require_ready "$src"; then
             echo "SKIP: $id is not ready (persona.json ready=false)"
             continue

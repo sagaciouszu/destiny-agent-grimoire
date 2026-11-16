@@ -32,7 +32,7 @@ smoke() {
     local src="$WORK/$repo"
 
     if [ ! -d "$src" ]; then
-        echo "  - $repo not present, skipped"
+        echo "  ✗ $repo missing beside the grimoire checkout ($src)"; FAIL=$((FAIL+1))
         return
     fi
     echo "=== $repo ($mode mode)"
