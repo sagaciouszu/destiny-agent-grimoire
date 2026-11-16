@@ -6,9 +6,9 @@
 python3 db/migrate.py
 ```
 
-This creates `db/grimoire.db` from `source/` and `archive/`. It is a build
+This creates `db/grimoire.db` from `source/` and vault-local `archive/`. It is a build
 artifact and is not committed to git. The build also loads
-`archive/data/captions.jsonl` (game captions, see
+vault-local `archive/data/captions.jsonl` (game captions, see
 [Game captions](#game-captions)).
 
 ## Enrichment
@@ -95,8 +95,8 @@ a better source.
 
 ## Game captions
 
-`migrate.py` loads `archive/data/captions.jsonl` (`sunrise-pre-bl`) and
-`archive/data/captions-live.jsonl` (`build-25932352`, 15 packages) as
+`migrate.py` loads vault-local `archive/data/captions.jsonl` (`sunrise-pre-bl`) and
+vault-local `archive/data/captions-live.jsonl` (`build-25932352`, 15 packages) as
 `source_tier='game_caption'`, `lang='en'`. Each record carries a build label;
 nothing mixes builds silently.
 

@@ -124,7 +124,7 @@ When it is ingested into the caption tier:
 | agent setup.sh | this repo | links `lore/` (symlink -> Windows junction -> clone); bootstraps the DB (release asset or build); points OpenClaw's MCP entry at the checkout |
 | agent `.gitignore` | runtime memory | USER.md, `core/*memory*`, core/journal.md never leave the machine |
 | agent `tests/` suites | agent workspace | lore/tests/resolve-workspace.sh (layout-independent; `lore/` may be symlink or clone) |
-| `db/migrate.py` | sources | `source/{books,transcripts,cards,records}` + `archive/data/*.jsonl` |
+| `db/migrate.py` | sources | `source/{books,transcripts,cards,records}` + vault-local `archive/data/*.jsonl` |
 | `scripts/ishtar-timeline.py` | snapshot | `source/ishtar-timeline.json` (45 eras, 800 source links; regenerate on demand with `--fetch`) |
 | `db/query.py` | database | CLI wrapper over `db/api.py`; every query subcommand in section 8 |
 | `tests/sync-doc-counts.py` | archive and agent repos | rewrites database and suite-check counts from their live sources (`--check` mode fails on drift) |
@@ -254,7 +254,7 @@ copied into an agent workspace. `.gitignore` covers
 Only curated material may be committed, with provenance naming the local build,
 for example `- Source: local game files (<build>)`. That includes the scraped
 JSONL corpora under `archive/data/` and the curated caption corpus
-`archive/data/captions.jsonl` - English lines only, with speaker attribution,
+`archive/data/captions.jsonl` (vault-local, not committed) - English lines only, with speaker attribution,
 activity facets, dedup verdicts and the build id recorded in each record
 (builds seen to date: `sunrise-pre-bl`, then `build-25932352`, each labeled;
 see `docs/process/Builds.md`). The raw subtitle exports it is derived from stay in

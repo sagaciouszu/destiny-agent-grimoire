@@ -245,7 +245,7 @@ sqlite3 db/grimoire.db "SELECT * FROM v_activity_coverage ORDER BY lines DESC LI
 1. **Only use verified quotes.** Canon is what lives in `transcript_lines` and `character_lines`; persona canon additionally excludes caption-tier rows. Do not paraphrase lore as quotes. Run `verify` with the speaker and `--exact` before quoting; if it fails, do not quote the line.
 2. **SQLite-first.** Do not read raw markdown from `source/` at query time; it is only the ingestion source.
 3. **Keep queries scoped.** Small `--limit N` values preserve token budget.
-4. **Do not edit this data directly.** The migration reads `source/` markdown + `archive/data/*.jsonl` and rebuilds the DB.
+4. **Do not edit this data directly.** The migration reads `source/` markdown + vault-local `archive/data/*.jsonl` and rebuilds the DB.
 5. **All six agents** (`destiny-agent-drifter`, `destiny-agent-eris-morn`, `destiny-agent-calus`, `destiny-agent-zavala`, `destiny-agent-ghost`, `destiny-agent-mara-sov`) consume this database via `lore/` (a symlink, Windows junction or clone of this repo).
 6. **Respect confidence.** Treat `unknown` classification as unknown; do not present a guessed season or activity as fact.
 7. **Mind coverage status.** `coverage_notes` says what the archive lacks: `partial_transcript` lines are real but incomplete, `no_dialogue` activities have none. Never fill a gap with an invented line.

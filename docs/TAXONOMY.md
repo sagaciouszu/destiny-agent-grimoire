@@ -55,7 +55,7 @@ Current state (2026-11-10):
 
 Every Ishtar web transcript carries the page's authoritative `Added In`
 release (1,271/1,271), captured by
-`archive/data/fetch_transcript_releases.py`. <!-- doc-sync:ignore -->
+vault-local `archive/data/fetch_transcript_releases.py`. <!-- doc-sync:ignore -->
 That is why coverage is near-complete and why Destiny 1 content is
 visible: 123 transcripts and 1,411 dialogue lines across `destiny-1`,
 `the-dark-below`, `house-of-wolves`, `the-taken-king` and `rise-of-iron`.

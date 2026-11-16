@@ -12,7 +12,7 @@ aspirational.
 ## Sources & provenance (canonical)
 
 Every English line lives on exactly one caption table. `migrate.py` loads
-`archive/data/captions.jsonl` (committed, one record per caption table) as
+vault-local `archive/data/captions.jsonl` (one record per caption table) as
 `source_tier='game_caption'` `lang='en'`.
 
 - **No duplicate text.** If the normalized text of a caption line already
@@ -53,7 +53,7 @@ Every English line lives on exactly one caption table. `migrate.py` loads
 The live client has no separate subtitle package for this text. English lives
 inside `w64_sr_globals_*` StringBank entries, thirteen locales per logical
 table, cleartext UTF-8. Fifteen of sixteen packages are ingested from
-`archive/data/captions-live.jsonl`, one record per `(package, entry, kind)`;
+vault-local `archive/data/captions-live.jsonl`, one record per `(package, entry, kind)`;
 repeated text across packages keeps a separate record and sighting.
 `w64_sr_globals_0134` has no English string-bank entries.
 
@@ -74,7 +74,7 @@ strings (6,723) and package-local duplicates (5,231). Cross-package repeats
 drop/keep counts ship as a stats sidecar.
 
 **English selection.** Locale is positional, not an in-file field. The English
-entry list for each package is committed under `archive/data/locale-maps/` and
+entry list for each package lives in vault-local `archive/data/locale-maps/` and
 comes from `scripts/resolve-locales.py`, which emits an entry only when its
 table is pinned by at least two independent script anchors. It reproduces
 package `0294`'s content-verified list exactly (634/634); two packages resolve

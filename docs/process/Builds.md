@@ -34,7 +34,7 @@ headers, 125,324 lines, `caption_provenance` 56,119 rows, `caption_sightings`
 
 | Tier (`source_tier`) | Rows (headers / lines) | Build / source |
 |---|---|---|
-| `game_caption` | 7,911 / 55,678 | Two builds. `sunrise-pre-bl`: 1,106 / 9,282 from committed `archive/data/captions.jsonl`. `build-25932352`: 6,805 / 46,396 from `archive/data/captions-live.jsonl` (15 packages, 46,512 provenance rows; 116 of them attach to pre-existing non-caption lines). |
+| `game_caption` | 7,911 / 55,678 | Two vault-local builds. `sunrise-pre-bl`: 1,106 / 9,282 from `archive/data/captions.jsonl`. `build-25932352`: 6,805 / 46,396 from `archive/data/captions-live.jsonl` (15 packages, 46,512 provenance rows; 116 of them attach to pre-existing non-caption lines). |
 | Web transcripts, `ishtar-collective.net` (Ishtar Collective, archival primary, human-verified) | 1,271 pages total: `ishtar_web` 1,129 / 15,850 lines · `ishtar_main` 101 / 4,203 · `ishtar_commons` 26 / 354 · `published` 8 / 22 · `validated` 7 / 22 | Web captures, era-scoped; primary source for DCV-era (vaulted) content. Not build-derived. |
 | `destinypedia` | 10 / 981 | Verbatim from the Destinypedia wiki (front-matter `Tier: destinypedia`). Destinypedia is corroboration per the source hierarchy in `STANDARDS.md`, not the primary. |
 | `youtube_captions` | 6 / 638 | YouTube-caption-derived; speaker labels reviewed where noted in the source file (e.g. `partial-expedition` lists 26 sources, "speaker labels reviewed"). Not build-derived. |
@@ -57,7 +57,7 @@ EN, `sunrise-pre-bl`):
 3. `caption_provenance`: one row per line - `kind='dialogue'`,
    `source_pkg='w64_investment_globals_client_0709'`, `source_entry='7898'`,
    `bank_entry='7885'`, StringReference hashes attached per line.
-4. `source_build='sunrise-pre-bl'` (every record in `archive/data/captions.jsonl`
+4. `source_build='sunrise-pre-bl'` (every vault-local record in `archive/data/captions.jsonl`
    carries it; nothing mixes builds silently).
 
 What `build-25932352` carries instead: the same logical text lives in a v53
@@ -102,7 +102,7 @@ are in the private extraction vault, not this repository):
 - **Filters are deliberate.** 122,528 short labels/UI headings, 6,723 noise
   strings, 5,231 duplicates, 13,949 item-text fragments and 1,378 mechanical
   perk/modifier lines were dropped. The per-package counts ship in
-  `archive/data/locale-maps/<package>.stats.json`.
+  vault-local `archive/data/locale-maps/<package>.stats.json`.
 - **Locale resolution is conservative.** `scripts/resolve-locales.py` emits an
   entry only when its table is pinned by at least two independent script
   anchors and reproduces `0294`'s verified EN list exactly (634/634, zero
@@ -149,7 +149,7 @@ are in the private extraction vault, not this repository):
 - **Class `0x808099ef` is not text.** 8,656 entries across 13 packages carry
   hash/reference tables (120–2,460 B, zero ASCII word runs); `0294/5892` is one
   of them and stays skipped. Evidence:
-  `archive/data/locale-maps/class-808099ef.skip.json`.
+  vault-local `archive/data/locale-maps/class-808099ef.skip.json`.
 
 `build-25932352` is legitimate for current-era extraction and verification,
 never as ground truth for what an earlier expansion shipped.
@@ -167,9 +167,9 @@ It unpacks every `w64_sr_globals` layer, merges the layers, resolves locales,
 extracts English, validates language, combines, writes a drift report, registers
 the build in `archive/data/builds.json`, rebuilds and runs the gates.
 
-- A new build is written to `archive/data/live-builds/<build>.jsonl` with
+- A new build is written to vault-local `archive/data/live-builds/<build>.jsonl` with
   **build-scoped slugs**; the current build stays in
-  `archive/data/captions-live.jsonl`.
+  vault-local `archive/data/captions-live.jsonl`.
 - `db/migrate.py` loads both, so a changed line becomes a new
   `caption_sightings` row, never an inline rewrite of an earlier build.
 - Running against the registered current build is a **no-op** (exit 0).
