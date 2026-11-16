@@ -143,7 +143,9 @@ The migration reads `source/` markdown plus vault-local `archive/data/*.jsonl`
 scratch files (extraction corpora are local-only, not committed).
 It **does not** build the manifest-derived tables (or the lore index); those
 come from `python3 db/enrich_lore.py`, `enrich_seals.py` after fetching
-the manifest with the vault-local manifest tooling. Run
+the manifest with the vault-local manifest tooling. For a from-scratch
+rebuild, use `scripts/rebuild-from-vault.sh`, which stages the vault inputs,
+runs the chain below, gates, and certifies. Run
 `python3 scripts/apply-queen-fold.py` after migrate (the owner speaker split),
 then `python3 db/build_entity_web.py --db db/grimoire.db`. The full chain is the
 release recipe documented in `docs/process/Testing-and-Auditing.md`.

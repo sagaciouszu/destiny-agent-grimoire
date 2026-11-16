@@ -92,17 +92,21 @@ descriptions, actionable errors, snippets, clamps, resource caps, counts).
 
 ## Before a release
 
+Raw corpora are local-only (never committed); the runbook stages them from
+the operator vault (hash-verified, copy-only), runs the full enrich chain,
+gates, and cleans the worktree afterward:
+
 ```bash
-python3 db/migrate.py
-python3 scripts/apply-queen-fold.py
-python3 db/enrich_lore.py
-python3 db/enrich_seals.py
-python3 db/build_entity_web.py --db db/grimoire.db
+scripts/rebuild-from-vault.sh
+python3 tests/release-parity-test.py --local db/grimoire.db --ref v<ver>
+scripts/release-stage.sh <version>
 bash grimoire-master-audit.sh
 mcp-server/.venv/bin/python tests/mcp-test.py
 ```
 
-Then stage the database, verify its checksum and rerun onboarding.
+The parity test certifies the rebuilt database row-for-row against the
+published release asset before staging. Then stage the database, verify its
+checksum and rerun onboarding.
 
 ## CI
 
