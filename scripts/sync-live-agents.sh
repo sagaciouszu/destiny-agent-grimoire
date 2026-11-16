@@ -447,8 +447,13 @@ PY
     echo "synced $(manifest ids | paste -sd, - | sed 's/,/, /g') -> $OC_ROOT/workspace-*"
     # Keep OpenClaw's MCP entry pointed at this checkout via the stable
     # pointer symlink (~/.local/share/grimoire -> checkout) and wrapper.
-    bash "$HERE/scripts/ensure-openclaw-mcp.sh" "$HERE" \
-        || echo "warning: OpenClaw MCP config was not updated" >&2
+    # Skipped under --dry-run: a preview must not touch home-directory files.
+    if [ -z "$DRY" ]; then
+        bash "$HERE/scripts/ensure-openclaw-mcp.sh" "$HERE" \
+            || echo "warning: OpenClaw MCP config was not updated" >&2
+    else
+        echo "dry-run: would update OpenClaw MCP entry"
+    fi
 fi
 
 if [ -z "$DRY" ] && [ "$TARGET" = "opencode" ]; then

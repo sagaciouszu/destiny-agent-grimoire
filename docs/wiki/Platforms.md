@@ -92,7 +92,7 @@ MCP:
 ```bat
 cd mcp-server
 python3 -m venv .venv
-.venv\Scripts\pip.exe install --require-hashes -r requirements.lock.txt
+.venv\Scripts\pip.exe install --require-hashes -r requirements.windows.lock.txt
 ```
 
 Run it with either launcher:

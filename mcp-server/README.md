@@ -71,7 +71,7 @@ background service.
 
 ## Database compatibility
 
-The adapter targets schema **1.11.0**. It does not invent a schema upgrade.
+The adapter requires schema **1.11.0** or newer (see `db/SCHEMA_VERSION` for the current database). It does not invent a schema upgrade.
 
 - `stats` includes `caption_sightings`. On a pre-1.9 database the response
   carries `missing_tables: ["caption_sightings", ...]` and omits that count
@@ -216,7 +216,8 @@ MCP limits clamp to 1-100 to protect the agent's context; the CLI is not clamped
 to 100 (the shared API allows up to 10,000). `offset` values above 10,000 clamp
 to 10,000 (deep paging past that bound returns no rows by design). Full text is
 trimmed to 4000 characters per row, and resource reads are capped at ~16,000
-characters with a `[truncated; page via the matching tool]` marker.
+characters. Trimmed lists keep only a prefix and carry a sibling
+`<key>_omitted` counter; re-page through the matching tool for the rest.
 `verify` is the quote-safety primitive: `verified` is true only for canonical text.
 It matches normalized phrases against the verification index; punctuation-only
 quotes fall back to an exact normalized-row lookup (mid-word fragments no longer

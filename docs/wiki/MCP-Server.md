@@ -24,7 +24,7 @@ Windows:
 ```bat
 cd mcp-server
 python3 -m venv .venv
-.venv\Scripts\pip.exe install --require-hashes -r requirements.lock.txt
+.venv\Scripts\pip.exe install --require-hashes -r requirements.windows.lock.txt
 ```
 
 The installer uses a hash-locked requirements file. Python 3.10+ is required.

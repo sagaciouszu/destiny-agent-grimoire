@@ -62,7 +62,9 @@ bash setup.sh path\to\destiny-agent-grimoire --no-mcp
 ```
 
 Pass a path to this archive, for example `../destiny-agent-grimoire`.
-`--no-mcp` skips the optional MCP install.
+`--no-mcp` skips the optional MCP install (the virtualenv). The OpenClaw
+MCP entry/pointer is still updated to reference this checkout; install the
+venv before relying on it, or leave OpenClaw unconfigured.
 
 ## OpenClaw MCP path
 
