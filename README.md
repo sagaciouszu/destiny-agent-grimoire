@@ -61,11 +61,11 @@ python3 db/migrate.py
 ```
 
 It leaves out the manifest-derived tables (`seals`) and the lore index. For a faithful local
-build you additionally need the authoritative dump via `BUNGIE_API_KEY` and
+build you additionally need the operator vault inputs (extraction corpora and
+manifest tooling are local-only, never committed) via `BUNGIE_API_KEY` and
 the enrich chain:
 
 ```bash
-python3 archive/data/fetch_manifest.py --check
 python3 db/migrate.py
 python3 scripts/apply-queen-fold.py
 python3 db/enrich_lore.py
@@ -219,18 +219,8 @@ STANDARDS.md # the contract: schema, naming, provenance, gates, README rules
 ## Maintenance
 
 ```bash
-# ingest more content (Ishtar page ranges, caption fetchers)
-python3 archive/scrape.py interactions <start> <end>
-python3 archive/scrape.py items <start> <end>
-python3 archive/data/fetch_transcripts_web.py
-python3 archive/data/fetch_cutscenes.py
-python3 archive/data/fetch_transcript_releases.py   # authoritative Added In releases
-
-# optional: authoritative Bungie manifest (needs BUNGIE_API_KEY)
-python3 archive/data/fetch_manifest.py --check
-python3 archive/data/fetch_manifest.py --fetch --extract
-
-# rebuild, then apply local manifest enrichment
+# content ingestion (scrapers, caption fetchers) is vault-local and not
+# committed; with vault inputs present, rebuild, then apply local enrichment
 python3 db/migrate.py
 python3 scripts/apply-queen-fold.py
 python3 db/enrich_lore.py
