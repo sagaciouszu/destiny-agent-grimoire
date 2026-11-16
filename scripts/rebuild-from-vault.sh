@@ -9,6 +9,21 @@ VAULT_DEFAULT="/opt/vault/d2-bl-extract/archive-data-backup/archive/data"
 VAULT="$VAULT_DEFAULT"
 DRY=""
 
+STAGED=()
+cleanup_and_restore() {
+    # Remove exactly what this script staged (never operator files), and
+    # restore the pre-build database if the chain failed midway.
+    if [ "${#STAGED[@]}" -gt 0 ]; then
+        rm -f "${STAGED[@]}"
+    fi
+    rmdir "$DATA/locale-maps" 2>/dev/null || true
+    if [ -f "$DB.prevault" ]; then
+        mv -f "$DB.prevault" "$DB"
+        echo "restored pre-build database" >&2
+    fi
+}
+trap 'cleanup_and_restore; exit 2' ERR
+
 while [ $# -gt 0 ]; do
     case "$1" in
         --vault) VAULT="${2:?--vault needs a directory}"; shift 2 ;;
@@ -47,11 +62,15 @@ echo "staging vault inputs (copy-only)..."
 mkdir -p "$DATA/locale-maps"
 for f in $INPUTS; do
     cp "$VAULT/$f" "$DATA/$f"
+    STAGED+=("$DATA/$f")
 done
-cp "$VAULT"/locale-maps/* "$DATA/locale-maps/"
+for f in "$VAULT"/locale-maps/*; do
+    cp "$f" "$DATA/locale-maps/"
+    STAGED+=("$DATA/locale-maps/$(basename "$f")")
+done
 
 echo "rebuilding database..."
-rm -f "$DB" "$DB-"*
+[ -f "$DB" ] && cp -f "$DB" "$DB.prevault.tmp" && mv -f "$DB.prevault.tmp" "$DB.prevault"  # restore point; migrate recreates
 python3 "$HERE/db/migrate.py"
 python3 "$HERE/scripts/apply-queen-fold.py"
 python3 "$HERE/db/enrich_lore.py"
@@ -66,14 +85,15 @@ GRIMOIRE_DB="$DB" python3 "$HERE/tests/caption-test.py"
 
 echo "re-verifying vault (untouched proof)..."
 (cd "$ROOT" && sha256sum -c "$MANIFEST" > /dev/null) \
-    || { echo "FATAL: vault changed during build" >&2; exit 2; }
+    || { cleanup_and_restore; echo "FATAL: vault changed during build" >&2; exit 2; }
 echo "vault untouched: OK"
 
 echo "cleaning staged corpora..."
-for f in $INPUTS; do
-    rm -f "$DATA/$f"
-done
-rm -rf "$DATA/locale-maps"
+if [ "${#STAGED[@]}" -gt 0 ]; then
+    rm -f "${STAGED[@]}"
+fi
+rmdir "$DATA/locale-maps" 2>/dev/null || true
+rm -f "$DB.prevault"
 
 echo "--- rebuilt table counts ---"
 sqlite3 "$DB" "SELECT 'interactions', COUNT(*) FROM interactions
