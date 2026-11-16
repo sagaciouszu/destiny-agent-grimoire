@@ -145,7 +145,7 @@ It **does not** build the manifest-derived tables (or the lore index); those
 come from `python3 db/enrich_lore.py`, `enrich_seals.py` after fetching
 the manifest with the vault-local manifest tooling. For a from-scratch
 rebuild, use `scripts/rebuild-from-vault.sh`, which stages the vault inputs,
-runs the chain below, gates, and certifies. Run
+runs the chain below and gates (certify the result separately with `tests/release-parity-test.py --local db/grimoire.db --ref v<ver>`). Run
 `python3 scripts/apply-queen-fold.py` after migrate (the owner speaker split),
 then `python3 db/build_entity_web.py --db db/grimoire.db`. The full chain is the
 release recipe documented in `docs/process/Testing-and-Auditing.md`.

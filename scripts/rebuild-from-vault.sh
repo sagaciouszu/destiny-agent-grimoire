@@ -7,7 +7,7 @@ set -e
 HERE="$(cd "$(dirname "$0")/.." && pwd)"
 VAULT_DEFAULT="/opt/vault/d2-bl-extract/archive-data-backup/archive/data"
 VAULT="$VAULT_DEFAULT"
-DRY=""
+DRY_RUN=""
 
 STAGED=()
 cleanup_and_restore() {
@@ -26,8 +26,8 @@ trap 'cleanup_and_restore; exit 2' ERR
 
 while [ $# -gt 0 ]; do
     case "$1" in
-        --vault) VAULT="${2:?--vault needs a directory}"; shift 2 ;;
-        --dry-run) DRY="echo"; shift ;;
+        --vault) [ -n "${2:-}" ] || { echo "FATAL: --vault needs a directory" >&2; exit 2; }; VAULT="$2"; shift 2 ;;
+        --dry-run) DRY_RUN=1; shift ;;
         *) echo "FATAL: unknown argument $1 (usage: rebuild-from-vault.sh [--vault DIR] [--dry-run])" >&2; exit 2 ;;
     esac
 done
@@ -52,11 +52,15 @@ INPUTS="captions.jsonl captions-live.jsonl cutscenes.jsonl interactions.jsonl
 items.jsonl transcripts_web.jsonl transcripts_overlap.jsonl
 transcript-releases.json transcript-missing.txt"
 
-if [ -n "$DRY" ]; then
+if [ -n "$DRY_RUN" ]; then
     echo "dry-run: would stage vault inputs, run migrate + enrich chain, gate, clean up"
     echo "dry-run: vault=$VAULT data=$DATA db=$DB"
+    echo "dry-run: a custom --vault must mirror the <root>/archive/data layout"
     exit 0
 fi
+
+# Locale files, enumerated from the manifest (explicit list, no bare glob).
+LOCALE_FILES=$(grep -o 'archive/data/locale-maps/[^ ]*' "$MANIFEST" | xargs -n1 basename)
 
 echo "staging vault inputs (copy-only)..."
 mkdir -p "$DATA/locale-maps"
@@ -64,9 +68,9 @@ for f in $INPUTS; do
     cp "$VAULT/$f" "$DATA/$f"
     STAGED+=("$DATA/$f")
 done
-for f in "$VAULT"/locale-maps/*; do
-    cp "$f" "$DATA/locale-maps/"
-    STAGED+=("$DATA/locale-maps/$(basename "$f")")
+for f in $LOCALE_FILES; do
+    cp "$VAULT/locale-maps/$f" "$DATA/locale-maps/"
+    STAGED+=("$DATA/locale-maps/$f")
 done
 
 echo "rebuilding database..."

@@ -94,7 +94,8 @@ descriptions, actionable errors, snippets, clamps, resource caps, counts).
 
 Raw corpora are local-only (never committed); the runbook stages them from
 the operator vault (hash-verified, copy-only), runs the full enrich chain,
-gates, and cleans the worktree afterward:
+gates, and cleans the worktree afterward. A custom `--vault` must mirror the
+`<root>/archive/data` layout the manifest paths assume:
 
 ```bash
 scripts/rebuild-from-vault.sh

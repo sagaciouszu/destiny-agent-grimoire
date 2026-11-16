@@ -14,6 +14,7 @@ printed, never row text.
 import argparse
 import os
 import re
+import shutil
 import sqlite3
 import subprocess
 import sys
@@ -72,8 +73,11 @@ def main():
     args = ap.parse_args()
 
     ref = args.ref
-    if re.match(r"^v\d", ref):
-        tmp = tempfile.mkdtemp(prefix="parity-ref-")
+    tmpdir = None
+    if os.path.exists(ref):
+        pass  # local file wins over tag-shaped names
+    elif re.match(r"^v\d+\.\d+(\.\d+)?$", ref):
+        tmpdir = tempfile.mkdtemp(prefix="parity-ref-")
         dl = [
             "gh",
             "release",
@@ -82,7 +86,7 @@ def main():
             "--pattern",
             "grimoire.db",
             "--dir",
-            tmp,
+            tmpdir,
             "--clobber",
         ]
         try:
@@ -94,15 +98,28 @@ def main():
         ):
             print("SKIP: no network/auth for release download (local-only run)")
             return 0
-        ref = os.path.join(tmp, "grimoire.db")
+        ref = os.path.join(tmpdir, "grimoire.db")
+    else:
+        print(f"FAIL: ref is neither an existing file nor a release tag: {ref}")
+        return 1
 
     for label, path in (("local", args.local), ("ref", ref)):
         if not os.path.exists(path):
             print(f"FAIL: {label} database not found: {path}")
             return 1
 
-    local = sqlite3.connect(f"file:{args.local}?mode=ro", uri=True)
-    published = sqlite3.connect(f"file:{ref}?mode=ro", uri=True)
+    try:
+        local = sqlite3.connect(f"file:{args.local}?mode=ro", uri=True)
+        local.execute("SELECT count(*) FROM sqlite_master").fetchone()
+    except sqlite3.DatabaseError as e:
+        print(f"FAIL: local database unreadable: {args.local} ({e})")
+        return 1
+    try:
+        published = sqlite3.connect(f"file:{ref}?mode=ro", uri=True)
+        published.execute("SELECT count(*) FROM sqlite_master").fetchone()
+    except sqlite3.DatabaseError as e:
+        print(f"FAIL: ref database unreadable: {ref} ({e})")
+        return 1
 
     print("=== RELEASE PARITY ===")
     lt, pt = tables(local), tables(published)
@@ -133,6 +150,8 @@ def main():
     )
 
     print(f"\nPassed: {PASS} | Failed: {FAIL}")
+    if tmpdir is not None:
+        shutil.rmtree(tmpdir, ignore_errors=True)
     return 1 if FAIL else 0
 
 
