@@ -233,6 +233,43 @@ if 'drifter' in REPOS and 'eris' in REPOS:
             if fields['drifter'] != fields['eris']:
                 issues.append(('agents', doc, 'identity fields differ between agents'))
 
+# Characterization tripwires (behavioral contract, machine-checked half).
+# relationships.md must name people the character actually relates to and show
+# how they address them. Thresholds are tripwires against gutting, not quality
+# scores: every agent clears them with headroom today. No live model calls.
+CHAR_MIN_FIGURES = 2
+CHAR_MIN_QUOTES = 2
+_canon_db = os.path.join(GR, 'db', 'grimoire.db')
+_canon_names = []
+if os.path.isfile(_canon_db):
+    try:
+        import sqlite3
+        _conn = sqlite3.connect(f'file:{_canon_db}?mode=ro', uri=True)
+        _canon_names = [r[0] for r in
+                        _conn.execute("SELECT name FROM characters")]
+        _conn.close()
+    except Exception as exc:  # noqa: BLE001 - roster check degrades to skip
+        print(f'  (warning: cannot read canon roster: {exc})')
+for name, root in REPOS.items():
+    if name in ('grimoire', 'template'):
+        continue
+    rel_path = os.path.join(root, 'core', 'relationships.md')
+    if not os.path.isfile(rel_path):
+        issues.append((name, 'core/relationships.md', 'missing'))
+        continue
+    rel_text = open(rel_path, encoding='utf-8', errors='ignore').read()
+    rel_lower = rel_text.lower()
+    if _canon_names:
+        figures = sorted({n for n in _canon_names
+                          if re.search(r'\b' + re.escape(n.lower()) + r'\b', rel_lower)})
+        if len(figures) < CHAR_MIN_FIGURES:
+            issues.append((name, 'core/relationships.md',
+                           f'names only {len(figures)} canon figure(s): {figures}'))
+    quotes = set(re.findall(r'"([^"]{2,})"', rel_text))
+    if len(quotes) < CHAR_MIN_QUOTES:
+        issues.append((name, 'core/relationships.md',
+                       f'only {len(quotes)} quoted address form(s); need {CHAR_MIN_QUOTES}+'))
+
 # Release notes stay short and scannable (STANDARDS 14)
 REL_SECTIONS = ["## What's Changed", '## Verification']
 for name, root in REPOS.items():
