@@ -51,36 +51,44 @@ def main():
         for f in files:
             if 'Token Estimate:' not in open(f, encoding='utf-8').read():
                 bad.append((f, 'no Token Estimate header'))
-        # load-tier claims in INDEX.md must match measured sizes (25% tolerance)
-        idx_path = os.path.join(ws, 'INDEX.md')
-        if os.path.exists(idx_path):
-            idx_text = open(idx_path, encoding='utf-8').read()
-            core = os.path.basename(glob.glob(os.path.join(ws, '*-core.md'))[0])
-            def size(rel):
-                p = os.path.join(ws, rel)
-                return len(open(p, encoding='utf-8').read()) / 4 / 1000 if os.path.exists(p) else None
-            def tier_files(row):
-                # Files the INDEX row names; 'this file' means INDEX.md itself.
-                # Drifter/Eris name only the core file; the other agents also
-                # name the entry file (the agent's system prompt).
-                refs = re.findall(r'`([^`]+\.md)`', row)
-                if 'this file' in row:
-                    refs = ['INDEX.md'] + refs
-                return refs
-            m_min = re.search(rf'\| Minimal \|[^\n]*', idx_text)
-            minimal = sum(size(r) or 0 for r in
-                          (tier_files(m_min.group(0)) if m_min else [core]))
-            voice_core = 'voice/' + core.replace('-core.md', '-voice-core.md')
-            standard = (minimal + (size(voice_core) or 0) + (size('core/relationships.md') or 0))
+        # load-tier claims in INDEX.md and AGENTS.md must match measured
+        # sizes (25% tolerance). Each table is checked against the files its
+        # own rows name; 'this file' resolves to the table's own file.
+        core = os.path.basename(glob.glob(os.path.join(ws, '*-core.md'))[0])
+        def size(rel):
+            p = os.path.join(ws, rel)
+            return len(open(p, encoding='utf-8').read()) / 4 / 1000 if os.path.exists(p) else None
+        def tier_files(table_file, row):
+            refs = re.findall(r'`([^`]+\.md)`', row)
+            if 'this file' in row:
+                refs = [table_file] + refs
+            return refs
+        for table_file in ('INDEX.md', 'AGENTS.md'):
+            table_path = os.path.join(ws, table_file)
+            if not os.path.exists(table_path):
+                continue
+            table_text = open(table_path, encoding='utf-8').read()
+            m_min = re.search(rf'\| Minimal \|[^\n]*', table_text)
+            if table_file == 'INDEX.md':
+                minimal = sum(size(r) or 0 for r in
+                              (tier_files(table_file, m_min.group(0)) if m_min else [core]))
+                voice_core = 'voice/' + core.replace('-core.md', '-voice-core.md')
+                standard = (minimal + (size(voice_core) or 0)
+                            + (size('core/relationships.md') or 0))
+            else:
+                minimal = sum(size(r) or 0 for r in
+                              (tier_files(table_file, m_min.group(0)) if m_min else [table_file, core]))
+                standard = (minimal + (size('core/guardrails.md') or 0)
+                            + (size('core/relationships.md') or 0))
             deep = sum(len(open(f, encoding='utf-8').read()) / 4 / 1000 for f in files)
             for tier, actual in (('Minimal', minimal), ('Standard', standard), ('Deep', deep)):
-                m = re.search(rf'\| {tier} \|[^\n]*?~([\d.]+)K', idx_text)
+                m = re.search(rf'\| {tier} \|[^\n]*?~([\d.]+)K', table_text)
                 if not m:
-                    bad.append((idx_path, f'{tier} tier claim missing'))
+                    bad.append((table_path, f'{tier} tier claim missing'))
                     continue
                 claimed = float(m.group(1))
                 if actual and abs(actual - claimed) / claimed > 0.25:
-                    bad.append((idx_path, f'{tier} tier ~{claimed}K vs measured ~{actual:.1f}K'))
+                    bad.append((table_path, f'{tier} tier ~{claimed}K vs measured ~{actual:.1f}K'))
     elif cmd == 'dashes':
         for f in files:
             text = open(f, encoding='utf-8').read()
