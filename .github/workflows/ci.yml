@@ -73,6 +73,11 @@ jobs:
       - name: Documentation consistency
         run: python3 tests/docs-consistency.py
 
+      - name: Release asset sizes
+        run: python3 tests/release-asset-check.py
+        env:
+          GH_TOKEN: ${{ github.token }}
+
       - name: Agnostic contract
         run: python3 tests/agnostic-test.py
 
