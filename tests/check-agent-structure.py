@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Structural checks shared by both agent workspaces.
 
-Usage: check-agent-structure.py <deps|tokens|dashes|index|paths|required> <workspace>
+Usage: check-agent-structure.py <deps|tokens|dashes|index|paths|required> <workspace>  # tokens gates the Core tier only
 Exit 1 on violations; prints the offending files.
 """
 import glob
@@ -68,31 +68,24 @@ def main():
             if not os.path.exists(table_path):
                 continue
             table_text = open(table_path, encoding='utf-8').read()
-            m_min = re.search(rf'\| Minimal \|[^\n]*', table_text)
-            if table_file == 'INDEX.md':
-                minimal = sum(size(r) or 0 for r in
-                              (tier_files(table_file, m_min.group(0)) if m_min else [core]))
-                voice_core = 'voice/' + core.replace('-core.md', '-voice-core.md')
-                standard = (minimal + (size(voice_core) or 0)
-                            + (size('core/relationships.md') or 0))
-            else:
-                minimal = sum(size(r) or 0 for r in
-                              (tier_files(table_file, m_min.group(0)) if m_min else [table_file, core]))
-                standard = (minimal + (size('core/guardrails.md') or 0)
-                            + (size('core/relationships.md') or 0))
-            # WS13: Deep counts modules only. README.md, RELEASE.md and
-            # CHANGELOG.md are project docs, never loaded as persona context.
-            deep = sum(len(open(f, encoding='utf-8').read()) / 4 / 1000
-                       for f in files
-                       if os.path.basename(f) not in ('README.md', 'RELEASE.md', 'CHANGELOG.md'))
-            for tier, actual in (('Minimal', minimal), ('Standard', standard), ('Deep', deep)):
-                m = re.search(rf'\| {tier} \|[^\n]*?~([\d.]+)K', table_text)
-                if not m:
-                    bad.append((table_path, f'{tier} tier claim missing'))
-                    continue
-                claimed = float(m.group(1))
-                if actual and abs(actual - claimed) / claimed > 0.25:
-                    bad.append((table_path, f'{tier} tier ~{claimed}K vs measured ~{actual:.1f}K'))
+            # Two-tier budgets (cut #3): each table carries one gated Core row
+            # naming its always-loaded files; legacy Minimal / Standard / Deep
+            # rows are rejected so the old tables cannot drift back.
+            if re.search(r'\| (Minimal|Standard|Deep) \|', table_text):
+                bad.append((table_path, 'legacy three-tier row present; migrate to Core/Task-loaded'))
+                continue
+            m_core = re.search(rf'\| Core \|[^\n]*', table_text)
+            if not m_core:
+                bad.append((table_path, 'Core tier claim missing'))
+                continue
+            actual = sum(size(r) or 0 for r in tier_files(table_file, m_core.group(0)))
+            m = re.search(rf'\| Core \|[^\n]*?~([\d.]+)K', table_text)
+            if not m:
+                bad.append((table_path, 'Core tier claim missing'))
+                continue
+            claimed = float(m.group(1))
+            if actual and abs(actual - claimed) / claimed > 0.25:
+                bad.append((table_path, f'Core tier ~{claimed}K vs measured ~{actual:.1f}K'))
     elif cmd == 'dashes':
         for f in files:
             text = open(f, encoding='utf-8').read()

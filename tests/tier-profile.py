@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 """32K small-context profile (Q-04): measure what each load tier actually costs.
 
-For every agent repo, resolves the file sets named by the INDEX and AGENTS
-tier tables (Minimal, Standard) plus the Deep module set, measures them with
-the repo's chars/4 estimator, and compares against the claimed ~XK budgets.
-Deep is measured over check-agent-structure modules(); runtime overhead
+For every agent repo, resolves the always-loaded Core file set named by the
+INDEX and AGENTS tier tables, and reports the Deep module total as an
+ungated reference. Uses the repo's chars/4 estimator. Runtime overhead
 (system text, tool schemas, history, retrieval output) cannot be measured
-statically and is reported as unmeasured reserve.
+statically and is reported as unmeasured reserve. Flags (not fails) Core sets
+above MONITOR_K.
 
-Report-only: exit 0 always. Use the table to decide whether a compact
-persona-instruction target is appropriate; no cap is enforced here.
+Report-only: exit 0 always.
 """
 import glob
 import os
@@ -22,7 +21,7 @@ WORK = os.path.dirname(ROOT)
 sys.path.insert(0, HERE)
 import _roster
 
-ROW = re.compile(r'\|\s*(Minimal|Standard|Deep)\s*\|([^\n|]*\|)?([^\n]*?~\s*[\d.]+K[^\n]*)')
+ROW = re.compile(r'\|\s*(Core|Task-loaded)\s*\|([^\n|]*\|)?([^\n]*?~\s*[\d.]+K[^\n]*)')
 REFS = re.compile(r'`([^`]+)`')
 CLAIM = re.compile(r'~([\d.]+)K')
 
@@ -54,11 +53,14 @@ def parse_tier(ws, fname):
     for m in ROW.finditer(text):
         tier, files = m.group(1), (m.group(2) or '') + ' ' + m.group(3)
         refs = [r for r in REFS.findall(files) if r.endswith('.md')]
-        if tier == 'Minimal' and 'this file' in files:
+        if tier == 'Core' and 'this file' in files:
             refs = [fname] + refs
         claim = CLAIM.search(files)
         tiers[tier] = (refs, float(claim.group(1)) if claim else None)
     return tiers
+
+
+MONITOR_K = 8.0  # Q-04: flag (don't fail) always-loaded sets above this
 
 
 def main():
@@ -72,31 +74,27 @@ def main():
         deep_k = sum(size(ws, os.path.relpath(f, ws)) or 0 for f in deep_files)
         for table in ('INDEX.md', 'AGENTS.md'):
             tiers = parse_tier(ws, table)
-            acc = []
-            for tier in ('Minimal', 'Standard'):
-                if tier not in tiers:
-                    continue
-                refs, claim = tiers[tier]
-                if tier == 'Standard' and 'Minimal' in tiers:
-                    refs = tiers['Minimal'][0] + [r for r in refs
-                                                  if r not in tiers['Minimal'][0]]
-                vals = [(r, size(ws, r)) for r in refs]
-                missing = [r for r, v in vals if v is None]
-                total = sum(v for _, v in vals if v is not None)
-                drift = (abs(total - claim) / claim) if claim else 0
-                worst = max(worst, drift)
-                flag = '  <-- MISSING ' + ','.join(missing) if missing else ''
-                print(f'{ident:<12} {table[:-3]:<7} {tier:<9} '
-                      f'{claim if claim is not None else "?":>8} {total:>8.1f}K '
-                      f'{drift:>6.0%}{flag}')
-                if tier == 'Standard' and 'Deep' in tiers:
-                    _, dclaim = tiers['Deep']
-                    ddrift = abs(deep_k - dclaim) / dclaim if dclaim else 0
-                    worst = max(worst, ddrift)
-                    print(f'{ident:<12} {"INDEX" if table=="INDEX.md" else "AGENTS":<7} '
-                          f'{"Deep":<9} {dclaim:>8} {deep_k:>8.1f}K {ddrift:>6.0%}')
-    print(f'\nmax drift: {worst:.0%} (gate tolerance elsewhere is 25%; runtime '
-          f'overhead unmeasured)')
+            if 'Core' not in tiers:
+                print(f'{ident:<12} {table[:-3]:<7} {"Core":<9} {"?":>8} {"?":>8} {"":>6}  <-- no Core row')
+                continue
+            refs, claim = tiers['Core']
+            vals = [(r, size(ws, r)) for r in refs]
+            missing = [r for r, v in vals if v is None]
+            total = sum(v for _, v in vals if v is not None)
+            drift = (abs(total - claim) / claim) if claim else 0
+            worst = max(worst, drift)
+            flag = '  <-- MISSING ' + ','.join(missing) if missing else ''
+            if total > MONITOR_K:
+                flag += f'  <-- MONITOR: above {MONITOR_K:.0f}K reference'
+            print(f'{ident:<12} {table[:-3]:<7} {"Core":<9} '
+                  f'{claim if claim is not None else "?":>8} {total:>8.1f}K '
+                  f'{drift:>6.0%}{flag}')
+            _, dclaim = tiers.get('Task-loaded', (None, None))
+            print(f'{ident:<12} {"INDEX" if table=="INDEX.md" else "AGENTS":<7} '
+                  f'{"task-loaded":<9} {dclaim if dclaim is not None else "?":>8} '
+                  f'{deep_k:>8.1f}K (ref, ungated)')
+    print(f'\nmax Core drift: {worst:.0%} (gate tolerance is 25%; Deep/task-loaded '
+          f'is reference only; runtime overhead unmeasured)')
     return 0
 
 
