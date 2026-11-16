@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Structural checks shared by both agent workspaces.
 
-Usage: check-agent-structure.py <deps|tokens|dashes|index|paths> <workspace>
+Usage: check-agent-structure.py <deps|tokens|dashes|index|paths|required> <workspace>
 Exit 1 on violations; prints the offending files.
 """
 import glob
@@ -80,7 +80,11 @@ def main():
                               (tier_files(table_file, m_min.group(0)) if m_min else [table_file, core]))
                 standard = (minimal + (size('core/guardrails.md') or 0)
                             + (size('core/relationships.md') or 0))
-            deep = sum(len(open(f, encoding='utf-8').read()) / 4 / 1000 for f in files)
+            # WS13: Deep counts modules only. README.md, RELEASE.md and
+            # CHANGELOG.md are project docs, never loaded as persona context.
+            deep = sum(len(open(f, encoding='utf-8').read()) / 4 / 1000
+                       for f in files
+                       if os.path.basename(f) not in ('README.md', 'RELEASE.md', 'CHANGELOG.md'))
             for tier, actual in (('Minimal', minimal), ('Standard', standard), ('Deep', deep)):
                 m = re.search(rf'\| {tier} \|[^\n]*?~([\d.]+)K', table_text)
                 if not m:
@@ -112,6 +116,43 @@ def main():
                 continue
             if pat.search(open(f, encoding='utf-8', errors='ignore').read()):
                 bad.append((os.path.relpath(f, ws), 'personal path'))
+    elif cmd == 'required':
+        # Fail-closed required-file manifest: exactly one registry of what
+        # belongs at the top level of an agent repo. Images are allowed by
+        # extension (README decoration); everything else unlisted fails.
+        core = glob.glob(os.path.join(ws, '*-core.md'))
+        if not core:
+            print('required files: ok (skeleton layout, skipped)')
+            return 0
+        stem = os.path.basename(core[0])[:-len('-core.md')]
+        allowed_files = {'AGENTS.md', 'CHANGELOG.md', 'IDENTITY.md',
+                         'INDEX.md', 'LICENSE', 'NOTICE', 'README.md',
+                         'RELEASE.md', 'SOUL.md', 'TOOLS.md',
+                         'USER.template.md', 'memory.py', 'persona.json',
+                         'setup.sh', '.gitignore', f'{stem}.md',
+                         f'{stem}-core.md', f'{stem}-voice.md'}
+        allowed_dirs = {'.git', '.github', 'core', 'voice', 'world',
+                        'reference', 'tests', 'lore', '__pycache__',
+                        '.venv', 'node_modules'}
+        allowed_ext = {'.png', '.svg', '.jpg', '.jpeg', '.gif'}
+        n = 0
+        for name in sorted(os.listdir(ws)):
+            # Runtime-seeded state is gitignored by design, not shipped content.
+            if name in RUNTIME:
+                continue
+            pth = os.path.join(ws, name)
+            if os.path.isdir(pth):
+                if name not in allowed_dirs:
+                    bad.append((pth, 'unlisted top-level directory'))
+                continue
+            n += 1
+            if name in allowed_files:
+                continue
+            if os.path.splitext(name)[1].lower() in allowed_ext:
+                continue
+            bad.append((pth, 'unlisted top-level file'))
+        if not bad:
+            print(f'required files: ok ({n} top-level entries checked)')
     else:
         print(f'unknown check: {cmd}', file=sys.stderr)
         return 2

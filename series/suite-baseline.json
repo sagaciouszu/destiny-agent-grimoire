@@ -3,7 +3,7 @@
   "description": "No-loss baseline for per-agent master-audit suites. Additions are allowed; removals require an explicit baseline change.",
   "agents": {
     "destiny-agent-drifter": {
-      "count": 28,
+      "count": 29,
       "required": [
         "10-Turn Emotional Arc",
         "Archive & Link Validation",
@@ -32,11 +32,12 @@
         "Suite Manifest",
         "Tape Generator",
         "Token Estimate Coverage",
-        "Voice Consistency"
+        "Voice Consistency",
+        "Required Files"
       ]
     },
     "destiny-agent-eris-morn": {
-      "count": 23,
+      "count": 24,
       "required": [
         "10-Turn Emotional Arc",
         "Connection",
@@ -60,11 +61,12 @@
         "Voice Consistency",
         "Voice Scorer",
         "Voice Scorer Negative",
-        "Voice Validator"
+        "Voice Validator",
+        "Required Files"
       ]
     },
     "destiny-agent-calus": {
-      "count": 21,
+      "count": 22,
       "required": [
         "Module Completeness",
         "Quote Verification",
@@ -86,11 +88,12 @@
         "Token Estimate Coverage",
         "No Em-Dashes",
         "INDEX Completeness",
-        "No Personal Paths"
+        "No Personal Paths",
+        "Required Files"
       ]
     },
     "destiny-agent-zavala": {
-      "count": 21,
+      "count": 22,
       "required": [
         "Module Completeness",
         "Quote Verification",
@@ -112,11 +115,12 @@
         "Token Estimate Coverage",
         "No Em-Dashes",
         "INDEX Completeness",
-        "No Personal Paths"
+        "No Personal Paths",
+        "Required Files"
       ]
     },
     "destiny-agent-ghost": {
-      "count": 21,
+      "count": 22,
       "required": [
         "Module Completeness",
         "Quote Verification",
@@ -138,11 +142,12 @@
         "Token Estimate Coverage",
         "No Em-Dashes",
         "INDEX Completeness",
-        "No Personal Paths"
+        "No Personal Paths",
+        "Required Files"
       ]
     },
     "destiny-agent-mara-sov": {
-      "count": 21,
+      "count": 22,
       "required": [
         "Module Completeness",
         "Quote Verification",
@@ -164,7 +169,8 @@
         "Token Estimate Coverage",
         "No Em-Dashes",
         "INDEX Completeness",
-        "No Personal Paths"
+        "No Personal Paths",
+        "Required Files"
       ]
     }
   }

@@ -31,9 +31,11 @@ def files_of(ws):
     out = [f for d in ('', 'voice', 'core', 'world', 'reference')
            for f in glob.glob(os.path.join(ws, d, '*.md'))]
     base = {os.path.basename(f) for f in out}
+    # WS13: project docs are not modules and never load as persona context.
     return [f for f in out if os.path.basename(f) not in
             ('USER.md', 'user-memory.md', 'journal.md', 'session-state.md',
-             'cross-session-memory.md', 'DREAMS.md')]
+             'cross-session-memory.md', 'DREAMS.md', 'README.md',
+             'RELEASE.md', 'CHANGELOG.md')]
 
 
 def size(ws, rel):

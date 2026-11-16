@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Guard the per-agent suite manifests against accidental loss.
 
-Checks:
-  - tests/master-audit.sh and tests/suites.json list the same suites/commands
+tests/suites.json is the single suite registry; each master-audit.sh loads
+it at runtime instead of duplicating the list. Checks:
+  - each master-audit.sh loads tests/suites.json and defines no inline suites
   - the central series/suite-baseline.json baseline is a subset of each manifest
   - suite counts never drop below the baseline
   - tiers and required fields are valid
@@ -20,27 +21,28 @@ TIERS = {'core', 'persona', 'experimental'}
 
 
 def audit_suites(agent):
+    """Return the suite (name, command) pairs an agent audit will run.
+
+    The registry lives in tests/suites.json; master-audit.sh (or a helper it
+    sources, e.g. Drifter's suites-lib.sh) must load it instead of defining
+    an inline SUITES block.
+    """
     path = os.path.join(agent, 'tests', 'master-audit.sh')
     text = open(path, encoding='utf-8').read()
-    block = re.search(r'SUITES=\((.*?)\n\)', text, re.S)
-    if not block:
-        # SUITES may live in a sourced helper (e.g. tests/suites-lib.sh).
-        helpers = re.findall(r'(?:source|\.)\s+"\$HERE/([^"]+)"', text)
-        for helper in helpers:
-            helper_path = os.path.join(agent, 'tests', helper)
-            if not os.path.isfile(helper_path):
-                continue
-            helper_text = open(helper_path, encoding='utf-8').read()
-            block = re.search(r'SUITES=\((.*?)\n\)', helper_text, re.S)
-            if block:
-                break
-    if not block:
-        raise AssertionError('SUITES block not found')
-    out = []
-    for entry in re.findall(r'"([^"]+)"', block.group(1)):
-        name, command = entry.split('|', 1)
-        out.append((name.strip(), command.strip()))
-    return out
+    sources = [text]
+    for helper in re.findall(r'(?:source|\.)\s+"\$HERE/([^"]+)"', text):
+        helper_path = os.path.join(agent, 'tests', helper)
+        if os.path.isfile(helper_path):
+            sources.append(open(helper_path, encoding='utf-8').read())
+    loaded = any('suites.json' in t for t in sources)
+    if not loaded:
+        raise AssertionError('master-audit.sh does not load tests/suites.json')
+    for t in sources:
+        if re.search(r'(?m)^\s*"[^"]+\|[^"]*"\s*,?\s*$', t):
+            raise AssertionError('inline suite entries found; suites.json is the registry')
+    manifest = json.load(open(os.path.join(agent, 'tests', 'suites.json'),
+                              encoding='utf-8'))
+    return [(s['name'], s['command']) for s in manifest.get('suites', [])]
 
 
 def main():

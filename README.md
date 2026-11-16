@@ -267,11 +267,11 @@ repository minus the database lives outside the tree.
 | Agent suite manifests | `python3 tests/suite-manifest-test.py` | PASS |
 | Agnostic contract | `python3 tests/agnostic-test.py` | PASS |
 | Archive audit | `bash grimoire-master-audit.sh` | 18/18 |
-| Calus / Zavala / Ghost / Mara Sov | run tests/master-audit.sh in each repo | 20/20 |
+| Calus / Zavala / Ghost / Mara Sov | run tests/master-audit.sh in each repo | 21/21 |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 checks |
 | Database integrity | `bash tests/test-db.sh` | 68 checks |
-| Drifter agent audit | run tests/master-audit.sh in destiny-agent-drifter | 27/27 |
-| Eris agent audit | run tests/master-audit.sh in destiny-agent-eris-morn | 22/22 |
+| Drifter agent audit | run tests/master-audit.sh in destiny-agent-drifter | 29/29 |
+| Eris agent audit | run tests/master-audit.sh in destiny-agent-eris-morn | 24/24 |
 | Documentation consistency | `python3 tests/docs-consistency.py` | PASS |
 | File conformance | `python3 tests/conformance.py` | PASS |
 | Knowledge webs | `python3 scripts/generate-knowledge-web.py --check` | PASS |
