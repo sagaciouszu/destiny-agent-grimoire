@@ -135,9 +135,9 @@ if [ "$TARGET" = "opencode" ]; then
             exit 1
         fi
         if [ -z "$DRY" ] && [ -f "$DEST/$entry" ]; then
-            python3 - "$DEST/$entry" "$id" <<'PY'
+            python3 - "$DEST/$entry" "$id" "$DEST/$id" <<'PY'
 import re, sys
-path, agent = sys.argv[1], sys.argv[2]
+path, agent, dest_dir = sys.argv[1], sys.argv[2], sys.argv[3]
 text = open(path, encoding='utf-8').read()
 names = [f'{agent}-core.md', f'{agent}-voice.md', 'INDEX.md', 'USER.md',
          'SOUL.md', 'IDENTITY.md', 'TOOLS.md', 'README.md', 'RELEASE.md']
@@ -145,6 +145,36 @@ pattern = r'(?<![\w/])(' + '|'.join(re.escape(n) for n in names) + r')'
 text = re.sub(pattern, rf'{agent}/\1', text)
 for directory in ('core/', 'voice/', 'world/', 'reference/'):
     text = re.sub(rf'(?<![\w/]){directory}', f'{agent}/{directory}', text)
+
+# Add absolute path hint for OpenCode deployment
+abs_path = f'~/.config/opencode/agents/{agent}'
+file_locations = f'''
+## File locations
+
+In OpenCode deployment, your files are at `{abs_path}/`.
+Load persona files using absolute paths:
+
+- `{abs_path}/{agent}-core.md`
+- `{abs_path}/{agent}-voice.md`
+- `{abs_path}/core/guardrails.md`
+- `{abs_path}/core/relationships.md`
+- `{abs_path}/INDEX.md`
+
+The canon database is at `~/.config/opencode/lore/db/grimoire.db`.
+'''
+# For entry files (calus.md, drifter.md, etc.), add File locations at the end
+# For AGENTS.md, add File locations before Platform bindings
+if '## File locations' not in text:
+    if '## Platform bindings' in text:
+        text = text.replace('## Platform bindings', file_locations + '\n## Platform bindings', 1)
+    elif '## Hard rules' in text:
+        text = text.replace('## Hard rules', file_locations + '\n## Hard rules', 1)
+    else:
+        text = text.rstrip() + '\n' + file_locations
+else:
+    # Update existing File locations section
+    text = re.sub(r'(?s)## File locations.*?(?=\n## |\Z)', file_locations.rstrip(), text, count=1)
+
 open(path, 'w', encoding='utf-8').write(text)
 PY
         fi
