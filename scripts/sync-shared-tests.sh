@@ -18,10 +18,9 @@ done
 FILES="memory.py memory-test.py run-suites.sh shared-helpers-test.sh suite-manifest-test.py connection-test.sh"
 CANON="$HERE/../tests/agent-helpers"
 DESTS=""
-for r in destiny-agent-calus destiny-agent-drifter destiny-agent-eris-morn \
-         destiny-agent-ghost destiny-agent-mara-sov destiny-agent-zavala; do
-    DESTS="$DESTS $WORK/$r"
-done
+while IFS= read -r src; do
+    [ -n "$src" ] && DESTS="$DESTS $WORK/$src"
+done < <(python3 -c "import json,sys; [print(a['source']) for a in json.load(open(sys.argv[1]))['agents'] if a.get('source')]" "$HERE/../series/agents.json")
 DESTS="$DESTS $WORK/destiny-agent-template/template"
 PASS=0; FAIL=0; UPDATED=0
 for f in $FILES; do
