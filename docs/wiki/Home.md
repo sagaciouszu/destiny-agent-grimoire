@@ -29,7 +29,7 @@ the database is built; agents read the built database.
 
 ## What the runtime gives you
 
-- **One archive, many voices.** Six character agents share the same canon.
+- **One archive, many voices.** Twelve character agents share the same canon.
 - **Quote safety first.** `verify` checks a line before an agent may quote it.
 - **Additive discovery.** Expansion, season, activity and event classifications
   sit beside the canon tables and never rewrite them.
