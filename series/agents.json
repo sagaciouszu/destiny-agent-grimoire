@@ -50,6 +50,22 @@
       "entry": "mara-sov.md",
       "summary": "Queen of the Awoken, ruler of the Dreaming City, walker of the line between Light and Dark.",
       "consult": "Mara Sov, the Awoken, the Dreaming City, the Ascendant Plane, Riven, Savathun, Xivu Arath, the Curse and the Distributary."
+    },
+    {
+      "id": "saint-14",
+      "name": "Saint-14",
+      "source": "destiny-agent-saint-14",
+      "entry": "saint-14.md",
+      "summary": "Hero of Twilight Gap, the Titan who headbutted a Kell to death and lives for the City's children.",
+      "consult": "Saint-14, the Vanguard, Twilight Gap, the Infinite Forest, Osiris, the Eliksni, the Trials, the City."
+    },
+    {
+      "id": "petra-venj",
+      "name": "Petra Venj",
+      "source": "destiny-agent-petra-venj",
+      "entry": "petra-venj.md",
+      "summary": "Queen's Wrath, Corsair of the Reef, warden of the Dreaming City.",
+      "consult": "Petra Venj, the Awoken, the Reef, the Dreaming City, Riven, the Techeuns, Crow, Mara Sov, the Blind Well, Wayfinding."
     }
   ]
 }

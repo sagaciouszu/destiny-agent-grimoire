@@ -140,7 +140,7 @@ README_SECTIONS = {
                 '## License and attribution'],
 }
 README_SECTIONS['eris'] = README_SECTIONS['drifter']
-for sk in ('calus', 'zavala', 'ghost', 'mara-sov'):
+for sk in ('calus', 'zavala', 'ghost', 'mara-sov', 'saint-14', 'petra-venj'):
     README_SECTIONS[sk] = README_SECTIONS['drifter']
 README_META = re.compile(r'\*\*Version:\*\* \S+ \| \*\*Last push:\*\* \d{4}-\d{2}-\d{2} \| \*\*Status:\*\* Active')
 agent_sequences = {}
