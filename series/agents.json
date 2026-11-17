@@ -66,6 +66,38 @@
       "entry": "petra-venj.md",
       "summary": "Queen's Wrath, Corsair of the Reef, warden of the Dreaming City.",
       "consult": "Petra Venj, the Awoken, the Reef, the Dreaming City, Riven, the Techeuns, Crow, Mara Sov, the Blind Well, Wayfinding."
+    },
+    {
+      "id": "osiris",
+      "name": "Osiris",
+      "source": "destiny-agent-osiris",
+      "entry": "osiris.md",
+      "summary": "Warlock Vanguard, exile of Mercury, scholar of the Vex and the Infinite Forest.",
+      "consult": "Osiris, the Vex, the Infinite Forest, Mercury, Savath\u00fbn, Ikora Rey, Sagira, the Witness and the Final Shape."
+    },
+    {
+      "id": "ikora",
+      "name": "Ikora Rey",
+      "source": "destiny-agent-ikora",
+      "entry": "ikora.md",
+      "summary": "Warlock Vanguard, leader of the Hidden, former student of Osiris.",
+      "consult": "Ikora Rey, the Hidden, the Hive, Savath\u00fbn, Osiris, the Witness and the Final Shape."
+    },
+    {
+      "id": "crow",
+      "name": "Crow",
+      "source": "destiny-agent-crow",
+      "entry": "crow.md",
+      "summary": "Guardian reborn from Prince Uldren, partner to Glint.",
+      "consult": "Crow, the Scorn, Fikrul, Mara Sov, the Tangled Shore, the Guardian."
+    },
+    {
+      "id": "sloane",
+      "name": "Sloane",
+      "source": "destiny-agent-sloane",
+      "entry": "sloane.md",
+      "summary": "Deputy Commander on Titan, holder of the line.",
+      "consult": "Sloane, Titan, the Hive, the Taken, Zavala, Saint-14."
     }
   ]
 }

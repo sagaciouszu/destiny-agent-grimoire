@@ -258,7 +258,7 @@ repository minus the database lives outside the tree.
 | Suite | Command | Expected |
 |---|---|---|
 | Agent access | `python3 tests/agent-access-test.py` | PASS |
-| Agent layout | `bash tests/agent-layout-test.sh` | 174 checks |
+| Agent layout | `bash tests/agent-layout-test.sh` | 354 checks |
 | Agent suite manifests | `python3 tests/suite-manifest-test.py` | PASS |
 | Agnostic contract | `python3 tests/agnostic-test.py` | PASS |
 | Archive audit | `bash grimoire-master-audit.sh` | 18/18 |
