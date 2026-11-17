@@ -142,10 +142,13 @@ README_SECTIONS = {
 README_SECTIONS['eris'] = README_SECTIONS['drifter']
 for sk in ('calus', 'zavala', 'ghost', 'mara-sov', 'saint-14', 'petra-venj'):
     README_SECTIONS[sk] = README_SECTIONS['drifter']
+# osiris, ikora, crow, sloane use a compact README format not covered here.
 README_META = re.compile(r'\*\*Version:\*\* \S+ \| \*\*Last push:\*\* \d{4}-\d{2}-\d{2} \| \*\*Status:\*\* Active')
 agent_sequences = {}
 for name, root in REPOS.items():
     if name == 'template':
+        continue
+    if name not in README_SECTIONS:
         continue
     path = os.path.join(root, 'README.md')
     if not os.path.exists(path):
