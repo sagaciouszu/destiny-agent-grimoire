@@ -1,43 +1,45 @@
-# v0.42.1 - Dead tables removed (schema 1.13.0)
+# v0.42.2 - Corpus rebuilt from the private vault (schema 1.13.0)
 
-**2026-11-12**
+**2026-11-17**
 
-Schema **1.13.0** release. Four derived tables with zero application readers
-are dropped: `manifest_activities`, `manifest_links`, `item_sets` and
-`item_set_members`. The database goes from 52 to 48 tables. The corpus is
-unchanged (9,229 transcripts / 125,324 lines / 63,359 sightings / 176,794 FTS
-rows).
+Rebuild release. The database was regenerated end-to-end from the operator vault
+using the documented runbook, then compared against v0.42.1. Schema, queries,
+MCP surface and corpus counts are unchanged; this artifact is republished to
+record rebuild provenance and the gates it passed.
 
 ## What's Changed
-- Schema 1.13.0: drop `manifest_activities`, `manifest_links`, `item_sets`,
-  `item_set_members`; 52 → 48 tables.
-- `db/enrich_manifest.py`: no longer creates or fills tables; keeps manifest
-  conflict reporting (`db/enrich_seals.py` is now the only table-creating enrich).
-- `db/enrich_itemsets.py`: keeps `item_classification` updates; no table writes.
-- `db/schema.sql`: already carried none of the four tables; no change needed.
-- `db/capabilities.json`: four removed entries.
-- `tests/taxonomy-deep-test.py`: `manifest()` check and registration removed;
-  16 checks remain.
-- Tests: `test-db.sh` gains one real check (68 total).
-- Docs: README build chain, `db/README.md`, `STANDARDS.md`,
-  `skills/destiny-grimoire/SKILL.md`, `docs/process/Database.md`,
-  `docs/process/Testing-and-Auditing.md`, `docs/process/Builds.md`.
-- Database: 269,221,888 bytes (~269 MB / 260 MiB-rounded), ~0.4 MB smaller.
-
-## Test fix
-`tests/test-db.sh` line 88 opened `""/path""` because `\"$DB\"` was nested in a
-pre-expanded string, so `sqlite3` failed and the `-z` assertion passed
-vacuously. The query now runs into a variable first; a negative control
-confirms the check fails when `verify_fts` is present.
+- `scripts/rebuild-from-vault.sh` rebuilt the database from the private vault;
+  every manifest input was hash-verified and the run closed with
+  `vault untouched: OK`.
+- The gitignored Bungie manifest cache was staged locally for `enrich_lore`;
+  no raw archive or manifest dump was added to Git.
+- Captions were staged from the vault: 7,911 transcripts, 55,678 lines, 56,119
+  provenance rows, 63,359 sightings, 64 activity facets, 0 unresolved.
+- The isolated rebuild root recreated the live workspace shape (per-agent
+  `lore` links, personal `core/` files, template checkout) so conformance ran
+  against the real layout instead of a bare checkout.
+- Counts unchanged from v0.42.1: 9,229 transcripts / 125,324 lines / 2,889
+  cards / 2,699 interactions / 58,764 items / 20 characters / 176,794 FTS rows
+  across 48 tables at schema 1.13.0.
+- Profile README metadata refreshed for the new tag and HEAD date.
+- No schema, query, MCP-tool or documentation-claim changes.
 
 ## Verification
-- Full from-source rebuild: migrate → queen-fold → enrich_lore →
-  enrich_seals → enrich_itemsets → build_entity_web.
-- Master audit 18/18; DB 68; query 97; caption 13; access 88; MCP 12/25/8
-  (161 calls); taxonomy 16; robustness 26; containment 11; item audit 0
-  failures; retrieval eval ranked; docs audit pass; conformance 405 files.
-- Consistency: docs-consistency 10/10, doc counts in sync, readme-meta in sync.
-- 48 tables, schema 1.13.0, fts 176,794, entity_links 33,578.
+- Full chain: migrate → queen-fold → enrich_lore → enrich_seals →
+  enrich_itemsets → build_entity_web.
+- Master audit 18/18 suites, 0 failed, 0 skipped; DB tests 68; caption tests 13;
+  MCP contract 12; MCP agent optimization 25; permission audit 1,584 checks.
+- Conformance: all files conform in the rebuilt workspace layout.
+- Release parity against v0.42.1: 15/15 (table-name set, 13 table counts, and
+  the game-caption transcript count). The check compares counts, not row
+  contents.
+- Candidate and current database `stats` identical on every table; live
+  post-promotion `PRAGMA integrity_check` returned `ok`.
+- Site check: 71 pages (links, metadata, sitemap, robots), 39 axe renders,
+  162 transcripts, 24 demo lines, 30/30 samples across 12 agents, roster
+  current.
+- Vault dry-run verified every manifest file (`OK`) before the build.
 
 ## Asset
-`grimoire.db` plus `.xz`/`.gz` (SHA256SUMS). Schema 1.13.0.
+- `grimoire.db` — 269,242,368 bytes (~269 MB), schema 1.13.0, 48 tables.
+- `SHA256SUMS` carries the artifact hash.
