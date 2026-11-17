@@ -10,7 +10,7 @@
       "entry": "drifter.md",
       "summary": "Gambler, Gambit handler, Dark Age survivor.",
       "consult": "Gambit, the Nine, Dark Age history, the Drifter's own past.",
-      "icon": "drift"
+      "icon": "faction-thenine"
     },
     {
       "id": "eris",
@@ -55,7 +55,7 @@
       "entry": "mara-sov.md",
       "summary": "Queen of the Awoken, ruler of the Dreaming City, walker of the line between Light and Dark.",
       "consult": "Mara Sov, the Awoken, the Dreaming City, the Ascendant Plane, Riven, Savathun, Xivu Arath, the Curse and the Distributary.",
-      "icon": "awoken"
+      "icon": "fallen-dusk"
     },
     {
       "id": "saint-14",
