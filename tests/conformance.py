@@ -35,9 +35,7 @@ WORK = os.path.dirname(GR)
 # contract + skeleton-only structure.
 sys.path.insert(0, HERE)
 import _roster
-REPOS = {n: p for n, p in _roster.repos(WORK).items()
-       if os.path.isdir(p) and os.path.isfile(os.path.join(p, 'README.md'))
-       and 'header.png' in open(os.path.join(p, 'README.md'), encoding='utf-8', errors='ignore').read()}
+REPOS = {n: p for n, p in _roster.repos(WORK).items() if os.path.isdir(p)}
 REPOS['grimoire'] = GR
 SKELETON = set()
 if os.path.isdir(os.path.join(WORK, 'destiny-agent-template')):
@@ -113,7 +111,7 @@ for name, root in REPOS.items():
             if drift > 30:
                 if FIX:
                     val = round(actual / 1000, 2) if actual < 1000 else round(actual / 1000, 1)
-                    new_tok = f"~{max(0.1, val)}K"
+                    new_tok = f"~{max(0.05, val)}K"
                     text2 = re.sub(r'(Token Estimate:\*\* )~\d+(?:\.\d+)?K', r'\g<1>' + new_tok, text, count=1)
                     open(path, 'w', encoding='utf-8').write(text2)
                     token_fixes += 1
@@ -144,7 +142,11 @@ README_SECTIONS = {
 README_SECTIONS['eris'] = README_SECTIONS['drifter']
 for sk in ('calus', 'zavala', 'ghost', 'mara-sov', 'saint-14', 'petra-venj'):
     README_SECTIONS[sk] = README_SECTIONS['drifter']
-# osiris, ikora, crow, sloane use a compact README format not covered here.
+# Compact README format used by newer agents.
+COMPACT_README_SECTIONS = ['## Quick start', '## Deploy', '## Verification',
+                           '## Troubleshooting', '## License']
+for sk in ('osiris', 'ikora', 'crow', 'sloane'):
+    README_SECTIONS[sk] = COMPACT_README_SECTIONS
 README_META = re.compile(r'\*\*Version:\*\* \S+ \| \*\*Last push:\*\* \d{4}-\d{2}-\d{2} \| \*\*Status:\*\* Active')
 agent_sequences = {}
 for name, root in REPOS.items():
@@ -160,10 +162,11 @@ for name, root in REPOS.items():
     first = next((l for l in text.splitlines() if l.strip()), '')
     if not first.startswith('# '):
         issues.append((name, 'README.md', 'first line is not an H1 title'))
-    if 'header.png' not in text or not os.path.exists(os.path.join(root, 'header.png')):
-        issues.append((name, 'README.md', 'missing banner (header.png)'))
-    if not README_META.search(text):
-        issues.append((name, 'README.md', 'missing version/last push metadata line'))
+    if name not in ('osiris', 'ikora', 'crow', 'sloane'):
+        if 'header.png' not in text or not os.path.exists(os.path.join(root, 'header.png')):
+            issues.append((name, 'README.md', 'missing banner (header.png)'))
+        if not README_META.search(text):
+            issues.append((name, 'README.md', 'missing version/last push metadata line'))
     seq = [h for h in README_SECTIONS[name] if h in text]
     if seq != README_SECTIONS[name]:
         missing = [h for h in README_SECTIONS[name] if h not in text]
@@ -259,6 +262,8 @@ for name, root in REPOS.items():
     if name in ('grimoire', 'template'):
         continue
     if name not in README_SECTIONS:
+        continue
+    if name in ('osiris', 'ikora', 'crow', 'sloane'):
         continue
     rel_path = os.path.join(root, 'core', 'relationships.md')
     if not os.path.isfile(rel_path):
