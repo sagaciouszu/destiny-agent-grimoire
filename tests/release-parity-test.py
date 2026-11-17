@@ -97,61 +97,66 @@ def main():
             subprocess.TimeoutExpired,
         ):
             print("SKIP: no network/auth for release download (local-only run)")
+            shutil.rmtree(tmpdir, ignore_errors=True)
             return 0
         ref = os.path.join(tmpdir, "grimoire.db")
     else:
         print(f"FAIL: ref is neither an existing file nor a release tag: {ref}")
         return 1
 
-    for label, path in (("local", args.local), ("ref", ref)):
-        if not os.path.exists(path):
-            print(f"FAIL: {label} database not found: {path}")
+    try:
+        for label, path in (("local", args.local), ("ref", ref)):
+            if not os.path.exists(path):
+                print(f"FAIL: {label} database not found: {path}")
+                return 1
+
+        try:
+            local = sqlite3.connect(f"file:{args.local}?mode=ro", uri=True)
+            local.execute("SELECT count(*) FROM sqlite_master").fetchone()
+        except sqlite3.DatabaseError as e:
+            print(f"FAIL: local database unreadable: {args.local} ({e})")
+            return 1
+        try:
+            published = sqlite3.connect(f"file:{ref}?mode=ro", uri=True)
+            published.execute("SELECT count(*) FROM sqlite_master").fetchone()
+        except sqlite3.DatabaseError as e:
+            print(f"FAIL: ref database unreadable: {ref} ({e})")
             return 1
 
-    try:
-        local = sqlite3.connect(f"file:{args.local}?mode=ro", uri=True)
-        local.execute("SELECT count(*) FROM sqlite_master").fetchone()
-    except sqlite3.DatabaseError as e:
-        print(f"FAIL: local database unreadable: {args.local} ({e})")
-        return 1
-    try:
-        published = sqlite3.connect(f"file:{ref}?mode=ro", uri=True)
-        published.execute("SELECT count(*) FROM sqlite_master").fetchone()
-    except sqlite3.DatabaseError as e:
-        print(f"FAIL: ref database unreadable: {ref} ({e})")
-        return 1
-
-    print("=== RELEASE PARITY ===")
-    lt, pt = tables(local), tables(published)
-    check(
-        "table sets match",
-        lt == pt,
-        f"local-only={sorted(lt - pt)} ref-only={sorted(pt - lt)}",
-    )
-
-    for table in TABLES:
-        ln, pn = count(local, table), count(published, table)
+        print("=== RELEASE PARITY ===")
+        lt, pt = tables(local), tables(published)
         check(
-            f"{table} rows match", ln is not None and ln == pn, f"local={ln} ref={pn}"
+            "table sets match",
+            lt == pt,
+            f"local-only={sorted(lt - pt)} ref-only={sorted(pt - lt)}",
         )
 
-    try:
-        lc = local.execute(CAPTION_COUNT).fetchone()[0]
-    except sqlite3.OperationalError:
-        lc = None
-    try:
-        pc = published.execute(CAPTION_COUNT).fetchone()[0]
-    except sqlite3.OperationalError:
-        pc = None
-    check(
-        "game_caption transcripts match",
-        lc is not None and lc == pc,
-        f"local={lc} ref={pc}",
-    )
+        for table in TABLES:
+            ln, pn = count(local, table), count(published, table)
+            check(
+                f"{table} rows match",
+                ln is not None and ln == pn,
+                f"local={ln} ref={pn}",
+            )
 
+        try:
+            lc = local.execute(CAPTION_COUNT).fetchone()[0]
+        except sqlite3.OperationalError:
+            lc = None
+        try:
+            pc = published.execute(CAPTION_COUNT).fetchone()[0]
+        except sqlite3.OperationalError:
+            pc = None
+        check(
+            "game_caption transcripts match",
+            lc is not None and lc == pc,
+            f"local={lc} ref={pc}",
+        )
+
+    finally:
+        if tmpdir is not None:
+            shutil.rmtree(tmpdir, ignore_errors=True)
     print(f"\nPassed: {PASS} | Failed: {FAIL}")
-    if tmpdir is not None:
-        shutil.rmtree(tmpdir, ignore_errors=True)
     return 1 if FAIL else 0
 
 
