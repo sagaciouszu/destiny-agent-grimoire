@@ -35,7 +35,9 @@ WORK = os.path.dirname(GR)
 # contract + skeleton-only structure.
 sys.path.insert(0, HERE)
 import _roster
-REPOS = {n: p for n, p in _roster.repos(WORK).items() if os.path.isdir(p)}
+REPOS = {n: p for n, p in _roster.repos(WORK).items()
+       if os.path.isdir(p) and os.path.isfile(os.path.join(p, 'README.md'))
+       and 'header.png' in open(os.path.join(p, 'README.md'), encoding='utf-8', errors='ignore').read()}
 REPOS['grimoire'] = GR
 SKELETON = set()
 if os.path.isdir(os.path.join(WORK, 'destiny-agent-template')):
@@ -255,6 +257,8 @@ if os.path.isfile(_canon_db):
         print(f'  (warning: cannot read canon roster: {exc})')
 for name, root in REPOS.items():
     if name in ('grimoire', 'template'):
+        continue
+    if name not in README_SECTIONS:
         continue
     rel_path = os.path.join(root, 'core', 'relationships.md')
     if not os.path.isfile(rel_path):

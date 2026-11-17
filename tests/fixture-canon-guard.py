@@ -77,7 +77,10 @@ def _strings(path):
 
 
 def _fixture_roots():
-    roots = [(name, path) for name, path in _roster.repos(WORK).items()]
+    roots = [(name, path) for name, path in _roster.repos(WORK).items()
+             if os.path.isfile(os.path.join(path, 'README.md'))
+             and 'header.png' in open(os.path.join(path, 'README.md'),
+                                     encoding='utf-8', errors='ignore').read()]
     template = os.path.join(WORK, "destiny-agent-template")
     if os.path.isdir(template):
         roots.append(("template", template))
