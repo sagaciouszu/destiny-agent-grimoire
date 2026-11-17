@@ -20,7 +20,8 @@
 **Limits and provenance:** <https://sagaciouszu.github.io/destiny-agent-grimoire-site/grimoire/limits/>
 
 One canonical, agent-first Destiny lore archive: a single SQLite database with
-FTS5 search, built from committed sources, with a documented quote policy and
+FTS5 search, built from committed sources plus local-only extraction corpora,
+with a documented quote policy and
 verification gates. No external services at runtime.
 
 ## Quick start for Guardians
@@ -72,6 +73,10 @@ python3 db/enrich_lore.py
 python3 db/enrich_seals.py
 python3 db/build_entity_web.py --db db/grimoire.db
 ```
+
+For a from-scratch rebuild use `scripts/rebuild-from-vault.sh` (hash-verified,
+copy-only staging of the vault corpora, full chain, gates, cleanup), then certify
+with `tests/release-parity-test.py --local db/grimoire.db --ref v<ver>`.
 
 **Step 3: query.**
 
@@ -203,9 +208,9 @@ Connection matrix:
 
 ```
 db/          # query.py, schema.sql, migrate.py, taxonomy.py, capabilities.json
-source/      # ingested markdown: books, cards, transcripts, records, items, interactions
+source/      # ingested markdown: books, cards, transcripts, records (+ ishtar-timeline.json)
 compendium/  # character quote index that feeds the characters tables
-archive/     # raw scraper output (JSONL) and fetchers
+archive/     # local-only extraction inputs (never committed; see the vault runbook)
 scripts/     # ingestion helpers
 tests/       # archive gates, agent suites, shared runner, conformance
 docs/        # wiki, taxonomy, discovery design and coverage ledger
