@@ -9,7 +9,8 @@
       "source": "destiny-agent-drifter",
       "entry": "drifter.md",
       "summary": "Gambler, Gambit handler, Dark Age survivor.",
-      "consult": "Gambit, the Nine, Dark Age history, the Drifter's own past."
+      "consult": "Gambit, the Nine, Dark Age history, the Drifter's own past.",
+      "icon": "drift"
     },
     {
       "id": "eris",
@@ -17,7 +18,8 @@
       "source": "destiny-agent-eris-morn",
       "entry": "eris.md",
       "summary": "Hive expert, survivor of the Hellmouth, the Witch.",
-      "consult": "Hive, the Moon, Savathun, the Witness, occult and ritual lore."
+      "consult": "Hive, the Moon, Savathun, the Witness, occult and ritual lore.",
+      "icon": "hive"
     },
     {
       "id": "calus",
@@ -25,7 +27,8 @@
       "source": "destiny-agent-calus",
       "entry": "calus.md",
       "summary": "Emperor of the Cabal, herald of the Witness, host of the Menagerie.",
-      "consult": "Calus, the Cabal, the Leviathan, the Menagerie, Opulence, the Witness and the end."
+      "consult": "Calus, the Cabal, the Leviathan, the Menagerie, Opulence, the Witness and the end.",
+      "icon": "cabal-gold"
     },
     {
       "id": "zavala",
@@ -33,7 +36,8 @@
       "source": "destiny-agent-zavala",
       "entry": "zavala.md",
       "summary": "Commander of the Vanguard, Awoken Titan, the City\u2019s wall.",
-      "consult": "Zavala, the Vanguard, the Last City, the Red War, Caiatl and the coalition."
+      "consult": "Zavala, the Vanguard, the Last City, the Red War, Caiatl and the coalition.",
+      "icon": "class-titan"
     },
     {
       "id": "ghost",
@@ -41,7 +45,8 @@
       "source": "destiny-agent-ghost",
       "entry": "ghost.md",
       "summary": "The Guardian's Ghost: curious, loyal and afraid of losing them.",
-      "consult": "Ghost, the Light, resurrection, the Traveler, the City and the Guardian."
+      "consult": "Ghost, the Light, resurrection, the Traveler, the City and the Guardian.",
+      "icon": "ghost"
     },
     {
       "id": "mara-sov",
@@ -49,7 +54,8 @@
       "source": "destiny-agent-mara-sov",
       "entry": "mara-sov.md",
       "summary": "Queen of the Awoken, ruler of the Dreaming City, walker of the line between Light and Dark.",
-      "consult": "Mara Sov, the Awoken, the Dreaming City, the Ascendant Plane, Riven, Savathun, Xivu Arath, the Curse and the Distributary."
+      "consult": "Mara Sov, the Awoken, the Dreaming City, the Ascendant Plane, Riven, Savathun, Xivu Arath, the Curse and the Distributary.",
+      "icon": "awoken"
     },
     {
       "id": "saint-14",
@@ -57,7 +63,8 @@
       "source": "destiny-agent-saint-14",
       "entry": "saint-14.md",
       "summary": "Hero of Twilight Gap, the Titan who headbutted a Kell to death and lives for the City's children.",
-      "consult": "Saint-14, the Vanguard, Twilight Gap, the Infinite Forest, Osiris, the Eliksni, the Trials, the City."
+      "consult": "Saint-14, the Vanguard, Twilight Gap, the Infinite Forest, Osiris, the Eliksni, the Trials, the City.",
+      "icon": "helmet"
     },
     {
       "id": "petra-venj",
@@ -65,7 +72,8 @@
       "source": "destiny-agent-petra-venj",
       "entry": "petra-venj.md",
       "summary": "Queen's Wrath, Corsair of the Reef, warden of the Dreaming City.",
-      "consult": "Petra Venj, the Awoken, the Reef, the Dreaming City, Riven, the Techeuns, Crow, Mara Sov, the Blind Well, Wayfinding."
+      "consult": "Petra Venj, the Awoken, the Reef, the Dreaming City, Riven, the Techeuns, Crow, Mara Sov, the Blind Well, Wayfinding.",
+      "icon": "fallen-devils"
     },
     {
       "id": "osiris",
@@ -73,7 +81,8 @@
       "source": "destiny-agent-osiris",
       "entry": "osiris.md",
       "summary": "Warlock Vanguard, exile of Mercury, scholar of the Vex and the Infinite Forest.",
-      "consult": "Osiris, the Vex, the Infinite Forest, Mercury, Savath\u00fbn, Ikora Rey, Sagira, the Witness and the Final Shape."
+      "consult": "Osiris, the Vex, the Infinite Forest, Mercury, Savath\u00fbn, Ikora Rey, Sagira, the Witness and the Final Shape.",
+      "icon": "faction-osiris"
     },
     {
       "id": "ikora",
@@ -81,7 +90,8 @@
       "source": "destiny-agent-ikora",
       "entry": "ikora.md",
       "summary": "Warlock Vanguard, leader of the Hidden, former student of Osiris.",
-      "consult": "Ikora Rey, the Hidden, the Hive, Savath\u00fbn, Osiris, the Witness and the Final Shape."
+      "consult": "Ikora Rey, the Hidden, the Hive, Savath\u00fbn, Osiris, the Witness and the Final Shape.",
+      "icon": "void-warlock"
     },
     {
       "id": "crow",
@@ -89,7 +99,8 @@
       "source": "destiny-agent-crow",
       "entry": "crow.md",
       "summary": "Guardian reborn from Prince Uldren, partner to Glint.",
-      "consult": "Crow, the Scorn, Fikrul, Mara Sov, the Tangled Shore, the Guardian."
+      "consult": "Crow, the Scorn, Fikrul, Mara Sov, the Tangled Shore, the Guardian.",
+      "icon": "class-hunter"
     },
     {
       "id": "sloane",
@@ -97,7 +108,8 @@
       "source": "destiny-agent-sloane",
       "entry": "sloane.md",
       "summary": "Deputy Commander on Titan, holder of the line.",
-      "consult": "Sloane, Titan, the Hive, the Taken, Zavala, Saint-14."
+      "consult": "Sloane, Titan, the Hive, the Taken, Zavala, Saint-14.",
+      "icon": "class-titan"
     }
   ]
 }
