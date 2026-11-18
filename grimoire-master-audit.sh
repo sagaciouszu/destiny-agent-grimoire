@@ -13,29 +13,50 @@ if [ ! -f "$ARCHIVE/db/grimoire.db" ]; then
     exit 1
 fi
 PASS=0; FAIL=0; SKIP=0
+# Suites are read-only checks, so they run in parallel; results are
+# collected by index and reported in registry order below.
+TMPDIR_AUDIT=$(mktemp -d)
+trap 'rm -rf "$TMPDIR_AUDIT"' EXIT
+N=0
 run() {
-    if bash "$1" >/dev/null 2>&1; then echo "  ✓ [$2] PASS"; PASS=$((PASS+1));
-    else echo "  ✗ [$2] FAIL"; FAIL=$((FAIL+1)); fi
+    N=$((N+1))
+    ( bash "$1" >/dev/null 2>&1; echo $? > "$TMPDIR_AUDIT/$N" ) &
+    eval "LABEL_$N=\"$2\""
+}
+run_py() {
+    label="$1"; shift
+    N=$((N+1))
+    ( python3 "$@" >/dev/null 2>&1; echo $? > "$TMPDIR_AUDIT/$N" ) &
+    eval "LABEL_$N=\"$label\""
 }
 run "$ARCHIVE/tests/test-db.sh" "Database Integrity (68 checks)"
 # run() executes a suite with bash, so Python suites are invoked explicitly.
-if python3 "$ARCHIVE/tests/caption-test.py" >/dev/null 2>&1; then echo "  ✓ [Game Caption Corpus] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Game Caption Corpus] FAIL"; FAIL=$((FAIL+1)); fi
+run_py "Game Caption Corpus" "$ARCHIVE/tests/caption-test.py"
 run "$ARCHIVE/tests/compendium-check.sh" "Compendium Files"
 run "$ARCHIVE/tests/lore-integrity.sh" "Lore Archive Integrity"
 run "$ARCHIVE/tests/cutscene-verify.sh" "Cutscene Caption Verification"
 run "$ARCHIVE/tests/query-interface-test.sh" "Query Interface (98 checks)"
 run "$ARCHIVE/tests/agent-layout-test.sh" "Agent Layout (OpenCode/OpenClaw, 354 checks)"
-if python3 "$ARCHIVE/tests/conformance.py" >/dev/null 2>&1; then echo "  ✓ [File Conformance] PASS"; PASS=$((PASS+1)); else echo "  ✗ [File Conformance] FAIL"; FAIL=$((FAIL+1)); fi
-if python3 "$ARCHIVE/tests/agnostic-test.py" >/dev/null 2>&1; then echo "  ✓ [Agnostic Contract] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Agnostic Contract] FAIL"; FAIL=$((FAIL+1)); fi
-if python3 "$ARCHIVE/tests/docs-consistency.py" >/dev/null 2>&1; then echo "  ✓ [Documentation Consistency] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Documentation Consistency] FAIL"; FAIL=$((FAIL+1)); fi
-if python3 "$ARCHIVE/tests/agent-access-test.py" >/dev/null 2>&1; then echo "  ✓ [Agent Access] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Agent Access] FAIL"; FAIL=$((FAIL+1)); fi
-if python3 "$ARCHIVE/scripts/generate-knowledge-web.py" --check >/dev/null 2>&1; then echo "  ✓ [Knowledge Webs] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Knowledge Webs] FAIL"; FAIL=$((FAIL+1)); fi
-if python3 "$ARCHIVE/tests/source-overlap-verify.py" >/dev/null 2>&1; then echo "  ✓ [Source Overlap vs Live] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Source Overlap vs Live] FAIL"; FAIL=$((FAIL+1)); fi
-if python3 "$ARCHIVE/tests/speaker-audit.py" >/dev/null 2>&1; then echo "  ✓ [Speaker Noise Gate] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Speaker Noise Gate] FAIL"; FAIL=$((FAIL+1)); fi
-if python3 "$ARCHIVE/tests/suite-manifest-test.py" >/dev/null 2>&1; then echo "  ✓ [Agent Suite Manifests] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Agent Suite Manifests] FAIL"; FAIL=$((FAIL+1)); fi
-if python3 "$ARCHIVE/tests/mirror-tree-test.py" >/dev/null 2>&1; then echo "  ✓ [Tree Mirror (rsync replacement)] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Tree Mirror (rsync replacement)] FAIL"; FAIL=$((FAIL+1)); fi
-if python3 "$ARCHIVE/tests/permission-leak-audit.py" >/dev/null 2>&1; then echo "  ✓ [Peer Permission Leak Audit] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Peer Permission Leak Audit] FAIL"; FAIL=$((FAIL+1)); fi
-if python3 "$ARCHIVE/tests/count-consistency.py" >/dev/null 2>&1; then echo "  ✓ [Persona/DB/Prose Count Consistency] PASS"; PASS=$((PASS+1)); else echo "  ✗ [Persona/DB/Prose Count Consistency] FAIL"; FAIL=$((FAIL+1)); fi
+run_py "File Conformance" "$ARCHIVE/tests/conformance.py"
+run_py "Agnostic Contract" "$ARCHIVE/tests/agnostic-test.py"
+run_py "Documentation Consistency" "$ARCHIVE/tests/docs-consistency.py"
+run_py "Agent Access" "$ARCHIVE/tests/agent-access-test.py"
+run_py "Knowledge Webs" "$ARCHIVE/scripts/generate-knowledge-web.py" --check
+run_py "Source Overlap vs Live" "$ARCHIVE/tests/source-overlap-verify.py"
+run_py "Speaker Noise Gate" "$ARCHIVE/tests/speaker-audit.py"
+run_py "Agent Suite Manifests" "$ARCHIVE/tests/suite-manifest-test.py"
+run_py "Tree Mirror (rsync replacement)" "$ARCHIVE/tests/mirror-tree-test.py"
+run_py "Peer Permission Leak Audit" "$ARCHIVE/tests/permission-leak-audit.py"
+run_py "Persona/DB/Prose Count Consistency" "$ARCHIVE/tests/count-consistency.py"
+wait
+i=1
+while [ "$i" -le "$N" ]; do
+    eval "label=\"\$LABEL_$i\""
+    code=$(cat "$TMPDIR_AUDIT/$i")
+    if [ "$code" -eq 0 ]; then echo "  ✓ [$label] PASS"; PASS=$((PASS+1));
+    else echo "  ✗ [$label] FAIL"; FAIL=$((FAIL+1)); fi
+    i=$((i+1))
+done
 echo ""
 echo "============================================================"
 echo "  SCORECARD: $PASS / $((PASS+FAIL)) SUITES PASSED ($FAIL failed, $SKIP skipped)"

@@ -356,7 +356,7 @@ match a recomputation of their source text.
 | `tests/agent-access-test.py` | setup dry-run and dangling links, missing-database failure, read-only database, site roster parity |
 | `scripts/generate-knowledge-web.py --check` | each agent knowledge web carries a canon snapshot that matches the database |
 | each agent repo tests/master-audit.sh | agent-side suites (voice, quotes, modules, conversation, golden snapshots) plus shared structure checks |
-| `tests/mcp-test.py` (on demand, needs `mcp-server/.venv`) | MCP tools, both launchers, probe handshake, read-only guard, stdio, CLI-parity tools, stats/live agreement (12/12 checks) |
+| `tests/mcp-test.py` (on demand, needs `mcp-server/.venv`) | MCP tools, both launchers, probe handshake, read-only guard, stdio, CLI-parity tools, stats/live agreement (13/13 checks) |
 | `tests/mcp-agent-optimization-test.py` (on demand, needs `mcp-server/.venv`) | LLM-facing surface: descriptions name every parameter, actionable ToolErrors, 25-token snippets, limit/offset clamps, resource caps, one-call item lookups, spoken_lines counts (25 checks) |
 | `tests/mcp-matrix-test.py` (on demand, needs `mcp-server/.venv`) | MCP calls across all 22 tools (161 calls), 3 concurrent clients, strict API parity, clean malformed-call errors |
 | `tests/check-agent-structure.py <deps\|tokens\|dashes\|index\|paths> <workspace>` | per-agent: deps resolve, token accuracy, no em/en-dashes, INDEX lists every module and every reference resolves, no personal paths |

@@ -231,6 +231,34 @@ def seals_and_lore():
     assert server.list_records('lore', limit=5)['count'] <= 5
 
 
+def content_tools():
+    bk = server.book('the dark future', limit=2)
+    assert bk['entries'] and bk['book']['slug'] == 'book-the-dark-future', bk
+    tr = server.transcript('menagerie', limit=2)
+    assert len(tr['lines']) == 2 and all('speaker' in ln for ln in tr['lines']), tr
+    ent = server.entity('Calus', limit=2)
+    assert ent['results'] and ent['total_documents'] > 0, ent
+    ci = server.character_info('Calus')
+    assert ci['spoken_lines'] > 0 and ci['quotes'] >= 0, ci
+    vm = server.verify_many(['I am Eris Morn.', 'not a canon line at all zzz'])
+    assert vm['total'] == 2 and vm['verified'] == 1, vm
+    rec = server.record('menagerie')
+    assert rec['slug'] == 'menagerie' and rec['body'], rec
+    miss = server.entity('no-such-entity-zzz', limit=2)
+    assert miss['entity'] is None and miss['total_documents'] == 0, miss
+    for fn, ref in ((server.book, 'no-such-book-zzz'), (server.transcript, 'no-such-tr-zzz'),
+                    (server.character_info, 'No Such Person Zzz'),
+                    (server.record, 'no-such-record-zzz')):
+        try:
+            fn(ref)
+            raise AssertionError(f'{ref} should not resolve')
+        except Exception as e:
+            assert 'not found' in str(e) and 'Traceback' not in str(e), e
+
+
+check('content tools resolve (book/transcript/entity/character_info/verify_many/record)', content_tools)
+
+
 def stats_match_live():
     """stats must mirror live COUNT(*): the meta/stats class of bugs."""
     counts = server.stats()['counts']
