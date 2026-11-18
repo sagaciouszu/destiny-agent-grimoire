@@ -1475,6 +1475,9 @@ def listing(kind, limit=50, offset=0):
         conn.close()
 
 
+_STATS_CACHE = {}
+
+
 @_guard
 def stats():
     """Row counts and top lists, tolerant of an older schema.
@@ -1483,7 +1486,20 @@ def stats():
     missing one) is reported in `missing_tables` instead of failing the whole
     call. Consumers should show the gap rather than imply the counts are
     complete.
+
+    Results are cached by database path and mtime so repeated calls (e.g. the
+    MCP server) avoid re-running 24 COUNT queries; the cache is invalidated
+    automatically when the database file changes.
     """
+    path = db_path()
+    try:
+        mtime = os.path.getmtime(path)
+    except OSError:
+        mtime = None
+    cache_key = (path, mtime)
+    cached = _STATS_CACHE.get(cache_key)
+    if cached is not None:
+        return cached
     conn = connect()
     try:
         counts, missing = {}, []
@@ -1519,6 +1535,7 @@ def stats():
             out['schema_version'] = row[0]
         if missing:
             out['missing_tables'] = missing
+        _STATS_CACHE[cache_key] = out
         return out
     finally:
         conn.close()

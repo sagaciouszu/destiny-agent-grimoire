@@ -1,6 +1,6 @@
 ---
 name: destiny-grimoire
-description: 'Query verified Destiny lore: quotes, seasons, raids, seals, items; Calus, Zavala, Ghost, Eris, Drifter. Triggers: lore, grimoire, quote, hive, gambit.'
+description: 'Query verified Destiny lore: quotes, seasons, raids, seals, items; Calus, Zavala, Ghost, Eris, Drifter, Mara Sov, Saint-14, Petra Venj, Osiris, Ikora, Crow, Sloane. Triggers: lore, grimoire, quote, hive, gambit.'
 license: MIT
 metadata:
   tags: "Destiny, Lore, Grimoire, Characters, Transcripts, Books, Items, Records, Raids, Dungeons, Seasons, Events"
@@ -29,7 +29,7 @@ flavor text, verify.
 
 - Repo root: wherever you cloned `destiny-agent-grimoire`
 - **Primary:** `db/grimoire.db` (SQLite + FTS5; if missing, bootstrap: `curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db -o db/grimoire.db` for the prebuilt asset (smaller: same endpoint with `.xz` / `.gz`, decompress with `xz -d` / `gzip -d`), or `python3 db/migrate.py` to build from checkout)
-- **Consumed by:** all twelve agents (Drifter, Eris Morn, Calus, Zavala, Ghost, Mara Sov) via `lore/` (symlink, Windows junction or clone)
+- **Consumed by:** all twelve agents (Drifter, Eris Morn, Calus, Zavala, Ghost, Mara Sov, Saint-14, Petra Venj, Osiris, Ikora Rey, Crow, Sloane) via `lore/` (symlink, Windows junction or clone)
 
 ## Data covering
 

@@ -49,7 +49,7 @@ def main():
             bad.append((name, 'README.md missing'))
             continue
         text = open(path, encoding='utf-8').read()
-        if 'header.png' not in text:
+        if 'header.png' not in text and 'header.svg' not in text:
             continue  # newer README format; not covered by this sync
         m = META.search(text)
         want_v, want_d = version_of(repo), last_push(repo)

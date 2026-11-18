@@ -29,7 +29,7 @@ import sys
 sys.exit(0 if sys.version_info >= (3, 10) else 1)
 PY
 then
-    echo "MCP SDK needs Python 3.10+; found $("$PYTHON" -V 2>&1)" >&2
+    echo "MCP SDK needs Python 3.10+ (3.11 or 3.12 recommended); found $("$PYTHON" -V 2>&1)" >&2
     exit 1
 fi
 

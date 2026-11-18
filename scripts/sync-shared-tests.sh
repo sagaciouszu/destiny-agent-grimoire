@@ -15,7 +15,6 @@ for arg in "$@"; do
         *) echo "usage: $0 [--check]" >&2; exit 2 ;;
     esac
 done
-FILES="memory.py memory-test.py run-suites.sh shared-helpers-test.sh suite-manifest-test.py connection-test.sh"
 CANON="$HERE/../tests/agent-helpers"
 DESTS=""
 while IFS= read -r src; do
@@ -23,23 +22,22 @@ while IFS= read -r src; do
 done < <(python3 -c "import json,sys; [print(a['source']) for a in json.load(open(sys.argv[1]))['agents'] if a.get('source')]" "$HERE/../series/agents.json")
 DESTS="$DESTS $WORK/destiny-agent-template/template"
 PASS=0; FAIL=0; UPDATED=0
-for f in $FILES; do
-    src="$CANON/$f"
-    [ -f "$src" ] || { echo "  ✗ canonical missing: tests/agent-helpers/$f"; FAIL=$((FAIL+1)); continue; }
-    case "$f" in
-        memory.py) rel="memory.py" ;;
-        *) rel="tests/$f" ;;
-    esac
+
+# Map: canonical filename -> relative path in agent repo
+sync_one() {
+    local f="$1" rel="$2"
+    local src="$CANON/$f"
+    [ -f "$src" ] || { echo "  x canonical missing: tests/agent-helpers/$f"; FAIL=$((FAIL+1)); return; }
     for d in $DESTS; do
         dst="$d/$rel"
         if [ ! -f "$dst" ]; then
-            echo "  ✗ missing distribution copy: $dst"
+            echo "  x missing distribution copy: $dst"
             FAIL=$((FAIL+1)); continue
         fi
         if cmp -s "$src" "$dst"; then
             PASS=$((PASS+1))
         elif [ "$CHECK" = "1" ]; then
-            echo "  ✗ drift: $dst"
+            echo "  x drift: $dst"
             FAIL=$((FAIL+1))
         else
             cp -p "$src" "$dst"
@@ -47,7 +45,24 @@ for f in $FILES; do
             UPDATED=$((UPDATED+1))
         fi
     done
+}
+
+# Original 6 files
+for f in memory.py memory-test.py run-suites.sh shared-helpers-test.sh suite-manifest-test.py connection-test.sh; do
+    case "$f" in
+        memory.py) rel="memory.py" ;;
+        *) rel="tests/$f" ;;
+    esac
+    sync_one "$f" "$rel"
 done
+
+# Additional 5 byte-identical files
+sync_one ".gitignore" ".gitignore"
+sync_one "setup.sh" "setup.sh"
+sync_one "ci.yml" ".github/workflows/ci.yml"
+sync_one "persona-freshness.py" "tests/persona-freshness.py"
+sync_one "runtime-leak-guard.py" "tests/runtime-leak-guard.py"
+
 if [ "$CHECK" = "1" ]; then
     echo "shared-tests: $PASS identical, $FAIL drifted"
 else

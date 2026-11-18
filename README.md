@@ -13,7 +13,7 @@
   <img src='https://img.shields.io/badge/made%20with-Destiny%20Grimoire-gold' alt='Made with Destiny Agent Grimoire'/>
 </p>
 
-**Version:** 0.42.2 | **Last push:** 2026-11-17 | **Status:** Active
+**Version:** 0.42.2 | **Last push:** 2026-11-18 | **Status:** Active
 
 **Documentation site:** <https://sagaciouszu.github.io/destiny-agent-grimoire-site/>
 
@@ -102,16 +102,16 @@ More commands are in the sections below.
 |---|---|---|
 | `curl` | optional prebuilt database | otherwise build locally |
 | `git` | cloning and version history | |
-| MCP SDK (optional) | typed tools for agents without a shell | Python 3.10+; `bash mcp-server/install.sh` |
+| MCP SDK (optional) | typed tools for agents without a shell | Python 3.10+ (3.11 or 3.12 recommended); `bash mcp-server/install.sh` |
 | `python3` 3.8+ | migration, query CLI, tests | standard library only |
 | `sqlite3` | optional raw SQL | the CLI uses Python's built-in driver |
-| ~400 MB disk | sources plus built database | database is ~260 MB |
+| ~400 MB disk | sources plus built database | database is ~260 MB (archive/data/manifest/ adds ~232 MB for rebuilds; mcp-server/.venv/ adds ~49 MB) |
 
 No API keys, accounts or network access are required at runtime.
 
 ## What is inside
 
-The live database uses schema 1.13.0 and has 48 tables. Four obsolete derived
+The live database uses schema 1.13.0 and has 48 tables (36 user tables + 9 views, plus FTS5 virtual tables, shadow tables and stat tables). Four obsolete derived
 tables (`manifest_activities`, `manifest_links`, `item_sets` and
 `item_set_members`) were removed in 1.13.0; they are not part of the current
 schema or enrichment output.
@@ -174,7 +174,7 @@ migration. The full contract is `STANDARDS.md`.
   over local stdio; one adapter covers every agent that mounts this archive.
   Install with `bash mcp-server/install.sh`; tools, limits, client config and
   security: `mcp-server/README.md`.
-- **Interface:** one of `python3 db/query.py search|character|item|verify|book|transcript|find-item|record|list|activity|event|lore|seal|seals|coverage|stats|entity`; read commands accept `--offset`.
+- **Interface:** one of `python3 db/query.py search|character|item|verify|book|transcript|find-item|record|list|activity|event|lore|seal|seals|coverage|stats|entity|verify-many|character-info`; read commands accept `--offset`.
   `verify` is the quote-safety primitive (exit 1 when absent); every command
   accepts `--json`; search returns snippets unless `--full`.
 - **Entity web:** `python3 db/query.py entity "<name>"` resolves any attested alias to its entity (characters, powers, factions, places) and reports aliases, document counts, top documents and relations. `entity` also powers `search --entity <name>`.
@@ -262,7 +262,7 @@ repository minus the database lives outside the tree.
 | Agent suite manifests | `python3 tests/suite-manifest-test.py` | PASS |
 | Agnostic contract | `python3 tests/agnostic-test.py` | PASS |
 | Archive audit | `bash grimoire-master-audit.sh` | 18/18 |
-| Calus / Zavala / Ghost / Mara Sov | run tests/master-audit.sh in each repo | 21/21 |
+| Calus / Zavala / Ghost / Mara Sov | run tests/master-audit.sh in each repo | 22/22 |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 checks |
 | Database integrity | `bash tests/test-db.sh` | 68 checks |
 | Drifter agent audit | run tests/master-audit.sh in destiny-agent-drifter | 29/29 |
