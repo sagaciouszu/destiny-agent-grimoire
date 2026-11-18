@@ -1,0 +1,39 @@
+# Runtime artifacts (dreaming data, session state)
+DREAMS.md
+
+# Runtime memory (personal conversation data; seeded from *.template.md by setup.sh)
+USER.md
+core/user-memory.md
+core/journal.md
+core/session-state.md
+core/cross-session-memory.md
+
+# Local per-user memory
+memory/
+
+# Canon archive (symlink or clone created by setup.sh)
+lore
+
+# Python bytecode
+__pycache__/
+*.pyc
+.venv/
+
+# Git internals
+.git/
+
+# OS / editor artifacts
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+*.tmp
+*.bak
+*.orig
+
+# Logs
+*.log
+
+# Generated index (rebuilt by tests/build-quote-index.py)
+reference/quote-inverted-index.json

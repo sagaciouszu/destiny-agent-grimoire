@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+
+      - uses: actions/checkout@v7
+        with:
+          repository: sagaciouszu/destiny-agent-grimoire
+          path: lore
+
+      - name: Database
+        run: |
+          mkdir -p lore/db
+          curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/grimoire.db -o lore/db/grimoire.db
+          curl -fsSL https://github.com/sagaciouszu/destiny-agent-grimoire/releases/latest/download/SHA256SUMS -o /tmp/SHA256SUMS
+          grep '  grimoire\.db$' /tmp/SHA256SUMS > /tmp/SHA256SUMS.db
+          cd lore/db && sha256sum -c /tmp/SHA256SUMS.db
+
+      - name: Onboarding
+        run: ./setup.sh --no-mcp "$PWD/lore"
+
+      - name: Shared test sync
+        run: python3 lore/tests/sync-shared-tests.sh --check
+
+      - name: Doc count sync
+        run: python3 lore/tests/sync-doc-counts.py --check
+
+      - name: README metadata sync
+        run: python3 lore/tests/sync-readme-meta.py --check
+
+      - name: Persona freshness
+        run: python3 tests/persona-freshness.py
+
+      - name: Voice consistency
+        run: bash tests/voice-consistency.sh
+
+      - name: Agent audit
+        env:
+          WORKSPACE: ${{ github.workspace }}
+        run: bash tests/master-audit.sh
