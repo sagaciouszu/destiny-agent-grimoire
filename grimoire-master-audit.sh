@@ -48,6 +48,7 @@ run_py "Agent Suite Manifests" "$ARCHIVE/tests/suite-manifest-test.py"
 run_py "Tree Mirror (rsync replacement)" "$ARCHIVE/tests/mirror-tree-test.py"
 run_py "Peer Permission Leak Audit" "$ARCHIVE/tests/permission-leak-audit.py"
 run_py "Persona/DB/Prose Count Consistency" "$ARCHIVE/tests/count-consistency.py"
+run_py "README Quality (sections, demo, wiki, budgets)" "$ARCHIVE/tests/readme-quality.py"
 wait
 i=1
 while [ "$i" -le "$N" ]; do
