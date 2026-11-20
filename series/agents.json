@@ -6,6 +6,7 @@
     {
       "id": "drifter",
       "name": "The Drifter",
+      "speaker": "The Drifter",
       "source": "destiny-agent-drifter",
       "entry": "drifter.md",
       "summary": "Gambler, Gambit handler, Dark Age survivor.",
@@ -15,6 +16,7 @@
     {
       "id": "eris",
       "name": "Eris Morn",
+      "speaker": "Eris Morn",
       "source": "destiny-agent-eris-morn",
       "entry": "eris.md",
       "summary": "Hive expert, survivor of the Hellmouth, the Witch.",
@@ -24,6 +26,7 @@
     {
       "id": "calus",
       "name": "Emperor Calus",
+      "speaker": "Calus",
       "source": "destiny-agent-calus",
       "entry": "calus.md",
       "summary": "Emperor of the Cabal, herald of the Witness, host of the Menagerie.",
@@ -33,6 +36,7 @@
     {
       "id": "zavala",
       "name": "Commander Zavala",
+      "speaker": "Zavala",
       "source": "destiny-agent-zavala",
       "entry": "zavala.md",
       "summary": "Commander of the Vanguard, Awoken Titan, the City\u2019s wall.",
@@ -42,6 +46,7 @@
     {
       "id": "ghost",
       "name": "Ghost",
+      "speaker": "Ghost",
       "source": "destiny-agent-ghost",
       "entry": "ghost.md",
       "summary": "The Guardian's Ghost: curious, loyal and afraid of losing them.",
@@ -51,6 +56,7 @@
     {
       "id": "mara-sov",
       "name": "Mara Sov",
+      "speaker": "Mara Sov",
       "source": "destiny-agent-mara-sov",
       "entry": "mara-sov.md",
       "summary": "Queen of the Awoken, ruler of the Dreaming City, walker of the line between Light and Dark.",
@@ -60,6 +66,7 @@
     {
       "id": "saint-14",
       "name": "Saint-14",
+      "speaker": "Saint-14",
       "source": "destiny-agent-saint-14",
       "entry": "saint-14.md",
       "summary": "Hero of Twilight Gap, the Titan who headbutted a Kell to death and lives for the City's children.",
@@ -69,6 +76,7 @@
     {
       "id": "petra-venj",
       "name": "Petra Venj",
+      "speaker": "Petra Venj",
       "source": "destiny-agent-petra-venj",
       "entry": "petra-venj.md",
       "summary": "Queen's Wrath, Corsair of the Reef, warden of the Dreaming City.",
@@ -78,6 +86,7 @@
     {
       "id": "osiris",
       "name": "Osiris",
+      "speaker": "Osiris",
       "source": "destiny-agent-osiris",
       "entry": "osiris.md",
       "summary": "Warlock Vanguard, exile of Mercury, scholar of the Vex and the Infinite Forest.",
@@ -87,6 +96,7 @@
     {
       "id": "ikora",
       "name": "Ikora Rey",
+      "speaker": "Ikora",
       "source": "destiny-agent-ikora",
       "entry": "ikora.md",
       "summary": "Warlock Vanguard, leader of the Hidden, former student of Osiris.",
@@ -96,6 +106,7 @@
     {
       "id": "crow",
       "name": "Crow",
+      "speaker": "Crow",
       "source": "destiny-agent-crow",
       "entry": "crow.md",
       "summary": "Guardian reborn from Prince Uldren, partner to Glint.",
@@ -105,6 +116,7 @@
     {
       "id": "sloane",
       "name": "Sloane",
+      "speaker": "Sloane",
       "source": "destiny-agent-sloane",
       "entry": "sloane.md",
       "summary": "Deputy Commander on Titan, holder of the line.",
