@@ -68,6 +68,34 @@ check "[ $NOSLUG -eq 0 ]" "  No books with empty slug/title"
 NOREC=$(sqlite3 "$DB" "SELECT COUNT(*) FROM records WHERE slug=''")
 check "[ $NOREC -eq 0 ]" "  No records with empty slug"
 
+
+# Duplicate source file detection (warning-level only; exit code unaffected)
+echo "=== Duplicate source file check (warning) ==="
+dup_tmp=$(mktemp)
+find "$source_data" -type f -name '*.md' -print0 | xargs -0 md5sum > "$dup_tmp" 2>/dev/null
+dup_hashes=$(awk '{print $1}' "$dup_tmp" | sort | uniq -d)
+dup_warn=0
+while IFS= read -r h; do
+  [ -z "$h" ] && continue
+  files=$(awk -v h="$h" '$1==h { $1=""; sub(/^ /,""); print }' "$dup_tmp")
+  is_redirect=0
+  while IFS= read -r f; do
+    [ -z "$f" ] && continue
+    if grep -q "retained as a redirect only" "$f" 2>/dev/null; then is_redirect=1; fi
+  done <<< "$files"
+  if [ "$is_redirect" -eq 1 ]; then
+    continue
+  fi
+  echo "  WARN duplicate content:"
+  while IFS= read -r f; do
+    [ -z "$f" ] && continue
+    echo "    $f"
+  done <<< "$files"
+  dup_warn=1
+done <<< "$dup_hashes"
+if [ "$dup_warn" -eq 0 ]; then echo "  no byte-identical duplicate source files"; fi
+rm -f "$dup_tmp"
+
 echo ""
 echo "DB: books=$BOOKSDB entries=$ENTRIES cards=$CMDS interactions=$INTS items=$ITEMS records=$RECORDS chars=$CHARS clines=$CLINES fts=$FTS"
 echo "Books: $BOOKS | Transcripts: $TRANSCRIPTS | Empty: $EMPTY"
