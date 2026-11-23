@@ -30,7 +30,8 @@ reference) enforce these rules; a change that breaks them is a change that is no
 - Quote verification: `tests/test-db.sh`, `db/query.py verify`, `tests/caption-test.py`
 - Canon policy: source hierarchy and provenance rules in the reference (section 1 (agnostic/corpus scope) / 3)
 - Persona freshness: `tests/persona-freshness.py`, `tests/count-consistency.py`
-- Voice consistency: per-agent voice suites and `tests/permission-leak-audit.py`
+- Voice consistency: per-agent voice suites (`tests/voice-scorer.py`, `tests/quote-verify.sh`)
+- Cross-agent isolation: `tests/permission-leak-audit.py` (peer read/glob/grep denial)
 - Agnostic contract: `tests/agnostic-test.py`, `tests/conformance.py`
 - Finalize refusal conditions: `destiny-agent-template/finalize-persona.py --check`
 
