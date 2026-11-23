@@ -46,5 +46,6 @@ elsewhere conflicts with that page, that page wins.
 ## Developer documentation
 
 This wiki is not build or process documentation. Build steps, schema internals
-and provenance rules live in the repository: `README.md`, `STANDARDS.md` and
+and provenance rules live in the repository: `README.md`, `STANDARDS.md` (index) and
+`docs/process/Standards-Reference.md` (full contract), and
 `docs/process/`.

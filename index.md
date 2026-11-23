@@ -1,7 +1,7 @@
 # Destiny Agent Grimoire - Index
 
-Short orientation. Counts and the full guide live in `README.md`; the contract is
-`STANDARDS.md`.
+Short orientation. Counts and the full guide live in `README.md`; the contract index is
+`STANDARDS.md` and the full contract is `docs/process/Standards-Reference.md`.
 
 ## Where to start
 
@@ -10,7 +10,7 @@ Short orientation. Counts and the full guide live in `README.md`; the contract i
 | Human setup, counts, maintenance | `README.md` |
 | Agent skill | `skills/destiny-grimoire/SKILL.md` |
 | Schema and table contract | `db/README.md`, `db/schema.sql` |
-| Naming, provenance, quote policy, gates | `STANDARDS.md` |
+| Naming, provenance, quote policy, gates | `STANDARDS.md` (index) → `docs/process/Standards-Reference.md` |
 | Machine-readable interface | `db/capabilities.json` |
 | MCP adapter (optional) | `mcp-server/README.md` |
 
