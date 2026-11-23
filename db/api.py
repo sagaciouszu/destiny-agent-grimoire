@@ -1531,8 +1531,17 @@ def stats():
             row = conn.execute("SELECT value FROM meta WHERE key='version'").fetchone()
         except sqlite3.OperationalError:
             row = None
+        version = None
         if row:
-            out['schema_version'] = row[0]
+            version = row[0]
+        if version is None:
+            try:
+                with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'SCHEMA_VERSION')) as f:
+                    version = f.read().strip()
+            except OSError:
+                version = None
+        if version is not None:
+            out['schema_version'] = version
         if missing:
             out['missing_tables'] = missing
         _STATS_CACHE[cache_key] = out

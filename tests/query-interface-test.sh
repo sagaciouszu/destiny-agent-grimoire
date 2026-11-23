@@ -14,7 +14,7 @@ check() {
 echo "=== QUERY INTERFACE TEST ==="
 
 check "$Q stats | grep -q 'transcript_lines'" "stats reports counts"
-check "$Q stats --json | python3 -c 'import json,sys; d=json.load(sys.stdin); assert d[\"fts\"]>100000'" "stats --json parses"
+check "$Q stats --json | python3 -c 'import json,sys; d=json.load(sys.stdin); assert d[\"counts\"][\"fts\"]>100000'" "stats --json parses"
 check "$Q search crota --limit 3 | grep -q 'results'" "search returns results"
 check "$Q search crota --type grimoire --limit 2 | grep -q 'grimoire_card'" "type filter returns only that source"
 check "$Q search crota --type items --limit 2 | grep -q 'item'" "type filter works for items"
@@ -71,7 +71,7 @@ check "python3 $ARCHIVE/tests/speaker-lookup-test.py" "speaker lookup parity and
 check "$Q list canon-speakers --limit 3 | grep -q 'Ghost'" "list canon speakers"
 check "! $Q list canon-speakers --limit 500 | grep -q 'Lord Shaxx'" "canon speakers exclude caption-only names"
 check "python3 -c 'import ast; ast.parse(open(\"$ARCHIVE/db/query.py\").read())'" "query.py parses"
-check "$Q stats --json | python3 -c 'import json,sys; d=json.load(sys.stdin); assert d[\"seasons\"]==28 and d[\"events\"]==9'" "stats reports taxonomy counts"
+check "$Q stats --json | python3 -c 'import json,sys; d=json.load(sys.stdin); assert d[\"counts\"][\"seasons\"]==28 and d[\"counts\"][\"events\"]==9'" "stats reports taxonomy counts"
 check "$Q coverage --json | python3 -c 'import json,sys; d=json.load(sys.stdin); assert len(d[\"activities\"])>=60'" "coverage --json parses"
 check "$Q list seasons --limit 30 | grep -q 'Season of Opulence'" "list seasons"
 check "$Q list events | grep -q 'Festival of the Lost'" "list events"
@@ -126,6 +126,8 @@ check "$Q character Calus --class hunter --about Hunter | grep -q 'cunning'" "cl
 check "$Q character Calus --class titan --about Titan | grep -q 'bravery'" "class titan variants"
 check "$Q search 'pride themselves' --class warlock --limit 1 | grep -q 'wisdom'" "class warlock search"
 check "python3 $ARCHIVE/tests/class-filter-test.py" "class transcript filter"
+check "$Q stats | grep -q 'Schema:'" "stats reports schema version"
+check "$Q stats --json | python3 -c 'import json,sys; d=json.load(sys.stdin); assert \"schema_version\" in d and d[\"schema_version\"] == \"1.13.0\"'" "stats --json carries schema_version"
 
 echo ""
 echo "Passed: $PASS | Failed: $FAIL"

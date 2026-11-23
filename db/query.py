@@ -277,9 +277,10 @@ def cmd_stats(args):
     res = api.stats()
     counts = res['counts']
     if args.json:
-        print(json.dumps(counts, separators=(',', ':')))
+        print(json.dumps(res, ensure_ascii=False, separators=(',', ':')))
         return 0
     print('=== Destiny Grimoire Database Stats ===')
+    print(f"Schema: {res.get('schema_version', '')}")
     for t, c in counts.items():
         print(f'  {t}: {c}')
     print('\n=== Top item types ===')
