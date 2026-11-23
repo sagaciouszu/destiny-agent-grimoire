@@ -271,7 +271,7 @@ repository minus the database lives outside the tree.
 | File conformance | `python3 tests/conformance.py` | PASS |
 | Knowledge webs | `python3 scripts/generate-knowledge-web.py --check` | PASS |
 | MCP contract | `mcp-server/.venv/bin/python tests/mcp-test.py` | 13/13 checks |
-| Query interface | `bash tests/query-interface-test.sh` | 98 checks |
+| Query interface | `bash tests/query-interface-test.sh` | 100 checks |
 
 Agent audits run from their own repos and call shared gates through
 `lore/tests/`; the archive audit is shared-only.
