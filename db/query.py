@@ -422,7 +422,7 @@ def main(argv=None):
         except Exception:
             _schema = ''
     _argv = list(argv) if argv is not None else sys.argv[1:]
-    if '--version' in _argv:
+    if _argv and _argv[0] == '--version':
         print(f'destiny-grimoire {_schema} ({api.db_path()})')
         return 0
     parser = argparse.ArgumentParser(description='Query the Destiny Grimoire database')

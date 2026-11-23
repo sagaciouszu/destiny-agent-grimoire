@@ -1496,7 +1496,12 @@ def stats():
         mtime = os.path.getmtime(path)
     except OSError:
         mtime = None
-    cache_key = (path, mtime)
+    schema_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'SCHEMA_VERSION')
+    try:
+        schema_mtime = os.path.getmtime(schema_path)
+    except OSError:
+        schema_mtime = None
+    cache_key = (path, mtime, schema_mtime)
     cached = _STATS_CACHE.get(cache_key)
     if cached is not None:
         return cached
@@ -1537,7 +1542,7 @@ def stats():
                 version = f.read().strip()
         except OSError:
             version = None
-        if version is None and row:
+        if not version and row:
             version = row[0]
         if version is not None:
             out['schema_version'] = version

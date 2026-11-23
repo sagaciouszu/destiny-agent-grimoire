@@ -291,7 +291,7 @@ def table_count_claims():
             if n != actual:
                 # Allow qualified breakdowns such as "36 tables + 9 views",
                 # which describe a subset rather than the total table count.
-                if text[m.end():].lstrip().startswith("+"):
+                if re.match(r'\+\s*\d+\s+views', text[m.end():].lstrip()):
                     continue
                 line = text.count("\n", 0, m.start()) + 1
                 hits.append(f"{os.path.relpath(path, WORK)}:{line}: "
