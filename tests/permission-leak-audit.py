@@ -50,6 +50,28 @@ def main():
         return 0
     manifest = json.load(open(MANIFEST, encoding='utf-8'))
     agents = manifest.get('agents', [])
+    # If WORK doesn't contain the expected agent repos, skip gracefully
+    # instead of failing every repo-path check.
+    agent_repos = [os.path.join(WORK, a.get('source', ''))
+                   for a in agents if a.get('source')]
+    missing = [r for r in agent_repos if not os.path.isdir(r)]
+    referenced = False
+    if os.path.isdir(DEST):
+        for fn in os.listdir(DEST):
+            if not fn.endswith('.md'):
+                continue
+            try:
+                text = open(os.path.join(DEST, fn), encoding='utf-8').read()
+            except OSError:
+                continue
+            if any(r in text for r in agent_repos):
+                referenced = True
+                break
+    if agent_repos and ((missing and len(missing) == len(agent_repos))
+                        or not referenced):
+        print('  SKIP: agent repos not found under ' + WORK)
+        print('  Set AGENT_REPOS_DIR to the directory containing destiny-agent-* repos')
+        return 0
     for agent in agents:
         ident = agent.get('id', '')
         for suffix in ('', '-consult'):

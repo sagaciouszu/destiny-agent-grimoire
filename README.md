@@ -276,6 +276,10 @@ repository minus the database lives outside the tree.
 Agent audits run from their own repos and call shared gates through
 `lore/tests/`; the archive audit is shared-only.
 
+Note: `tests/permission-leak-audit.py` requires `AGENT_REPOS_DIR` to point to the
+directory containing the `destiny-agent-*` repositories. When running from a worktree,
+set `AGENT_REPOS_DIR=/home/<user>/destiny` (or the appropriate path).
+
 ## License and attribution
 
 MIT licensed. Fan-made. Not affiliated with or endorsed by Bungie.
