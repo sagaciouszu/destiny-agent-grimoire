@@ -276,7 +276,8 @@ for pat in [os.path.join(GRIMOIRE, '*.md'), os.path.join(GRIMOIRE, 'db', '*.md')
             os.path.join(GRIMOIRE, 'skills', 'destiny-grimoire', '*.md'),
             os.path.join(GRIMOIRE, 'compendium', '*.md'),
             os.path.join(GRIMOIRE, 'docs', 'wiki', '*.md'),
-            os.path.join(GRIMOIRE, 'docs', '*.md')]:
+            os.path.join(GRIMOIRE, 'docs', '*.md'),
+            os.path.join(GRIMOIRE, 'docs', 'process', '*.md')]:
     FILES.extend(glob.glob(pat))
 for repo in AGENT_REPOS.values():
     if not os.path.isdir(repo):
