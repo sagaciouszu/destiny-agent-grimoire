@@ -1,8 +1,11 @@
 #!/bin/bash
 # Destiny Grimoire - Master Audit (All Checks)
 ARCHIVE="${ARCHIVE:-$(cd "$(dirname "$0")" && pwd)}"
+FAST=0
+if [ "${1:-}" = "--fast" ]; then FAST=1; fi
 echo "============================================================"
 echo "  DESTINY GRIMOIRE - MASTER AUDIT (ALL CHECKS)"
+if [ "$FAST" -eq 1 ]; then echo "  (fast mode: skipping Agent Access and Documentation Consistency)"; fi
 echo "============================================================"
 echo ""
 # Bootstrap guard: a clear message beats nine confusing suite failures
@@ -39,8 +42,12 @@ run "$ARCHIVE/tests/query-interface-test.sh" "Query Interface (101 checks)"
 run "$ARCHIVE/tests/agent-layout-test.sh" "Agent Layout (OpenCode/OpenClaw, 354 checks)"
 run_py "File Conformance" "$ARCHIVE/tests/conformance.py"
 run_py "Agnostic Contract" "$ARCHIVE/tests/agnostic-test.py"
+if [ "$FAST" -eq 0 ]; then
 run_py "Documentation Consistency" "$ARCHIVE/tests/docs-consistency.py"
 run_py "Agent Access" "$ARCHIVE/tests/agent-access-test.py"
+else
+echo "  (skipping Documentation Consistency and Agent Access in fast mode)"
+fi
 run_py "Knowledge Webs" "$ARCHIVE/scripts/generate-knowledge-web.py" --check
 run_py "Source Overlap vs Live" "$ARCHIVE/tests/source-overlap-verify.py"
 run_py "Speaker Noise Gate" "$ARCHIVE/tests/speaker-audit.py"
@@ -59,6 +66,7 @@ while [ "$i" -le "$N" ]; do
     i=$((i+1))
 done
 echo ""
+if [ "$FAST" -eq 1 ]; then echo "  WARNING: fast mode skips 2 suites; run the full gate before release."; fi
 echo "============================================================"
 echo "  SCORECARD: $PASS / $((PASS+FAIL)) SUITES PASSED ($FAIL failed, $SKIP skipped)"
 echo "============================================================"

@@ -8,7 +8,8 @@ also checks suite counts, and `test-db.sh` against the built `db/grimoire.db`).
 
 ## Entry points
 
-- Grimoire: `bash grimoire-master-audit.sh` (18 suites, archive-wide)
+- Grimoire: `bash grimoire-master-audit.sh` (19 suites, archive-wide)
+- Fast audit (skips `Agent Access` and `Documentation Consistency`, ~30 s): `bash grimoire-master-audit.sh --fast` — full gate still required before release.
 - Agents: run `bash tests/master-audit.sh` in each agent repo
 - `suite-manifest-test.py` - suite loss/drift guard
 - `agent-helpers/` - canonical copies of the helpers distributed byte-identically
