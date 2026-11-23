@@ -111,7 +111,7 @@ No API keys, accounts or network access are required at runtime.
 
 ## What is inside
 
-The live database uses schema 1.13.0 and has 36 tables + 9 views (plus FTS5 virtual, shadow and stat tables — 48 sqlite_master entries in total). Four obsolete derived
+The live database uses schema 1.13.0 and has 48 tables (36 content tables plus 12 FTS5 virtual and shadow tables) and 9 views. Four obsolete derived
 tables (`manifest_activities`, `manifest_links`, `item_sets` and
 `item_set_members`) were removed in 1.13.0; they are not part of the current
 schema or enrichment output.
@@ -250,7 +250,7 @@ bash scripts/sync-live-agents.sh
 gh release upload <tag> db/grimoire.db SHA256SUMS --clobber
 ```
 
-The change procedure is section 10 of `STANDARDS.md`. A rolling backup of the
+The change procedure is section 10 of `docs/process/Standards-Reference.md`. A rolling backup of the
 repository minus the database lives outside the tree.
 
 ## Verification
@@ -261,7 +261,7 @@ repository minus the database lives outside the tree.
 | Agent layout | `bash tests/agent-layout-test.sh` | 354 checks |
 | Agent suite manifests | `python3 tests/suite-manifest-test.py` | PASS |
 | Agnostic contract | `python3 tests/agnostic-test.py` | PASS |
-| Archive audit | `bash grimoire-master-audit.sh` | 18/18 |
+| Archive audit | `bash grimoire-master-audit.sh` | 19/19 |
 | Calus / Zavala / Ghost / Mara Sov | run tests/master-audit.sh in each repo | 22/22 |
 | Cutscene captions | `bash tests/cutscene-verify.sh` | 6/6 checks |
 | Database integrity | `bash tests/test-db.sh` | 68 checks |
