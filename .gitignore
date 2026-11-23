@@ -24,7 +24,8 @@ mcp-server/.venv/
 
 
 # Local database backups (never shipped)
-backups/
+backups/*
+!backups/.gitkeep
 
 # Extracted game data and manifest dumps: local only, never committed
 archive/data/manifest/
