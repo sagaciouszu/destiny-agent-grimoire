@@ -406,11 +406,21 @@ def cmd_lore(args):
 def main(argv=None):
     # --version must work without a subcommand.
     _schema_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'SCHEMA_VERSION')
+    _schema = ''
     try:
         with open(_schema_path) as _f:
             _schema = _f.read().strip()
     except OSError:
-        _schema = ''
+        pass
+    if not _schema:
+        try:
+            _conn = api.connect()
+            _row = _conn.execute("SELECT value FROM meta WHERE key='version'").fetchone()
+            _conn.close()
+            if _row:
+                _schema = _row[0]
+        except Exception:
+            _schema = ''
     _argv = list(argv) if argv is not None else sys.argv[1:]
     if '--version' in _argv:
         print(f'destiny-grimoire {_schema} ({api.db_path()})')
