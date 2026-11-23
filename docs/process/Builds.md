@@ -214,7 +214,7 @@ the build in `archive/data/builds.json`, rebuilds and runs the gates.
 
   Rewriting era canon to match the live build, or vice versa, requires owner
   approval; it is never an inline edit.
-- **Captions are not persona canon** (`STANDARDS.md` §Caption contract, §10):
+- **Captions are not persona canon** (`docs/process/Standards-Reference.md` §Caption contract, §10):
   persona counts are unaffected by captions.
 - This page registers builds and tiers; it does not re-document caption rules
   (`Captions.md`) or schema (`Database.md`).

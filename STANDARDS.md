@@ -1,4 +1,4 @@
-# Standards
+# Standards (index)
 
 > **Depends On:** none (standards reference)
 > **Token Estimate:** ~0.8K tokens
@@ -12,7 +12,8 @@ reference) enforce these rules; a change that breaks them is a change that is no
 
 - Scope and agnostic contract: `docs/process/Standards-Reference.md` (sections 1-2)
 - Database contract and naming: `docs/process/Standards-Reference.md` (sections 3-5)
-- Quoting policy and persona canon: `docs/process/Standards-Reference.md` (section 6)
+- Quoting policy: `docs/process/Standards-Reference.md` (section 6)
+- Persona canon: `docs/process/Standards-Reference.md` (section 3, "Persona canon")
 - Verification gates: `docs/process/Standards-Reference.md` (section 7)
 - Agent interface contract: `docs/process/Standards-Reference.md` (section 8)
 - Agent workspace contract: `docs/process/Standards-Reference.md` (section 9)
@@ -27,7 +28,7 @@ reference) enforce these rules; a change that breaks them is a change that is no
 ## Required gates (must stay enforceable)
 
 - Quote verification: `tests/test-db.sh`, `db/query.py verify`, `tests/caption-test.py`
-- Canon policy: source hierarchy and provenance rules in the reference (section 1.1 / 3)
+- Canon policy: source hierarchy and provenance rules in the reference (section 1 (agnostic/corpus scope) / 3)
 - Persona freshness: `tests/persona-freshness.py`, `tests/count-consistency.py`
 - Voice consistency: per-agent voice suites and `tests/permission-leak-audit.py`
 - Agnostic contract: `tests/agnostic-test.py`, `tests/conformance.py`
@@ -39,8 +40,10 @@ reference) enforce these rules; a change that breaks them is a change that is no
 2. Rebuild: `python3 db/migrate.py`, `python3 scripts/apply-queen-fold.py`,
    enrichment steps, `python3 db/build_entity_web.py --db db/grimoire.db`.
 3. Refresh derived docs: `python3 tests/sync-doc-counts.py`,
-   `python3 tests/sync-readme-meta.py`, `bash scripts/sync-wiki.sh`.
-4. Run gates: `bash grimoire-master-audit.sh` and per-agent `bash tests/master-audit.sh`.
+   `python3 tests/sync-readme-meta.py`, `python3 scripts/gap-report.py`,
+   `bash scripts/sync-wiki.sh`.
+4. Run gates: `bash grimoire-master-audit.sh` and per-agent `bash tests/master-audit.sh`,
+   plus a fresh-clone spot check for layout changes.
 5. Commit; push tags/releases as needed.
 
 Database counts and suite totals are generated, not hand-maintained:

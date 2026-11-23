@@ -183,7 +183,7 @@ nothing mixes builds silently.
   apply on top.
 - **Persona canon excludes captions**: `persona.json` `canon_lines` counts the
   corpus a persona was built from, so a caption drop never rewrites an agent
-  persona (see STANDARDS.md "Persona canon").
+  persona (see docs/process/Standards-Reference.md "Persona canon").
 - **Gate:** `tests/caption-test.py` (registered in `grimoire-master-audit.sh`).
 
 - **Attribution provenance is stored, not dropped.** `transcript_lines.speaker_source`

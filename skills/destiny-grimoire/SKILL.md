@@ -261,5 +261,5 @@ sqlite3 db/grimoire.db "SELECT * FROM v_activity_coverage ORDER BY lines DESC LI
 
 `transcripts.source_tier` records precedence; lower tiers stay searchable and
 are not promoted without a better source, and a caption-tier transcript is
-never presented as verbatim. Full provenance rules: `STANDARDS.md`.
+never presented as verbatim. Full provenance rules: `docs/process/Standards-Reference.md` (indexed by `STANDARDS.md`).
 Bungie Inc owns all Destiny property. Fan-built, not affiliated.

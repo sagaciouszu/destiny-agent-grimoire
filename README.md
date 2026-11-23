@@ -111,7 +111,7 @@ No API keys, accounts or network access are required at runtime.
 
 ## What is inside
 
-The live database uses schema 1.13.0 and has 48 tables (36 content tables plus 12 FTS5 virtual and shadow tables) and 9 views. Four obsolete derived
+The live database uses schema 1.13.0 and has 48 tables (34 content tables, 12 FTS5 virtual and shadow tables, and 2 SQLite stat tables) and 9 views. Four obsolete derived
 tables (`manifest_activities`, `manifest_links`, `item_sets` and
 `item_set_members`) were removed in 1.13.0; they are not part of the current
 schema or enrichment output.
@@ -163,7 +163,7 @@ schema or enrichment output.
 | **Total** | 708597 | Rows across every table, view and index above |
 
 Every content row carries provenance. Speaker aliases are canonicalized during
-migration. The full contract is `STANDARDS.md`.
+migration. The full contract is `docs/process/Standards-Reference.md` (indexed by `STANDARDS.md`).
 
 ## For agents
 
@@ -190,8 +190,8 @@ migration. The full contract is `STANDARDS.md`.
   waiting on a source.
 - **Discovery design:** `docs/DISCOVERY.md` explains why the layer is additive,
   how filters compile, and measured query times.
-- **Policy:** `STANDARDS.md` defines schema, naming, provenance, quote policy and
-  verification gates.
+- **Policy:** `STANDARDS.md` (index) / `docs/process/Standards-Reference.md` (full contract)
+  defines schema, naming, provenance, quote policy and verification gates.
 - **Never** parse `source/` markdown at runtime. Query the database.
 - **Output budget:** always pass `--limit`; assume 20 to 40 lines per call.
 
