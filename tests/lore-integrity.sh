@@ -72,7 +72,7 @@ check "[ $NOREC -eq 0 ]" "  No records with empty slug"
 # Duplicate source file detection (warning-level only; exit code unaffected)
 echo "=== Duplicate source file check (warning) ==="
 dup_tmp=$(mktemp)
-find "$source_data" -type f -name '*.md' -print0 | xargs -0 md5sum > "$dup_tmp" 2>/dev/null
+find "$source_data" -type f -print0 | xargs -0 -r md5sum > "$dup_tmp" 2>/dev/null
 dup_hashes=$(awk '{print $1}' "$dup_tmp" | sort | uniq -d)
 dup_warn=0
 while IFS= read -r h; do
@@ -81,7 +81,7 @@ while IFS= read -r h; do
   is_redirect=0
   while IFS= read -r f; do
     [ -z "$f" ] && continue
-    if grep -q "retained as a redirect only" "$f" 2>/dev/null; then is_redirect=1; fi
+    case "$f" in *.md) if grep -q "retained as a redirect only" "$f" 2>/dev/null; then is_redirect=1; fi ;; esac
   done <<< "$files"
   if [ "$is_redirect" -eq 1 ]; then
     continue
