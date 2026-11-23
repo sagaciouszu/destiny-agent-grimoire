@@ -27,7 +27,7 @@ record rebuild provenance and the gates it passed.
 ## Verification
 - Full chain: migrate → queen-fold → enrich_lore → enrich_seals →
   enrich_itemsets → build_entity_web.
-- Master audit 18/18 suites, 0 failed, 0 skipped; DB tests 68; caption tests 13;
+- Master audit 19/19 suites, 0 failed, 0 skipped; DB tests 68; caption tests 13;
   MCP contract 12; MCP agent optimization 25; permission audit 1,584 checks.
 - Conformance: all files conform in the rebuilt workspace layout.
 - Release parity against v0.42.1: 15/15 (table-name set, 13 table counts, and

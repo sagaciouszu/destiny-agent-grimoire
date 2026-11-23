@@ -23,6 +23,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 DOCS = ['README.md', 'STANDARDS.md',
+        'docs/process/Standards-Reference.md',
         'docs/wiki/Getting-Started.md', 'docs/wiki/Troubleshooting.md']
 MIB = 1024 * 1024
 
