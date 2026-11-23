@@ -111,7 +111,7 @@ No API keys, accounts or network access are required at runtime.
 
 ## What is inside
 
-The live database uses schema 1.13.0 and has 48 tables (36 user tables + 9 views, plus FTS5 virtual tables, shadow tables and stat tables). Four obsolete derived
+The live database uses schema 1.13.0 and has 36 tables + 9 views (plus FTS5 virtual, shadow and stat tables — 48 sqlite_master entries in total). Four obsolete derived
 tables (`manifest_activities`, `manifest_links`, `item_sets` and
 `item_set_members`) were removed in 1.13.0; they are not part of the current
 schema or enrichment output.

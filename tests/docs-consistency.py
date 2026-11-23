@@ -289,6 +289,10 @@ def table_count_claims():
                              text, re.I):
             n = int(m.group(1))
             if n != actual:
+                # Allow qualified breakdowns such as "36 tables + 9 views",
+                # which describe a subset rather than the total table count.
+                if text[m.end():].lstrip().startswith("+"):
+                    continue
                 line = text.count("\n", 0, m.start()) + 1
                 hits.append(f"{os.path.relpath(path, WORK)}:{line}: "
                             f"{m.group(0)} (DB has {actual} tables)")
