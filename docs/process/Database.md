@@ -100,6 +100,11 @@ vault-local `archive/data/captions-live.jsonl` (`build-25932352`, 15 packages) a
 `source_tier='game_caption'`, `lang='en'`. Each record carries a build label;
 nothing mixes builds silently.
 
+> **Vault-only:** the paths `archive/data/captions.jsonl`, `archive/data/captions-live.jsonl`,
+> `archive/data/manifest/`, and `archive/data/fetch_transcript_releases.py` exist only in the
+> operator vault. They are not committed; a fresh clone will not have them, and builds that
+> need them require `BUNGIE_API_KEY` + the enrich chain.
+
 - **No duplicate text.** A caption line whose normalized text already exists in
   canon is not inserted again; its StringReference hash and package origin
   attach to the existing line in `caption_provenance` instead. Search therefore

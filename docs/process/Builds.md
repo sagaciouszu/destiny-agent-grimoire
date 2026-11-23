@@ -4,6 +4,11 @@ Build identities, versions and the extraction-tier → provenance mapping for
 every row in this corpus. If a row's build is not named here, the row is
 wrong; do not guess one in.
 
+> **Vault-only:** the paths `archive/data/captions.jsonl`, `archive/data/captions-live.jsonl`,
+> `archive/data/manifest/`, and `archive/data/fetch_transcript_releases.py` exist only in the
+> operator vault. They are not committed; a fresh clone will not have them, and builds that
+> need them require `BUNGIE_API_KEY` + the enrich chain.
+
 ## Why this page exists
 
 Every caption, transcript and provenance row derives from a specific game
