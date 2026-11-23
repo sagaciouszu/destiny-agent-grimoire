@@ -343,7 +343,7 @@ match a recomputation of their source text.
 | `tests/lore-integrity.sh` | source archive structure, book/transcript/card/record counts |
 | `tests/lore-format.sh` | transcript markdown format |
 | `tests/cutscene-verify.sh` | caption corroboration, encoding, cross-video consistency, attribution |
-| `tests/query-interface-test.sh` | CLI and API surface, 100 checks |
+| `tests/query-interface-test.sh` | CLI and API surface, 101 checks |
 | `tests/db-source-crosscheck.py` | database slugs vs source files, provenance URLs, index completeness |
 | `tests/caption-test.py` | game captions: headers/language, StringReference provenance, no duplicate canon text, curated activity facets, FTS/verification parity, demoted stat lines, caption search, persona canon exclusion |
 | `tests/speaker-audit.py` | reclassified parse noise must not reappear |

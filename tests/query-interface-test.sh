@@ -129,6 +129,7 @@ check "python3 $ARCHIVE/tests/class-filter-test.py" "class transcript filter"
 check "$Q stats | grep -q 'Schema:'" "stats reports schema version"
 check "$Q stats --json | python3 -c 'import json,sys; d=json.load(sys.stdin); assert \"schema_version\" in d and d[\"schema_version\"] == \"1.13.0\"'" "stats --json carries schema_version"
 
+check "$Q --version | grep -q 'destiny-grimoire'" "query.py --version prints identity"
 echo ""
 echo "Passed: $PASS | Failed: $FAIL"
 [ "$FAIL" -eq 0 ]
