@@ -202,6 +202,7 @@ Connection matrix:
 | agent repos | this archive | `lore/` symlink or clone, then `lore/db/query.py` |
 | MCP client | this archive | `mcp-server/run.sh` (stdio, read-only) |
 | release workflow | consumers | `grimoire.db` attached to each release, checksum verified |
+| live DB integrity | all consumers | SHA256: `96f09229829ee61e01f31f2c14d206ea09494ad4af70fdc532a4ff0c2476da0f` (see `SHA256SUMS`) |
 | agent `setup.sh` | this archive | clone or symlink, download or build the database |
 
 ## Repository layout
