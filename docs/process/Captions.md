@@ -1,6 +1,6 @@
 # Captions
 
-Build identities and the tier -> provenance mapping: [`Builds.md`](Builds.md).
+Build identities and the tier -> provenance mapping are recorded in the `builds` table of the database.
 
 English captions extracted from local game builds: `sunrise-pre-bl` (Season of
 Arrivals, 2020) and `build-25932352` (Update 9.7.0.6, Oct 2026). Every

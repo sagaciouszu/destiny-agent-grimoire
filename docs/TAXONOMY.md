@@ -65,7 +65,7 @@ Ten Destinypedia verbatim transcripts close the remaining activity gaps where
 that wiki has a `Transcript` section: Salvation's Edge, Spire of Stars, Eater of
 Worlds, The Shattered Realm, Seraph's Shield, Starcrossed, Enigma Protocol,
 Kell's Fall, Deep Dives and Altars of Summoning. Four Destiny 1 raid encounter
-transcripts are narration-only and are labelled that way in `docs/GAPS.md`.
+transcripts are narration-only and are labelled that way in the gap report.
 A Destiny 1 expansion never inherits a Destiny 2 season from a reprised
 activity, so Vault of Glass and King's Fall stay seasonless.
 

@@ -49,3 +49,9 @@ db/grimoire-slim.db-*
 
 # SDD scratch (per-plan workspaces)
 .superpowers/
+
+# Planning and build artifacts (not shipped)
+docs/DISCOVERY.md
+docs/GAPS.md
+docs/process/BeyondLight-Roadmap.md
+docs/process/Builds.md

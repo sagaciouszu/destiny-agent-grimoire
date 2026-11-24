@@ -4,7 +4,7 @@ SQLite database for the Destiny lore repository. Single file, no external connec
 
 File: `grimoire.db` (SQLite, FTS5 full-text search enabled). Built from `source/` + `archive/` by `migrate.py`; not committed, prebuilt copies attached to releases.
 
-Full build/provenance matrix: [`docs/process/Builds.md`](../docs/process/Builds.md).
+Build provenance is recorded in the `builds` table of the database.
 
 ## Quick start
 

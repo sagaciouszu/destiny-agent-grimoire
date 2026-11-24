@@ -7,7 +7,7 @@ Output feeds `db/migrate.py`; re-run migrate after ingesting.
 | Script | Writes to | Consumed by migrate |
 |--------|-----------|---------------------|
 | `build-lore-staging.py` | `archive/data/manifest/lore_entries.jsonl` | no (enrichment input) |
-| `gap-report.py` | `docs/GAPS.md` | no (generated report) |
+| `gap-report.py` | stdout | no (generated report) |
 | `ingest-ishtar-commons-batch.py` | `source/transcripts/commons-*.md` | yes |
 | `ishtar-timeline.py --fetch/--from/--report` | `source/ishtar-timeline.json` | yes (in-universe era snapshot; --report compares vs the timeline column) |
 

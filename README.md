@@ -186,10 +186,6 @@ migration. The full contract is `docs/process/Standards-Reference.md` (indexed b
   model, confidence levels and query examples.
 - **Lore:** `python3 db/query.py list lore` and `lore <hash|title>` expose the
   Bungie manifest lore corpus.
-- **Gap ledger:** `docs/GAPS.md` lists activities, events and speakers still
-  waiting on a source.
-- **Discovery design:** `docs/DISCOVERY.md` explains why the layer is additive,
-  how filters compile, and measured query times.
 - **Policy:** `STANDARDS.md` (index) / `docs/process/Standards-Reference.md` (full contract)
   defines schema, naming, provenance, quote policy and verification gates.
 - **Never** parse `source/` markdown at runtime. Query the database.
